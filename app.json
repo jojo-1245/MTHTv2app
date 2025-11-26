@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "AfterLife",
+    "slug": "afterlife",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "resizeMode": "contain"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.afterlife.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.afterlife.app"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
+
