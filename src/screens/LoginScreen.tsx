@@ -112,11 +112,17 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         routes: [{ name: 'ListHome' }],
       });
     } catch (v_5e9bfe) {
-      const v_a8cd21 =
-        v_5e9bfe instanceof Error
-          ? v_5e9bfe.message
-          : '로그인 중 알 수 없는 오류가 발생했습니다.';
-      v_889fad('로그인 실패', v_a8cd21);
+      const v_4b5200 = '로그인 중 알 수 없는 오류가 발생했습니다.';
+      let v_d6bda5 = v_4b5200;
+      if (v_5e9bfe instanceof Error) {
+        const v_75195c = v_5e9bfe.message || '';
+        if (/invalid email or password/i.test(v_75195c)) {
+          v_d6bda5 = '등록된 이메일이 없거나 비밀번호가 올바르지 않습니다.';
+        } else {
+          v_d6bda5 = v_75195c;
+        }
+      }
+      v_889fad('로그인 실패', v_d6bda5);
     } finally {
       v_deef62(false);
     }
