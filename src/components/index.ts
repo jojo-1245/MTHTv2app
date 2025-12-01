@@ -46,3 +46,5 @@ export type { ContactListItemProps } from './ContactListItem';
 export { default as SelectField } from './SelectField';
 export type { SelectFieldProps } from './SelectField';
 
+export { default as AlertModal } from './AlertModal';
+

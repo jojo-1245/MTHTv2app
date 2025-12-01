@@ -5,6 +5,7 @@ import {
   AliveResponse,
   KeepAliveServerResponse,
 } from '../types';
+import { STORAGE_KEYS } from '../constants';
 import { getEnv } from '../utils/env';
 
 let ROUTES: { main: string; login: string } | null = null;
@@ -222,5 +223,124 @@ const createAxiosInstance = (navigation?: any) => {
 
 export const getAxiosInstance = (navigation?: any) => {
   return createAxiosInstance(navigation);
+};
+
+type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+  error?: {
+    message: string;
+    statusCode?: number;
+  };
+};
+
+export type AuthMember = {
+  member: number;
+  email: string;
+  firstname: string;
+  lastname: string;
+};
+
+export type AuthPayload = {
+  token: string;
+  member: AuthMember;
+};
+
+export type RegisterMemberPayload = {
+  email: string;
+  pin: string;
+  firstname: string;
+  lastname: string;
+  mobile: string;
+  mobilecode: string;
+  gender: number;
+  age?: number;
+};
+
+export type LoginPayload = {
+  email: string;
+  pin: string;
+};
+
+const unwrapResponse = <T>(response: ApiResponse<T>): T => {
+  if (response.success && response.data) {
+    return response.data;
+  }
+  throw new Error(response.error?.message || '서버 응답을 해석할 수 없습니다.');
+};
+
+const normalizeError = (error: unknown): Error => {
+  if (axios.isAxiosError(error)) {
+    const apiResponse = error.response?.data as ApiResponse<unknown> | undefined;
+    const message =
+      apiResponse?.error?.message ||
+      error.response?.statusText ||
+      error.message ||
+      '요청 중 오류가 발생했습니다.';
+    return new Error(message);
+  }
+
+  if (error instanceof Error) {
+    return error;
+  }
+
+  return new Error('요청 중 알 수 없는 오류가 발생했습니다.');
+};
+
+export const registerMember = async (
+  payload: RegisterMemberPayload,
+  navigation?: any,
+): Promise<AuthPayload> => {
+  try {
+    const axiosInstance = getAxiosInstance(navigation);
+    const response = await axiosInstance.post<ApiResponse<AuthPayload>>(
+      '/oth-path',
+      payload,
+    );
+    return unwrapResponse(response.data);
+  } catch (error) {
+    throw normalizeError(error);
+  }
+};
+
+export const loginMember = async (
+  payload: LoginPayload,
+  navigation?: any,
+): Promise<AuthPayload> => {
+  try {
+    const axiosInstance = getAxiosInstance(navigation);
+    const response = await axiosInstance.post<ApiResponse<AuthPayload>>(
+      '/oth-path',
+      payload,
+    );
+    return unwrapResponse(response.data);
+  } catch (error) {
+    throw normalizeError(error);
+  }
+};
+
+export const persistAuthSession = async (auth: AuthPayload) => {
+  try {
+    await AsyncStorage.multiSet([
+      [STORAGE_KEYS.authToken, auth.token],
+      [STORAGE_KEYS.memberInfo, JSON.stringify(auth.member)],
+      [STORAGE_KEYS.isLoggedIn, 'true'],
+      [STORAGE_KEYS.savedEmail, auth.member.email],
+    ]);
+  } catch (error) {
+    console.warn('세션 저장에 실패했습니다:', error);
+  }
+};
+
+export const clearAuthSession = async () => {
+  try {
+    await AsyncStorage.multiRemove([
+      STORAGE_KEYS.authToken,
+      STORAGE_KEYS.memberInfo,
+      STORAGE_KEYS.isLoggedIn,
+    ]);
+  } catch (error) {
+    console.warn('세션 삭제에 실패했습니다:', error);
+  }
 };
 

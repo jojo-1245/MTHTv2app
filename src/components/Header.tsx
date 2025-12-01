@@ -14,7 +14,7 @@ import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 export interface HeaderProps {
   title: string;
   eyebrowText?: string;
-  subtitle?: string;
+  subtitle?: string | v_a3453e.ReactNode;
   onBackPress?: () => void;
   showBackButton?: boolean;
   leftAccessory?: v_a3453e.ReactNode;
@@ -101,13 +101,17 @@ const Header: v_a3453e.FC<HeaderProps> = ({
         </Text>
 
         {v_dda473 ? (
-          <Text
-            style={[v_d81136.subtitle, v_7e5e48]}
-            numberOfLines={3}
-            accessibilityRole="text"
-          >
-            {v_dda473}
-          </Text>
+          typeof v_dda473 === 'string' ? (
+            <Text
+              style={[v_d81136.subtitle, v_7e5e48]}
+              numberOfLines={3}
+              accessibilityRole="text"
+            >
+              {v_dda473}
+            </Text>
+          ) : (
+            <View style={v_d81136.subtitleNode}>{v_dda473}</View>
+          )
         ) : null}
       </View>
 
@@ -177,6 +181,10 @@ const v_d81136 = v_472849.create({
     lineHeight: 20,
     color: v_1bfbd0.secondaryText,
     fontFamily: v_843035.medium,
+  },
+  subtitleNode: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   bottomContent: {
     marginTop: v_9b1a04.large,

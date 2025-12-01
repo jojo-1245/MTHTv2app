@@ -13,10 +13,11 @@ import { v_b00d6f } from '../../hooks';
 interface VerificationCodeTemplateProps {
   title: string;
   subtitle: v_4a8ba2;
-  highlightLabel?: string;
   onBack: () => void;
-  onVerify: () => void;
+  onVerify: (code: string) => void;
   resendLabel?: string;
+  onResend?: () => void;
+  codeLength?: number;
 }
 
 const v_5db486 = 30 * 60 * 1000; 
@@ -24,19 +25,41 @@ const v_5db486 = 30 * 60 * 1000;
 export const VerificationCodeTemplate: v_a3453e.FC<VerificationCodeTemplateProps> = ({
   title: v_9f1622,
   subtitle: v_dda473,
-  highlightLabel: v_e14620 = 'Email',
   onBack: v_64ccfb,
   onVerify: v_72a8c5,
   resendLabel: v_94d343 = 'Resend code in',
+  onResend: v_6ee6a9,
+  codeLength: v_5db458 = 4,
 }) => {
   const [v_c99bd2, v_537cbb] = v_5ab095('');
+  const [v_f74c59, v_a173ea] = v_5ab095(false);
   const { formatted: v_864a3e, reset: v_487a25 } = v_b00d6f(v_5db486);
+
+  const v_83b05b = () => {
+    if (v_c99bd2.length !== v_5db458) {
+      v_a173ea(true);
+      return;
+    }
+    v_a173ea(false);
+    v_72a8c5(v_c99bd2);
+  };
+
+  const v_cf9840 = () => {
+    v_537cbb('');
+    v_a173ea(false);
+    v_487a25();
+    v_6ee6a9?.();
+  };
+
+  const v_fa5a04 = typeof v_dda473 === 'string' ? v_dda473 : undefined;
+  const v_9b51a6 = typeof v_dda473 === 'string' ? undefined : v_dda473;
 
   return (
     <View style={v_d81136.screen}>
       <Header
         title={v_9f1622}
-        subtitle={v_dda473}
+        subtitle={v_fa5a04}
+        bottomContent={v_9b51a6}
         showBackButton
         onBackPress={v_64ccfb}
       />
@@ -46,19 +69,29 @@ export const VerificationCodeTemplate: v_a3453e.FC<VerificationCodeTemplateProps
         showsVerticalScrollIndicator={false}
       >
         <View style={v_d81136.body}>
-          <OtpInput value={v_c99bd2} onChange={v_537cbb} showError={v_c99bd2.length === 0} />
+          <OtpInput
+            value={v_c99bd2}
+            length={v_5db458}
+            onChange={(v_3b402b) => {
+              v_537cbb(v_3b402b);
+              if (v_f74c59 && v_3b402b.length === v_5db458) {
+                v_a173ea(false);
+              }
+            }}
+            showError={v_f74c59}
+          />
 
           <View style={v_d81136.resendRow}>
             <Text style={v_d81136.resendText}>
               {v_94d343}
               <Text style={v_d81136.highlightText}> {v_864a3e}</Text>
             </Text>
-            <TouchableOpacity onPress={v_487a25}>
+            <TouchableOpacity onPress={v_cf9840}>
               <Text style={v_d81136.resendButton}>Resend</Text>
             </TouchableOpacity>
           </View>
 
-          <PrimaryButton title="Verify" onPress={v_72a8c5} />
+          <PrimaryButton title="Verify" onPress={v_83b05b} />
         </View>
       </ScrollView>
     </View>

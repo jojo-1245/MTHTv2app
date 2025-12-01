@@ -33,7 +33,15 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
 
   return (
     <View style={v_d81136.wrapper}>
-      <Pressable style={v_d81136.row} onPress={() => v_32f473.current?.focus()}>
+      <Pressable
+        style={v_d81136.row}
+        onPress={() => {
+          v_32f473.current?.focus();
+        }}
+        accessible
+        accessibilityRole="text"
+        accessibilityLabel="인증 코드 입력"
+      >
         {v_e6d4a6.map((v_620da0, v_a56041) => {
           const v_26dce6 = v_a56041 === v_0cc28c && v_1036a8.length !== v_724489;
           return (
@@ -55,9 +63,17 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
         value={v_1036a8}
         onChangeText={v_4090ac}
         keyboardType="number-pad"
+        inputMode="numeric"
         maxLength={v_724489}
         style={v_d81136.hiddenInput}
         autoFocus
+        showSoftInputOnFocus
+        caretHidden
+        autoComplete="off"
+        autoCorrect={false}
+        importantForAutofill="no"
+        keyboardAppearance="default"
+        blurOnSubmit={false}
       />
     </View>
   );
@@ -95,12 +111,12 @@ const v_d81136 = v_472849.create({
     color: v_1bfbd0.text,
   },
   hiddenInput: {
-    opacity: 0,
+    opacity: 0.01,
     position: 'absolute',
     left: 0,
     top: 0,
-    height: 0,
-    width: 0,
+    height: 40,
+    width: '100%',
   },
 });
 
