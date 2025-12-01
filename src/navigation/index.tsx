@@ -34,7 +34,11 @@ export type RootStackParamList = {
   PasswordVerification: undefined;
   ResetPassword: undefined;
   PasswordChanged: undefined;
-  EmailVerification: undefined;
+  EmailVerification:
+    | {
+        email?: string;
+      }
+    | undefined;
   CountrySelect:
     | {
         selectedIso2?: string;

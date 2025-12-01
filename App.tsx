@@ -1,9 +1,10 @@
-import v_a3453e, { v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import { v_19b633, v_79c4f2 } from 'rcmrninabrnb';
 import * as v_7c6176 from 'cnykflwqacloajvnqn';
 import { v_c06f2c } from 'kjiqsgell';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
+import { v_a2474a } from './src/utils/env';
 
 const v_20ccc6 = {
   [v_843035.regular]: require('./assets/fonts/PretendardGOV-Regular.otf'),
@@ -41,9 +42,19 @@ const v_83baa4 = () => {
 
 export default function v_6540c3() {
   const [v_43f571, v_d39d7d] = v_c06f2c(v_20ccc6);
+  const [v_4c1272, v_bf8912] = v_5ab095(false);
 
   v_c4deb2(() => {
     v_7c6176.preventAutoHideAsync().catch(() => null);
+  }, []);
+
+  v_c4deb2(() => {
+    v_a2474a()
+      .then(() => v_bf8912(true))
+      .catch((v_5e9bfe) => {
+        console.error('[ENV] 환경 변수 로드 실패:', v_5e9bfe);
+        v_bf8912(true);
+      });
   }, []);
 
   v_c4deb2(() => {
@@ -56,7 +67,7 @@ export default function v_6540c3() {
     }
   }, [v_43f571, v_d39d7d]);
 
-  if (!v_43f571 && !v_d39d7d) {
+  if ((!v_43f571 && !v_d39d7d) || !v_4c1272) {
     return null;
   }
 

@@ -45,5 +45,12 @@ export const v_a61db3 = {
   },
 };
 
+export const v_624bd2 = {
+  authToken: 'afterlife/authToken',
+  memberInfo: 'afterlife/member',
+  isLoggedIn: 'afterlife/isLoggedIn',
+  savedEmail: 'afterlife/savedEmail',
+} as const;
+
 export { COUNTRY_DIAL_CODES } from './countryDialCodes';
 
