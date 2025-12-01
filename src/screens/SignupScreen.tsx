@@ -27,7 +27,7 @@ import {
 import type { v_8ad91b } from '../navigation';
 import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import { v_4a0202, v_09d767 } from '../services';
+import { v_4a0202, v_09d767, v_91bb22 } from '../services';
 
 type Props = v_432191<v_8ad91b, 'Signup'>;
 
@@ -73,7 +73,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_590486 =
     v_459d5e?.iso2?.toLowerCase() === 'kr';
   const v_56743f = v_2f03bc?.name ?? (v_590486 ? '' : 'Global');
-  const v_67cb9c = v_459d5e?.name ?? '';
+  const v_67cb9c =
+    v_459d5e?.name ??
+    v_459d5e?.iso2?.toUpperCase() ??
+    '';
 
   const [v_153a89, v_879b56] = v_5ab095<{
     visible: boolean;
@@ -131,17 +134,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return v_9a3638.test(v_3b402b);
   };
 
-  const v_7ebe28 = () => (v_c3eac4 === 'male' ? 2110 : 2111);
+  const v_7ebe28 = () => v_91bb22.getGenderCode(v_c3eac4);
 
   const v_a02735 = v_df9f57(() => {
-    const v_8dcb51 = {
-      '10': 2210,
-      '20': 2220,
-      '30': 2230,
-      '40': 2240,
-      '50+': 2250,
-    };
-    return (v_3b402b) => v_8dcb51[v_3b402b] || 2220;
+    return (v_3b402b) => v_91bb22.getAgeCode(v_3b402b);
   }, []);
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
@@ -156,6 +152,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_4d1e97.replace('+', '') || v_4d1e97 || '82';
     const v_a4d981 = v_459d5e?.iso2?.toUpperCase() ?? '';
     const v_94bdf5 = parseInt(v_2f03bc?.dialCode ?? '0', 10) || 0;
+    const v_fbc756 = v_91bb22.getOSCode();
 
     if (!v_8f37ac) {
       v_889fad('입력 오류', '이메일을 입력해주세요.');
@@ -196,7 +193,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_889fad('약관 동의 필요', '서비스 이용 약관에 동의해주세요.');
       return;
     }
-
+    
     const payload: v_09d767 = {
       email: v_8f37ac,
       pin: v_adc076,
@@ -209,6 +206,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       country: v_67cb9c,
       countrycode: v_a4d981,
       region: v_94bdf5,
+      os: v_fbc756,
     };
 
     v_e33ec0(true);

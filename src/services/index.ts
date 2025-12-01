@@ -7,6 +7,7 @@ import {
 } from '../types';
 import { STORAGE_KEYS } from '../constants';
 import { getEnv } from '../utils/env';
+import { Platform } from 'react-native';
 
 let ROUTES: { main: string; login: string } | null = null;
 
@@ -258,6 +259,7 @@ export type RegisterMemberPayload = {
   country?: string;
   countrycode?: string;
   region?: number;
+  os?: number;
 };
 
 export type LoginPayload = {
@@ -347,3 +349,24 @@ export const clearAuthSession = async () => {
   }
 };
 
+export const SignupHelpers = {
+
+  getGenderCode: (gender: 'male' | 'female'): number => {
+    return gender === 'male' ? 2110 : 2111;
+  },
+
+  getAgeCode: (ageRange: '10' | '20' | '30' | '40' | '50+'): number => {
+    const ageMap: Record<string, number> = {
+      '10': 2210,
+      '20': 2220,
+      '30': 2230,
+      '40': 2240,
+      '50+': 2250,
+    };
+    return ageMap[ageRange] || 2220;
+  },
+
+  getOSCode: (): number => {
+    return Platform.OS === 'android' ? 3112 : 3113;
+  },
+};
