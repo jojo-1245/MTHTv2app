@@ -5,6 +5,7 @@ import { v_c06f2c } from 'kjiqsgell';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a } from './src/utils/env';
+import { v_4b64f4 } from './src/context';
 
 const v_20ccc6 = {
   [v_843035.regular]: require('./assets/fonts/PretendardGOV-Regular.otf'),
@@ -71,6 +72,10 @@ export default function v_6540c3() {
     return null;
   }
 
-  return <AppNavigator />;
+  return (
+    <AppProvider>
+      <AppNavigator />
+    </AppProvider>
+  );
 }
 

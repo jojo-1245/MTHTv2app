@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
   v_e767d1,
@@ -21,11 +21,11 @@ import {
   v_e2ca42,
   v_cb41de,
   v_89c10a,
+  v_d56c0a,
   v_e775af,
 } from '../components';
 import type { v_8ad91b } from '../navigation';
-import { v_202d44 } from '../constants';
-import type { v_da1883 } from '../types';
+import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_4a0202, v_09d767 } from '../services';
 
@@ -37,29 +37,43 @@ const v_21bdd5 = [
 ] as const;
 
 const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
+type GenderOption = (typeof v_21bdd5)[number];
 type AgeOption = (typeof v_0c96f7)[number];
 
 const v_901315 =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
 const v_064327 = '영문, 숫자, 특수문자를 모두 포함한 8자 이상이어야 합니다.';
 
-const v_d7c38a =
-  v_202d44.find((v_3f4e2e) => v_3f4e2e.iso2 === 'kr') ?? v_202d44[0];
-
 const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const {
+    selectedCountryDialCode: v_459d5e,
+    selectedRegion: v_2f03bc,
+    setSelectMode: v_67ab1c,
+    signupFormData: v_8d7bc8,
+    updateSignupFormData: v_a776b5,
+  } = v_700ef9();
   const [v_a6fcf8, v_539b92] = v_5ab095(true);
-  const [v_d74a81, v_fcce73] = v_5ab095('');
+  const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
   const [v_c3eac4, v_bdc43c] =
     v_5ab095<typeof v_21bdd5[number]['value']>('male');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
-  const [v_0899ab, v_3400e8] =
-    v_5ab095<v_da1883>(v_d7c38a);
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_a32a50, v_4944f5] = v_5ab095('');
   const [v_328bb4, v_b7613d] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
+
+  v_c4deb2(() => {
+    if (v_8d7bc8.phone !== undefined && v_8d7bc8.phone !== v_d74a81) {
+      v_fcce73(v_8d7bc8.phone);
+    }
+  }, [v_8d7bc8.phone]);
+
+  const v_590486 =
+    v_459d5e?.iso2?.toLowerCase() === 'kr';
+  const v_56743f = v_2f03bc?.name ?? (v_590486 ? '' : 'Global');
+  const v_67cb9c = v_459d5e?.name ?? '';
 
   const [v_153a89, v_879b56] = v_5ab095<{
     visible: boolean;
@@ -73,10 +87,21 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   });
 
   const v_cbf7db = () => {
-    v_c65f5d.navigate('CountrySelect', {
-      selectedIso2: v_0899ab.iso2,
-      onSelectCountry: (v_b9bbbd) => v_3400e8(v_b9bbbd),
-    });
+    v_67ab1c('country');
+    v_c65f5d.navigate('CountrySelect', { mode: 'country' });
+  };
+
+  const v_b36a76 = () => {
+    if (!v_590486) {
+      return;
+    }
+    v_67ab1c('region');
+    v_c65f5d.navigate('CountrySelect', { mode: 'region' });
+  };
+
+  const v_641550 = (v_3b402b) => {
+    v_fcce73(v_3b402b);
+    v_a776b5({ phone: v_3b402b });
   };
 
   const v_889fad = (v_9f1622, v_a8cd21, v_e2be2d) => {
@@ -119,13 +144,18 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return (v_3b402b) => v_8dcb51[v_3b402b] || 2220;
   }, []);
 
+  const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
+  const v_4d1e97 = v_459d5e?.dialCode ?? '+82';
+
   const v_47ed2f = async () => {
     const v_8f37ac = v_e0c7e8.trim().toLowerCase();
     const v_c6b2bb = v_a32a50.trim();
     const v_57c787 = v_328bb4.trim();
     const v_088b9e = v_9c3d15(v_d74a81);
     const v_6c3a47 =
-      v_0899ab.dialCode.replace('+', '') || v_0899ab.dialCode || '82';
+      v_4d1e97.replace('+', '') || v_4d1e97 || '82';
+    const v_a4d981 = v_459d5e?.iso2?.toUpperCase() ?? '';
+    const v_94bdf5 = parseInt(v_2f03bc?.dialCode ?? '0', 10) || 0;
 
     if (!v_8f37ac) {
       v_889fad('입력 오류', '이메일을 입력해주세요.');
@@ -144,6 +174,11 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     if (!v_088b9e) {
       v_889fad('입력 오류', '전화번호를 입력해주세요.');
+      return;
+    }
+
+    if (v_590486 && !v_2f03bc) {
+      v_889fad('입력 오류', '지역을 선택해주세요.');
       return;
     }
 
@@ -171,6 +206,9 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       mobilecode: v_6c3a47,
       gender: v_7ebe28(),
       age: v_a02735(v_f83808),
+      country: v_67cb9c,
+      countrycode: v_a4d981,
+      region: v_94bdf5,
     };
 
     v_e33ec0(true);
@@ -239,7 +277,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 placeholder="010-1010-1000"
                 keyboardType="phone-pad"
                 value={v_d74a81}
-                onChangeText={v_fcce73}
+                onChangeText={v_641550}
                 editable={!v_88dca2}
                 leftIcon={
                   <TouchableOpacity
@@ -247,12 +285,22 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     onPress={v_cbf7db}
                     disabled={v_88dca2}
                   >
-                    <Text style={v_d81136.flagEmoji}>{v_0899ab.flagEmoji}</Text>
-                    <Text style={v_d81136.countryCode}>{v_0899ab.dialCode}</Text>
+                    <Text style={v_d81136.flagEmoji}>{v_1bf308}</Text>
+                    <Text style={v_d81136.countryCode}>{v_4d1e97}</Text>
                     <Feather name="chevron-down" size={16} color={v_1bfbd0.secondaryText} />
                   </TouchableOpacity>
                 }
               />
+              <SelectField
+                label="지역"
+                placeholder="지역을 선택하세요"
+                value={v_56743f}
+                onPress={v_b36a76}
+                disabled={!v_590486 || v_88dca2}
+              />
+              {!v_590486 ? (
+                <Text style={v_d81136.regionHelper}>Global 지역이 자동으로 적용됩니다.</Text>
+              ) : null}
               <View>
                 <Text style={v_d81136.sectionLabel}>성별</Text>
                 <View style={v_d81136.inlineOptions}>
@@ -359,6 +407,7 @@ type SignupScreenStyles = {
   footerRow: v_7e4944;
   footerText: v_5e8657;
   footerLink: v_5e8657;
+  regionHelper: v_5e8657;
 };
 
 const v_d81136 = v_472849.create<SignupScreenStyles>({
@@ -446,6 +495,12 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
     fontSize: 13,
     fontFamily: v_843035.semibold,
     color: v_1bfbd0.text,
+  },
+  regionHelper: {
+    fontSize: 12,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    marginTop: -v_9b1a04.small / 2,
   },
 });
 

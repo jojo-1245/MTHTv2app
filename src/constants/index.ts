@@ -53,4 +53,12 @@ export const v_624bd2 = {
 } as const;
 
 export { COUNTRY_DIAL_CODES } from './countryDialCodes';
+export {
+  REGIONS_AS_COUNTRY_DIAL_CODES,
+  GLOBAL_REGION,
+  getRegionsByCountryIso2,
+  getRegionIdByIso2,
+  getIso2ByRegionId,
+  getRegionNameById,
+} from './regions';
 
