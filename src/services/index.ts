@@ -255,6 +255,9 @@ export type RegisterMemberPayload = {
   mobilecode: string;
   gender: number;
   age?: number;
+  country?: string;
+  countrycode?: string;
+  region?: number;
 };
 
 export type LoginPayload = {

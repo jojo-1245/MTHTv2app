@@ -16,7 +16,6 @@ import {
   v_db1cc4,
   v_f40fc5,
 } from '../screens';
-import type { v_da1883 } from '../types';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -41,8 +40,7 @@ export type RootStackParamList = {
     | undefined;
   CountrySelect:
     | {
-        selectedIso2?: string;
-        onSelectCountry?: (country: v_da1883) => void;
+        mode?: 'country' | 'region';
       }
     | undefined;
 };

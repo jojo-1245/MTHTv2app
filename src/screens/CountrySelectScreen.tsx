@@ -9,36 +9,61 @@ import {
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_729608, v_f68dda } from '../components';
-import { v_1bfbd0, v_843035, v_9b1a04, v_202d44 } from '../constants';
+import { v_1bfbd0, v_843035, v_9b1a04, v_202d44, v_369014 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import type { v_da1883 } from '../types';
+import { v_700ef9 } from '../context';
 
 type Props = v_432191<v_8ad91b, 'CountrySelect'>;
 
 const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+  const {
+    selectedCountryDialCode: v_459d5e,
+    setSelectedCountryDialCode: v_f693e7,
+    selectedRegion: v_2f03bc,
+    setSelectedRegion: v_2f2d51,
+    selectMode: v_479a37,
+    setSelectMode: v_67ab1c,
+  } = v_700ef9();
   const [v_7c5791, v_c57190] = v_5ab095('');
-  const v_b3aeb0 = v_c7daf6.params?.selectedIso2;
+  const v_34e5bb = v_c7daf6.params?.mode ?? v_479a37;
+  const v_093bd4 = v_df9f57(() => {
+    if (v_34e5bb === 'region') {
+      return v_369014(v_459d5e.iso2);
+    }
+    return v_202d44;
+  }, [v_34e5bb, v_459d5e.iso2]);
+  const v_c6e76b = v_34e5bb === 'region' ? v_2f03bc : v_459d5e;
+  const v_184db2 = v_34e5bb === 'region' ? '지역 선택' : '국가 선택';
+  const v_61b749 =
+    v_34e5bb === 'region' ? '지역 이름 또는 번호 검색' : '국가 이름 또는 국가번호 검색';
 
   const v_4773d4 = v_df9f57(() => {
     if (!v_7c5791.trim()) {
-      return v_202d44;
+      return v_093bd4;
     }
     const v_1cfe9a = v_7c5791.toLowerCase();
-    return v_202d44.filter(
-      (v_b9bbbd) =>
-        v_b9bbbd.name.toLowerCase().includes(v_1cfe9a) ||
-        v_b9bbbd.dialCode.includes(v_1cfe9a) ||
-        v_b9bbbd.iso2.toLowerCase().includes(v_1cfe9a),
+    const v_f3105d = v_1cfe9a.replace(/[^0-9]/g, '');
+    return v_093bd4.filter(
+      (v_8c0b26) =>
+        v_8c0b26.name.toLowerCase().includes(v_1cfe9a) ||
+        v_8c0b26.iso2.toLowerCase().includes(v_1cfe9a) ||
+        (!!v_f3105d && v_8c0b26.dialCode.replace('+', '').startsWith(v_f3105d)),
     );
-  }, [v_7c5791]);
+  }, [v_093bd4, v_7c5791]);
 
   const v_6121dc = (country: v_da1883) => {
-    v_c7daf6.params?.onSelectCountry?.(v_b9bbbd);
+    if (v_34e5bb === 'region') {
+      v_2f2d51(v_b9bbbd);
+    } else {
+      v_f693e7(v_b9bbbd);
+    }
+    v_67ab1c(v_34e5bb);
     v_c65f5d.goBack();
   };
 
   const v_fcf6ec = ({ item: v_8c0b26 }: { item: v_da1883 }) => {
-    const v_599a41 = v_b3aeb0?.toLowerCase() === v_8c0b26.iso2.toLowerCase();
+    const v_599a41 = v_c6e76b?.iso2?.toLowerCase() === v_8c0b26.iso2.toLowerCase();
     return (
       <TouchableOpacity style={v_d81136.row} onPress={() => v_6121dc(v_8c0b26)}>
         <View style={v_d81136.rowLeft}>
@@ -56,13 +81,13 @@ const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
   return (
     <View style={v_d81136.screen}>
       <Header
-        title="국가 선택"
+        title={v_184db2}
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
       />
       <View style={v_d81136.content}>
         <SearchField
-          placeholder="국가 이름 또는 국가번호 검색"
+          placeholder={v_61b749}
           value={v_7c5791}
           onChangeText={v_c57190}
         />
