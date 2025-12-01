@@ -1,214 +1,226 @@
 
-import v_b5030f, { v_3333d3 } from 'imsks';
-import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import axios, { AxiosError } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  v_96ef47,
-  v_2fe85a,
+  AliveResponse,
+  KeepAliveServerResponse,
 } from '../types';
-import { v_e4a763 } from '../utils/env';
+import { getEnv } from '../utils/env';
 
-let v_ce4741 = null;
+let ROUTES: { main: string; login: string } | null = null;
 
-export const v_a2ecba = (v_81e34b) => {
-  v_ce4741 = v_81e34b;
+export const setRoutes = (routes: { main: string; login: string }) => {
+  ROUTES = routes;
 };
 
-const v_8a74cb = 20000;
+const API_TIMEOUT = 20000;
 
-const v_e4d665 = async (v_c65f5d) => {
+const handleTimeoutError = async (navigation?: any) => {
   try {
-    const v_042a8b = await v_e84827.getItem('isLoggedIn');
-    if (v_c65f5d && v_ce4741) {
-      if (v_042a8b === 'true') {
+    const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+    if (navigation && ROUTES) {
+      if (isLoggedIn === 'true') {
 
-        v_c65f5d.reset({
+        navigation.reset({
           index: 0,
-          routes: [{ name: v_ce4741.main }],
+          routes: [{ name: ROUTES.main }],
         });
       } else {
 
-        v_c65f5d.reset({
+        navigation.reset({
           index: 0,
-          routes: [{ name: v_ce4741.login }],
+          routes: [{ name: ROUTES.login }],
         });
       }
     }
-  } catch (v_5e9bfe) {
-    console.error('타임아웃 처리 중 오류:', v_5e9bfe);
-    if (v_c65f5d && v_ce4741) {
+  } catch (error) {
+    console.error('타임아웃 처리 중 오류:', error);
+    if (navigation && ROUTES) {
 
-      v_c65f5d.reset({
+      navigation.reset({
         index: 0,
-        routes: [{ name: v_ce4741.login }],
+        routes: [{ name: ROUTES.login }],
       });
     }
   }
 };
 
-export const v_d61bb8 = async (
-  v_f71b56,
-  v_b36f96 = {},
-  v_c65f5d,
+export const apiRequest = async (
+  url: string,
+  options: RequestInit = {},
+  navigation?: any,
 ): Promise<Response> => {
-  const v_4fc7c7 = new AbortController();
-  const v_3894d5 = setTimeout(() => v_4fc7c7.abort(), v_8a74cb);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
 
   try {
-    const v_3393e3 = await fetch(v_f71b56, {
-      ...v_b36f96,
-      signal: v_4fc7c7.signal,
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
     });
-    clearTimeout(v_3894d5);
-    return v_3393e3;
-  } catch (v_5e9bfe) {
-    clearTimeout(v_3894d5);
-    if (v_5e9bfe instanceof Error && v_5e9bfe.name === 'AbortError') {
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
 
-      if (v_c65f5d) {
-        await v_e4d665(v_c65f5d);
+      if (navigation) {
+        await handleTimeoutError(navigation);
       }
       throw new Error('API request timeout');
     }
-    throw v_5e9bfe;
+    throw error;
   }
 };
 
-export const v_0a1127 = async (
-  v_09dafd,
-  v_b36f96 = {},
-  v_c65f5d,
+export const gatewayRequest = async (
+  endpoint: string,
+  options: RequestInit = {},
+  navigation?: any,
 ): Promise<Response> => {
-  const v_c9c489 = v_e4a763();
-  const v_36dd9e = v_c9c489.GATEWAY_AUTH_CODE;
-  const v_7dac96 = `${v_c9c489.GATEWAY}${v_36dd9e}&endpoint=${v_09dafd}`;
+  const env = getEnv();
 
-  return v_d61bb8(v_7dac96, v_b36f96, v_c65f5d);
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  const baseUrl = env.GATEWAY;
+  const gatewayUrl = `${baseUrl}${oth-secret}&endpoint=${endpoint}`;
+
+  return apiRequest(gatewayUrl, options, navigation);
 };
 
-export const v_12a388 = async (
-  v_09dafd,
-  v_b36f96 = {},
-  v_c65f5d,
+export const nodeGatewayRequest = async (
+  endpoint: string,
+  options: RequestInit = {},
+  navigation?: any,
 ): Promise<Response> => {
-  const v_c9c489 = v_e4a763();
-  const v_c01615 = v_c9c489.GATEWAY;
-  const v_f71b56 = v_09dafd.startsWith('/') 
-    ? `${v_c01615}${v_09dafd}` 
-    : `${v_c01615}/${v_09dafd}`;
+  const env = getEnv();
+  const baseUrl = env.GATEWAY;
+  const url = endpoint.startsWith('/') 
+    ? `${baseUrl}${endpoint}` 
+    : `${baseUrl}/${endpoint}`;
 
-  return v_d61bb8(v_f71b56, v_b36f96, v_c65f5d);
+  return apiRequest(url, options, navigation);
 };
 
-export const v_495832 = async (
-  v_c65f5d,
-): Promise<v_96ef47> => {
+export const sendAliveSignal = async (
+  navigation?: any,
+): Promise<AliveResponse> => {
   try {
-    const v_c9c489 = v_e4a763();
-    const v_36dd9e = v_c9c489.GATEWAY_AUTH_CODE;
+    const env = getEnv();
 
-    const v_3393e3 = await v_12a388('/keepalive', {
+    const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+
+    const response = await nodeGatewayRequest('/keepalive', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${v_36dd9e}`,
+        Authorization: `Bearer ${oth-secret}`,
       },
-    }, v_c65f5d);
+    }, navigation);
 
-    if (!v_3393e3.ok) {
-      throw new Error(`HTTP error! status: ${v_3393e3.status}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const serverResponse: v_2fe85a = await v_3393e3.json();
+    const serverResponse: KeepAliveServerResponse = await response.json();
 
-    if (v_2c2f8d.status === 'success') {
-      const result: v_96ef47 = {
+    if (serverResponse.status === 'success') {
+      const result: AliveResponse = {
         success: true,
       };
 
-      if (v_2c2f8d.data.emergency_info) {
+      if (serverResponse.data.emergency_info) {
 
-        v_43c42e.emergencyStop = {
+        result.emergencyStop = {
           enabled: true,
-          message: v_2c2f8d.data.emergency_info.message,
-          link: v_2c2f8d.data.emergency_info.link,
+          message: serverResponse.data.emergency_info.message,
+          link: serverResponse.data.emergency_info.link,
         };
       } else {
 
-        v_43c42e.emergencyStop = {
+        result.emergencyStop = {
           enabled: false,
         };
       }
 
-      return v_43c42e;
+      return result;
     } else {
 
-      throw new Error(`Server error: ${v_2c2f8d.message}`);
+      throw new Error(`Server error: ${serverResponse.message}`);
     }
-  } catch (v_5e9bfe) {
-    if (v_5e9bfe instanceof Error && v_5e9bfe.message === 'API request timeout') {
+  } catch (error) {
+    if (error instanceof Error && error.message === 'API request timeout') {
 
-      throw v_5e9bfe;
+      throw error;
     }
-    throw v_5e9bfe;
+    throw error;
   }
 };
 
-const v_7488d5 = (v_c65f5d) => {
-  const v_c9c489 = v_e4a763();
-  const v_fed274 = v_c9c489.GATEWAY;
-  const v_36dd9e = v_c9c489.GATEWAY_AUTH_CODE;
+const createAxiosInstance = (navigation?: any) => {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
 
-  const v_0c3a5b = v_b5030f.create({
-    baseURL: v_fed274,
-    timeout: v_8a74cb,
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+
+  if (!baseURL) {
+    throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  }
+
+  if (!oth-secret) {
+    throw new Error('클라이언트 토큰이 설정되지 않았습니다. CLIENT_TOKEN 또는 GATEWAY_AUTH_CODE를 확인해주세요.');
+  }
+
+  const instance = axios.create({
+    baseURL,
+    timeout: API_TIMEOUT,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${v_36dd9e}`,
+      Authorization: `Bearer ${oth-secret}`,
     },
   });
 
-  v_0c3a5b.interceptors.request.use(
-    (v_74a79c) => {
-      console.log(`[API Request] ${v_74a79c.method?.toUpperCase()} ${v_74a79c.url}`);
-      return v_74a79c;
+  instance.interceptors.request.use(
+    (config) => {
+      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`);
+      return config;
     },
-    (v_5e9bfe) => {
-      console.error('[API Request Error]', v_5e9bfe);
-      return Promise.reject(v_5e9bfe);
+    (error) => {
+      console.error('[API Request Error]', error);
+      return Promise.reject(error);
     },
   );
 
-  v_0c3a5b.interceptors.response.use(
-    (v_3393e3) => {
-      console.log(`[API Response] ${v_3393e3.config.url}`, v_3393e3.status);
-      return v_3393e3;
+  instance.interceptors.response.use(
+    (response) => {
+      console.log(`[API Response] ${response.config.url}`, response.status);
+      return response;
     },
-    async (error: v_3333d3) => {
+    async (error: AxiosError) => {
 
-      if (v_5e9bfe.code === 'ECONNABORTED' || v_5e9bfe.message.includes('timeout')) {
-        console.error('[API Timeout]', v_5e9bfe.config?.url);
-        if (v_c65f5d) {
-          await v_e4d665(v_c65f5d);
+      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+        console.error('[API Timeout]', error.config?.url);
+        if (navigation) {
+          await handleTimeoutError(navigation);
         }
       } else {
 
         console.error('[API Error]', {
-          url: v_5e9bfe.config?.url,
-          method: v_5e9bfe.config?.method,
-          status: v_5e9bfe.response?.status,
-          statusText: v_5e9bfe.response?.statusText,
-          data: v_5e9bfe.response?.data,
-          message: v_5e9bfe.message,
+          url: error.config?.url,
+          method: error.config?.method,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message,
         });
       }
-      return Promise.reject(v_5e9bfe);
+      return Promise.reject(error);
     },
   );
 
-  return v_0c3a5b;
+  return instance;
 };
 
-export const v_7fc23c = (v_c65f5d) => {
-  return v_7488d5(v_c65f5d);
+export const getAxiosInstance = (navigation?: any) => {
+  return createAxiosInstance(navigation);
 };
 
