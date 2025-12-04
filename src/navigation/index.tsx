@@ -1,32 +1,37 @@
 import v_a3453e from 'bapkr';
 import { v_ac28fd } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_709be7 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import {
-  v_a82b55,
-  v_c1e2b5,
-  v_040c8f,
-  v_c316d8,
-  v_d49470,
-  v_b1090c,
-  v_af04e5,
-  v_2b0ec1,
-  v_f4f851,
-  v_873cfb,
-  v_0d311d,
-  v_db1cc4,
-  v_f40fc5,
-} from '../screens';
+import v_c316d8 from '../screens/HomeScreen';
+import v_7aeeb0 from '../screens/MetaHomeScreen';
+import v_f4f851 from '../screens/LoginScreen';
+import v_f40fc5 from '../screens/SignupScreen';
+import v_040c8f from '../screens/ForgotPasswordScreen';
+import v_0d311d from '../screens/PasswordVerificationScreen';
+import v_db1cc4 from '../screens/ResetPasswordScreen';
+import v_873cfb from '../screens/PasswordChangedScreen';
+import v_a82b55 from '../screens/EmailVerificationScreen';
+import v_c1e2b5 from '../screens/CountrySelectScreen';
+import { v_952e24 } from '../screens/wallet/WalletScreen';
+import { v_4ef695 } from '../screens/wallet/WalletHistoryScreen';
+import { v_5b640b } from '../screens/wallet/WalletSendScreen';
+import { v_2ba37d } from '../screens/wallet/WalletQrScanScreen';
+import { v_31216c } from '../screens/wallet/WalletTransactionProgressScreen';
+import { v_1cd2a2 } from '../screens/wallet/WalletTransactionResultScreen';
+import { v_a023f9 } from '../screens/wallet/WalletReceiveScreen';
+import { v_4ab181 } from '../screens/FontTestScreen';
+import v_03a231 from '../screens/profile/MyInfoScreen';
+import v_cdb169 from '../screens/profile/MyInfoEditScreen';
+import v_dec378 from '../screens/profile/MyInfoEmailAuthScreen';
+import v_4a40b2 from '../screens/profile/MyInfoSettingsScreen';
+import v_386af2 from '../screens/profile/MyInfoNotifyScreen';
+import v_41dfd5 from '../screens/profile/MyInfoClausesScreen';
+import v_5fdcb2 from '../screens/profile/ClauseDetailScreen';
+import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
+import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  ListHome: undefined;
-  CloneRegister: undefined;
-  CloneUpload:
-    | {
-        facePreview?: string;
-      }
-    | undefined;
-  CloneCamera: undefined;
+  MetaHome: undefined;
   Login: undefined;
   Signup: undefined;
   ForgotPassword: undefined;
@@ -43,6 +48,46 @@ export type RootStackParamList = {
         mode?: 'country' | 'region';
       }
     | undefined;
+  Wallet: undefined;
+  PolygonHistory:
+    | {
+        title?: string;
+        iconSource?: any;
+        tokenName?: string;
+      }
+    | undefined;
+  MetahintHistory:
+    | {
+        title?: string;
+        iconSource?: any;
+        tokenName?: string;
+      }
+    | undefined;
+  WalletSend: undefined;
+  WalletReceive:
+    | {
+        title?: string;
+        iconSource?: any;
+        tokenName?: string;
+      }
+    | undefined;
+  WalletQrScan: undefined;
+  WalletEstimate: undefined;
+  WalletTransactionProgress: undefined;
+  WalletTransactionResult: undefined;
+  TransactionDetails: undefined;
+  FontTest: undefined;
+  MyInfo: undefined;
+  MyInfoEdit: undefined;
+  MyInfoEmailAuth: undefined;
+  MyInfoSettings: undefined;
+  MyInfoNotify: undefined;
+  MyInfoClauses: undefined;
+  ClauseDetail: {
+    clauseType: 'terms' | 'privacy';
+  };
+  MyInfoCloseMembership: undefined;
+  MyInfoFaq: undefined;
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();
@@ -57,10 +102,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         }}
       >
         <Stack.Screen name="Home" component={v_c316d8} />
-        <Stack.Screen name="ListHome" component={v_d49470} />
-        <Stack.Screen name="CloneRegister" component={v_b1090c} />
-        <Stack.Screen name="CloneUpload" component={v_af04e5} />
-        <Stack.Screen name="CloneCamera" component={v_2b0ec1} />
+        <Stack.Screen name="MetaHome" component={v_7aeeb0} />
         <Stack.Screen name="Login" component={v_f4f851} />
         <Stack.Screen name="Signup" component={v_f40fc5} />
         <Stack.Screen name="ForgotPassword" component={v_040c8f} />
@@ -69,6 +111,26 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="PasswordChanged" component={v_873cfb} />
         <Stack.Screen name="EmailVerification" component={v_a82b55} />
         <Stack.Screen name="CountrySelect" component={v_c1e2b5} />
+        <Stack.Screen name="Wallet" component={v_952e24} />
+        <Stack.Screen name="PolygonHistory" component={v_4ef695} />
+        <Stack.Screen name="MetahintHistory" component={v_4ef695} />
+        <Stack.Screen name="WalletSend" component={v_5b640b} />
+        <Stack.Screen name="WalletReceive" component={v_a023f9} />
+        <Stack.Screen name="WalletQrScan" component={v_2ba37d} />
+        <Stack.Screen name="WalletEstimate" component={v_31216c} />
+        <Stack.Screen name="WalletTransactionProgress" component={v_31216c} />
+        <Stack.Screen name="WalletTransactionResult" component={v_1cd2a2} />
+        <Stack.Screen name="TransactionDetails" component={v_1cd2a2} />
+        <Stack.Screen name="FontTest" component={v_4ab181} />
+        <Stack.Screen name="MyInfo" component={v_03a231} />
+        <Stack.Screen name="MyInfoEdit" component={v_cdb169} />
+        <Stack.Screen name="MyInfoEmailAuth" component={v_dec378} />
+        <Stack.Screen name="MyInfoSettings" component={v_4a40b2} />
+        <Stack.Screen name="MyInfoNotify" component={v_386af2} />
+        <Stack.Screen name="MyInfoClauses" component={v_41dfd5} />
+        <Stack.Screen name="ClauseDetail" component={v_5fdcb2} />
+        <Stack.Screen name="MyInfoCloseMembership" component={v_9e06f6} />
+        <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -76,10 +138,7 @@ export const AppNavigator: v_a3453e.FC = () => {
 
 export const v_ce4741 = {
   home: 'Home',
-  listHome: 'ListHome',
-  cloneRegister: 'CloneRegister',
-  cloneUpload: 'CloneUpload',
-  cloneCamera: 'CloneCamera',
+  MetaHome: 'MetaHome',
   main: 'Home',
   login: 'Login',
   signup: 'Signup',
@@ -89,5 +148,41 @@ export const v_ce4741 = {
   passwordChanged: 'PasswordChanged',
   emailVerification: 'EmailVerification',
   countrySelect: 'CountrySelect',
+  wallet: 'Wallet',
+  polygonHistory: 'PolygonHistory',
+  metahintHistory: 'MetahintHistory',
+  walletSend: 'WalletSend',
+  walletReceive: 'WalletReceive',
+  walletQrScan: 'WalletQrScan',
+  walletEstimate: 'WalletEstimate',
+  walletTransactionProgress: 'WalletTransactionProgress',
+  walletTransactionResult: 'WalletTransactionResult',
+  transactionDetails: 'TransactionDetails',
+  fontTest: 'FontTest',
+  myInfo: 'MyInfo',
+  myInfoEdit: 'MyInfoEdit',
+  myInfoEmailAuth: 'MyInfoEmailAuth',
+  myInfoSettings: 'MyInfoSettings',
+  myInfoNotify: 'MyInfoNotify',
+  myInfoClauses: 'MyInfoClauses',
+  clauseDetail: 'ClauseDetail',
+  myInfoCloseMembership: 'MyInfoCloseMembership',
+  myInfoFaq: 'MyInfoFaq',
 } as const;
+
+import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
+import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+
+export const v_a0daa8 = () => {
+  const v_c65f5d = v_ada615<v_390fcc<RootStackParamList>>();
+
+  return {
+    navigate: v_c65f5d.navigate,
+    goBack: v_c65f5d.goBack,
+    reset: v_c65f5d.reset,
+    push: v_c65f5d.push,
+    pop: v_c65f5d.pop,
+    replace: v_c65f5d.replace,
+  };
+};
 

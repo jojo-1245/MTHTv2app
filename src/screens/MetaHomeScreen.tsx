@@ -1,7 +1,6 @@
 import v_a3453e from 'bapkr';
 import {
   v_03e392,
-  v_122070,
   v_472849,
   v_19b633,
   v_4623af,
@@ -9,12 +8,13 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import { v_f4e704, v_c92f00, v_729608 } from '../components';
+import { v_f4e704, v_c92f00, v_729608, v_570c34 } from '../components';
 import type { v_8ad91b } from '../navigation';
+import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import type { v_7369b0 } from '../components/BottomNavigationBar';
 
-type Props = v_432191<v_8ad91b, 'ListHome'>;
+type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
 const v_c1dbad = [
   {
@@ -35,16 +35,20 @@ const v_c1dbad = [
 ];
 
 const bottomNavItems: v_7369b0[] = [
-  { key: 'home', label: 'Home', icon: 'home', route: 'ListHome' },
-  { key: 'clone', label: '클론생성', icon: 'plus-circle', route: 'CloneRegister' },
-  { key: 'persona', label: '페르소나', icon: 'users' },
-  { key: 'profile', label: '프로필', icon: 'user' },
+  { key: 'home', label: 'MetaHint AI', icon: 'home', route: 'MetaHome' },
+  { key: 'shop', label: 'Shop', icon: 'shopping-cart' },
+  { key: 'wallet', label: 'Wallet', icon: 'credit-card', route: 'Wallet' },
+  { key: 'profile', label: '프로필', icon: 'user', route: 'MyInfo' },
 ];
 
-const ListHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const MetaHomeScreen: v_a3453e.FC<Props> = () => {
+  const { navigate: v_9b57fc } = v_a0daa8();
+
   const v_116756 = (item: v_7369b0) => {
     if (v_8c0b26.route) {
-      v_c65f5d.navigate(v_8c0b26.route as keyof v_8ad91b);
+
+      const v_c7daf6 = v_8c0b26.route as keyof v_8ad91b;
+      v_9b57fc(v_c7daf6 as any);
       return;
     }
 
@@ -68,35 +72,27 @@ const ListHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   return (
     <View style={v_d81136.screen}>
-      <Header
-        title="List"
-        subtitle='"The one you miss is waiting for you."'
-        rightAccessory={v_a48659}
+      <Header 
+        title="MetaHint" 
       />
 
-      <ScrollView
+      <SafeScrollView
         contentContainerStyle={v_d81136.scrollContent}
         showsVerticalScrollIndicator={false}
+        showBottomBackground={false}
       >
         <View style={v_d81136.container}>
-          {v_c1dbad.map(v_707995 => (
-            <ContactListItem
-              key={v_707995.id}
-              name={v_707995.name}
-              relation={v_707995.relation}
-              avatarSource={v_707995.avatar}
-              placeholderColor={v_707995.placeholderColor}
-              onPressVideo={() => v_707cb3(v_707995.name)}
-            />
-          ))}
-        </View>
-      </ScrollView>
+          <View style={v_d81136.walletSection}>
+            <Text style={v_d81136.sectionTitle}>지갑</Text>
+            <View style={v_d81136.linkContainer}>
+              <TouchableOpacity onPress={() => v_9b57fc('Wallet')} activeOpacity={0.7}>
+                <Text style={v_d81136.linkText}>내 지갑</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-      <View style={v_d81136.adWrapper}>
-        <View style={v_d81136.adBanner}>
-          <Text style={v_d81136.adText}>광고영역</Text>
         </View>
-      </View>
+      </SafeScrollView>
 
       <BottomNavigationBar
         items={v_fce460}
@@ -122,6 +118,34 @@ const v_d81136 = v_472849.create({
     maxWidth: 780,
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.large,
+    gap: v_9b1a04.large,
+  },
+  walletSection: {
+    width: '100%',
+    gap: v_9b1a04.medium,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+    marginBottom: v_9b1a04.small,
+  },
+  linkContainer: {
+    gap: v_9b1a04.small,
+  },
+  linkText: {
+    fontSize: 16,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.primary,
+    textDecorationLine: 'underline',
+    paddingVertical: v_9b1a04.small,
+  },
+  historySection: {
+    width: '100%',
+    gap: v_9b1a04.medium,
+  },
+  testSection: {
+    width: '100%',
     gap: v_9b1a04.medium,
   },
   headerActions: {
@@ -162,5 +186,5 @@ const v_d81136 = v_472849.create({
   },
 });
 
-export default v_d49470;
+export default v_7aeeb0;
 

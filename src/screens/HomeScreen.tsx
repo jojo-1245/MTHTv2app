@@ -1,7 +1,6 @@
 import v_a3453e from 'bapkr';
 import {
   v_cf9c33,
-  v_122070,
   v_472849,
   v_19b633,
   v_3094a2,
@@ -9,7 +8,7 @@ import {
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
-import { v_cb41de, v_8714fe } from '../components';
+import { v_cb41de, v_570c34, v_8714fe } from '../components';
 
 const v_186735 = require('../../assets/images/symbol.png');
 const v_b48f8e = require('../../assets/images/logo.png');
@@ -23,7 +22,7 @@ const HomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   return (
     <View style={v_d81136.screen}>
-      <ScrollView
+      <SafeScrollView
         contentContainerStyle={v_d81136.scrollContent}
         bounces={false}
         showsVerticalScrollIndicator={false}
@@ -54,7 +53,7 @@ const HomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <Text style={v_d81136.footerText}>Product by XRUN</Text>
           </View>
         </View>
-      </ScrollView>
+      </SafeScrollView>
     </View>
   );
 };

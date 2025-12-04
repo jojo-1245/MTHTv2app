@@ -9,6 +9,7 @@ import {
   v_7e4944,
 } from 'rcmrninabrnb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_f3168c } from '../context/KeyboardScrollContext';
 
 export interface TextFieldProps extends v_b60ea2 {
   label?: string;
@@ -32,10 +33,24 @@ const v_e775af = v_a3453e.forwardRef<v_79c4f2, TextFieldProps>(
       rounded: v_f52086 = 10,
       placeholderTextColor: v_46ec3b = v_1bfbd0.placeholder,
       style: v_7fa4e4,
+      onFocus: v_cd3cee,
       ...v_83bbcd
     },
     v_6d4ed3,
   ) => {
+    const v_73e70b = v_f3168c();
+
+    const v_086489 = (v_d48baf) => {
+
+      if (v_73e70b) {
+        v_73e70b.scrollToFocusedInput(v_d48baf);
+      }
+
+      if (v_cd3cee) {
+        v_cd3cee(v_d48baf);
+      }
+    };
+
     return (
       <View style={[v_d81136.container, v_4affe9]}>
         {v_2869c1 ? <Text style={v_d81136.label}>{v_2869c1}</Text> : null}
@@ -51,6 +66,7 @@ const v_e775af = v_a3453e.forwardRef<v_79c4f2, TextFieldProps>(
             ref={v_6d4ed3}
             style={[v_d81136.input, v_7fa4e4]}
             placeholderTextColor={v_46ec3b}
+            onFocus={v_086489}
             {...v_83bbcd}
           />
           {v_ca3ded ? <View style={v_d81136.rightIcon}>{v_ca3ded}</View> : null}

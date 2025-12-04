@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AfterLife",
-    "slug": "afterlife",
+    "name": "MetaHint",
+    "slug": "metahint",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -15,13 +15,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.afterlife.app"
+      "bundleIdentifier": "service-mh.example.invalid"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "package": "com.afterlife.app"
+      "package": "service-mh.example.invalid"
     },
     "web": {
       "bundler": "metro"
