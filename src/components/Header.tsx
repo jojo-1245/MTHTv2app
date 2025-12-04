@@ -17,6 +17,8 @@ export interface HeaderProps {
   subtitle?: string | v_a3453e.ReactNode;
   onBackPress?: () => void;
   showBackButton?: boolean;
+  onClosePress?: () => void;
+  showCloseButton?: boolean;
   leftAccessory?: v_a3453e.ReactNode;
   rightAccessory?: v_a3453e.ReactNode;
   bottomContent?: v_a3453e.ReactNode;
@@ -33,6 +35,8 @@ const Header: v_a3453e.FC<HeaderProps> = ({
   subtitle: v_dda473,
   onBackPress: v_f442f6,
   showBackButton: v_9c4d53,
+  onClosePress: v_a80b4a,
+  showCloseButton: v_45f781,
   leftAccessory: v_bea0eb,
   rightAccessory: v_de8f73,
   bottomContent: v_b13a55,
@@ -43,6 +47,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
   subtitleStyle: v_7e5e48,
 }) => {
   const v_e2510f = v_9c4d53 ?? Boolean(v_f442f6);
+  const v_16994b = v_45f781 ?? false;
 
   const v_8b8176 = v_a3453e.useMemo(() => {
     if (v_bea0eb) {
@@ -50,10 +55,10 @@ const Header: v_a3453e.FC<HeaderProps> = ({
     }
 
     if (!v_e2510f) {
-      return null;
+      return <View style={v_d81136.placeholder} />;
     }
 
-    return (
+    return ( 
       <TouchableOpacity
         onPress={v_f442f6}
         style={v_d81136.backButton}
@@ -61,59 +66,76 @@ const Header: v_a3453e.FC<HeaderProps> = ({
         accessibilityRole="button"
         accessibilityLabel="뒤로가기"
       >
-        <Feather name="arrow-left" size={20} color={v_1bfbd0.headerText} />
+        <Feather name="arrow-left" size={20} color={v_1bfbd0.primary} />
       </TouchableOpacity>
     );
   }, [v_bea0eb, v_f442f6, v_e2510f]);
 
-  const v_4a827d = Boolean(v_8b8176) || Boolean(v_de8f73);
+  const v_c7e6a0 = v_a3453e.useMemo(() => {
+    if (v_de8f73) {
+      return v_de8f73;
+    }
+
+    if (!v_16994b) {
+      return <View style={v_d81136.placeholder} />;
+    }
+
+    return (
+      <TouchableOpacity
+        onPress={v_a80b4a}
+        style={v_d81136.closeButton}
+        activeOpacity={0.85}
+        accessibilityRole="button"
+        accessibilityLabel="닫기"
+      >
+        <Feather name="x" size={20} color={v_1bfbd0.secondaryText} />
+      </TouchableOpacity>
+    );
+  }, [v_de8f73, v_a80b4a, v_16994b]);
 
   return (
     <View style={[v_d81136.container, v_4affe9]}>
-      {v_4a827d ? (
-        <View style={v_d81136.topRow}>
-          <View style={v_d81136.leftWrapper}>{v_8b8176}</View>
-          {v_de8f73 ? (
-            <View style={v_d81136.rightWrapper}>{v_de8f73}</View>
-          ) : (
-            <View style={v_d81136.rightPlaceholder} />
-          )}
-        </View>
-      ) : null}
-
-      <View style={[v_d81136.textWrapper, v_c8eabd]}>
-        {v_6a56e9 ? (
+      <View style={v_d81136.topRow}>
+        <View style={v_d81136.leftWrapper}>{v_8b8176}</View>
+        <View style={v_d81136.centerWrapper}>
           <Text
-            style={[v_d81136.eyebrow, v_faa4b0]}
+            style={[v_d81136.title, v_672cf3]}
             numberOfLines={1}
-            accessibilityRole="text"
+            accessibilityRole="header"
           >
-            {v_6a56e9}
+            {v_9f1622}
           </Text>
-        ) : null}
+        </View>
+        <View style={v_d81136.rightWrapper}>{v_c7e6a0}</View>
+      </View>
 
-        <Text
-          style={[v_d81136.title, v_672cf3]}
-          numberOfLines={2}
-          accessibilityRole="header"
-        >
-          {v_9f1622}
-        </Text>
-
-        {v_dda473 ? (
-          typeof v_dda473 === 'string' ? (
+      {(v_6a56e9 || v_dda473) && (
+        <View style={[v_d81136.textWrapper, v_c8eabd]}>
+          {v_6a56e9 ? (
             <Text
-              style={[v_d81136.subtitle, v_7e5e48]}
-              numberOfLines={3}
+              style={[v_d81136.eyebrow, v_faa4b0]}
+              numberOfLines={1}
               accessibilityRole="text"
             >
-              {v_dda473}
+              {v_6a56e9}
             </Text>
-          ) : (
-            <View style={v_d81136.subtitleNode}>{v_dda473}</View>
-          )
-        ) : null}
-      </View>
+          ) : null}
+
+          {v_dda473 ? (
+            typeof v_dda473 === 'string' ? (
+              <Text
+                style={[v_d81136.subtitle, v_7e5e48]}
+                numberOfLines={3}
+                accessibilityRole="text"
+              >
+                {v_dda473}
+              </Text>
+            ) : (
+              <View style={v_d81136.subtitleNode}>{v_dda473}</View>
+            )
+          ) : null}
+        </View>
+      )}
 
       {v_b13a55 ? (
         <View style={v_d81136.bottomContent}>{v_b13a55}</View>
@@ -126,7 +148,8 @@ const v_d81136 = v_472849.create({
   container: {
     backgroundColor: v_1bfbd0.background,
     paddingHorizontal: v_9b1a04.large,
-    paddingVertical: v_9b1a04.large,
+    paddingTop: 50,
+    paddingBottom: v_9b1a04.medium,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.08,
@@ -138,29 +161,45 @@ const v_d81136 = v_472849.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: v_9b1a04.large,
+    minHeight: 48,
   },
   leftWrapper: {
-    flexDirection: 'row',
+    width: 48,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  centerWrapper: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: v_9b1a04.medium,
   },
   rightWrapper: {
-    marginLeft: v_9b1a04.medium,
+    width: 48,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
-  rightPlaceholder: {
-    width: 1,
-    height: 1,
+  placeholder: {
+    width: 48,
+    height: 48,
   },
   backButton: {
     width: 48,
     height: 48,
-    borderRadius: 0,
-    backgroundColor: v_1bfbd0.headerIconBg,
+    borderRadius: 8,
+    backgroundColor: v_1bfbd0.backgroundSecondary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+  },
+  closeButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textWrapper: {
+    marginTop: v_9b1a04.medium,
     gap: v_9b1a04.small,
   },
   eyebrow: {
@@ -171,10 +210,11 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.medium,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: v_1bfbd0.headerText,
-    fontFamily: v_843035.extrabold,
+    fontFamily: v_843035.bold,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,

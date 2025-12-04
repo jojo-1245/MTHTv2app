@@ -4,11 +4,12 @@ export const v_1bfbd0 = {
   primary: '#343a5a',
   secondary: '#ffdc04',
   background: '#ffffff',
+  backgroundSecondary: '#F8FAFC',
   text: '#10192d',
   error: '#ff0000',
   success: '#00ff00',
-  buttonPrimary: '#000000',
-  buttonSecondary: '#ffdc04',
+  buttonPrimary: '#3A3C79',
+  buttonSecondary: '#5e62ac',
   headerText: '#10192d',
   headerIconBg: '#F8FAFC',
   border: '#d8dadc',
@@ -21,12 +22,34 @@ export const v_1bfbd0 = {
   toggleTrackOn: '#000000',
 };
 
+import { v_326be8 } from 'rcmrninabrnb';
+
 export const v_843035 = {
-  regular: 'PretendardGOV-Regular',
-  medium: 'PretendardGOV-Medium',
-  semibold: 'PretendardGOV-SemiBold',
-  bold: 'PretendardGOV-Bold',
-  extrabold: 'PretendardGOV-ExtraBold',
+  regular: v_326be8.select({
+    android: 'PretendardGOV-Regular',
+    ios: 'PretendardGOV-Regular',
+    default: 'PretendardGOV-Regular',
+  }) as string,
+  medium: v_326be8.select({
+    android: 'PretendardGOV-Medium',
+    ios: 'PretendardGOV-Medium',
+    default: 'PretendardGOV-Medium',
+  }) as string,
+  semibold: v_326be8.select({
+    android: 'PretendardGOV-SemiBold',
+    ios: 'PretendardGOV-SemiBold',
+    default: 'PretendardGOV-SemiBold',
+  }) as string,
+  bold: v_326be8.select({
+    android: 'PretendardGOV-Bold',
+    ios: 'PretendardGOV-Bold',
+    default: 'PretendardGOV-Bold',
+  }) as string,
+  extrabold: v_326be8.select({
+    android: 'PretendardGOV-ExtraBold',
+    ios: 'PretendardGOV-ExtraBold',
+    default: 'PretendardGOV-ExtraBold',
+  }) as string,
 } as const;
 
 export const v_9b1a04 = {
@@ -46,10 +69,10 @@ export const v_a61db3 = {
 };
 
 export const v_624bd2 = {
-  authToken: 'afterlife/authToken',
-  memberInfo: 'afterlife/member',
-  isLoggedIn: 'afterlife/isLoggedIn',
-  savedEmail: 'afterlife/savedEmail',
+  authToken: 'metahint/authToken',
+  memberInfo: 'metahint/member',
+  isLoggedIn: 'metahint/isLoggedIn',
+  savedEmail: 'metahint/savedEmail',
 } as const;
 
 export { COUNTRY_DIAL_CODES } from './countryDialCodes';
@@ -61,4 +84,6 @@ export {
   getIso2ByRegionId,
   getRegionNameById,
 } from './regions';
+
+export { getTokenIcon } from './tokenMeta';
 

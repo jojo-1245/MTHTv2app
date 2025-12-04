@@ -32,6 +32,9 @@ interface AppContextValue {
   signupFormData: SignupFormData;
   updateSignupFormData: (data: Partial<SignupFormData>) => void;
   resetSignupFormData: () => void;
+  walletSendAddress: string;
+  setWalletSendAddress: (address: string) => void;
+  openAddTokenDialog: () => void;
 }
 
 const v_d7c38a =
@@ -54,6 +57,12 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
     countryIso2: v_d7c38a.iso2,
     regionIso2: v_2a5c62.iso2,
   });
+  const [v_ee27aa, v_134f07] = v_5ab095<string>('');
+
+  const v_dd6143 = v_de06a3(() => {
+
+    console.log('Add token dialog');
+  }, []);
 
   const v_f693e7 = v_de06a3((country: v_da1883) => {
     v_e10000(v_b9bbbd);
@@ -104,16 +113,21 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
       signupFormData: v_8d7bc8,
       updateSignupFormData: v_a776b5,
       resetSignupFormData: v_4df356,
+      walletSendAddress: v_ee27aa,
+      setWalletSendAddress: v_134f07,
+      openAddTokenDialog: v_dd6143,
     }),
     [
       v_459d5e,
       v_2f03bc,
       v_479a37,
       v_8d7bc8,
+      v_ee27aa,
       v_f693e7,
       v_2f2d51,
       v_a776b5,
       v_4df356,
+      v_dd6143,
     ],
   );
 
@@ -127,5 +141,4 @@ export const v_700ef9 = (): AppContextValue => {
   }
   return v_e3aeb3;
 };
-
 

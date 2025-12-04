@@ -3,7 +3,6 @@ import {
   v_39a996,
   v_e767d1,
   v_326be8,
-  v_122070,
   v_472849,
   v_19b633,
   v_4623af,
@@ -21,6 +20,7 @@ import {
   v_e2ca42,
   v_cb41de,
   v_89c10a,
+  v_570c34,
   v_d56c0a,
   v_e775af,
 } from '../components';
@@ -230,17 +230,13 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   return (
     <>
-      <KeyboardAvoidingView
-        style={v_d81136.flex}
-        behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={v_326be8.OS === 'ios' ? 0 : 24}
-      >
         <View style={v_d81136.screen}>
           <Header title="Sign up" showBackButton onBackPress={() => v_c65f5d.goBack()} />
-          <ScrollView
+          <SafeScrollView
             contentContainerStyle={v_d81136.content}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
+            autoAdjustKeyboardPadding={true}
           >
             <View style={v_d81136.form}>
               <TextField
@@ -371,9 +367,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
+          </SafeScrollView>
         </View>
-      </KeyboardAvoidingView>
 
       <AlertModal
         visible={v_153a89.visible}
@@ -415,7 +410,6 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
   screen: {
     flex: 1,
     backgroundColor: v_1bfbd0.background,
-    paddingBottom: 40,
   },
   content: {
     flexGrow: 1,

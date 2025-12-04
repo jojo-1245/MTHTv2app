@@ -1,18 +1,19 @@
 import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
-import { v_19b633, v_79c4f2 } from 'rcmrninabrnb';
+import { v_19b633, v_79c4f2, v_326be8 } from 'rcmrninabrnb';
 import * as v_7c6176 from 'cnykflwqacloajvnqn';
 import { v_c06f2c } from 'kjiqsgell';
+import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a } from './src/utils/env';
 import { v_4b64f4 } from './src/context';
 
 const v_20ccc6 = {
-  [v_843035.regular]: require('./assets/fonts/PretendardGOV-Regular.otf'),
-  [v_843035.medium]: require('./assets/fonts/PretendardGOV-Medium.otf'),
-  [v_843035.semibold]: require('./assets/fonts/PretendardGOV-SemiBold.otf'),
-  [v_843035.bold]: require('./assets/fonts/PretendardGOV-Bold.otf'),
-  [v_843035.extrabold]: require('./assets/fonts/PretendardGOV-ExtraBold.otf'),
+  'PretendardGOV-Regular': require('./assets/fonts/PretendardGOV-Regular.otf'),
+  'PretendardGOV-Medium': require('./assets/fonts/PretendardGOV-Medium.otf'),
+  'PretendardGOV-SemiBold': require('./assets/fonts/PretendardGOV-SemiBold.otf'),
+  'PretendardGOV-Bold': require('./assets/fonts/PretendardGOV-Bold.otf'),
+  'PretendardGOV-ExtraBold': require('./assets/fonts/PretendardGOV-ExtraBold.otf'),
 };
 
 let v_e0cae9 = false;
@@ -61,6 +62,20 @@ export default function v_6540c3() {
   v_c4deb2(() => {
     if (v_43f571) {
       v_83baa4();
+      console.log('[FONTS] 폰트 로드 완료');
+      console.log('[FONTS] FONTS 상수:', v_843035);
+      console.log('[FONTS] FONT_ASSETS 키:', Object.keys(v_20ccc6));
+      console.log('[FONTS] Platform:', v_326be8.OS);
+      console.log('[FONTS] 사용할 폰트 이름들:');
+      console.log('  - Regular:', v_843035.regular);
+      console.log('  - Medium:', v_843035.medium);
+      console.log('  - SemiBold:', v_843035.semibold);
+      console.log('  - Bold:', v_843035.bold);
+      console.log('  - ExtraBold:', v_843035.extrabold);
+    }
+
+    if (v_d39d7d) {
+      console.error('[FONTS] 폰트 로드 오류:', v_d39d7d);
     }
 
     if (v_43f571 || v_d39d7d) {
@@ -73,9 +88,13 @@ export default function v_6540c3() {
   }
 
   return (
-    <AppProvider>
-      <AppNavigator />
-    </AppProvider>
+    <SafeAreaProvider
+      initialMetrics={v_326be8.OS === 'android' ? v_a39049 : undefined}
+    >
+      <AppProvider>
+        <AppNavigator />
+      </AppProvider>
+    </SafeAreaProvider>
   );
 }
 

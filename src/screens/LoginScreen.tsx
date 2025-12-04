@@ -2,9 +2,9 @@ import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
   v_cf9c33,
+  v_0e1f26,
   v_e767d1,
   v_326be8,
-  v_122070,
   v_472849,
   v_19b633,
   v_4623af,
@@ -15,9 +15,11 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04, v_624bd2 } from '../constants';
 import {
   v_8e2768,
+  v_fa3feb,
   v_729608,
   v_e2ca42,
   v_cb41de,
+  v_570c34,
   v_e775af,
 } from '../components';
 import type { v_8ad91b } from '../navigation';
@@ -31,7 +33,9 @@ type Props = v_432191<v_8ad91b, 'Login'>;
 const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
+  const [v_2129ec, v_874dfe] = v_5ab095(true);
   const [v_cd31a8, v_deef62] = v_5ab095(false);
+  const [v_ac3ab7, v_028502] = v_5ab095(false);
   const [v_153a89, v_879b56] = v_5ab095({
     visible: false,
     title: '',
@@ -51,6 +55,22 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     };
 
     v_219084();
+  }, []);
+
+  v_c4deb2(() => {
+    const v_b55c88 = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => v_028502(true),
+    );
+    const v_88ec6a = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => v_028502(false),
+    );
+
+    return () => {
+      v_b55c88.remove();
+      v_88ec6a.remove();
+    };
   }, []);
 
   const v_1d0f03 = (v_3b402b) => {
@@ -107,9 +127,13 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
       await v_d41982(v_bd4b7d);
 
+      if (!v_2129ec) {
+        await v_e84827.removeItem(v_624bd2.isLoggedIn);
+      }
+
       v_c65f5d.reset({
         index: 0,
-        routes: [{ name: 'ListHome' }],
+        routes: [{ name: 'MetaHome' }],
       });
     } catch (v_5e9bfe) {
       const v_4b5200 = '로그인 중 알 수 없는 오류가 발생했습니다.';
@@ -130,71 +154,71 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   return (
     <>
-      <KeyboardAvoidingView
-        style={v_d81136.flex}
-        behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={v_326be8.OS === 'ios' ? 0 : 24}
-      >
-        <View style={v_d81136.screen}>
-          <Header
-            showBackButton
-            title=""
-            onBackPress={v_6ca26b}
-            containerStyle={v_d81136.flatHeader}
-          />
-          <ScrollView
-            contentContainerStyle={v_d81136.content}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-          >
-            <View style={v_d81136.inner}>
-              <View style={v_d81136.logoSection}>
-                <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
-                <Image source={v_b48f8e} style={v_d81136.logo} resizeMode="contain" />
-              </View>
+      <View style={v_d81136.screen}>
+        <Header
+          showBackButton
+          title=""
+          onBackPress={v_6ca26b}
+          containerStyle={v_d81136.flatHeader}
+        />
+        <SafeScrollView
+          contentContainerStyle={v_d81136.content}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          autoAdjustKeyboardPadding={true}
+        >
+          <View style={v_d81136.inner}>
+            <View style={v_d81136.logoSection}>
+              <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
+              <Image source={v_b48f8e} style={v_d81136.logo} resizeMode="contain" />
+            </View>
 
-              <View style={v_d81136.form}>
-                <TextField
-                  label="Email address"
-                  placeholder="Your email"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={v_e0c7e8}
-                  onChangeText={v_fedf34}
-                  editable={!v_cd31a8}
+            <View style={v_d81136.form}>
+              <TextField
+                label="Email address"
+                placeholder="Your email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={v_e0c7e8}
+                onChangeText={v_fedf34}
+                editable={!v_cd31a8}
+              />
+              <PasswordField
+                label="Password"
+                placeholder="Password"
+                value={v_adc076}
+                onChangeText={v_52b279}
+                editable={!v_cd31a8}
+              />
+              <FormCheckbox
+                label="로그인 상태 유지"
+                value={v_2129ec}
+                onChange={v_874dfe}
+              />
+              <TouchableOpacity
+                style={v_d81136.linkButton}
+                onPress={() => v_c65f5d.navigate('ForgotPassword')}
+              >
+                <Text style={v_d81136.linkText}>Forgot password?</Text>
+              </TouchableOpacity>
+              <View style={v_d81136.buttonWrapper}>
+                <PrimaryButton
+                  title={v_cd31a8 ? '로그인 중...' : '로그인'}
+                  onPress={v_ec4736}
+                  disabled={v_cd31a8}
                 />
-                <PasswordField
-                  label="Password"
-                  placeholder="Password"
-                  value={v_adc076}
-                  onChangeText={v_52b279}
-                  editable={!v_cd31a8}
-                />
-                <TouchableOpacity
-                  style={v_d81136.linkButton}
-                  onPress={() => v_c65f5d.navigate('ForgotPassword')}
-                >
-                  <Text style={v_d81136.linkText}>Forgot password?</Text>
-                </TouchableOpacity>
-                <View style={v_d81136.buttonWrapper}>
-                  <PrimaryButton
-                    title={v_cd31a8 ? '로그인 중...' : '로그인'}
-                    onPress={v_ec4736}
-                    disabled={v_cd31a8}
+                {v_cd31a8 && (
+                  <ActivityIndicator
+                    size="small"
+                    color={v_1bfbd0.buttonPrimary}
+                    style={v_d81136.loadingIndicator}
                   />
-                  {v_cd31a8 && (
-                    <ActivityIndicator
-                      size="small"
-                      color={v_1bfbd0.buttonPrimary}
-                      style={v_d81136.loadingIndicator}
-                    />
-                  )}
-                </View>
+                )}
               </View>
             </View>
-          </ScrollView>
-        </View>
-      </KeyboardAvoidingView>
+          </View>
+        </SafeScrollView>
+      </View>
 
       <AlertModal
         visible={v_153a89.visible}

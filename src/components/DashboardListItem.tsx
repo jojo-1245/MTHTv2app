@@ -95,7 +95,7 @@ const DashboardListItem: v_a3453e.FC<DashboardListItemProps> = ({
         </View>
       </View>
 
-      <Feather name="chevron-right" size={20} color={v_1bfbd0.secondaryText} />
+      <Feather name="chevron-right" size={20} color={v_1bfbd0.secondaryText} style={v_d81136.chevron} />
     </TouchableOpacity>
   );
 };
@@ -155,6 +155,9 @@ const v_d81136 = v_472849.create({
     fontSize: 12,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.secondaryText,
+  },
+  chevron: {
+    alignSelf: 'center',
   },
 });
 
