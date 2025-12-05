@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_e662ae, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_df9f57, v_e662ae, v_5ab095 } from 'bapkr';
 import { v_09d0e5, v_472849, v_19b633, v_79c4f2, v_3094a2 } from 'rcmrninabrnb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
@@ -7,6 +7,7 @@ interface OtpInputProps {
   value?: string;
   onChange?: (code: string) => void;
   showError?: boolean;
+  editable?: boolean;
 }
 
 const OtpInput: v_a3453e.FC<OtpInputProps> = ({
@@ -14,9 +15,14 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   value: v_3b402b = '',
   onChange: v_b187d9,
   showError: v_f74c59,
+  editable: v_87d063 = true,
 }) => {
   const [v_1036a8, v_c17726] = v_5ab095(v_3b402b);
   const v_32f473 = v_e662ae<v_79c4f2>(null);
+
+  v_c4deb2(() => {
+    v_c17726(v_3b402b);
+  }, [v_3b402b]);
 
   const v_e6d4a6 = v_df9f57(() => {
     const v_8b8b16 = v_1036a8.padEnd(v_724489, ' ');
@@ -66,12 +72,13 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
         inputMode="numeric"
         maxLength={v_724489}
         style={v_d81136.hiddenInput}
-        autoFocus
-        showSoftInputOnFocus
+        autoFocus={v_87d063}
+        showSoftInputOnFocus={v_87d063}
+        editable={v_87d063}
         caretHidden
-        autoComplete="off"
-        autoCorrect={false}
-        importantForAutofill="no"
+        autoComplete="sms-otp"
+        textContentType="oneTimeCode"
+        importantForAutofill="yes"
         keyboardAppearance="default"
         blurOnSubmit={false}
       />

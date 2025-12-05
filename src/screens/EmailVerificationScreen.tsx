@@ -28,14 +28,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
     <>
       <VerificationCodeTemplate
         title="Enter Verification Code"
-        subtitle={
-          <Text>
-            Enter 4-digit code we just sent to{' '}
-            <Text style={{ fontFamily: v_843035.semibold, color: v_1bfbd0.text }}>
-              {v_e0c7e8 || 'your email'}
-            </Text>
-          </Text>
-        }
+        subtitle={null}
         onBack={() => v_c65f5d.goBack()}
         onVerify={v_83b05b}
         codeLength={6}
