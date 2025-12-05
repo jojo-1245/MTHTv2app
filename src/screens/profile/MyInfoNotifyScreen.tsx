@@ -151,7 +151,6 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     v_10837f(true);
     v_d16a0d.current = true;
 
-    v_03e392.alert('전송 완료', '메시지가 전송되었습니다.');
     v_8f2787('');
 
     const v_54d6ff = {
@@ -360,6 +359,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           <SafeScrollView
             ref={v_e99f51}
             style={v_d81136.list}
+            backgroundColor={'#f2f2f7'}
             contentContainerStyle={v_d81136.listContent}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
