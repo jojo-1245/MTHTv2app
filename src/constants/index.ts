@@ -5,6 +5,8 @@ export const v_1bfbd0 = {
   secondary: '#ffdc04',
   background: '#ffffff',
   backgroundSecondary: '#F8FAFC',
+  lightBlue: '#F5F9FF',
+  blurBlue: '#E6F0FF',
   text: '#10192d',
   error: '#ff0000',
   success: '#00ff00',
