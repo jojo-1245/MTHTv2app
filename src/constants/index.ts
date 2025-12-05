@@ -25,31 +25,16 @@ export const v_1bfbd0 = {
 import { v_326be8 } from 'rcmrninabrnb';
 
 export const v_843035 = {
-  regular: v_326be8.select({
-    android: 'PretendardGOV-Regular',
-    ios: 'PretendardGOV-Regular',
-    default: 'PretendardGOV-Regular',
-  }) as string,
-  medium: v_326be8.select({
-    android: 'PretendardGOV-Medium',
-    ios: 'PretendardGOV-Medium',
-    default: 'PretendardGOV-Medium',
-  }) as string,
-  semibold: v_326be8.select({
-    android: 'PretendardGOV-SemiBold',
-    ios: 'PretendardGOV-SemiBold',
-    default: 'PretendardGOV-SemiBold',
-  }) as string,
-  bold: v_326be8.select({
-    android: 'PretendardGOV-Bold',
-    ios: 'PretendardGOV-Bold',
-    default: 'PretendardGOV-Bold',
-  }) as string,
-  extrabold: v_326be8.select({
-    android: 'PretendardGOV-ExtraBold',
-    ios: 'PretendardGOV-ExtraBold',
-    default: 'PretendardGOV-ExtraBold',
-  }) as string,
+  regular: 'Pretendard-Regular',
+  medium: 'Pretendard-Medium',
+  semibold: 'Pretendard-SemiBold',
+  bold: 'Pretendard-Bold',
+  extrabold: 'Pretendard-ExtraBold',
+} as const;
+
+export const v_228d55 = {
+  bold: { fontFamily: v_843035.bold, letterSpacing: -0.5 },
+  extrabold: { fontFamily: v_843035.extrabold, letterSpacing: -0.5 },
 } as const;
 
 export const v_9b1a04 = {

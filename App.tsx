@@ -9,11 +9,11 @@ import { v_a2474a } from './src/utils/env';
 import { v_4b64f4 } from './src/context';
 
 const v_20ccc6 = {
-  'PretendardGOV-Regular': require('./assets/fonts/PretendardGOV-Regular.otf'),
-  'PretendardGOV-Medium': require('./assets/fonts/PretendardGOV-Medium.otf'),
-  'PretendardGOV-SemiBold': require('./assets/fonts/PretendardGOV-SemiBold.otf'),
-  'PretendardGOV-Bold': require('./assets/fonts/PretendardGOV-Bold.otf'),
-  'PretendardGOV-ExtraBold': require('./assets/fonts/PretendardGOV-ExtraBold.otf'),
+  'Pretendard-Regular': require('./assets/fonts/Pretendard-Regular.otf'),
+  'Pretendard-Medium': require('./assets/fonts/Pretendard-Medium.otf'),
+  'Pretendard-SemiBold': require('./assets/fonts/Pretendard-SemiBold.otf'),
+  'Pretendard-Bold': require('./assets/fonts/Pretendard-Bold.otf'),
+  'Pretendard-ExtraBold': require('./assets/fonts/Pretendard-ExtraBold.otf'),
 };
 
 let v_e0cae9 = false;
@@ -34,7 +34,10 @@ const v_83baa4 = () => {
     }
 
     v_b0de9c.defaultProps.style = [
-      { fontFamily: v_843035.regular },
+      {
+        fontFamily: 'Pretendard-Regular',
+        fontSize: 16,
+      },
       v_b0de9c.defaultProps.style,
     ];
   });
@@ -62,16 +65,7 @@ export default function v_6540c3() {
   v_c4deb2(() => {
     if (v_43f571) {
       v_83baa4();
-      console.log('[FONTS] 폰트 로드 완료');
-      console.log('[FONTS] FONTS 상수:', v_843035);
-      console.log('[FONTS] FONT_ASSETS 키:', Object.keys(v_20ccc6));
-      console.log('[FONTS] Platform:', v_326be8.OS);
-      console.log('[FONTS] 사용할 폰트 이름들:');
-      console.log('  - Regular:', v_843035.regular);
-      console.log('  - Medium:', v_843035.medium);
-      console.log('  - SemiBold:', v_843035.semibold);
-      console.log('  - Bold:', v_843035.bold);
-      console.log('  - ExtraBold:', v_843035.extrabold);
+      console.log('[FONTS] 폰트 로드 완료: Pretendard');
     }
 
     if (v_d39d7d) {
