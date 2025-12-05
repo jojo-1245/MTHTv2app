@@ -24,6 +24,11 @@ export const v_1bfbd0 = {
   toggleTrackOn: '#000000',
 };
 
+export const v_963c2c= {
+  background: '#ffffff',
+  bottomBackground: '#fafafa',
+}
+
 import { v_326be8 } from 'rcmrninabrnb';
 
 export const v_843035 = {
