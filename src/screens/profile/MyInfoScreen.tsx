@@ -75,13 +75,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         contentContainerStyle={v_d81136.content}
       >
         <View style={v_d81136.profileSection}>
-          <View style={v_d81136.avatarContainer}>
-            <Image
-              source={require('../../../assets/images/logo.png')}
-              style={v_d81136.avatar}
-              resizeMode="contain"
-            />
-          </View>
           <Text style={v_d81136.name}>User Name</Text>
           <Text style={v_d81136.email}>user@example.com</Text>
         </View>
@@ -119,19 +112,7 @@ const v_d81136 = v_472849.create({
     marginBottom: v_9b1a04.xlarge,
     paddingVertical: v_9b1a04.large,
   },
-  avatarContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: v_1bfbd0.backgroundSecondary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: v_9b1a04.medium,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-  },
+
   name: {
     fontSize: 20,
     fontFamily: v_843035.bold,

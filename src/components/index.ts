@@ -56,6 +56,7 @@ export { default as ExplorerBadge } from './ExplorerBadge';
 export type { ExplorerBadgeProps } from './ExplorerBadge';
 
 export { default as SafeScrollView } from './SafeScrollView';
+export { default as SafeView } from './SafeView';
 
 export { TokenListItem } from './wallet/TokenListItem';
 export type { TokenListItemProps } from './wallet/TokenListItem';

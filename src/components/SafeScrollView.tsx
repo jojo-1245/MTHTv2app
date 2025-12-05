@@ -2,7 +2,7 @@ import v_a3453e, { v_680bcc, v_5ab095, v_c4deb2, v_e662ae, v_298205 } from 'bapk
 import { v_122070, v_326be8, v_472849, v_72945f, v_7e4944, v_3094a2, v_0e1f26, v_efd272, v_bfa1d6 } from 'rcmrninabrnb';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
-import { v_1bfbd0 } from '../constants';
+import { v_1bfbd0, v_963c2c } from '../constants';
 import { v_3a14f9, v_f3168c } from '../context/KeyboardScrollContext';
 
 interface SafeScrollViewProps extends v_72945f {
@@ -16,6 +16,8 @@ interface SafeScrollViewProps extends v_72945f {
 
   bottomBackgroundColor?: string;
 
+  backgroundColor?: string;
+
   autoAdjustKeyboardPadding?: boolean;
 }
 
@@ -25,7 +27,8 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
   contentContainerStyle: v_9aecf5,
   additionalBottomPadding: v_86fc47 = 0,
   showBottomBackground: v_bb8530 = true,
-  bottomBackgroundColor: v_53b2af = "#fafafa",
+  bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground,
+  backgroundColor: v_f7b9fb = v_963c2c.background,
   autoAdjustKeyboardPadding: v_4d1023 = false,
   ...v_b1927c
 }, v_6d4ed3) => {
@@ -82,7 +85,7 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
   const v_cebf7c = v_acf836 + v_86fc47 + v_f41ebf;
 
   return (
-    <View style={v_d81136.wrapper}>
+    <View style={[v_d81136.wrapper, { backgroundColor: v_f7b9fb }]}>
       <ScrollView
         ref={v_90527e}
         style={[v_d81136.container, v_7fa4e4]}

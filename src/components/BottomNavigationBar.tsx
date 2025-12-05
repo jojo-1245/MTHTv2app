@@ -1,5 +1,6 @@
 import v_a3453e, { v_a7b0d7 } from 'bapkr';
 import {
+  v_326be8,
   v_961e77,
   v_472849,
   v_19b633,
@@ -9,6 +10,7 @@ import {
 } from 'rcmrninabrnb';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
+import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 export interface BottomNavigationItem {
@@ -32,10 +34,20 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
   containerStyle: v_4affe9,
 }) => {
   const v_033e14 = v_e0068c();
-  const v_830e65 = Math.max(v_033e14.bottom, v_9b1a04.medium);
+
+  const v_f9771e = v_c18c22(0);
+
+  const v_acf836 =
+    v_326be8.OS === 'ios'
+      ? v_033e14.bottom
+      : Math.max(v_f9771e, v_033e14.bottom);
+
+  const v_86fc47 = 0;
+  const v_f41ebf = 0;
+  const v_cebf7c = v_acf836 + v_86fc47 + v_f41ebf;
 
   return (
-    <View style={[v_d81136.wrapper, { paddingBottom: v_830e65 }, v_4affe9]}>
+    <View style={[v_d81136.wrapper, { paddingBottom: v_cebf7c }, v_4affe9]}>
       <View style={v_d81136.inner}>
         {v_4622b9.map(v_8c0b26 => {
           const v_26dce6 = v_8c0b26.key === v_1f1e84;
@@ -67,8 +79,6 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
 
 const v_d81136 = v_472849.create({
   wrapper: {
-    paddingHorizontal: v_9b1a04.large,
-    paddingTop: v_9b1a04.medium,
     backgroundColor: 'transparent',
   },
   inner: {
@@ -79,15 +89,10 @@ const v_d81136 = v_472849.create({
     maxWidth: 780,
     alignSelf: 'center',
     backgroundColor: v_1bfbd0.background,
-    borderRadius: 28,
     paddingVertical: v_9b1a04.small,
     paddingHorizontal: v_9b1a04.medium,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.12,
-    shadowRadius: 20,
-    elevation: 10,
-    marginBottom: 10,
+    borderTopWidth: 1,
+    borderTopColor: v_1bfbd0.border,
   },
   tab: {
     flex: 1,
@@ -106,5 +111,4 @@ const v_d81136 = v_472849.create({
 });
 
 export default v_f4e704;
-
 
