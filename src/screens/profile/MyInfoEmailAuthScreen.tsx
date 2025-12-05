@@ -69,7 +69,6 @@ const v_d81136 = v_472849.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: 'red',
   },
   content: {
     padding: v_9b1a04.large,

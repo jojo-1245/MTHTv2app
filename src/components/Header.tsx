@@ -58,7 +58,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
       return <View style={v_d81136.placeholder} />;
     }
 
-    return ( 
+    return (
       <TouchableOpacity
         onPress={v_f442f6}
         style={v_d81136.backButton}
