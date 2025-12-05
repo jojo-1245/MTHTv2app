@@ -21,7 +21,7 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     <View style={v_d81136.screen}>
       <Header
         title="Reset password"
-        subtitle="Please type something you'll remember"
+        subtitle=""
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
       />

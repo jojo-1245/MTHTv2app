@@ -8,6 +8,7 @@ import {
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
+import { v_a0daa8 } from '../navigation';
 import { v_cb41de, v_570c34, v_8714fe } from '../components';
 
 const v_186735 = require('../../assets/images/symbol.png');
@@ -15,9 +16,15 @@ const v_b48f8e = require('../../assets/images/logo.png');
 
 type Props = v_432191<v_8ad91b, 'Home'>;
 
-const HomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const HomeScreen: v_a3453e.FC<Props> = () => {
+  const { navigate: v_9b57fc } = v_a0daa8();
+
   const v_1aabbb = (screen: keyof v_8ad91b) => {
-    v_c65f5d.navigate(v_53746a);
+    v_9b57fc(v_53746a as any);
+  };
+
+  const v_3ffec5 = (v_4898e2) => {
+    v_9b57fc('ClauseDetail', { clauseType: v_4898e2 });
   };
 
   return (
@@ -46,8 +53,8 @@ const HomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               이 앱에서 제공하는 기능과 정보 이용 방식에 대해 알아보려면
             </Text>
             <Text style={[v_d81136.infoText, v_d81136.infoSpacing]}>
-              아래의 <Text style={v_d81136.linkText}>이용약관</Text> 과{' '}
-              <Text style={v_d81136.linkText}>개인정보 처리방침</Text>을 읽고 동의해주세요.
+              아래의 <Text style={v_d81136.linkText} onPress={() => v_3ffec5('terms')}>이용약관</Text> 과{' '}
+              <Text style={v_d81136.linkText} onPress={() => v_3ffec5('privacy')}>개인정보 처리방침</Text>을 읽고 동의해주세요.
             </Text>
 
             <Text style={v_d81136.footerText}>Product by XRUN</Text>

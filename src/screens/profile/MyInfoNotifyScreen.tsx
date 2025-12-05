@@ -242,7 +242,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           )}
           {v_dfa14b && (
             <Image
-              source={require('../../../assets/images/logo.png')}
+              source={require('../../../assets/images/thumb_event.png')}
               style={v_d81136.heroImage}
               resizeMode="cover"
             />

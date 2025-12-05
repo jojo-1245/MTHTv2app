@@ -11,14 +11,10 @@ const PasswordVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }
   return (
     <VerificationCodeTemplate
       title="Enter Verification Code"
-      subtitle={
-        <Text>
-          Enter 4-digit code we just sent to your{' '}
-          <Text style={{ fontFamily: v_843035.semibold, color: v_1bfbd0.text }}>Email</Text>
-        </Text>
-      }
+      subtitle=""
       onBack={() => v_c65f5d.goBack()}
       onVerify={() => v_c65f5d.navigate('ResetPassword')}
+      codeLength={6}
     />
   );
 };

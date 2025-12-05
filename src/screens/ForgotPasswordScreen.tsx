@@ -20,7 +20,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     <View style={v_d81136.screen}>
       <Header
         title="Forgot password?"
-        subtitle="Don’t worry! It happens. Please enter the email associated with your account."
+        subtitle=""
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
       />

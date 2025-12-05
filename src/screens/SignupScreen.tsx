@@ -397,6 +397,7 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: v_9b1a04.small,
+    paddingBottom: v_9b1a04.medium,
   },
   footerText: {
     fontSize: 13,
