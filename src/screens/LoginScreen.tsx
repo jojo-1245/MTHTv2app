@@ -102,55 +102,9 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_ec4736 = async () => {
-    const v_8f37ac = v_e0c7e8.trim().toLowerCase();
 
-    if (!v_8f37ac) {
-      v_889fad('입력 오류', '이메일을 입력해주세요.');
-      return;
-    }
-
-    if (!v_1d0f03(v_8f37ac)) {
-      v_889fad('입력 오류', '올바른 이메일 주소를 입력해주세요.');
-      return;
-    }
-
-    if (!v_adc076.trim()) {
-      v_889fad('입력 오류', '비밀번호를 입력해주세요.');
-      return;
-    }
-
-    v_deef62(true);
-    try {
-      const v_bd4b7d = await v_67ec53({
-        email: v_8f37ac,
-        pin: v_adc076,
-      });
-      await v_d41982(v_bd4b7d);
-
-      if (!v_2129ec) {
-        await v_e84827.removeItem(v_624bd2.isLoggedIn);
-      }
-
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'MetaHome' }],
-      });
-    } catch (v_5e9bfe) {
-      const v_4b5200 = '로그인 중 알 수 없는 오류가 발생했습니다.';
-      let v_d6bda5 = v_4b5200;
-      if (v_5e9bfe instanceof Error) {
-        const v_75195c = v_5e9bfe.message || '';
-        if (/invalid email or password/i.test(v_75195c)) {
-          v_d6bda5 = '등록된 이메일이 없거나 비밀번호가 올바르지 않습니다.';
-        } else {
-          v_d6bda5 = v_75195c;
-        }
-      }
-      v_889fad('로그인 실패', v_d6bda5);
-    } finally {
-      v_deef62(false);
-    }
-  };
+    v_c65f5d.navigate('MetaHome');
+  }
 
   return (
     <>
