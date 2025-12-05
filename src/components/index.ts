@@ -16,6 +16,7 @@ export type { HeaderProps } from './Header';
 export { default as FormCheckbox } from './FormCheckbox';
 
 export { default as OtpInput } from './OtpInput';
+export { default as CustomNumberPad } from './CustomNumberPad';
 
 export { default as OptionButton } from './OptionButton';
 

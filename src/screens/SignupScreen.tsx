@@ -145,7 +145,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_47ed2f = async () => {
 
-    v_c65f5d.navigate('Login');
+    v_c65f5d.navigate('EmailVerification', { email: v_e0c7e8 });
   }
 
   return (

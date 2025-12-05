@@ -125,7 +125,7 @@ const v_d81136 = v_472849.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: v_843035.semibold,
+    fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
   },
   description: {

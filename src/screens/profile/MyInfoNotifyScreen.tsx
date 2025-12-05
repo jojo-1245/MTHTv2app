@@ -95,7 +95,7 @@ const v_6f7f13 = [
   {
     board: 2,
     type: 9303, 
-    title: 'METAHINT EVENT',
+    title: '메타힌트 이벤트에 대해 궁금합니다. 이벤트 기간이 언제까지 되나요? ',
     contents: null,
     datetime: '2024-09-28T02:20:00',
     image: null,
@@ -220,9 +220,6 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
             >
               <Text style={v_d81136.replyText}>{v_b9faeb.title}</Text>
             </TouchableOpacity>
-            <View style={v_d81136.userAvatar}>
-              <Feather name="user" size={16} color={v_1bfbd0.background} />
-            </View>
           </View>
           <Text style={v_d81136.replyTimestamp}>{v_9f6fdd(v_b9faeb.datetime)}</Text>
         </View>
@@ -233,10 +230,13 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
     return (
       <View key={`notification-${v_b9faeb.board}-${v_a56041}`} style={v_d81136.messageWrapper}>
-        <Image
-          source={require('../../../assets/images/metahint-logo.png')}
-          style={v_d81136.avatar}
-        />
+        <View style={v_d81136.avatarWrapper}>
+          <Image
+            source={require('../../../assets/images/metahint-logo.png')}
+            style={v_d81136.avatar}
+          />
+          <Text style={v_d81136.avatarText}>METAHINT</Text>
+        </View>
         <View style={v_d81136.messageCard}>
           {v_ee89db && (
             <Image source={{ uri: v_ee89db }} style={v_d81136.heroImage} resizeMode="cover" />
@@ -449,22 +449,33 @@ const v_d81136 = v_472849.create({
   },
   messageWrapper: {
     position: 'relative',
-    paddingLeft: 34,
     marginBottom: 16,
   },
   avatar: {
     width: 26,
     height: 26,
     borderRadius: 13,
-    position: 'absolute',
     left: 0,
     top: 0,
+  },
+  avatarText: {
+    fontSize: 14,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+  },
+  avatarWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginBottom: 7,
   },
   messageCard: {
     backgroundColor: v_1bfbd0.background,
     borderRadius: 12,
     padding: 12,
     gap: 10,
+    width: '95%',
   },
   heroImage: {
     width: '100%',
@@ -473,34 +484,34 @@ const v_d81136 = v_472849.create({
     marginBottom: 4,
   },
   badge: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
   },
   description: {
-    fontSize: 12,
+    fontSize: 14,
     color: v_1bfbd0.secondaryText,
   },
   eventDate: {
-    fontSize: 11,
+    fontSize: 13,
     color: v_1bfbd0.secondaryText,
     marginTop: 4,
   },
   ctaButton: {
     backgroundColor: v_1bfbd0.buttonPrimary,
     borderRadius: 6,
-    height: 40,
+    height: 50,
     marginTop: 12,
     marginBottom: 12,
     alignItems: 'center',
     justifyContent: 'center',
   },
   ctaButtonWithMargin: {
-    marginTop: 12,
+    marginTop: 14,
   },
   ctaText: {
     color: v_1bfbd0.background,
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: v_843035.bold,
   },
   timestamp: {
@@ -525,6 +536,8 @@ const v_d81136 = v_472849.create({
     alignItems: 'flex-end',
     gap: 6,
     marginBottom: 16,
+    width: '95%',
+    alignSelf: 'flex-end',
   },
   replyRow: {
     flexDirection: 'row',
@@ -539,23 +552,13 @@ const v_d81136 = v_472849.create({
     alignSelf: 'flex-end',
   },
   replyText: {
-    fontSize: 12,
-    fontFamily: v_843035.bold,
+    fontSize: 14,
+    fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
-  },
-  userAvatar: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: v_1bfbd0.text,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
   },
   replyTimestamp: {
     fontSize: 10,
     color: v_1bfbd0.secondaryText,
-    paddingRight: 34,
   },
   inputBar: {
     flexDirection: 'row',
