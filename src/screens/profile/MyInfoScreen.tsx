@@ -1,11 +1,12 @@
 import v_a3453e from 'bapkr';
-import { v_472849, v_19b633, v_3094a2, v_cf9c33, v_4623af } from 'rcmrninabrnb';
+import { v_472849, v_19b633, v_3094a2, v_cf9c33, v_4623af, v_1a40c4 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
 import { v_729608, v_ae275d, v_570c34 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_f832ec } from 'zvyjokvuouwvifyzks';
+import { v_25515d } from 'zvyjokvuouwvifyzks';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -55,16 +56,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       iconName: 'help-circle' as const,
       route: 'MyInfoFaq' as const,
     },
-    {
-      id: 'logout',
-      title: 'Logout',
-      description: '로그아웃',
-      iconName: 'logout' as const,
-
-      onPress: () => {
-        v_9b57fc('Login');
-      },
-    },
   ];
 
   return (
@@ -75,8 +66,20 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         contentContainerStyle={v_d81136.content}
       >
         <View style={v_d81136.profileSection}>
-          <Text style={v_d81136.name}>User Name</Text>
-          <Text style={v_d81136.email}>user@example.com</Text>
+          <View style={v_d81136.profileInfoSection}>
+            <Text style={v_d81136.name}>User Name</Text>
+            <Text style={v_d81136.email}>user@example.com</Text>
+          </View>
+          <View style={v_d81136.iconSection}>
+            {}
+            <TouchableOpacity style={[v_d81136.iconWrapper]} onPress={() => { }}>
+              <Ionicons name="share-social-outline" size={24} />
+            </TouchableOpacity>
+            {}
+            <TouchableOpacity style={[v_d81136.iconWrapper]} onPress={() => { v_9b57fc('Login'); }}>
+              <Ionicons name="log-out-outline" size={24} />
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={v_d81136.menuSection}>
@@ -86,8 +89,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
               title={v_8c0b26.title}
               description={v_8c0b26.description}
               iconName={v_8c0b26.iconName}
-              onPress={v_8c0b26.route ? () => v_9b57fc(v_8c0b26.route as any) : v_8c0b26.onPress}
-              style={v_d81136.menuItem}
+              onPress={v_8c0b26.route ? () => v_9b57fc(v_8c0b26.route as any) : undefined}
             />
           ))}
         </View>
@@ -99,25 +101,18 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
   },
   scrollView: {
     flex: 1,
   },
   content: {
-    padding: v_9b1a04.large,
-  },
-  profileSection: {
-    alignItems: 'center',
-    marginBottom: v_9b1a04.xlarge,
+    paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.large,
   },
-
   name: {
     fontSize: 20,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
-    marginBottom: v_9b1a04.small,
   },
   email: {
     fontSize: 14,
@@ -125,9 +120,38 @@ const v_d81136 = v_472849.create({
   },
   menuSection: {
     gap: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.large,
   },
-  menuItem: {
-    marginBottom: 0,
+
+  profileSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    marginBottom: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.large,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  profileInfoSection: {
+    alignItems: 'flex-start',
+  },
+
+  iconSection: {
+    flexDirection: 'row',
+    gap: v_9b1a04.medium,
+    alignItems: 'center',
+    color: v_1bfbd0.buttonPrimary,
+  },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#F4F6FB",
+    borderWidth: 1,
+    borderColor: "#E6F0FF",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
