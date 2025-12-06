@@ -39,7 +39,17 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
 
     return (
         <View style={[v_d81136.wrapper, v_7fa4e4]}>
-            <View style={[v_d81136.container, { height: v_cb21f8, backgroundColor: v_f7b9fb }]}>
+            <View
+                style={[
+                    v_d81136.container,
+                    {
+                        height: v_cb21f8,
+                        backgroundColor: v_f7b9fb,
+
+                        paddingBottom: v_bb8530 ? v_cebf7c : 0,
+                    }
+                ]}
+            >
                 {v_21f619}
             </View>
             {v_bb8530 && (

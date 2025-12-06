@@ -59,8 +59,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   return (
     <SafeView
       style={v_d81136.screen}
-      showBottomBackground={false}
-      bottomBackgroundColor={"#fafafa"}
+      showBottomBackground={true} 
     >
       <Header
         title="MetaHint"

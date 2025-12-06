@@ -47,7 +47,7 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
   const v_cebf7c = v_acf836 + v_86fc47 + v_f41ebf;
 
   return (
-    <View style={[v_d81136.wrapper, { paddingBottom: v_cebf7c }, v_4affe9]}>
+    <View style={[v_d81136.wrapper, v_4affe9]}>
       <View style={v_d81136.inner}>
         {v_4622b9.map(v_8c0b26 => {
           const v_26dce6 = v_8c0b26.key === v_1f1e84;
