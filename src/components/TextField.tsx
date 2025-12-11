@@ -100,8 +100,9 @@ const v_d81136 = v_472849.create({
     flex: 1,
     fontSize: 16,
     color: v_1bfbd0.text,
-    minHeight: 26,
+    minHeight: 42,
     fontFamily: v_843035.regular,
+    lineHeight: 24,
   },
   leftIcon: {
     marginRight: v_9b1a04.small,
