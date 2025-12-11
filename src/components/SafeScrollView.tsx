@@ -27,8 +27,8 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
   contentContainerStyle: v_9aecf5,
   additionalBottomPadding: v_86fc47 = 0,
   showBottomBackground: v_bb8530 = true,
-  bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground,
-  backgroundColor: v_f7b9fb = v_963c2c.background,
+  bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground || "#fafafa",
+  backgroundColor: v_f7b9fb = v_963c2c.background || "#fafafa",
   autoAdjustKeyboardPadding: v_4d1023 = false,
   ...v_b1927c
 }, v_6d4ed3) => {
@@ -89,7 +89,7 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
       <ScrollView
         ref={v_90527e}
         style={[v_d81136.container, v_7fa4e4]}
-        automaticallyAdjustKeyboardInsets={v_4d1023}
+        automaticallyAdjustKeyboardInsets={false}
         keyboardShouldPersistTaps={v_b1927c.keyboardShouldPersistTaps ?? "handled"}
         contentContainerStyle={(() => {
 
