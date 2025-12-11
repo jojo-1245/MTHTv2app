@@ -22,8 +22,8 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
     style: v_7fa4e4,
     additionalBottomPadding: v_86fc47 = 0,
     showBottomBackground: v_bb8530 = true,
-    bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground,
-    backgroundColor: v_f7b9fb = v_963c2c.background,
+    bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground || "#fafafa",
+    backgroundColor: v_f7b9fb = v_963c2c.background || "#fafafa",
 }) => {
     const v_033e14 = v_e0068c();
 
