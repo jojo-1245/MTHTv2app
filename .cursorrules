@@ -276,6 +276,78 @@ container: {
 3. 공용 스타일로 해결이 불가능한 경우에만 새로운 스타일 정의
 4. 새로운 공용 스타일 추가 시 `src/shared/constants/index.ts`의 `COMMON_STYLES`에 추가
 
+#### 3.3 폰트 사이즈 및 여백 상수 사용 규칙
+**중요**: 스타일을 작성할 때는 하드코딩된 숫자 값 대신 `src/shared/constants/index.ts`에 정의된 상수를 사용해야 합니다.
+
+**FONT_SIZE 상수** (`src/shared/constants/index.ts`)
+- **용도**: 모든 `fontSize` 값은 `FONT_SIZE` 상수를 사용해야 합니다.
+- **사용 가능한 값**:
+  - `FONT_SIZE.small`: 12
+  - `FONT_SIZE.medium`: 14
+  - `FONT_SIZE.large`: 16
+  - `FONT_SIZE.xlarge`: 18
+  - `FONT_SIZE.title`: 24
+  - `FONT_SIZE.input`: 20
+  - `FONT_SIZE.validation`: 11
+- **사용 예시**:
+  ```typescript
+  fontSize: 24,
+  fontSize: 18,
+  fontSize: 16,
+  
+  fontSize: FONT_SIZE.title,      // 24
+  fontSize: FONT_SIZE.xlarge,    // 18
+  fontSize: FONT_SIZE.large,      // 16
+  ```
+
+**SPACING 상수** (`src/shared/constants/index.ts`)
+- **용도**: 모든 여백 값(margin, padding 등)은 `SPACING` 상수를 사용해야 합니다.
+- **사용 가능한 값**:
+  - `SPACING.stepTextBottom`: 32
+  - `SPACING.titleBottom`: 16
+  - `SPACING.subtitleBottom`: 48
+  - `SPACING.inputContainerBottom`: 32
+  - `SPACING.validationTop`: 8
+  - `SPACING.buttonContainerBottom`: 32
+  - `SPACING.contentTop`: 32
+- **사용 예시**:
+  ```typescript
+  marginBottom: 32,
+  marginTop: 8,
+  paddingTop: 32,
+  marginHorizontal: 8,
+  
+  marginBottom: SPACING.inputContainerBottom,  // 32
+  marginTop: SPACING.validationTop,            // 8
+  paddingTop: SPACING.contentTop,               // 32
+  marginHorizontal: SIZES.small,               // 8 (SIZES 사용)
+  ```
+
+**SIZES 상수** (`src/shared/constants/index.ts`)
+- **용도**: 크기 관련 값은 `SIZES` 상수를 사용합니다.
+- **사용 가능한 값**:
+  - `SIZES.small`: 8
+  - `SIZES.medium`: 16
+  - `SIZES.large`: 20
+  - `SIZES.xlarge`: 24
+- **사용 예시**:
+  ```typescript
+  paddingHorizontal: 20,
+  gap: 16,
+  marginHorizontal: 8,
+  
+  paddingHorizontal: SIZES.large,    // 20
+  gap: SIZES.medium,                 // 16
+  marginHorizontal: SIZES.small,     // 8
+  ```
+
+**폰트 사이즈 및 여백 상수 사용 규칙**:
+1. **절대 하드코딩 금지**: `fontSize`, `margin`, `padding` 등의 숫자 값을 직접 작성하지 않습니다.
+2. **상수 우선 사용**: `FONT_SIZE`, `SPACING`, `SIZES` 상수에 정의된 값이 있으면 반드시 사용합니다.
+3. **새로운 값 추가**: 필요한 값이 상수에 없으면 `src/shared/constants/index.ts`에 먼저 추가한 후 사용합니다.
+4. **일관성 유지**: 같은 의미의 값은 동일한 상수를 사용하여 일관성을 유지합니다.
+5. **예외 상황**: 특수한 경우(예: 계산된 값, 동적 값)에만 하드코딩을 허용하되, 주석으로 이유를 명시합니다.
+
 ### 4. 네비게이션
 - 네비게이션을 사용할 경우 `src/navigation/index.tsx`에서 설정합니다.
 - React Navigation 패키지 설치가 필요합니다.

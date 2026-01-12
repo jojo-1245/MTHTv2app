@@ -47,19 +47,126 @@ export const v_228d55 = {
   extrabold: { fontFamily: v_843035.extrabold, letterSpacing: -0.5 },
 } as const;
 
+export const v_ef658a = {
+  small: 12,
+  medium: 14,
+  large: 16,
+  xlarge: 18,
+  title: 24,
+  input: 20,
+  validation: 11,
+} as const;
+
 export const v_9b1a04 = {
   small: 8,
   medium: 16,
   large: 20,
   xlarge: 24,
+  dateInputVertical: 12,
 };
 
+export const v_34d45f = {
+  stepTextBottom: 32,
+  titleBottom: 16,
+  subtitleBottom: 48,
+  inputContainerBottom: 32,
+  validationTop: 8,
+  buttonContainerBottom: 32,
+  contentTop: 32,
+} as const;
+
 export const v_a61db3 = {
+  container: {
+    flex: 1,
+    width: '100%' as const,
+    maxWidth: 780,
+  },
   bottomSection: {
     marginTop: 'auto' as const,
-    maxWidth: 780,
     paddingTop: v_9b1a04.medium,
     marginBottom: v_9b1a04.large,
+  },
+
+  screen: {
+    flex: 1,
+    backgroundColor: v_1bfbd0.background,
+  },
+  content: {
+    flexGrow: 1,
+    paddingHorizontal: v_9b1a04.large,
+    paddingTop: 32,
+  },
+
+  stepText: {
+    fontSize: v_ef658a.xlarge,
+    fontFamily: v_843035.medium,
+    color: 'rgba(94, 98, 172, 0.18)',
+    textAlign: 'right' as const,
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 24,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+    lineHeight: 32,
+    letterSpacing: -0.24,
+    textTransform: 'uppercase' as const,
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.semibold,
+    color: '#9B9B9B',
+    lineHeight: 24,
+    letterSpacing: -0.16,
+    marginBottom: 48,
+  },
+  inputText: {
+    fontSize: 20,
+    fontFamily: v_843035.medium,
+    lineHeight: 36,
+    letterSpacing: -0.2,
+  },
+  validationText: {
+    fontSize: 11,
+    fontFamily: v_843035.medium,
+    lineHeight: 16,
+    letterSpacing: -0.11,
+    marginTop: 8,
+  },
+
+  spacing: {
+    stepTextBottom: 32,
+    titleBottom: 16,
+    subtitleBottom: 48,
+    inputContainerBottom: 32,
+    validationTop: 8,
+    buttonContainerBottom: 32,
+    contentTop: 32,
+  },
+
+  inputWrapper: {
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  dateInputWrapper: {
+    paddingVertical: v_9b1a04.dateInputVertical,
+    minHeight: 56,
+    justifyContent: 'center' as const,
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  buttonContainer: {
+    marginTop: 'auto' as const,
+    paddingBottom: v_34d45f.buttonContainerBottom,
+  },
+  scrollContent: {
+    paddingHorizontal: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.xlarge,
+  },
+  contentContainer: {
+    paddingHorizontal: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.xlarge,
   },
 };
 
