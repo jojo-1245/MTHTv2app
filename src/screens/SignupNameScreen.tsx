@@ -93,11 +93,14 @@ const v_d81136 = v_472849.create({
         flexGrow: 1,
         paddingHorizontal: v_9b1a04.large,
         paddingTop: 32,
+        minHeight: '100%',
     },
     container: {
         width: '100%',
         maxWidth: 780,
         alignSelf: 'center',
+        flex: 1,
+        justifyContent: 'space-between',
     },
     stepText: {
         fontSize: 18,
@@ -129,6 +132,7 @@ const v_d81136 = v_472849.create({
     inputWrapper: {
         borderWidth: 0,
         borderColor: 'transparent',
+        paddingHorizontal: 0,
     },
     input: {
         fontSize: 20,
