@@ -1,10 +1,19 @@
 import v_a3453e from 'bapkr';
 import { v_ac28fd } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_709be7 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import v_7af305 from '../screens/IntroScreen';
 import v_c316d8 from '../screens/HomeScreen';
 import v_7aeeb0 from '../screens/MetaHomeScreen';
 import v_f4f851 from '../screens/LoginScreen';
 import v_f40fc5 from '../screens/SignupScreen';
+import v_937ab8 from '../screens/SignupTermsScreen';
+import v_c39920 from '../screens/SignupEmailScreen';
+import v_d02ed0 from '../screens/SignupPasswordScreen';
+import v_91bfb7 from '../screens/SignupNameScreen';
+import v_d7587d from '../screens/SignupBirthdayScreen';
+import v_055bf6 from '../screens/SignupGenderScreen';
+import v_124daa from '../screens/SignupReferralScreen';
+import v_2436b6 from '../screens/SignupSuccessScreen';
 import v_040c8f from '../screens/ForgotPasswordScreen';
 import v_0d311d from '../screens/PasswordVerificationScreen';
 import v_db1cc4 from '../screens/ResetPasswordScreen';
@@ -30,10 +39,23 @@ import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
 import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 
 export type RootStackParamList = {
+  Intro: undefined;
   Home: undefined;
   MetaHome: undefined;
   Login: undefined;
   Signup: undefined;
+  SignupTerms: undefined;
+  SignupEmail: undefined;
+  SignupPassword: undefined;
+  SignupName: undefined;
+  SignupBirthday:
+    | {
+        name?: string;
+      }
+    | undefined;
+  SignupGender: undefined;
+  SignupReferral: undefined;
+  SignupSuccess: undefined;
   ForgotPassword: undefined;
   PasswordVerification: undefined;
   ResetPassword: undefined;
@@ -96,15 +118,24 @@ export const AppNavigator: v_a3453e.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Intro"
         screenOptions={{
           headerShown: false,
         }}
       >
+        <Stack.Screen name="Intro" component={v_7af305} />
         <Stack.Screen name="Home" component={v_c316d8} />
         <Stack.Screen name="MetaHome" component={v_7aeeb0} />
         <Stack.Screen name="Login" component={v_f4f851} />
         <Stack.Screen name="Signup" component={v_f40fc5} />
+        <Stack.Screen name="SignupTerms" component={v_937ab8} />
+        <Stack.Screen name="SignupEmail" component={v_c39920} />
+        <Stack.Screen name="SignupPassword" component={v_d02ed0} />
+        <Stack.Screen name="SignupName" component={v_91bfb7} />
+        <Stack.Screen name="SignupBirthday" component={v_d7587d} />
+        <Stack.Screen name="SignupGender" component={v_055bf6} />
+        <Stack.Screen name="SignupReferral" component={v_124daa} />
+        <Stack.Screen name="SignupSuccess" component={v_2436b6} />
         <Stack.Screen name="ForgotPassword" component={v_040c8f} />
         <Stack.Screen name="PasswordVerification" component={v_0d311d} />
         <Stack.Screen name="ResetPassword" component={v_db1cc4} />
