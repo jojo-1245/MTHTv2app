@@ -1,112 +1,142 @@
 import v_a3453e from 'bapkr';
 import {
+  v_700696,
   v_cf9c33,
   v_472849,
-  v_19b633,
-  v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
+import { v_b5df25 } from 'ernurodqvmtspux';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
-import { v_556baf } from '../components';
+import { v_cb41de, v_570c34, v_556baf, v_8714fe } from '../components';
 
 type Props = v_432191<v_8ad91b, 'Home'>;
+
+const { height: v_28d8d8 } = v_700696.get('window');
+
+const v_34a8ff = require('../../assets/images/logo.png');
 
 const HomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
 
+  const v_ec4736 = () => {
+    v_9b57fc('Login');
+  };
+
+  const v_c5a058 = () => {
+    v_9b57fc('SignupTerms');
+  };
+
+  const v_f36218 = 'feed';
+  const v_cdfaaa = 'https://example.com';
+
   return (
-    <SafeView style={v_d81136.screen} backgroundColor="#F8F8F8">
-      <View style={v_d81136.container}>
+    <SafeView style={v_d81136.container}>
+      <StatusBar style="dark" />
+
+      {
+
+}
+      <SafeScrollView
+        contentContainerStyle={v_d81136.scrollContent}
+        showsVerticalScrollIndicator={true}
+        showBottomBackground={false}
+        disableBottomPadding={true}
+      >
         {}
         <View style={v_d81136.adContainer}>
-          <Text style={v_d81136.adText}>전면 광고</Text>
-        </View>
+          {}
+          {
 
-        {}
-        <View style={v_d81136.buttonGroup}>
-          <TouchableOpacity
-            style={v_d81136.loginButton}
-            onPress={() => v_9b57fc('Login')}
-            activeOpacity={0.85}
-            accessibilityRole="button"
-            accessibilityLabel="로그인"
-          >
-            <Text style={v_d81136.loginButtonText}>로그인</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={v_d81136.signupButton}
-            onPress={() => v_9b57fc('SignupTerms')}
-            activeOpacity={0.85}
-            accessibilityRole="button"
-            accessibilityLabel="회원가입"
-          >
-            <Text style={v_d81136.signupButtonText}>회원가입</Text>
-          </TouchableOpacity>
+}
+          <View style={v_d81136.adPlaceholder}>
+            {}
+          </View>
         </View>
+      </SafeScrollView>
+
+      {}
+      <View style={v_d81136.buttonContainer}>
+        <PrimaryButton
+          title="로그인"
+          onPress={v_ec4736}
+          fullWidth={true}
+          style={v_d81136.loginButton}
+        />
+        <SecondaryButton
+          title="회원가입"
+          onPress={v_c5a058}
+          fullWidth={true}
+        />
       </View>
+
     </SafeView>
   );
 };
 
 const v_d81136 = v_472849.create({
-  screen: {
-    flex: 1,
-  },
   container: {
-    flex: 1,
-    paddingHorizontal: v_9b1a04.large,
-    paddingTop: 102,
+    ...v_a61db3.container,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    ...v_a61db3.scrollContent,
+    minHeight: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  logoContainer: {
+    position: 'absolute',
+    top: v_28d8d8 * 0.3,
+    left: 0,
+    right: 0,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+  },
+  logo: {
+    width: 200,
+    height: 60,
+  },
   adContainer: {
-    width: 327,
-    height: 393,
-    backgroundColor: '#D9D9D9',
+    marginBottom: v_9b1a04.xlarge,
+    width: '100%',
+    aspectRatio: 3 / 4,
+    height: 'auto',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 48,
+    alignSelf: 'center',
+    overflow: 'hidden',
+    backgroundColor: '#cccccc',
+    position: 'relative',
   },
-  adText: {
-    fontSize: 30,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.text,
+  adWebView: {
+    width: '100%',
+    height: '100%',
   },
-  buttonGroup: {
-    width: 327,
-    gap: 15,
+  adPlaceholder: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#cccccc',
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 'auto', 
+    gap: v_9b1a04.medium,
+    alignSelf: 'flex-end',
+    paddingHorizontal: v_9b1a04.large,
+    marginBottom: v_9b1a04.xlarge,
   },
   loginButton: {
-    height: 56,
-    backgroundColor: v_1bfbd0.buttonPrimary,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 0,
   },
-  loginButtonText: {
-    fontSize: 16,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.background,
-    lineHeight: 24,
-  },
-  signupButton: {
-    height: 56,
-    backgroundColor: v_1bfbd0.background,
-    borderWidth: 0.5,
-    borderColor: '#C4C4C4',
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  signupButtonText: {
-    fontSize: 16,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.buttonPrimary,
-    lineHeight: 24,
+  taboolaContainer: {
+    borderWidth: 2,
+    borderColor: '#ededed',
   },
 });
 
