@@ -6,7 +6,7 @@ import {
     v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_cb41de, v_570c34 } from '../components';
 
@@ -58,39 +58,29 @@ const SignupSuccessScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 };
 
 const v_d81136 = v_472849.create({
-    screen: {
-        flex: 1,
-        backgroundColor: v_1bfbd0.background,
-    },
+    screen: v_a61db3.screen,
     content: {
-        flexGrow: 1,
-        paddingHorizontal: v_9b1a04.large,
-        paddingTop: 80,
+        ...v_a61db3.content,
+        paddingTop: 80, 
     },
     container: {
-        width: '100%',
-        maxWidth: 780,
-        alignSelf: 'center',
+        ...v_a61db3.container,
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     title: {
-        fontSize: 24,
-        fontFamily: v_843035.bold,
-        color: v_1bfbd0.text,
-        lineHeight: 32,
-        letterSpacing: -0.24,
+        ...v_a61db3.title,
         textAlign: 'left',
-        marginBottom: 48,
-        marginTop: 42,
+        marginBottom: v_34d45f.subtitleBottom,
+        marginTop: 42, 
     },
     imageContainer: {
         flex: 1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 48,
+        marginBottom: v_34d45f.subtitleBottom,
     },
     successImage: {
         width: '100%',
@@ -99,7 +89,7 @@ const v_d81136 = v_472849.create({
     },
     buttonContainer: {
         width: '100%',
-        paddingBottom: 32,
+        paddingBottom: v_34d45f.buttonContainerBottom,
     },
 });
 

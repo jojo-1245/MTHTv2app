@@ -7,7 +7,7 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_729608, v_cb41de, v_570c34 } from '../components';
 
@@ -141,61 +141,33 @@ const SignupGenderScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 };
 
 const v_d81136 = v_472849.create({
-    screen: {
-        flex: 1,
-        backgroundColor: v_1bfbd0.background,
-    },
+    screen: v_a61db3.screen,
     header: {
         backgroundColor: 'transparent',
     },
     content: {
-        flexGrow: 1,
-        paddingHorizontal: v_9b1a04.large,
-        paddingTop: 32,
+        ...v_a61db3.content,
         minHeight: '100%',
     },
     container: {
-        width: '100%',
-        maxWidth: 780,
-        alignSelf: 'center',
+        ...v_a61db3.container,
         flex: 1,
         justifyContent: 'space-between',
     },
-    stepText: {
-        fontSize: 18,
-        fontFamily: v_843035.medium,
-        color: 'rgba(94, 98, 172, 0.18)',
-        textAlign: 'right',
-        marginBottom: 32,
-    },
-    title: {
-        fontSize: 24,
-        fontFamily: v_843035.bold,
-        color: v_1bfbd0.text,
-        lineHeight: 32,
-        letterSpacing: -0.24,
-        textTransform: 'uppercase',
-        marginBottom: 16,
-    },
-    subtitle: {
-        fontSize: 16,
-        fontFamily: v_843035.semibold,
-        color: '#9B9B9B',
-        lineHeight: 24,
-        letterSpacing: -0.16,
-        marginBottom: 48,
-    },
+    stepText: v_a61db3.stepText,
+    title: v_a61db3.title,
+    subtitle: v_a61db3.subtitle,
     genderContainer: {
         flexDirection: 'row',
-        gap: 16,
-        marginBottom: 32,
+        gap: v_9b1a04.medium,
+        marginBottom: v_34d45f.inputContainerBottom,
     },
     genderCard: {
         flex: 1,
         borderWidth: 2,
         borderColor: v_1bfbd0.border,
-        borderRadius: 16,
-        padding: 24,
+        borderRadius: v_9b1a04.medium,
+        padding: v_9b1a04.xlarge,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: v_1bfbd0.background,
@@ -211,7 +183,7 @@ const v_d81136 = v_472849.create({
         borderColor: '#FF3B30',
     },
     iconContainer: {
-        marginBottom: 16,
+        marginBottom: v_9b1a04.medium,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -222,18 +194,15 @@ const v_d81136 = v_472849.create({
 
     },
     genderText: {
-        fontSize: 18,
+        fontSize: v_ef658a.xlarge,
         fontFamily: v_843035.semibold,
         color: v_1bfbd0.text,
-        lineHeight: 24,
+        lineHeight: v_9b1a04.xlarge,
     },
     genderTextSelected: {
 
     },
-    buttonContainer: {
-        marginTop: 'auto',
-        paddingBottom: 32,
-    },
+    buttonContainer: v_a61db3.buttonContainer,
     buttonDisabled: {
         opacity: 0.3,
     },
