@@ -58,6 +58,9 @@ export type { ExplorerBadgeProps } from './ExplorerBadge';
 export { default as SafeScrollView } from './SafeScrollView';
 export { default as SafeView } from './SafeView';
 
+export { default as SidebarMenu } from './SidebarMenu';
+export type { SidebarMenuProps, SidebarMenuItem } from './SidebarMenu';
+
 export { TokenListItem } from './wallet/TokenListItem';
 export type { TokenListItemProps } from './wallet/TokenListItem';
 export { TransactionListItem } from './wallet/TransactionListItem';
