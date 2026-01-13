@@ -2,17 +2,18 @@ import v_a3453e, { v_5ab095 } from 'bapkr';
 import {
     v_472849,
     v_19b633,
+    v_4623af,
     v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f } from '../constants';
-import type { v_8ad91b } from '../navigation';
-import { v_729608, v_cb41de, v_570c34, v_e775af } from '../components';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f } from '../../constants';
+import type { v_8ad91b } from '../../navigation';
+import { v_729608, v_cb41de, v_570c34, v_e775af } from '../../components';
 
-type Props = v_432191<v_8ad91b, 'SignupReferral'>;
+type Props = v_432191<v_8ad91b, 'SignupEmail'>;
 
-const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
-    const [v_9bf12c, v_fb6bbb] = v_5ab095('');
+const SignupEmailScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+    const [v_e0c7e8, v_fedf34] = v_5ab095('');
     const [v_a71df8, v_b876f0] = v_5ab095(false);
     const [v_41ff46, v_2d6b5b] = v_5ab095(false);
 
@@ -22,7 +23,7 @@ const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     };
 
     const v_a64837 = (v_3b402b) => {
-        v_fb6bbb(v_3b402b);
+        v_fedf34(v_3b402b);
         if (v_3b402b.length > 0) {
             const v_d065ee = v_1d0f03(v_3b402b);
             v_b876f0(v_d065ee);
@@ -32,11 +33,19 @@ const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
     };
 
-    const v_fc0cf5 = v_9bf12c.length === 0 || v_a71df8;
-
     const v_420661 = () => {
+        if (!v_a71df8) {
+            return;
+        }
+        v_c65f5d.navigate('EmailVerification', { email: v_e0c7e8 });
+    };
 
-        v_c65f5d.navigate('SignupSuccess');
+    const v_6ca26b = () => {
+
+        v_c65f5d.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
     };
 
     return (
@@ -44,7 +53,7 @@ const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <Header
                 title=""
                 showBackButton
-                onBackPress={() => v_c65f5d.goBack()}
+                onBackPress={v_6ca26b}
                 containerStyle={v_d81136.header}
             />
             <SafeScrollView
@@ -54,23 +63,23 @@ const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             >
                 <View style={v_d81136.container}>
                     {}
-                    <Text style={v_d81136.stepText}>6/6</Text>
+                    <Text style={v_d81136.stepText}>1/6</Text>
 
                     {}
                     <Text style={v_d81136.title}>
-                        추천인 코드를{'\n'}입력해주세요.
+                        이메일을{'\n'}입력해 주세요.
                     </Text>
 
                     {}
                     <Text style={v_d81136.subtitle}>
-                        초대해준 사람의 이메일주소를 입력해주세요.
+                        로그인 ID는 이메일입니다.
                     </Text>
 
                     {}
                     <View style={v_d81136.inputContainer}>
                         <TextField
                             placeholder="이메일을 입력해주세요"
-                            value={v_9bf12c}
+                            value={v_e0c7e8}
                             onChangeText={v_a64837}
                             keyboardType="email-address"
                             autoCapitalize="none"
@@ -92,10 +101,10 @@ const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     {}
                     <View style={v_d81136.buttonContainer}>
                         <PrimaryButton
-                            title="다음"
+                            title="인증"
                             onPress={v_420661}
-                            disabled={!v_fc0cf5}
-                            style={!v_fc0cf5 && v_d81136.buttonDisabled}
+                            disabled={!v_a71df8}
+                            style={!v_a71df8 && v_d81136.buttonDisabled}
                         />
                     </View>
                 </View>
@@ -142,5 +151,5 @@ const v_d81136 = v_472849.create({
     },
 });
 
-export default v_124daa;
+export default v_c39920;
 

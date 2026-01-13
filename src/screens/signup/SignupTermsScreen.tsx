@@ -9,9 +9,9 @@ import {
     v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
-import type { v_8ad91b } from '../navigation';
-import { v_cb41de } from '../components';
+import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
+import type { v_8ad91b } from '../../navigation';
+import { v_cb41de } from '../../components';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 
 type Props = v_432191<v_8ad91b, 'SignupTerms'>;
