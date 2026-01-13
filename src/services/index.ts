@@ -1,4 +1,5 @@
 
+export * from './skinAnalysis';
 import axios, { AxiosError } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
