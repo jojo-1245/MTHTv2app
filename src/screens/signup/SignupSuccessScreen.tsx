@@ -6,13 +6,13 @@ import {
     v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../constants';
-import type { v_8ad91b } from '../navigation';
-import { v_cb41de, v_570c34 } from '../components';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../../constants';
+import type { v_8ad91b } from '../../navigation';
+import { v_cb41de, v_570c34 } from '../../components';
 
 type Props = v_432191<v_8ad91b, 'SignupSuccess'>;
 
-const v_634539 = require('../../assets/images/success_join_img.png');
+const v_634539 = require('../../../assets/images/success_join_img.png');
 
 const SignupSuccessScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_182531 = () => {

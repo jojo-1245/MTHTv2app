@@ -7,9 +7,9 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../constants';
-import type { v_8ad91b } from '../navigation';
-import { v_729608, v_cb41de, v_570c34 } from '../components';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_843035, v_9b1a04, v_34d45f } from '../../constants';
+import type { v_8ad91b } from '../../navigation';
+import { v_729608, v_cb41de, v_570c34 } from '../../components';
 
 type Props = v_432191<v_8ad91b, 'SignupGender'>;
 

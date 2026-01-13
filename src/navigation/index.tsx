@@ -6,19 +6,21 @@ import v_c316d8 from '../screens/HomeScreen';
 import v_7aeeb0 from '../screens/MetaHomeScreen';
 import v_f4f851 from '../screens/LoginScreen';
 import v_f40fc5 from '../screens/SignupScreen';
-import v_937ab8 from '../screens/SignupTermsScreen';
-import v_c39920 from '../screens/SignupEmailScreen';
-import v_d02ed0 from '../screens/SignupPasswordScreen';
-import v_91bfb7 from '../screens/SignupNameScreen';
-import v_d7587d from '../screens/SignupBirthdayScreen';
-import v_055bf6 from '../screens/SignupGenderScreen';
-import v_124daa from '../screens/SignupReferralScreen';
-import v_2436b6 from '../screens/SignupSuccessScreen';
+import {
+  v_937ab8,
+  v_c39920,
+  v_a82b55,
+  v_d02ed0,
+  v_91bfb7,
+  v_d7587d,
+  v_055bf6,
+  v_124daa,
+  v_2436b6,
+} from '../screens/signup';
 import v_040c8f from '../screens/ForgotPasswordScreen';
 import v_0d311d from '../screens/PasswordVerificationScreen';
 import v_db1cc4 from '../screens/ResetPasswordScreen';
 import v_873cfb from '../screens/PasswordChangedScreen';
-import v_a82b55 from '../screens/EmailVerificationScreen';
 import v_c1e2b5 from '../screens/CountrySelectScreen';
 import { v_952e24 } from '../screens/wallet/WalletScreen';
 import { v_4ef695 } from '../screens/wallet/WalletHistoryScreen';

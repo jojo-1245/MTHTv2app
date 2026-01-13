@@ -5,32 +5,26 @@ import {
     v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f } from '../constants';
-import type { v_8ad91b } from '../navigation';
-import { v_729608, v_e2ca42, v_cb41de, v_570c34 } from '../components';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f } from '../../constants';
+import type { v_8ad91b } from '../../navigation';
+import { v_729608, v_cb41de, v_570c34, v_e775af } from '../../components';
 
-type Props = v_432191<v_8ad91b, 'SignupPassword'>;
+type Props = v_432191<v_8ad91b, 'SignupReferral'>;
 
-const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
-    const [v_adc076, v_52b279] = v_5ab095('');
+const SignupReferralScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+    const [v_9bf12c, v_fb6bbb] = v_5ab095('');
     const [v_a71df8, v_b876f0] = v_5ab095(false);
     const [v_41ff46, v_2d6b5b] = v_5ab095(false);
 
-    const v_857dfe = (v_3b402b) => {
-
-        const v_b947d5 = v_3b402b.length >= 8;
-        const v_9dd411 = /[A-Z]/.test(v_3b402b);
-        const v_1cf57e = /[a-z]/.test(v_3b402b);
-        const v_5af9de = /\d/.test(v_3b402b);
-        const v_a5927f = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/.test(v_3b402b);
-
-        return v_b947d5 && v_9dd411 && v_1cf57e && v_5af9de && v_a5927f;
+    const v_1d0f03 = (v_3b402b) => {
+        const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return v_9a3638.test(v_3b402b);
     };
 
-    const v_57c91b = (v_3b402b) => {
-        v_52b279(v_3b402b);
+    const v_a64837 = (v_3b402b) => {
+        v_fb6bbb(v_3b402b);
         if (v_3b402b.length > 0) {
-            const v_d065ee = v_857dfe(v_3b402b);
+            const v_d065ee = v_1d0f03(v_3b402b);
             v_b876f0(v_d065ee);
             v_2d6b5b(true);
         } else {
@@ -38,12 +32,11 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
     };
 
-    const v_420661 = () => {
-        if (!v_a71df8) {
-            return;
-        }
+    const v_fc0cf5 = v_9bf12c.length === 0 || v_a71df8;
 
-        v_c65f5d.navigate('SignupName');
+    const v_420661 = () => {
+
+        v_c65f5d.navigate('SignupSuccess');
     };
 
     return (
@@ -61,24 +54,26 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             >
                 <View style={v_d81136.container}>
                     {}
-                    <Text style={v_d81136.stepText}>2/6</Text>
+                    <Text style={v_d81136.stepText}>6/6</Text>
 
                     {}
                     <Text style={v_d81136.title}>
-                        로그인에{'\n'}사용하실 비밀번호를 입력하세요.
+                        추천인 코드를{'\n'}입력해주세요.
                     </Text>
 
                     {}
-                    <Text style={v_d81136.requirements}>
-                        8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함
+                    <Text style={v_d81136.subtitle}>
+                        초대해준 사람의 이메일주소를 입력해주세요.
                     </Text>
 
                     {}
                     <View style={v_d81136.inputContainer}>
-                        <PasswordField
-                            placeholder="비밀번호를 입력해주세요"
-                            value={v_adc076}
-                            onChangeText={v_57c91b}
+                        <TextField
+                            placeholder="이메일을 입력해주세요"
+                            value={v_9bf12c}
+                            onChangeText={v_a64837}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
                             style={v_d81136.input}
                             inputWrapperStyle={v_d81136.inputWrapper}
                         />
@@ -89,7 +84,7 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                                     v_a71df8 ? v_d81136.validationSuccess : v_d81136.validationError,
                                 ]}
                             >
-                                {v_a71df8 ? '사용가능한 비밀번호입니다.' : '비밀번호 요구사항을 확인해주세요.'}
+                                {v_a71df8 ? '사용가능한 이메일 입니다.' : '올바른 이메일 형식이 아닙니다.'}
                             </Text>
                         )}
                     </View>
@@ -99,8 +94,8 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         <PrimaryButton
                             title="다음"
                             onPress={v_420661}
-                            disabled={!v_a71df8}
-                            style={!v_a71df8 && v_d81136.buttonDisabled}
+                            disabled={!v_fc0cf5}
+                            style={!v_fc0cf5 && v_d81136.buttonDisabled}
                         />
                     </View>
                 </View>
@@ -125,7 +120,7 @@ const v_d81136 = v_472849.create({
     },
     stepText: v_a61db3.stepText,
     title: v_a61db3.title,
-    requirements: v_a61db3.subtitle,
+    subtitle: v_a61db3.subtitle,
     inputContainer: {
         marginBottom: v_34d45f.inputContainerBottom,
     },
@@ -133,10 +128,7 @@ const v_d81136 = v_472849.create({
         ...v_a61db3.inputWrapper,
         paddingHorizontal: 0,
     },
-    input: {
-        ...v_a61db3.inputText,
-        color: '#9B9B9B',
-    },
+    input: v_a61db3.inputText,
     validationText: v_a61db3.validationText,
     validationSuccess: {
         color: '#007AFF',
@@ -150,5 +142,5 @@ const v_d81136 = v_472849.create({
     },
 });
 
-export default v_d02ed0;
+export default v_124daa;
 
