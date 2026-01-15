@@ -1,14 +1,10 @@
 import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
-  v_e767d1,
-  v_326be8,
   v_472849,
   v_19b633,
   v_4623af,
   v_3094a2,
-  v_7e4944,
-  v_5e8657,
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
@@ -41,8 +37,8 @@ type GenderOption = (typeof v_21bdd5)[number];
 type AgeOption = (typeof v_0c96f7)[number];
 
 const v_901315 =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
-const v_064327 = '영문, 숫자, 특수문자를 모두 포함한 8자 이상이어야 합니다.';
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
+const v_064327 = '8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함';
 
 const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const {
@@ -58,11 +54,81 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_5ab095<typeof v_21bdd5[number]['value']>('male');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
-  const [v_a32a50, v_4944f5] = v_5ab095('');
-  const [v_328bb4, v_b7613d] = v_5ab095('');
+  const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
-  const [v_0b3ebe, v_241a35] = v_5ab095('');
+  const [v_9bf12c, v_fb6bbb] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
+
+  const [v_8b47e4, v_c9a6aa] = v_5ab095(false);
+  const [v_fd8548, v_1cf99d] = v_5ab095(false);
+  const [v_5996d6, v_735c4d] = v_5ab095(false);
+
+  const v_0e461e = (v_3b402b): boolean => {
+    const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return v_9a3638.test(v_3b402b);
+  };
+
+  const v_559736 = (): string | null => {
+    if (!v_8b47e4 || v_e0c7e8.length === 0) return null;
+    if (!v_0e461e(v_e0c7e8)) {
+      return '올바른 이메일 형식을 입력해주세요.';
+    }
+    return null;
+  };
+
+  const v_8f5468 = (): string | null => {
+    if (!v_5996d6 || v_9bf12c.length === 0) return null;
+    if (!v_0e461e(v_9bf12c)) {
+      return '올바른 이메일 형식을 입력해주세요.';
+    }
+    return null;
+  };
+
+  const v_1743a3 = (): string | null => {
+    if (!v_fd8548 || v_adc076.length === 0) return null;
+
+    const v_9de4ac = [];
+
+    if (v_adc076.length < 8) {
+      v_9de4ac.push('8자 이상');
+    }
+    if (!/[a-z]/.test(v_adc076)) {
+      v_9de4ac.push('영문 소문자');
+    }
+    if (!/[A-Z]/.test(v_adc076)) {
+      v_9de4ac.push('영문 대문자');
+    }
+    if (!/\d/.test(v_adc076)) {
+      v_9de4ac.push('숫자');
+    }
+    if (!/[~`!@#$%^&*()_\-+={}[\]|\\:;"'<>,.?/]/.test(v_adc076)) {
+      v_9de4ac.push('특수문자');
+    }
+
+    if (v_9de4ac.length > 0) {
+      return `${v_9de4ac.join(', ')}가 필요합니다.`;
+    }
+    return null;
+  };
+
+  const v_4e8e4d = v_559736();
+  const v_e8fd53 = v_1743a3();
+  const v_2c06d8 = v_8f5468();
+
+  const v_a64837 = (v_3b402b) => {
+    v_fedf34(v_3b402b);
+    if (!v_8b47e4) v_c9a6aa(true);
+  };
+
+  const v_57c91b = (v_3b402b) => {
+    v_52b279(v_3b402b);
+    if (!v_fd8548) v_1cf99d(true);
+  };
+
+  const v_36c8eb = (v_3b402b) => {
+    v_fb6bbb(v_3b402b);
+    if (!v_5996d6) v_735c4d(true);
+  };
 
   v_c4deb2(() => {
     if (v_8d7bc8.phone !== undefined && v_8d7bc8.phone !== v_d74a81) {
@@ -151,7 +217,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   return (
     <>
       <View style={v_d81136.screen}>
-        <Header title="Sign up" showBackButton onBackPress={() => v_c65f5d.goBack()} />
+        <Header title="회원가입" showBackButton onBackPress={() => v_c65f5d.goBack()} />
         <SafeScrollView
           contentContainerStyle={v_d81136.content}
           keyboardShouldPersistTaps="handled"
@@ -159,35 +225,50 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           autoAdjustKeyboardPadding={true}
         >
           <View style={v_d81136.form}>
+            {}
             <TextField
-              label="이메일"
-              placeholder="oth-user@example.invalid"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={v_e0c7e8}
-              onChangeText={v_fedf34}
+              label="이름"
+              placeholder="Enter your Last name"
+              value={v_1833e7}
+              onChangeText={v_318f24}
               editable={!v_88dca2}
             />
-            <View style={v_d81136.row}>
+
+            {}
+            <View>
               <TextField
-                label="성"
-                placeholder="성을 입력하세요"
-                value={v_328bb4}
-                onChangeText={v_b7613d}
-                containerStyle={[v_d81136.rowItem, v_d81136.rowItemSpacing]}
+                label="Email"
+                placeholder="Enter your email address"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={v_e0c7e8}
+                onChangeText={v_a64837}
                 editable={!v_88dca2}
               />
-              <TextField
-                label="이름"
-                placeholder="이름을 입력하세요"
-                value={v_a32a50}
-                onChangeText={v_4944f5}
-                containerStyle={v_d81136.rowItem}
-                editable={!v_88dca2}
-              />
+              {v_4e8e4d && (
+                <Text style={v_d81136.errorText}>{v_4e8e4d}</Text>
+              )}
             </View>
+
+            {}
+            <View>
+              <PasswordField
+                label="비밀번호"
+                placeholder="Password"
+                value={v_adc076}
+                onChangeText={v_57c91b}
+                editable={!v_88dca2}
+              />
+              {v_e8fd53 ? (
+                <Text style={v_d81136.errorText}>{v_e8fd53}</Text>
+              ) : (
+                <Text style={v_d81136.hintText}>{v_064327}</Text>
+              )}
+            </View>
+
+            {}
             <TextField
-              label="Phone"
+              label="전화번호"
               placeholder="010-1010-1000"
               keyboardType="phone-pad"
               value={v_d74a81}
@@ -205,16 +286,17 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 </TouchableOpacity>
               }
             />
+
+            {}
             <SelectField
               label="지역"
-              placeholder="지역을 선택하세요"
+              placeholder="Korea"
               value={v_56743f}
               onPress={v_b36a76}
               disabled={!v_590486 || v_88dca2}
             />
-            {!v_590486 ? (
-              <Text style={v_d81136.regionHelper}>Global 지역이 자동으로 적용됩니다.</Text>
-            ) : null}
+
+            {}
             <View>
               <Text style={v_d81136.sectionLabel}>성별</Text>
               <View style={v_d81136.inlineOptions}>
@@ -228,8 +310,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 ))}
               </View>
             </View>
+
+            {}
             <View>
-              <Text style={v_d81136.sectionLabel}>연령대</Text>
+              <Text style={v_d81136.sectionLabel}>나이</Text>
               <View style={v_d81136.inlineOptions}>
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
@@ -241,30 +325,33 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 ))}
               </View>
             </View>
-            <PasswordField
-              label="비밀번호"
-              placeholder="영문/숫자/특수문자 포함 8자 이상"
-              value={v_adc076}
-              onChangeText={v_52b279}
-              editable={!v_88dca2}
-            />
-            <PasswordField
-              label="비밀번호 확인"
-              placeholder="비밀번호를 다시 입력하세요"
-              value={v_0b3ebe}
-              onChangeText={v_241a35}
-              editable={!v_88dca2}
-            />
-            <Text style={v_d81136.passwordHint}>{v_064327}</Text>
 
+            {}
+            <View>
+              <TextField
+                label="추천이메일"
+                placeholder="oth-staff@example.invalid"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={v_9bf12c}
+                onChangeText={v_36c8eb}
+                editable={!v_88dca2}
+              />
+              {v_2c06d8 && (
+                <Text style={v_d81136.errorText}>{v_2c06d8}</Text>
+              )}
+            </View>
+
+            {}
             <View style={v_d81136.checkboxWrapper}>
               <FormCheckbox
-                label="I accept the terms and privacy policy"
+                label="METAHiNT서비스 약관 및 개인정보 보호정책에 동의합니다."
                 value={v_a6fcf8}
                 onChange={(v_3b402b) => !v_88dca2 && v_539b92(v_3b402b)}
               />
             </View>
 
+            {}
             <View style={v_d81136.buttonWrapper}>
               <PrimaryButton
                 title={v_88dca2 ? '가입 중...' : '가입하기'}
@@ -278,13 +365,6 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   style={v_d81136.loadingIndicator}
                 />
               )}
-            </View>
-
-            <View style={v_d81136.footerRow}>
-              <Text style={v_d81136.footerText}>Already have an account? </Text>
-              <TouchableOpacity onPress={() => v_c65f5d.navigate('Login')}>
-                <Text style={v_d81136.footerLink}>Log in</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </SafeScrollView>
@@ -300,33 +380,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   );
 };
 
-type SignupScreenStyles = {
-  flex: v_7e4944;
-  screen: v_7e4944;
-  content: v_7e4944;
-  form: v_7e4944;
-  row: v_7e4944;
-  rowItem: v_7e4944;
-  rowItemSpacing: v_7e4944;
-  sectionLabel: v_5e8657;
-  inlineOptions: v_7e4944;
-  phonePrefix: v_7e4944;
-  flagEmoji: v_5e8657;
-  countryCode: v_5e8657;
-  checkboxWrapper: v_7e4944;
-  passwordHint: v_5e8657;
-  buttonWrapper: v_7e4944;
-  loadingIndicator: v_7e4944;
-  footerRow: v_7e4944;
-  footerText: v_5e8657;
-  footerLink: v_5e8657;
-  regionHelper: v_5e8657;
-};
-
-const v_d81136 = v_472849.create<SignupScreenStyles>({
-  flex: {
-    flex: 1,
-  },
+const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
     backgroundColor: v_1bfbd0.background,
@@ -341,15 +395,6 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
     width: '100%',
     maxWidth: 780,
     gap: v_9b1a04.medium,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  rowItem: {
-    flex: 1,
-  },
-  rowItemSpacing: {
-    marginRight: v_9b1a04.small,
   },
   sectionLabel: {
     fontSize: 14,
@@ -379,13 +424,6 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
   checkboxWrapper: {
     marginTop: v_9b1a04.small,
   },
-  passwordHint: {
-    fontSize: 12,
-    fontFamily: v_843035.regular,
-    color: v_1bfbd0.secondaryText,
-    marginTop: -v_9b1a04.small / 2,
-    marginBottom: v_9b1a04.small,
-  },
   buttonWrapper: {
     marginTop: v_9b1a04.medium,
   },
@@ -393,27 +431,17 @@ const v_d81136 = v_472849.create<SignupScreenStyles>({
     marginTop: v_9b1a04.small / 2,
     alignSelf: 'center',
   },
-  footerRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: v_9b1a04.small,
-    paddingBottom: v_9b1a04.medium,
-  },
-  footerText: {
-    fontSize: 13,
+  errorText: {
+    fontSize: 12,
     fontFamily: v_843035.regular,
-    color: v_1bfbd0.secondaryText,
+    color: '#EF4444',
+    marginTop: 4,
   },
-  footerLink: {
-    fontSize: 13,
-    fontFamily: v_843035.semibold,
-    color: v_1bfbd0.text,
-  },
-  regionHelper: {
+  hintText: {
     fontSize: 12,
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
-    marginTop: -v_9b1a04.small / 2,
+    marginTop: 4,
   },
 });
 
