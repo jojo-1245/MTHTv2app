@@ -444,14 +444,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     <>
       {}
       <StatusBar style={v_2f29a7 ? "dark" : "light"} />
-      <SafeView style={v_d81136.screen} showBottomBackground={true}>
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
         {}
         <View style={[v_d81136.statusBarBackground, { height: v_033e14.top }]} />
 
         <SafeScrollView
           style={v_d81136.scrollView}
           contentContainerStyle={{ ...v_d81136.scrollContent, paddingTop: v_033e14.top }}
-          showBottomBackground={false}
+          showBottomBackground={true}
         >
           {}
           <View style={v_d81136.headerSection}>
@@ -738,8 +738,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             </View>
           </View>
 
-          {}
-          <View style={{ height: 40 }} />
         </SafeScrollView>
       </SafeView>
 
