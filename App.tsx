@@ -3,6 +3,7 @@ import { v_19b633, v_79c4f2, v_326be8 } from 'rcmrninabrnb';
 import * as v_7c6176 from 'cnykflwqacloajvnqn';
 import { v_c06f2c } from 'kjiqsgell';
 import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
+import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a } from './src/utils/env';
@@ -85,6 +86,7 @@ export default function v_6540c3() {
     <SafeAreaProvider
       initialMetrics={v_326be8.OS === 'android' ? v_a39049 : undefined}
     >
+      <StatusBar style="dark" />
       <AppProvider>
         <AppNavigator />
       </AppProvider>

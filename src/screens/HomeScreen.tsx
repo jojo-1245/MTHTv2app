@@ -26,7 +26,7 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_c5a058 = () => {
-    v_9b57fc('SignupTerms');
+    v_9b57fc('Signup');
   };
 
   const v_f36218 = 'feed';

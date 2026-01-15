@@ -4,12 +4,14 @@ import {
     v_700696,
     v_aa7413,
     v_122070,
+    v_b5df25,
     v_472849,
     v_19b633,
     v_4623af,
     v_3094a2,
 } from 'rcmrninabrnb';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 const { width: v_0d9f50 } = v_700696.get('window');
@@ -39,6 +41,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     onMenuItemPress: v_1e7823,
     userProfile: v_2f4b56 = { name: 'TED' },
 }) => {
+    const v_033e14 = v_e0068c();
     const v_e9b367 = v_e662ae(new v_a2349e.Value(-v_7a3013)).current;
 
     v_c4deb2(() => {
@@ -85,12 +88,21 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
         v_0890f8();
     };
 
+    v_c4deb2(() => {
+        if (v_cf55be) {
+            v_b5df25.setBarStyle('dark-content', true);
+        } else {
+            v_b5df25.setBarStyle('light-content', true);
+        }
+    }, [v_cf55be]);
+
     return (
         <Modal
             visible={v_cf55be}
             transparent
             animationType="fade"
             onRequestClose={v_0890f8}
+            statusBarTranslucent
         >
             <View style={v_d81136.overlay}>
                 <TouchableOpacity
@@ -107,7 +119,10 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     ]}
                 >
                     {}
-                    <View style={v_d81136.closeButtonContainer}>
+                    <View style={[v_d81136.statusBarBackground, { height: v_033e14.top }]} />
+
+                    {}
+                    <View style={[v_d81136.closeButtonContainer, { top: v_033e14.top + v_9b1a04.medium }]}>
                         <TouchableOpacity
                             style={v_d81136.closeButton}
                             onPress={v_0890f8}
@@ -120,7 +135,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     </View>
 
                     <ScrollView
-                        style={v_d81136.scrollView}
+                        style={[v_d81136.scrollView, { marginTop: v_033e14.top }]}
                         contentContainerStyle={v_d81136.scrollContent}
                         showsVerticalScrollIndicator={false}
                     >
@@ -252,7 +267,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     </ScrollView>
 
                     {}
-                    <View style={v_d81136.userProfileSection}>
+                    <View style={[v_d81136.userProfileSection, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}>
                         <View style={v_d81136.userAvatar}>
                             {v_2f4b56.avatar ? (
                                 <View style={[v_d81136.avatarPlaceholder, { backgroundColor: v_2f4b56.placeholderColor || v_1bfbd0.buttonPrimary }]}>
@@ -298,10 +313,20 @@ const v_d81136 = v_472849.create({
         left: 0,
         top: 0,
     },
+    statusBarBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: v_1bfbd0.background,
+        zIndex: 100,
+    },
     closeButtonContainer: {
         paddingHorizontal: v_9b1a04.large,
-        paddingTop: v_9b1a04.small,
         alignItems: 'flex-end',
+        position: 'absolute',
+        right: 0,
+        zIndex: 101,
     },
     closeButton: {
         width: 34,
@@ -315,6 +340,7 @@ const v_d81136 = v_472849.create({
     },
     scrollContent: {
         paddingBottom: v_9b1a04.xlarge,
+        paddingTop: v_9b1a04.xlarge,
     },
     headerSection: {
         paddingHorizontal: v_9b1a04.large,

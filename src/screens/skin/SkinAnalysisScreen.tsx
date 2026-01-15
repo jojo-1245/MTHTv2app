@@ -20,6 +20,7 @@ import * as v_f38d26 from 'lbosdxgirxcherxohyvziam';
 import * as v_cc38b7 from 'dnbozflmjypi';
 import * as v_8682f1 from 'xfwnoqvryfjuilcdia';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
+import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
@@ -1039,6 +1040,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
 
     return (
+        <>
+        <StatusBar style="dark" />
         <SafeView style={v_d81136.screen}>
             <Header
                 title="피부분석"
@@ -1065,6 +1068,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 </View>
             </SafeScrollView>
         </SafeView>
+        </>
     );
 };
 
