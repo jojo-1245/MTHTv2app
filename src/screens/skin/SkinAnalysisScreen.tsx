@@ -10,6 +10,7 @@ import {
     v_122070,
     v_09d0e5,
     v_700696,
+    v_aa7413,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_78ceb7, v_d4f1cc } from 'mbgbsytfgyr';
@@ -98,6 +99,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const [v_d5fcde, v_e61e4f] = v_5ab095('');
     const [v_e521b9, v_6f6f79] = v_5ab095<any>(null);
     const [v_1744b9, v_5c59f6] = v_5ab095('');
+
+    const [v_c5caed, v_e2f548] = v_5ab095(false);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         try {
@@ -203,16 +206,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }, [v_52f1d1, v_c00289]);
 
     const v_46964a = v_de06a3(() => {
-        v_03e392.alert(
-            '얼굴 촬영',
-            '피부 분석을 위해 정면 얼굴 사진을 촬영해주세요.',
-            [
-                { text: '취소', style: 'cancel' },
-                { text: '📷 카메라', onPress: v_2091c0 },
-                { text: '🖼️ 갤러리', onPress: () => v_2e22e6('gallery') },
-            ],
-        );
-    }, [v_2e22e6]);
+        v_e2f548(true);
+    }, []);
 
     const v_2091c0 = v_de06a3(async () => {
         if (!v_d1a6bb?.granted) {
@@ -224,6 +219,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
         v_639227('camera');
     }, [v_d1a6bb, v_1e66f0]);
+
+    const v_eb4a5e = v_de06a3(() => {
+        v_e2f548(false);
+        v_2091c0();
+    }, [v_2091c0]);
+
+    const v_5c14ac = v_de06a3(() => {
+        v_e2f548(false);
+        v_2e22e6('gallery');
+    }, [v_2e22e6]);
 
     const v_311f79 = v_de06a3(async () => {
         if (!v_1a165b.current || v_ef2e54) return;
@@ -473,8 +478,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         } catch (v_5e9bfe) {
             console.error('피부 분석 오류:', v_5e9bfe);
             v_5c59f6(
-                v_5e9bfe instanceof Error 
-                    ? v_5e9bfe.message 
+                v_5e9bfe instanceof Error
+                    ? v_5e9bfe.message
                     : '분석 중 오류가 발생했습니다.'
             );
             v_639227('settings');
@@ -672,15 +677,27 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     </>
                 ) : (
                     <View style={v_d81136.uploadPlaceholder}>
-                        <View style={v_d81136.uploadIconContainer}>
-                            <Ionicons name="person-outline" size={60} color={v_1bfbd0.bluePrimary} />
+                        {}
+                        <View style={v_d81136.faceGuideContainer}>
+                            <View style={v_d81136.faceGuideOval}>
+                            </View>
+                            {}
+                            <View style={v_d81136.uploadShoulderGuide} />
                         </View>
-                        <Text style={v_d81136.uploadText}>
-                            얼굴 사진 촬영
-                        </Text>
-                        <Text style={v_d81136.uploadHint}>
-                            탭하여 카메라 또는 갤러리에서 선택
-                        </Text>
+
+                        {}
+                        <View style={v_d81136.uploadCenterContent}>
+                            <View style={v_d81136.uploadIconContainer}>
+                                <Ionicons name="camera-outline" size={32} color={v_1bfbd0.bluePrimary} />
+                            </View>
+                            <Text style={v_d81136.uploadText}>
+                                얼굴 사진 촬영
+                            </Text>
+                            <Text style={v_d81136.uploadHint}>
+                                탭하여 카메라 또는 갤러리에서 선택
+                            </Text>
+                        </View>
+
                     </View>
                 )}
 
@@ -713,8 +730,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             v_d81136.validationStatus,
                             { color: v_07cd8d.hasFace ? '#4CAF50' : '#F44336' }
                         ]}>
-                            {v_07cd8d.hasFace 
-                                ? `인식됨 (${v_07cd8d.faceCount}명)` 
+                            {v_07cd8d.hasFace
+                                ? `인식됨 (${v_07cd8d.faceCount}명)`
                                 : '인식 실패'}
                         </Text>
                     </View>
@@ -732,8 +749,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             v_d81136.validationStatus,
                             { color: v_07cd8d.isFrontal ? '#4CAF50' : '#FF9800' }
                         ]}>
-                            {v_07cd8d.isFrontal 
-                                ? '정면' 
+                            {v_07cd8d.isFrontal
+                                ? '정면'
                                 : '정면이 아닐 수 있음'}
                         </Text>
                     </View>
@@ -759,7 +776,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <View style={v_d81136.validationWarning}>
                     <Ionicons name="warning" size={20} color="#F57C00" />
                     <Text style={v_d81136.validationWarningText}>
-                        {!v_07cd8d.hasFace 
+                        {!v_07cd8d.hasFace
                             ? '얼굴이 인식되지 않았습니다. 다시 촬영해주세요.'
                             : '정면이 아닙니다. 정면을 바라보고 다시 촬영해주세요.'}
                     </Text>
@@ -770,11 +787,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <View style={v_d81136.buttonSection}>
                 <PrimaryButton
                     title={
-                        !v_82f4af 
-                            ? "사진을 촬영해주세요" 
-                            : !v_07cd8d?.hasFace 
-                                ? "얼굴 인식 필요" 
-                                : !v_07cd8d?.isFrontal 
+                        !v_82f4af
+                            ? "사진을 촬영해주세요"
+                            : !v_07cd8d?.hasFace
+                                ? "얼굴 인식 필요"
+                                : !v_07cd8d?.isFrontal
                                     ? "정면 촬영 필요"
                                     : "다음 단계로"
                     }
@@ -908,7 +925,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                                             <Ionicons name="checkmark" size={14} color={v_1bfbd0.background} />
                                         )}
                                     </View>
-                                    <Text style={v_d81136.concernIcon}>{v_ccf527.icon}</Text>
                                     <Text style={[
                                         v_d81136.concernLabel,
                                         v_599a41 && v_d81136.concernLabelSelected,
@@ -972,7 +988,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <View style={v_d81136.sectionTitleRow}>
                     <Ionicons name="document-text-outline" size={16} color="#4EC9B0" />
                     <Text style={v_d81136.jsonTitle}>분석 결과 (JSON)</Text>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={v_d81136.copyIconButton}
                         onPress={v_3274ee}
                         accessibilityRole="button"
@@ -981,7 +997,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         <Ionicons name="copy-outline" size={18} color="#4EC9B0" />
                     </TouchableOpacity>
                 </View>
-                <ScrollView 
+                <ScrollView
                     style={v_d81136.jsonScrollView}
                     horizontal={false}
                     nestedScrollEnabled={true}
@@ -1041,33 +1057,78 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     return (
         <>
-        <StatusBar style="dark" />
-        <SafeView style={v_d81136.screen}>
-            <Header
-                title="피부분석"
-                showBackButton
-                onBackPress={() => {
-                    if (v_91943c === 'capture') {
-                        v_c65f5d.goBack();
-                    } else if (v_91943c === 'settings') {
-                        v_639227('capture');
-                    } else if (v_91943c === 'result') {
-                        v_a2f2ec();
-                    }
-                }}
-            />
-            <SafeScrollView
-                contentContainerStyle={v_d81136.content}
-                showsVerticalScrollIndicator={false}
+            <StatusBar style="dark" />
+            <SafeView style={v_d81136.screen}>
+                <Header
+                    title="피부분석"
+                    showBackButton
+                    onBackPress={() => {
+                        if (v_91943c === 'capture') {
+                            v_c65f5d.goBack();
+                        } else if (v_91943c === 'settings') {
+                            v_639227('capture');
+                        } else if (v_91943c === 'result') {
+                            v_a2f2ec();
+                        }
+                    }}
+                />
+                <SafeScrollView
+                    contentContainerStyle={v_d81136.content}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={v_d81136.container}>
+                        {v_91943c === 'capture' && v_33853a()}
+                        {v_91943c === 'settings' && v_a5ba83()}
+                        {v_91943c === 'analyzing' && v_5f339d()}
+                        {v_91943c === 'result' && v_4ff022()}
+                    </View>
+                </SafeScrollView>
+            </SafeView>
+
+            {}
+            <Modal
+                visible={v_c5caed}
+                transparent
+                animationType="fade"
+                onRequestClose={() => v_e2f548(false)}
             >
-                <View style={v_d81136.container}>
-                    {v_91943c === 'capture' && v_33853a()}
-                    {v_91943c === 'settings' && v_a5ba83()}
-                    {v_91943c === 'analyzing' && v_5f339d()}
-                    {v_91943c === 'result' && v_4ff022()}
-                </View>
-            </SafeScrollView>
-        </SafeView>
+                <Pressable
+                    style={v_d81136.imagePickerModalOverlay}
+                    onPress={() => v_e2f548(false)}
+                >
+                    <Pressable style={v_d81136.imagePickerModalContent} onPress={() => { }}>
+                        <Text style={v_d81136.imagePickerModalTitle}>얼굴 촬영</Text>
+                        <Text style={v_d81136.imagePickerModalSubtitle}>
+                            피부 분석을 위해 정면 얼굴 사진을 촬영해주세요.
+                        </Text>
+
+                        <View style={v_d81136.imagePickerModalButtons}>
+                            <TouchableOpacity
+                                style={v_d81136.imagePickerModalButton}
+                                onPress={v_eb4a5e}
+                            >
+                                <Ionicons name="camera-outline" size={24} color={v_1bfbd0.bluePrimary} />
+                                <Text style={v_d81136.imagePickerModalButtonText}>카메라</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={v_d81136.imagePickerModalButton}
+                                onPress={v_5c14ac}
+                            >
+                                <Ionicons name="images-outline" size={24} color={v_1bfbd0.bluePrimary} />
+                                <Text style={v_d81136.imagePickerModalButtonText}>갤러리</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <TouchableOpacity
+                            style={v_d81136.imagePickerModalCancelButton}
+                            onPress={() => v_e2f548(false)}
+                        >
+                            <Text style={v_d81136.imagePickerModalCancelText}>취소</Text>
+                        </TouchableOpacity>
+                    </Pressable>
+                </Pressable>
+            </Modal>
         </>
     );
 };
@@ -1110,7 +1171,7 @@ const v_d81136 = v_472849.create({
 
     imageUploadArea: {
         width: '100%',
-        aspectRatio: 3/4,
+        aspectRatio: 3 / 4,
         backgroundColor: v_1bfbd0.lightGray,
         borderRadius: 20,
         overflow: 'hidden',
@@ -1124,10 +1185,45 @@ const v_d81136 = v_472849.create({
     },
     uploadPlaceholder: {
         flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: v_9b1a04.xlarge,
+        paddingHorizontal: v_9b1a04.large,
+        position: 'relative',
+    },
+    faceGuideContainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: v_9b1a04.xlarge,
+        width: '100%',
         position: 'relative',
+    },
+    faceGuideOval: {
+        width: 160,
+        height: 200,
+        borderRadius: 80,
+        borderWidth: 2,
+        borderColor: 'rgba(59, 130, 246, 0.3)',
+        borderStyle: 'dashed',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(59, 130, 246, 0.05)',
+    },
+    uploadShoulderGuide: {
+        width: 220,
+        height: 60,
+        borderTopLeftRadius: 110,
+        borderTopRightRadius: 110,
+        borderWidth: 2,
+        borderBottomWidth: 0,
+        borderColor: 'rgba(59, 130, 246, 0.3)',
+        borderStyle: 'dashed',
+        marginTop: -10,
+        backgroundColor: 'rgba(59, 130, 246, 0.05)',
+    },
+    uploadCenterContent: {
+        alignItems: 'center',
+        paddingVertical: v_9b1a04.medium,
     },
 
     guideOverlay: {
@@ -1182,24 +1278,26 @@ const v_d81136 = v_472849.create({
         alignItems: 'center',
     },
     uploadIconContainer: {
-        width: 70,
-        height: 70,
-        borderRadius: 35,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
         backgroundColor: v_1bfbd0.blurBlue,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: v_9b1a04.small,
     },
     uploadText: {
-        fontSize: v_ef658a.medium,
+        fontSize: v_ef658a.large,
         fontFamily: v_843035.semibold,
         color: v_1bfbd0.bluePrimary,
+        marginBottom: 4,
     },
     uploadHint: {
-        fontSize: v_ef658a.medium,
+        fontSize: v_ef658a.small,
         fontFamily: v_843035.regular,
         color: v_1bfbd0.secondaryText,
     },
+
     changeImageButton: {
         position: 'absolute',
         top: 12,
@@ -1433,10 +1531,6 @@ const v_d81136 = v_472849.create({
     checkboxSelected: {
         backgroundColor: v_1bfbd0.bluePrimary,
         borderColor: v_1bfbd0.bluePrimary,
-    },
-    concernIcon: {
-        fontSize: 16,
-        marginRight: 6,
     },
     concernLabel: {
         flex: 1,
@@ -1683,6 +1777,61 @@ const v_d81136 = v_472849.create({
         backgroundColor: '#FFFFFF',
         borderWidth: 2,
         borderColor: v_1bfbd0.bluePrimary,
+    },
+
+    imagePickerModalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imagePickerModalContent: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: v_9b1a04.large,
+        width: v_0d9f50 - 48,
+        alignItems: 'center',
+    },
+    imagePickerModalTitle: {
+        fontSize: v_ef658a.xlarge,
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+        marginBottom: v_9b1a04.small,
+    },
+    imagePickerModalSubtitle: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        textAlign: 'center',
+        marginBottom: v_9b1a04.large,
+    },
+    imagePickerModalButtons: {
+        flexDirection: 'row',
+        gap: v_9b1a04.large,
+        marginBottom: v_9b1a04.large,
+    },
+    imagePickerModalButton: {
+        alignItems: 'center',
+        paddingVertical: v_9b1a04.medium,
+        paddingHorizontal: v_9b1a04.xlarge,
+        backgroundColor: v_1bfbd0.lightGray,
+        borderRadius: 12,
+        minWidth: 100,
+    },
+    imagePickerModalButtonText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.bluePrimary,
+        marginTop: v_9b1a04.small,
+    },
+    imagePickerModalCancelButton: {
+        paddingVertical: v_9b1a04.medium,
+        paddingHorizontal: v_9b1a04.xlarge,
+    },
+    imagePickerModalCancelText: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.bluePrimary,
     },
 });
 
