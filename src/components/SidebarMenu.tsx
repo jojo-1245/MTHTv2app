@@ -69,7 +69,6 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     const v_c08e0e = [
         { id: 'skin', label: '피부 분석하기', icon: 'user-plus' },
         { id: 'health', label: '건강 분석하기', icon: 'user-plus' },
-        { id: 'connect', label: '건강정보 연결하기', icon: 'user-plus' },
     ];
 
     const v_ff33a4 = [
