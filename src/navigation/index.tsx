@@ -9,7 +9,6 @@ import v_f40fc5 from '../screens/SignupScreen';
 import {
   v_937ab8,
   v_c39920,
-  v_a82b55,
   v_d02ed0,
   v_91bfb7,
   v_d7587d,
@@ -17,6 +16,7 @@ import {
   v_124daa,
   v_2436b6,
 } from '../screens/signup';
+import v_a82b55 from '../screens/EmailVerificationScreen';
 import v_040c8f from '../screens/ForgotPasswordScreen';
 import v_0d311d from '../screens/PasswordVerificationScreen';
 import v_db1cc4 from '../screens/ResetPasswordScreen';
