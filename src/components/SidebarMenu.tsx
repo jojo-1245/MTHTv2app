@@ -63,6 +63,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     const v_4120d4 = [
         { id: 'wallet', label: 'Wallet', icon: 'credit-card' },
         { id: 'shop', label: 'Shop', icon: 'shopping-cart' },
+        { id: 'chat', label: 'Chat', icon: 'message-circle' },
     ];
 
     const v_c08e0e = [

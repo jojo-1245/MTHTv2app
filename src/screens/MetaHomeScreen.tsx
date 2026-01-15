@@ -356,6 +356,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       case 'shop':
         v_03e392.alert('안내', 'Shop 화면은 준비 중입니다.');
         break;
+      case 'chat':
+        v_9b57fc('Chat');
+        break;
       case 'skin':
         v_9b57fc('SkinAnalysis');
         break;
