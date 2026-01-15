@@ -310,6 +310,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const { width: v_06db8f } = v_e45a99();
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
   const [v_89bb03, v_39f9a7] = v_5ab095('');
+  const [v_40f660, v_d5a554] = v_5ab095(false);
   const [v_b2ef64, v_9fb738] = v_5ab095(false);
   const [v_459c4b, v_82dcd4] = v_5ab095<string[]>(
     v_6fca9b.map(v_8c0b26 => v_8c0b26.id)
@@ -493,20 +494,53 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.searchContainer}>
-            <View style={v_d81136.searchBar}>
+            <View style={[v_d81136.searchBar, v_40f660 && v_d81136.searchBarFocused]}>
               <TextInput
                 style={v_d81136.searchInput}
-                placeholder="TED 님, 무엇이 궁금하신가요?"
+                placeholder={v_40f660 ? "건강정보를 검색하세요" : "TED 님, 무엇이 궁금하신가요?"}
                 placeholderTextColor="#999"
                 value={v_89bb03}
                 onChangeText={v_39f9a7}
                 onSubmitEditing={v_5e757d}
+                onFocus={() => v_d5a554(true)}
+                onBlur={() => v_d5a554(false)}
                 returnKeyType="search"
               />
-              <TouchableOpacity onPress={v_5e757d} style={v_d81136.searchButton}>
-                <Ionicons name="search" size={22} color="#6B7280" />
+              <TouchableOpacity
+                onPress={v_5e757d}
+                style={[v_d81136.searchButton, v_40f660 && v_d81136.searchButtonFocused]}
+              >
+                {v_40f660 ? (
+                  <Ionicons name="arrow-up" size={20} color="#FFFFFF" />
+                ) : (
+                  <Ionicons name="search" size={22} color="#6B7280" />
+                )}
               </TouchableOpacity>
             </View>
+
+            {}
+            {v_40f660 && (
+              <View style={v_d81136.searchExtras}>
+                <TouchableOpacity
+                  style={v_d81136.searchExtraButton}
+                  onPress={() => v_03e392.alert('추가', '파일 첨부 기능은 준비 중입니다.')}
+                >
+                  <Ionicons name="add" size={24} color="#6B7280" />
+                </TouchableOpacity>
+
+                <View style={v_d81136.searchExtraRight}>
+                  <TouchableOpacity style={v_d81136.healthTag}>
+                    <Text style={v_d81136.healthTagText}>건강관리</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={v_d81136.searchExtraButton}
+                    onPress={() => v_03e392.alert('음성', '음성 검색 기능은 준비 중입니다.')}
+                  >
+                    <Ionicons name="mic-outline" size={24} color="#6B7280" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
 
           {}
@@ -900,6 +934,62 @@ const v_d81136 = v_472849.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
+  },
+  searchBarFocused: {
+    borderRadius: 16,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  searchButtonFocused: {
+    backgroundColor: '#4A5099',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchExtras: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.small,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  searchExtraButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  searchExtraRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
+  healthTag: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+  },
+  healthTagText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#374151',
   },
   searchInput: {
     flex: 1,
