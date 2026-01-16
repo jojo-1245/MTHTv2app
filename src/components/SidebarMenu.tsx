@@ -10,7 +10,7 @@ import {
     v_4623af,
     v_3094a2,
 } from 'rcmrninabrnb';
-import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_dec439, v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
@@ -21,6 +21,7 @@ export interface SidebarMenuItem {
     id: string;
     label: string;
     icon?: keyof typeof v_dec439.glyphMap;
+    materialIcon?: keyof typeof v_f832ec.glyphMap;
     onPress?: () => void;
 }
 
@@ -68,9 +69,9 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     ];
 
     const v_c08e0e = [
-        { id: 'skin', label: '피부 분석하기', icon: 'user-plus' },
-        { id: 'health', label: '건강 분석하기', icon: 'user-plus' },
-        { id: 'connect', label: '건강정보 연결하기', icon: 'user-plus' },
+        { id: 'skin', label: '피부 분석하기', materialIcon: 'face-woman-shimmer' },
+        { id: 'health', label: '건강 분석하기', materialIcon: 'heart-pulse' },
+        { id: 'connect', label: '건강정보 연결하기', icon: 'link' },
     ];
 
     const v_ff33a4 = [
@@ -189,7 +190,14 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                                     accessibilityRole="button"
                                     accessibilityLabel={v_8c0b26.label}
                                 >
-                                    {v_8c0b26.icon && (
+                                    {v_8c0b26.materialIcon ? (
+                                        <MaterialCommunityIcons
+                                            name={v_8c0b26.materialIcon}
+                                            size={20}
+                                            color={v_1bfbd0.text}
+                                            style={v_d81136.menuIcon}
+                                        />
+                                    ) : v_8c0b26.icon && (
                                         <Feather
                                             name={v_8c0b26.icon}
                                             size={20}
