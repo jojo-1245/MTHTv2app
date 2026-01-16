@@ -1364,6 +1364,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <SafeScrollView
                     contentContainerStyle={v_d81136.content}
                     showsVerticalScrollIndicator={false}
+                    showBottomBackground={false}
+                    disableBottomPadding={true}
                 >
                     <View style={v_d81136.container}>
                         {v_91943c === 'capture' && v_33853a()}
