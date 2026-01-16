@@ -27,7 +27,7 @@ type Props = v_432191<v_8ad91b, 'MyInfoNotify'>;
 
 export interface NotificationItem {
   board: number;
-  type: 9301 | 9302 | 9303; 
+  type: 9301 | 9302 | 9303 | 9304; 
   title: string;
   contents: string | null;
   datetime: string;
@@ -35,6 +35,9 @@ export interface NotificationItem {
   guid: string | null;
   datebegin?: string;
   dateends?: string;
+
+  requesterEmail?: string; 
+  requesterName?: string; 
 }
 
 const v_e065e5 = (v_a86996): string => {
@@ -81,6 +84,17 @@ const v_23be95 = (v_b9c00c) => {
 };
 
 const v_6f7f13 = [
+  {
+    board: 0,
+    type: 9304, 
+    title: '건강정보 불러오기를 요청하셨습니다.',
+    contents: null,
+    datetime: '2024-09-27T02:16:00',
+    image: null,
+    guid: null,
+    requesterEmail: 'oth-staff@example.invalid',
+    requesterName: '신세경',
+  },
   {
     board: 1,
     type: 9302, 
@@ -198,14 +212,78 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     }
   };
 
+  const v_8b09cb = async (v_10046b, v_47ef8d) => {
+    v_03e392.alert(
+      v_47ef8d ? '허용' : '거절',
+      v_47ef8d
+        ? '건강정보 불러오기 요청을 허용하시겠습니까?'
+        : '건강정보 불러오기 요청을 거절하시겠습니까?',
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: v_47ef8d ? '허용' : '거절',
+          onPress: () => {
+
+            if (v_47ef8d) {
+              v_03e392.alert('완료', '건강정보 불러오기 요청을 허용했습니다.');
+            } else {
+              v_03e392.alert('완료', '건강정보 불러오기 요청을 거절했습니다.');
+            }
+
+            v_0965ee(v_b9c00c.filter((v_f4e98d) => v_f4e98d.board !== v_10046b));
+          },
+        },
+      ]
+    );
+  };
+
   const v_8172ec = (v_b9faeb, v_a56041) => {
     const v_7b6eb8 = v_b9faeb.type === 9303;
     const v_fc7457 = v_b9faeb.type === 9302;
     const v_d37866 = v_b9faeb.type === 9301;
+    const v_6a1939 = v_b9faeb.type === 9304;
 
     const v_ee89db = v_b9faeb.image
       ? `data:image/jpeg;base64,${v_b9faeb.image}`
       : null;
+
+    if (v_6a1939) {
+      return (
+        <View key={`notification-${v_b9faeb.board}-${v_a56041}`} style={v_d81136.messageWrapper}>
+          <View style={v_d81136.avatarWrapper}>
+            <Image
+              source={require('../../../assets/images/metahint-logo.png')}
+              style={v_d81136.avatar}
+            />
+            <Text style={v_d81136.avatarText}>METAHINT</Text>
+          </View>
+          <View style={v_d81136.messageCard}>
+            <Text style={v_d81136.healthRequestText}>
+              {v_b9faeb.requesterEmail} 님이{'\n'}
+              {v_b9faeb.requesterName}님이{'\n'}
+              건강정보 불러오기를 요청하셨습니다.
+            </Text>
+            <View style={v_d81136.healthRequestButtons}>
+              <TouchableOpacity
+                style={v_d81136.healthRequestButtonAccept}
+                onPress={() => v_8b09cb(v_b9faeb.board, true)}
+                activeOpacity={0.85}
+              >
+                <Text style={v_d81136.healthRequestButtonText}>허용</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={v_d81136.healthRequestButtonReject}
+                onPress={() => v_8b09cb(v_b9faeb.board, false)}
+                activeOpacity={0.85}
+              >
+                <Text style={v_d81136.healthRequestButtonTextReject}>거절</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={v_d81136.timestamp}>{v_9f6fdd(v_b9faeb.datetime)}</Text>
+        </View>
+      );
+    }
 
     if (v_7b6eb8) {
 
@@ -603,6 +681,44 @@ const v_d81136 = v_472849.create({
   sendButtonText: {
     color: v_1bfbd0.background,
     fontSize: 14,
+  },
+  healthRequestText: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  healthRequestButtons: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 8,
+  },
+  healthRequestButtonAccept: {
+    flex: 1,
+    backgroundColor: v_1bfbd0.buttonPrimary,
+    borderRadius: 6,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  healthRequestButtonReject: {
+    flex: 1,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 6,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  healthRequestButtonText: {
+    color: v_1bfbd0.background,
+    fontSize: 14,
+    fontFamily: v_843035.bold,
+  },
+  healthRequestButtonTextReject: {
+    color: v_1bfbd0.text,
+    fontSize: 14,
+    fontFamily: v_843035.bold,
   },
 });
 
