@@ -22,7 +22,7 @@ import v_f595b9, { v_bf60de, v_003e74, v_050c3d, v_19b633 as v_9b42ad, v_9033e9,
 import { v_570c34, v_5deec6 } from '../components';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
-import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../constants';
+import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_16b893, v_53f592 } from '../constants';
 import type { v_80b5f0 } from '../components/SidebarMenu';
 import { v_556baf } from '../components';
 
@@ -56,7 +56,7 @@ const v_74dc09 = [
   },
 ];
 
-const v_6fca9b = [
+const v_191cd1 = [
   { id: 'skinType', label: 'Skin Type', score: 78, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
   { id: 'spots', label: 'Spots', score: 78, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
   { id: 'wrinkles', label: 'Wrinkles', score: 91, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
@@ -73,6 +73,27 @@ const v_6fca9b = [
   { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 81, color: '#06B6D4', radarBefore: 60, radarAfter: 80 },
   { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 75, color: '#84CC16', radarBefore: 50, radarAfter: 70 },
 ];
+
+const v_be142a = [
+  { id: 'skinType', label: 'Skin Type', score: 72, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
+  { id: 'spots', label: 'Spots', score: 65, color: '#F97316', radarBefore: 50, radarAfter: 65 },
+  { id: 'wrinkles', label: 'Wrinkles', score: 82, color: '#22C55E', radarBefore: 55, radarAfter: 70 },
+  { id: 'texture', label: 'Texture', score: 88, color: '#06B6D4', radarBefore: 60, radarAfter: 75 },
+  { id: 'acne', label: 'Acne', score: 85, color: '#9CA3AF', radarBefore: 60, radarAfter: 75 },
+  { id: 'darkCircles', label: 'Dark Circles', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 65 },
+  { id: 'redness', label: 'Redness', score: 92, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
+  { id: 'oiliness', label: 'Oiliness', score: 85, color: '#F97316', radarBefore: 40, radarAfter: 60 },
+  { id: 'moisture', label: 'Moisture', score: 75, color: '#F97316', radarBefore: 50, radarAfter: 70 },
+  { id: 'pores', label: 'Pores', score: 78, color: '#84CC16', radarBefore: 40, radarAfter: 60 },
+  { id: 'eyeBags', label: 'Eye bags', score: 79, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
+  { id: 'radiance', label: 'Radiance', score: 80, color: '#22C55E', radarBefore: 45, radarAfter: 70 },
+  { id: 'firmness', label: 'Firmness', score: 82, color: '#EC4899', radarBefore: 35, radarAfter: 65 },
+  { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 74, color: '#06B6D4', radarBefore: 55, radarAfter: 70 },
+  { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 60 },
+];
+
+const v_2b90bf = '2026.01.15';
+const v_c10ca0 = '2025.12.20';
 
 const RadarChart: v_a3453e.FC<{
   data: number[];
@@ -312,10 +333,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_89bb03, v_39f9a7] = v_5ab095('');
   const [v_40f660, v_d5a554] = v_5ab095(false);
   const [v_b2ef64, v_9fb738] = v_5ab095(false);
+  const [v_204bf1, v_b318d9] = v_5ab095<'recent' | 'previous'>('recent');
   const [v_459c4b, v_82dcd4] = v_5ab095<string[]>(
-    v_6fca9b.map(v_8c0b26 => v_8c0b26.id)
+    v_191cd1.map(v_8c0b26 => v_8c0b26.id)
   );
   const [v_39cb7a, v_ecd01c] = v_5ab095(8); 
+  const [v_30ddf9, v_ca2ef8] = v_5ab095(9); 
+
+  const v_a36c61 = v_204bf1 === 'recent' ? v_191cd1 : v_be142a;
+  const v_d39d27 = v_204bf1 === 'recent' ? v_2b90bf : v_c10ca0;
+  const v_287ba3 = v_204bf1 === 'recent' ? 17 : 19;
 
   const v_fc5fb7 = (v_740dd8): string => {
     if (v_740dd8 >= 8) return '높음';
@@ -323,6 +350,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     if (v_740dd8 >= 4) return '보통';
     if (v_740dd8 >= 2) return '주의';
     return '위험';
+  };
+
+  const v_d22127 = (v_fbe91e): string => {
+    if (v_fbe91e >= 9) return '우수단계';
+    if (v_fbe91e >= 7) return '양호단계';
+    if (v_fbe91e >= 5) return '보통단계';
+    if (v_fbe91e >= 3) return '주의단계';
+    return '위험단계';
   };
 
   const v_7d58f2 = v_df9f57(() => {
@@ -419,14 +454,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   const v_54edde = (v_45e488) => {
     if (v_45e488) {
-      v_82dcd4(v_6fca9b.map(v_8c0b26 => v_8c0b26.id));
+      v_82dcd4(v_191cd1.map(v_8c0b26 => v_8c0b26.id));
     } else {
       v_82dcd4([]);
     }
   };
 
   const v_916c54 = v_df9f57(() => {
-    const v_973c3e = v_6fca9b.filter(
+    const v_973c3e = v_191cd1.filter(
       v_8c0b26 => !v_8c0b26.isButton && v_459c4b.includes(v_8c0b26.id)
     );
     return {
@@ -615,10 +650,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               </View>
               <View style={v_d81136.levelInfoContainer}>
                 <View style={v_d81136.levelInfo}>
-                  <View style={v_d81136.levelBadge}>
-                    <Text style={v_d81136.levelBadgeText}>Level 9</Text>
+                  <View style={[v_d81136.levelBadge, { backgroundColor: v_16b893[v_30ddf9 as keyof typeof v_16b893] }]}>
+                    <Text style={v_d81136.levelBadgeText}>Level {v_30ddf9}</Text>
                   </View>
-                  <Text style={v_d81136.levelStatus}>양호단계</Text>
+                  <Text style={v_d81136.levelStatus}>{v_d22127(v_30ddf9)}</Text>
                 </View>
                 <Text style={v_d81136.levelDescription}>
                   상태 유지를 위한 지속적 관리 필요
@@ -664,6 +699,43 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               </View>
 
               {}
+              <View style={v_d81136.analysisTabContainer}>
+                <TouchableOpacity
+                  style={[
+                    v_d81136.analysisTab,
+                    v_204bf1 === 'recent' && v_d81136.analysisTabActive,
+                  ]}
+                  onPress={() => v_b318d9('recent')}
+                  activeOpacity={0.7}
+                >
+                  <Text style={[
+                    v_d81136.analysisTabText,
+                    v_204bf1 === 'recent' && v_d81136.analysisTabTextActive,
+                  ]}>
+                    최근분석
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    v_d81136.analysisTab,
+                    v_204bf1 === 'previous' && v_d81136.analysisTabActive,
+                  ]}
+                  onPress={() => v_b318d9('previous')}
+                  activeOpacity={0.7}
+                >
+                  <Text style={[
+                    v_d81136.analysisTabText,
+                    v_204bf1 === 'previous' && v_d81136.analysisTabTextActive,
+                  ]}>
+                    이전분석
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {}
+              <Text style={v_d81136.analysisDateText}>분석일자: {v_d39d27}</Text>
+
+              {}
               <View style={v_d81136.warningSection}>
                 <View style={v_d81136.warningRow}>
                   <Text style={v_d81136.warningLabel}>주의</Text>
@@ -689,7 +761,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               {}
               <View style={v_d81136.diagnosticSection}>
                 <Text style={v_d81136.diagnosticTitle}>Live Diagnostic Results</Text>
-                <Text style={v_d81136.skinAgeText}>SKIN AGE: 17</Text>
+                <Text style={v_d81136.skinAgeText}>SKIN AGE: {v_287ba3}</Text>
 
                 {}
                 <View style={v_d81136.diagnosticGridWrap}>
@@ -719,31 +791,34 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   </TouchableOpacity>
 
                   {}
-                  {v_6fca9b
+                  {v_a36c61
                     .filter(v_8c0b26 => !v_8c0b26.isButton && v_459c4b.includes(v_8c0b26.id))
-                    .map((v_8c0b26) => (
-                      <View
-                        key={v_8c0b26.id}
-                        style={[v_d81136.diagnosticItemNew, { width: v_7d58f2.itemWidth }]}
-                      >
-                        <View style={[v_d81136.scoreCircleNew, {
-                          borderColor: v_8c0b26.color,
-                          width: v_7d58f2.circleSize,
-                          height: v_7d58f2.circleSize,
-                          borderRadius: v_7d58f2.circleSize / 2,
-                        }]}>
-                          <Text style={[v_d81136.scoreTextNew, {
-                            color: v_8c0b26.color,
-                            fontSize: v_7d58f2.fontSize,
+                    .map((v_8c0b26) => {
+                      const v_5e5963 = v_53f592(v_8c0b26.score);
+                      return (
+                        <View
+                          key={v_8c0b26.id}
+                          style={[v_d81136.diagnosticItemNew, { width: v_7d58f2.itemWidth }]}
+                        >
+                          <View style={[v_d81136.scoreCircleNew, {
+                            borderColor: v_5e5963,
+                            width: v_7d58f2.circleSize,
+                            height: v_7d58f2.circleSize,
+                            borderRadius: v_7d58f2.circleSize / 2,
                           }]}>
-                            {v_8c0b26.score}
+                            <Text style={[v_d81136.scoreTextNew, {
+                              color: v_5e5963,
+                              fontSize: v_7d58f2.fontSize,
+                            }]}>
+                              {v_8c0b26.score}
+                            </Text>
+                          </View>
+                          <Text style={[v_d81136.diagnosticLabelNew, { fontSize: v_7d58f2.labelFontSize }]} numberOfLines={2}>
+                            {v_8c0b26.label}
                           </Text>
                         </View>
-                        <Text style={[v_d81136.diagnosticLabelNew, { fontSize: v_7d58f2.labelFontSize }]} numberOfLines={2}>
-                          {v_8c0b26.label}
-                        </Text>
-                      </View>
-                    ))
+                      );
+                    })
                   }
                 </View>
 
@@ -830,14 +905,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             </View>
 
             <ScrollView style={v_d81136.modalScrollView}>
-              {v_6fca9b.filter(v_8c0b26 => !v_8c0b26.isButton).map((v_8c0b26) => (
+              {v_a36c61.filter(v_8c0b26 => !v_8c0b26.isButton).map((v_8c0b26) => (
                 <TouchableOpacity
                   key={v_8c0b26.id}
                   style={v_d81136.modalItem}
                   onPress={() => v_2d3af6(v_8c0b26.id)}
                 >
                   <View style={v_d81136.modalItemLeft}>
-                    <View style={[v_d81136.modalItemDot, { backgroundColor: v_8c0b26.color }]} />
+                    <View style={[v_d81136.modalItemDot, { backgroundColor: v_53f592(v_8c0b26.score) }]} />
                     <Text style={v_d81136.modalItemLabel}>{v_8c0b26.label}</Text>
                   </View>
                   <View style={[
@@ -1215,6 +1290,41 @@ const v_d81136 = v_472849.create({
     fontSize: 11,
     fontFamily: v_843035.regular,
     color: '#6B7280',
+  },
+
+  analysisTabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: v_9b1a04.large,
+    marginBottom: v_9b1a04.small,
+    gap: v_9b1a04.small,
+  },
+  analysisTab: {
+    paddingVertical: v_9b1a04.small,
+    paddingHorizontal: v_9b1a04.large,
+    borderRadius: 20,
+    backgroundColor: '#F3F4F6',
+    minWidth: 100,
+    alignItems: 'center',
+  },
+  analysisTabActive: {
+    backgroundColor: '#3B82F6',
+  },
+  analysisTabText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#6B7280',
+  },
+  analysisTabTextActive: {
+    color: '#FFFFFF',
+  },
+  analysisDateText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#9CA3AF',
+    textAlign: 'center',
+    marginBottom: v_9b1a04.medium,
   },
   warningSection: {
     width: '100%',
