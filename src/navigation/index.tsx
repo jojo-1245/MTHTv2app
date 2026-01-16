@@ -54,10 +54,10 @@ export type RootStackParamList = {
   SignupPassword: undefined;
   SignupName: undefined;
   SignupBirthday:
-    | {
-        name?: string;
-      }
-    | undefined;
+  | {
+    name?: string;
+  }
+  | undefined;
   SignupGender: undefined;
   SignupReferral: undefined;
   SignupSuccess: undefined;
@@ -66,39 +66,39 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   PasswordChanged: undefined;
   EmailVerification:
-    | {
-        email?: string;
-        redirectTo?: keyof RootStackParamList;
-      }
-    | undefined;
+  | {
+    email?: string;
+    redirectTo?: keyof RootStackParamList;
+  }
+  | undefined;
   CountrySelect:
-    | {
-        mode?: 'country' | 'region';
-      }
-    | undefined;
+  | {
+    mode?: 'country' | 'region';
+  }
+  | undefined;
   Wallet: undefined;
   PolygonHistory:
-    | {
-        title?: string;
-        iconSource?: any;
-        tokenName?: string;
-      }
-    | undefined;
+  | {
+    title?: string;
+    iconSource?: any;
+    tokenName?: string;
+  }
+  | undefined;
   MetahintHistory:
-    | {
-        title?: string;
-        iconSource?: any;
-        tokenName?: string;
-      }
-    | undefined;
+  | {
+    title?: string;
+    iconSource?: any;
+    tokenName?: string;
+  }
+  | undefined;
   WalletSend: undefined;
   WalletReceive:
-    | {
-        title?: string;
-        iconSource?: any;
-        tokenName?: string;
-      }
-    | undefined;
+  | {
+    title?: string;
+    iconSource?: any;
+    tokenName?: string;
+  }
+  | undefined;
   WalletQrScan: undefined;
   WalletEstimate: undefined;
   WalletTransactionProgress: undefined;
@@ -116,7 +116,7 @@ export type RootStackParamList = {
   };
   MyInfoCloseMembership: undefined;
   MyInfoFaq: undefined;
-  SkinAnalysis: undefined;
+  SkinAnalysis: { previewResult?: boolean } | undefined;
   HealthAnalysis: undefined;
   HealthConnection: undefined;
   Chat: {

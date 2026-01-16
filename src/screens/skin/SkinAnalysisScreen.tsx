@@ -27,7 +27,7 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe } from '../../components';
 import type { v_8ad91b } from '../../navigation';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a } from '../../constants';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590 } from '../../constants';
 import {
     v_6bbbb9,
     type v_146928,
@@ -80,9 +80,94 @@ const SKIN_CONCERNS_HD: { key: v_38cf4d; label: string }[] = [
     { key: 'hd_wrinkle', label: '주름' },
 ];
 
-const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const v_f68226 = {
+    acne: '여드름',
+    dark_circle_v2: '다크서클',
+    droopy_lower_eyelid: '처진 아랫눈꺼풀',
+    droopy_upper_eyelid: '처진 윗눈꺼풀',
+    eye_bag: '눈밑지방',
+    firmness: '탄력',
+    moisture: '수분',
+    oiliness: '유분',
+    pore: '모공',
+    radiance: '광채',
+    redness: '홍조',
+    age_spot: '기미/잡티',
+    texture: '피부결',
+    wrinkle: '주름',
 
-    const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('capture');
+    hd_acne: '여드름',
+    hd_dark_circle: '다크서클',
+    hd_droopy_lower_eyelid: '처진 아랫눈꺼풀',
+    hd_droopy_upper_eyelid: '처진 윗눈꺼풀',
+    hd_eye_bag: '눈밑지방',
+    hd_firmness: '탄력',
+    hd_moisture: '수분',
+    hd_oiliness: '유분',
+    hd_pore: '모공',
+    hd_radiance: '광채',
+    hd_redness: '홍조',
+    hd_age_spot: '기미/잡티',
+    hd_texture: '피부결',
+    hd_wrinkle: '주름',
+};
+
+const v_638095 = {
+    acne: 'fitness-outline',
+    dark_circle_v2: 'eye-outline',
+    droopy_lower_eyelid: 'eye-outline',
+    droopy_upper_eyelid: 'eye-outline',
+    eye_bag: 'eye-outline',
+    firmness: 'hand-left-outline',
+    moisture: 'water-outline',
+    oiliness: 'water-outline',
+    pore: 'scan-outline',
+    radiance: 'sunny-outline',
+    redness: 'color-palette-outline',
+    age_spot: 'ellipse-outline',
+    texture: 'layers-outline',
+    wrinkle: 'git-branch-outline',
+};
+
+const v_3e09cd = {
+    mode: 'sd',
+    selectedConcerns: [
+        'acne', 'dark_circle_v2', 'droopy_lower_eyelid', 'droopy_upper_eyelid',
+        'eye_bag', 'firmness', 'moisture', 'oiliness', 'pore', 'radiance',
+        'redness', 'age_spot', 'texture', 'wrinkle'
+    ],
+    taskId: 'sample_task_id_for_preview_mode_12345',
+    result: {
+        error: null,
+        results: {
+            output: [
+                { ui_score: 84, type: 'firmness', mask_urls: [] },
+                { ui_score: 89, type: 'dark_circle_v2', mask_urls: [] },
+                { ui_score: 94, type: 'wrinkle', mask_urls: [] },
+                { ui_score: 89, type: 'radiance', mask_urls: [] },
+                { ui_score: 92, type: 'redness', mask_urls: [] },
+                { ui_score: 91, type: 'oiliness', mask_urls: [] },
+                { ui_score: 98, type: 'pore', mask_urls: [] },
+                { ui_score: 87, type: 'age_spot', mask_urls: [] },
+                { ui_score: 78, type: 'droopy_lower_eyelid', mask_urls: [] },
+                { ui_score: 92, type: 'texture', mask_urls: [] },
+                { ui_score: 83, type: 'droopy_upper_eyelid', mask_urls: [] },
+                { ui_score: 82, type: 'eye_bag', mask_urls: [] },
+                { ui_score: 82, type: 'moisture', mask_urls: [] },
+                { ui_score: 84, type: 'acne', mask_urls: [] },
+                { score: 87.5, type: 'all' },
+                { type: 'resize_image', mask_urls: [] },
+            ]
+        },
+        task_status: 'success'
+    },
+    timestamp: new Date().toISOString(),
+};
+
+const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+    const v_bf6a8c = v_c7daf6.params?.previewResult;
+
+    const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
 
     const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
     const v_1a165b = v_e662ae<v_78ceb7>(null);
@@ -101,6 +186,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const [v_1744b9, v_5c59f6] = v_5ab095('');
 
     const [v_c5caed, v_e2f548] = v_5ab095(false);
+
+    v_c4deb2(() => {
+        if (v_bf6a8c) {
+            v_6f6f79(v_3e09cd);
+            v_639227('result');
+        }
+    }, [v_bf6a8c]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         try {
@@ -799,6 +891,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     disabled={!v_82f4af || !v_07cd8d?.hasFace || !v_07cd8d?.isFrontal}
                     fullWidth
                 />
+
+                {}
+                <TouchableOpacity
+                    style={v_d81136.previewButton}
+                    onPress={() => {
+                        v_6f6f79(v_3e09cd);
+                        v_639227('result');
+                    }}
+                >
+                    <Ionicons name="eye-outline" size={16} color={v_1bfbd0.bluePrimary} />
+                    <Text style={v_d81136.previewButtonText}>결과 화면 미리보기 (개발용)</Text>
+                </TouchableOpacity>
             </View>
         </>
     );
@@ -976,80 +1080,265 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         </View>
     );
 
-    const v_4ff022 = () => (
-        <>
-            <View style={v_d81136.resultHeader}>
-                <Ionicons name="checkmark-circle" size={48} color="#4CAF50" />
-                <Text style={v_d81136.resultTitle}>분석 완료!</Text>
-            </View>
+    const v_058956 = v_de06a3(() => {
+        if (!v_e521b9?.result?.results?.output) return null;
 
-            {}
-            <View style={v_d81136.jsonSection}>
-                <View style={v_d81136.sectionTitleRow}>
-                    <Ionicons name="document-text-outline" size={16} color="#4EC9B0" />
-                    <Text style={v_d81136.jsonTitle}>분석 결과 (JSON)</Text>
-                    <TouchableOpacity
-                        style={v_d81136.copyIconButton}
-                        onPress={v_3274ee}
-                        accessibilityRole="button"
-                        accessibilityLabel="JSON 복사"
-                    >
-                        <Ionicons name="copy-outline" size={18} color="#4EC9B0" />
-                    </TouchableOpacity>
+        const v_9ef443 = v_e521b9.result.results.output;
+        let v_adfd7c = 0;
+        let v_c2741d = '';
+        const v_17b30f = [];
+
+        v_9ef443.forEach((v_8c0b26) => {
+            if (v_8c0b26.type === 'all' && v_8c0b26.score !== undefined) {
+                v_adfd7c = Math.round(v_8c0b26.score);
+            } else if (v_8c0b26.type === 'resize_image' && v_8c0b26.mask_urls?.[0]) {
+                v_c2741d = v_8c0b26.mask_urls[0];
+            } else if (v_8c0b26.ui_score !== undefined && v_8c0b26.type) {
+                v_17b30f.push({
+                    type: v_8c0b26.type,
+                    score: v_8c0b26.ui_score,
+                    label: v_f68226[v_8c0b26.type] || v_8c0b26.type,
+                });
+            }
+        });
+
+        v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
+
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
+    }, [v_e521b9]);
+
+    const v_4d19dd = (v_740dd8): string => {
+        if (v_740dd8 >= 95) return '최상';
+        if (v_740dd8 >= 90) return '우수';
+        if (v_740dd8 >= 85) return '양호';
+        if (v_740dd8 >= 80) return '보통';
+        if (v_740dd8 >= 70) return '주의';
+        if (v_740dd8 >= 60) return '관리 필요';
+        return '집중 관리';
+    };
+
+    const v_4ff022 = () => {
+        const v_579c77 = v_058956();
+
+        if (!v_579c77) {
+            return (
+                <View style={v_d81136.analyzingContainer}>
+                    <Ionicons name="warning" size={48} color={v_1bfbd0.error} />
+                    <Text style={v_d81136.analyzingTitle}>결과를 불러올 수 없습니다</Text>
+                    <PrimaryButton
+                        title="다시 시도"
+                        onPress={v_a2f2ec}
+                        style={{ marginTop: v_9b1a04.large }}
+                    />
                 </View>
-                <ScrollView
-                    style={v_d81136.jsonScrollView}
-                    horizontal={false}
-                    nestedScrollEnabled={true}
-                >
-                    <Text style={v_d81136.jsonText} selectable>
-                        {JSON.stringify(v_e521b9, null, 2)}
-                    </Text>
-                </ScrollView>
-            </View>
+            );
+        }
 
-            {}
-            {v_e521b9?.result?.results?.url && (
-                <View style={v_d81136.resultSummary}>
-                    <View style={v_d81136.sectionTitleRow}>
-                        <Ionicons name="bar-chart-outline" size={18} color={v_1bfbd0.text} />
-                        <Text style={v_d81136.summaryTitle}>결과 요약</Text>
+        const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f } = v_579c77;
+        const v_54d0c6 = v_53f592(v_adfd7c);
+        const v_858eb9 = v_4d19dd(v_adfd7c);
+
+        const v_b5b523 = v_17b30f.slice(0, 3);
+        const v_5f1433 = v_17b30f.slice(-3).reverse();
+
+        return (
+            <>
+                {}
+                <View style={v_d81136.resultHeaderSection}>
+                    <View style={v_d81136.resultTitleRow}>
+                        <Ionicons name="checkmark-circle" size={28} color="#4CAF50" />
+                        <Text style={v_d81136.resultMainTitle}>피부 분석 완료</Text>
                     </View>
-                    <Text style={v_d81136.summaryText}>
-                        • 분석 모드: {v_e521b9.mode.toUpperCase()}
-                    </Text>
-                    <Text style={v_d81136.summaryText}>
-                        • 분석 항목: {v_e521b9.selectedConcerns.length}개
-                    </Text>
-                    <Text style={v_d81136.summaryText}>
-                        • 결과 파일: ZIP 형식
+                    <Text style={v_d81136.resultSubtitle}>
+                        {v_e521b9.mode.toUpperCase()} 모드 • {v_17b30f.length}개 항목 분석
                     </Text>
                 </View>
-            )}
 
-            {}
-            <View style={v_d81136.buttonSection}>
-                <View style={v_d81136.buttonRow}>
+                {}
+                <View style={v_d81136.overallScoreCard}>
+                    {}
+                    {(v_c2741d || v_82f4af) && (
+                        <View style={v_d81136.resultFaceImageContainer}>
+                            <Image
+                                source={{ uri: v_c2741d || v_82f4af || '' }}
+                                style={v_d81136.resultFaceImage}
+                                resizeMode="cover"
+                            />
+                        </View>
+                    )}
+
+                    {}
+                    <View style={v_d81136.overallScoreContent}>
+                        <Text style={v_d81136.overallScoreLabel}>종합 피부 점수</Text>
+                        <View style={v_d81136.overallScoreCircle}>
+                            <View style={[
+                                v_d81136.overallScoreRing,
+                                { borderColor: v_54d0c6 }
+                            ]}>
+                                <Text style={[v_d81136.overallScoreNumber, { color: v_54d0c6 }]}>
+                                    {v_adfd7c}
+                                </Text>
+                                <Text style={v_d81136.overallScoreUnit}>점</Text>
+                            </View>
+                        </View>
+                        <View style={[v_d81136.overallGradeBadge, { backgroundColor: v_54d0c6 + '20' }]}>
+                            <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
+                                {v_858eb9}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+
+                {}
+                <View style={v_d81136.resultSection}>
+                    <View style={v_d81136.resultSectionHeader}>
+                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: '#DBEAFE' }]}>
+                            <Ionicons name="trophy" size={18} color="#2563EB" />
+                        </View>
+                        <Text style={v_d81136.resultSectionTitle}>우수 항목</Text>
+                    </View>
+                    <View style={v_d81136.concernHighlightList}>
+                        {v_b5b523.map((v_ccf527, v_a56041) => (
+                            <View key={v_ccf527.type} style={v_d81136.concernHighlightItem}>
+                                <View style={[v_d81136.concernRank, { backgroundColor: '#DBEAFE' }]}>
+                                    <Text style={[v_d81136.concernRankText, { color: '#2563EB' }]}>{v_a56041 + 1}</Text>
+                                </View>
+                                <Text style={v_d81136.concernHighlightLabel}>{v_ccf527.label}</Text>
+                                <View style={[
+                                    v_d81136.concernHighlightScore,
+                                    { backgroundColor: '#F0F9FF' }
+                                ]}>
+                                    <Text style={[
+                                        v_d81136.concernHighlightScoreText,
+                                        { color: '#0369A1' }
+                                    ]}>
+                                        {v_ccf527.score}점
+                                    </Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                {}
+                <View style={v_d81136.resultSection}>
+                    <View style={v_d81136.resultSectionHeader}>
+                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: '#FEE2E2' }]}>
+                            <Ionicons name="trending-down" size={18} color="#DC2626" />
+                        </View>
+                        <Text style={v_d81136.resultSectionTitle}>관리 필요 항목</Text>
+                    </View>
+                    <View style={v_d81136.concernHighlightList}>
+                        {v_5f1433.map((v_ccf527, v_a56041) => (
+                            <View key={v_ccf527.type} style={v_d81136.concernHighlightItem}>
+                                <View style={[v_d81136.concernRank, { backgroundColor: '#FEE2E2' }]}>
+                                    <Text style={[v_d81136.concernRankText, { color: '#DC2626' }]}>{v_a56041 + 1}</Text>
+                                </View>
+                                <Text style={v_d81136.concernHighlightLabel}>{v_ccf527.label}</Text>
+                                <View style={[
+                                    v_d81136.concernHighlightScore,
+                                    { backgroundColor: '#FEF2F2' }
+                                ]}>
+                                    <Text style={[
+                                        v_d81136.concernHighlightScoreText,
+                                        { color: '#991B1B' }
+                                    ]}>
+                                        {v_ccf527.score}점
+                                    </Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                {}
+                <View style={v_d81136.resultSection}>
+                    <View style={v_d81136.resultSectionHeader}>
+                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: v_1bfbd0.blurBlue }]}>
+                            <Ionicons name="list" size={18} color={v_1bfbd0.bluePrimary} />
+                        </View>
+                        <Text style={v_d81136.resultSectionTitle}>전체 분석 결과</Text>
+                    </View>
+                    <View style={v_d81136.concernGridContainer}>
+                        {v_17b30f.map((v_ccf527) => {
+                            const v_5e5963 = v_53f592(v_ccf527.score);
+                            const v_c288e9 = v_638095[v_ccf527.type] || 'ellipse-outline';
+
+                            const v_7fd696 = v_ccf527.score >= 90 ? '#1E40AF' :
+                                v_ccf527.score >= 80 ? '#166534' :
+                                    v_ccf527.score >= 70 ? '#A16207' :
+                                        '#9F1239';
+                            return (
+                                <View key={v_ccf527.type} style={v_d81136.concernGridItemHorizontal}>
+                                    <View style={[
+                                        v_d81136.concernGridIconSmall,
+                                        { backgroundColor: v_5e5963 + '15' }
+                                    ]}>
+                                        <Ionicons name={v_c288e9 as any} size={18} color={v_5e5963} />
+                                    </View>
+                                    <View style={v_d81136.concernGridContentVertical}>
+                                        <Text style={v_d81136.concernGridLabelFull}>
+                                            {v_ccf527.label}
+                                        </Text>
+                                        <View style={v_d81136.concernGridProgressRow}>
+                                            <View style={v_d81136.concernGridBarFlex}>
+                                                <View style={[
+                                                    v_d81136.concernGridScoreBarInline,
+                                                    { backgroundColor: v_5e5963 + '30' }
+                                                ]}>
+                                                    <View style={[
+                                                        v_d81136.concernGridScoreFill,
+                                                        {
+                                                            width: `${v_ccf527.score}%`,
+                                                            backgroundColor: v_5e5963
+                                                        }
+                                                    ]} />
+                                                </View>
+                                            </View>
+                                            <Text style={[v_d81136.concernGridScoreFixed, { color: v_7fd696 }]}>
+                                                {v_ccf527.score}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            );
+                        })}
+                    </View>
+                </View>
+
+                {}
+                <View style={v_d81136.analysisInfoCard}>
+                    <View style={v_d81136.analysisInfoRow}>
+                        <Ionicons name="time-outline" size={16} color={v_1bfbd0.secondaryText} />
+                        <Text style={v_d81136.analysisInfoText}>
+                            분석 일시: {new Date(v_e521b9.timestamp).toLocaleString('ko-KR')}
+                        </Text>
+                    </View>
+                    <View style={v_d81136.analysisInfoRow}>
+                        <Ionicons name="analytics-outline" size={16} color={v_1bfbd0.secondaryText} />
+                        <Text style={v_d81136.analysisInfoText}>
+                            Task ID: {v_e521b9.taskId?.slice(0, 20)}...
+                        </Text>
+                    </View>
+                </View>
+
+                {}
+                <View style={v_d81136.buttonSection}>
                     <SecondaryButton
-                        title="JSON 복사"
-                        onPress={v_3274ee}
-                        style={{ flex: 1, marginRight: v_9b1a04.small }}
-                    />
-                    <SecondaryButton
-                        title="JSON 저장"
+                        title="결과 저장 (JSON)"
                         onPress={v_8d018e}
-                        style={{ flex: 1 }}
+                        fullWidth
+                    />
+                    <PrimaryButton
+                        title="새로운 분석 시작"
+                        onPress={v_a2f2ec}
+                        fullWidth
+                        style={{ marginTop: v_9b1a04.medium }}
                     />
                 </View>
-                <PrimaryButton
-                    title="새로운 분석 시작"
-                    onPress={v_a2f2ec}
-                    fullWidth
-                    style={{ marginTop: v_9b1a04.medium }}
-                />
-            </View>
-        </>
-    );
+            </>
+        );
+    };
 
     if (v_91943c === 'camera') {
         return v_c8ac01();
@@ -1565,6 +1854,19 @@ const v_d81136 = v_472849.create({
     buttonRow: {
         flexDirection: 'row',
     },
+    previewButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        marginTop: v_9b1a04.medium,
+        paddingVertical: v_9b1a04.small,
+    },
+    previewButtonText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.bluePrimary,
+    },
 
     analyzingContainer: {
         flex: 1,
@@ -1591,52 +1893,274 @@ const v_d81136 = v_472849.create({
         marginTop: v_9b1a04.medium,
     },
 
-    resultHeader: {
+    resultHeaderSection: {
         alignItems: 'center',
-        paddingVertical: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
     },
-    resultTitle: {
-        fontSize: 24,
+    resultTitleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+    },
+    resultMainTitle: {
+        fontSize: 22,
         fontFamily: v_843035.bold,
         color: v_1bfbd0.text,
-        marginTop: v_9b1a04.medium,
     },
-    jsonSection: {
-        backgroundColor: '#1E1E1E',
-        borderRadius: 16,
-        padding: v_9b1a04.medium,
-        maxHeight: 400,
+    resultSubtitle: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginTop: 4,
     },
-    jsonTitle: {
+
+    overallScoreCard: {
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 20,
+        padding: v_9b1a04.large,
+        flexDirection: 'row',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 5,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+    },
+    resultFaceImageContainer: {
+        width: 100,
+        height: 130,
+        borderRadius: 12,
+        overflow: 'hidden',
+        marginRight: v_9b1a04.medium,
+    },
+    resultFaceImage: {
+        width: '100%',
+        height: '100%',
+    },
+    overallScoreContent: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    overallScoreLabel: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.secondaryText,
+        marginBottom: v_9b1a04.small,
+    },
+    overallScoreCircle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    overallScoreRing: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        borderWidth: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: v_1bfbd0.lightGray,
+    },
+    overallScoreNumber: {
+        fontSize: 36,
+        fontFamily: v_843035.bold,
+    },
+    overallScoreUnit: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginTop: -4,
+    },
+    overallGradeBadge: {
+        paddingHorizontal: 16,
+        paddingVertical: 6,
+        borderRadius: 20,
+        marginTop: v_9b1a04.small,
+    },
+    overallGradeText: {
         fontSize: v_ef658a.medium,
         fontFamily: v_843035.semibold,
-        color: '#4EC9B0',
     },
-    jsonScrollView: {
-        maxHeight: 350,
-    },
-    jsonText: {
-        fontSize: v_ef658a.small,
-        fontFamily: 'monospace',
-        color: '#D4D4D4',
-        lineHeight: 20,
-    },
-    resultSummary: {
-        backgroundColor: v_1bfbd0.lightBlue,
-        borderRadius: 16,
-        padding: v_9b1a04.medium,
+
+    resultSection: {
         marginTop: v_9b1a04.medium,
     },
-    summaryTitle: {
+    resultSectionHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: v_9b1a04.small,
+    },
+    resultSectionIcon: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        backgroundColor: '#DCFCE7',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: v_9b1a04.small,
+    },
+    resultSectionTitle: {
         fontSize: v_ef658a.large,
         fontFamily: v_843035.semibold,
         color: v_1bfbd0.text,
     },
-    summaryText: {
+
+    concernHighlightList: {
+        backgroundColor: v_1bfbd0.lightGray,
+        borderRadius: 12,
+        overflow: 'hidden',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderTopWidth: 1,
+        borderColor: "#ededed",
+    },
+    concernHighlightItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: v_9b1a04.medium,
+        borderBottomWidth: 1,
+        borderColor: "#ededed",
+    },
+    concernRank: {
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: '#DCFCE7',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: v_9b1a04.small,
+    },
+    concernRankText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.bold,
+        color: '#22C55E',
+    },
+    concernHighlightLabel: {
+        flex: 1,
         fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.text,
+    },
+    concernHighlightScore: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 12,
+    },
+    concernHighlightScoreText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.semibold,
+    },
+
+    concernGridContainer: {
+        backgroundColor: v_1bfbd0.lightGray,
+        borderRadius: 16,
+        padding: v_9b1a04.small,
+        gap: v_9b1a04.small,
+    },
+    concernGridItem: {
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+        marginBottom: v_9b1a04.small,
+    },
+    concernGridItemHorizontal: {
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        gap: v_9b1a04.small,
+    },
+    concernGridIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: v_9b1a04.small,
+    },
+    concernGridIconSmall: {
+        width: 36,
+        height: 36,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 2,
+    },
+    concernGridContentVertical: {
+        flex: 1,
+    },
+    concernGridLabelFull: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+        marginBottom: 6,
+    },
+    concernGridProgressRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    concernGridBarFlex: {
+        flex: 1,
+        marginRight: v_9b1a04.small,
+    },
+    concernGridScoreFixed: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.bold,
+        minWidth: 28,
+        textAlign: 'right',
+    },
+    concernGridScoreBarInline: {
+        height: 6,
+        borderRadius: 3,
+        overflow: 'hidden',
+    },
+    concernGridLabel: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+        marginBottom: v_9b1a04.small,
+    },
+    concernGridScoreRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+    },
+    concernGridScoreBar: {
+        flex: 1,
+        height: 8,
+        borderRadius: 4,
+        overflow: 'hidden',
+    },
+    concernGridScoreFill: {
+        height: '100%',
+        borderRadius: 4,
+    },
+    concernGridScore: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.bold,
+        width: 30,
+        textAlign: 'right',
+    },
+
+    analysisInfoCard: {
+        backgroundColor: v_1bfbd0.lightGray,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+        marginTop: v_9b1a04.medium,
+        gap: v_9b1a04.small,
+    },
+    analysisInfoRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+    },
+    analysisInfoText: {
+        fontSize: v_ef658a.small,
         fontFamily: v_843035.regular,
         color: v_1bfbd0.secondaryText,
-        lineHeight: 24,
     },
 
     cameraContainer: {
