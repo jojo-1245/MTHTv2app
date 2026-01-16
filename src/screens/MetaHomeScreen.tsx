@@ -71,40 +71,40 @@ const v_74dc09 = [
 ];
 
 const v_191cd1 = [
-  { id: 'skinType', label: 'Skin Type', score: 78, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
-  { id: 'spots', label: 'Spots', score: 78, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
-  { id: 'wrinkles', label: 'Wrinkles', score: 91, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
-  { id: 'texture', label: 'Texture', score: 96, color: '#06B6D4', radarBefore: 65, radarAfter: 85 },
-  { id: 'acne', label: 'Acne', score: 96, color: '#9CA3AF', radarBefore: 70, radarAfter: 85 },
-  { id: 'darkCircles', label: 'Dark Circles', score: 77, color: '#9CA3AF', radarBefore: 50, radarAfter: 75 },
-  { id: 'redness', label: 'Redness', score: 99, color: '#EF4444', radarBefore: 55, radarAfter: 75 },
-  { id: 'oiliness', label: 'Oiliness', score: 93, color: '#F97316', radarBefore: 45, radarAfter: 70 },
-  { id: 'moisture', label: 'Moisture', score: 83, color: '#06B6D4', radarBefore: 55, radarAfter: 80 },
-  { id: 'pores', label: 'Pores', score: 87, color: '#84CC16', radarBefore: 45, radarAfter: 70 },
-  { id: 'eyeBags', label: 'Eye bags', score: 86, color: '#22C55E', radarBefore: 55, radarAfter: 75 },
-  { id: 'radiance', label: 'Radiance', score: 89, color: '#22C55E', radarBefore: 50, radarAfter: 80 },
-  { id: 'firmness', label: 'Firmness', score: 90, color: '#EC4899', radarBefore: 40, radarAfter: 75 },
-  { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 81, color: '#06B6D4', radarBefore: 60, radarAfter: 80 },
-  { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 75, color: '#84CC16', radarBefore: 50, radarAfter: 70 },
-];
+    { id: 'skinType', label: 'Skin Type', score: 78, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
+    { id: 'spots', label: 'Spots', score: 78, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
+    { id: 'wrinkles', label: 'Wrinkles', score: 91, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
+    { id: 'texture', label: 'Texture', score: 96, color: '#06B6D4', radarBefore: 65, radarAfter: 85 },
+    { id: 'acne', label: 'Acne', score: 96, color: '#9CA3AF', radarBefore: 70, radarAfter: 85 },
+    { id: 'darkCircles', label: 'Dark Circles', score: 77, color: '#9CA3AF', radarBefore: 50, radarAfter: 75 },
+    { id: 'redness', label: 'Redness', score: 99, color: '#EF4444', radarBefore: 55, radarAfter: 75 },
+    { id: 'oiliness', label: 'Oiliness', score: 93, color: '#F97316', radarBefore: 45, radarAfter: 70 },
+    { id: 'moisture', label: 'Moisture', score: 83, color: '#06B6D4', radarBefore: 55, radarAfter: 80 },
+    { id: 'pores', label: 'Pores', score: 87, color: '#84CC16', radarBefore: 45, radarAfter: 70 },
+    { id: 'eyeBags', label: 'Eye bags', score: 86, color: '#22C55E', radarBefore: 55, radarAfter: 75 },
+    { id: 'radiance', label: 'Radiance', score: 89, color: '#22C55E', radarBefore: 50, radarAfter: 80 },
+    { id: 'firmness', label: 'Firmness', score: 90, color: '#EC4899', radarBefore: 40, radarAfter: 75 },
+    { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 81, color: '#06B6D4', radarBefore: 60, radarAfter: 80 },
+    { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 75, color: '#84CC16', radarBefore: 50, radarAfter: 70 },
+  ];
 
 const v_be142a = [
-  { id: 'skinType', label: 'Skin Type', score: 72, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
-  { id: 'spots', label: 'Spots', score: 65, color: '#F97316', radarBefore: 50, radarAfter: 65 },
-  { id: 'wrinkles', label: 'Wrinkles', score: 82, color: '#22C55E', radarBefore: 55, radarAfter: 70 },
-  { id: 'texture', label: 'Texture', score: 88, color: '#06B6D4', radarBefore: 60, radarAfter: 75 },
-  { id: 'acne', label: 'Acne', score: 85, color: '#9CA3AF', radarBefore: 60, radarAfter: 75 },
-  { id: 'darkCircles', label: 'Dark Circles', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 65 },
-  { id: 'redness', label: 'Redness', score: 92, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
-  { id: 'oiliness', label: 'Oiliness', score: 85, color: '#F97316', radarBefore: 40, radarAfter: 60 },
-  { id: 'moisture', label: 'Moisture', score: 75, color: '#F97316', radarBefore: 50, radarAfter: 70 },
-  { id: 'pores', label: 'Pores', score: 78, color: '#84CC16', radarBefore: 40, radarAfter: 60 },
-  { id: 'eyeBags', label: 'Eye bags', score: 79, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
-  { id: 'radiance', label: 'Radiance', score: 80, color: '#22C55E', radarBefore: 45, radarAfter: 70 },
-  { id: 'firmness', label: 'Firmness', score: 82, color: '#EC4899', radarBefore: 35, radarAfter: 65 },
-  { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 74, color: '#06B6D4', radarBefore: 55, radarAfter: 70 },
-  { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 60 },
-];
+    { id: 'skinType', label: 'Skin Type', score: 72, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
+    { id: 'spots', label: 'Spots', score: 65, color: '#F97316', radarBefore: 50, radarAfter: 65 },
+    { id: 'wrinkles', label: 'Wrinkles', score: 82, color: '#22C55E', radarBefore: 55, radarAfter: 70 },
+    { id: 'texture', label: 'Texture', score: 88, color: '#06B6D4', radarBefore: 60, radarAfter: 75 },
+    { id: 'acne', label: 'Acne', score: 85, color: '#9CA3AF', radarBefore: 60, radarAfter: 75 },
+    { id: 'darkCircles', label: 'Dark Circles', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 65 },
+    { id: 'redness', label: 'Redness', score: 92, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
+    { id: 'oiliness', label: 'Oiliness', score: 85, color: '#F97316', radarBefore: 40, radarAfter: 60 },
+    { id: 'moisture', label: 'Moisture', score: 75, color: '#F97316', radarBefore: 50, radarAfter: 70 },
+    { id: 'pores', label: 'Pores', score: 78, color: '#84CC16', radarBefore: 40, radarAfter: 60 },
+    { id: 'eyeBags', label: 'Eye bags', score: 79, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
+    { id: 'radiance', label: 'Radiance', score: 80, color: '#22C55E', radarBefore: 45, radarAfter: 70 },
+    { id: 'firmness', label: 'Firmness', score: 82, color: '#EC4899', radarBefore: 35, radarAfter: 65 },
+    { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 74, color: '#06B6D4', radarBefore: 55, radarAfter: 70 },
+    { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 60 },
+  ];
 
 const v_2b90bf = '2026.01.15';
 const v_c10ca0 = '2025.12.20';
@@ -120,8 +120,8 @@ const v_df3284 = {
 };
 
 const RadarChart: v_a3453e.FC<{
-  data: number[];
-  dataAfter?: number[];
+  data?: number[];  
+  dataAfter: number[];  
   labels: string[];
   size: number;
 }> = ({ data: v_9390e8, dataAfter: v_65eb2a, labels: v_e0187d, size: v_05b441 }) => {
@@ -180,23 +180,23 @@ const RadarChart: v_a3453e.FC<{
       })}
 
       {}
-      <Polygon
-        points={v_cf01e7(v_9390e8)}
-        fill="rgba(156, 163, 175, 0.2)"
-        stroke="#9CA3AF"
-        strokeWidth={2}
-        strokeDasharray="4,4"
-      />
-
-      {}
-      {v_65eb2a && (
+      {v_9390e8 && (
         <Polygon
-          points={v_cf01e7(v_65eb2a)}
-          fill="rgba(59, 130, 246, 0.3)"
-          stroke="#3B82F6"
+          points={v_cf01e7(v_9390e8)}
+          fill="rgba(156, 163, 175, 0.2)"
+          stroke="#9CA3AF"
           strokeWidth={2}
+          strokeDasharray="4,4"
         />
       )}
+
+      {}
+      <Polygon
+        points={v_cf01e7(v_65eb2a)}
+        fill="rgba(59, 130, 246, 0.3)"
+        stroke="#3B82F6"
+        strokeWidth={2}
+      />
 
       {}
       {v_e0187d.map((v_2869c1, v_ebec57) => {
@@ -360,7 +360,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_b2ef64, v_9fb738] = v_5ab095(false);
   const [v_204bf1, v_b318d9] = v_5ab095<'recent' | 'previous'>('recent');
   const [v_459c4b, v_82dcd4] = v_5ab095<string[]>(
-    v_191cd1.map(v_8c0b26 => v_8c0b26.id)
+    v_191cd1.map(v_8c0b26 => v_8c0b26.id) || []
   );
   const [v_39cb7a, v_ecd01c] = v_5ab095(8); 
   const [v_30ddf9, v_ca2ef8] = v_5ab095(9); 
@@ -385,6 +385,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       v_88ec6a.remove();
     };
   }, []);
+
+  const v_aaece8 = v_191cd1.length > 0;
+  const v_4c2f50 = v_be142a.length > 0;
+  const v_ea9dec = v_aaece8 || v_4c2f50;
 
   const v_a36c61 = v_204bf1 === 'recent' ? v_191cd1 : v_be142a;
   const v_d39d27 = v_204bf1 === 'recent' ? v_2b90bf : v_c10ca0;
@@ -532,15 +536,31 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_916c54 = v_df9f57(() => {
-    const v_973c3e = v_191cd1.filter(
+    const v_f7373f = v_191cd1.filter(
       v_8c0b26 => !v_8c0b26.isButton && v_459c4b.includes(v_8c0b26.id)
     );
+
+    const v_625820 = v_be142a.filter(
+      v_8c0b26 => !v_8c0b26.isButton && v_459c4b.includes(v_8c0b26.id)
+    );
+
+    const v_e0187d = v_f7373f.map(v_8c0b26 => v_8c0b26.label);
+    const v_33efc5 = v_f7373f.map(v_8c0b26 => v_8c0b26.radarAfter);
+
+    const v_e98932 = v_4c2f50
+      ? v_f7373f.map(v_6f013f => {
+        const v_8d052f = v_625820.find(v_ba2215 => v_ba2215.id === v_6f013f.id);
+        return v_8d052f ? v_8d052f.radarBefore : 0;
+      })
+      : [];
+
     return {
-      labels: v_973c3e.map(v_8c0b26 => v_8c0b26.label),
-      before: v_973c3e.map(v_8c0b26 => v_8c0b26.radarBefore),
-      after: v_973c3e.map(v_8c0b26 => v_8c0b26.radarAfter),
+      labels: v_e0187d,
+      before: v_e98932,
+      after: v_33efc5,
+      hasPrevious: v_4c2f50 && v_625820.length > 0,
     };
-  }, [v_459c4b]);
+  }, [v_459c4b, v_4c2f50]);
 
   const v_b5f731 = ({ item: v_8c0b26 }: { item: typeof v_74dc09[0] }) => (
     <TouchableOpacity
@@ -760,105 +780,120 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             <View style={v_d81136.skinAnalysisCard}>
               {}
               <View style={v_d81136.radarChartContainer}>
-                {v_916c54.labels.length > 2 ? (
-                  <RadarChart
-                    data={v_916c54.before}
-                    dataAfter={v_916c54.after}
-                    labels={v_916c54.labels}
-                    size={v_7d58f2.radarChartSize}
-                  />
-                ) : (
+                {v_916c54.labels.length === 0 ? (
                   <View style={[v_d81136.radarChartPlaceholder, {
                     width: v_7d58f2.radarChartSize,
                     height: v_7d58f2.radarChartSize
                   }]}>
                     <Text style={v_d81136.radarChartPlaceholderText}>
-                      레이더 차트를 표시하려면{'\n'}3개 이상의 항목을 선택하세요
+                      피부 분석 결과가 없습니다{'\n'}피부 분석을 진행해주세요
                     </Text>
                   </View>
+                ) : (
+                  <RadarChart
+                    data={v_916c54.hasPrevious ? v_916c54.before : undefined}
+                    dataAfter={v_916c54.after}
+                    labels={v_916c54.labels}
+                    size={v_7d58f2.radarChartSize}
+                  />
                 )}
                 {}
-                <View style={v_d81136.legendContainer}>
-                  <View style={v_d81136.legendItem}>
-                    <View style={v_d81136.legendLineSolid} />
-                    <Text style={v_d81136.legendText}>최근분석</Text>
+                {v_916c54.labels.length > 0 && v_916c54.hasPrevious && (
+                  <View style={v_d81136.legendContainer}>
+                    <View style={v_d81136.legendItem}>
+                      <View style={v_d81136.legendLineSolid} />
+                      <Text style={v_d81136.legendText}>최근분석</Text>
+                    </View>
+                    <View style={v_d81136.legendItem}>
+                      <View style={v_d81136.legendLineDashed} />
+                      <Text style={v_d81136.legendText}>이전분석</Text>
+                    </View>
                   </View>
-                  <View style={v_d81136.legendItem}>
-                    <View style={v_d81136.legendLineDashed} />
-                    <Text style={v_d81136.legendText}>이전분석</Text>
-                  </View>
+                )}
+              </View>
+
+              {}
+              {v_ea9dec && (
+                <View style={v_d81136.analysisTabContainer}>
+                  {v_aaece8 && (
+                    <TouchableOpacity
+                      style={[
+                        v_d81136.analysisTab,
+                        v_204bf1 === 'recent' && v_d81136.analysisTabActive,
+                      ]}
+                      onPress={() => v_b318d9('recent')}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={[
+                        v_d81136.analysisTabText,
+                        v_204bf1 === 'recent' && v_d81136.analysisTabTextActive,
+                      ]}>
+                        최근분석
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {v_4c2f50 && (
+                    <TouchableOpacity
+                      style={[
+                        v_d81136.analysisTab,
+                        v_204bf1 === 'previous' && v_d81136.analysisTabActive,
+                      ]}
+                      onPress={() => v_b318d9('previous')}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={[
+                        v_d81136.analysisTabText,
+                        v_204bf1 === 'previous' && v_d81136.analysisTabTextActive,
+                      ]}>
+                        이전분석
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
-              </View>
+              )}
 
               {}
-              <View style={v_d81136.analysisTabContainer}>
-                <TouchableOpacity
-                  style={[
-                    v_d81136.analysisTab,
-                    v_204bf1 === 'recent' && v_d81136.analysisTabActive,
-                  ]}
-                  onPress={() => v_b318d9('recent')}
-                  activeOpacity={0.7}
-                >
-                  <Text style={[
-                    v_d81136.analysisTabText,
-                    v_204bf1 === 'recent' && v_d81136.analysisTabTextActive,
-                  ]}>
-                    최근분석
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    v_d81136.analysisTab,
-                    v_204bf1 === 'previous' && v_d81136.analysisTabActive,
-                  ]}
-                  onPress={() => v_b318d9('previous')}
-                  activeOpacity={0.7}
-                >
-                  <Text style={[
-                    v_d81136.analysisTabText,
-                    v_204bf1 === 'previous' && v_d81136.analysisTabTextActive,
-                  ]}>
-                    이전분석
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              {v_ea9dec && (
+                <Text style={v_d81136.analysisDateText}>분석일자: {v_d39d27}</Text>
+              )}
 
               {}
-              <Text style={v_d81136.analysisDateText}>분석일자: {v_d39d27}</Text>
-
-              {}
-              <View style={v_d81136.warningSection}>
-                {v_972b6e.caution.length > 0 && (
-                  <View style={v_d81136.warningRow}>
-                    <Text style={v_d81136.warningLabel}>주의</Text>
-                    <View style={v_d81136.tagContainer}>
-                      {v_972b6e.caution.map((v_8c0b26, v_a56041) => (
-                        <View key={`caution-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagWarning]}>
-                          <Text style={v_d81136.tagText}>{v_8c0b26}</Text>
-                        </View>
-                      ))}
+              {v_ea9dec && (
+                <View style={v_d81136.warningSection}>
+                  {v_972b6e.caution.length > 0 && (
+                    <View style={v_d81136.warningRow}>
+                      <Text style={v_d81136.warningLabel}>주의</Text>
+                      <View style={v_d81136.tagContainer}>
+                        {v_972b6e.caution.map((v_8c0b26, v_a56041) => (
+                          <View key={`caution-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagWarning]}>
+                            <Text style={v_d81136.tagText}>{v_8c0b26}</Text>
+                          </View>
+                        ))}
+                      </View>
                     </View>
-                  </View>
-                )}
-                {v_972b6e.danger.length > 0 && (
-                  <View style={v_d81136.warningRow}>
-                    <Text style={v_d81136.warningLabel}>경고</Text>
-                    <View style={v_d81136.tagContainer}>
-                      {v_972b6e.danger.map((v_8c0b26, v_a56041) => (
-                        <View key={`danger-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagDanger]}>
-                          <Text style={[v_d81136.tagText, v_d81136.tagTextDanger]}>{v_8c0b26}</Text>
-                        </View>
-                      ))}
+                  )}
+                  {v_972b6e.danger.length > 0 && (
+                    <View style={v_d81136.warningRow}>
+                      <Text style={v_d81136.warningLabel}>경고</Text>
+                      <View style={v_d81136.tagContainer}>
+                        {v_972b6e.danger.map((v_8c0b26, v_a56041) => (
+                          <View key={`danger-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagDanger]}>
+                            <Text style={[v_d81136.tagText, v_d81136.tagTextDanger]}>{v_8c0b26}</Text>
+                          </View>
+                        ))}
+                      </View>
                     </View>
-                  </View>
-                )}
-              </View>
+                  )}
+                </View>
+              )}
 
               {}
               <View style={v_d81136.diagnosticSection}>
                 <Text style={v_d81136.diagnosticTitle}>Live Diagnostic Results</Text>
-                <Text style={v_d81136.skinAgeText}>SKIN AGE: {v_287ba3}</Text>
+                {}
+                {v_ea9dec && (
+                  <Text style={v_d81136.skinAgeText}>SKIN AGE: {v_287ba3}</Text>
+                )}
 
                 {}
                 <View style={v_d81136.diagnosticGridWrap}>
@@ -1567,7 +1602,7 @@ const v_d81136 = v_472849.create({
   analysisTab: {
     paddingVertical: v_9b1a04.small,
     paddingHorizontal: v_9b1a04.large,
-    borderRadius: 20,
+    borderRadius: v_9b1a04.small,
     backgroundColor: '#F3F4F6',
     minWidth: 100,
     alignItems: 'center',
@@ -1850,7 +1885,7 @@ const v_d81136 = v_472849.create({
   tryAgainButton: {
     borderWidth: 1,
     borderColor: '#3B82F6',
-    borderRadius: 20,
+    borderRadius: v_9b1a04.small,
     paddingVertical: v_9b1a04.small,
     paddingHorizontal: v_9b1a04.xlarge * 2,
   },
