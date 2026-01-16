@@ -10,6 +10,7 @@ import {
     v_e767d1,
     v_326be8,
     v_cf9c33,
+    v_03e392,
 } from 'rcmrninabrnb';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_556baf, v_729608, v_cb41de } from '../../components';
@@ -122,7 +123,27 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
     };
 
     const v_3525bc = (v_389afb) => {
-        v_afa1a3(v_ba2215 => v_ba2215.filter(v_8c0b26 => v_8c0b26.id !== v_389afb));
+        const v_993c20 = v_fb2a6e.find(v_8c0b26 => v_8c0b26.id === v_389afb);
+        const v_d044ab = v_993c20?.name || v_993c20?.email || '항목';
+
+        v_03e392.alert(
+            '건강정보 삭제',
+            `${v_d044ab}의 건강정보를 삭제하시겠습니까?`,
+            [
+                {
+                    text: '취소',
+                    style: 'cancel',
+                },
+                {
+                    text: '삭제',
+                    style: 'destructive',
+                    onPress: () => {
+                        v_afa1a3(v_ba2215 => v_ba2215.filter(v_8c0b26 => v_8c0b26.id !== v_389afb));
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
     };
 
     const v_2b88e3 = () => {
