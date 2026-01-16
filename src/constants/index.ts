@@ -75,6 +75,37 @@ export const v_34d45f = {
   contentTop: 32,
 } as const;
 
+export const v_16b893 = {
+  1: '#DC2626',  
+  2: '#EF4444',  
+  3: '#F97316',  
+  4: '#FB923C',  
+  5: '#FBBF24',  
+  6: '#FCD34D',  
+  7: '#84CC16',  
+  8: '#22C55E',  
+  9: '#3B82F6',  
+  10: '#2563EB', 
+} as const;
+
+export const v_afa590 = (v_740dd8): keyof typeof v_16b893 => {
+  if (v_740dd8 >= 95) return 10;
+  if (v_740dd8 >= 90) return 9;
+  if (v_740dd8 >= 85) return 8;
+  if (v_740dd8 >= 80) return 7;
+  if (v_740dd8 >= 75) return 6;
+  if (v_740dd8 >= 70) return 5;
+  if (v_740dd8 >= 65) return 4;
+  if (v_740dd8 >= 60) return 3;
+  if (v_740dd8 >= 50) return 2;
+  return 1;
+};
+
+export const v_53f592 = (v_740dd8): string => {
+  const v_fbe91e = v_afa590(v_740dd8);
+  return v_16b893[v_fbe91e];
+};
+
 export const v_a61db3 = {
   container: {
     flex: 1,
