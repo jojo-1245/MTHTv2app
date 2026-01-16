@@ -65,10 +65,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
           </View>
           <View style={v_d81136.iconSection}>
             {}
-            <TouchableOpacity style={[v_d81136.iconWrapper]} onPress={() => { }}>
-              <Ionicons name="share-social-outline" size={24} />
-            </TouchableOpacity>
-            {}
             <TouchableOpacity style={[v_d81136.iconWrapper]} onPress={() => { v_9b57fc('Login'); }}>
               <Ionicons name="log-out-outline" size={24} />
             </TouchableOpacity>
