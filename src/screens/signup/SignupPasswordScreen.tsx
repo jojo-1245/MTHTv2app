@@ -11,9 +11,13 @@ import { v_729608, v_e2ca42, v_cb41de, v_570c34 } from '../../components';
 
 type Props = v_432191<v_8ad91b, 'SignupPassword'>;
 
+const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+const v_b6e838 = /[^A-Za-z0-9~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+
 const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const [v_adc076, v_52b279] = v_5ab095('');
     const [v_a71df8, v_b876f0] = v_5ab095(false);
+    const [v_651247, v_862dd5] = v_5ab095(false);
     const [v_41ff46, v_2d6b5b] = v_5ab095(false);
 
     const v_857dfe = (v_3b402b) => {
@@ -22,24 +26,61 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         const v_9dd411 = /[A-Z]/.test(v_3b402b);
         const v_1cf57e = /[a-z]/.test(v_3b402b);
         const v_5af9de = /\d/.test(v_3b402b);
-        const v_a5927f = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/.test(v_3b402b);
+        const v_a5927f = v_3a9aef.test(v_3b402b);
 
         return v_b947d5 && v_9dd411 && v_1cf57e && v_5af9de && v_a5927f;
+    };
+
+    const v_3c3484 = (v_3b402b): boolean => {
+        return v_b6e838.test(v_3b402b);
+    };
+
+    const v_c5377e = (v_3b402b): string | null => {
+        if (v_3b402b.length === 0) return null;
+
+        if (v_3c3484(v_3b402b)) {
+            return '사용할 수 없는 특수문자가 포함되어 있습니다.';
+        }
+
+        const v_9de4ac = [];
+
+        if (v_3b402b.length < 8) {
+            v_9de4ac.push('8자 이상');
+        }
+        if (!/[a-z]/.test(v_3b402b)) {
+            v_9de4ac.push('영문 소문자');
+        }
+        if (!/[A-Z]/.test(v_3b402b)) {
+            v_9de4ac.push('영문 대문자');
+        }
+        if (!/\d/.test(v_3b402b)) {
+            v_9de4ac.push('숫자');
+        }
+        if (!v_3a9aef.test(v_3b402b)) {
+            v_9de4ac.push('특수문자');
+        }
+
+        if (v_9de4ac.length > 0) {
+            return `${v_9de4ac.join(', ')}가 필요합니다.`;
+        }
+        return null; 
     };
 
     const v_57c91b = (v_3b402b) => {
         v_52b279(v_3b402b);
         if (v_3b402b.length > 0) {
+            v_862dd5(v_3c3484(v_3b402b));
             const v_d065ee = v_857dfe(v_3b402b);
             v_b876f0(v_d065ee);
             v_2d6b5b(true);
         } else {
             v_2d6b5b(false);
+            v_862dd5(false);
         }
     };
 
     const v_420661 = () => {
-        if (!v_a71df8) {
+        if (!v_a71df8 || v_651247) {
             return;
         }
 
@@ -86,10 +127,10 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             <Text
                                 style={[
                                     v_d81136.validationText,
-                                    v_a71df8 ? v_d81136.validationSuccess : v_d81136.validationError,
+                                    v_a71df8 && !v_651247 ? v_d81136.validationSuccess : v_d81136.validationError,
                                 ]}
                             >
-                                {v_a71df8 ? '사용가능한 비밀번호입니다.' : '비밀번호 요구사항을 확인해주세요.'}
+                                {v_c5377e(v_adc076) || '사용가능한 비밀번호입니다.'}
                             </Text>
                         )}
                     </View>
@@ -99,8 +140,8 @@ const SignupPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         <PrimaryButton
                             title="다음"
                             onPress={v_420661}
-                            disabled={!v_a71df8}
-                            style={!v_a71df8 && v_d81136.buttonDisabled}
+                            disabled={!v_a71df8 || v_651247}
+                            style={(!v_a71df8 || v_651247) && v_d81136.buttonDisabled}
                         />
                     </View>
                 </View>

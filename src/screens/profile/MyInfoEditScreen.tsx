@@ -12,7 +12,7 @@ import {
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f, v_624bd2 } from '../../constants';
 import {
   v_8e2768,
   v_729608,
@@ -39,9 +39,23 @@ const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
 type GenderOption = (typeof v_21bdd5)[number];
 type AgeOption = (typeof v_0c96f7)[number];
 
-const v_901315 =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
-const v_064327 = '영문, 숫자, 특수문자를 모두 포함한 8자 이상이어야 합니다.';
+const v_064327 = '8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함';
+const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+const v_b6e838 = /[^A-Za-z0-9~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+
+const v_857dfe = (v_3b402b): boolean => {
+  const v_b947d5 = v_3b402b.length >= 8;
+  const v_9dd411 = /[A-Z]/.test(v_3b402b);
+  const v_1cf57e = /[a-z]/.test(v_3b402b);
+  const v_5af9de = /\d/.test(v_3b402b);
+  const v_a5927f = v_3a9aef.test(v_3b402b);
+
+  return v_b947d5 && v_9dd411 && v_1cf57e && v_5af9de && v_a5927f;
+};
+
+const v_3c3484 = (v_3b402b): boolean => {
+  return v_b6e838.test(v_3b402b);
+};
 
 const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
@@ -55,14 +69,19 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     v_459d5e?.iso2?.toLowerCase() === 'kr';
 
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
-  const [v_a32a50, v_4944f5] = v_5ab095('');
-  const [v_328bb4, v_b7613d] = v_5ab095('');
+  const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_d74a81, v_fcce73] = v_5ab095('');
   const [v_c3eac4, v_bdc43c] = v_5ab095<'male' | 'female'>('male');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
+
+  const [v_274f50, v_697ca3] = v_5ab095(false);
+  const [v_6089b6, v_c7f76c] = v_5ab095(false);
+  const [v_651247, v_862dd5] = v_5ab095(false);
+  const [v_736a24, v_8c1910] = v_5ab095(false);
+  const [v_e44a98, v_3ef84a] = v_5ab095(false);
   const [v_153a89, v_879b56] = v_5ab095<{
     visible: boolean;
     title: string;
@@ -122,32 +141,73 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
 
   const v_9c3d15 = (v_3b402b) => v_3b402b.replace(/\D/g, '');
 
-  const v_1d0f03 = (v_3b402b) => {
-    const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return v_9a3638.test(v_3b402b);
+  const v_c5377e = (v_3b402b): string | null => {
+    if (v_3b402b.length === 0) return null;
+
+    if (v_3c3484(v_3b402b)) {
+      return '사용할 수 없는 특수문자가 포함되어 있습니다.';
+    }
+
+    const v_9de4ac = [];
+
+    if (v_3b402b.length < 8) {
+      v_9de4ac.push('8자 이상');
+    }
+    if (!/[a-z]/.test(v_3b402b)) {
+      v_9de4ac.push('영문 소문자');
+    }
+    if (!/[A-Z]/.test(v_3b402b)) {
+      v_9de4ac.push('영문 대문자');
+    }
+    if (!/\d/.test(v_3b402b)) {
+      v_9de4ac.push('숫자');
+    }
+    if (!v_3a9aef.test(v_3b402b)) {
+      v_9de4ac.push('특수문자');
+    }
+
+    if (v_9de4ac.length > 0) {
+      return `${v_9de4ac.join(', ')}가 필요합니다.`;
+    }
+    return null; 
+  };
+
+  const v_57c91b = (v_3b402b) => {
+    v_52b279(v_3b402b);
+    if (v_3b402b.length > 0) {
+      v_862dd5(v_3c3484(v_3b402b));
+      v_c7f76c(v_857dfe(v_3b402b));
+      v_697ca3(true);
+    } else {
+      v_697ca3(false);
+      v_8c1910(false);
+      v_862dd5(false);
+    }
+
+    if (v_0b3ebe.length > 0) {
+      v_3ef84a(v_3b402b === v_0b3ebe);
+    }
+  };
+
+  const v_dd9cbd = (v_3b402b) => {
+    v_241a35(v_3b402b);
+    if (v_3b402b.length > 0) {
+      v_3ef84a(v_adc076 === v_3b402b);
+      v_8c1910(true);
+    } else {
+      v_8c1910(false);
+    }
   };
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
   const v_4d1e97 = v_459d5e?.dialCode ?? '+82';
 
   const v_02f61c = async () => {
-    const v_8f37ac = v_e0c7e8.trim().toLowerCase();
-    const v_c6b2bb = v_a32a50.trim();
-    const v_57c787 = v_328bb4.trim();
+    const v_affc3e = v_1833e7.trim();
     const v_088b9e = v_9c3d15(v_d74a81);
 
-    if (!v_8f37ac) {
-      v_889fad('입력 오류', '이메일을 입력해주세요.');
-      return;
-    }
-
-    if (!v_1d0f03(v_8f37ac)) {
-      v_889fad('입력 오류', '올바른 이메일 주소를 입력해주세요.');
-      return;
-    }
-
-    if (!v_c6b2bb || !v_57c787) {
-      v_889fad('입력 오류', '성을 포함한 이름을 모두 입력해주세요.');
+    if (!v_affc3e) {
+      v_889fad('입력 오류', '이름을 입력해주세요.');
       return;
     }
 
@@ -161,7 +221,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
       return;
     }
 
-    if (v_adc076 && !v_901315.test(v_adc076)) {
+    if (v_adc076 && !v_857dfe(v_adc076)) {
       v_889fad('입력 오류', v_064327);
       return;
     }
@@ -207,27 +267,17 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
               keyboardType="email-address"
               autoCapitalize="none"
               value={v_e0c7e8}
-              onChangeText={v_fedf34}
+              editable={false}
+              style={v_d81136.disabledInput}
+              inputWrapperStyle={v_d81136.disabledInputWrapper}
+            />
+            <TextField
+              label="이름"
+              placeholder="이름을 입력하세요"
+              value={v_1833e7}
+              onChangeText={v_318f24}
               editable={!v_88dca2}
             />
-            <View style={v_d81136.row}>
-              <TextField
-                label="성"
-                placeholder="성을 입력하세요"
-                value={v_328bb4}
-                onChangeText={v_b7613d}
-                containerStyle={[v_d81136.rowItem, v_d81136.rowItemSpacing]}
-                editable={!v_88dca2}
-              />
-              <TextField
-                label="이름"
-                placeholder="이름을 입력하세요"
-                value={v_a32a50}
-                onChangeText={v_4944f5}
-                containerStyle={v_d81136.rowItem}
-                editable={!v_88dca2}
-              />
-            </View>
             <TextField
               label="Phone"
               placeholder="010-1010-1000"
@@ -283,24 +333,35 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
                 ))}
               </View>
             </View>
-            <PasswordField
-              label="비밀번호 (변경 시에만 입력)"
-              placeholder="영문/숫자/특수문자 포함 8자 이상"
-              value={v_adc076}
-              onChangeText={v_52b279}
-              editable={!v_88dca2}
-            />
+            <View>
+              <PasswordField
+                label="비밀번호 (변경 시에만 입력)"
+                placeholder="영문/숫자/특수문자 포함 8자 이상"
+                value={v_adc076}
+                onChangeText={v_57c91b}
+                editable={!v_88dca2}
+              />
+              {v_274f50 && (
+                <Text style={[v_d81136.validationText, v_6089b6 && !v_651247 ? v_d81136.validationSuccess : v_d81136.validationError]}>
+                  {v_c5377e(v_adc076) || '사용가능한 비밀번호입니다.'}
+                </Text>
+              )}
+            </View>
             {v_adc076 ? (
-              <>
+              <View>
                 <PasswordField
                   label="비밀번호 확인"
                   placeholder="비밀번호를 다시 입력하세요"
                   value={v_0b3ebe}
-                  onChangeText={v_241a35}
+                  onChangeText={v_dd9cbd}
                   editable={!v_88dca2}
                 />
-                <Text style={v_d81136.passwordHint}>{v_064327}</Text>
-              </>
+                {v_736a24 && (
+                  <Text style={[v_d81136.validationText, v_e44a98 ? v_d81136.validationSuccess : v_d81136.validationError]}>
+                    {v_e44a98 ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.'}
+                  </Text>
+                )}
+              </View>
             ) : null}
 
             <View style={v_d81136.buttonWrapper}>
@@ -383,11 +444,12 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
   },
-  passwordHint: {
-    fontSize: 12,
-    color: v_1bfbd0.secondaryText,
-    marginTop: -v_9b1a04.small / 2,
-    marginBottom: v_9b1a04.small,
+  validationText: v_a61db3.validationText,
+  validationSuccess: {
+    color: '#007AFF',
+  },
+  validationError: {
+    color: v_1bfbd0.error,
   },
   buttonWrapper: {
     marginTop: v_9b1a04.medium,
@@ -400,6 +462,14 @@ const v_d81136 = v_472849.create({
     fontSize: 12,
     color: v_1bfbd0.secondaryText,
     marginTop: -v_9b1a04.small / 2,
+  },
+  disabledInput: {
+    backgroundColor: '#F5F5F5',
+    color: v_1bfbd0.secondaryText,
+  },
+  disabledInputWrapper: {
+    backgroundColor: '#F5F5F5',
+    borderColor: '#E5E5E5',
   },
 });
 

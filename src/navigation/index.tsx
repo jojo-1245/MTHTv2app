@@ -68,6 +68,7 @@ export type RootStackParamList = {
   EmailVerification:
     | {
         email?: string;
+        redirectTo?: keyof RootStackParamList;
       }
     | undefined;
   CountrySelect:

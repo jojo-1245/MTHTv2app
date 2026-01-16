@@ -19,14 +19,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       title: 'Edit My Info',
       description: '내 정보 수정',
       iconName: 'account-edit' as const,
-      route: 'MyInfoEdit' as const,
-    },
-    {
-      id: 'email',
-      title: 'Email Authentification',
-      description: '이메일 인증',
-      iconName: 'email-check' as const,
-      route: 'MyInfoEmailAuth' as const,
+      route: 'MyInfoEmailAuth' as const, 
     },
     {
       id: 'settings',

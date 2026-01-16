@@ -61,6 +61,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     }, [v_cf55be, v_e9b367]);
 
     const v_4120d4 = [
+        { id: 'home', label: 'Home', icon: 'home' },
         { id: 'wallet', label: 'Wallet', icon: 'credit-card' },
         { id: 'shop', label: 'Shop', icon: 'shopping-cart' },
         { id: 'chat', label: 'Chat', icon: 'message-circle' },
@@ -268,7 +269,13 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     </ScrollView>
 
                     {}
-                    <View style={[v_d81136.userProfileSection, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}>
+                    <TouchableOpacity
+                        style={[v_d81136.userProfileSection, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}
+                        onPress={() => v_8e442f({ id: 'myinfo', label: '나의 정보' })}
+                        activeOpacity={0.7}
+                        accessibilityRole="button"
+                        accessibilityLabel="나의 정보"
+                    >
                         <View style={v_d81136.userAvatar}>
                             {v_2f4b56.avatar ? (
                                 <View style={[v_d81136.avatarPlaceholder, { backgroundColor: v_2f4b56.placeholderColor || v_1bfbd0.buttonPrimary }]}>
@@ -285,7 +292,8 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                             )}
                         </View>
                         <Text style={v_d81136.userName}>{v_2f4b56.name}</Text>
-                    </View>
+                        <Feather name="chevron-right" size={20} color="#9CA3AF" style={v_d81136.profileArrow} />
+                    </TouchableOpacity>
                 </Animated.View>
             </View>
         </Modal>
@@ -433,6 +441,10 @@ const v_d81136 = v_472849.create({
         fontSize: 16,
         fontFamily: v_843035.medium,
         color: v_1bfbd0.text,
+        flex: 1,
+    },
+    profileArrow: {
+        marginLeft: 'auto',
     },
 });
 
