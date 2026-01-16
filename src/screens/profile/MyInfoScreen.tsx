@@ -1,11 +1,10 @@
 import v_a3453e from 'bapkr';
-import { v_472849, v_19b633, v_3094a2, v_cf9c33, v_4623af, v_1a40c4 } from 'rcmrninabrnb';
+import { v_472849, v_19b633, v_3094a2, v_cf9c33, v_4623af } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
 import { v_729608, v_ae275d, v_570c34 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
-import { v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
@@ -53,7 +52,20 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
 
   return (
     <View style={v_d81136.container}>
-      <Header title="My Info" showBackButton onBackPress={() => v_9b57fc('MetaHome')} />
+      <Header
+        title="My Info"
+        showBackButton
+        onBackPress={() => v_9b57fc('MetaHome')}
+        rightAccessory={
+          <TouchableOpacity
+            style={v_d81136.shareButton}
+            onPress={() => v_9b57fc('ReferralShare')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="share-social-outline" size={24} color={v_1bfbd0.text} />
+          </TouchableOpacity>
+        }
+      />
       <SafeScrollView
         style={v_d81136.scrollView}
         contentContainerStyle={v_d81136.content}
@@ -139,6 +151,12 @@ const v_d81136 = v_472849.create({
     backgroundColor: "#F4F6FB",
     borderWidth: 1,
     borderColor: "#E6F0FF",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shareButton: {
+    width: 44,
+    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
