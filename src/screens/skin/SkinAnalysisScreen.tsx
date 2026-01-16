@@ -121,12 +121,12 @@ const v_638095 = {
     firmness: 'hand-left-outline',
     moisture: 'water-outline',
     oiliness: 'water-outline',
-    pore: 'scan-outline',
+    pore: 'apps-outline',           
     radiance: 'sunny-outline',
-    redness: 'color-palette-outline',
+    redness: 'flame-outline',       
     age_spot: 'ellipse-outline',
-    texture: 'layers-outline',
-    wrinkle: 'git-branch-outline',
+    texture: 'finger-print-outline', 
+    wrinkle: 'pulse-outline',       
 };
 
 const v_3e09cd = {
@@ -1210,7 +1210,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 ]}>
                                     <Text style={[
                                         v_d81136.concernHighlightScoreText,
-                                        { color: '#0369A1' }
+                                        { color: '#2563EB' }
                                     ]}>
                                         {v_ccf527.score}점
                                     </Text>
@@ -1241,7 +1241,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 ]}>
                                     <Text style={[
                                         v_d81136.concernHighlightScoreText,
-                                        { color: '#991B1B' }
+                                        { color: '#DC2626' }
                                     ]}>
                                         {v_ccf527.score}점
                                     </Text>
