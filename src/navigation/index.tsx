@@ -40,7 +40,7 @@ import v_5fdcb2 from '../screens/profile/ClauseDetailScreen';
 import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
 import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 import { v_852e99 } from '../screens/skin';
-import { v_daf220 } from '../screens/health';
+import { v_daf220, v_1b8038 } from '../screens/health';
 import { v_02d653 } from '../screens/chat';
 
 export type RootStackParamList = {
@@ -118,6 +118,7 @@ export type RootStackParamList = {
   MyInfoFaq: undefined;
   SkinAnalysis: undefined;
   HealthAnalysis: undefined;
+  HealthConnection: undefined;
   Chat: undefined;
 };
 
@@ -173,6 +174,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
         <Stack.Screen name="SkinAnalysis" component={v_852e99} />
         <Stack.Screen name="HealthAnalysis" component={v_daf220} />
+        <Stack.Screen name="HealthConnection" component={v_1b8038} />
         <Stack.Screen name="Chat" component={v_02d653} />
       </Stack.Navigator>
     </NavigationContainer>
