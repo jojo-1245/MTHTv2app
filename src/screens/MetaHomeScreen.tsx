@@ -109,6 +109,16 @@ const v_be142a = [
 const v_2b90bf = '2026.01.15';
 const v_c10ca0 = '2025.12.20';
 
+const v_4a3ec5 = {
+  caution: ['모공', '수분'],  
+  danger: ['탄력'],           
+};
+
+const v_df3284 = {
+  caution: ['다크서클', '유분'],  
+  danger: ['잡티', '수분'],       
+};
+
 const RadarChart: v_a3453e.FC<{
   data: number[];
   dataAfter?: number[];
@@ -172,9 +182,10 @@ const RadarChart: v_a3453e.FC<{
       {}
       <Polygon
         points={v_cf01e7(v_9390e8)}
-        fill="rgba(156, 163, 175, 0.3)"
+        fill="rgba(156, 163, 175, 0.2)"
         stroke="#9CA3AF"
         strokeWidth={2}
+        strokeDasharray="4,4"
       />
 
       {}
@@ -377,6 +388,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_a36c61 = v_204bf1 === 'recent' ? v_191cd1 : v_be142a;
   const v_d39d27 = v_204bf1 === 'recent' ? v_2b90bf : v_c10ca0;
   const v_287ba3 = v_204bf1 === 'recent' ? 17 : 19;
+  const v_972b6e = v_204bf1 === 'recent' ? v_4a3ec5 : v_df3284;
 
   const v_fc5fb7 = (v_740dd8): string => {
     if (v_740dd8 >= 8) return '높음';
@@ -715,11 +727,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           <View style={v_d81136.section}>
             <Text style={v_d81136.sectionTitle}>나의 건강레벨</Text>
             <View style={v_d81136.healthLevelCard}>
-              <View style={v_d81136.levelIconContainer}>
-                <Image
-                  source={v_a6b742}
-                  style={v_d81136.levelIcon}
-                  resizeMode="contain"
+              <View style={[v_d81136.levelIconContainer, { backgroundColor: v_16b893[v_30ddf9 as keyof typeof v_16b893] + '20' }]}>
+                <MaterialCommunityIcons
+                  name="heart-pulse"
+                  size={32}
+                  color={v_16b893[v_30ddf9 as keyof typeof v_16b893]}
                 />
               </View>
               <View style={v_d81136.levelInfoContainer}>
@@ -762,12 +774,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 {}
                 <View style={v_d81136.legendContainer}>
                   <View style={v_d81136.legendItem}>
-                    <View style={[v_d81136.legendDot, { backgroundColor: '#9CA3AF' }]} />
-                    <Text style={v_d81136.legendText}>Before</Text>
+                    <View style={v_d81136.legendLineSolid} />
+                    <Text style={v_d81136.legendText}>최근분석</Text>
                   </View>
                   <View style={v_d81136.legendItem}>
-                    <View style={[v_d81136.legendDot, { backgroundColor: '#3B82F6' }]} />
-                    <Text style={v_d81136.legendText}>After</Text>
+                    <View style={v_d81136.legendLineDashed} />
+                    <Text style={v_d81136.legendText}>이전분석</Text>
                   </View>
                 </View>
               </View>
@@ -811,25 +823,30 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
               {}
               <View style={v_d81136.warningSection}>
-                <View style={v_d81136.warningRow}>
-                  <Text style={v_d81136.warningLabel}>주의</Text>
-                  <View style={v_d81136.tagContainer}>
-                    <View style={[v_d81136.tag, v_d81136.tagWarning]}>
-                      <Text style={v_d81136.tagText}>모공</Text>
-                    </View>
-                    <View style={[v_d81136.tag, v_d81136.tagWarning]}>
-                      <Text style={v_d81136.tagText}>수분</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={v_d81136.warningRow}>
-                  <Text style={v_d81136.warningLabel}>경고</Text>
-                  <View style={v_d81136.tagContainer}>
-                    <View style={[v_d81136.tag, v_d81136.tagDanger]}>
-                      <Text style={[v_d81136.tagText, v_d81136.tagTextDanger]}>탄력</Text>
+                {v_972b6e.caution.length > 0 && (
+                  <View style={v_d81136.warningRow}>
+                    <Text style={v_d81136.warningLabel}>주의</Text>
+                    <View style={v_d81136.tagContainer}>
+                      {v_972b6e.caution.map((v_8c0b26, v_a56041) => (
+                        <View key={`caution-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagWarning]}>
+                          <Text style={v_d81136.tagText}>{v_8c0b26}</Text>
+                        </View>
+                      ))}
                     </View>
                   </View>
-                </View>
+                )}
+                {v_972b6e.danger.length > 0 && (
+                  <View style={v_d81136.warningRow}>
+                    <Text style={v_d81136.warningLabel}>경고</Text>
+                    <View style={v_d81136.tagContainer}>
+                      {v_972b6e.danger.map((v_8c0b26, v_a56041) => (
+                        <View key={`danger-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagDanger]}>
+                          <Text style={[v_d81136.tagText, v_d81136.tagTextDanger]}>{v_8c0b26}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                )}
               </View>
 
               {}
@@ -1415,17 +1432,15 @@ const v_d81136 = v_472849.create({
     gap: v_9b1a04.small,
   },
   levelIconContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: v_9b1a04.medium,
-  },
-  levelIcon: {
-    width: 40,
-    height: 40,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
   },
   levelInfo: {
     flexDirection: 'row',
@@ -1500,10 +1515,18 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     gap: 4,
   },
-  legendDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+  legendLineDashed: {
+    width: 20,
+    height: 0,
+    borderTopWidth: 2,
+    borderTopColor: '#9CA3AF',
+    borderStyle: 'dashed',
+  },
+  legendLineSolid: {
+    width: 20,
+    height: 2,
+    backgroundColor: '#3B82F6',
+    borderRadius: 1,
   },
   legendText: {
     fontSize: 11,
