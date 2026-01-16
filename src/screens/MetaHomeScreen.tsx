@@ -570,7 +570,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 <Feather name="menu" size={24} color="#FFFFFF" />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => v_03e392.alert('알림', '알림 기능은 준비 중입니다.')}
+                onPress={() => v_9b57fc('MyInfoNotify')}
                 style={v_d81136.iconButton}
                 activeOpacity={0.7}
                 accessibilityRole="button"

@@ -59,6 +59,7 @@ export const v_ef658a = {
 
 export const v_9b1a04 = {
   small: 8,
+  xmedium: 12,
   medium: 16,
   large: 20,
   xlarge: 24,
