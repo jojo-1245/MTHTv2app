@@ -364,6 +364,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   );
   const [v_39cb7a, v_ecd01c] = v_5ab095(8); 
   const [v_30ddf9, v_ca2ef8] = v_5ab095(9); 
+  const [v_9cb8cb, v_8cab62] = v_5ab095(true); 
 
   const [v_e870d1, v_aa40cb] = v_5ab095(false);
   const [v_437b17, v_c88681] = v_5ab095<HealthInfo | null>(null);
@@ -588,7 +589,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 accessibilityRole="button"
                 accessibilityLabel="알림"
               >
-                <Ionicons name="notifications-outline" size={24} color="#FFFFFF" />
+                <View style={v_d81136.notificationIconContainer}>
+                  <Ionicons name="notifications-outline" size={24} color="#FFFFFF" />
+                  {v_9cb8cb && (
+                    <View style={v_d81136.notificationBadge} />
+                  )}
+                </View>
               </TouchableOpacity>
             </View>
 
@@ -1109,6 +1115,22 @@ const v_d81136 = v_472849.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  notificationIconContainer: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notificationBadge: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#FF0000',
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF',
   },
   greetingContainer: {
     paddingHorizontal: v_9b1a04.large,
