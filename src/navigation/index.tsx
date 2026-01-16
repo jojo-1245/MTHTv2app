@@ -119,7 +119,10 @@ export type RootStackParamList = {
   SkinAnalysis: undefined;
   HealthAnalysis: undefined;
   HealthConnection: undefined;
-  Chat: undefined;
+  Chat: {
+    initialSearchText?: string;
+    initialHealthInfo?: { id: string; name: string } | null;
+  } | undefined;
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();

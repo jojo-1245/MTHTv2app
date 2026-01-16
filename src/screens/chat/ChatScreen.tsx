@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_e662ae } from 'bapkr';
+import v_a3453e, { v_5ab095, v_e662ae, v_c4deb2 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -13,6 +13,7 @@ import {
   v_700696,
   v_da479e,
   v_bd64bf,
+  v_0e1f26,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
@@ -23,6 +24,19 @@ import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
+
+const v_2e47ea = require('../../../assets/images/robot_face.png');
+
+interface HealthInfo {
+  id: string;
+  name: string;
+}
+
+const v_33dc2e = [
+  { id: '1', name: '할머니' },
+  { id: '2', name: '할아버지' },
+  { id: '3', name: '아버지' },
+];
 
 type Props = v_432191<v_8ad91b, 'Chat'>;
 
@@ -94,7 +108,7 @@ const v_8387df = [
   },
 ];
 
-const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
   const v_e99f51 = v_e662ae<v_122070>(null);
@@ -103,6 +117,35 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_3ba9c6, v_655a4e] = v_5ab095(false);
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
   const [v_6e882f, v_6e04f8] = v_5ab095<{ [key: string]: number }>({});
+
+  const [v_e870d1, v_aa40cb] = v_5ab095(false);
+  const [v_437b17, v_c88681] = v_5ab095<HealthInfo | null>(null);
+  const [v_7e4acc, v_de86c2] = v_5ab095(0);
+
+  v_c4deb2(() => {
+    if (v_c7daf6.params?.initialSearchText) {
+      v_f32824(v_c7daf6.params.initialSearchText);
+    }
+    if (v_c7daf6.params?.initialHealthInfo) {
+      v_c88681(v_c7daf6.params.initialHealthInfo);
+    }
+  }, [v_c7daf6.params]);
+
+  v_c4deb2(() => {
+    const v_b55c88 = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      (v_9e86fd) => v_de86c2(v_9e86fd.endCoordinates.height)
+    );
+    const v_88ec6a = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => v_de86c2(0)
+    );
+
+    return () => {
+      v_b55c88.remove();
+      v_88ec6a.remove();
+    };
+  }, []);
 
   const v_18219f = (item: v_80b5f0) => {
     switch (v_8c0b26.id) {
@@ -125,12 +168,22 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         v_9b57fc('HealthAnalysis');
         break;
       case 'connect':
-        v_03e392.alert('안내', '건강정보 연결하기 화면은 준비 중입니다.');
+        v_9b57fc('HealthConnection');
+        break;
+      case 'grandma':
+      case 'grandpa':
+        v_03e392.alert('안내', '가족 프로필 화면은 준비 중입니다.');
+        break;
+      case 'history':
+        v_03e392.alert('안내', '검색 기록 화면은 준비 중입니다.');
         break;
       case 'myinfo':
         v_9b57fc('MyInfo');
         break;
       default:
+        if (v_8c0b26.id.startsWith('suggestion-')) {
+          v_03e392.alert('검색', v_8c0b26.label);
+        }
         break;
     }
   };
@@ -148,20 +201,38 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_f32824('');
 
     setTimeout(() => {
+      v_e99f51.current?.scrollToEnd({ animated: true });
+    }, 100);
+
+    setTimeout(() => {
       const v_37c94a = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
         text: '답변을 준비하고 있습니다...',
       };
       v_41d55d(v_ba2215 => [...v_ba2215, v_37c94a]);
-      v_e99f51.current?.scrollToEnd({ animated: true });
-    }, 1000);
 
-    v_e99f51.current?.scrollToEnd({ animated: true });
+      setTimeout(() => {
+        v_e99f51.current?.scrollToEnd({ animated: true });
+      }, 100);
+    }, 1000);
   };
 
   const v_4f73b9 = (v_01bee9) => {
     v_03e392.alert('상품 보기', `${v_01bee9.name}\n상품 상세 페이지로 이동합니다.`);
+  };
+
+  const v_74f1f5 = () => {
+    v_aa40cb(v_ba2215 => !v_ba2215);
+  };
+
+  const v_073b8f = (v_e60aa7) => {
+    v_c88681(v_e60aa7);
+    v_aa40cb(false);
+  };
+
+  const v_80b796 = () => {
+    v_c88681(null);
   };
 
   const v_dd0316 = (
@@ -181,7 +252,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <Image
             source={require('../../../assets/images/product_01.png')}
             style={v_d81136.productImage}
-            resizeMode="cover"
+            resizeMode="contain"
           />
           {v_01bee9.discount && (
             <View style={v_d81136.discountBadge}>
@@ -202,7 +273,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <Text style={v_d81136.currentPrice}>{v_01bee9.price}</Text>
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={v_d81136.viewProductButton}
             onPress={() => v_4f73b9(v_01bee9)}
             activeOpacity={0.8}
@@ -280,14 +351,18 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           >
             <Feather name="menu" size={24} color="#374151" />
           </TouchableOpacity>
-          <View style={v_d81136.logoContainer}>
+          <TouchableOpacity
+            style={v_d81136.logoContainer}
+            onPress={() => v_9b57fc('MetaHome')}
+            activeOpacity={0.7}
+          >
             <Text style={v_d81136.logoText}>
               <Text style={v_d81136.logoMeta}>META </Text>
               <Text style={v_d81136.logoHi}>Hi</Text>
               <Text style={v_d81136.logoN}>N</Text>
               <Text style={v_d81136.logoT}>T</Text>
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={v_d81136.headerRight} />
         </View>
 
@@ -334,17 +409,27 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <View style={v_d81136.inputExtras}>
-              <TouchableOpacity
-                style={v_d81136.extraButton}
-                onPress={() => v_03e392.alert('추가', '파일 첨부 기능은 준비 중입니다.')}
-              >
-                <Ionicons name="add" size={24} color="#6B7280" />
-              </TouchableOpacity>
+              <View style={v_d81136.extraLeft}>
+                <TouchableOpacity
+                  style={[v_d81136.extraButton, v_e870d1 && v_d81136.extraButtonActive]}
+                  onPress={v_74f1f5}
+                >
+                  <Ionicons name="add" size={24} color={v_e870d1 ? '#4A5099' : '#6B7280'} />
+                </TouchableOpacity>
+
+                {}
+                {v_437b17 && (
+                  <TouchableOpacity
+                    style={v_d81136.selectedHealthTag}
+                    onPress={v_80b796}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={v_d81136.selectedHealthTagText}>{v_437b17.name}</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
 
               <View style={v_d81136.extraRight}>
-                <TouchableOpacity style={v_d81136.healthTag}>
-                  <Text style={v_d81136.healthTagText}>건강관리</Text>
-                </TouchableOpacity>
                 <TouchableOpacity
                   style={v_d81136.extraButton}
                   onPress={() => v_03e392.alert('음성', '음성 입력 기능은 준비 중입니다.')}
@@ -355,6 +440,54 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
           </View>
         </KeyboardAvoidingView>
+
+        {}
+        {v_e870d1 && (
+          <TouchableOpacity
+            style={v_d81136.healthPanelBackdrop}
+            activeOpacity={1}
+            onPress={() => v_aa40cb(false)}
+          />
+        )}
+
+        {}
+        {v_e870d1 && (
+          <View style={[
+            v_d81136.healthPanel,
+            {
+              bottom: v_7e4acc > 0 ? v_7e4acc + 10 : 0,
+              paddingBottom: v_7e4acc > 0 ? v_9b1a04.medium : v_033e14.bottom + v_9b1a04.medium
+            }
+          ]}>
+            <View style={v_d81136.healthPanelHeader}>
+              <Text style={v_d81136.healthPanelTitle}>건강정보 불러오기</Text>
+              <TouchableOpacity onPress={() => {
+                v_aa40cb(false);
+                v_9b57fc('HealthConnection');
+              }}>
+                <Text style={v_d81136.healthPanelLink}>건강정보 연결하기</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView
+              style={v_d81136.healthPanelList}
+              showsVerticalScrollIndicator={false}
+            >
+              {v_33dc2e.map((v_8c0b26) => (
+                <TouchableOpacity
+                  key={v_8c0b26.id}
+                  style={v_d81136.healthPanelItem}
+                  onPress={() => v_073b8f(v_8c0b26)}
+                  activeOpacity={0.7}
+                >
+                  <View style={v_d81136.healthPanelAvatar}>
+                    <Image source={v_2e47ea} style={v_d81136.healthPanelAvatarImage} />
+                  </View>
+                  <Text style={v_d81136.healthPanelItemText}>{v_8c0b26.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </SafeView>
 
       <SidebarMenu
@@ -458,6 +591,8 @@ const v_d81136 = v_472849.create({
   productsContainer: {
     marginTop: v_9b1a04.small,
     marginHorizontal: -v_9b1a04.large,
+    height: 360, 
+    overflow: 'hidden',
   },
   productSwiperContent: {
     paddingHorizontal: v_9b1a04.large,
@@ -477,10 +612,11 @@ const v_d81136 = v_472849.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 3,
+    height: 320, 
   },
   productImageContainer: {
     width: '100%',
-    height: 160,
+    height: 140,
     backgroundColor: '#F8F9FA',
     position: 'relative',
   },
@@ -503,7 +639,11 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.bold,
   },
   productInfo: {
-    padding: v_9b1a04.medium,
+    padding: v_9b1a04.small,
+    paddingHorizontal: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.medium,
+    height: 180, 
+    justifyContent: 'space-between',
   },
   productName: {
     fontSize: v_ef658a.large,
@@ -541,8 +681,8 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
     gap: 6,
     backgroundColor: '#4A5099',
-    paddingVertical: 12,
-    borderRadius: 10,
+    paddingVertical: 10,
+    borderRadius: 8,
   },
   viewProductButtonText: {
     color: '#FFFFFF',
@@ -566,6 +706,82 @@ const v_d81136 = v_472849.create({
   paginationDotActive: {
     backgroundColor: '#4A5099',
     width: 20,
+  },
+
+  healthPanelBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    zIndex: 10,
+  },
+
+  healthPanel: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 11,
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: v_9b1a04.large,
+    paddingTop: v_9b1a04.large,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  healthPanelHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: v_9b1a04.medium,
+  },
+  healthPanelTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#9CA3AF',
+  },
+  healthPanelLink: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#4A5099',
+    textDecorationLine: 'underline',
+  },
+  healthPanelList: {
+    maxHeight: 250,
+  },
+  healthPanelItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.small,
+    marginBottom: v_9b1a04.small / 2,
+  },
+  healthPanelAvatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#EEF2FF',
+    borderWidth: 2,
+    borderColor: '#A5B4FC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginRight: v_9b1a04.medium,
+  },
+  healthPanelAvatarImage: {
+    width: 28,
+    height: 28,
+    resizeMode: 'contain',
+  },
+  healthPanelItemText: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
   },
 
   inputContainer: {
@@ -610,6 +826,11 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     paddingVertical: v_9b1a04.small,
   },
+  extraLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
   extraButton: {
     width: 44,
     height: 44,
@@ -620,23 +841,27 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
+  extraButtonActive: {
+    borderColor: '#4A5099',
+    backgroundColor: '#EEF2FF',
+  },
   extraRight: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: v_9b1a04.small,
   },
-  healthTag: {
+  selectedHealthTag: {
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 22,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    borderColor: '#A5B4FC',
+    backgroundColor: '#EEF2FF',
   },
-  healthTagText: {
+  selectedHealthTagText: {
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
-    color: '#374151',
+    color: '#4A5099',
   },
 });
 

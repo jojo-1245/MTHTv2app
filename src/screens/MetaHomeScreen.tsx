@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_df9f57 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_df9f57, v_c4deb2 } from 'bapkr';
 import {
   v_03e392,
   v_472849,
@@ -13,6 +13,8 @@ import {
   v_122070,
   v_09d0e5,
   v_e45a99,
+  v_0e1f26,
+  v_326be8,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
@@ -28,6 +30,18 @@ import { v_556baf } from '../components';
 
 const v_9b2456 = require('../../assets/images/main_top_img.png');
 const v_a6b742 = require('../../assets/images/character.png');
+const v_2e47ea = require('../../assets/images/robot_face.png');
+
+interface HealthInfo {
+  id: string;
+  name: string;
+}
+
+const v_33dc2e = [
+  { id: '1', name: '할머니' },
+  { id: '2', name: '할아버지' },
+  { id: '3', name: '아버지' },
+];
 
 const { width: v_0d9f50 } = v_700696.get('window');
 
@@ -340,6 +354,26 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_39cb7a, v_ecd01c] = v_5ab095(8); 
   const [v_30ddf9, v_ca2ef8] = v_5ab095(9); 
 
+  const [v_e870d1, v_aa40cb] = v_5ab095(false);
+  const [v_437b17, v_c88681] = v_5ab095<HealthInfo | null>(null);
+  const [v_7e4acc, v_de86c2] = v_5ab095(0);
+
+  v_c4deb2(() => {
+    const v_b55c88 = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      (v_9e86fd) => v_de86c2(v_9e86fd.endCoordinates.height)
+    );
+    const v_88ec6a = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => v_de86c2(0)
+    );
+
+    return () => {
+      v_b55c88.remove();
+      v_88ec6a.remove();
+    };
+  }, []);
+
   const v_a36c61 = v_204bf1 === 'recent' ? v_191cd1 : v_be142a;
   const v_d39d27 = v_204bf1 === 'recent' ? v_2b90bf : v_c10ca0;
   const v_287ba3 = v_204bf1 === 'recent' ? 17 : 19;
@@ -437,9 +471,33 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_5e757d = () => {
-    if (v_89bb03.trim()) {
-      v_03e392.alert('검색', v_89bb03);
+    if (v_89bb03.trim() || v_437b17) {
+      v_9b57fc('Chat', {
+        initialSearchText: v_89bb03.trim(),
+        initialHealthInfo: v_437b17,
+      });
+
+      v_39f9a7('');
+      v_c88681(null);
+      v_d5a554(false);
     }
+  };
+
+  const v_74f1f5 = () => {
+    if (!v_e870d1) {
+
+      v_0e1f26.dismiss();
+    }
+    v_aa40cb(v_ba2215 => !v_ba2215);
+  };
+
+  const v_073b8f = (v_e60aa7) => {
+    v_c88681(v_e60aa7);
+    v_aa40cb(false);
+  };
+
+  const v_80b796 = () => {
+    v_c88681(null);
   };
 
   const v_2d3af6 = (v_389afb) => {
@@ -538,10 +596,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.searchContainer}>
-            <View style={[v_d81136.searchBar, v_40f660 && v_d81136.searchBarFocused]}>
+            <View style={[
+              v_d81136.searchBar,
+              (v_40f660 || v_437b17 || v_e870d1) && v_d81136.searchBarFocused
+            ]}>
               <TextInput
                 style={v_d81136.searchInput}
-                placeholder={v_40f660 ? "건강정보를 검색하세요" : "TED 님, 무엇이 궁금하신가요?"}
+                placeholder={(v_40f660 || v_437b17 || v_e870d1) ? "건강정보를 검색하세요" : "TED 님, 무엇이 궁금하신가요?"}
                 placeholderTextColor="#999"
                 value={v_89bb03}
                 onChangeText={v_39f9a7}
@@ -552,9 +613,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               />
               <TouchableOpacity
                 onPress={v_5e757d}
-                style={[v_d81136.searchButton, v_40f660 && v_d81136.searchButtonFocused]}
+                style={[
+                  v_d81136.searchButton,
+                  (v_40f660 || v_437b17 || v_e870d1) && v_d81136.searchButtonFocused
+                ]}
               >
-                {v_40f660 ? (
+                {(v_40f660 || v_437b17 || v_e870d1) ? (
                   <Ionicons name="arrow-up" size={20} color="#FFFFFF" />
                 ) : (
                   <Ionicons name="search" size={22} color="#6B7280" />
@@ -563,19 +627,29 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             </View>
 
             {}
-            {v_40f660 && (
+            {(v_40f660 || v_437b17 || v_e870d1) && (
               <View style={v_d81136.searchExtras}>
-                <TouchableOpacity
-                  style={v_d81136.searchExtraButton}
-                  onPress={() => v_03e392.alert('추가', '파일 첨부 기능은 준비 중입니다.')}
-                >
-                  <Ionicons name="add" size={24} color="#6B7280" />
-                </TouchableOpacity>
+                <View style={v_d81136.searchExtraLeft}>
+                  <TouchableOpacity
+                    style={[v_d81136.searchExtraButton, v_e870d1 && v_d81136.searchExtraButtonActive]}
+                    onPress={v_74f1f5}
+                  >
+                    <Ionicons name="add" size={24} color={v_e870d1 ? '#4A5099' : '#6B7280'} />
+                  </TouchableOpacity>
+
+                  {}
+                  {v_437b17 && (
+                    <TouchableOpacity
+                      style={v_d81136.selectedHealthTag}
+                      onPress={v_80b796}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={v_d81136.selectedHealthTagText}>{v_437b17.name}</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
 
                 <View style={v_d81136.searchExtraRight}>
-                  <TouchableOpacity style={v_d81136.healthTag}>
-                    <Text style={v_d81136.healthTagText}>건강관리</Text>
-                  </TouchableOpacity>
                   <TouchableOpacity
                     style={v_d81136.searchExtraButton}
                     onPress={() => v_03e392.alert('음성', '음성 검색 기능은 준비 중입니다.')}
@@ -859,6 +933,51 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           </View>
 
         </SafeScrollView>
+
+        {}
+        {v_e870d1 && (
+          <TouchableOpacity
+            style={v_d81136.healthPanelBackdrop}
+            activeOpacity={1}
+            onPress={() => v_aa40cb(false)}
+          />
+        )}
+
+        {}
+        {v_e870d1 && (
+          <View style={[
+            v_d81136.healthPanel,
+            { paddingBottom: v_033e14.bottom + v_9b1a04.medium }
+          ]}>
+            <View style={v_d81136.healthPanelHeader}>
+              <Text style={v_d81136.healthPanelTitle}>건강정보 불러오기</Text>
+              <TouchableOpacity onPress={() => {
+                v_aa40cb(false);
+                v_9b57fc('HealthConnection');
+              }}>
+                <Text style={v_d81136.healthPanelLink}>건강정보 연결하기</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView
+              style={v_d81136.healthPanelList}
+              showsVerticalScrollIndicator={false}
+            >
+              {v_33dc2e.map((v_8c0b26) => (
+                <TouchableOpacity
+                  key={v_8c0b26.id}
+                  style={v_d81136.healthPanelItem}
+                  onPress={() => v_073b8f(v_8c0b26)}
+                  activeOpacity={0.7}
+                >
+                  <View style={v_d81136.healthPanelAvatar}>
+                    <Image source={v_2e47ea} style={v_d81136.healthPanelAvatarImage} />
+                  </View>
+                  <Text style={v_d81136.healthPanelItemText}>{v_8c0b26.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </SafeView>
 
       <SidebarMenu
@@ -1059,10 +1178,108 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
+  searchExtraLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
   searchExtraRight: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: v_9b1a04.small,
+  },
+  searchExtraButtonActive: {
+    borderColor: '#4A5099',
+    backgroundColor: '#EEF2FF',
+  },
+  selectedHealthTag: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#A5B4FC',
+    backgroundColor: '#EEF2FF',
+  },
+  selectedHealthTagText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#4A5099',
+  },
+
+  healthPanelBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    zIndex: 10,
+  },
+
+  healthPanel: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 11,
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: v_9b1a04.large,
+    paddingTop: v_9b1a04.large,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  healthPanelHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: v_9b1a04.medium,
+  },
+  healthPanelTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#9CA3AF',
+  },
+  healthPanelLink: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#4A5099',
+    textDecorationLine: 'underline',
+  },
+  healthPanelList: {
+    maxHeight: 250,
+  },
+  healthPanelItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.small,
+    marginBottom: v_9b1a04.small / 2,
+  },
+  healthPanelAvatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#EEF2FF',
+    borderWidth: 2,
+    borderColor: '#A5B4FC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginRight: v_9b1a04.medium,
+  },
+  healthPanelAvatarImage: {
+    width: 28,
+    height: 28,
+    resizeMode: 'contain',
+  },
+  healthPanelItemText: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
   },
   healthTag: {
     paddingHorizontal: 16,
