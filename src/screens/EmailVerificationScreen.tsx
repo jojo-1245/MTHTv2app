@@ -15,6 +15,7 @@ type Props = v_432191<v_8ad91b, 'EmailVerification'>;
 
 const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const v_e0c7e8 = v_c7daf6.params?.email || 'oth-staff@example.invalid';
+  const v_6c4ab9 = v_c7daf6.params?.redirectTo;
   const [v_c99bd2, v_537cbb] = v_5ab095('');
   const [v_3a2ef3, v_e50001] = v_5ab095(false);
   const [v_cb36b1, v_6a8302] = v_5ab095(300); 
@@ -49,7 +50,11 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
   const v_03cae9 = () => {
     v_e50001(false);
 
-    v_c65f5d.navigate('Login');
+    if (v_6c4ab9) {
+      v_c65f5d.navigate(v_6c4ab9 as any);
+    } else {
+      v_c65f5d.navigate('Login');
+    }
   };
 
   const v_93136a = v_c99bd2.length === 6;

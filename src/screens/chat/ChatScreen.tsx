@@ -7,9 +7,12 @@ import {
   v_4623af,
   v_122070,
   v_03e392,
-  v_f2c756,
   v_e767d1,
   v_326be8,
+  v_cf9c33,
+  v_700696,
+  v_da479e,
+  v_bd64bf,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
@@ -23,15 +26,59 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 
 type Props = v_432191<v_8ad91b, 'Chat'>;
 
+const { width: v_0d9f50 } = v_700696.get('window');
+const v_37c282 = v_0d9f50 - 80; 
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  discount?: string;
+}
+
 interface ChatMessage {
   id: string;
   type: 'user' | 'ai';
   text: string;
-  linkCard?: {
-    title: string;
-    url: string;
-  };
+  products?: Product[];
 }
+
+const v_426e67 = [
+  {
+    id: '1',
+    name: '종근당건강 아이커 칼슘업 플러스',
+    description: '성장기 어린이를 위한 프리미엄 영양제\n칼슘, 비타민D, 아연 함유',
+    price: '39,900원',
+    originalPrice: '49,900원',
+    discount: '20%',
+  },
+  {
+    id: '2',
+    name: '뉴트리원 키즈 그로우 칼슘',
+    description: '어린이 성장 발육에 필요한 칼슘\n비타민K, 마그네슘 함유',
+    price: '32,000원',
+    originalPrice: '40,000원',
+    discount: '20%',
+  },
+  {
+    id: '3',
+    name: '정관장 홍이장군 키즈',
+    description: '6년근 홍삼 농축액 함유\n면역력 & 성장 동시 케어',
+    price: '58,000원',
+    originalPrice: '65,000원',
+    discount: '11%',
+  },
+  {
+    id: '4',
+    name: '일동후디스 하이키드 플러스',
+    description: '성장기 필수 영양소 22종\n초유단백 & 칼슘 함유',
+    price: '45,000원',
+    originalPrice: '55,000원',
+    discount: '18%',
+  },
+];
 
 const v_8387df = [
   {
@@ -42,11 +89,8 @@ const v_8387df = [
   {
     id: '2',
     type: 'ai',
-    text: '키크는약은 없지만 관련 영양제 추천해드릴게요',
-    linkCard: {
-      title: '결과만 나오면됩니다.',
-      url: 'https://example.com/supplements',
-    },
+    text: '키크는약은 없지만 성장기 영양제를 추천해드릴게요!',
+    products: v_426e67,
   },
 ];
 
@@ -58,9 +102,13 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_a469c7, v_f32824] = v_5ab095('');
   const [v_3ba9c6, v_655a4e] = v_5ab095(false);
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
+  const [v_6e882f, v_6e04f8] = v_5ab095<{ [key: string]: number }>({});
 
   const v_18219f = (item: v_80b5f0) => {
     switch (v_8c0b26.id) {
+      case 'home':
+        v_9b57fc('MetaHome');
+        break;
       case 'wallet':
         v_9b57fc('Wallet');
         break;
@@ -78,6 +126,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         break;
       case 'connect':
         v_03e392.alert('안내', '건강정보 연결하기 화면은 준비 중입니다.');
+        break;
+      case 'myinfo':
+        v_9b57fc('MyInfo');
         break;
       default:
         break;
@@ -109,15 +160,60 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_e99f51.current?.scrollToEnd({ animated: true });
   };
 
-  const v_4c3e84 = (v_f71b56) => {
-    v_f2c756.openURL(v_f71b56).catch(() => {
-      v_03e392.alert('오류', '링크를 열 수 없습니다.');
-    });
+  const v_4f73b9 = (v_01bee9) => {
+    v_03e392.alert('상품 보기', `${v_01bee9.name}\n상품 상세 페이지로 이동합니다.`);
   };
 
-  const v_08bcd6 = (v_f71b56) => {
-    v_03e392.alert('복사됨', '링크가 클립보드에 복사되었습니다.');
+  const v_dd0316 = (
+    event: v_bd64bf<v_da479e>,
+    v_7f4466,
+  ) => {
+    const v_bfc931 = v_d48baf.nativeEvent.contentOffset.x;
+    const v_a56041 = Math.round(v_bfc931 / v_37c282);
+    v_6e04f8(v_ba2215 => ({ ...v_ba2215, [v_7f4466]: v_a56041 }));
   };
+
+  const v_80b207 = (v_01bee9) => (
+    <View key={v_01bee9.id} style={v_d81136.productCardWrapper}>
+      <View style={v_d81136.productCard}>
+        {}
+        <View style={v_d81136.productImageContainer}>
+          <Image
+            source={require('../../../assets/images/product_01.png')}
+            style={v_d81136.productImage}
+            resizeMode="cover"
+          />
+          {v_01bee9.discount && (
+            <View style={v_d81136.discountBadge}>
+              <Text style={v_d81136.discountText}>{v_01bee9.discount}</Text>
+            </View>
+          )}
+        </View>
+
+        {}
+        <View style={v_d81136.productInfo}>
+          <Text style={v_d81136.productName} numberOfLines={1}>{v_01bee9.name}</Text>
+          <Text style={v_d81136.productDescription} numberOfLines={2}>{v_01bee9.description}</Text>
+
+          <View style={v_d81136.priceContainer}>
+            {v_01bee9.originalPrice && (
+              <Text style={v_d81136.originalPrice}>{v_01bee9.originalPrice}</Text>
+            )}
+            <Text style={v_d81136.currentPrice}>{v_01bee9.price}</Text>
+          </View>
+
+          <TouchableOpacity 
+            style={v_d81136.viewProductButton}
+            onPress={() => v_4f73b9(v_01bee9)}
+            activeOpacity={0.8}
+          >
+            <Text style={v_d81136.viewProductButtonText}>제품보러가기</Text>
+            <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
   const v_82c167 = (v_a8cd21) => {
     if (v_a8cd21.type === 'user') {
@@ -130,29 +226,42 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       );
     }
 
+    const v_2bcb8f = v_6e882f[v_a8cd21.id] || 0;
+
     return (
       <View key={v_a8cd21.id} style={v_d81136.aiMessageContainer}>
         <Text style={v_d81136.aiMessageText}>{v_a8cd21.text}</Text>
 
-        {v_a8cd21.linkCard && (
-          <TouchableOpacity
-            style={v_d81136.linkCard}
-            onPress={() => v_4c3e84(v_a8cd21.linkCard!.url)}
-            activeOpacity={0.8}
-          >
-            <Text style={v_d81136.linkCardTitle}>{v_a8cd21.linkCard.title}</Text>
-            <View style={v_d81136.linkCardFooter}>
-              <TouchableOpacity
-                style={v_d81136.copyButton}
-                onPress={() => v_08bcd6(v_a8cd21.linkCard!.url)}
-              >
-                <Ionicons name="copy-outline" size={18} color="#9CA3AF" />
-              </TouchableOpacity>
+        {v_a8cd21.products && v_a8cd21.products.length > 0 && (
+          <View style={v_d81136.productsContainer}>
+            {}
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScroll={(v_9e86fd) => v_dd0316(v_9e86fd, v_a8cd21.id)}
+              scrollEventThrottle={16}
+              decelerationRate="fast"
+              snapToInterval={v_37c282}
+              snapToAlignment="start"
+              contentContainerStyle={v_d81136.productSwiperContent}
+            >
+              {v_a8cd21.products.map(v_80b207)}
+            </ScrollView>
+
+            {}
+            <View style={v_d81136.pagination}>
+              {v_a8cd21.products.map((v_37eab7, v_a56041) => (
+                <View
+                  key={v_a56041}
+                  style={[
+                    v_d81136.paginationDot,
+                    v_a56041 === v_2bcb8f && v_d81136.paginationDotActive,
+                  ]}
+                />
+              ))}
             </View>
-            <Text style={v_d81136.linkCardUrl} numberOfLines={1}>
-              {v_a8cd21.linkCard.url}
-            </Text>
-          </TouchableOpacity>
+          </View>
         )}
       </View>
     );
@@ -346,33 +455,117 @@ const v_d81136 = v_472849.create({
     marginBottom: v_9b1a04.medium,
   },
 
-  linkCard: {
-    width: '100%',
+  productsContainer: {
+    marginTop: v_9b1a04.small,
+    marginHorizontal: -v_9b1a04.large,
+  },
+  productSwiperContent: {
+    paddingHorizontal: v_9b1a04.large,
+  },
+  productCardWrapper: {
+    width: v_37c282,
+    paddingRight: v_9b1a04.medium,
+  },
+  productCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    padding: v_9b1a04.large,
-    marginTop: v_9b1a04.small,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
   },
-  linkCardTitle: {
-    fontSize: v_ef658a.xlarge,
+  productImageContainer: {
+    width: '100%',
+    height: 160,
+    backgroundColor: '#F8F9FA',
+    position: 'relative',
+  },
+  productImage: {
+    width: '100%',
+    height: '100%',
+  },
+  discountBadge: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    backgroundColor: '#EF4444',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  discountText: {
+    color: '#FFFFFF',
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.bold,
+  },
+  productInfo: {
+    padding: v_9b1a04.medium,
+  },
+  productName: {
+    fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,
     color: '#111827',
-    marginBottom: v_9b1a04.xlarge * 2,
+    marginBottom: 4,
   },
-  linkCardFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: v_9b1a04.small,
-  },
-  copyButton: {
-    padding: 4,
-  },
-  linkCardUrl: {
+  productDescription: {
     fontSize: v_ef658a.small,
     fontFamily: v_843035.regular,
+    color: '#6B7280',
+    lineHeight: 18,
+    marginBottom: v_9b1a04.small,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+    marginBottom: v_9b1a04.medium,
+  },
+  originalPrice: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
     color: '#9CA3AF',
+    textDecorationLine: 'line-through',
+  },
+  currentPrice: {
+    fontSize: v_ef658a.xlarge,
+    fontFamily: v_843035.bold,
+    color: '#EF4444',
+  },
+  viewProductButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    backgroundColor: '#4A5099',
+    paddingVertical: 12,
+    borderRadius: 10,
+  },
+  viewProductButtonText: {
+    color: '#FFFFFF',
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.bold,
+  },
+
+  pagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: v_9b1a04.medium,
+    gap: 8,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#D1D5DB',
+  },
+  paginationDotActive: {
+    backgroundColor: '#4A5099',
+    width: 20,
   },
 
   inputContainer: {

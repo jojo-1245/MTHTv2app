@@ -350,6 +350,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   const v_18219f = (item: v_80b5f0) => {
     switch (v_8c0b26.id) {
+      case 'home':
+
+        break;
       case 'wallet':
         v_9b57fc('Wallet');
         break;
@@ -374,6 +377,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         break;
       case 'history':
         v_03e392.alert('안내', '검색 기록 화면은 준비 중입니다.');
+        break;
+      case 'myinfo':
+        v_9b57fc('MyInfo');
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
