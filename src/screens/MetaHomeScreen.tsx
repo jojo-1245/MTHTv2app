@@ -404,7 +404,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         v_9b57fc('HealthAnalysis');
         break;
       case 'connect':
-        v_03e392.alert('안내', '건강정보 연결하기 화면은 준비 중입니다.');
+        v_9b57fc('HealthConnection');
         break;
       case 'grandma':
       case 'grandpa':
@@ -769,23 +769,25 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <TouchableOpacity
                     style={[v_d81136.diagnosticItemNew, { width: v_7d58f2.itemWidth }]}
                     onPress={() => v_9fb738(true)}
-                    activeOpacity={0.7}
+                    activeOpacity={0.8}
                   >
-                    <View style={[v_d81136.skinTypeButton, {
+                    <View style={[v_d81136.skinTypeButtonCircle, {
                       width: v_7d58f2.circleSize,
                       height: v_7d58f2.circleSize,
                       borderRadius: v_7d58f2.circleSize / 2,
                     }]}>
                       <MaterialCommunityIcons
-                        name="face-woman-outline"
-                        size={v_7d58f2.iconSize}
-                        color="#8B4513"
+                        name="face-woman-shimmer"
+                        size={v_7d58f2.iconSize * 0.85}
+                        color="#6366F1"
                       />
-                      <View style={v_d81136.skinTypeAddIcon}>
-                        <Ionicons name="add-circle" size={Math.max(12, v_7d58f2.circleSize * 0.28)} color="#3B82F6" />
+                    </View>
+                    <View style={v_d81136.skinTypeAddBadge}>
+                      <View style={v_d81136.skinTypeAddBadgeInner}>
+                        <Ionicons name="add" size={10} color="#FFFFFF" />
                       </View>
                     </View>
-                    <Text style={[v_d81136.diagnosticLabelNew, { fontSize: v_7d58f2.labelFontSize }]} numberOfLines={2}>
+                    <Text style={[v_d81136.diagnosticLabelNew, v_d81136.skinTypeLabel, { fontSize: v_7d58f2.labelFontSize }]} numberOfLines={2}>
                       Skin Type
                     </Text>
                   </TouchableOpacity>
@@ -1444,19 +1446,49 @@ const v_d81136 = v_472849.create({
     textAlign: 'center',
     lineHeight: 14,
   },
-  skinTypeButton: {
-    backgroundColor: '#F3E8DC',
+
+  skinTypeButtonCircle: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#EEF2FF',
     marginBottom: 6,
-    position: 'relative',
+    borderWidth: 2.5,
+    borderColor: '#A5B4FC',
+
+    shadowColor: '#6366F1',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+
+    elevation: 6,
   },
-  skinTypeAddIcon: {
+  skinTypeAddBadge: {
     position: 'absolute',
-    bottom: -2,
-    right: -2,
+    top: -2,
+    right: 2,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 4,
+  },
+  skinTypeAddBadgeInner: {
+    width: 14,
+    height: 14,
     borderRadius: 7,
+    backgroundColor: '#6366F1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skinTypeLabel: {
+    color: '#6366F1',
+    fontFamily: v_843035.semibold,
   },
 
   modalOverlay: {
