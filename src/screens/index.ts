@@ -4,17 +4,7 @@ export { default as IntroScreen } from './IntroScreen';
 export { default as HomeScreen } from './HomeScreen';
 export { default as LoginScreen } from './LoginScreen';
 export { default as SignupScreen } from './SignupScreen';
-export {
-  SignupTermsScreen,
-  SignupEmailScreen,
-  EmailVerificationScreen,
-  SignupPasswordScreen,
-  SignupNameScreen,
-  SignupBirthdayScreen,
-  SignupGenderScreen,
-  SignupReferralScreen,
-  SignupSuccessScreen,
-} from './signup';
+export { default as EmailVerificationScreen } from './EmailVerificationScreen';
 export { default as ForgotPasswordScreen } from './ForgotPasswordScreen';
 export { default as ResetPasswordScreen } from './ResetPasswordScreen';
 export { default as PasswordChangedScreen } from './PasswordChangedScreen';
