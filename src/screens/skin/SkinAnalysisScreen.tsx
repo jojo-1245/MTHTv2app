@@ -2233,10 +2233,10 @@ const v_d81136 = v_472849.create({
     cameraShoulderGuide: {
         width: v_0d9f50 * 0.9,
         height: v_28d8d8 * 0.08,
-        borderBottomLeftRadius: v_0d9f50 * 0.45,
-        borderBottomRightRadius: v_0d9f50 * 0.45,
+        borderTopLeftRadius: v_0d9f50 * 0.45,
+        borderTopRightRadius: v_0d9f50 * 0.45,
         borderWidth: 3,
-        borderTopWidth: 0,
+        borderBottomWidth: 0,
         borderColor: '#FFFFFF',
         borderStyle: 'dashed',
         marginTop: -3,
