@@ -6,16 +6,6 @@ import v_c316d8 from '../screens/HomeScreen';
 import v_7aeeb0 from '../screens/MetaHomeScreen';
 import v_f4f851 from '../screens/LoginScreen';
 import v_f40fc5 from '../screens/SignupScreen';
-import {
-  v_937ab8,
-  v_c39920,
-  v_d02ed0,
-  v_91bfb7,
-  v_d7587d,
-  v_055bf6,
-  v_124daa,
-  v_2436b6,
-} from '../screens/signup';
 import v_a82b55 from '../screens/EmailVerificationScreen';
 import v_040c8f from '../screens/ForgotPasswordScreen';
 import v_0d311d from '../screens/PasswordVerificationScreen';
@@ -50,18 +40,6 @@ export type RootStackParamList = {
   MetaHome: undefined;
   Login: undefined;
   Signup: undefined;
-  SignupTerms: undefined;
-  SignupEmail: undefined;
-  SignupPassword: undefined;
-  SignupName: undefined;
-  SignupBirthday:
-  | {
-    name?: string;
-  }
-  | undefined;
-  SignupGender: undefined;
-  SignupReferral: undefined;
-  SignupSuccess: undefined;
   ForgotPassword: undefined;
   PasswordVerification: undefined;
   ResetPassword: undefined;
@@ -143,14 +121,6 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="MetaHome" component={v_7aeeb0} />
         <Stack.Screen name="Login" component={v_f4f851} />
         <Stack.Screen name="Signup" component={v_f40fc5} />
-        <Stack.Screen name="SignupTerms" component={v_937ab8} />
-        <Stack.Screen name="SignupEmail" component={v_c39920} />
-        <Stack.Screen name="SignupPassword" component={v_d02ed0} />
-        <Stack.Screen name="SignupName" component={v_91bfb7} />
-        <Stack.Screen name="SignupBirthday" component={v_d7587d} />
-        <Stack.Screen name="SignupGender" component={v_055bf6} />
-        <Stack.Screen name="SignupReferral" component={v_124daa} />
-        <Stack.Screen name="SignupSuccess" component={v_2436b6} />
         <Stack.Screen name="ForgotPassword" component={v_040c8f} />
         <Stack.Screen name="PasswordVerification" component={v_0d311d} />
         <Stack.Screen name="ResetPassword" component={v_db1cc4} />
