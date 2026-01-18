@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/images/appicon.png",
     "splash": {
       "image": "./assets/images/logo.png",
       "backgroundColor": "#ffffff",
@@ -15,17 +16,23 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "service-mh.example.invalid"
+      "bundleIdentifier": "service-mh.example.invalid",
+      "icon": "./assets/images/appicon.png",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
-      },
+      "icon": "./assets/images/appicon.png",
       "package": "service-mh.example.invalid"
     },
     "web": {
       "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b0a6287a-1e8b-41ef-8233-3e15da97212d"
+      }
     }
   }
 }
-
