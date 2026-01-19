@@ -31,7 +31,7 @@ import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
 import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 import v_52f825 from '../screens/profile/ReferralShareScreen';
 import { v_852e99 } from '../screens/skin';
-import { v_daf220, v_1b8038 } from '../screens/health';
+import { v_daf220, v_cb47c8, v_1b8038 } from '../screens/health';
 import { v_02d653 } from '../screens/chat';
 
 export type RootStackParamList = {
@@ -98,6 +98,10 @@ export type RootStackParamList = {
   ReferralShare: undefined;
   SkinAnalysis: { previewResult?: boolean } | undefined;
   HealthAnalysis: undefined;
+  HealthAnalysisResult: {
+    results: Record<string, { value: any; confidence?: any }>;
+    timestamp: string;
+  };
   HealthConnection: undefined;
   Chat: {
     initialSearchText?: string;
@@ -150,6 +154,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="ReferralShare" component={v_52f825} />
         <Stack.Screen name="SkinAnalysis" component={v_852e99} />
         <Stack.Screen name="HealthAnalysis" component={v_daf220} />
+        <Stack.Screen name="HealthAnalysisResult" component={v_cb47c8} />
         <Stack.Screen name="HealthConnection" component={v_1b8038} />
         <Stack.Screen name="Chat" component={v_02d653} />
       </Stack.Navigator>
