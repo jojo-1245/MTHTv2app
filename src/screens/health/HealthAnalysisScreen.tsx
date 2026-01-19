@@ -1019,7 +1019,8 @@ const v_d81136 = v_472849.create({
     position: 'relative',
   },
   cameraPreviewWrapper: {
-    flex: 1,
+
+    aspectRatio: 0.75,
     width: '100%',
     position: 'relative',
   },
@@ -1096,9 +1097,11 @@ const v_d81136 = v_472849.create({
     marginTop: v_9b1a04.medium,
     fontSize: 16,
     fontFamily: v_843035.medium,
-    color: v_1bfbd0.background,
+
+    color: "#000000",
     textAlign: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+    backgroundColor: "#ffffff",
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.small,
     borderRadius: 8,
