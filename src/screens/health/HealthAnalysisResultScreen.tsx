@@ -6,10 +6,22 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
+import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_729608, v_570c34, v_556baf, v_cb41de } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
 import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
+
+type SummaryStatusType = 'excellent' | 'good' | 'normal' | 'warning' | 'danger';
+
+interface SummaryStatusInfo {
+  type: SummaryStatusType;
+  message: string;
+  icon: keyof typeof v_25515d.glyphMap;
+  color: string;
+  borderColor: string;
+  backgroundColor: string;
+}
 
 type Props = v_432191<v_8ad91b, 'HealthAnalysisResult'>;
 
@@ -117,6 +129,148 @@ const v_2e7086 = (v_3b27d9, v_3b402b): string | null => {
   return null;
 };
 
+const v_6d92d1 = (v_3b27d9, v_3b402b): SummaryStatusInfo | null => {
+  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+
+  if (isNaN(v_549ed3)) {
+    return null;
+  }
+
+  switch (v_3b27d9) {
+    case v_e3e816.WELLNESS_INDEX:
+
+      if (v_549ed3 >= 80) {
+        return {
+          type: 'excellent',
+          message: '우수: 건강 상태가 매우 좋습니다.',
+          icon: 'checkmark-circle',
+          color: '#10B981', 
+          borderColor: '#10B981',
+          backgroundColor: '#edfff6', 
+        };
+      } else if (v_549ed3 >= 60) {
+        return {
+          type: 'good',
+          message: '양호: 건강 상태가 양호합니다.',
+          icon: 'checkmark-circle-outline',
+          color: '#3B72F2', 
+          borderColor: '#3B72F2',
+          backgroundColor: '#edf4ff', 
+        };
+      } else if (v_549ed3 >= 40) {
+        return {
+          type: 'normal',
+          message: '보통: 건강 관리를 권장합니다.',
+          icon: 'information-circle-outline',
+          color: '#F59E0B', 
+          borderColor: '#F59E0B',
+          backgroundColor: '#fffbeb', 
+        };
+      } else {
+        return {
+          type: 'warning',
+          message: '주의: 건강 상태 개선이 필요합니다. 전문의 상담을 권장합니다.',
+          icon: 'warning-outline',
+          color: '#EF4444', 
+          borderColor: '#EF4444',
+          backgroundColor: '#fdf1f1', 
+        };
+      }
+
+    case v_e3e816.WELLNESS_LEVEL:
+
+      if (v_549ed3 >= 4) {
+        return {
+          type: 'excellent',
+          message: '우수: 건강 수준이 높습니다.',
+          icon: 'checkmark-circle',
+          color: '#10B981',
+          borderColor: '#10B981',
+          backgroundColor: '#D1FAE5',
+        };
+      } else if (v_549ed3 >= 3) {
+        return {
+          type: 'good',
+          message: '양호: 건강 수준이 양호합니다.',
+          icon: 'checkmark-circle-outline',
+          color: '#3B72F2',
+          borderColor: '#3B72F2',
+          backgroundColor: '#E6F0FF',
+        };
+      } else if (v_549ed3 >= 2) {
+        return {
+          type: 'normal',
+          message: '보통: 건강 관리를 권장합니다.',
+          icon: 'information-circle-outline',
+          color: '#F59E0B',
+          borderColor: '#F59E0B',
+          backgroundColor: '#FEF3C7',
+        };
+      } else {
+        return {
+          type: 'warning',
+          message: '주의: 건강 수준 개선이 필요합니다. 전문의 상담을 권장합니다.',
+          icon: 'warning-outline',
+          color: '#EF4444',
+          borderColor: '#EF4444',
+          backgroundColor: '#FEE2E2',
+        };
+      }
+
+    case v_e3e816.HEART_AGE:
+
+      if (v_549ed3 <= 30) {
+        return {
+          type: 'excellent',
+          message: '우수: 심장 건강이 매우 좋습니다.',
+          icon: 'checkmark-circle',
+          color: '#10B981',
+          borderColor: '#10B981',
+          backgroundColor: '#D1FAE5',
+        };
+      } else if (v_549ed3 <= 40) {
+        return {
+          type: 'good',
+          message: '양호: 심장 건강이 양호합니다.',
+          icon: 'checkmark-circle-outline',
+          color: '#3B72F2',
+          borderColor: '#3B72F2',
+          backgroundColor: '#E6F0FF',
+        };
+      } else if (v_549ed3 <= 50) {
+        return {
+          type: 'normal',
+          message: '보통: 심장 건강 관리를 권장합니다.',
+          icon: 'information-circle-outline',
+          color: '#F59E0B',
+          borderColor: '#F59E0B',
+          backgroundColor: '#FEF3C7',
+        };
+      } else if (v_549ed3 <= 60) {
+        return {
+          type: 'warning',
+          message: '주의: 심장 건강 개선이 필요합니다.',
+          icon: 'warning-outline',
+          color: '#EF4444',
+          borderColor: '#EF4444',
+          backgroundColor: '#FEE2E2',
+        };
+      } else {
+        return {
+          type: 'danger',
+          message: '경고: 심장 건강이 우려됩니다. 전문의 상담을 강력히 권장합니다.',
+          icon: 'alert-circle',
+          color: '#DC2626', 
+          borderColor: '#DC2626',
+          backgroundColor: '#FEE2E2',
+        };
+      }
+
+    default:
+      return null;
+  }
+};
+
 const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
   if (v_3b402b === null || v_3b402b === undefined) {
     return 'N/A';
@@ -221,11 +375,15 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         <Header
           title="측정 결과"
           showBackButton
-          onBackPress={() => v_c65f5d.goBack()}
+          onBackPress={() => {
+
+            v_c65f5d.replace('HealthAnalysis');
+          }}
         />
         <SafeScrollView
           contentContainerStyle={v_d81136.content}
           showsVerticalScrollIndicator={false}
+          showBottomBackground={false}
         >
           <View style={v_d81136.container}>
             <Text style={v_d81136.title}>건강분석 결과</Text>
@@ -245,16 +403,63 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {v_b30c6b.map(([v_3b27d9, v_9390e8]) => {
                   const v_653390 = Number(v_3b27d9);
                   const v_828097 = v_2e7086(v_653390, v_9390e8.value);
+                  const v_75da5e = v_6d92d1(v_653390, v_9390e8.value);
+
+                  const v_2b38bd = v_75da5e
+                    ? {
+                      borderColor: v_75da5e.borderColor,
+                      backgroundColor: v_75da5e.backgroundColor,
+                    }
+                    : {};
+
+                  const v_d371b8 = v_75da5e
+                    ? {
+                      color: v_75da5e.color,
+                    }
+                    : {};
 
                   return (
-                    <View key={v_3b27d9} style={[v_d81136.resultSection, v_d81136.summarySection]}>
+                    <View
+                      key={v_3b27d9}
+                      style={[
+                        v_d81136.resultSection,
+                        v_d81136.summarySection,
+                        v_2b38bd,
+                      ]}
+                    >
                       <Text style={v_d81136.sectionTitle}>
                         {v_50f905(v_653390)}
                       </Text>
-                      <Text style={[v_d81136.sectionValue, v_d81136.summaryValue]}>
+                      <Text
+                        style={[
+                          v_d81136.sectionValue,
+                          v_d81136.summaryValue,
+                          v_d371b8,
+                        ]}
+                      >
                         {v_a6fe82(v_9390e8.value, v_653390)}
                       </Text>
-                      {v_828097 && (
+                      {}
+                      {v_75da5e && (
+                        <View style={v_d81136.statusContainer}>
+                          <Ionicons
+                            name={v_75da5e.icon}
+                            size={18}
+                            color={v_75da5e.color}
+                            style={v_d81136.statusIcon}
+                          />
+                          <Text
+                            style={[
+                              v_d81136.statusText,
+                              { color: v_75da5e.color },
+                            ]}
+                          >
+                            {v_75da5e.message}
+                          </Text>
+                        </View>
+                      )}
+                      {}
+                      {!v_75da5e && v_828097 && (
                         <Text style={v_d81136.riskText}>{v_828097}</Text>
                       )}
                       <Text style={v_d81136.descriptionText}>
@@ -432,6 +637,22 @@ const v_d81136 = v_472849.create({
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
   },
+  summarySection: {
+    borderWidth: 2,
+
+  },
+  summaryValue: {
+    fontSize: 28, 
+
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: v_9b1a04.small,
+  },
+  statusIcon: {
+    marginRight: v_9b1a04.small / 2,
+  },
   sectionTitle: {
     fontSize: 14,
     fontFamily: v_843035.medium,
@@ -469,6 +690,13 @@ const v_d81136 = v_472849.create({
     color: '#DC3545',
     marginTop: v_9b1a04.small,
     lineHeight: 18,
+  },
+  statusText: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+    marginTop: v_9b1a04.small,
+    lineHeight: 20,
   },
   infoContainer: {
     backgroundColor: '#FFF3CD',
