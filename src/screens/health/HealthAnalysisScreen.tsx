@@ -19,6 +19,7 @@ import { v_d4f1cc } from 'mbgbsytfgyr';
 import { v_729608, v_570c34, v_556baf, v_cb41de } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
+import { v_573fcf } from '../../utils/env';
 
 import {
   v_d55d6e,
@@ -39,7 +40,23 @@ import {
 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 
-const v_390b91 = 'oth-secret';
+const v_fa53c9 = (): string => {
+  try {
+
+    return v_573fcf('FZLJTILI_LICENSE_KEY');
+  } catch (v_5e9bfe) {
+
+    const v_651d83 =
+      process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
+      process.env.FZLJTILI_LICENSE_KEY ||
+      '';
+    if (!v_651d83) {
+      console.warn('경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.');
+    }
+    return v_651d83;
+  }
+};
+
 const v_8ea06a = 60; 
 
 type Props = v_432191<v_8ad91b, 'HealthAnalysis'>;
@@ -173,15 +190,26 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_49296b(true);
       console.log('세션 생성 시작...');
 
+      const v_651d83 = v_fa53c9();
+      if (!v_651d83) {
+        throw new Error('FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요.');
+      }
+
+      console.log('라이센스 키 확인:', v_651d83 ? `${v_651d83.substring(0, 10)}...` : '없음');
+
       v_a3ff5a.current = await v_d55d6e.faceSession(
         {
-          licenseKey: v_390b91,
+          licenseKey: v_651d83,
         },
         {
 
         }
       );
       console.log('세션 생성 완료, 세션 객체:', !!v_a3ff5a.current);
+
+      if (!v_a3ff5a.current) {
+        throw new Error('세션이 생성되지 않았습니다.');
+      }
 
     } catch (v_9e86fd) {
       const v_748547 = v_9e86fd as v_89d8fd;
@@ -211,6 +239,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     try {
       if (v_bc50c7 === v_eb2401.READY) {
 
+        if (!v_a3ff5a.current) {
+          v_03e392.alert('오류', '세션이 준비되지 않았습니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        console.log('측정 시작 요청, 세션 상태:', v_bc50c7);
+
         await v_a3ff5a.current?.start(v_8ea06a);
       } else if (
         v_bc50c7 === v_eb2401.STARTING ||
@@ -221,10 +255,48 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       }
     } catch (v_9e86fd) {
       const v_748547 = v_9e86fd as v_89d8fd;
-      console.error('측정 시작/중지 오류:', v_748547);
-      v_03e392.alert('오류', `측정 오류: ${v_748547?.code || '알 수 없는 오류'}`);
+      const v_7a5fef = v_748547?.code;
+      console.error('측정 시작/중지 오류 상세:', {
+        error: v_9e86fd,
+        code: v_7a5fef,
+        domain: v_748547?.domain,
+        message: (v_748547 as any)?.message,
+        sessionState: v_bc50c7,
+        hasSession: !!v_a3ff5a.current,
+      });
+
+      let v_1744b9 = '';
+      let v_b5cd35 = '측정 오류';
+
+      switch (v_7a5fef) {
+        case 2042:
+          v_b5cd35 = '세션 오류';
+          v_1744b9 = `에러 코드: 2042\n\n세션 상태 오류가 발생했습니다.\n\n가능한 원인:\n- 세션이 준비되지 않은 상태에서 측정 시작\n- 세션 초기화가 완료되지 않음\n- 카메라 접근 문제\n\n해결 방법:\n1. "다시 측정하기" 버튼을 눌러 처음부터 다시 시작\n2. 앱을 완전히 종료 후 다시 실행\n3. 카메라 권한 확인`;
+          break;
+        case 3003:
+          v_b5cd35 = '측정 오류';
+          v_1744b9 = `에러 코드: 3003\n\n측정 중 오류가 발생했습니다.\n\n확인 사항:\n- 얼굴이 카메라에 잘 보이는지 확인\n- 조명이 충분한지 확인\n- 카메라와의 거리 조정 (30-50cm)\n- 얼굴이 정면을 향하고 있는지 확인`;
+          break;
+        default:
+          v_1744b9 = `에러 코드: ${v_7a5fef || '알 수 없음'}\n\n측정 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.`;
+      }
+
+      v_03e392.alert(v_b5cd35, v_1744b9, [
+        {
+          text: '확인',
+          onPress: () => {
+
+            if (v_a3ff5a.current) {
+              console.log('에러 발생으로 인한 세션 정리');
+              v_98caa0();
+            }
+            v_ce2e95.current = false;
+            v_49296b(false);
+          },
+        },
+      ]);
     }
-  }, [v_bc50c7]);
+  }, [v_bc50c7, v_98caa0]);
 
   v_c4deb2(() => {
     if (!v_288ac3 || v_ee736b) {
@@ -243,9 +315,49 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   v_c4deb2(() => {
     if (v_5e9bfe) {
-      v_03e392.alert('오류', `오류 발생: ${v_5e9bfe?.code || '알 수 없는 오류'}`);
+      const v_7a5fef = v_5e9bfe?.code;
+      console.error('SDK 에러 발생:', {
+        code: v_7a5fef,
+        domain: (v_5e9bfe as any)?.domain,
+        message: (v_5e9bfe as any)?.message,
+        error: v_5e9bfe,
+      });
+
+      let v_1744b9 = '';
+      let v_b5cd35 = '측정 오류';
+
+      switch (v_7a5fef) {
+        case 2042:
+          v_b5cd35 = '세션 오류';
+          v_1744b9 = `에러 코드: 2042\n\n가능한 원인:\n- 라이센스 키 문제\n- 세션 초기화 실패\n- 카메라 접근 문제\n\n해결 방법:\n1. 앱을 완전히 종료 후 다시 실행\n2. 카메라 권한 확인\n3. 라이센스 키가 올바르게 설정되었는지 확인`;
+          break;
+        case 7009:
+          v_b5cd35 = '세션 생성 실패';
+          v_1744b9 = `에러 코드: 7009\n\n가능한 원인:\n- 라이센스 키 문제\n- SDK 초기화 실패\n- 카메라 초기화 문제\n\n앱을 재시작해보세요.`;
+          break;
+        case 3003:
+          v_b5cd35 = '측정 오류';
+          v_1744b9 = `에러 코드: 3003\n\n측정 중 오류가 발생했습니다.\n\n확인 사항:\n- 얼굴이 카메라에 잘 보이는지 확인\n- 조명이 충분한지 확인\n- 카메라와의 거리 조정 (30-50cm)\n- 얼굴이 정면을 향하고 있는지 확인`;
+          break;
+        default:
+          v_1744b9 = `에러 코드: ${v_7a5fef || '알 수 없음'}\n\n오류가 발생했습니다. 앱을 재시작하거나 잠시 후 다시 시도해주세요.`;
+      }
+
+      v_03e392.alert(v_b5cd35, v_1744b9, [
+        {
+          text: '확인',
+          onPress: () => {
+
+            if (v_a3ff5a.current) {
+              v_98caa0();
+            }
+            v_ce2e95.current = false;
+            v_49296b(false);
+          },
+        },
+      ]);
     }
-  }, [v_5e9bfe]);
+  }, [v_5e9bfe, v_98caa0]);
 
   v_c4deb2(() => {
     if (v_f91e0a) {
