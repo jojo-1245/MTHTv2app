@@ -11,6 +11,8 @@ import {
     v_09d0e5,
     v_700696,
     v_aa7413,
+    v_da479e,
+    v_bd64bf,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_78ceb7, v_d4f1cc } from 'mbgbsytfgyr';
@@ -25,6 +27,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
+const v_37c282 = v_0d9f50 - 80; 
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590 } from '../../constants';
@@ -112,6 +115,74 @@ const v_f68226 = {
     hd_wrinkle: '주름',
 };
 
+interface RecommendedProduct {
+    id: string;
+    brand: string;
+    name: string;
+    description: string;
+    price: string;
+    currency: string;
+    targetConcerns: string[];
+    image?: any;
+}
+
+const v_a8db3e = [
+    {
+        id: '1',
+        brand: 'YUCOD',
+        name: 'Sebum & Pore Control Serum',
+        description: '복합성 피부 & 유수분 밸런싱',
+        price: '100',
+        currency: 'MTHT',
+        targetConcerns: ['pore', 'oiliness', 'hd_pore', 'hd_oiliness'],
+    },
+    {
+        id: '2',
+        brand: 'DERMAFIX',
+        name: 'Anti-Wrinkle Repair Cream',
+        description: '주름 개선 & 탄력 강화 크림',
+        price: '150',
+        currency: 'MTHT',
+        targetConcerns: ['wrinkle', 'firmness', 'hd_wrinkle', 'hd_firmness'],
+    },
+    {
+        id: '3',
+        brand: 'SKINLAB',
+        name: 'Dark Circle Eye Serum',
+        description: '다크서클 & 눈밑 케어 집중 세럼',
+        price: '120',
+        currency: 'MTHT',
+        targetConcerns: ['dark_circle_v2', 'eye_bag', 'hd_dark_circle', 'hd_eye_bag'],
+    },
+    {
+        id: '4',
+        brand: 'AQUABOOST',
+        name: 'Hydra Moisture Essence',
+        description: '고보습 수분 에센스',
+        price: '80',
+        currency: 'MTHT',
+        targetConcerns: ['moisture', 'radiance', 'hd_moisture', 'hd_radiance'],
+    },
+    {
+        id: '5',
+        brand: 'CLEARZONE',
+        name: 'Acne Control Solution',
+        description: '트러블 진정 & 여드름 케어',
+        price: '90',
+        currency: 'MTHT',
+        targetConcerns: ['acne', 'redness', 'hd_acne', 'hd_redness'],
+    },
+    {
+        id: '6',
+        brand: 'BRIGHTEX',
+        name: 'Spot Correcting Ampoule',
+        description: '기미/잡티 집중 케어 앰플',
+        price: '130',
+        currency: 'MTHT',
+        targetConcerns: ['age_spot', 'texture', 'hd_age_spot', 'hd_texture'],
+    },
+];
+
 const v_638095 = {
     acne: 'fitness-outline',
     dark_circle_v2: 'eye-outline',
@@ -186,6 +257,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_1744b9, v_5c59f6] = v_5ab095('');
 
     const [v_c5caed, v_e2f548] = v_5ab095(false);
+
+    const [v_6e882f, v_6e04f8] = v_5ab095(0);
 
     v_c4deb2(() => {
         if (v_bf6a8c) {
@@ -626,6 +699,29 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_03e392.alert('오류', '파일 저장 중 오류가 발생했습니다.');
         }
     }, [v_e521b9]);
+
+    const v_dd0316 = v_de06a3((event: v_bd64bf<v_da479e>) => {
+        const v_bfc931 = v_d48baf.nativeEvent.contentOffset.x;
+        const v_a56041 = Math.round(v_bfc931 / v_37c282);
+        v_6e04f8(v_a56041);
+    }, []);
+
+    const v_01283e = v_de06a3((v_5f1433) => {
+        const v_459f64 = v_5f1433.map(v_3f4e2e => v_3f4e2e.type);
+
+        const v_6fc8e3 = v_a8db3e.filter(v_01bee9 =>
+            v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
+        );
+
+        return v_6fc8e3.length > 0 ? v_6fc8e3 : v_a8db3e.slice(0, 3);
+    }, []);
+
+    const v_4f73b9 = v_de06a3((v_01bee9) => {
+        v_03e392.alert(
+            '상품 보기',
+            `${v_01bee9.brand}\n${v_01bee9.name}\n\n상품 상세 페이지로 이동합니다.`
+        );
+    }, []);
 
     const v_3274ee = v_de06a3(async () => {
         if (!v_e521b9) {
@@ -1190,115 +1286,166 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 </View>
 
                 {}
-                <View style={v_d81136.resultSection}>
-                    <View style={v_d81136.resultSectionHeader}>
-                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: '#DBEAFE' }]}>
-                            <Ionicons name="trophy" size={18} color="#2563EB" />
+                <View style={v_d81136.highlightRow}>
+                    {}
+                    <View style={v_d81136.highlightColumn}>
+                        <View style={v_d81136.highlightHeader}>
+                            <Ionicons name="trophy-outline" size={16} color="#2563EB" />
+                            <Text style={[v_d81136.highlightTitle, { color: '#2563EB' }]}>우수</Text>
                         </View>
-                        <Text style={v_d81136.resultSectionTitle}>우수 항목</Text>
+                        <View style={v_d81136.highlightList}>
+                            {v_b5b523.map((v_ccf527, v_a56041) => (
+                                <View key={v_ccf527.type} style={v_d81136.highlightItem}>
+                                    <Text style={v_d81136.highlightRank}>{v_a56041 + 1}</Text>
+                                    <Text style={v_d81136.highlightLabel} numberOfLines={1}>{v_ccf527.label}</Text>
+                                    <Text style={[v_d81136.highlightScore, { color: '#2563EB' }]}>{v_ccf527.score}</Text>
+                                </View>
+                            ))}
+                        </View>
                     </View>
-                    <View style={v_d81136.concernHighlightList}>
-                        {v_b5b523.map((v_ccf527, v_a56041) => (
-                            <View key={v_ccf527.type} style={v_d81136.concernHighlightItem}>
-                                <View style={[v_d81136.concernRank, { backgroundColor: '#DBEAFE' }]}>
-                                    <Text style={[v_d81136.concernRankText, { color: '#2563EB' }]}>{v_a56041 + 1}</Text>
+
+                    {}
+                    <View style={v_d81136.highlightDivider} />
+
+                    {}
+                    <View style={v_d81136.highlightColumn}>
+                        <View style={v_d81136.highlightHeader}>
+                            <Ionicons name="alert-circle-outline" size={16} color="#DC2626" />
+                            <Text style={[v_d81136.highlightTitle, { color: '#DC2626' }]}>관리필요</Text>
+                        </View>
+                        <View style={v_d81136.highlightList}>
+                            {v_5f1433.map((v_ccf527, v_a56041) => (
+                                <View key={v_ccf527.type} style={v_d81136.highlightItem}>
+                                    <Text style={v_d81136.highlightRank}>{v_a56041 + 1}</Text>
+                                    <Text style={v_d81136.highlightLabel} numberOfLines={1}>{v_ccf527.label}</Text>
+                                    <Text style={[v_d81136.highlightScore, { color: '#DC2626' }]}>{v_ccf527.score}</Text>
                                 </View>
-                                <Text style={v_d81136.concernHighlightLabel}>{v_ccf527.label}</Text>
-                                <View style={[
-                                    v_d81136.concernHighlightScore,
-                                    { backgroundColor: '#F0F9FF' }
-                                ]}>
-                                    <Text style={[
-                                        v_d81136.concernHighlightScoreText,
-                                        { color: '#2563EB' }
-                                    ]}>
-                                        {v_ccf527.score}점
-                                    </Text>
-                                </View>
-                            </View>
-                        ))}
+                            ))}
+                        </View>
                     </View>
                 </View>
 
                 {}
-                <View style={v_d81136.resultSection}>
-                    <View style={v_d81136.resultSectionHeader}>
-                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: '#FEE2E2' }]}>
-                            <Ionicons name="trending-down" size={18} color="#DC2626" />
-                        </View>
-                        <Text style={v_d81136.resultSectionTitle}>관리 필요 항목</Text>
-                    </View>
-                    <View style={v_d81136.concernHighlightList}>
-                        {v_5f1433.map((v_ccf527, v_a56041) => (
-                            <View key={v_ccf527.type} style={v_d81136.concernHighlightItem}>
-                                <View style={[v_d81136.concernRank, { backgroundColor: '#FEE2E2' }]}>
-                                    <Text style={[v_d81136.concernRankText, { color: '#DC2626' }]}>{v_a56041 + 1}</Text>
+                {(() => {
+                    const v_265b71 = v_01283e(v_5f1433);
+                    return (
+                        <View style={v_d81136.recommendedSection}>
+                            <View style={v_d81136.recommendedHeader}>
+                                <View style={v_d81136.recommendedTitleRow}>
+                                    <Ionicons name="sparkles-outline" size={18} color="#D97706" />
+                                    <Text style={v_d81136.resultSectionTitle}>맞춤 추천 상품</Text>
                                 </View>
-                                <Text style={v_d81136.concernHighlightLabel}>{v_ccf527.label}</Text>
-                                <View style={[
-                                    v_d81136.concernHighlightScore,
-                                    { backgroundColor: '#FEF2F2' }
-                                ]}>
-                                    <Text style={[
-                                        v_d81136.concernHighlightScoreText,
-                                        { color: '#DC2626' }
-                                    ]}>
-                                        {v_ccf527.score}점
-                                    </Text>
-                                </View>
+                                <Text style={v_d81136.recommendedSubtitle}>
+                                    관리 필요 항목에 맞는 제품을 추천해드려요
+                                </Text>
                             </View>
-                        ))}
-                    </View>
-                </View>
+
+                            {}
+                            <View style={v_d81136.productSwiperContainer}>
+                                <ScrollView
+                                    horizontal
+                                    pagingEnabled
+                                    showsHorizontalScrollIndicator={false}
+                                    onScroll={v_dd0316}
+                                    scrollEventThrottle={16}
+                                    decelerationRate="fast"
+                                    snapToInterval={v_37c282}
+                                    snapToAlignment="start"
+                                    contentContainerStyle={v_d81136.productSwiperContent}
+                                >
+                                    {v_265b71.map((v_01bee9) => (
+                                        <View key={v_01bee9.id} style={v_d81136.productCardWrapper}>
+                                            <TouchableOpacity
+                                                style={v_d81136.productCard}
+                                                onPress={() => v_4f73b9(v_01bee9)}
+                                                activeOpacity={0.9}
+                                            >
+                                                {}
+                                                <View style={v_d81136.productImageArea}>
+                                                    <Image
+                                                        source={require('../../../assets/images/product_01.png')}
+                                                        style={v_d81136.productImage}
+                                                        resizeMode="contain"
+                                                    />
+                                                </View>
+
+                                                {}
+                                                <View style={v_d81136.productInfoArea}>
+                                                    <Text style={v_d81136.productBrand}>{v_01bee9.brand}</Text>
+                                                    <Text style={v_d81136.productName} numberOfLines={2}>
+                                                        {v_01bee9.name}
+                                                    </Text>
+                                                    <Text style={v_d81136.productDescription} numberOfLines={1}>
+                                                        {v_01bee9.description}
+                                                    </Text>
+
+                                                    <View style={v_d81136.productPriceRow}>
+                                                        <Text style={v_d81136.productPriceLabel}>Price</Text>
+                                                        <Text style={v_d81136.productPrice}>
+                                                            {v_01bee9.price} <Text style={v_d81136.productCurrency}>{v_01bee9.currency}</Text>
+                                                        </Text>
+                                                    </View>
+
+                                                    <TouchableOpacity
+                                                        style={v_d81136.productButton}
+                                                        onPress={() => v_4f73b9(v_01bee9)}
+                                                        activeOpacity={0.8}
+                                                    >
+                                                        <Text style={v_d81136.productButtonText}>상품 보러가기</Text>
+                                                        <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    ))}
+                                </ScrollView>
+
+                                {}
+                                {v_265b71.length > 1 && (
+                                    <View style={v_d81136.productPagination}>
+                                        {v_265b71.map((v_37eab7, v_a56041) => (
+                                            <View
+                                                key={v_a56041}
+                                                style={[
+                                                    v_d81136.productPaginationDot,
+                                                    v_a56041 === v_6e882f && v_d81136.productPaginationDotActive,
+                                                ]}
+                                            />
+                                        ))}
+                                    </View>
+                                )}
+                            </View>
+                        </View>
+                    );
+                })()}
 
                 {}
                 <View style={v_d81136.resultSection}>
                     <View style={v_d81136.resultSectionHeader}>
-                        <View style={[v_d81136.resultSectionIcon, { backgroundColor: v_1bfbd0.blurBlue }]}>
-                            <Ionicons name="list" size={18} color={v_1bfbd0.bluePrimary} />
-                        </View>
+                        <Ionicons name="grid-outline" size={18} color={v_1bfbd0.bluePrimary} />
                         <Text style={v_d81136.resultSectionTitle}>전체 분석 결과</Text>
                     </View>
-                    <View style={v_d81136.concernGridContainer}>
+                    <View style={v_d81136.compactGrid}>
                         {v_17b30f.map((v_ccf527) => {
                             const v_5e5963 = v_53f592(v_ccf527.score);
-                            const v_c288e9 = v_638095[v_ccf527.type] || 'ellipse-outline';
-
-                            const v_7fd696 = v_ccf527.score >= 90 ? '#1E40AF' :
-                                v_ccf527.score >= 80 ? '#166534' :
-                                    v_ccf527.score >= 70 ? '#A16207' :
-                                        '#9F1239';
                             return (
-                                <View key={v_ccf527.type} style={v_d81136.concernGridItemHorizontal}>
-                                    <View style={[
-                                        v_d81136.concernGridIconSmall,
-                                        { backgroundColor: v_5e5963 + '15' }
-                                    ]}>
-                                        <Ionicons name={v_c288e9 as any} size={18} color={v_5e5963} />
-                                    </View>
-                                    <View style={v_d81136.concernGridContentVertical}>
-                                        <Text style={v_d81136.concernGridLabelFull}>
+                                <View key={v_ccf527.type} style={v_d81136.compactGridItem}>
+                                    <View style={v_d81136.compactGridContent}>
+                                        <Text style={v_d81136.compactGridLabel} numberOfLines={1}>
                                             {v_ccf527.label}
                                         </Text>
-                                        <View style={v_d81136.concernGridProgressRow}>
-                                            <View style={v_d81136.concernGridBarFlex}>
-                                                <View style={[
-                                                    v_d81136.concernGridScoreBarInline,
-                                                    { backgroundColor: v_5e5963 + '30' }
-                                                ]}>
-                                                    <View style={[
-                                                        v_d81136.concernGridScoreFill,
-                                                        {
-                                                            width: `${v_ccf527.score}%`,
-                                                            backgroundColor: v_5e5963
-                                                        }
-                                                    ]} />
-                                                </View>
-                                            </View>
-                                            <Text style={[v_d81136.concernGridScoreFixed, { color: v_7fd696 }]}>
-                                                {v_ccf527.score}
-                                            </Text>
-                                        </View>
+                                        <Text style={[v_d81136.compactGridScore, { color: v_5e5963 }]}>
+                                            {v_ccf527.score}
+                                        </Text>
+                                    </View>
+                                    <View style={v_d81136.compactGridBar}>
+                                        <View style={[
+                                            v_d81136.compactGridBarFill,
+                                            {
+                                                width: `${v_ccf527.score}%`,
+                                                backgroundColor: v_5e5963
+                                            }
+                                        ]} />
                                     </View>
                                 </View>
                             );
@@ -1991,21 +2138,117 @@ const v_d81136 = v_472849.create({
     resultSectionHeader: {
         flexDirection: 'row',
         alignItems: 'center',
+        gap: v_9b1a04.small,
         marginBottom: v_9b1a04.small,
-    },
-    resultSectionIcon: {
-        width: 32,
-        height: 32,
-        borderRadius: 8,
-        backgroundColor: '#DCFCE7',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: v_9b1a04.small,
     },
     resultSectionTitle: {
         fontSize: v_ef658a.large,
         fontFamily: v_843035.semibold,
         color: v_1bfbd0.text,
+    },
+
+    highlightRow: {
+        flexDirection: 'row',
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 16,
+        marginTop: v_9b1a04.medium,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 8,
+        elevation: 2,
+        borderWidth: 1,
+        borderColor: '#F3F4F6',
+    },
+    highlightColumn: {
+        width: '50%', 
+        padding: v_9b1a04.medium,
+    },
+    highlightHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginBottom: v_9b1a04.medium,
+    },
+    highlightTitle: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.bold,
+    },
+    highlightDivider: {
+        width: 1,
+        backgroundColor: '#F3F4F6',
+        position: 'absolute',
+        left: '50%',
+        top: v_9b1a04.medium,
+        bottom: v_9b1a04.medium,
+    },
+    highlightList: {
+        gap: 10,
+    },
+    highlightItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    highlightRank: {
+        width: 14,
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.secondaryText,
+    },
+    highlightLabel: {
+        flex: 1,
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.text,
+        marginHorizontal: 6,
+    },
+    highlightScore: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.bold,
+        width: 28,
+        textAlign: 'right',
+    },
+
+    compactGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: v_1bfbd0.lightGray,
+        borderRadius: 16,
+        padding: v_9b1a04.small,
+        gap: v_9b1a04.small,
+    },
+    compactGridItem: {
+        width: '48%',
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+    },
+    compactGridContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    compactGridLabel: {
+        flex: 1,
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.text,
+        marginRight: 8,
+    },
+    compactGridScore: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.bold,
+    },
+    compactGridBar: {
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#F3F4F6',
+        overflow: 'hidden',
+    },
+    compactGridBarFill: {
+        height: '100%',
+        borderRadius: 3,
     },
 
     concernHighlightList: {
@@ -2303,6 +2546,140 @@ const v_d81136 = v_472849.create({
         backgroundColor: '#FFFFFF',
         borderWidth: 2,
         borderColor: v_1bfbd0.bluePrimary,
+    },
+
+    recommendedSection: {
+        marginTop: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
+    },
+    recommendedHeader: {
+        marginBottom: v_9b1a04.medium,
+    },
+    recommendedTitleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+        marginBottom: 4,
+    },
+    recommendedSubtitle: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginLeft: 26, 
+    },
+
+    productSwiperContainer: {
+        marginHorizontal: -v_9b1a04.large,
+    },
+    productSwiperContent: {
+        paddingHorizontal: v_9b1a04.large,
+    },
+    productCardWrapper: {
+        width: v_37c282,
+        paddingRight: v_9b1a04.medium,
+        paddingBottom: v_9b1a04.small,
+    },
+    productCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.08,
+        shadowRadius: 16,
+        elevation: 4,
+        borderWidth: 1,
+        borderColor: '#F3F4F6',
+    },
+    productImageArea: {
+        height: 160,
+        backgroundColor: '#F9FAFB',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: v_9b1a04.small,
+    },
+    productImage: {
+        width: '100%',
+        height: '100%',
+    },
+    productInfoArea: {
+        padding: v_9b1a04.large,
+    },
+    productBrand: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.semibold,
+        color: '#9CA3AF',
+        letterSpacing: 1,
+        marginBottom: 4,
+    },
+    productName: {
+        fontSize: v_ef658a.xlarge,
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+        lineHeight: 24,
+        marginBottom: 4,
+    },
+    productDescription: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginBottom: v_9b1a04.medium,
+    },
+    productPriceRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: v_9b1a04.medium,
+        borderTopWidth: 1,
+        borderTopColor: '#F3F4F6',
+        marginBottom: v_9b1a04.medium,
+    },
+    productPriceLabel: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+    },
+    productPrice: {
+        fontSize: v_ef658a.xlarge,
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+    },
+    productCurrency: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.secondaryText,
+    },
+    productButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        backgroundColor: v_1bfbd0.bluePrimary,
+        paddingVertical: 14,
+        borderRadius: 12,
+    },
+    productButtonText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: '#FFFFFF',
+    },
+
+    productPagination: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: v_9b1a04.large,
+        gap: 8,
+    },
+    productPaginationDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#E5E7EB',
+    },
+    productPaginationDotActive: {
+        backgroundColor: v_1bfbd0.bluePrimary,
+        width: 24,
     },
 
     imagePickerModalOverlay: {

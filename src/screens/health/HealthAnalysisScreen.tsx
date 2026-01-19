@@ -135,6 +135,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_12abe8, v_8a8952] = v_5ab095<string | undefined>();
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
 
+  const v_950450 = v_e662ae<NodeJS.Timeout | undefined>(undefined);
+  const v_4d28a0 = 10000; 
+
+  const v_b1faa7 = v_e662ae<boolean>(false);
+
   const v_ec0597 = v_de06a3(async (): Promise<boolean> => {
     if (!v_d1a6bb) {
       const v_43c42e = await v_1e66f0();
@@ -298,20 +303,54 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   }, [v_bc50c7, v_98caa0]);
 
+  const v_b1eca7 = v_e662ae(false);
   v_c4deb2(() => {
-    if (!v_288ac3 || v_ee736b) {
+    if (!v_288ac3) {
+      v_b1eca7.current = false;
       return;
     }
 
-    v_054130(`경고: ${v_288ac3?.code}`);
-    if (v_eb342d.current) {
-      clearTimeout(v_eb342d.current);
+    const v_77ef6e = v_288ac3?.code;
+
+    if (v_b1eca7.current) {
+      return;
     }
-    v_eb342d.current = setTimeout(() => {
-      v_054130(undefined);
-      v_eb342d.current = undefined;
-    }, 3000);
-  }, [v_288ac3, v_ee736b]);
+
+    console.log('[경고 발생]', { code: v_77ef6e, warning: v_288ac3 });
+
+    if (v_77ef6e === 3500 || (v_77ef6e && v_77ef6e >= 3000 && v_77ef6e < 4000)) {
+      console.log('[얼굴 인식 경고] 측정 중지 및 세션 재시작');
+      v_b1eca7.current = true;
+
+      if (v_bc50c7 === v_eb2401.PROCESSING || v_bc50c7 === v_eb2401.STARTING) {
+        if (v_a3ff5a.current) {
+          v_a3ff5a.current.stop().catch((v_9e86fd) => {
+            console.error('측정 중지 오류:', v_9e86fd);
+          });
+        }
+
+        setTimeout(() => {
+          v_98caa0();
+          v_ce2e95.current = false;
+          v_49296b(false);
+          v_b1eca7.current = false; 
+
+          setTimeout(() => {
+            if (v_c1ef35 && v_d1a6bb?.granted) {
+              v_bb3644();
+            }
+          }, 500);
+        }, 300);
+      } else {
+
+        v_b1eca7.current = false;
+      }
+
+      return;
+    }
+
+    v_b1eca7.current = false;
+  }, [v_288ac3, v_bc50c7, v_a3ff5a, v_c1ef35, v_d1a6bb?.granted, v_98caa0, v_bb3644]);
 
   v_c4deb2(() => {
     if (v_5e9bfe) {
@@ -468,32 +507,78 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_c4deb2(() => {
     if (v_bc50c7 !== v_eb2401.PROCESSING) {
       v_8a8952(undefined);
+
+      if (v_950450.current) {
+        clearTimeout(v_950450.current);
+        v_950450.current = undefined;
+      }
+
+      if (v_bc50c7 === v_eb2401.READY) {
+
+        if (v_b1faa7.current) {
+          console.log('[얼굴 감지 실패] READY 상태 복귀, 플래그 리셋 - 다음 측정 준비 완료');
+          v_b1faa7.current = false;
+        }
+      }
       return;
     }
 
     if (!v_14a7eb || v_14a7eb.imageValidity === v_2be213.VALID) {
       v_8a8952(undefined);
+
+      if (v_950450.current) {
+        clearTimeout(v_950450.current);
+        v_950450.current = undefined;
+      }
+
       return;
     }
 
+    let v_bbcfff = '';
     switch (v_14a7eb.imageValidity) {
       case v_2be213.INVALID_DEVICE_ORIENTATION:
-        v_8a8952('기기 방향 오류');
+        v_bbcfff = '기기 방향 오류';
         break;
       case v_2be213.INVALID_ROI:
-        v_8a8952('얼굴이 감지되지 않습니다');
+        v_bbcfff = '얼굴이 감지되지 않습니다';
         break;
       case v_2be213.TILTED_HEAD:
-        v_8a8952('고개를 똑바로 세워주세요');
+        v_bbcfff = '고개를 똑바로 세워주세요';
         break;
       case v_2be213.FACE_TOO_FAR:
-        v_8a8952('얼굴을 카메라에 더 가까이 해주세요');
+        v_bbcfff = '얼굴을 카메라에 더 가까이 해주세요';
         break;
       case v_2be213.UNEVEN_LIGHT:
-        v_8a8952('조명이 불균일합니다');
+        v_bbcfff = '조명이 불균일합니다';
         break;
     }
-  }, [v_14a7eb, v_bc50c7]);
+    v_8a8952(v_bbcfff);
+
+    if (v_bbcfff && !v_950450.current) {
+      v_950450.current = setTimeout(() => {
+        console.log('[얼굴 감지 실패] 5초 이상 지속 - 측정 중지 (세션 유지)');
+        if (v_a3ff5a.current && (v_bc50c7 === v_eb2401.PROCESSING || v_bc50c7 === v_eb2401.STARTING)) {
+
+          v_b1faa7.current = true;
+          console.log('[얼굴 감지 실패] faceDetectionFailed 플래그 설정 - 결과 화면 이동 방지');
+
+          v_a3ff5a.current.stop().catch((v_9e86fd) => {
+            console.error('얼굴 감지 실패로 인한 측정 중지 오류:', v_9e86fd);
+          });
+
+          v_8a8952(undefined);
+        }
+        v_950450.current = undefined;
+      }, v_4d28a0);
+    }
+
+    return () => {
+      if (v_950450.current) {
+        clearTimeout(v_950450.current);
+        v_950450.current = undefined;
+      }
+    };
+  }, [v_14a7eb, v_bc50c7, v_a3ff5a, v_c1ef35, v_d1a6bb?.granted, v_98caa0, v_bb3644]);
 
   v_c4deb2(() => {
     let v_cb36b1;
@@ -521,6 +606,17 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   }, [v_bc50c7]);
 
   v_c4deb2(() => {
+    if (!v_d0a515) {
+      return;
+    }
+
+    if (v_b1faa7.current) {
+      console.log('[결과 화면 이동 방지] 얼굴 감지 실패로 인한 측정 중지 - finalResults 무시');
+
+      v_b1faa7.current = false;
+      return;
+    }
+
     if (v_d0a515) {
 
       const v_9f8792 = {};
@@ -639,7 +735,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_cf763b(
     v_de06a3(() => {
       if (v_91943c === 'measurement') {
-        console.log('화면 포커스됨 (measurement 단계) - 세션 초기화');
+        console.log('화면 포커스됨 (measurement 단계) - 세션 완전 초기화');
+
+        v_b1faa7.current = false; 
+        v_8a8952(undefined);
+        v_f36dd5(undefined);
+        v_7fa926(0);
 
         if (v_a3ff5a.current) {
           v_98caa0();
@@ -651,6 +752,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       } else {
 
         console.log('화면 포커스됨 (intro 단계) - 세션 정리');
+
+        v_b1faa7.current = false;
+        v_8a8952(undefined);
+        v_f36dd5(undefined);
+        v_7fa926(0);
+
         if (v_a3ff5a.current) {
           v_98caa0();
         }
@@ -664,6 +771,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           v_98caa0();
           v_ce2e95.current = false;
+
+          v_b1faa7.current = false;
         }
       };
     }, [v_91943c, v_98caa0]) 
@@ -865,28 +974,36 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
 
             {}
-            <View style={v_d81136.bottomContainer}>
-              {}
-              <View style={v_d81136.infoContainer}>
-                {v_12abe8 && (
-                  <View style={v_d81136.imageValidityContainer}>
-                    <Text style={v_d81136.imageValidityTitle}>얼굴 인식</Text>
-                    <Text style={v_d81136.imageValidityText}>{v_12abe8}</Text>
-                  </View>
-                )}
-                {v_b3c379 && !v_12abe8 && (
-                  <View style={v_d81136.pulseRateContainer}>
-                    <Text style={v_d81136.pulseRateText}>맥박: {v_b3c379}</Text>
-                  </View>
-                )}
-              </View>
+            <View style={v_d81136.infoContainerOverlay}>
+              {v_12abe8 && (
+                <View style={v_d81136.imageValidityContainer}>
+                  <Text style={v_d81136.imageValidityTitle}>얼굴 인식</Text>
+                  <Text style={v_d81136.imageValidityText}>{v_12abe8}</Text>
+                </View>
+              )}
+              {v_b3c379 && !v_12abe8 && (
+                <View style={v_d81136.pulseRateContainer}>
+                  <Text style={v_d81136.pulseRateText}>맥박: {v_b3c379}</Text>
+                </View>
+              )}
+            </View>
 
+            {}
+            <View style={v_d81136.bottomContainer}>
               {}
               <View style={v_d81136.statusContainer}>
                 {v_109b56 ? (
-                  <ActivityIndicator size="large" color={v_1bfbd0.background} />
+                  <ActivityIndicator size="large" color={v_1bfbd0.text} />
                 ) : null}
                 <Text style={v_d81136.statusText}>{v_7a93a3()}</Text>
+              </View>
+
+              {}
+              <View style={v_d81136.guidanceContainer}>
+                <Text style={v_d81136.guidanceText}>
+                  가만히 앉아서 얼굴이 고르게 비추고{'\n'}
+                  배경에 광원이 없는지 확인합니다.
+                </Text>
               </View>
 
               {}
@@ -903,17 +1020,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   onPress={v_ac8071}
                   disabled={
                     v_109b56 ||
-                    v_bc50c7 !== v_eb2401.READY &&
-                    v_bc50c7 !== v_eb2401.STARTING &&
-                    v_bc50c7 !== v_eb2401.PROCESSING
+                    (v_bc50c7 !== v_eb2401.READY &&
+                      v_bc50c7 !== v_eb2401.STARTING &&
+                      v_bc50c7 !== v_eb2401.PROCESSING)
                   }
                 />
               </View>
-
-              {}
-              {v_ee736b && (
-                <Text style={v_d81136.warningMessage}>{v_ee736b}</Text>
-              )}
             </View>
           </View>
         </View>
@@ -1017,6 +1129,7 @@ const v_d81136 = v_472849.create({
   cameraContainer: {
     flex: 1,
     position: 'relative',
+    backgroundColor: '#000',
   },
   cameraPreviewWrapper: {
 
@@ -1046,9 +1159,36 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
   },
   bottomContainer: {
+    paddingTop: v_9b1a04.large,
     paddingBottom: v_9b1a04.xlarge,
     paddingHorizontal: v_9b1a04.large,
     alignItems: 'center',
+    backgroundColor: v_1bfbd0.background,
+
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5, 
+    zIndex: 10, 
+  },
+
+  infoContainerOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 250, 
+    zIndex: 15, 
+    pointerEvents: 'box-none', 
   },
   infoContainer: {
     marginBottom: v_9b1a04.medium,
@@ -1076,16 +1216,27 @@ const v_d81136 = v_472849.create({
     textAlign: 'center',
   },
   pulseRateContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.small,
-    borderRadius: 8,
+    minWidth: 120, 
+    borderRadius: 12,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4, 
   },
   pulseRateText: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.background,
     textAlign: 'center',
+    letterSpacing: 0.5,
   },
   statusContainer: {
     alignItems: 'center',
@@ -1094,21 +1245,39 @@ const v_d81136 = v_472849.create({
     minHeight: 60,
   },
   statusText: {
-    marginTop: v_9b1a04.medium,
     fontSize: 16,
     fontFamily: v_843035.medium,
-
-    color: "#000000",
+    color: v_1bfbd0.text,
     textAlign: 'center',
+    backgroundColor: v_1bfbd0.background,
+    paddingHorizontal: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.medium,
+    borderRadius: 12,
 
-    backgroundColor: "#ffffff",
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3, 
+  },
+  guidanceContainer: {
+    marginBottom: v_9b1a04.large,
     paddingHorizontal: v_9b1a04.large,
-    paddingVertical: v_9b1a04.small,
-    borderRadius: 8,
+  },
+  guidanceText: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+    lineHeight: 20,
   },
   buttonContainer: {
     width: '100%',
     maxWidth: 400,
+    zIndex: 10, 
   },
   warningMessage: {
     marginTop: v_9b1a04.medium,
