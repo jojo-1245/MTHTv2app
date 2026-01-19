@@ -130,56 +130,56 @@ const v_a8db3e = [
     {
         id: '1',
         brand: 'YUCOD',
+        name: 'Hydro-Ceramide Serum',
+        description: '건성피부 & 극강보습',
+        price: '100',
+        currency: 'MTHT',
+        targetConcerns: ['moisture', 'hd_moisture'],
+    },
+    {
+        id: '2',
+        brand: 'YUCOD',
         name: 'Sebum & Pore Control Serum',
-        description: '복합성 피부 & 유수분 밸런싱',
+        description: '복합성 피부를 위한 유수분 밸런싱 세럼',
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['pore', 'oiliness', 'hd_pore', 'hd_oiliness'],
     },
     {
-        id: '2',
-        brand: 'DERMAFIX',
-        name: 'Anti-Wrinkle Repair Cream',
-        description: '주름 개선 & 탄력 강화 크림',
-        price: '150',
+        id: '3',
+        brand: 'YUCOD',
+        name: 'Calming Relief Serum',
+        description: '민감성 피부를 위한 집중 진정세럼',
+        price: '100',
+        currency: 'MTHT',
+        targetConcerns: ['redness', 'acne', 'hd_redness', 'hd_acne'],
+    },
+    {
+        id: '4',
+        brand: 'YUCOD',
+        name: 'Luminous Tone-Up Serum',
+        description: '칙칙한 피부를 위한 미백 & 광채 세럼',
+        price: '100',
+        currency: 'MTHT',
+        targetConcerns: ['radiance', 'age_spot', 'hd_radiance', 'hd_age_spot'],
+    },
+    {
+        id: '5',
+        brand: 'YUCOD',
+        name: 'Ageless Firming Serum',
+        description: '주름 개선 & 탄력강화를 위한 안티에이징 세럼',
+        price: '100',
         currency: 'MTHT',
         targetConcerns: ['wrinkle', 'firmness', 'hd_wrinkle', 'hd_firmness'],
     },
     {
-        id: '3',
-        brand: 'SKINLAB',
-        name: 'Dark Circle Eye Serum',
-        description: '다크서클 & 눈밑 케어 집중 세럼',
-        price: '120',
-        currency: 'MTHT',
-        targetConcerns: ['dark_circle_v2', 'eye_bag', 'hd_dark_circle', 'hd_eye_bag'],
-    },
-    {
-        id: '4',
-        brand: 'AQUABOOST',
-        name: 'Hydra Moisture Essence',
-        description: '고보습 수분 에센스',
-        price: '80',
-        currency: 'MTHT',
-        targetConcerns: ['moisture', 'radiance', 'hd_moisture', 'hd_radiance'],
-    },
-    {
-        id: '5',
-        brand: 'CLEARZONE',
-        name: 'Acne Control Solution',
-        description: '트러블 진정 & 여드름 케어',
-        price: '90',
-        currency: 'MTHT',
-        targetConcerns: ['acne', 'redness', 'hd_acne', 'hd_redness'],
-    },
-    {
         id: '6',
-        brand: 'BRIGHTEX',
-        name: 'Spot Correcting Ampoule',
-        description: '기미/잡티 집중 케어 앰플',
-        price: '130',
+        brand: 'YUCOD',
+        name: 'Pore Refine & Lift Serum',
+        description: '모공케어 & 탄력 강화 세럼',
+        price: '100',
         currency: 'MTHT',
-        targetConcerns: ['age_spot', 'texture', 'hd_age_spot', 'hd_texture'],
+        targetConcerns: ['pore', 'firmness', 'hd_pore', 'hd_firmness', 'droopy_upper_eyelid', 'droopy_lower_eyelid', 'hd_droopy_upper_eyelid', 'hd_droopy_lower_eyelid'],
     },
 ];
 
@@ -713,7 +713,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
         );
 
-        return v_6fc8e3.length > 0 ? v_6fc8e3 : v_a8db3e.slice(0, 3);
+        const v_8b7534 = v_a8db3e.filter(v_01bee9 =>
+            !v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
+        );
+
+        return [...v_6fc8e3, ...v_8b7534];
     }, []);
 
     const v_4f73b9 = v_de06a3((v_01bee9) => {
