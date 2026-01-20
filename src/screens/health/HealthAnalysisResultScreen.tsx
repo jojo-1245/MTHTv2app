@@ -810,10 +810,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             {}
             <View style={v_d81136.buttonContainer}>
               <PrimaryButton
-                title="다시 측정하기"
+                title="측정종료"
                 onPress={() => {
 
-                  v_c65f5d.replace('HealthAnalysis');
+                  v_c65f5d.reset({
+                    index: 0,
+                    routes: [{ name: 'MetaHome' }],
+                  });
                 }}
               />
             </View>
