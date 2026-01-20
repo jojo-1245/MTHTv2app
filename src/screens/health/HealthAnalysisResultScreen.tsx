@@ -1,16 +1,56 @@
-import v_a3453e from 'bapkr';
+import v_a3453e, { v_5ab095 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
   v_3094a2,
+  v_4623af,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_729608, v_570c34, v_556baf, v_cb41de } from '../../components';
 import type { v_8ad91b } from '../../navigation';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
+import { v_1bfbd0, v_a61db3, v_843035, v_ef658a, v_9b1a04, v_d8cb4d } from '../../constants';
 import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
+
+type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
+
+const v_d46f97 = {
+  wellnessIndex: {
+    title: '웰니스 지수 (Wellness Score)',
+    content: [
+      {
+        subtitle: '정의',
+        text: '심혈관 위험 등 다양한 건강 지표를 종합하여 산출한 복합 예측 위험 점수입니다.',
+      },
+      {
+        subtitle: '목적',
+        text: '향후 5년에서 10년 내에 발생할 수 있는 심혈관 질환 등의 위험을 예측하고 사용자가 예방적인 조치를 취하도록 장려하는 데 목적이 있습니다.',
+      },
+      {
+        subtitle: '표시 형태',
+        text: "주로 '7/10'과 같이 수치(Score)로 나타납니다.",
+      },
+    ],
+  },
+  wellnessLevel: {
+    title: '웰니스 수준 및 해석 (Level / Interpretation)',
+    content: [
+      {
+        subtitle: '정의',
+        text: '측정된 지수나 위험도를 사용자가 한눈에 파악할 수 있도록 낮음(Low), 중간(Medium), 높음(High)의 세 단계로 분류한 것입니다.',
+      },
+      {
+        subtitle: '역할',
+        text: '수치 데이터(예: 4/10)를 바탕으로 사용자의 현재 상태를 직관적인 피드백으로 변환하여 제공합니다.',
+      },
+      {
+        subtitle: '보고서 활용',
+        text: '이 수준 정보는 최종 사용자에게 직접 표시하거나 보험사의 언더라이팅 팀에 전달되어, 위험도가 높은 경우 추가 의료 검진을 권고하는 등의 의사결정 근거로 활용됩니다.',
+      },
+    ],
+  },
+};
 
 type SummaryStatusType = 'excellent' | 'good' | 'normal' | 'warning' | 'danger';
 
@@ -107,6 +147,58 @@ const v_2c4b08 = (v_3b27d9): string => {
   return v_394a2e[v_3b27d9] || '측정된 생체 신호 값입니다.';
 };
 
+interface RiskCriteria {
+  low: string;
+  medium: string;
+  high: string;
+  unit?: string;
+}
+
+const v_d4fb29 = {
+  [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: {
+    systolic: {
+      low: '< 129',
+      medium: '129-139',
+      high: '>= 140',
+      unit: 'mmHg',
+    },
+    diastolic: {
+      low: '< 90',
+      medium: '90-94',
+      high: '>= 95',
+      unit: 'mmHg',
+    },
+  },
+  [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: {
+    low: '< 6',
+    medium: '6-6.4',
+    high: '>= 6.5',
+    unit: '%',
+  },
+  [v_e3e816.LOW_HEMOGLOBIN_RISK]: {
+    low: '>= 12.0',
+    medium: '해당 없음',
+    high: '< 12.0',
+    unit: 'g/dL',
+  },
+  [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: {
+    low: '<= 100',
+    medium: '해당 없음',
+    high: '> 100',
+    unit: 'mg/dL',
+  },
+  [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: {
+    low: '<= 200',
+    medium: '201-240',
+    high: '>= 240',
+    unit: 'mg/dL',
+  },
+};
+
+const v_2f5a10 = (v_3b27d9): RiskCriteria | { systolic: RiskCriteria; diastolic: RiskCriteria } | null => {
+  return v_d4fb29[v_3b27d9] || null;
+};
+
 const v_2e7086 = (v_3b27d9, v_3b402b): string | null => {
   const v_f4d1c2 = [
     v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
@@ -144,36 +236,28 @@ const v_6d92d1 = (v_3b27d9, v_3b402b): SummaryStatusInfo | null => {
           type: 'excellent',
           message: '우수: 건강 상태가 매우 좋습니다.',
           icon: 'checkmark-circle',
-          color: '#10B981', 
-          borderColor: '#10B981',
-          backgroundColor: '#edfff6', 
+          ...v_d8cb4d.excellent,
         };
       } else if (v_549ed3 >= 60) {
         return {
           type: 'good',
           message: '양호: 건강 상태가 양호합니다.',
           icon: 'checkmark-circle-outline',
-          color: '#3B72F2', 
-          borderColor: '#3B72F2',
-          backgroundColor: '#edf4ff', 
+          ...v_d8cb4d.good,
         };
       } else if (v_549ed3 >= 40) {
         return {
           type: 'normal',
           message: '보통: 건강 관리를 권장합니다.',
           icon: 'information-circle-outline',
-          color: '#F59E0B', 
-          borderColor: '#F59E0B',
-          backgroundColor: '#fffbeb', 
+          ...v_d8cb4d.normal,
         };
       } else {
         return {
           type: 'warning',
           message: '주의: 건강 상태 개선이 필요합니다. 전문의 상담을 권장합니다.',
           icon: 'warning-outline',
-          color: '#EF4444', 
-          borderColor: '#EF4444',
-          backgroundColor: '#fdf1f1', 
+          ...v_d8cb4d.warning,
         };
       }
 
@@ -184,36 +268,28 @@ const v_6d92d1 = (v_3b27d9, v_3b402b): SummaryStatusInfo | null => {
           type: 'excellent',
           message: '우수: 건강 수준이 높습니다.',
           icon: 'checkmark-circle',
-          color: '#10B981',
-          borderColor: '#10B981',
-          backgroundColor: '#D1FAE5',
+          ...v_d8cb4d.excellent,
         };
       } else if (v_549ed3 >= 3) {
         return {
           type: 'good',
           message: '양호: 건강 수준이 양호합니다.',
           icon: 'checkmark-circle-outline',
-          color: '#3B72F2',
-          borderColor: '#3B72F2',
-          backgroundColor: '#E6F0FF',
+          ...v_d8cb4d.good,
         };
       } else if (v_549ed3 >= 2) {
         return {
           type: 'normal',
           message: '보통: 건강 관리를 권장합니다.',
           icon: 'information-circle-outline',
-          color: '#F59E0B',
-          borderColor: '#F59E0B',
-          backgroundColor: '#FEF3C7',
+          ...v_d8cb4d.normal,
         };
       } else {
         return {
           type: 'warning',
           message: '주의: 건강 수준 개선이 필요합니다. 전문의 상담을 권장합니다.',
           icon: 'warning-outline',
-          color: '#EF4444',
-          borderColor: '#EF4444',
-          backgroundColor: '#FEE2E2',
+          ...v_d8cb4d.warning,
         };
       }
 
@@ -224,45 +300,35 @@ const v_6d92d1 = (v_3b27d9, v_3b402b): SummaryStatusInfo | null => {
           type: 'excellent',
           message: '우수: 심장 건강이 매우 좋습니다.',
           icon: 'checkmark-circle',
-          color: '#10B981',
-          borderColor: '#10B981',
-          backgroundColor: '#D1FAE5',
+          ...v_d8cb4d.excellent,
         };
       } else if (v_549ed3 <= 40) {
         return {
           type: 'good',
           message: '양호: 심장 건강이 양호합니다.',
           icon: 'checkmark-circle-outline',
-          color: '#3B72F2',
-          borderColor: '#3B72F2',
-          backgroundColor: '#E6F0FF',
+          ...v_d8cb4d.good,
         };
       } else if (v_549ed3 <= 50) {
         return {
           type: 'normal',
           message: '보통: 심장 건강 관리를 권장합니다.',
           icon: 'information-circle-outline',
-          color: '#F59E0B',
-          borderColor: '#F59E0B',
-          backgroundColor: '#FEF3C7',
+          ...v_d8cb4d.normal,
         };
       } else if (v_549ed3 <= 60) {
         return {
           type: 'warning',
           message: '주의: 심장 건강 개선이 필요합니다.',
           icon: 'warning-outline',
-          color: '#EF4444',
-          borderColor: '#EF4444',
-          backgroundColor: '#FEE2E2',
+          ...v_d8cb4d.warning,
         };
       } else {
         return {
           type: 'danger',
           message: '경고: 심장 건강이 우려됩니다. 전문의 상담을 강력히 권장합니다.',
           icon: 'alert-circle',
-          color: '#DC2626', 
-          borderColor: '#DC2626',
-          backgroundColor: '#FEE2E2',
+          ...v_d8cb4d.danger,
         };
       }
 
@@ -341,6 +407,33 @@ const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { results: v_a7f568, timestamp: v_42044e } = v_c7daf6.params;
 
+  const [v_571c37, v_e78f19] = v_5ab095<Record<number, boolean>>({});
+
+  const [v_49e71a, v_f2b4a8] = v_5ab095<Record<number, boolean>>({});
+
+  const v_30e354 = (v_653390) => {
+    v_e78f19(v_ba2215 => ({
+      ...v_ba2215,
+      [v_653390]: !v_ba2215[v_653390],
+    }));
+  };
+
+  const v_1be31b = (v_653390) => {
+    v_f2b4a8(v_ba2215 => ({
+      ...v_ba2215,
+      [v_653390]: !v_ba2215[v_653390],
+    }));
+  };
+
+  const v_311b14 = (v_332b51): InfoModalType => {
+    if (v_332b51 === v_e3e816.WELLNESS_INDEX) {
+      return 'wellnessIndex';
+    } else if (v_332b51 === v_e3e816.WELLNESS_LEVEL) {
+      return 'wellnessLevel';
+    }
+    return null;
+  };
+
   const v_b1b76c = [
     v_e3e816.WELLNESS_INDEX,
     v_e3e816.WELLNESS_LEVEL,
@@ -418,6 +511,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     }
                     : {};
 
+                  const v_314d3c = v_311b14(v_653390);
+
                   return (
                     <View
                       key={v_3b27d9}
@@ -427,9 +522,27 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         v_2b38bd,
                       ]}
                     >
-                      <Text style={v_d81136.sectionTitle}>
-                        {v_50f905(v_653390)}
-                      </Text>
+                      {}
+                      <View style={v_d81136.sectionTitleRow}>
+                        <Text style={v_d81136.sectionTitle}>
+                          {v_50f905(v_653390)}
+                        </Text>
+                        {v_314d3c && (
+                          <TouchableOpacity
+                            onPress={() => v_30e354(v_653390)}
+                            style={v_d81136.infoIconButton}
+                            accessibilityRole="button"
+                            accessibilityLabel={`${v_50f905(v_653390)} 상세 정보 ${v_571c37[v_653390] ? '숨기기' : '보기'}`}
+                            accessibilityHint="탭하면 상세 정보가 표시되거나 숨겨집니다"
+                          >
+                            <Ionicons
+                              name={v_571c37[v_653390] ? "chevron-up-circle" : "information-circle-outline"}
+                              size={22}
+                              color={v_1bfbd0.secondaryText}
+                            />
+                          </TouchableOpacity>
+                        )}
+                      </View>
                       <Text
                         style={[
                           v_d81136.sectionValue,
@@ -506,6 +619,29 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
                         return null;
                       })()}
+
+                      {}
+                      {v_314d3c && v_571c37[v_653390] && (
+                        <View style={v_d81136.infoExpandContainer}>
+                          <View style={v_d81136.infoExpandHeader}>
+                            <Text style={v_d81136.infoExpandTitle}>
+                              {v_d46f97[v_314d3c].title}
+                            </Text>
+                          </View>
+                          <View style={v_d81136.infoExpandBody}>
+                            {v_d46f97[v_314d3c].content.map((v_8c0b26, v_a56041) => (
+                              <View key={v_a56041} style={v_d81136.infoExpandSection}>
+                                <Text style={v_d81136.infoExpandSubtitle}>
+                                  {v_8c0b26.subtitle}
+                                </Text>
+                                <Text style={v_d81136.infoExpandText}>
+                                  {v_8c0b26.text}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+                        </View>
+                      )}
                     </View>
                   );
                 })}
@@ -521,6 +657,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {v_53d27c.map(([v_3b27d9, v_9390e8]) => {
                   const v_653390 = Number(v_3b27d9);
                   const v_828097 = v_2e7086(v_653390, v_9390e8.value);
+                  const v_c9f7af = v_2f5a10(v_653390);
 
                   return (
                     <View key={v_3b27d9} style={v_d81136.resultSection}>
@@ -536,6 +673,80 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       <Text style={v_d81136.descriptionText}>
                         {v_2c4b08(v_653390)}
                       </Text>
+
+                      {}
+                      {v_c9f7af && (
+                        <View style={v_d81136.riskCriteriaContainer}>
+                          {}
+                          <TouchableOpacity
+                            style={v_d81136.riskCriteriaHeader}
+                            onPress={() => v_1be31b(v_653390)}
+                            accessibilityRole="button"
+                            accessibilityLabel={`판정 기준 ${v_49e71a[v_653390] ? '숨기기' : '보기'}`}
+                            accessibilityHint="탭하면 판정 기준 상세 내용이 표시되거나 숨겨집니다"
+                          >
+                            <Text style={v_d81136.riskCriteriaTitle}>판정 기준</Text>
+                            <Ionicons
+                              name={v_49e71a[v_653390] ? "chevron-up" : "chevron-down"}
+                              size={20}
+                              color={v_1bfbd0.secondaryText}
+                            />
+                          </TouchableOpacity>
+
+                          {}
+                          {v_49e71a[v_653390] && (
+                            <>
+                              {v_653390 === v_e3e816.HIGH_BLOOD_PRESSURE_RISK &&
+                                'systolic' in v_c9f7af ? (
+                                <>
+                                  <View style={v_d81136.riskCriteriaRow}>
+                                    <Text style={v_d81136.riskCriteriaLabel}>수축기:</Text>
+                                    <View style={v_d81136.riskCriteriaValues}>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        낮음 {v_c9f7af.systolic.low} {v_c9f7af.systolic.unit || ''}
+                                      </Text>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        중간 {v_c9f7af.systolic.medium} {v_c9f7af.systolic.unit || ''}
+                                      </Text>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        높음 {v_c9f7af.systolic.high} {v_c9f7af.systolic.unit || ''}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={v_d81136.riskCriteriaRow}>
+                                    <Text style={v_d81136.riskCriteriaLabel}>이완기:</Text>
+                                    <View style={v_d81136.riskCriteriaValues}>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        낮음 {v_c9f7af.diastolic.low} {v_c9f7af.diastolic.unit || ''}
+                                      </Text>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        중간 {v_c9f7af.diastolic.medium} {v_c9f7af.diastolic.unit || ''}
+                                      </Text>
+                                      <Text style={v_d81136.riskCriteriaValue}>
+                                        높음 {v_c9f7af.diastolic.high} {v_c9f7af.diastolic.unit || ''}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </>
+                              ) : 'low' in v_c9f7af ? (
+                                <View style={v_d81136.riskCriteriaValues}>
+                                  <Text style={v_d81136.riskCriteriaValue}>
+                                    낮음: {v_c9f7af.low} {v_c9f7af.unit || ''}
+                                  </Text>
+                                  {v_c9f7af.medium !== '해당 없음' && (
+                                    <Text style={v_d81136.riskCriteriaValue}>
+                                      중간: {v_c9f7af.medium} {v_c9f7af.unit || ''}
+                                    </Text>
+                                  )}
+                                  <Text style={v_d81136.riskCriteriaValue}>
+                                    높음: {v_c9f7af.high} {v_c9f7af.unit || ''}
+                                  </Text>
+                                </View>
+                              ) : null}
+                            </>
+                          )}
+                        </View>
+                      )}
                       {(() => {
 
                         if (v_9390e8.confidence && typeof v_9390e8.confidence === 'object' && 'level' in v_9390e8.confidence) {
@@ -650,17 +861,26 @@ const v_d81136 = v_472849.create({
   },
   statusContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: v_9b1a04.small,
   },
   statusIcon: {
     marginRight: v_9b1a04.small / 2,
+    paddingTop: v_9b1a04.small,
+  },
+  sectionTitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   sectionTitle: {
-    fontSize: 14,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.secondaryText,
-    marginBottom: v_9b1a04.small,
+    fontSize: v_ef658a.large,
+    letterSpacing: -0.16,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+    flex: 1,
+  },
+  infoIconButton: {
+    padding: v_9b1a04.small / 2,
+    marginLeft: v_9b1a04.small,
   },
   sectionValue: {
     fontSize: 24,
@@ -717,6 +937,76 @@ const v_d81136 = v_472849.create({
   },
   buttonContainer: {
     marginTop: v_9b1a04.xlarge,
+  },
+
+  infoExpandContainer: {
+    marginTop: v_9b1a04.medium,
+    paddingTop: v_9b1a04.medium,
+    borderTopWidth: 1,
+    borderTopColor: v_1bfbd0.border,
+  },
+  infoExpandHeader: {
+    marginBottom: v_9b1a04.small,
+  },
+  infoExpandTitle: {
+    fontSize: 16,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+    marginBottom: v_9b1a04.small,
+  },
+  infoExpandBody: {
+    gap: v_9b1a04.medium,
+  },
+  infoExpandSection: {
+    marginBottom: v_9b1a04.small,
+  },
+  infoExpandSubtitle: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.primary,
+    marginBottom: v_9b1a04.small / 2,
+  },
+  infoExpandText: {
+    fontSize: 13,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    lineHeight: 20,
+  },
+
+  riskCriteriaContainer: {
+    marginTop: v_9b1a04.medium,
+    paddingTop: v_9b1a04.medium,
+    borderTopWidth: 1,
+    borderTopColor: v_1bfbd0.border,
+  },
+  riskCriteriaHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: v_9b1a04.small,
+  },
+  riskCriteriaTitle: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+  },
+  riskCriteriaRow: {
+    marginBottom: v_9b1a04.small,
+  },
+  riskCriteriaLabel: {
+    fontSize: 13,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+    marginBottom: v_9b1a04.small / 2,
+  },
+  riskCriteriaValues: {
+    gap: v_9b1a04.small / 2,
+  },
+  riskCriteriaValue: {
+    fontSize: 12,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    lineHeight: 18,
   },
 });
 

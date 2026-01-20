@@ -20,7 +20,7 @@ export const v_1bfbd0 = {
   border: '#d8dadc',
   placeholder: 'rgba(0, 0, 0, 0.5)',
   mutedText: '#3C3C43',
-  secondaryText: '#8e9bae',
+  secondaryText: '#666666',
   icon: '#000000',
   iconMuted: '#8E8E93',
   toggleTrackOff: '#dddddd',
@@ -106,6 +106,34 @@ export const v_53f592 = (v_740dd8): string => {
   const v_fbe91e = v_afa590(v_740dd8);
   return v_16b893[v_fbe91e];
 };
+
+export const v_d8cb4d = {
+  excellent: {
+    color: v_16b893[10], 
+    borderColor: v_16b893[10],
+    backgroundColor: '#EFF6FF', 
+  },
+  good: {
+    color: v_16b893[8], 
+    borderColor: v_16b893[8],
+    backgroundColor: '#F0FDF4', 
+  },
+  normal: {
+    color: v_16b893[3], 
+    borderColor: v_16b893[3],
+    backgroundColor: '#FFFBEB', 
+  },
+  warning: {
+    color: v_16b893[2], 
+    borderColor: v_16b893[2],
+    backgroundColor: '#FEF2F2', 
+  },
+  danger: {
+    color: v_16b893[1], 
+    borderColor: v_16b893[1],
+    backgroundColor: '#FEF2F2', 
+  },
+} as const;
 
 export const v_a61db3 = {
   container: {
