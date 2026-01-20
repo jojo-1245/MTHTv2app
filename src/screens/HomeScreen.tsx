@@ -16,7 +16,8 @@ type Props = v_432191<v_8ad91b, 'Home'>;
 
 const { height: v_28d8d8 } = v_700696.get('window');
 
-const v_34a8ff = require('../../assets/images/logo.png');
+const v_186735 = require('../../assets/images/symbol.png');
+const v_16cea9 = require('../../assets/images/logo.png');
 
 const HomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
@@ -36,9 +37,11 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
     <SafeView style={v_d81136.container}>
       <StatusBar style="dark" />
 
-      {
+      <View style={v_d81136.logoContainer}>
+        <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
+        <Image source={v_16cea9} style={v_d81136.logo} resizeMode="contain" />
+      </View>
 
-}
       <SafeScrollView
         contentContainerStyle={v_d81136.scrollContent}
         showsVerticalScrollIndicator={true}
@@ -91,15 +94,20 @@ const v_d81136 = v_472849.create({
     position: 'absolute',
     top: v_28d8d8 * 0.3,
     left: 0,
+    backgroundColor: 'white',
     right: 0,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
   },
+  symbol: {
+    width: 120,
+    height: 120,
+  },
   logo: {
-    width: 200,
-    height: 60,
+    width: 160,
+    height: 40,
   },
   adContainer: {
     marginBottom: v_9b1a04.xlarge,
@@ -121,7 +129,7 @@ const v_d81136 = v_472849.create({
   adPlaceholder: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#cccccc',
+    backgroundColor: '#ffffff',
   },
   buttonContainer: {
     width: '100%',
