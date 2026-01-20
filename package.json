@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.11.0",
     "@types/crypto-js": "^4.2.2",
     "axios": "^1.13.2",
+    "fzljtilisignal-react-native-sdk": "file:FzljtiliSignal_ReactNative_SDK_5.11.4.tgz",
     "crypto-js": "^4.2.0",
     "expo": "~54.0.31",
     "expo-camera": "~17.0.10",
@@ -40,8 +41,7 @@
     "react-native-navigation-bar-height": "^0.2.0",
     "react-native-safe-area-context": "^5.6.2",
     "react-native-screens": "~4.16.0",
-    "react-native-svg": "15.12.1",
-    "fzljtilisignal-react-native-sdk": "./FzljtiliSignal_ReactNative_SDK_5.11.4.tgz"
+    "react-native-svg": "15.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
@@ -49,5 +49,17 @@
     "babel-plugin-inline-dotenv": "^1.7.0",
     "typescript": "^5.7.2"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-compass-heading",
+          "fzljtilisignal-react-native-sdk",
+          "expo-face-detector",
+          "react-native-navigation-bar-height"
+        ]
+      }
+    }
+  }
 }
