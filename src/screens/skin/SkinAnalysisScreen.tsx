@@ -25,6 +25,7 @@ import * as v_8682f1 from 'xfwnoqvryfjuilcdia';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
+import v_8c5b32 from 'quibwhxmgaihxjwrkkiuwoxpqb';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_37c282 = v_0d9f50 - 80; 
@@ -1605,43 +1606,36 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             </Modal>
 
             {}
-            <Modal
-                visible={v_c813f5 !== null}
-                transparent
-                animationType="fade"
-                onRequestClose={() => v_0d73a9(null)}
-            >
-                <Pressable
-                    style={v_d81136.productImageModalOverlay}
-                    onPress={() => v_0d73a9(null)}
-                >
-                    <Pressable style={v_d81136.productImageModalContent} onPress={() => { }}>
-                        {}
-                        <TouchableOpacity
-                            style={v_d81136.productImageModalCloseButton}
-                            onPress={() => v_0d73a9(null)}
-                            accessibilityRole="button"
-                            accessibilityLabel="이미지 확대 모달 닫기"
-                        >
-                            <Ionicons name="close" size={28} color="#FFFFFF" />
-                        </TouchableOpacity>
-
-                        {}
-                        {v_c813f5 && (
-                            <>
-                                <Image
-                                    source={v_c813f5.image}
-                                    style={v_d81136.productImageModalImage}
-                                    resizeMode="contain"
-                                />
-                                <Text style={v_d81136.productImageModalName}>
-                                    {v_c813f5.name}
-                                </Text>
-                            </>
-                        )}
-                    </Pressable>
-                </Pressable>
-            </Modal>
+            {v_c813f5 && (
+                <ImageViewing
+                    images={[{ uri: v_cf9c33.resolveAssetSource(v_c813f5.image).uri }]}
+                    imageIndex={0}
+                    visible={v_c813f5 !== null}
+                    onRequestClose={() => v_0d73a9(null)}
+                    presentationStyle="overFullScreen"
+                    doubleTapToZoomEnabled={true}
+                    swipeToCloseEnabled={true}
+                    HeaderComponent={({ imageIndex: v_c3488c }) => (
+                        <View style={v_d81136.productImageModalHeader}>
+                            <TouchableOpacity
+                                style={v_d81136.productImageModalCloseButton}
+                                onPress={() => v_0d73a9(null)}
+                                accessibilityRole="button"
+                                accessibilityLabel="이미지 확대 모달 닫기"
+                            >
+                                <Ionicons name="close" size={28} color="#FFFFFF" />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    FooterComponent={({ imageIndex: v_c3488c }) => (
+                        <View style={v_d81136.productImageModalFooter}>
+                            <Text style={v_d81136.productImageModalName}>
+                                {v_c813f5.name}
+                            </Text>
+                        </View>
+                    )}
+                />
+            )}
         </>
     );
 };
@@ -2838,20 +2832,48 @@ const v_d81136 = v_472849.create({
         justifyContent: 'center',
         position: 'relative',
     },
-    productImageModalCloseButton: {
+    productImageModalHeader: {
         position: 'absolute',
-        top: -60,
+        top: 0,
+        left: 0,
         right: 0,
+        paddingTop: 50,
+        paddingHorizontal: 20,
+        zIndex: 10,
+        alignItems: 'flex-end',
+    },
+    productImageModalFooter: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingBottom: 50,
+        paddingHorizontal: 20,
+        zIndex: 10,
+        alignItems: 'center',
+    },
+    productImageModalCloseButton: {
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 10,
+    },
+    productImageModalScrollView: {
+        width: '100%',
+        height: v_28d8d8 * 0.7,
+        maxHeight: 600,
+    },
+    productImageModalScrollContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: '100%',
+        minHeight: v_28d8d8 * 0.7,
     },
     productImageModalImage: {
-        width: '100%',
+        width: v_0d9f50 * 0.9,
+        maxWidth: 600,
         height: v_28d8d8 * 0.7,
         maxHeight: 600,
     },
@@ -2861,6 +2883,7 @@ const v_d81136 = v_472849.create({
         color: '#FFFFFF',
         marginTop: v_9b1a04.large,
         textAlign: 'center',
+        paddingBottom: v_9b1a04.medium,
     },
 });
 
