@@ -871,6 +871,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           contentContainerStyle={v_d81136.introContent}
           showsVerticalScrollIndicator={false}
           showBottomBackground={false}
+          disableBottomPadding={true}
         >
           <View style={v_d81136.introContainer}>
             <View style={v_d81136.introIconContainer}>
