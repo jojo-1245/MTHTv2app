@@ -139,7 +139,25 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_b1faa7 = v_e662ae<boolean>(false);
 
+  const v_4c31ba = v_e662ae<boolean>(false);
+
+  const v_b9ada4 = v_e662ae<boolean>(false);
+
   const v_3be953 = v_e662ae<boolean>(false);
+
+  const v_b98ddb = v_e662ae<boolean>(false);
+
+  const v_919f8c = v_e662ae<v_eb2401 | null>(null);
+
+  const v_318478 = v_e662ae<boolean>(false);
+
+  const v_1cbea0 = v_e662ae<boolean>(false);
+
+  const v_c1affb = v_e662ae<number>(0);
+
+  const v_977633 = v_e662ae<number>(0);
+
+  const v_1dd18f = v_e662ae<boolean>(false);
 
   const v_ec0597 = v_de06a3(async (): Promise<boolean> => {
     if (!v_d1a6bb) {
@@ -165,6 +183,38 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_a3ff5a.current = undefined;
     }
   }, []);
+
+  const v_98b3fa = v_de06a3(async () => {
+    console.log('세션 초기화 후 intro로 이동');
+    if (v_a3ff5a.current) {
+      try {
+        await v_a3ff5a.current.stop();
+        console.log('세션 중지 완료');
+      } catch (v_9e86fd) {
+        console.warn('세션 중지 실패:', v_9e86fd);
+      }
+      await v_98caa0();
+      v_a3ff5a.current = undefined;
+    }
+
+    v_ce2e95.current = false;
+    v_3be953.current = false;
+    v_b1faa7.current = false;
+    v_b98ddb.current = false;
+    v_1cbea0.current = false;
+    v_c1affb.current = 0;
+
+    v_977633.current = Date.now() + 5000;
+    v_1dd18f.current = false;
+    v_318478.current = false;
+    v_b9ada4.current = false;
+    v_49296b(false);
+    v_b0aeaf(false);
+    v_8a8952(undefined);
+    v_f36dd5(undefined);
+    v_7fa926(0);
+    v_639227('intro');
+  }, [v_98caa0]);
 
   const v_bb3644 = v_de06a3(async () => {
 
@@ -301,6 +351,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
         console.log('측정 시작 요청, 세션 상태:', v_bc50c7);
 
+        v_1dd18f.current = false;
+
         await v_a3ff5a.current?.start(v_8ea06a);
       } else if (
         v_bc50c7 === v_eb2401.STARTING ||
@@ -321,6 +373,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         hasSession: !!v_a3ff5a.current,
       });
 
+      if (v_7a5fef && v_7a5fef >= 3000 && v_7a5fef < 4000) {
+        console.log('[얼굴 인식 에러] 무시 - 측정 계속 진행', { code: v_7a5fef });
+        return;
+      }
+
       let v_1744b9 = '';
       let v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
 
@@ -328,10 +385,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         case 2042:
           v_b5cd35 = v_8d41d7('health_analysis.errors.session_error');
           v_1744b9 = v_8d41d7('health_analysis.errors.error_2042');
-          break;
-        case 3003:
-          v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
-          v_1744b9 = v_8d41d7('health_analysis.errors.error_3003');
           break;
         default:
           v_1744b9 = v_8d41d7('health_analysis.errors.error_default', { code: v_7a5fef || '알 수 없음' });
@@ -352,7 +405,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         },
       ]);
     }
-  }, [v_bc50c7, v_98caa0]);
+  }, [v_bc50c7, v_98caa0, v_8d41d7]);
 
   const v_b1eca7 = v_e662ae(false);
   v_c4deb2(() => {
@@ -370,7 +423,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     console.log('[경고 발생]', { code: v_77ef6e, warning: v_288ac3 });
 
     if (v_77ef6e === 3500 || (v_77ef6e && v_77ef6e >= 3000 && v_77ef6e < 4000)) {
-      console.log('[얼굴 인식 경고] 무시 (10초 타이머로 처리)');
+      console.log('[얼굴 인식 경고] 무시 - 측정 계속 진행');
       v_b1eca7.current = true;
 
       return;
@@ -382,12 +435,69 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_c4deb2(() => {
     if (v_5e9bfe) {
       const v_7a5fef = v_5e9bfe?.code;
+      const v_5c2f9f = Date.now();
+      if (v_7a5fef === 3003) {
+        if (!v_4c31ba.current) {
+          return;
+        }
+        if (v_b9ada4.current) {
+          return;
+        }
+        if (!v_a3ff5a.current || v_91943c !== 'measurement') {
+          return;
+        }
+        if (v_1dd18f.current) {
+          return;
+        }
+        if (v_977633.current && v_5c2f9f < v_977633.current) {
+          return;
+        }
+        if (v_b98ddb.current) {
+          return;
+        }
+      }
       console.error('SDK 에러 발생:', {
         code: v_7a5fef,
         domain: (v_5e9bfe as any)?.domain,
         message: (v_5e9bfe as any)?.message,
         error: v_5e9bfe,
       });
+
+      if (v_7a5fef === 3003) {
+        if (!v_a3ff5a.current || v_91943c !== 'measurement') {
+          console.log('[3003 에러] 세션 없음/intro 상태 - 무시');
+          return;
+        }
+        if (v_1dd18f.current) {
+          console.log('[3003 에러] 측정 완료 후 - 무시');
+          return;
+        }
+        if (v_977633.current && v_5c2f9f < v_977633.current) {
+          console.log('[3003 에러] 재생성 직후 - 무시', { until: v_977633.current });
+          return;
+        }
+        if (v_b98ddb.current) {
+          console.log('[3003 에러] 이미 팝업 표시됨 - 무시');
+          return;
+        }
+
+        v_b98ddb.current = true;
+        v_03e392.alert(v_8d41d7('health_analysis.errors.measurement_error'), v_8d41d7('health_analysis.errors.error_3003'), [
+          {
+            text: v_8d41d7('common.confirm'),
+            onPress: async () => {
+              console.log('[3003 에러 처리] 확인 클릭 - 세션 초기화');
+              await v_98b3fa();
+            },
+          },
+        ]);
+        return;
+      }
+
+      if (v_7a5fef && v_7a5fef >= 3000 && v_7a5fef < 4000) {
+        console.log('[얼굴 인식 에러] 무시 - 측정 계속 진행', { code: v_7a5fef, measurementCompleted: v_1dd18f.current });
+        return;
+      }
 
       let v_1744b9 = '';
       let v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
@@ -400,10 +510,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         case 7009:
           v_b5cd35 = v_8d41d7('health_analysis.errors.session_creation_failed');
           v_1744b9 = v_8d41d7('health_analysis.errors.error_7009');
-          break;
-        case 3003:
-          v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
-          v_1744b9 = v_8d41d7('health_analysis.errors.error_3003');
           break;
         default:
           v_1744b9 = v_8d41d7('health_analysis.errors.error_unknown', { code: v_7a5fef || '알 수 없음' });
@@ -423,7 +529,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         },
       ]);
     }
-  }, [v_5e9bfe, v_98caa0]);
+  }, [v_5e9bfe, v_98caa0, v_bc50c7, v_8d41d7, v_91943c, v_a3ff5a, v_bb3644, v_98b3fa]);
 
   v_c4deb2(() => {
     if (v_f91e0a) {
@@ -573,7 +679,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
     v_8a8952(v_bbcfff);
 
-  }, [v_14a7eb, v_bc50c7]);
+  }, [v_14a7eb, v_bc50c7, v_8d41d7]);
 
   v_c4deb2(() => {
     let v_cb36b1;
@@ -605,10 +711,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
+    v_1dd18f.current = true;
+    v_b9ada4.current = true;
+    console.log('[측정 완료] finalResults 생성 - 3003 에러 무시 플래그 설정');
+
     if (v_b1faa7.current) {
       console.log('[결과 화면 이동 방지] 얼굴 감지 실패로 인한 측정 중지 - finalResults 무시');
 
       v_b1faa7.current = false;
+      v_1dd18f.current = false; 
       return;
     }
 
@@ -689,6 +800,28 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
+      (async () => {
+        try {
+          if (v_a3ff5a.current) {
+            try {
+              await v_a3ff5a.current.stop();
+              console.log('[결과 화면 이동] 세션 중지 완료');
+            } catch (v_9e86fd) {
+              console.warn('[결과 화면 이동] 세션 중지 실패:', v_9e86fd);
+            }
+            await v_98caa0();
+            console.log('[결과 화면 이동] 세션 종료 완료');
+          }
+        } catch (v_9e86fd) {
+          console.error('[결과 화면 이동] 세션 정리 중 오류:', v_9e86fd);
+        }
+
+        v_b98ddb.current = false;
+        v_977633.current = 0;
+        v_1dd18f.current = true; 
+        console.log('[결과 화면 이동] 3003 에러 관련 플래그 리셋 및 세션 종료 완료');
+      })();
+
       v_c65f5d.navigate('HealthAnalysisResult', {
         results: v_9f8792,
         timestamp: new Date().toISOString(),
@@ -711,16 +844,41 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     if (v_a3ff5a.current && v_bc50c7 === v_eb2401.READY) {
       console.log('✅ 세션이 READY 상태입니다. 카메라가 활성화되었습니다.');
+
+      if (v_c1affb.current > 0) {
+        console.log('[3003 에러 처리] 세션 재생성 성공 - 재시도 횟수 리셋');
+        v_c1affb.current = 0;
+      }
+
+      if (v_919f8c.current === v_eb2401.TERMINATED ||
+        v_919f8c.current === v_eb2401.INITIALIZING ||
+        v_919f8c.current === null) {
+        v_977633.current = Date.now() + 5000; 
+        console.log('[3003 에러 처리] 세션 재생성 완료 - 5초 동안 3003 에러 무시');
+      }
+    } else if (v_a3ff5a.current && v_bc50c7 === v_eb2401.PROCESSING) {
+
+      if (v_b98ddb.current) {
+        console.log('[3003 에러 처리] 측정 시작 성공 - 팝업 플래그 리셋');
+        v_b98ddb.current = false;
+      }
+      if (v_c1affb.current > 0) {
+        console.log('[3003 에러 처리] 측정 시작 성공 - 재시도 횟수 리셋');
+        v_c1affb.current = 0;
+      }
     } else if (v_a3ff5a.current && v_bc50c7 === v_eb2401.TERMINATING) {
       console.warn('⚠️ 세션이 TERMINATING 상태입니다. 세션이 종료되고 있습니다.');
     } else if (v_a3ff5a.current && v_bc50c7 === v_eb2401.TERMINATED) {
       console.warn('⚠️ 세션이 TERMINATED 상태입니다. 세션이 종료되었습니다.');
       v_a3ff5a.current = undefined;
       v_ce2e95.current = false;
+      v_318478.current = false;
     } else if (v_a3ff5a.current && v_bc50c7 !== v_eb2401.READY) {
       console.log('⏳ 세션이 READY 상태로 전환 대기 중... (현재 상태:', v_07b251, ')');
     }
-  }, [v_bc50c7, v_a3ff5a]);
+
+    v_919f8c.current = v_bc50c7 ?? null;
+  }, [v_bc50c7, v_a3ff5a, v_91943c, v_8d41d7]);
 
   const v_0bafd1 = v_de06a3(() => {
     console.log('카메라 컨테이너 마운트됨');
@@ -730,9 +888,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_cf763b(
     v_de06a3(() => {
       console.log('화면 포커스됨');
+      v_4c31ba.current = true;
 
       return () => {
         console.log('화면 언포커스됨, 세션 종료');
+        v_4c31ba.current = false;
 
         if (v_a3ff5a.current) {
           v_98caa0();
@@ -810,23 +970,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_56ef46 = v_de06a3(async () => {
     console.log('측정 화면에서 intro로 돌아가기');
-
-    if (v_a3ff5a.current) {
-      await v_98caa0();
-      v_a3ff5a.current = undefined;
-    }
-
-    v_ce2e95.current = false;
-    v_3be953.current = false;
-    v_b1faa7.current = false;
-    v_49296b(false);
-    v_b0aeaf(false);
-    v_8a8952(undefined);
-    v_f36dd5(undefined);
-    v_7fa926(0);
-
-    v_639227('intro');
-  }, [v_98caa0]);
+    await v_98b3fa();
+  }, [v_98b3fa]);
 
   if (!v_d1a6bb?.granted && !v_109b56) {
     return (
@@ -876,9 +1021,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           disableBottomPadding={true}
         >
           <View style={v_d81136.introContainer}>
-            <View style={v_d81136.introIconContainer}>
-              <Ionicons name="heart-outline" size={64} color={v_1bfbd0.bluePrimary} />
-            </View>
 
             <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
 
@@ -949,67 +1091,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 fullWidth
               />
 
-              {}
-              <TouchableOpacity
-                style={v_d81136.devTestLink}
-                onPress={() => {
+              {
 
-                  const v_2d2278 = {
-
-                    [v_e3e816.WELLNESS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                    [v_e3e816.WELLNESS_LEVEL]: { confidence: { level: 2 }, value: 4 },
-                    [v_e3e816.HEART_AGE]: { confidence: { level: 1 }, value: 35 },
-
-                    [v_e3e816.PULSE_RATE]: { confidence: { level: 2 }, value: 72 },
-                    [v_e3e816.RESPIRATION_RATE]: { confidence: { level: 2 }, value: 16 },
-                    [v_e3e816.OXYGEN_SATURATION]: { confidence: { level: 2 }, value: 98.5 },
-                    [v_e3e816.BLOOD_PRESSURE]: { confidence: { level: 1 }, value: { systolic: 120, diastolic: 80 } },
-
-                    [v_e3e816.STRESS_LEVEL]: { confidence: { level: 1 }, value: 3 },
-                    [v_e3e816.STRESS_INDEX]: { confidence: { level: 1 }, value: 706 },
-                    [v_e3e816.NORMALIZED_STRESS_INDEX]: { confidence: { level: 1 }, value: 17 },
-
-                    [v_e3e816.RRI]: { confidence: { level: 1 }, value: [] }, 
-                    [v_e3e816.MEAN_RRI]: { confidence: { level: 1 }, value: 850 },
-                    [v_e3e816.SDNN]: { confidence: { level: 1 }, value: 45.2 },
-                    [v_e3e816.RMSSD]: { confidence: { level: 1 }, value: 32.5 },
-                    [v_e3e816.SD1]: { confidence: { level: 1 }, value: 23.1 },
-                    [v_e3e816.SD2]: { confidence: { level: 1 }, value: 58.4 },
-                    [v_e3e816.PRQ]: { confidence: { level: 1 }, value: 1.8 },
-                    [v_e3e816.LFHF]: { confidence: { level: 1 }, value: 2.1 },
-
-                    [v_e3e816.PNS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                    [v_e3e816.PNS_ZONE]: { confidence: { level: 1 }, value: 2 },
-                    [v_e3e816.SNS_INDEX]: { confidence: { level: 1 }, value: 25 },
-                    [v_e3e816.SNS_ZONE]: { confidence: { level: 1 }, value: 1 },
-
-                    [v_e3e816.HEMOGLOBIN]: { confidence: { level: 1 }, value: 14.5 },
-                    [v_e3e816.HEMOGLOBIN_A1C]: { confidence: { level: 1 }, value: 5.2 },
-
-                    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.LOW_HEMOGLOBIN_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: { confidence: undefined, value: 1 },
-                    [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.ASCVD_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.ASCVD_RISK_LEVEL]: { confidence: undefined, value: 2 },
-
-                    [v_e3e816.MEAN_ARTERIAL_PRESSURE]: { confidence: { level: 1 }, value: 93.3 },
-                    [v_e3e816.PULSE_PRESSURE]: { confidence: { level: 1 }, value: 40 },
-                    [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
-                    [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
-                  };
-                  v_c65f5d.navigate('HealthAnalysisResult', {
-                    results: v_2d2278,
-                    timestamp: new Date().toISOString(),
-                  });
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
-                accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
-              >
-                <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
-              </TouchableOpacity>
+}
             </View>
           </View>
         </SafeScrollView>
@@ -1079,13 +1163,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={v_d81136.statusText}>{v_7a93a3()}</Text>
               </View>
 
-              {}
-              <View style={v_d81136.guidanceContainer}>
-                <Text style={v_d81136.guidanceText}>
-                  {v_8d41d7('health_analysis.measurement.guidance_text')}
-                </Text>
-              </View>
+              {
 
+}
               {}
               <View style={v_d81136.buttonContainer}>
                 <PrimaryButton
@@ -1277,7 +1357,7 @@ const v_d81136 = v_472849.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 250, 
+    paddingBottom: 200, 
     zIndex: 15, 
     pointerEvents: 'box-none', 
   },
@@ -1345,14 +1425,6 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_9b1a04.medium,
     borderRadius: 12,
 
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3, 
   },
   guidanceContainer: {
     marginBottom: v_9b1a04.large,
