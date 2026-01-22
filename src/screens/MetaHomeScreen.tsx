@@ -728,7 +728,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 onPress={v_74d6ea}
                 activeOpacity={0.8}
               >
-                {}
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.skin')}</Text>
                 <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.skin_analysis')}</Text>
               </TouchableOpacity>
 
@@ -747,7 +747,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 onPress={v_ae6f36}
                 activeOpacity={0.8}
               >
-                {}
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.health')}</Text>
                 <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.health_analysis')}</Text>
               </TouchableOpacity>
             </View>
