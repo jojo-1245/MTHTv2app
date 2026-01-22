@@ -1,0 +1,20 @@
+{
+    "common": {
+        "setting": "설정",
+        "language": "언어",
+        "close_membership": "회원 탈퇴",
+        "korean": "한국어",
+        "english": "영어",
+        "indonesian": "인도네시아어",
+        "select_language": "언어 선택",
+        "cancel": "취소",
+        "confirm": "확인",
+        "back": "뒤로가기",
+        "close": "닫기"
+    },
+    "profile": {
+        "my_info_settings": "내 정보 설정",
+        "language_description": "앱 내 언어 설정",
+        "close_membership_description": "메타힌트 회원 탈퇴"
+    }
+}

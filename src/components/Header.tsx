@@ -9,6 +9,7 @@ import {
   v_7e4944,
 } from 'rcmrninabrnb';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 export interface HeaderProps {
@@ -46,6 +47,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
   eyebrowStyle: v_faa4b0,
   subtitleStyle: v_7e5e48,
 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const v_e2510f = v_9c4d53 ?? Boolean(v_f442f6);
   const v_16994b = v_45f781 ?? false;
 
@@ -64,12 +66,12 @@ const Header: v_a3453e.FC<HeaderProps> = ({
         style={v_d81136.backButton}
         activeOpacity={0.85}
         accessibilityRole="button"
-        accessibilityLabel="뒤로가기"
+        accessibilityLabel={v_8d41d7('common.back')}
       >
         <Feather name="arrow-left" size={20} color={v_1bfbd0.primary} />
       </TouchableOpacity>
     );
-  }, [v_bea0eb, v_f442f6, v_e2510f]);
+  }, [v_bea0eb, v_f442f6, v_e2510f, v_8d41d7]);
 
   const v_c7e6a0 = v_a3453e.useMemo(() => {
     if (v_de8f73) {
@@ -86,12 +88,12 @@ const Header: v_a3453e.FC<HeaderProps> = ({
         style={v_d81136.closeButton}
         activeOpacity={0.85}
         accessibilityRole="button"
-        accessibilityLabel="닫기"
+        accessibilityLabel={v_8d41d7('common.close')}
       >
         <Feather name="x" size={20} color={v_1bfbd0.secondaryText} />
       </TouchableOpacity>
     );
-  }, [v_de8f73, v_a80b4a, v_16994b]);
+  }, [v_de8f73, v_a80b4a, v_16994b, v_8d41d7]);
 
   return (
     <View style={[v_d81136.container, v_4affe9]}>
