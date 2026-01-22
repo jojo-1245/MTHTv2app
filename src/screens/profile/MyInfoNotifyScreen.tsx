@@ -98,17 +98,6 @@ const v_9c28a5 = (v_8d41d7): NotificationItem[] => [
   },
   {
     board: 1,
-    type: 9302, 
-    title: v_8d41d7('my_info_notify.sample_event_title'),
-    contents: v_8d41d7('my_info_notify.sample_event_content'),
-    datetime: '2024-09-27T02:16:00',
-    image: null,
-    guid: 'https://xrun.run',
-    datebegin: '2024-09-27',
-    dateends: '2024-10-28',
-  },
-  {
-    board: 2,
     type: 9303, 
     title: v_8d41d7('my_info_notify.sample_user_message_title'),
     contents: null,
@@ -315,9 +304,16 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           <Text style={v_d81136.avatarText}>METAHINT</Text>
         </View>
         <View style={v_d81136.messageCard}>
-          {
-
-}
+          {v_ee89db && (
+            <Image source={{ uri: v_ee89db }} style={v_d81136.heroImage} resizeMode="cover" />
+          )}
+          {v_dfa14b && (
+            <Image
+              source={require('../../../assets/images/thumb_event.png')}
+              style={v_d81136.heroImage}
+              resizeMode="cover"
+            />
+          )}
           <Text style={v_d81136.badge}>{v_b9faeb.title}</Text>
           {v_b9faeb.contents !== null && v_b9faeb.type !== 9303 && (
             <View>
@@ -337,7 +333,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                 <TouchableOpacity
                   style={[v_d81136.ctaButton, v_d81136.ctaButtonWithMargin]}
                   onPress={async () => {
-                    const v_f71b56 = `https://service-mh.example.invalid`;
+                    const v_f71b56 = `https://oth-path-51a04e.example.invalid/oth-path?id=${v_b9faeb.board}`;
                     v_f2c756.openURL(v_f71b56).catch(() => {
                       v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('my_info_notify.link_error'));
                     });
