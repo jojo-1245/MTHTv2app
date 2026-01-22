@@ -1256,9 +1256,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <Ionicons name="checkmark-circle" size={28} color="#4CAF50" />
                         <Text style={v_d81136.resultMainTitle}>{v_8d41d7('skin.result.title')}</Text>
                     </View>
-                    <Text style={v_d81136.resultSubtitle}>
-                        {v_8d41d7('skin.result.mode_info', { mode: v_e521b9.mode.toUpperCase(), count: v_17b30f.length })}
-                    </Text>
+                    {
+
+}
                 </View>
 
                 {}
