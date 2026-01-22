@@ -70,7 +70,12 @@ const v_333679 = (v_cd1446): Promise<{ width: number; height: number }> =>
 const v_62eb5a = (v_b24339): string => {
 
     if (v_b24339.startsWith('hd_')) {
-        return v_b24339.substring(3);
+        const v_7ddf7c = v_b24339.substring(3);
+
+        if (v_7ddf7c === 'dark_circle') {
+            return 'dark_circle_v2';
+        }
+        return v_7ddf7c;
     }
     return v_b24339;
 };
@@ -254,7 +259,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_07cd8d, v_ff4473] = v_5ab095<FaceValidation | null>(null);
     const [v_bbcab1, v_7db762] = v_5ab095(false);
 
-    const [v_52f1d1, v_ee0f9a] = v_5ab095<AnalysisMode>('sd');
+    const [v_52f1d1, v_ee0f9a] = v_5ab095<AnalysisMode>('hd');
     const [v_76def3, v_bfbe67] = v_5ab095<Set<string>>(new Set());
 
     const [v_d02050, v_0942aa] = v_5ab095(false);
@@ -694,7 +699,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         v_639227('capture');
         v_60b86c(null);
         v_ff4473(null);
-        v_ee0f9a('sd');
+        v_ee0f9a('hd');
         v_bfbe67(new Set());
         v_6f6f79(null);
         v_5c59f6('');
@@ -1097,55 +1102,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 )}
 
                 {}
-                <View style={v_d81136.modeSection}>
-                    <View style={v_d81136.sectionTitleRow}>
-                        <Ionicons name="options-outline" size={18} color={v_1bfbd0.text} />
-                        <Text style={v_d81136.sectionTitle}>{v_8d41d7('skin.settings.mode_title')}</Text>
-                    </View>
-                    <View style={v_d81136.modeButtons}>
-                        <TouchableOpacity
-                            style={[
-                                v_d81136.modeButton,
-                                v_52f1d1 === 'sd' && v_d81136.modeButtonActive,
-                            ]}
-                            onPress={() => {
-                                v_ee0f9a('sd');
-                                v_bfbe67(new Set(v_6c3b8b(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key)));
-                            }}
-                        >
-                            <Text style={[
-                                v_d81136.modeButtonTitle,
-                                v_52f1d1 === 'sd' && v_d81136.modeButtonTitleActive,
-                            ]}>SD</Text>
-                            <Text style={[
-                                v_d81136.modeButtonDesc,
-                                v_52f1d1 === 'sd' && v_d81136.modeButtonDescActive,
-                            ]}>표준 화질</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[
-                                v_d81136.modeButton,
-                                v_52f1d1 === 'hd' && v_d81136.modeButtonActive,
-                            ]}
-                            onPress={() => {
-                                v_ee0f9a('hd');
-                                v_bfbe67(new Set(v_e803bf(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key)));
-                            }}
-                        >
-                            <Text style={[
-                                v_d81136.modeButtonTitle,
-                                v_52f1d1 === 'hd' && v_d81136.modeButtonTitleActive,
-                            ]}>HD</Text>
-                            <Text style={[
-                                v_d81136.modeButtonDesc,
-                                v_52f1d1 === 'hd' && v_d81136.modeButtonDescActive,
-                            ]}>고화질</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {}
                 <View style={v_d81136.concernsSection}>
                     <View style={v_d81136.concernsHeader}>
                         <Text style={v_d81136.sectionTitle}>🔍 {v_8d41d7('skin.settings.concern_title')}</Text>
@@ -1537,6 +1493,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             {v_8d41d7('skin.result.analysis_date', { date: new Date(v_e521b9.timestamp).toLocaleString('ko-KR') })}
                         </Text>
                     </View>
+                    <View style={v_d81136.analysisInfoRow}>
+                        <Ionicons name="analytics-outline" size={16} color={v_1bfbd0.secondaryText} />
+                        <Text style={v_d81136.analysisInfoText}>
+                            Task ID: {v_e521b9.taskId?.slice(0, 20)}...
+                        </Text>
+                    </View>
                 </View>
 
                 {}
@@ -1546,7 +1508,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 }
                     <PrimaryButton
                         title={v_8d41d7('skin.result.btn_new')}
-                        onPress={v_a2f2ec}
+                        onPress={() => v_c65f5d.navigate('MetaHome')}
                         fullWidth
                         style={{ marginTop: v_9b1a04.medium }}
                     />

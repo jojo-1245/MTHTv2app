@@ -167,7 +167,8 @@
         "clause_desc": "List of terms",
         "faq": "FAQ",
         "faq_desc": "Frequently Asked Questions",
-        "logout": "Logout"
+        "logout": "Logout",
+        "referral": "Referral"
     },
     "skin": {
         "products": {
@@ -276,22 +277,6 @@
             "btn_new": "Start New Analysis",
             "error_no_result": "Could not load results",
             "btn_retry": "Retry"
-        },
-        "concerns": {
-            "acne": "Acne",
-            "dark_circle_v2": "Dark Circles",
-            "droopy_lower_eyelid": "Droopy Lower Eyelid",
-            "droopy_upper_eyelid": "Droopy Upper Eyelid",
-            "eye_bag": "Eye Bags",
-            "firmness": "Firmness",
-            "moisture": "Moisture",
-            "oiliness": "Oiliness",
-            "pore": "Pores",
-            "radiance": "Radiance",
-            "redness": "Redness",
-            "age_spot": "Age Spots",
-            "texture": "Texture",
-            "wrinkle": "Wrinkles"
         },
         "skin_analysis": {
             "errors": {

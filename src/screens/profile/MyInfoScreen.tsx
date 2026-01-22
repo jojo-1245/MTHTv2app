@@ -24,13 +24,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       route: 'MyInfoEmailAuth' as const, 
     },
     {
-      id: 'settings',
-      title: v_8d41d7('profile.settings'),
-      description: v_8d41d7('profile.settings_desc'),
-      iconName: 'cog' as const,
-      route: 'MyInfoSettings' as const,
-    },
-    {
       id: 'notify',
       title: v_8d41d7('profile.notify'),
       description: v_8d41d7('profile.notify_desc'),
@@ -51,6 +44,13 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       iconName: 'help-circle' as const,
       route: 'MyInfoFaq' as const,
     },
+    {
+      id: 'settings',
+      title: v_8d41d7('profile.settings'),
+      description: v_8d41d7('profile.settings_desc'),
+      iconName: 'cog' as const,
+      route: 'MyInfoSettings' as const,
+    },
   ];
 
   return (
@@ -65,7 +65,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
             onPress={() => v_9b57fc('ReferralShare')}
             activeOpacity={0.7}
           >
-            <Ionicons name="share-social-outline" size={24} color={v_1bfbd0.text} />
+            <View style={v_d81136.shareButtonContent}>
+              <Ionicons name="share-social-outline" size={24} color={v_1bfbd0.text} />
+              <Text style={v_d81136.shareButtonText}>{v_8d41d7('profile.referral')}</Text>
+            </View>
           </TouchableOpacity>
         }
       />
@@ -158,10 +161,18 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
   },
   shareButton: {
-    width: 44,
-    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  shareButtonContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  shareButtonText: {
+    fontSize: 12,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
   },
 });
 
