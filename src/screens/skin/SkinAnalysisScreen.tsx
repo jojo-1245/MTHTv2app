@@ -25,6 +25,7 @@ import * as v_8682f1 from 'xfwnoqvryfjuilcdia';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
+import v_8c5b32 from 'quibwhxmgaihxjwrkkiuwoxpqb';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_37c282 = v_0d9f50 - 80; 
@@ -135,6 +136,7 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['moisture', 'hd_moisture'],
+        image: require('../../../assets/images/product/yucod_01.png'),
     },
     {
         id: '2',
@@ -144,6 +146,7 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['pore', 'oiliness', 'hd_pore', 'hd_oiliness'],
+        image: require('../../../assets/images/product/yucod_02.png'),
     },
     {
         id: '3',
@@ -153,6 +156,7 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['redness', 'acne', 'hd_redness', 'hd_acne'],
+        image: require('../../../assets/images/product/yucod_03.png'),
     },
     {
         id: '4',
@@ -162,6 +166,7 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['radiance', 'age_spot', 'hd_radiance', 'hd_age_spot'],
+        image: require('../../../assets/images/product/yucod_04.png'),
     },
     {
         id: '5',
@@ -171,6 +176,7 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['wrinkle', 'firmness', 'hd_wrinkle', 'hd_firmness'],
+        image: require('../../../assets/images/product/yucod_05.png'),
     },
     {
         id: '6',
@@ -180,7 +186,9 @@ const v_a8db3e = [
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['pore', 'firmness', 'hd_pore', 'hd_firmness', 'droopy_upper_eyelid', 'droopy_lower_eyelid', 'hd_droopy_upper_eyelid', 'hd_droopy_lower_eyelid'],
+        image: require('../../../assets/images/product/yucod_06.png'),
     },
+
 ];
 
 const v_638095 = {
@@ -259,6 +267,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_c5caed, v_e2f548] = v_5ab095(false);
 
     const [v_6e882f, v_6e04f8] = v_5ab095(0);
+
+    const [v_c813f5, v_0d73a9] = v_5ab095<{ image: any; name: string } | null>(null);
 
     v_c4deb2(() => {
         if (v_bf6a8c) {
@@ -717,7 +727,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             !v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
         );
 
-        return [...v_6fc8e3, ...v_8b7534];
+        const v_383efc = [...v_6fc8e3, ...v_8b7534];
+
+        return v_383efc.sort((v_779914, v_148ff6) => Number(v_779914.id) - Number(v_148ff6.id));
     }, []);
 
     const v_4f73b9 = v_de06a3((v_01bee9) => {
@@ -1365,13 +1377,34 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                                 activeOpacity={0.9}
                                             >
                                                 {}
-                                                <View style={v_d81136.productImageArea}>
+                                                <Pressable
+                                                    style={v_d81136.productImageArea}
+                                                    onPress={(v_9e86fd) => {
+                                                        v_9e86fd.stopPropagation();
+                                                    }}
+                                                >
                                                     <Image
-                                                        source={require('../../../assets/images/product_01.png')}
+                                                        source={v_01bee9.image}
                                                         style={v_d81136.productImage}
                                                         resizeMode="contain"
                                                     />
-                                                </View>
+                                                    {}
+                                                    <TouchableOpacity
+                                                        style={v_d81136.productImageZoomButton}
+                                                        onPress={(v_9e86fd) => {
+                                                            v_9e86fd.stopPropagation();
+                                                            v_0d73a9({
+                                                                image: v_01bee9.image,
+                                                                name: v_01bee9.name,
+                                                            });
+                                                        }}
+                                                        accessibilityRole="button"
+                                                        accessibilityLabel="이미지 확대"
+                                                        accessibilityHint="탭하면 이미지를 크게 볼 수 있습니다"
+                                                    >
+                                                        <Ionicons name="expand-outline" size={20} color="#FFFFFF" />
+                                                    </TouchableOpacity>
+                                                </Pressable>
 
                                                 {}
                                                 <View style={v_d81136.productInfoArea}>
@@ -1571,6 +1604,38 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     </Pressable>
                 </Pressable>
             </Modal>
+
+            {}
+            {v_c813f5 && (
+                <ImageViewing
+                    images={[{ uri: v_cf9c33.resolveAssetSource(v_c813f5.image).uri }]}
+                    imageIndex={0}
+                    visible={v_c813f5 !== null}
+                    onRequestClose={() => v_0d73a9(null)}
+                    presentationStyle="overFullScreen"
+                    doubleTapToZoomEnabled={true}
+                    swipeToCloseEnabled={true}
+                    HeaderComponent={({ imageIndex: v_c3488c }) => (
+                        <View style={v_d81136.productImageModalHeader}>
+                            <TouchableOpacity
+                                style={v_d81136.productImageModalCloseButton}
+                                onPress={() => v_0d73a9(null)}
+                                accessibilityRole="button"
+                                accessibilityLabel="이미지 확대 모달 닫기"
+                            >
+                                <Ionicons name="close" size={28} color="#FFFFFF" />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    FooterComponent={({ imageIndex: v_c3488c }) => (
+                        <View style={v_d81136.productImageModalFooter}>
+                            <Text style={v_d81136.productImageModalName}>
+                                {v_c813f5.name}
+                            </Text>
+                        </View>
+                    )}
+                />
+            )}
         </>
     );
 };
@@ -2601,10 +2666,22 @@ const v_d81136 = v_472849.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: v_9b1a04.small,
+        position: 'relative',
     },
     productImage: {
         width: '100%',
         height: '100%',
+    },
+    productImageZoomButton: {
+        position: 'absolute',
+        bottom: v_9b1a04.small,
+        right: v_9b1a04.small,
+        width: 32,
+        height: 32,
+        borderRadius: 4,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     productInfoArea: {
         padding: v_9b1a04.large,
@@ -2739,6 +2816,74 @@ const v_d81136 = v_472849.create({
         fontSize: v_ef658a.large,
         fontFamily: v_843035.semibold,
         color: v_1bfbd0.bluePrimary,
+    },
+
+    productImageModalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    productImageModalContent: {
+        width: '90%',
+        maxWidth: 600,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+    },
+    productImageModalHeader: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        paddingTop: 50,
+        paddingHorizontal: 20,
+        zIndex: 10,
+        alignItems: 'flex-end',
+    },
+    productImageModalFooter: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingBottom: 50,
+        paddingHorizontal: 20,
+        zIndex: 10,
+        alignItems: 'center',
+    },
+    productImageModalCloseButton: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    productImageModalScrollView: {
+        width: '100%',
+        height: v_28d8d8 * 0.7,
+        maxHeight: 600,
+    },
+    productImageModalScrollContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: '100%',
+        minHeight: v_28d8d8 * 0.7,
+    },
+    productImageModalImage: {
+        width: v_0d9f50 * 0.9,
+        maxWidth: 600,
+        height: v_28d8d8 * 0.7,
+        maxHeight: 600,
+    },
+    productImageModalName: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.semibold,
+        color: '#FFFFFF',
+        marginTop: v_9b1a04.large,
+        textAlign: 'center',
+        paddingBottom: v_9b1a04.medium,
     },
 });
 
