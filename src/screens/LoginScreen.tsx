@@ -23,6 +23,7 @@ import {
   v_e775af,
 } from '../components';
 import type { v_8ad91b } from '../navigation';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_67ec53, v_d41982 } from '../services';
 
 const v_186735 = require('../../assets/images/symbol.png');
@@ -31,6 +32,7 @@ const v_b48f8e = require('../../assets/images/logo.png');
 type Props = v_432191<v_8ad91b, 'Login'>;
 
 const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_2129ec, v_874dfe] = v_5ab095(true);
@@ -129,8 +131,8 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             <View style={v_d81136.form}>
               <TextField
-                label="Email address"
-                placeholder="Your email"
+                label={v_8d41d7('login.email_label')}
+                placeholder={v_8d41d7('login.email_placeholder')}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={v_e0c7e8}
@@ -138,14 +140,14 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 editable={!v_cd31a8}
               />
               <PasswordField
-                label="Password"
-                placeholder="Password"
+                label={v_8d41d7('login.password_label')}
+                placeholder={v_8d41d7('login.password_placeholder')}
                 value={v_adc076}
                 onChangeText={v_52b279}
                 editable={!v_cd31a8}
               />
               <FormCheckbox
-                label="로그인 상태 유지"
+                label={v_8d41d7('login.keep_logged_in')}
                 value={v_2129ec}
                 onChange={v_874dfe}
               />
@@ -153,11 +155,11 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 style={v_d81136.linkButton}
                 onPress={() => v_c65f5d.navigate('ForgotPassword')}
               >
-                <Text style={v_d81136.linkText}>Forgot password?</Text>
+                <Text style={v_d81136.linkText}>{v_8d41d7('login.forgot_password')}</Text>
               </TouchableOpacity>
               <View style={v_d81136.buttonWrapper}>
                 <PrimaryButton
-                  title={v_cd31a8 ? '로그인 중...' : '로그인'}
+                  title={v_cd31a8 ? v_8d41d7('login.logging_in') : v_8d41d7('common.login')}
                   onPress={v_ec4736}
                   disabled={v_cd31a8}
                 />

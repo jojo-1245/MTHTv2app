@@ -26,6 +26,7 @@ import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_8c5b32 from 'quibwhxmgaihxjwrkkiuwoxpqb';
+import { v_772971 } from 'jmpfvteuuztnp';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_37c282 = v_0d9f50 - 80; 
@@ -50,70 +51,51 @@ interface FaceValidation {
     faceCount: number;
 }
 
-const SKIN_CONCERNS_SD: { key: v_ee7be6; label: string }[] = [
-    { key: 'acne', label: '여드름' },
-    { key: 'dark_circle_v2', label: '다크서클' },
-    { key: 'droopy_lower_eyelid', label: '처진 아랫눈꺼풀' },
-    { key: 'droopy_upper_eyelid', label: '처진 윗눈꺼풀' },
-    { key: 'eye_bag', label: '눈밑지방' },
-    { key: 'firmness', label: '탄력' },
-    { key: 'moisture', label: '수분' },
-    { key: 'oiliness', label: '유분' },
-    { key: 'pore', label: '모공' },
-    { key: 'radiance', label: '광채' },
-    { key: 'redness', label: '홍조' },
-    { key: 'age_spot', label: '기미/잡티' },
-    { key: 'texture', label: '피부결' },
-    { key: 'wrinkle', label: '주름' },
+const v_62eb5a = (v_b24339): string => {
+
+    if (v_b24339.startsWith('hd_')) {
+        return v_b24339.substring(3);
+    }
+    return v_b24339;
+};
+
+const v_6c3b8b = (v_8d41d7): { key: v_ee7be6; label: string }[] => [
+    { key: 'acne', label: v_8d41d7('skin.concerns.acne') },
+    { key: 'dark_circle_v2', label: v_8d41d7('skin.concerns.dark_circle_v2') },
+    { key: 'droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
+    { key: 'droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
+    { key: 'eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
+    { key: 'firmness', label: v_8d41d7('skin.concerns.firmness') },
+    { key: 'moisture', label: v_8d41d7('skin.concerns.moisture') },
+    { key: 'oiliness', label: v_8d41d7('skin.concerns.oiliness') },
+    { key: 'pore', label: v_8d41d7('skin.concerns.pore') },
+    { key: 'radiance', label: v_8d41d7('skin.concerns.radiance') },
+    { key: 'redness', label: v_8d41d7('skin.concerns.redness') },
+    { key: 'age_spot', label: v_8d41d7('skin.concerns.age_spot') },
+    { key: 'texture', label: v_8d41d7('skin.concerns.texture') },
+    { key: 'wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
 ];
 
-const SKIN_CONCERNS_HD: { key: v_38cf4d; label: string }[] = [
-    { key: 'hd_acne', label: '여드름' },
-    { key: 'hd_dark_circle', label: '다크서클' },
-    { key: 'hd_droopy_lower_eyelid', label: '처진 아랫눈꺼풀' },
-    { key: 'hd_droopy_upper_eyelid', label: '처진 윗눈꺼풀' },
-    { key: 'hd_eye_bag', label: '눈밑지방' },
-    { key: 'hd_firmness', label: '탄력' },
-    { key: 'hd_moisture', label: '수분' },
-    { key: 'hd_oiliness', label: '유분' },
-    { key: 'hd_pore', label: '모공' },
-    { key: 'hd_radiance', label: '광채' },
-    { key: 'hd_redness', label: '홍조' },
-    { key: 'hd_age_spot', label: '기미/잡티' },
-    { key: 'hd_texture', label: '피부결' },
-    { key: 'hd_wrinkle', label: '주름' },
+const v_e803bf = (v_8d41d7): { key: v_38cf4d; label: string }[] => [
+    { key: 'hd_acne', label: v_8d41d7('skin.concerns.acne') },
+    { key: 'hd_dark_circle', label: v_8d41d7('skin.concerns.dark_circle_v2') },
+    { key: 'hd_droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
+    { key: 'hd_droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
+    { key: 'hd_eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
+    { key: 'hd_firmness', label: v_8d41d7('skin.concerns.firmness') },
+    { key: 'hd_moisture', label: v_8d41d7('skin.concerns.moisture') },
+    { key: 'hd_oiliness', label: v_8d41d7('skin.concerns.oiliness') },
+    { key: 'hd_pore', label: v_8d41d7('skin.concerns.pore') },
+    { key: 'hd_radiance', label: v_8d41d7('skin.concerns.radiance') },
+    { key: 'hd_redness', label: v_8d41d7('skin.concerns.redness') },
+    { key: 'hd_age_spot', label: v_8d41d7('skin.concerns.age_spot') },
+    { key: 'hd_texture', label: v_8d41d7('skin.concerns.texture') },
+    { key: 'hd_wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
 ];
 
-const v_f68226 = {
-    acne: '여드름',
-    dark_circle_v2: '다크서클',
-    droopy_lower_eyelid: '처진 아랫눈꺼풀',
-    droopy_upper_eyelid: '처진 윗눈꺼풀',
-    eye_bag: '눈밑지방',
-    firmness: '탄력',
-    moisture: '수분',
-    oiliness: '유분',
-    pore: '모공',
-    radiance: '광채',
-    redness: '홍조',
-    age_spot: '기미/잡티',
-    texture: '피부결',
-    wrinkle: '주름',
-
-    hd_acne: '여드름',
-    hd_dark_circle: '다크서클',
-    hd_droopy_lower_eyelid: '처진 아랫눈꺼풀',
-    hd_droopy_upper_eyelid: '처진 윗눈꺼풀',
-    hd_eye_bag: '눈밑지방',
-    hd_firmness: '탄력',
-    hd_moisture: '수분',
-    hd_oiliness: '유분',
-    hd_pore: '모공',
-    hd_radiance: '광채',
-    hd_redness: '홍조',
-    hd_age_spot: '기미/잡티',
-    hd_texture: '피부결',
-    hd_wrinkle: '주름',
+const v_9b034b = (v_b24339, v_8d41d7): string => {
+    const v_73543d = v_62eb5a(v_b24339);
+    return v_8d41d7(`skin.concerns.${v_73543d}`) || v_b24339;
 };
 
 interface RecommendedProduct {
@@ -127,12 +109,12 @@ interface RecommendedProduct {
     image?: any;
 }
 
-const v_a8db3e = [
+const v_01283e = (v_8d41d7): RecommendedProduct[] => [
     {
         id: '1',
         brand: 'YUCOD',
         name: 'Hydro-Ceramide Serum',
-        description: '건성피부 & 극강보습',
+        description: v_8d41d7('skin.products.product_1_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['moisture', 'hd_moisture'],
@@ -142,7 +124,7 @@ const v_a8db3e = [
         id: '2',
         brand: 'YUCOD',
         name: 'Sebum & Pore Control Serum',
-        description: '복합성 피부를 위한 유수분 밸런싱 세럼',
+        description: v_8d41d7('skin.products.product_2_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['pore', 'oiliness', 'hd_pore', 'hd_oiliness'],
@@ -152,7 +134,7 @@ const v_a8db3e = [
         id: '3',
         brand: 'YUCOD',
         name: 'Calming Relief Serum',
-        description: '민감성 피부를 위한 집중 진정세럼',
+        description: v_8d41d7('skin.products.product_3_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['redness', 'acne', 'hd_redness', 'hd_acne'],
@@ -162,7 +144,7 @@ const v_a8db3e = [
         id: '4',
         brand: 'YUCOD',
         name: 'Luminous Tone-Up Serum',
-        description: '칙칙한 피부를 위한 미백 & 광채 세럼',
+        description: v_8d41d7('skin.products.product_4_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['radiance', 'age_spot', 'hd_radiance', 'hd_age_spot'],
@@ -172,7 +154,7 @@ const v_a8db3e = [
         id: '5',
         brand: 'YUCOD',
         name: 'Ageless Firming Serum',
-        description: '주름 개선 & 탄력강화를 위한 안티에이징 세럼',
+        description: v_8d41d7('skin.products.product_5_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['wrinkle', 'firmness', 'hd_wrinkle', 'hd_firmness'],
@@ -182,13 +164,12 @@ const v_a8db3e = [
         id: '6',
         brand: 'YUCOD',
         name: 'Pore Refine & Lift Serum',
-        description: '모공케어 & 탄력 강화 세럼',
+        description: v_8d41d7('skin.products.product_6_description'),
         price: '100',
         currency: 'MTHT',
         targetConcerns: ['pore', 'firmness', 'hd_pore', 'hd_firmness', 'droopy_upper_eyelid', 'droopy_lower_eyelid', 'hd_droopy_upper_eyelid', 'hd_droopy_lower_eyelid'],
         image: require('../../../assets/images/product/yucod_06.png'),
     },
-
 ];
 
 const v_638095 = {
@@ -244,6 +225,7 @@ const v_3e09cd = {
 };
 
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+    const { t: v_8d41d7 } = v_772971();
     const v_bf6a8c = v_c7daf6.params?.previewResult;
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
@@ -317,9 +299,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             console.error('[FaceDetector] 얼굴 인식 오류:', v_5e9bfe);
 
             v_03e392.alert(
-                '얼굴 인식 실패',
-                '얼굴을 인식할 수 없습니다. 다시 촬영해주세요.',
-                [{ text: '확인' }]
+                v_8d41d7('skin.alerts.permission_required'),
+                v_8d41d7('skin.alerts.analysis_error'),
+                [{ text: v_8d41d7('common.confirm') }]
             );
             return { hasFace: false, isFrontal: false, faceCount: 0 };
         }
@@ -331,13 +313,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             if (v_04e790 === 'camera') {
                 const { status: v_d308b5 } = await v_d05ab5.requestCameraPermissionsAsync();
                 if (v_d308b5 !== 'granted') {
-                    v_03e392.alert('권한 필요', '카메라 권한이 필요합니다.');
+                    v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.camera_permission'));
                     return;
                 }
             } else {
                 const { status: v_d308b5 } = await v_d05ab5.requestMediaLibraryPermissionsAsync();
                 if (v_d308b5 !== 'granted') {
-                    v_03e392.alert('권한 필요', '갤러리 접근 권한이 필요합니다.');
+                    v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.gallery_permission'));
                     return;
                 }
             }
@@ -376,7 +358,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } catch (v_5e9bfe) {
             console.error('이미지 선택 오류:', v_5e9bfe);
             v_7db762(false);
-            v_03e392.alert('오류', '이미지를 선택하는 중 오류가 발생했습니다.');
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
         }
     }, [v_52f1d1, v_c00289]);
 
@@ -388,7 +370,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         if (!v_d1a6bb?.granted) {
             const v_43c42e = await v_1e66f0();
             if (!v_43c42e.granted) {
-                v_03e392.alert('권한 필요', '카메라 사용 권한이 필요합니다.');
+                v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.camera_permission'));
                 return;
             }
         }
@@ -486,7 +468,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             }
         } catch (v_5e9bfe) {
             console.error('사진 촬영 오류:', v_5e9bfe);
-            v_03e392.alert('오류', '사진을 촬영하는 중 오류가 발생했습니다.');
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
             v_7db762(false);
         } finally {
             v_968808(false);
@@ -510,58 +492,58 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, []);
 
     const v_f02aac = v_de06a3(() => {
-        const v_44eb1a = v_52f1d1 === 'hd' ? v_7ca9bb : v_ecaa99;
+        const v_44eb1a = v_52f1d1 === 'hd' ? v_e803bf(v_8d41d7) : v_6c3b8b(v_8d41d7);
         if (v_76def3.size === v_44eb1a.length) {
             v_bfbe67(new Set());
         } else {
             v_bfbe67(new Set(v_44eb1a.map(v_3f4e2e => v_3f4e2e.key)));
         }
-    }, [v_52f1d1, v_76def3.size]);
+    }, [v_52f1d1, v_76def3.size, v_8d41d7]);
 
     const v_fefb99 = v_de06a3(() => {
         if (!v_82f4af) {
-            v_03e392.alert('알림', '먼저 사진을 촬영해주세요.');
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_capture_required'));
             return;
         }
 
         if (!v_07cd8d?.hasFace) {
             v_03e392.alert(
-                '얼굴 인식 실패',
-                '얼굴이 인식되지 않았습니다.\n가이드에 맞춰 다시 촬영해주세요.',
-                [{ text: '확인' }]
+                v_8d41d7('skin.capture.not_detected'),
+                v_8d41d7('skin.capture.warning_no_face'),
+                [{ text: v_8d41d7('common.confirm') }]
             );
             return;
         }
 
         if (!v_07cd8d?.isFrontal) {
             v_03e392.alert(
-                '정면이 아닙니다',
-                '정확한 분석을 위해 정면을 바라보고 다시 촬영해주세요.',
-                [{ text: '확인' }]
+                v_8d41d7('skin.capture.not_frontal'),
+                v_8d41d7('skin.capture.warning_not_frontal'),
+                [{ text: v_8d41d7('common.confirm') }]
             );
             return;
         }
 
-        const v_44eb1a = v_52f1d1 === 'hd' ? v_7ca9bb : v_ecaa99;
+        const v_44eb1a = v_52f1d1 === 'hd' ? v_e803bf(v_8d41d7) : v_6c3b8b(v_8d41d7);
         v_bfbe67(new Set(v_44eb1a.map(v_3f4e2e => v_3f4e2e.key)));
         v_639227('settings');
-    }, [v_82f4af, v_07cd8d, v_52f1d1]);
+    }, [v_82f4af, v_07cd8d, v_52f1d1, v_8d41d7]);
 
     const v_34776f = v_de06a3(async () => {
         if (!v_82f4af) {
-            v_03e392.alert('알림', '먼저 이미지를 선택해주세요.');
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_image_required'));
             return;
         }
 
         if (v_76def3.size === 0) {
-            v_03e392.alert('알림', '최소 1개 이상의 분석 항목을 선택해주세요.');
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.error_no_selection'));
             return;
         }
 
         if (!v_6bbbb9.hasApiKey()) {
             v_03e392.alert(
-                'API 키 필요',
-                'YouCam API 키가 설정되지 않았습니다. 환경 변수를 확인해주세요.',
+                v_8d41d7('common.error'),
+                v_8d41d7('skin.alerts.api_key_error'),
             );
             return;
         }
@@ -569,7 +551,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         try {
             v_639227('analyzing');
             v_0942aa(true);
-            v_e61e4f('이미지 준비 중...');
+            v_e61e4f(v_8d41d7('skin.analyzing.preparing'));
             v_5c59f6('');
             v_6f6f79(null);
 
@@ -582,11 +564,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 { compress: 0.9, format: v_3c288d.SaveFormat.JPEG },
             );
 
-            v_e61e4f('이미지 업로드 중...');
+            v_e61e4f(v_8d41d7('skin.settings.uploading_image'));
 
             const v_5b9682 = await v_f38d26.getInfoAsync(v_30be54.uri);
             if (!v_5b9682.exists) {
-                throw new Error('이미지 파일을 찾을 수 없습니다.');
+                throw new Error(v_8d41d7('skin.alerts.file_not_found'));
             }
 
             const v_a7bd9e = `skin_analysis_${v_52f1d1}_${Date.now()}.jpg`;
@@ -594,16 +576,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
             console.log(`[Analysis] 파일 크기: ${(v_349aae / 1024 / 1024).toFixed(2)}MB`);
 
-            const v_6535ab = await v_6bbbb9.createFile(v_a7bd9e, v_349aae, 'image/jpeg');
+            const v_6535ab = await v_6bbbb9.createFile(v_a7bd9e, v_349aae, 'image/jpeg', v_8d41d7);
 
             if (v_6535ab.data.files.length === 0) {
-                throw new Error('파일 생성에 실패했습니다.');
+                throw new Error(v_8d41d7('skin.alerts.file_create_error'));
             }
 
             const v_206b93 = v_6535ab.data.files[0];
             const v_e8f579 = v_206b93.requests[0];
 
-            v_e61e4f('파일 업로드 중...');
+            v_e61e4f(v_8d41d7('skin.analyzing.uploading'));
             const v_aea053 = await v_f38d26.uploadAsync(
                 v_e8f579.url,
                 v_30be54.uri,
@@ -617,10 +599,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
 
             if (v_aea053.status < 200 || v_aea053.status >= 300) {
-                throw new Error(`파일 업로드 실패: ${v_aea053.status}`)
+                throw new Error(v_8d41d7('skin.alerts.upload_error', { status: v_aea053.status }));
             }
 
-            v_e61e4f('피부 분석 요청 중...');
+            v_e61e4f(v_8d41d7('skin.analyzing.requesting'));
             const v_3e850e = Array.from(v_76def3) as v_146928[];
 
             const v_927f76 = await v_6bbbb9.runSkinAnalysis({
@@ -637,8 +619,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 60,
                 2000,
                 (v_bc21cd, v_3d627c) => {
-                    v_e61e4f(`분석 중... (${v_bc21cd}/${v_3d627c})`);
+                    v_e61e4f(v_8d41d7('skin.analyzing.polling', { attempt: v_bc21cd, max: v_3d627c }));
                 },
+                v_8d41d7,
             );
 
             v_6f6f79({
@@ -655,7 +638,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_5c59f6(
                 v_5e9bfe instanceof Error
                     ? v_5e9bfe.message
-                    : '분석 중 오류가 발생했습니다.'
+                    : v_8d41d7('skin.alerts.analysis_error')
             );
             v_639227('settings');
         } finally {
@@ -676,7 +659,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const v_8d018e = v_de06a3(async () => {
         if (!v_e521b9) {
-            v_03e392.alert('알림', '저장할 분석 결과가 없습니다.');
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
             return;
         }
 
@@ -697,16 +680,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 await v_cc38b7.shareAsync(v_a00264, {
                     mimeType: 'application/json',
-                    dialogTitle: '피부 분석 결과 저장',
+                    dialogTitle: v_8d41d7('skin.settings.alert_save_dialog_title'),
                     UTI: 'public.json',
                 });
-                v_03e392.alert('완료', '파일이 저장/공유되었습니다.');
+                v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_save_success'));
             } else {
-                v_03e392.alert('알림', `파일이 저장되었습니다.\n경로: ${v_a00264}`);
+                v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_save_success_path', { path: v_a00264 }));
             }
         } catch (v_5e9bfe) {
             console.error('파일 저장 오류:', v_5e9bfe);
-            v_03e392.alert('오류', '파일 저장 중 오류가 발생했습니다.');
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
         }
     }, [v_e521b9]);
 
@@ -716,42 +699,43 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         v_6e04f8(v_a56041);
     }, []);
 
-    const v_01283e = v_de06a3((v_5f1433) => {
+    const v_744c99 = v_de06a3((v_5f1433) => {
         const v_459f64 = v_5f1433.map(v_3f4e2e => v_3f4e2e.type);
+        const v_383efc = v_01283e(v_8d41d7);
 
-        const v_6fc8e3 = v_a8db3e.filter(v_01bee9 =>
+        const v_6fc8e3 = v_383efc.filter(v_01bee9 =>
             v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
         );
 
-        const v_8b7534 = v_a8db3e.filter(v_01bee9 =>
+        const v_8b7534 = v_383efc.filter(v_01bee9 =>
             !v_01bee9.targetConcerns.some(v_ccf527 => v_459f64.includes(v_ccf527))
         );
 
-        const v_383efc = [...v_6fc8e3, ...v_8b7534];
+        const v_828c3d = [...v_6fc8e3, ...v_8b7534];
 
-        return v_383efc.sort((v_779914, v_148ff6) => Number(v_779914.id) - Number(v_148ff6.id));
-    }, []);
+        return v_828c3d.sort((v_779914, v_148ff6) => Number(v_779914.id) - Number(v_148ff6.id));
+    }, [v_8d41d7]);
 
     const v_4f73b9 = v_de06a3((v_01bee9) => {
         v_03e392.alert(
-            '상품 보기',
-            `${v_01bee9.brand}\n${v_01bee9.name}\n\n상품 상세 페이지로 이동합니다.`
+            v_8d41d7('skin.result.view_product'),
+            `${v_01bee9.brand}\n${v_01bee9.name}`
         );
     }, []);
 
     const v_3274ee = v_de06a3(async () => {
         if (!v_e521b9) {
-            v_03e392.alert('알림', '복사할 분석 결과가 없습니다.');
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_copy'));
             return;
         }
 
         try {
             const v_10f84e = JSON.stringify(v_e521b9, null, 2);
             await v_fba5a0.setStringAsync(v_10f84e);
-            v_03e392.alert('완료', 'JSON 결과가 클립보드에 복사되었습니다.');
+            v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_copy_success'));
         } catch (v_5e9bfe) {
             console.error('클립보드 복사 오류:', v_5e9bfe);
-            v_03e392.alert('오류', '클립보드 복사 중 오류가 발생했습니다.');
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
         }
     }, [v_e521b9]);
 
@@ -791,7 +775,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                             {}
                             <Text style={v_d81136.cameraGuideText}>
-                                얼굴과 어깨를 맞춰주세요
+                                {v_8d41d7('skin.capture.subtitle')}
                             </Text>
                         </View>
 
@@ -808,7 +792,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     {}
                     <View style={v_d81136.cameraHintContainer}>
                         <Text style={v_d81136.cameraHintText}>
-                            정면을 바라보고 촬영 버튼을 눌러주세요
+                            {v_8d41d7('skin.capture.subtitle')}
                         </Text>
                     </View>
 
@@ -850,11 +834,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         <>
             {}
             <View style={v_d81136.infoSection}>
-                <Text style={v_d81136.stepIndicator}>STEP 1</Text>
-                <Text style={v_d81136.title}>얼굴 촬영</Text>
+                <Text style={v_d81136.stepIndicator}>{v_8d41d7('skin.step_prefix')} 1</Text>
+                <Text style={v_d81136.title}>{v_8d41d7('skin.capture.title')}</Text>
                 <Text style={v_d81136.subtitle}>
-                    가이드에 맞춰 정면 얼굴을 촬영해주세요.{'\n'}
-                    얼굴과 어깨가 함께 보여야 합니다.
+                    {v_8d41d7('skin.capture.subtitle')}
                 </Text>
             </View>
 
@@ -895,10 +878,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <Ionicons name="camera-outline" size={32} color={v_1bfbd0.bluePrimary} />
                             </View>
                             <Text style={v_d81136.uploadText}>
-                                얼굴 사진 촬영
+                                {v_8d41d7('skin.capture.placeholder_title')}
                             </Text>
                             <Text style={v_d81136.uploadHint}>
-                                탭하여 카메라 또는 갤러리에서 선택
+                                {v_8d41d7('skin.capture.placeholder_subtitle')}
                             </Text>
                         </View>
 
@@ -908,7 +891,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 {v_bbcab1 && (
                     <View style={v_d81136.validatingOverlay}>
                         <ActivityIndicator size="large" color={v_1bfbd0.background} />
-                        <Text style={v_d81136.validatingText}>얼굴 인식 중...</Text>
+                        <Text style={v_d81136.validatingText}>{v_8d41d7('skin.capture.validating')}</Text>
                     </View>
                 )}
             </TouchableOpacity>
@@ -918,7 +901,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.validationSection}>
                     <View style={v_d81136.sectionTitleRow}>
                         <Ionicons name="clipboard-outline" size={18} color={v_1bfbd0.text} />
-                        <Text style={v_d81136.validationTitle}>사진 검증 결과</Text>
+                        <Text style={v_d81136.validationTitle}>{v_8d41d7('skin.capture.validation_result')}</Text>
                     </View>
 
                     <View style={v_d81136.validationItem}>
@@ -929,14 +912,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <Ionicons name="close-circle" size={24} color="#F44336" />
                             )}
                         </View>
-                        <Text style={v_d81136.validationLabel}>얼굴 인식</Text>
+                        <Text style={v_d81136.validationLabel}>{v_8d41d7('skin.capture.face_detection')}</Text>
                         <Text style={[
                             v_d81136.validationStatus,
                             { color: v_07cd8d.hasFace ? '#4CAF50' : '#F44336' }
                         ]}>
                             {v_07cd8d.hasFace
-                                ? `인식됨 (${v_07cd8d.faceCount}명)`
-                                : '인식 실패'}
+                                ? v_8d41d7('skin.capture.detected', { count: v_07cd8d.faceCount })
+                                : v_8d41d7('skin.capture.not_detected')}
                         </Text>
                     </View>
 
@@ -948,14 +931,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <Ionicons name="warning" size={24} color="#FF9800" />
                             )}
                         </View>
-                        <Text style={v_d81136.validationLabel}>정면 촬영</Text>
+                        <Text style={v_d81136.validationLabel}>{v_8d41d7('skin.capture.frontal_shot')}</Text>
                         <Text style={[
                             v_d81136.validationStatus,
                             { color: v_07cd8d.isFrontal ? '#4CAF50' : '#FF9800' }
                         ]}>
                             {v_07cd8d.isFrontal
-                                ? '정면'
-                                : '정면이 아닐 수 있음'}
+                                ? v_8d41d7('skin.capture.frontal')
+                                : v_8d41d7('skin.capture.not_frontal')}
                         </Text>
                     </View>
                 </View>
@@ -965,13 +948,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             <View style={v_d81136.guideSection}>
                 <View style={v_d81136.sectionTitleRow}>
                     <Ionicons name="camera-outline" size={18} color={v_1bfbd0.text} />
-                    <Text style={v_d81136.guideTitle}>촬영 가이드</Text>
+                    <Text style={v_d81136.guideTitle}>{v_8d41d7('skin.capture.guide_title')}</Text>
                 </View>
                 <View style={v_d81136.guideList}>
-                    <Text style={v_d81136.guideItem}>• 가이드라인 안에 얼굴과 어깨를 맞춰주세요</Text>
-                    <Text style={v_d81136.guideItem}>• 정면을 바라보고 촬영해주세요</Text>
-                    <Text style={v_d81136.guideItem}>• 밝은 조명에서 촬영하면 정확도가 높아져요</Text>
-                    <Text style={v_d81136.guideItem}>• 머리카락이 얼굴을 가리지 않게 해주세요</Text>
+                    <Text style={v_d81136.guideItem}>• {v_8d41d7('skin.capture.guide_1')}</Text>
+                    <Text style={v_d81136.guideItem}>• {v_8d41d7('skin.capture.guide_2')}</Text>
+                    <Text style={v_d81136.guideItem}>• {v_8d41d7('skin.capture.guide_3')}</Text>
+                    <Text style={v_d81136.guideItem}>• {v_8d41d7('skin.capture.guide_4')}</Text>
                 </View>
             </View>
 
@@ -981,8 +964,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <Ionicons name="warning" size={20} color="#F57C00" />
                     <Text style={v_d81136.validationWarningText}>
                         {!v_07cd8d.hasFace
-                            ? '얼굴이 인식되지 않았습니다. 다시 촬영해주세요.'
-                            : '정면이 아닙니다. 정면을 바라보고 다시 촬영해주세요.'}
+                            ? v_8d41d7('skin.capture.warning_no_face')
+                            : v_8d41d7('skin.capture.warning_not_frontal')}
                     </Text>
                 </View>
             )}
@@ -992,12 +975,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <PrimaryButton
                     title={
                         !v_82f4af
-                            ? "사진을 촬영해주세요"
+                            ? v_8d41d7('skin.capture.btn_capture')
                             : !v_07cd8d?.hasFace
-                                ? "얼굴 인식 필요"
+                                ? v_8d41d7('skin.capture.btn_detect_need')
                                 : !v_07cd8d?.isFrontal
-                                    ? "정면 촬영 필요"
-                                    : "다음 단계로"
+                                    ? v_8d41d7('skin.capture.btn_frontal_need')
+                                    : v_8d41d7('skin.capture.btn_next')
                     }
                     onPress={v_fefb99}
                     disabled={!v_82f4af || !v_07cd8d?.hasFace || !v_07cd8d?.isFrontal}
@@ -1013,14 +996,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     }}
                 >
                     <Ionicons name="eye-outline" size={16} color={v_1bfbd0.bluePrimary} />
-                    <Text style={v_d81136.previewButtonText}>결과 화면 미리보기 (개발용)</Text>
+                    <Text style={v_d81136.previewButtonText}>{v_8d41d7('skin.capture.preview_mode')}</Text>
                 </TouchableOpacity>
             </View>
         </>
     );
 
     const v_a5ba83 = () => {
-        const v_44eb1a = v_52f1d1 === 'hd' ? v_7ca9bb : v_ecaa99;
+        const v_44eb1a = v_52f1d1 === 'hd' ? v_e803bf(v_8d41d7) : v_6c3b8b(v_8d41d7);
         const v_5476b4 = v_76def3.size === v_44eb1a.length;
 
         return (
@@ -1034,20 +1017,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             resizeMode="cover"
                         />
                         <View style={v_d81136.previewInfo}>
-                            <Text style={v_d81136.previewTitle}>촬영된 사진</Text>
+                            <Text style={v_d81136.previewTitle}>{v_8d41d7('skin.settings.captured_photo')}</Text>
                             {v_07cd8d && (
                                 <View style={v_d81136.previewBadges}>
                                     <View style={[v_d81136.badge, { backgroundColor: '#E8F5E9' }]}>
                                         <Ionicons name="checkmark" size={14} color="#4CAF50" />
                                         <Text style={[v_d81136.badgeText, { color: '#4CAF50' }]}>
-                                            얼굴 인식
+                                            {v_8d41d7('skin.capture.face_detection')}
                                         </Text>
                                     </View>
                                     {v_07cd8d.isFrontal && (
                                         <View style={[v_d81136.badge, { backgroundColor: '#E3F2FD' }]}>
                                             <Ionicons name="checkmark" size={14} color="#2196F3" />
                                             <Text style={[v_d81136.badgeText, { color: '#2196F3' }]}>
-                                                정면
+                                                {v_8d41d7('skin.capture.frontal')}
                                             </Text>
                                         </View>
                                     )}
@@ -1061,7 +1044,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.modeSection}>
                     <View style={v_d81136.sectionTitleRow}>
                         <Ionicons name="options-outline" size={18} color={v_1bfbd0.text} />
-                        <Text style={v_d81136.sectionTitle}>분석 모드 선택</Text>
+                        <Text style={v_d81136.sectionTitle}>{v_8d41d7('skin.settings.mode_title')}</Text>
                     </View>
                     <View style={v_d81136.modeButtons}>
                         <TouchableOpacity
@@ -1071,7 +1054,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             ]}
                             onPress={() => {
                                 v_ee0f9a('sd');
-                                v_bfbe67(new Set(v_ecaa99.map(v_3f4e2e => v_3f4e2e.key)));
+                                v_bfbe67(new Set(v_6c3b8b(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key)));
                             }}
                         >
                             <Text style={[
@@ -1091,7 +1074,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             ]}
                             onPress={() => {
                                 v_ee0f9a('hd');
-                                v_bfbe67(new Set(v_7ca9bb.map(v_3f4e2e => v_3f4e2e.key)));
+                                v_bfbe67(new Set(v_e803bf(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key)));
                             }}
                         >
                             <Text style={[
@@ -1109,16 +1092,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 {}
                 <View style={v_d81136.concernsSection}>
                     <View style={v_d81136.concernsHeader}>
-                        <Text style={v_d81136.sectionTitle}>🔍 분석 항목 선택</Text>
+                        <Text style={v_d81136.sectionTitle}>🔍 {v_8d41d7('skin.settings.concern_title')}</Text>
                         <TouchableOpacity onPress={v_f02aac}>
                             <Text style={v_d81136.selectAllText}>
-                                {v_5476b4 ? '전체 해제' : '전체 선택'}
+                                {v_5476b4 ? v_8d41d7('skin.settings.deselect_all') : v_8d41d7('skin.settings.select_all')}
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     <Text style={v_d81136.concernsSubtitle}>
-                        {v_76def3.size}개 항목 선택됨
+                        {v_8d41d7('skin.settings.selected_count', { count: v_76def3.size })}
                     </Text>
 
                     <View style={v_d81136.concernsGrid}>
@@ -1165,12 +1148,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.buttonSection}>
                     <View style={v_d81136.buttonRow}>
                         <SecondaryButton
-                            title="이전"
+                            title={v_8d41d7('common.back')}
                             onPress={() => v_639227('capture')}
                             style={{ flex: 1, marginRight: 8 }}
                         />
                         <PrimaryButton
-                            title="분석 시작"
+                            title={v_8d41d7('skin.settings.btn_start')}
                             onPress={v_34776f}
                             disabled={v_76def3.size === 0}
                             style={{ flex: 2 }}
@@ -1184,10 +1167,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_5f339d = () => (
         <View style={v_d81136.analyzingContainer}>
             <ActivityIndicator size="large" color={v_1bfbd0.bluePrimary} />
-            <Text style={v_d81136.analyzingTitle}>피부 분석 중...</Text>
+            <Text style={v_d81136.analyzingTitle}>{v_8d41d7('skin.analyzing.title')}</Text>
             <Text style={v_d81136.analyzingText}>{v_d5fcde}</Text>
             <Text style={v_d81136.analyzingHint}>
-                분석에는 약 30초~1분 정도 소요됩니다.
+                {v_8d41d7('skin.analyzing.hint')}
             </Text>
         </View>
     );
@@ -1209,7 +1192,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_17b30f.push({
                     type: v_8c0b26.type,
                     score: v_8c0b26.ui_score,
-                    label: v_f68226[v_8c0b26.type] || v_8c0b26.type,
+                    label: v_9b034b(v_8c0b26.type, v_8d41d7),
                 });
             }
         });
@@ -1217,16 +1200,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
 
         return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
-    }, [v_e521b9]);
+    }, [v_e521b9, v_8d41d7]);
 
     const v_4d19dd = (v_740dd8): string => {
-        if (v_740dd8 >= 95) return '최상';
-        if (v_740dd8 >= 90) return '우수';
-        if (v_740dd8 >= 85) return '양호';
-        if (v_740dd8 >= 80) return '보통';
-        if (v_740dd8 >= 70) return '주의';
-        if (v_740dd8 >= 60) return '관리 필요';
-        return '집중 관리';
+        if (v_740dd8 >= 95) return v_8d41d7('skin.result.grade.excellent');
+        if (v_740dd8 >= 90) return v_8d41d7('skin.result.grade.great');
+        if (v_740dd8 >= 85) return v_8d41d7('skin.result.grade.good');
+        if (v_740dd8 >= 80) return v_8d41d7('skin.result.grade.normal');
+        if (v_740dd8 >= 70) return v_8d41d7('skin.result.grade.caution');
+        if (v_740dd8 >= 60) return v_8d41d7('skin.result.grade.needs_care');
+        return v_8d41d7('skin.result.grade.intensive_care');
     };
 
     const v_4ff022 = () => {
@@ -1236,9 +1219,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             return (
                 <View style={v_d81136.analyzingContainer}>
                     <Ionicons name="warning" size={48} color={v_1bfbd0.error} />
-                    <Text style={v_d81136.analyzingTitle}>결과를 불러올 수 없습니다</Text>
+                    <Text style={v_d81136.analyzingTitle}>{v_8d41d7('skin.result.error_no_result')}</Text>
                     <PrimaryButton
-                        title="다시 시도"
+                        title={v_8d41d7('skin.result.btn_retry')}
                         onPress={v_a2f2ec}
                         style={{ marginTop: v_9b1a04.large }}
                     />
@@ -1259,10 +1242,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.resultHeaderSection}>
                     <View style={v_d81136.resultTitleRow}>
                         <Ionicons name="checkmark-circle" size={28} color="#4CAF50" />
-                        <Text style={v_d81136.resultMainTitle}>피부 분석 완료</Text>
+                        <Text style={v_d81136.resultMainTitle}>{v_8d41d7('skin.result.title')}</Text>
                     </View>
                     <Text style={v_d81136.resultSubtitle}>
-                        {v_e521b9.mode.toUpperCase()} 모드 • {v_17b30f.length}개 항목 분석
+                        {v_8d41d7('skin.result.mode_info', { mode: v_e521b9.mode.toUpperCase(), count: v_17b30f.length })}
                     </Text>
                 </View>
 
@@ -1281,7 +1264,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                     {}
                     <View style={v_d81136.overallScoreContent}>
-                        <Text style={v_d81136.overallScoreLabel}>종합 피부 점수</Text>
+                        <Text style={v_d81136.overallScoreLabel}>{v_8d41d7('skin.result.overall_score')}</Text>
                         <View style={v_d81136.overallScoreCircle}>
                             <View style={[
                                 v_d81136.overallScoreRing,
@@ -1290,7 +1273,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <Text style={[v_d81136.overallScoreNumber, { color: v_54d0c6 }]}>
                                     {v_adfd7c}
                                 </Text>
-                                <Text style={v_d81136.overallScoreUnit}>점</Text>
+                                <Text style={v_d81136.overallScoreUnit}>{v_8d41d7('skin.result.score_unit')}</Text>
                             </View>
                         </View>
                         <View style={[v_d81136.overallGradeBadge, { backgroundColor: v_54d0c6 + '20' }]}>
@@ -1307,7 +1290,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View style={v_d81136.highlightColumn}>
                         <View style={v_d81136.highlightHeader}>
                             <Ionicons name="trophy-outline" size={16} color="#2563EB" />
-                            <Text style={[v_d81136.highlightTitle, { color: '#2563EB' }]}>우수</Text>
+                            <Text style={[v_d81136.highlightTitle, { color: '#2563EB' }]}>{v_8d41d7('skin.result.excellent_items')}</Text>
                         </View>
                         <View style={v_d81136.highlightList}>
                             {v_b5b523.map((v_ccf527, v_a56041) => (
@@ -1327,7 +1310,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View style={v_d81136.highlightColumn}>
                         <View style={v_d81136.highlightHeader}>
                             <Ionicons name="alert-circle-outline" size={16} color="#DC2626" />
-                            <Text style={[v_d81136.highlightTitle, { color: '#DC2626' }]}>관리필요</Text>
+                            <Text style={[v_d81136.highlightTitle, { color: '#DC2626' }]}>{v_8d41d7('skin.result.care_items')}</Text>
                         </View>
                         <View style={v_d81136.highlightList}>
                             {v_5f1433.map((v_ccf527, v_a56041) => (
@@ -1343,16 +1326,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 {}
                 {(() => {
-                    const v_265b71 = v_01283e(v_5f1433);
+                    const v_265b71 = v_744c99(v_5f1433);
                     return (
                         <View style={v_d81136.recommendedSection}>
                             <View style={v_d81136.recommendedHeader}>
                                 <View style={v_d81136.recommendedTitleRow}>
                                     <Ionicons name="sparkles-outline" size={18} color="#D97706" />
-                                    <Text style={v_d81136.resultSectionTitle}>맞춤 추천 상품</Text>
+                                    <Text style={v_d81136.resultSectionTitle}>{v_8d41d7('skin.result.recommend_title')}</Text>
                                 </View>
                                 <Text style={v_d81136.recommendedSubtitle}>
-                                    관리 필요 항목에 맞는 제품을 추천해드려요
+                                    {v_8d41d7('skin.result.recommend_subtitle')}
                                 </Text>
                             </View>
 
@@ -1460,7 +1443,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.resultSection}>
                     <View style={v_d81136.resultSectionHeader}>
                         <Ionicons name="grid-outline" size={18} color={v_1bfbd0.bluePrimary} />
-                        <Text style={v_d81136.resultSectionTitle}>전체 분석 결과</Text>
+                        <Text style={v_d81136.resultSectionTitle}>{v_8d41d7('skin.result.all_results')}</Text>
                     </View>
                     <View style={v_d81136.compactGrid}>
                         {v_17b30f.map((v_ccf527) => {
@@ -1469,7 +1452,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <View key={v_ccf527.type} style={v_d81136.compactGridItem}>
                                     <View style={v_d81136.compactGridContent}>
                                         <Text style={v_d81136.compactGridLabel} numberOfLines={1}>
-                                            {v_ccf527.label}
+                                            {v_8d41d7('skin.concerns.' + v_ccf527.type.replace('hd_', ''))}
                                         </Text>
                                         <Text style={[v_d81136.compactGridScore, { color: v_5e5963 }]}>
                                             {v_ccf527.score}
@@ -1495,7 +1478,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View style={v_d81136.analysisInfoRow}>
                         <Ionicons name="time-outline" size={16} color={v_1bfbd0.secondaryText} />
                         <Text style={v_d81136.analysisInfoText}>
-                            분석 일시: {new Date(v_e521b9.timestamp).toLocaleString('ko-KR')}
+                            {v_8d41d7('skin.result.analysis_date', { date: new Date(v_e521b9.timestamp).toLocaleString('ko-KR') })}
                         </Text>
                     </View>
                     <View style={v_d81136.analysisInfoRow}>
@@ -1509,12 +1492,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 {}
                 <View style={v_d81136.buttonSection}>
                     <SecondaryButton
-                        title="결과 저장 (JSON)"
+                        title={v_8d41d7('skin.result.btn_save')}
                         onPress={v_8d018e}
                         fullWidth
                     />
                     <PrimaryButton
-                        title="새로운 분석 시작"
+                        title={v_8d41d7('skin.result.btn_new')}
                         onPress={v_a2f2ec}
                         fullWidth
                         style={{ marginTop: v_9b1a04.medium }}
@@ -1533,7 +1516,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             <StatusBar style="dark" />
             <SafeView style={v_d81136.screen}>
                 <Header
-                    title="피부분석"
+                    title={v_8d41d7('skin.title')}
                     showBackButton
                     onBackPress={() => {
                         if (v_91943c === 'capture') {
@@ -1572,9 +1555,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     onPress={() => v_e2f548(false)}
                 >
                     <Pressable style={v_d81136.imagePickerModalContent} onPress={() => { }}>
-                        <Text style={v_d81136.imagePickerModalTitle}>얼굴 촬영</Text>
+                        <Text style={v_d81136.imagePickerModalTitle}>{v_8d41d7('skin.modal.capture_title')}</Text>
                         <Text style={v_d81136.imagePickerModalSubtitle}>
-                            피부 분석을 위해 정면 얼굴 사진을 촬영해주세요.
+                            {v_8d41d7('skin.modal.capture_subtitle')}
                         </Text>
 
                         <View style={v_d81136.imagePickerModalButtons}>
@@ -1583,7 +1566,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 onPress={v_eb4a5e}
                             >
                                 <Ionicons name="camera-outline" size={24} color={v_1bfbd0.bluePrimary} />
-                                <Text style={v_d81136.imagePickerModalButtonText}>카메라</Text>
+                                <Text style={v_d81136.imagePickerModalButtonText}>{v_8d41d7('skin.modal.camera')}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
@@ -1591,7 +1574,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 onPress={v_5c14ac}
                             >
                                 <Ionicons name="images-outline" size={24} color={v_1bfbd0.bluePrimary} />
-                                <Text style={v_d81136.imagePickerModalButtonText}>갤러리</Text>
+                                <Text style={v_d81136.imagePickerModalButtonText}>{v_8d41d7('skin.modal.gallery')}</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -1599,7 +1582,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             style={v_d81136.imagePickerModalCancelButton}
                             onPress={() => v_e2f548(false)}
                         >
-                            <Text style={v_d81136.imagePickerModalCancelText}>취소</Text>
+                            <Text style={v_d81136.imagePickerModalCancelText}>{v_8d41d7('common.cancel')}</Text>
                         </TouchableOpacity>
                     </Pressable>
                 </Pressable>

@@ -10,6 +10,7 @@ import {
   v_7e4944,
   v_5e8657,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f, v_624bd2 } from '../../constants';
@@ -30,16 +31,18 @@ import { v_a0daa8 } from '../../navigation';
 
 type Props = v_432191<v_8ad91b, 'MyInfoEdit'>;
 
-const v_21bdd5 = [
-  { value: 'male', label: '남' },
-  { value: 'female', label: '여' },
-] as const;
+const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
+  const { t: v_8d41d7 } = v_772971();
+
+  const v_21bdd5 = [
+    { value: 'male', label: v_8d41d7('common.male') },
+    { value: 'female', label: v_8d41d7('common.female') },
+  ] as const;
 
 const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
 type GenderOption = (typeof v_21bdd5)[number];
 type AgeOption = (typeof v_0c96f7)[number];
 
-const v_064327 = '8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함';
 const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
 const v_b6e838 = /[^A-Za-z0-9~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
 
@@ -57,7 +60,6 @@ const v_3c3484 = (v_3b402b): boolean => {
   return v_b6e838.test(v_3b402b);
 };
 
-const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const {
     selectedCountryDialCode: v_459d5e,
@@ -145,7 +147,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     if (v_3b402b.length === 0) return null;
 
     if (v_3c3484(v_3b402b)) {
-      return '사용할 수 없는 특수문자가 포함되어 있습니다.';
+      return v_8d41d7('my_info_edit.password_invalid_char');
     }
 
     const v_9de4ac = [];
@@ -167,7 +169,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     }
 
     if (v_9de4ac.length > 0) {
-      return `${v_9de4ac.join(', ')}가 필요합니다.`;
+      return v_8d41d7('my_info_edit.password_requirements', { errors: v_9de4ac.join(', ') });
     }
     return null; 
   };
@@ -207,27 +209,27 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     const v_088b9e = v_9c3d15(v_d74a81);
 
     if (!v_affc3e) {
-      v_889fad('입력 오류', '이름을 입력해주세요.');
+      v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.name_required'));
       return;
     }
 
     if (!v_088b9e) {
-      v_889fad('입력 오류', '전화번호를 입력해주세요.');
+      v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.phone_required'));
       return;
     }
 
     if (v_590486 && !v_2f03bc) {
-      v_889fad('입력 오류', '지역을 선택해주세요.');
+      v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.region_required'));
       return;
     }
 
     if (v_adc076 && !v_857dfe(v_adc076)) {
-      v_889fad('입력 오류', v_064327);
+      v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('signup.password_rule'));
       return;
     }
 
     if (v_adc076 && v_adc076 !== v_0b3ebe) {
-      v_889fad('입력 오류', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.password_mismatch'));
       return;
     }
 
@@ -235,15 +237,15 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     try {
 
       await new Promise((v_6f7712) => setTimeout(v_6f7712, 1000));
-      v_889fad('수정 완료', '내 정보가 성공적으로 수정되었습니다.', () => {
+      v_889fad(v_8d41d7('common.success'), v_8d41d7('my_info_edit.errors.update_success'), () => {
         v_c7ac57();
       });
     } catch (v_5e9bfe) {
       const v_a8cd21 =
         v_5e9bfe instanceof Error
           ? v_5e9bfe.message
-          : '정보 수정 중 알 수 없는 오류가 발생했습니다.';
-      v_889fad('수정 실패', v_a8cd21);
+          : v_8d41d7('my_info_edit.errors.update_failed');
+      v_889fad(v_8d41d7('common.error'), v_a8cd21);
     } finally {
       v_e33ec0(false);
     }
@@ -253,7 +255,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     <>
 
       <View style={v_d81136.screen}>
-        <Header title="Edit My Info" showBackButton onBackPress={v_c7ac57} />
+        <Header title={v_8d41d7('my_info_edit.title')} showBackButton onBackPress={v_c7ac57} />
         <SafeScrollView
           contentContainerStyle={v_d81136.content}
           keyboardShouldPersistTaps="handled"
@@ -262,8 +264,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
         >
           <View style={v_d81136.form}>
             <TextField
-              label="이메일"
-              placeholder="oth-user@example.invalid"
+              label={v_8d41d7('my_info_edit.email_label')}
+              placeholder={v_8d41d7('my_info_email_auth.email_placeholder')}
               keyboardType="email-address"
               autoCapitalize="none"
               value={v_e0c7e8}
@@ -272,14 +274,14 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
               inputWrapperStyle={v_d81136.disabledInputWrapper}
             />
             <TextField
-              label="이름"
-              placeholder="이름을 입력하세요"
+              label={v_8d41d7('my_info_edit.name_label')}
+              placeholder={v_8d41d7('my_info_edit.name_placeholder')}
               value={v_1833e7}
               onChangeText={v_318f24}
               editable={!v_88dca2}
             />
             <TextField
-              label="Phone"
+              label={v_8d41d7('my_info_edit.phone_label')}
               placeholder="010-1010-1000"
               keyboardType="phone-pad"
               value={v_d74a81}
@@ -298,17 +300,17 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
               }
             />
             <SelectField
-              label="지역"
-              placeholder="지역을 선택하세요"
+              label={v_8d41d7('my_info_edit.region_label')}
+              placeholder={v_8d41d7('my_info_edit.region_placeholder')}
               value={v_56743f}
               onPress={v_b36a76}
               disabled={!v_590486 || v_88dca2}
             />
             {!v_590486 ? (
-              <Text style={v_d81136.regionHelper}>Global 지역이 자동으로 적용됩니다.</Text>
+              <Text style={v_d81136.regionHelper}>{v_8d41d7('my_info_edit.region_helper')}</Text>
             ) : null}
             <View>
-              <Text style={v_d81136.sectionLabel}>성별</Text>
+              <Text style={v_d81136.sectionLabel}>{v_8d41d7('my_info_edit.gender_label')}</Text>
               <View style={v_d81136.inlineOptions}>
                 {v_21bdd5.map((v_0bd920) => (
                   <OptionButton
@@ -321,7 +323,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
               </View>
             </View>
             <View>
-              <Text style={v_d81136.sectionLabel}>연령대</Text>
+              <Text style={v_d81136.sectionLabel}>{v_8d41d7('my_info_edit.age_label')}</Text>
               <View style={v_d81136.inlineOptions}>
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
@@ -335,30 +337,30 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
             </View>
             <View>
               <PasswordField
-                label="비밀번호 (변경 시에만 입력)"
-                placeholder="영문/숫자/특수문자 포함 8자 이상"
+                label={v_8d41d7('my_info_edit.password_label')}
+                placeholder={v_8d41d7('my_info_edit.password_placeholder')}
                 value={v_adc076}
                 onChangeText={v_57c91b}
                 editable={!v_88dca2}
               />
               {v_274f50 && (
                 <Text style={[v_d81136.validationText, v_6089b6 && !v_651247 ? v_d81136.validationSuccess : v_d81136.validationError]}>
-                  {v_c5377e(v_adc076) || '사용가능한 비밀번호입니다.'}
+                  {v_c5377e(v_adc076) || v_8d41d7('my_info_edit.password_available')}
                 </Text>
               )}
             </View>
             {v_adc076 ? (
               <View>
                 <PasswordField
-                  label="비밀번호 확인"
-                  placeholder="비밀번호를 다시 입력하세요"
+                  label={v_8d41d7('my_info_edit.password_confirm_label')}
+                  placeholder={v_8d41d7('my_info_edit.password_confirm_placeholder')}
                   value={v_0b3ebe}
                   onChangeText={v_dd9cbd}
                   editable={!v_88dca2}
                 />
                 {v_736a24 && (
                   <Text style={[v_d81136.validationText, v_e44a98 ? v_d81136.validationSuccess : v_d81136.validationError]}>
-                    {v_e44a98 ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.'}
+                    {v_e44a98 ? v_8d41d7('my_info_edit.password_match') : v_8d41d7('my_info_edit.password_not_match')}
                   </Text>
                 )}
               </View>
@@ -366,7 +368,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
 
             <View style={v_d81136.buttonWrapper}>
               <PrimaryButton
-                title={v_88dca2 ? '수정 중...' : '수정하기'}
+                title={v_88dca2 ? v_8d41d7('my_info_edit.updating') : v_8d41d7('my_info_edit.update_button')}
                 onPress={v_02f61c}
                 disabled={v_88dca2}
               />

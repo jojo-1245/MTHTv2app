@@ -32,10 +32,10 @@ interface HealthInfo {
   name: string;
 }
 
-const v_33dc2e = [
-  { id: '1', name: '할머니' },
-  { id: '2', name: '할아버지' },
-  { id: '3', name: '아버지' },
+const v_f7d55f = (v_8d41d7): HealthInfo[] => [
+  { id: '1', name: v_8d41d7('chat.family_members.grandma') },
+  { id: '2', name: v_8d41d7('chat.family_members.grandpa') },
+  { id: '3', name: v_8d41d7('chat.family_members.father') },
 ];
 
 type Props = v_432191<v_8ad91b, 'Chat'>;
@@ -59,59 +59,63 @@ interface ChatMessage {
   products?: Product[];
 }
 
-const v_426e67 = [
+const v_44ff40 = (v_8d41d7): Product[] => [
   {
     id: '1',
-    name: '종근당건강 아이커 칼슘업 플러스',
-    description: '성장기 어린이를 위한 프리미엄 영양제\n칼슘, 비타민D, 아연 함유',
+    name: v_8d41d7('chat.sample_products.product_1_name'),
+    description: v_8d41d7('chat.sample_products.product_1_description'),
     price: '39,900원',
     originalPrice: '49,900원',
     discount: '20%',
   },
   {
     id: '2',
-    name: '뉴트리원 키즈 그로우 칼슘',
-    description: '어린이 성장 발육에 필요한 칼슘\n비타민K, 마그네슘 함유',
+    name: v_8d41d7('chat.sample_products.product_2_name'),
+    description: v_8d41d7('chat.sample_products.product_2_description'),
     price: '32,000원',
     originalPrice: '40,000원',
     discount: '20%',
   },
   {
     id: '3',
-    name: '정관장 홍이장군 키즈',
-    description: '6년근 홍삼 농축액 함유\n면역력 & 성장 동시 케어',
+    name: v_8d41d7('chat.sample_products.product_3_name'),
+    description: v_8d41d7('chat.sample_products.product_3_description'),
     price: '58,000원',
     originalPrice: '65,000원',
     discount: '11%',
   },
   {
     id: '4',
-    name: '일동후디스 하이키드 플러스',
-    description: '성장기 필수 영양소 22종\n초유단백 & 칼슘 함유',
+    name: v_8d41d7('chat.sample_products.product_4_name'),
+    description: v_8d41d7('chat.sample_products.product_4_description'),
     price: '45,000원',
     originalPrice: '55,000원',
     discount: '18%',
   },
 ];
 
-const v_8387df = [
-  {
-    id: '1',
-    type: 'user',
-    text: '키가 크는약이 있나?',
-  },
-  {
-    id: '2',
-    type: 'ai',
-    text: '키크는약은 없지만 성장기 영양제를 추천해드릴게요!',
-    products: v_426e67,
-  },
-];
+import { v_772971 } from 'jmpfvteuuztnp';
 
 const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
   const v_e99f51 = v_e662ae<v_122070>(null);
+
+  const v_8387df = [
+    {
+      id: '1',
+      type: 'user',
+      text: v_8d41d7('chat.sample_messages.user_message'),
+    },
+    {
+      id: '2',
+      type: 'ai',
+      text: v_8d41d7('chat.sample_messages.ai_message'),
+      products: v_44ff40(v_8d41d7),
+    },
+  ];
+
   const [v_fa56e0, v_41d55d] = v_5ab095<ChatMessage[]>(v_8387df);
   const [v_a469c7, v_f32824] = v_5ab095('');
   const [v_3ba9c6, v_655a4e] = v_5ab095(false);
@@ -156,7 +160,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         v_9b57fc('Wallet');
         break;
       case 'shop':
-        v_03e392.alert('안내', 'Shop 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.shop_preparing'));
         break;
       case 'chat':
 
@@ -172,17 +176,17 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         break;
       case 'grandma':
       case 'grandpa':
-        v_03e392.alert('안내', '가족 프로필 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.family_preparing'));
         break;
       case 'history':
-        v_03e392.alert('안내', '검색 기록 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.history_preparing'));
         break;
       case 'myinfo':
         v_9b57fc('MyInfo');
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
-          v_03e392.alert('검색', v_8c0b26.label);
+          v_03e392.alert(v_8d41d7('common.notification'), v_8c0b26.label);
         }
         break;
     }
@@ -208,7 +212,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       const v_37c94a = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
-        text: '답변을 준비하고 있습니다...',
+        text: v_8d41d7('chat.ai_preparing'),
       };
       v_41d55d(v_ba2215 => [...v_ba2215, v_37c94a]);
 
@@ -219,7 +223,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   };
 
   const v_4f73b9 = (v_01bee9) => {
-    v_03e392.alert('상품 보기', `${v_01bee9.name}\n상품 상세 페이지로 이동합니다.`);
+    v_03e392.alert(v_8d41d7('chat.view_product'), `${v_01bee9.name}`);
   };
 
   const v_74f1f5 = () => {
@@ -278,7 +282,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             onPress={() => v_4f73b9(v_01bee9)}
             activeOpacity={0.8}
           >
-            <Text style={v_d81136.viewProductButtonText}>제품보러가기</Text>
+            <Text style={v_d81136.viewProductButtonText}>{v_8d41d7('chat.view_product')}</Text>
             <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
@@ -387,7 +391,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             <View style={[v_d81136.inputBar, v_3ba9c6 && v_d81136.inputBarFocused]}>
               <TextInput
                 style={v_d81136.textInput}
-                placeholder="건강정보를 검색하세요"
+                placeholder={v_8d41d7('chat.placeholder')}
                 placeholderTextColor="#999"
                 value={v_a469c7}
                 onChangeText={v_f32824}
@@ -432,7 +436,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
               <View style={v_d81136.extraRight}>
                 <TouchableOpacity
                   style={v_d81136.extraButton}
-                  onPress={() => v_03e392.alert('음성', '음성 입력 기능은 준비 중입니다.')}
+                  onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.voice_preparing'))}
                 >
                   <Ionicons name="mic-outline" size={24} color="#6B7280" />
                 </TouchableOpacity>
@@ -460,19 +464,19 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             }
           ]}>
             <View style={v_d81136.healthPanelHeader}>
-              <Text style={v_d81136.healthPanelTitle}>건강정보 불러오기</Text>
+              <Text style={v_d81136.healthPanelTitle}>{v_8d41d7('chat.health_info_title')}</Text>
               <TouchableOpacity onPress={() => {
                 v_aa40cb(false);
                 v_9b57fc('HealthConnection');
               }}>
-                <Text style={v_d81136.healthPanelLink}>건강정보 연결하기</Text>
+                <Text style={v_d81136.healthPanelLink}>{v_8d41d7('chat.health_info_connect')}</Text>
               </TouchableOpacity>
             </View>
             <ScrollView
               style={v_d81136.healthPanelList}
               showsVerticalScrollIndicator={false}
             >
-              {v_33dc2e.map((v_8c0b26) => (
+              {v_f7d55f(v_8d41d7).map((v_8c0b26) => (
                 <TouchableOpacity
                   key={v_8c0b26.id}
                   style={v_d81136.healthPanelItem}

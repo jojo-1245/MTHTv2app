@@ -15,6 +15,7 @@ import {
   v_03e392,
   v_122070,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
@@ -83,23 +84,23 @@ const v_23be95 = (v_b9c00c) => {
   return v_4d79ca;
 };
 
-const v_6f7f13 = [
+const v_9c28a5 = (v_8d41d7): NotificationItem[] => [
   {
     board: 0,
     type: 9304, 
-    title: '건강정보 불러오기를 요청하셨습니다.',
+    title: v_8d41d7('my_info_notify.sample_health_request_title'),
     contents: null,
     datetime: '2024-09-27T02:16:00',
     image: null,
     guid: null,
     requesterEmail: 'oth-staff@example.invalid',
-    requesterName: '신세경',
+    requesterName: v_8d41d7('my_info_notify.sample_requester_name'),
   },
   {
     board: 1,
     type: 9302, 
-    title: 'METAHINT EVENT',
-    contents: 'Play Beta version, explore and review, get 5000 MTHT',
+    title: v_8d41d7('my_info_notify.sample_event_title'),
+    contents: v_8d41d7('my_info_notify.sample_event_content'),
     datetime: '2024-09-27T02:16:00',
     image: null,
     guid: 'https://xrun.run',
@@ -109,7 +110,7 @@ const v_6f7f13 = [
   {
     board: 2,
     type: 9303, 
-    title: '메타힌트 이벤트에 대해 궁금합니다. 이벤트 기간이 언제까지 되나요? ',
+    title: v_8d41d7('my_info_notify.sample_user_message_title'),
     contents: null,
     datetime: '2024-09-28T02:20:00',
     image: null,
@@ -118,6 +119,7 @@ const v_6f7f13 = [
 ];
 
 const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
+  const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
   const [v_180423, v_8f2787] = v_5ab095('');
@@ -134,10 +136,10 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
   const v_496106 = v_de06a3(async () => {
     v_34a50a(true);
 
-    v_0965ee(v_6f7f13);
+    v_0965ee(v_9c28a5(v_8d41d7));
     v_34a50a(false);
     v_575aad(false);
-  }, []);
+  }, [v_8d41d7]);
 
   v_c4deb2(() => {
     v_d16a0d.current = true;
@@ -158,7 +160,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
   const v_465869 = async () => {
     if (!v_180423.trim()) {
-      v_03e392.alert('입력 필요', '메시지를 입력해주세요.');
+      v_03e392.alert(v_8d41d7('my_info_notify.input_required'), v_8d41d7('my_info_notify.input_required_message'));
       return;
     }
 
@@ -187,10 +189,10 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
   }, [v_496106]);
 
   const v_57fac2 = async (v_10046b) => {
-    v_03e392.alert('삭제 확인', '이 메시지를 삭제하시겠습니까?', [
-      { text: '취소', style: 'cancel' },
+    v_03e392.alert(v_8d41d7('my_info_notify.delete_confirm_title'), v_8d41d7('my_info_notify.delete_confirm_message'), [
+      { text: v_8d41d7('my_info_notify.delete_cancel'), style: 'cancel' },
       {
-        text: '삭제',
+        text: v_8d41d7('my_info_notify.delete_confirm'),
         style: 'destructive',
         onPress: () => {
 
@@ -205,7 +207,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
     if (v_f71b56.startsWith('http://') || v_f71b56.startsWith('https://')) {
       v_f2c756.openURL(v_f71b56).catch(() => {
-        v_03e392.alert('오류', '링크를 열 수 없습니다.');
+        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('my_info_notify.link_error'));
       });
     } else {
       console.log('[알림] 앱 내부 라우트:', v_f71b56);
@@ -214,20 +216,20 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
   const v_8b09cb = async (v_10046b, v_47ef8d) => {
     v_03e392.alert(
-      v_47ef8d ? '허용' : '거절',
+      v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow_title') : v_8d41d7('my_info_notify.health_request_reject_title'),
       v_47ef8d
-        ? '건강정보 불러오기 요청을 허용하시겠습니까?'
-        : '건강정보 불러오기 요청을 거절하시겠습니까?',
+        ? v_8d41d7('my_info_notify.health_request_allow_message')
+        : v_8d41d7('my_info_notify.health_request_reject_message'),
       [
-        { text: '취소', style: 'cancel' },
+        { text: v_8d41d7('common.cancel'), style: 'cancel' },
         {
-          text: v_47ef8d ? '허용' : '거절',
+          text: v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow') : v_8d41d7('my_info_notify.health_request_reject'),
           onPress: () => {
 
             if (v_47ef8d) {
-              v_03e392.alert('완료', '건강정보 불러오기 요청을 허용했습니다.');
+              v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_allowed'));
             } else {
-              v_03e392.alert('완료', '건강정보 불러오기 요청을 거절했습니다.');
+              v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_rejected'));
             }
 
             v_0965ee(v_b9c00c.filter((v_f4e98d) => v_f4e98d.board !== v_10046b));
@@ -259,9 +261,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           </View>
           <View style={v_d81136.messageCard}>
             <Text style={v_d81136.healthRequestText}>
-              {v_b9faeb.requesterEmail} 님이{'\n'}
-              {v_b9faeb.requesterName}님이{'\n'}
-              건강정보 불러오기를 요청하셨습니다.
+              {v_8d41d7('my_info_notify.health_request_text', { email: v_b9faeb.requesterEmail, name: v_b9faeb.requesterName })}
             </Text>
             <View style={v_d81136.healthRequestButtons}>
               <TouchableOpacity
@@ -269,14 +269,14 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                 onPress={() => v_8b09cb(v_b9faeb.board, true)}
                 activeOpacity={0.85}
               >
-                <Text style={v_d81136.healthRequestButtonText}>허용</Text>
+                <Text style={v_d81136.healthRequestButtonText}>{v_8d41d7('my_info_notify.health_request_allow')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={v_d81136.healthRequestButtonReject}
                 onPress={() => v_8b09cb(v_b9faeb.board, false)}
                 activeOpacity={0.85}
               >
-                <Text style={v_d81136.healthRequestButtonTextReject}>거절</Text>
+                <Text style={v_d81136.healthRequestButtonTextReject}>{v_8d41d7('my_info_notify.health_request_reject')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -341,18 +341,18 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                 </Text>
               )}
               {v_d37866 && (
-                <TouchableOpacity
-                  style={[v_d81136.ctaButton, v_d81136.ctaButtonWithMargin]}
-                  onPress={async () => {
-                    const v_f71b56 = `https://oth-path-51a04e.example.invalid/oth-path?id=${v_b9faeb.board}`;
-                    v_f2c756.openURL(v_f71b56).catch(() => {
-                      v_03e392.alert('오류', '링크를 열 수 없습니다.');
-                    });
-                  }}
-                  activeOpacity={0.85}
-                >
-                  <Text style={v_d81136.ctaText}>자세히 보기</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[v_d81136.ctaButton, v_d81136.ctaButtonWithMargin]}
+                    onPress={async () => {
+                      const v_f71b56 = `https://oth-path-51a04e.example.invalid/oth-path?id=${v_b9faeb.board}`;
+                      v_f2c756.openURL(v_f71b56).catch(() => {
+                        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('my_info_notify.link_error'));
+                      });
+                    }}
+                    activeOpacity={0.85}
+                  >
+                    <Text style={v_d81136.ctaText}>{v_8d41d7('my_info_notify.view_detail')}</Text>
+                  </TouchableOpacity>
               )}
               {v_fc7457 && v_b9faeb.guid !== '' && v_b9faeb.guid !== null && (
                 <TouchableOpacity
@@ -360,7 +360,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                   onPress={() => v_0a2feb(v_b9faeb.guid)}
                   activeOpacity={0.85}
                 >
-                  <Text style={v_d81136.ctaText}>Take Closer Look</Text>
+                  <Text style={v_d81136.ctaText}>{v_8d41d7('my_info_notify.take_closer_look')}</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -424,7 +424,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
       <View style={v_d81136.container}>
         <StatusBar style="dark" />
         <Header
-          title="Notify"
+          title={v_8d41d7('my_info_notify.title')}
           onBackPress={v_c7ac57}
           showBackButton
         />
@@ -448,7 +448,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           >
             {v_b9c00c.length === 0 && !v_683210 ? (
               <View style={v_d81136.emptyContainer}>
-                <Text style={v_d81136.emptyText}>알림이 없습니다.</Text>
+                <Text style={v_d81136.emptyText}>{v_8d41d7('my_info_notify.empty')}</Text>
               </View>
             ) : (
               v_718f6b()
@@ -467,7 +467,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           <View style={v_d81136.inputWrapper}>
             <TextInput
               style={v_d81136.input}
-              placeholder="메시지를 입력하세요"
+              placeholder={v_8d41d7('my_info_notify.message_placeholder')}
               placeholderTextColor={v_1bfbd0.placeholder}
               value={v_180423}
               onChangeText={v_8f2787}
@@ -483,7 +483,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
             {v_5e23ec ? (
               <ActivityIndicator size="small" color="#fff" />
             ) : (
-              <Text style={v_d81136.sendButtonText}>전송</Text>
+              <Text style={v_d81136.sendButtonText}>{v_8d41d7('my_info_notify.send_button')}</Text>
             )}
           </TouchableOpacity>
         </View>

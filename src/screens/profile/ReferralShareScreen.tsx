@@ -9,6 +9,7 @@ import {
     v_cf9c33,
     v_7618c3,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
@@ -48,6 +49,7 @@ const v_d1ffaa = {
 };
 
 const ReferralShareScreen: v_a3453e.FC<Props> = () => {
+    const { t: v_8d41d7 } = v_772971();
     const { goBack: v_c7ac57 } = v_a0daa8();
 
     const [v_7be0c6] = v_5ab095<GradeType>('gold'); 
@@ -56,29 +58,29 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
     const v_3ed1e9 = '2023. 02. 02';
 
     const v_f9dce7 = v_d1ffaa[v_7be0c6];
-    const v_b32f09 = v_7be0c6 === 'gold' ? '골드' : '실버';
+    const v_b32f09 = v_7be0c6 === 'gold' ? v_8d41d7('referral_share.grade_gold') : v_8d41d7('referral_share.grade_silver');
     const v_8faf23 = v_7be0c6 === 'gold' ? 'G' : 'S';
 
     const v_682edd = async () => {
         await v_fba5a0.setStringAsync(v_92b6a6);
-        v_03e392.alert('복사 완료', 'PIN 코드가 클립보드에 복사되었습니다.');
+        v_03e392.alert(v_8d41d7('referral_share.copy_success_title'), v_8d41d7('referral_share.copy_success_message'));
     };
 
     const v_316053 = async () => {
         try {
             await v_5f4661.share({
-                message: `HiNT 파트너가 되어보세요! 추천 코드: ${v_92b6a6}`,
-                title: 'HiNT 파트너 추천',
+                message: v_8d41d7('referral_share.share_message', { code: v_92b6a6 }),
+                title: v_8d41d7('referral_share.share_title'),
             });
         } catch (v_5e9bfe) {
-            v_03e392.alert('오류', '공유에 실패했습니다.');
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('referral_share.share_error'));
         }
     };
 
     return (
         <SafeView style={v_d81136.container}>
             <Header
-                title="레퍼럴 공유"
+                title={v_8d41d7('referral_share.title')}
                 showBackButton
                 onBackPress={v_c7ac57}
             />
@@ -91,8 +93,8 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
             >
                 {}
                 <View style={v_d81136.congratsSection}>
-                    <Text style={v_d81136.congratsTitle}>METAHiNT 파트너가</Text>
-                    <Text style={v_d81136.congratsTitle}>되신 것을 축하드립니다!</Text>
+                    <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_1')}</Text>
+                    <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_2')}</Text>
                 </View>
 
                 {}
@@ -142,7 +144,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
                 {}
                 <View style={v_d81136.pinDisplayContainer}>
                     <View style={v_d81136.pinDisplay}>
-                        <Text style={v_d81136.pinLabel}>PIN NO.</Text>
+                        <Text style={v_d81136.pinLabel}>{v_8d41d7('referral_share.pin_label')}</Text>
                         <Text style={v_d81136.pinValue}>{v_92b6a6}</Text>
                     </View>
                     <TouchableOpacity
@@ -150,7 +152,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
                         onPress={v_682edd}
                         activeOpacity={0.7}
                     >
-                        <Text style={[v_d81136.copyButtonText, { color: v_f9dce7.primary }]}>코드복사</Text>
+                        <Text style={[v_d81136.copyButtonText, { color: v_f9dce7.primary }]}>{v_8d41d7('referral_share.copy_button')}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -160,7 +162,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
                     onPress={v_316053}
                     activeOpacity={0.8}
                 >
-                    <Text style={v_d81136.kakaoButtonText}>카카오톡 공유하기</Text>
+                    <Text style={v_d81136.kakaoButtonText}>{v_8d41d7('referral_share.kakao_share_button')}</Text>
                 </TouchableOpacity>
             </View>
         </SafeView>

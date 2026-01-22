@@ -1,5 +1,6 @@
 import v_a3453e, { v_5ab095 } from 'bapkr';
 import { v_472849, v_3094a2, v_19b633 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04, v_34d45f } from '../../constants';
 import { v_729608, v_cb41de, v_570c34, v_e775af } from '../../components';
@@ -9,6 +10,7 @@ import { v_a0daa8 } from '../../navigation';
 type Props = v_432191<v_8ad91b, 'MyInfoEmailAuth'>;
 
 const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
+  const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_a71df8, v_b876f0] = v_5ab095(false);
@@ -39,13 +41,13 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
 
   return (
     <View style={v_d81136.container}>
-      <Header title="본인 인증" showBackButton onBackPress={v_c7ac57} />
+      <Header title={v_8d41d7('my_info_email_auth.title')} showBackButton onBackPress={v_c7ac57} />
       <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
         <View style={v_d81136.form}>
           <View style={v_d81136.inputContainer}>
             <TextField
-              label="이메일"
-              placeholder="oth-user@example.invalid"
+              label={v_8d41d7('my_info_email_auth.email_label')}
+              placeholder={v_8d41d7('my_info_email_auth.email_placeholder')}
               keyboardType="email-address"
               autoCapitalize="none"
               value={v_e0c7e8}
@@ -58,12 +60,12 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
                   v_a71df8 ? v_d81136.validationSuccess : v_d81136.validationError,
                 ]}
               >
-                {v_a71df8 ? '사용가능한 이메일 입니다.' : '올바른 이메일 형식이 아닙니다.'}
+                {v_a71df8 ? v_8d41d7('my_info_email_auth.email_valid') : v_8d41d7('my_info_email_auth.email_invalid')}
               </Text>
             )}
           </View>
           <PrimaryButton
-            title="인증 코드 전송"
+            title={v_8d41d7('my_info_email_auth.send_code_button')}
             onPress={v_2de427}
             disabled={!v_a71df8}
             style={!v_a71df8 && v_d81136.buttonDisabled}

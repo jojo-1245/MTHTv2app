@@ -13,10 +13,12 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_202d44, v_369014 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import type { v_da1883 } from '../types';
 import { v_700ef9 } from '../context';
+import { v_772971 } from 'jmpfvteuuztnp';
 
 type Props = v_432191<v_8ad91b, 'CountrySelect'>;
 
 const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const {
     selectedCountryDialCode: v_459d5e,
     setSelectedCountryDialCode: v_f693e7,
@@ -34,9 +36,9 @@ const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
     return v_202d44;
   }, [v_34e5bb, v_459d5e.iso2]);
   const v_c6e76b = v_34e5bb === 'region' ? v_2f03bc : v_459d5e;
-  const v_184db2 = v_34e5bb === 'region' ? '지역 선택' : '국가 선택';
+  const v_184db2 = v_34e5bb === 'region' ? v_8d41d7('country_select.title_region') : v_8d41d7('country_select.title_country');
   const v_61b749 =
-    v_34e5bb === 'region' ? '지역 이름 또는 번호 검색' : '국가 이름 또는 국가번호 검색';
+    v_34e5bb === 'region' ? v_8d41d7('country_select.search_placeholder_region') : v_8d41d7('country_select.search_placeholder_country');
 
   const v_4773d4 = v_df9f57(() => {
     if (!v_7c5791.trim()) {

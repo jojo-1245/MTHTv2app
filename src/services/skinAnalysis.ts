@@ -141,6 +141,7 @@ class v_3c3bb8 {
     v_a7bd9e,
     v_349aae,
     v_c0c2d5 = 'image/jpeg',
+    v_8d41d7,
   ): Promise<FileUploadResponse> {
     try {
       const v_f71b56 = `${v_4269c7}/file/skin-analysis`;
@@ -169,11 +170,14 @@ class v_3c3bb8 {
       console.error('[YouCam API] 응답 데이터:', JSON.stringify(v_5e9bfe?.response?.data));
 
       if (v_5e9bfe?.response?.status === 401) {
-        throw new Error('API 키가 유효하지 않습니다. YouCam API 키를 확인해주세요.');
+        const v_a8cd21 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.invalid_api_key') : 'API 키가 유효하지 않습니다. YouCam API 키를 확인해주세요.';
+        throw new Error(v_a8cd21);
       } else if (v_5e9bfe?.response?.status === 404) {
-        throw new Error('API 엔드포인트를 찾을 수 없습니다. API 구독 상태를 확인해주세요.');
+        const v_a8cd21 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.endpoint_not_found') : 'API 엔드포인트를 찾을 수 없습니다. API 구독 상태를 확인해주세요.';
+        throw new Error(v_a8cd21);
       } else if (v_5e9bfe?.response?.status === 403) {
-        throw new Error('API 접근이 거부되었습니다. API 권한을 확인해주세요.');
+        const v_a8cd21 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.access_denied') : 'API 접근이 거부되었습니다. API 권한을 확인해주세요.';
+        throw new Error(v_a8cd21);
       }
       throw v_5e9bfe;
     }
@@ -238,6 +242,7 @@ class v_3c3bb8 {
     v_3d627c = 30,
     v_134121 = 2000,
     onProgress?: (attempt: number, v_3d627c) => void,
+    v_8d41d7,
   ): Promise<SkinAnalysisResult> {
     let v_45fe0c = 0;
 
@@ -253,13 +258,15 @@ class v_3c3bb8 {
       }
 
       if (v_43c42e.task_status === 'error') {
-        throw new Error(v_43c42e.error_message || v_43c42e.error || '분석 중 오류가 발생했습니다.');
+        const v_4b5200 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.analysis_error') : '분석 중 오류가 발생했습니다.';
+        throw new Error(v_43c42e.error_message || v_43c42e.error || v_4b5200);
       }
 
       await new Promise((v_6f7712) => setTimeout(v_6f7712, v_134121));
     }
 
-    throw new Error('분석 시간이 초과되었습니다. 다시 시도해주세요.');
+    const v_2a0b31 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.timeout') : '분석 시간이 초과되었습니다. 다시 시도해주세요.';
+    throw new Error(v_2a0b31);
   }
 }
 

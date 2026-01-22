@@ -10,6 +10,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_a61db3, v_ef658a, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_cb41de, v_570c34, v_556baf, v_8714fe } from '../components';
 
 type Props = v_432191<v_8ad91b, 'Home'>;
@@ -21,6 +22,7 @@ const v_16cea9 = require('../../assets/images/logo.png');
 
 const HomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
+  const { t: v_8d41d7 } = v_772971();
 
   const v_ec4736 = () => {
     v_9b57fc('Login');
@@ -63,13 +65,13 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
       {}
       <View style={v_d81136.buttonContainer}>
         <PrimaryButton
-          title="로그인"
+          title={v_8d41d7('common.login')}
           onPress={v_ec4736}
           fullWidth={true}
           style={v_d81136.loginButton}
         />
         <SecondaryButton
-          title="회원가입"
+          title={v_8d41d7('common.signup')}
           onPress={v_c5a058}
           fullWidth={true}
         />
