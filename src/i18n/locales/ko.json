@@ -167,7 +167,8 @@
         "clause_desc": "약관 목록",
         "faq": "자주 묻는 질문",
         "faq_desc": "FAQ",
-        "logout": "로그아웃"
+        "logout": "로그아웃",
+        "referral": "레퍼럴"
     },
     "skin": {
         "products": {
@@ -286,25 +287,9 @@
             "all_results": "전체 분석 결과",
             "analysis_date": "분석 일시: {{date}}",
             "btn_save": "결과 저장 (JSON)",
-            "btn_new": "새로운 분석 시작",
+            "btn_new": "종료하기",
             "error_no_result": "결과를 불러올 수 없습니다",
             "btn_retry": "다시 시도"
-        },
-        "concerns": {
-            "acne": "여드름",
-            "dark_circle_v2": "다크서클",
-            "droopy_lower_eyelid": "처진 아랫눈꺼풀",
-            "droopy_upper_eyelid": "처진 윗눈꺼풀",
-            "eye_bag": "눈밑지방",
-            "firmness": "탄력",
-            "moisture": "수분",
-            "oiliness": "유분",
-            "pore": "모공",
-            "radiance": "광채",
-            "redness": "홍조",
-            "age_spot": "기미/잡티",
-            "texture": "피부결",
-            "wrinkle": "주름"
         },
         "skin_analysis": {
             "errors": {
