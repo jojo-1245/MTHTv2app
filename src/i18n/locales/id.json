@@ -167,7 +167,8 @@
         "clause_desc": "Daftar ketentuan",
         "faq": "FAQ",
         "faq_desc": "Pertanyaan yang Sering Diajukan",
-        "logout": "Keluar"
+        "logout": "Keluar",
+        "referral": "Referral"
     },
     "skin": {
         "products": {
@@ -276,22 +277,6 @@
             "btn_new": "Mulai Analisis Baru",
             "error_no_result": "Tidak dapat memuat hasil",
             "btn_retry": "Coba Lagi"
-        },
-        "concerns": {
-            "acne": "Jerawat",
-            "dark_circle_v2": "Lingkaran Hitam",
-            "droopy_lower_eyelid": "Kelopak Mata Bawah Terkulai",
-            "droopy_upper_eyelid": "Kelopak Mata Atas Terkulai",
-            "eye_bag": "Kantung Mata",
-            "firmness": "Kekencangan",
-            "moisture": "Kelembapan",
-            "oiliness": "Keminjakan",
-            "pore": "Pori-pori",
-            "radiance": "Kecerahan",
-            "redness": "Kemerahan",
-            "age_spot": "Bintik Penuaan",
-            "texture": "Tekstur",
-            "wrinkle": "Kerutan"
         },
         "skin_analysis": {
             "errors": {
