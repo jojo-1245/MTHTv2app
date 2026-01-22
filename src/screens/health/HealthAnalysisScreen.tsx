@@ -64,6 +64,72 @@ type Props = v_432191<v_8ad91b, 'HealthAnalysis'>;
 
 type AnalysisStep = 'intro' | 'measurement';
 
+type SdkAlertInfo = {
+  shouldReset: boolean;
+};
+
+const v_d58507 = {
+
+  4: { shouldReset: true },
+  8: { shouldReset: true },
+  14: { shouldReset: true },
+  17: { shouldReset: true },
+  19: { shouldReset: true },
+  20: { shouldReset: true },
+  21: { shouldReset: true },
+
+  1001: { shouldReset: true },
+  1002: { shouldReset: true },
+  1005: { shouldReset: true },
+  1501: { shouldReset: false },
+
+  2002: { shouldReset: true },
+  2003: { shouldReset: true },
+  2004: { shouldReset: true },
+  2007: { shouldReset: true },
+  2010: { shouldReset: true },
+  2016: { shouldReset: true },
+  2017: { shouldReset: true },
+  2018: { shouldReset: true },
+  2024: { shouldReset: true },
+  2025: { shouldReset: true },
+  2032: { shouldReset: true },
+  2034: { shouldReset: true },
+  2035: { shouldReset: true },
+  2036: { shouldReset: true },
+
+  6004: { shouldReset: false },
+  6005: { shouldReset: false },
+
+  7002: { shouldReset: true },
+  7004: { shouldReset: true },
+  7005: { shouldReset: true },
+  7006: { shouldReset: true },
+  7007: { shouldReset: true },
+  7008: { shouldReset: true },
+  7009: { shouldReset: true },
+  7010: { shouldReset: true },
+  7011: { shouldReset: true },
+  7012: { shouldReset: true },
+
+  3505: { shouldReset: false },
+  3506: { shouldReset: false },
+
+  4505: { shouldReset: false },
+  4506: { shouldReset: false },
+
+  8003: { shouldReset: true },
+  8004: { shouldReset: true },
+  8005: { shouldReset: true },
+  8006: { shouldReset: true },
+  8007: { shouldReset: true },
+  8008: { shouldReset: true },
+  8501: { shouldReset: false },
+
+  9001: { shouldReset: true },
+  9500: { shouldReset: false },
+};
+
 const v_a79016 = (v_3b27d9): string => {
   const v_f2dfb8 = {
     [v_e3e816.PULSE_RATE]: 'PULSE_RATE',
@@ -147,6 +213,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_b98ddb = v_e662ae<boolean>(false);
 
+  const v_0e2ade = v_e662ae<Set<number>>(new Set());
+
   const v_919f8c = v_e662ae<v_eb2401 | null>(null);
 
   const v_318478 = v_e662ae<boolean>(false);
@@ -201,6 +269,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_3be953.current = false;
     v_b1faa7.current = false;
     v_b98ddb.current = false;
+    v_0e2ade.current.clear();
     v_1cbea0.current = false;
     v_c1affb.current = 0;
 
@@ -215,6 +284,47 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_7fa926(0);
     v_639227('intro');
   }, [v_98caa0]);
+
+  const v_141cf8 = v_de06a3(
+    (v_c99bd2): boolean => {
+      if (!v_c99bd2) {
+        return false;
+      }
+      const v_34d5e3 = v_d58507[v_c99bd2];
+      if (!v_34d5e3) {
+        return false;
+      }
+      const v_6845e8 = `health_analysis.sdk_alerts.${v_c99bd2}`;
+      const v_8667e1 = `${v_6845e8}.title`;
+      const v_ba9d82 = `${v_6845e8}.reason`;
+      const v_31cc5f = `${v_6845e8}.solution`;
+      const v_9f1622 = v_8d41d7(v_8667e1);
+      const v_58ca36 = v_8d41d7(v_ba9d82);
+      const v_6f0517 = v_8d41d7(v_31cc5f);
+      if (v_9f1622 === v_8667e1 || v_58ca36 === v_ba9d82 || v_6f0517 === v_31cc5f) {
+        return false;
+      }
+      if (v_0e2ade.current.has(v_c99bd2)) {
+        return true;
+      }
+      v_0e2ade.current.add(v_c99bd2);
+
+      const v_a8cd21 = `${v_58ca36}\n\n${v_8d41d7('health_analysis.sdk_alerts.solution_prefix')}\n${v_6f0517}\n\n(코드: ${v_c99bd2})`;
+      v_03e392.alert(v_9f1622, v_a8cd21, [
+        {
+          text: v_8d41d7('common.confirm'),
+          onPress: async () => {
+            v_0e2ade.current.delete(v_c99bd2);
+            if (v_34d5e3.shouldReset) {
+              await v_98b3fa();
+            }
+          },
+        },
+      ]);
+      return true;
+    },
+    [v_98b3fa, v_8d41d7],
+  );
 
   const v_bb3644 = v_de06a3(async () => {
 
@@ -318,6 +428,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             },
           ]
         );
+      } else if (v_141cf8(v_748547?.code)) {
+        v_3be953.current = true;
+        v_a3ff5a.current = undefined;
+        v_49296b(false);
+        return;
       } else {
 
         v_3be953.current = true;
@@ -339,7 +454,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         );
       }
     }
-  }, [v_ec0597, v_c1ef35, v_109b56]);
+  }, [v_ec0597, v_c1ef35, v_109b56, v_141cf8]);
 
   const v_ac8071 = v_de06a3(async () => {
     try {
@@ -373,6 +488,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         hasSession: !!v_a3ff5a.current,
       });
 
+      if (v_7a5fef && v_141cf8(v_7a5fef)) {
+        return;
+      }
+
       if (v_7a5fef && v_7a5fef >= 3000 && v_7a5fef < 4000) {
         console.log('[얼굴 인식 에러] 무시 - 측정 계속 진행', { code: v_7a5fef });
         return;
@@ -405,7 +524,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         },
       ]);
     }
-  }, [v_bc50c7, v_98caa0, v_8d41d7]);
+  }, [v_bc50c7, v_98caa0, v_8d41d7, v_141cf8]);
 
   const v_b1eca7 = v_e662ae(false);
   v_c4deb2(() => {
@@ -456,6 +575,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           return;
         }
       }
+      if (v_7a5fef && v_7a5fef !== 3003 && v_141cf8(v_7a5fef)) {
+        return;
+      }
+
       console.error('SDK 에러 발생:', {
         code: v_7a5fef,
         domain: (v_5e9bfe as any)?.domain,
@@ -529,7 +652,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         },
       ]);
     }
-  }, [v_5e9bfe, v_98caa0, v_bc50c7, v_8d41d7, v_91943c, v_a3ff5a, v_bb3644, v_98b3fa]);
+  }, [v_5e9bfe, v_98caa0, v_bc50c7, v_8d41d7, v_91943c, v_a3ff5a, v_bb3644, v_98b3fa, v_141cf8]);
 
   v_c4deb2(() => {
     if (v_f91e0a) {

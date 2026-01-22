@@ -568,6 +568,260 @@
                 "wellness_level_usage_text": "This level information is directly displayed to end users or delivered to insurance underwriting teams, and is used as a basis for decision-making, such as recommending additional medical examinations when the risk level is high."
             }
         }
+        ,
+        "sdk_alerts": {
+          "solution_prefix": "Solution:",
+          "4": {
+            "title": "Device Error",
+            "reason": "A session was requested to run while the device is in Low Power mode.",
+            "solution": "Turn off Low Power Mode or charge your device until it turns off."
+          },
+          "8": {
+            "title": "Device Error",
+            "reason": "The OS version is below the minimum required by the SDK.",
+            "solution": "Update the OS or use another device."
+          },
+          "14": {
+            "title": "Device Error",
+            "reason": "Battery level is below 20%.",
+            "solution": "Charge the device and try again."
+          },
+          "17": {
+            "title": "Device Error",
+            "reason": "Severe clock skew detected.",
+            "solution": "Set date/time/timezone correctly (auto setting recommended) and try again."
+          },
+          "19": {
+            "title": "Device Error",
+            "reason": "Bluetooth is off.",
+            "solution": "Turn on Bluetooth and try again."
+          },
+          "20": {
+            "title": "Device Error",
+            "reason": "Bluetooth permission is missing.",
+            "solution": "Grant Bluetooth permission in device settings and try again."
+          },
+          "21": {
+            "title": "Device Error",
+            "reason": "Location service is off.",
+            "solution": "Turn on location service and try again."
+          },
+          "1001": {
+            "title": "Camera Error",
+            "reason": "No camera with required specs (640x480 @ 30FPS).",
+            "solution": "Check camera functionality or use another device."
+          },
+          "1002": {
+            "title": "Camera Error",
+            "reason": "Could not operate the camera.",
+            "solution": "Restart the app or verify the camera works properly."
+          },
+          "1005": {
+            "title": "Camera Error",
+            "reason": "Camera permission is missing.",
+            "solution": "Grant camera permission in device settings and try again."
+          },
+          "1501": {
+            "title": "Camera Warning",
+            "reason": "Camera image dimensions differ from the requested resolution.",
+            "solution": "Retry the measurement. If it persists, use another device."
+          },
+          "2002": {
+            "title": "License Error",
+            "reason": "License device activation limit reached.",
+            "solution": "Contact support to increase the device limit."
+          },
+          "2003": {
+            "title": "License Error",
+            "reason": "License measurement limit reached.",
+            "solution": "Contact support to increase the measurement limit."
+          },
+          "2004": {
+            "title": "License Error",
+            "reason": "License authentication failed.",
+            "solution": "Check internet connection, device time, and storage, then try again."
+          },
+          "2007": {
+            "title": "License Error",
+            "reason": "Invalid license key.",
+            "solution": "Verify the license key provided by support."
+          },
+          "2010": {
+            "title": "License Error",
+            "reason": "License has been revoked.",
+            "solution": "Contact support."
+          },
+          "2016": {
+            "title": "License Error",
+            "reason": "SSL authentication error occurred.",
+            "solution": "Check device time and internet connection, then try again."
+          },
+          "2017": {
+            "title": "License Error",
+            "reason": "License has expired.",
+            "solution": "Contact support."
+          },
+          "2018": {
+            "title": "License Error",
+            "reason": "License is suspended.",
+            "solution": "Contact support."
+          },
+          "2024": {
+            "title": "License Error",
+            "reason": "No internet connection.",
+            "solution": "Restore network connection and try again."
+          },
+          "2025": {
+            "title": "License Error",
+            "reason": "SSL handshake error.",
+            "solution": "Check device time and internet connection, then try again."
+          },
+          "2032": {
+            "title": "License Error",
+            "reason": "License key is empty.",
+            "solution": "Initialize the SDK with a valid license key."
+          },
+          "2034": {
+            "title": "License Error",
+            "reason": "Invalid Product ID was provided.",
+            "solution": "Set Product ID to null when creating a session."
+          },
+          "2035": {
+            "title": "License Error",
+            "reason": "Cannot open file for read or file is corrupted.",
+            "solution": "Reinstall the app or verify installation integrity."
+          },
+          "2036": {
+            "title": "License Error",
+            "reason": "License sync is required.",
+            "solution": "Connect to the internet and try again."
+          },
+          "6004": {
+            "title": "Session Error",
+            "reason": "Start was called when session is not READY.",
+            "solution": "Wait until session becomes READY before starting."
+          },
+          "6005": {
+            "title": "Session Error",
+            "reason": "Stop was called when session is not PROCESSING.",
+            "solution": "Call stop only while session is processing."
+          },
+          "7002": {
+            "title": "Initialization Error",
+            "reason": "Invalid session time.",
+            "solution": "Use a session time between 20 and 180 seconds."
+          },
+          "7004": {
+            "title": "Initialization Error",
+            "reason": "Image rotation and device orientation settings conflict.",
+            "solution": "Use only withDeviceOrientation."
+          },
+          "7005": {
+            "title": "Initialization Error",
+            "reason": "License key format is invalid.",
+            "solution": "Ensure the key is correct with no spaces or newlines."
+          },
+          "7006": {
+            "title": "Initialization Error",
+            "reason": "SDK failed to initialize (hardware may be unsupported).",
+            "solution": "Verify device/OS is 64-bit and try again."
+          },
+          "7007": {
+            "title": "Initialization Error",
+            "reason": "Unsupported user weight was provided.",
+            "solution": "Use 40–200 kg or omit weight."
+          },
+          "7008": {
+            "title": "Initialization Error",
+            "reason": "Unsupported user age was provided.",
+            "solution": "Use 18–110 years or omit age."
+          },
+          "7009": {
+            "title": "Initialization Error",
+            "reason": "A new session was created before terminating the previous one.",
+            "solution": "Terminate the previous session and try again."
+          },
+          "7010": {
+            "title": "Initialization Error",
+            "reason": "Polar SDK dependency is missing.",
+            "solution": "Add Polar SDK dependency in Android build.gradle."
+          },
+          "7011": {
+            "title": "Initialization Error",
+            "reason": "Segment Analytics dependency is missing.",
+            "solution": "Add Segment Analytics dependency in Android build.gradle."
+          },
+          "7012": {
+            "title": "Initialization Error",
+            "reason": "Unsupported user height was provided.",
+            "solution": "Use 130–230 cm or omit height."
+          },
+          "3505": {
+            "title": "Measurement Warning",
+            "reason": "Camera FPS is degraded and may affect measurement quality.",
+            "solution": "Follow measurement best practices and try again."
+          },
+          "3506": {
+            "title": "Measurement Warning",
+            "reason": "A frame was received in incorrect timestamp order.",
+            "solution": "You can proceed with the measurement."
+          },
+          "4505": {
+            "title": "Measurement Warning",
+            "reason": "Blood pressure calculation failed.",
+            "solution": "BP results will be omitted for this measurement. Try again."
+          },
+          "4506": {
+            "title": "Measurement Warning",
+            "reason": "No vital signs were processed.",
+            "solution": "Check license/internet status and try again."
+          },
+          "8003": {
+            "title": "Device Error",
+            "reason": "PPG device connection timed out.",
+            "solution": "Turn Bluetooth off and on, then reconnect."
+          },
+          "8004": {
+            "title": "Device Error",
+            "reason": "Invalid PPG device ID format.",
+            "solution": "Provide a valid device ID and try again."
+          },
+          "8005": {
+            "title": "Device Error",
+            "reason": "PPG device firmware is not supported.",
+            "solution": "Update firmware or use another device."
+          },
+          "8006": {
+            "title": "Device Error",
+            "reason": "PPG device model is not supported.",
+            "solution": "Use a supported device."
+          },
+          "8007": {
+            "title": "Device Error",
+            "reason": "PPG device was disconnected.",
+            "solution": "Check battery/Bluetooth and reconnect."
+          },
+          "8008": {
+            "title": "Device Error",
+            "reason": "Sensor is misplaced or not fastened properly.",
+            "solution": "Wear the device snugly with direct skin contact."
+          },
+          "8501": {
+            "title": "Measurement Warning",
+            "reason": "PPG device is not on the user's arm.",
+            "solution": "Fasten the device strap firmly to the arm."
+          },
+          "9001": {
+            "title": "Monitoring Error",
+            "reason": "Monitoring temporarily stopped for this session.",
+            "solution": "Terminate the session and start a new one."
+          },
+          "9500": {
+            "title": "Measurement Warning",
+            "reason": "Data gap detected in the stream.",
+            "solution": "Check the Bluetooth connection."
+          }
+        }
     },
     "my_info_edit": {
         "title": "Edit My Info",

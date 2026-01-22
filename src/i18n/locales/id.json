@@ -568,6 +568,260 @@
                 "wellness_level_usage_text": "Informasi tingkat ini ditampilkan langsung kepada pengguna akhir atau disampaikan kepada tim underwriting asuransi, dan digunakan sebagai dasar pengambilan keputusan, seperti merekomendasikan pemeriksaan medis tambahan ketika tingkat risiko tinggi."
             }
         }
+        ,
+        "sdk_alerts": {
+          "solution_prefix": "Solusi:",
+          "4": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Sesi diminta saat perangkat berada dalam mode hemat daya.",
+            "solution": "Matikan mode hemat daya atau isi daya perangkat sampai mode tersebut nonaktif."
+          },
+          "8": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Versi OS di bawah minimum yang dibutuhkan SDK.",
+            "solution": "Perbarui OS atau gunakan perangkat lain."
+          },
+          "14": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Level baterai di bawah 20%.",
+            "solution": "Isi daya perangkat lalu coba lagi."
+          },
+          "17": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Terdeteksi penyimpangan waktu (clock skew) yang besar.",
+            "solution": "Setel tanggal/waktu/zona waktu dengan benar (disarankan otomatis), lalu coba lagi."
+          },
+          "19": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Bluetooth mati.",
+            "solution": "Nyalakan Bluetooth lalu coba lagi."
+          },
+          "20": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Izin Bluetooth tidak tersedia.",
+            "solution": "Berikan izin Bluetooth di pengaturan perangkat lalu coba lagi."
+          },
+          "21": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Layanan lokasi mati.",
+            "solution": "Nyalakan layanan lokasi lalu coba lagi."
+          },
+          "1001": {
+            "title": "Kesalahan Kamera",
+            "reason": "Tidak ada kamera dengan spesifikasi yang dibutuhkan (640x480 @ 30FPS).",
+            "solution": "Periksa fungsi kamera atau gunakan perangkat lain."
+          },
+          "1002": {
+            "title": "Kesalahan Kamera",
+            "reason": "Tidak dapat mengoperasikan kamera.",
+            "solution": "Mulai ulang aplikasi atau pastikan kamera berfungsi."
+          },
+          "1005": {
+            "title": "Kesalahan Kamera",
+            "reason": "Izin kamera tidak tersedia.",
+            "solution": "Berikan izin kamera di pengaturan perangkat lalu coba lagi."
+          },
+          "1501": {
+            "title": "Peringatan Kamera",
+            "reason": "Resolusi gambar kamera berbeda dari yang diminta.",
+            "solution": "Coba pengukuran ulang. Jika tetap terjadi, gunakan perangkat lain."
+          },
+          "2002": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Batas aktivasi perangkat pada lisensi tercapai.",
+            "solution": "Hubungi dukungan untuk menambah batas perangkat."
+          },
+          "2003": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Batas jumlah pengukuran lisensi tercapai.",
+            "solution": "Hubungi dukungan untuk menambah batas pengukuran."
+          },
+          "2004": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Autentikasi lisensi gagal.",
+            "solution": "Periksa koneksi internet, waktu perangkat, dan penyimpanan lalu coba lagi."
+          },
+          "2007": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Kunci lisensi tidak valid.",
+            "solution": "Periksa kunci lisensi yang diberikan oleh dukungan."
+          },
+          "2010": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Lisensi telah dicabut.",
+            "solution": "Hubungi dukungan."
+          },
+          "2016": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Terjadi kesalahan autentikasi SSL.",
+            "solution": "Periksa waktu perangkat dan koneksi internet, lalu coba lagi."
+          },
+          "2017": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Lisensi telah kedaluwarsa.",
+            "solution": "Hubungi dukungan."
+          },
+          "2018": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Lisensi ditangguhkan.",
+            "solution": "Hubungi dukungan."
+          },
+          "2024": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Tidak ada koneksi internet.",
+            "solution": "Pulihkan koneksi jaringan lalu coba lagi."
+          },
+          "2025": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Terjadi kesalahan SSL handshake.",
+            "solution": "Periksa waktu perangkat dan koneksi internet, lalu coba lagi."
+          },
+          "2032": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Kunci lisensi kosong.",
+            "solution": "Inisialisasi SDK dengan kunci lisensi yang valid."
+          },
+          "2034": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Product ID tidak valid.",
+            "solution": "Set Product ID ke null saat membuat sesi."
+          },
+          "2035": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Tidak dapat membaca file atau file rusak.",
+            "solution": "Instal ulang aplikasi atau periksa integritas instalasi."
+          },
+          "2036": {
+            "title": "Kesalahan Lisensi",
+            "reason": "Sinkronisasi lisensi diperlukan.",
+            "solution": "Hubungkan ke internet lalu coba lagi."
+          },
+          "6004": {
+            "title": "Kesalahan Sesi",
+            "reason": "Start dipanggil saat sesi tidak READY.",
+            "solution": "Tunggu sampai sesi READY sebelum memulai."
+          },
+          "6005": {
+            "title": "Kesalahan Sesi",
+            "reason": "Stop dipanggil saat sesi tidak PROCESSING.",
+            "solution": "Panggil stop hanya saat sesi sedang memproses."
+          },
+          "7002": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Waktu sesi tidak valid.",
+            "solution": "Gunakan durasi sesi 20–180 detik."
+          },
+          "7004": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Pengaturan rotasi gambar dan orientasi perangkat bertentangan.",
+            "solution": "Gunakan hanya withDeviceOrientation."
+          },
+          "7005": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Format kunci lisensi tidak valid.",
+            "solution": "Pastikan kunci benar tanpa spasi atau baris baru."
+          },
+          "7006": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "SDK gagal diinisialisasi (kemungkinan hardware tidak didukung).",
+            "solution": "Pastikan perangkat/OS 64-bit lalu coba lagi."
+          },
+          "7007": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Berat badan pengguna tidak didukung.",
+            "solution": "Gunakan 40–200 kg atau kosongkan."
+          },
+          "7008": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Usia pengguna tidak didukung.",
+            "solution": "Gunakan 18–110 tahun atau kosongkan."
+          },
+          "7009": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Sesi baru dibuat sebelum sesi sebelumnya dihentikan.",
+            "solution": "Hentikan sesi sebelumnya lalu coba lagi."
+          },
+          "7010": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Dependensi Polar SDK tidak ditemukan.",
+            "solution": "Tambahkan Polar SDK di Android build.gradle."
+          },
+          "7011": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Dependensi Segment Analytics tidak ditemukan.",
+            "solution": "Tambahkan Segment Analytics di Android build.gradle."
+          },
+          "7012": {
+            "title": "Kesalahan Inisialisasi",
+            "reason": "Tinggi badan pengguna tidak didukung.",
+            "solution": "Gunakan 130–230 cm atau kosongkan."
+          },
+          "3505": {
+            "title": "Peringatan Pengukuran",
+            "reason": "FPS kamera menurun dan dapat memengaruhi kualitas pengukuran.",
+            "solution": "Ikuti panduan pengukuran dan coba lagi."
+          },
+          "3506": {
+            "title": "Peringatan Pengukuran",
+            "reason": "Frame diterima dengan urutan timestamp yang salah.",
+            "solution": "Anda bisa melanjutkan pengukuran."
+          },
+          "4505": {
+            "title": "Peringatan Pengukuran",
+            "reason": "Perhitungan tekanan darah gagal.",
+            "solution": "Hasil tekanan darah akan dikecualikan. Coba lagi."
+          },
+          "4506": {
+            "title": "Peringatan Pengukuran",
+            "reason": "Tidak ada vital sign yang diproses.",
+            "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
+          },
+          "8003": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Waktu koneksi perangkat PPG habis.",
+            "solution": "Matikan dan nyalakan Bluetooth, lalu hubungkan lagi."
+          },
+          "8004": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Format ID perangkat PPG tidak valid.",
+            "solution": "Gunakan ID perangkat yang valid dan coba lagi."
+          },
+          "8005": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Firmware perangkat PPG tidak didukung.",
+            "solution": "Perbarui firmware atau gunakan perangkat lain."
+          },
+          "8006": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Model perangkat PPG tidak didukung.",
+            "solution": "Gunakan perangkat yang didukung."
+          },
+          "8007": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Perangkat PPG terputus.",
+            "solution": "Periksa baterai/Bluetooth lalu sambungkan kembali."
+          },
+          "8008": {
+            "title": "Kesalahan Perangkat",
+            "reason": "Sensor tidak terpasang dengan benar.",
+            "solution": "Pasang perangkat dengan rapat pada kulit."
+          },
+          "8501": {
+            "title": "Peringatan Pengukuran",
+            "reason": "Perangkat PPG tidak terpasang di lengan.",
+            "solution": "Pasang perangkat PPG dengan kencang di lengan."
+          },
+          "9001": {
+            "title": "Kesalahan Pemantauan",
+            "reason": "Pemantauan sementara dihentikan pada sesi ini.",
+            "solution": "Hentikan sesi dan mulai sesi baru."
+          },
+          "9500": {
+            "title": "Peringatan Pengukuran",
+            "reason": "Terdeteksi jeda data dalam stream.",
+            "solution": "Periksa koneksi Bluetooth."
+          }
+        }
     },
     "my_info_edit": {
         "title": "Ubah Info Saya",
