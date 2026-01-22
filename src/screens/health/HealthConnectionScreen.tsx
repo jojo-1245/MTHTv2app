@@ -14,6 +14,7 @@ import {
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
+import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_556baf, v_729608, v_cb41de } from '../../components';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_a0daa8 } from '../../navigation';
@@ -373,6 +374,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
 
     return (
         <SafeView style={v_d81136.screen}>
+            <StatusBar style="dark" />
             <Header
                 title={v_8d41d7('health_connection.title')}
                 showBackButton
