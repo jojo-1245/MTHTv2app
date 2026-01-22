@@ -1493,12 +1493,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             {v_8d41d7('skin.result.analysis_date', { date: new Date(v_e521b9.timestamp).toLocaleString('ko-KR') })}
                         </Text>
                     </View>
-                    <View style={v_d81136.analysisInfoRow}>
-                        <Ionicons name="analytics-outline" size={16} color={v_1bfbd0.secondaryText} />
-                        <Text style={v_d81136.analysisInfoText}>
-                            Task ID: {v_e521b9.taskId?.slice(0, 20)}...
-                        </Text>
-                    </View>
+                    {
+
+}
+
                 </View>
 
                 {}
