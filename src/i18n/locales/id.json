@@ -460,7 +460,7 @@
             "measurement_error": "Kesalahan Pengukuran",
             "session_error": "Kesalahan Sesi",
             "error_2042": "Kode kesalahan: 2042\n\nTerjadi kesalahan status sesi.\n\nKemungkinan penyebab:\n- Pengukuran dimulai saat sesi belum siap\n- Inisialisasi sesi tidak lengkap\n- Masalah akses kamera\n\nSolusi:\n1. Tekan \"Coba Ukur Lagi\" untuk memulai dari awal\n2. Tutup dan mulai ulang aplikasi sepenuhnya\n3. Periksa izin kamera",
-            "error_3003": "Kode kesalahan: 3003\n\nTerjadi kesalahan selama pengukuran.\n\nPeriksa:\n- Wajah terlihat oleh kamera\n- Pencahayaan cukup\n- Sesuaikan jarak dari kamera (30-50cm)\n- Wajah menghadap ke depan",
+            "error_3003": "Wajah tidak terdeteksi dengan benar. Pengukuran akan diulang.\n\nPeriksa:\n- Wajah terlihat oleh kamera\n- Pencahayaan cukup\n- Sesuaikan jarak dari kamera (30-50cm)\n- Wajah menghadap ke depan",
             "error_default": "Kode kesalahan: {{code}}\n\nTerjadi kesalahan selama pengukuran. Silakan coba lagi nanti.",
             "error_2042_detail": "Kode kesalahan: 2042\n\nKemungkinan penyebab:\n- Masalah kunci lisensi\n- Inisialisasi sesi gagal\n- Masalah akses kamera\n\nSolusi:\n1. Tutup dan mulai ulang aplikasi sepenuhnya\n2. Periksa izin kamera\n3. Verifikasi kunci lisensi diatur dengan benar",
             "error_7009": "Kode kesalahan: 7009\n\nKemungkinan penyebab:\n- Masalah kunci lisensi\n- Inisialisasi SDK gagal\n- Masalah inisialisasi kamera\n\nSilakan mulai ulang aplikasi.",
