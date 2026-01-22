@@ -8,6 +8,7 @@ import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a } from './src/utils/env';
 import { v_4b64f4 } from './src/context';
+import './src/i18n';
 
 const v_20ccc6 = {
   'Pretendard-Regular': require('./assets/fonts/Pretendard-Regular.otf'),
