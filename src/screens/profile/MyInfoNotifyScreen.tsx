@@ -105,7 +105,7 @@ const v_9c28a5 = (v_8d41d7): NotificationItem[] => [
     image: null,
     guid: 'https://xrun.run',
     datebegin: '2024-09-27',
-    dateends: '2024-10-27',
+    dateends: '2024-10-28',
   },
   {
     board: 2,
@@ -315,16 +315,9 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
           <Text style={v_d81136.avatarText}>METAHINT</Text>
         </View>
         <View style={v_d81136.messageCard}>
-          {v_ee89db && (
-            <Image source={{ uri: v_ee89db }} style={v_d81136.heroImage} resizeMode="cover" />
-          )}
-          {v_dfa14b && (
-            <Image
-              source={require('../../../assets/images/thumb_event.png')}
-              style={v_d81136.heroImage}
-              resizeMode="cover"
-            />
-          )}
+          {
+
+}
           <Text style={v_d81136.badge}>{v_b9faeb.title}</Text>
           {v_b9faeb.contents !== null && v_b9faeb.type !== 9303 && (
             <View>
@@ -341,18 +334,18 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                 </Text>
               )}
               {v_d37866 && (
-                  <TouchableOpacity
-                    style={[v_d81136.ctaButton, v_d81136.ctaButtonWithMargin]}
-                    onPress={async () => {
-                      const v_f71b56 = `https://oth-path-51a04e.example.invalid/oth-path?id=${v_b9faeb.board}`;
-                      v_f2c756.openURL(v_f71b56).catch(() => {
-                        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('my_info_notify.link_error'));
-                      });
-                    }}
-                    activeOpacity={0.85}
-                  >
-                    <Text style={v_d81136.ctaText}>{v_8d41d7('my_info_notify.view_detail')}</Text>
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={[v_d81136.ctaButton, v_d81136.ctaButtonWithMargin]}
+                  onPress={async () => {
+                    const v_f71b56 = `https://service-mh.example.invalid`;
+                    v_f2c756.openURL(v_f71b56).catch(() => {
+                      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('my_info_notify.link_error'));
+                    });
+                  }}
+                  activeOpacity={0.85}
+                >
+                  <Text style={v_d81136.ctaText}>{v_8d41d7('my_info_notify.view_detail')}</Text>
+                </TouchableOpacity>
               )}
               {v_fc7457 && v_b9faeb.guid !== '' && v_b9faeb.guid !== null && (
                 <TouchableOpacity

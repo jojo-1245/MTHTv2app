@@ -72,7 +72,7 @@ const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
           <Text style={v_d81136.flag}>{v_8c0b26.flagEmoji}</Text>
           <View>
             <Text style={v_d81136.countryName}>{v_8c0b26.name}</Text>
-            <Text style={v_d81136.countryCode}>{v_8c0b26.dialCode}</Text>
+            {}
           </View>
         </View>
         {v_599a41 ? <Feather name="check" size={18} color={v_1bfbd0.text} /> : null}
