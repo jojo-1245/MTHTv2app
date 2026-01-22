@@ -30,7 +30,7 @@ interface SummaryStatusInfo {
 type Props = v_432191<v_8ad91b, 'HealthAnalysisResult'>;
 
 const v_50f905 = (v_3b27d9, v_8d41d7): string => {
-  const v_f2dfb8 = {
+  const v_f2dfb8 = { 
     [v_e3e816.PULSE_RATE]: v_8d41d7('health_analysis.vitals.pulse_rate'),
     [v_e3e816.RESPIRATION_RATE]: v_8d41d7('health_analysis.vitals.respiration_rate'),
     [v_e3e816.OXYGEN_SATURATION]: v_8d41d7('health_analysis.vitals.oxygen_saturation'),
@@ -38,6 +38,34 @@ const v_50f905 = (v_3b27d9, v_8d41d7): string => {
     [v_e3e816.WELLNESS_INDEX]: v_8d41d7('health_analysis.vitals.wellness_index'),
     [v_e3e816.WELLNESS_LEVEL]: v_8d41d7('health_analysis.vitals.wellness_level'),
     [v_e3e816.HEART_AGE]: v_8d41d7('health_analysis.vitals.heart_age'),
+    [v_e3e816.SDNN]: v_8d41d7('health_analysis.vitals.sdnn'),
+    [v_e3e816.STRESS_LEVEL]: v_8d41d7('health_analysis.vitals.stress_level'),
+    [v_e3e816.RRI]: v_8d41d7('health_analysis.vitals.rri'),
+    [v_e3e816.STRESS_INDEX]: v_8d41d7('health_analysis.vitals.stress_index'),
+    [v_e3e816.MEAN_RRI]: v_8d41d7('health_analysis.vitals.mean_rri'),
+    [v_e3e816.RMSSD]: v_8d41d7('health_analysis.vitals.rmssd'),
+    [v_e3e816.SD1]: v_8d41d7('health_analysis.vitals.sd1'),
+    [v_e3e816.SD2]: v_8d41d7('health_analysis.vitals.sd2'),
+    [v_e3e816.PRQ]: v_8d41d7('health_analysis.vitals.prq'),
+    [v_e3e816.PNS_INDEX]: v_8d41d7('health_analysis.vitals.pns_index'),
+    [v_e3e816.PNS_ZONE]: v_8d41d7('health_analysis.vitals.pns_zone'),
+    [v_e3e816.SNS_INDEX]: v_8d41d7('health_analysis.vitals.sns_index'),
+    [v_e3e816.SNS_ZONE]: v_8d41d7('health_analysis.vitals.sns_zone'),
+    [v_e3e816.LFHF]: v_8d41d7('health_analysis.vitals.lfhf'),
+    [v_e3e816.HEMOGLOBIN]: v_8d41d7('health_analysis.vitals.hemoglobin'),
+    [v_e3e816.HEMOGLOBIN_A1C]: v_8d41d7('health_analysis.vitals.hemoglobin_a1c'),
+    [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: v_8d41d7('health_analysis.vitals.high_hemoglobin_a1c_risk'),
+    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: v_8d41d7('health_analysis.vitals.high_blood_pressure_risk'),
+    [v_e3e816.ASCVD_RISK]: v_8d41d7('health_analysis.vitals.ascvd_risk'),
+    [v_e3e816.NORMALIZED_STRESS_INDEX]: v_8d41d7('health_analysis.vitals.normalized_stress_index'),
+    [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: v_8d41d7('health_analysis.vitals.high_total_cholesterol_risk'),
+    [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: v_8d41d7('health_analysis.vitals.high_fasting_glucose_risk'),
+    [v_e3e816.LOW_HEMOGLOBIN_RISK]: v_8d41d7('health_analysis.vitals.low_hemoglobin_risk'),
+    [v_e3e816.ASCVD_RISK_LEVEL]: v_8d41d7('health_analysis.vitals.ascvd_risk_level'),
+    [v_e3e816.MEAN_ARTERIAL_PRESSURE]: v_8d41d7('health_analysis.vitals.mean_arterial_pressure'),
+    [v_e3e816.CARDIAC_WORKLOAD]: v_8d41d7('health_analysis.vitals.cardiac_workload'),
+    [v_e3e816.PULSE_PRESSURE]: v_8d41d7('health_analysis.vitals.pulse_pressure'),
+    [v_e3e816.BODY_TENSION_SCORE]: v_8d41d7('health_analysis.vitals.body_tension_score'),
   };
   return v_f2dfb8[v_3b27d9] || `Result (${v_3b27d9})`;
 };
@@ -51,6 +79,34 @@ const v_2c4b08 = (v_3b27d9, v_8d41d7): string => {
     [v_e3e816.WELLNESS_INDEX]: v_8d41d7('health_analysis.vitals.wellness_index_desc'),
     [v_e3e816.WELLNESS_LEVEL]: v_8d41d7('health_analysis.vitals.wellness_level_desc'),
     [v_e3e816.HEART_AGE]: v_8d41d7('health_analysis.vitals.heart_age_desc'),
+    [v_e3e816.SDNN]: v_8d41d7('health_analysis.vitals.sdnn_desc'),
+    [v_e3e816.STRESS_LEVEL]: v_8d41d7('health_analysis.vitals.stress_level_desc'),
+    [v_e3e816.RRI]: v_8d41d7('health_analysis.vitals.rri_desc'),
+    [v_e3e816.STRESS_INDEX]: v_8d41d7('health_analysis.vitals.stress_index_desc'),
+    [v_e3e816.MEAN_RRI]: v_8d41d7('health_analysis.vitals.mean_rri_desc'),
+    [v_e3e816.RMSSD]: v_8d41d7('health_analysis.vitals.rmssd_desc'),
+    [v_e3e816.SD1]: v_8d41d7('health_analysis.vitals.sd1_desc'),
+    [v_e3e816.SD2]: v_8d41d7('health_analysis.vitals.sd2_desc'),
+    [v_e3e816.PRQ]: v_8d41d7('health_analysis.vitals.prq_desc'),
+    [v_e3e816.PNS_INDEX]: v_8d41d7('health_analysis.vitals.pns_index_desc'),
+    [v_e3e816.PNS_ZONE]: v_8d41d7('health_analysis.vitals.pns_zone_desc'),
+    [v_e3e816.SNS_INDEX]: v_8d41d7('health_analysis.vitals.sns_index_desc'),
+    [v_e3e816.SNS_ZONE]: v_8d41d7('health_analysis.vitals.sns_zone_desc'),
+    [v_e3e816.LFHF]: v_8d41d7('health_analysis.vitals.lfhf_desc'),
+    [v_e3e816.HEMOGLOBIN]: v_8d41d7('health_analysis.vitals.hemoglobin_desc'),
+    [v_e3e816.HEMOGLOBIN_A1C]: v_8d41d7('health_analysis.vitals.hemoglobin_a1c_desc'),
+    [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: v_8d41d7('health_analysis.vitals.high_hemoglobin_a1c_risk_desc'),
+    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: v_8d41d7('health_analysis.vitals.high_blood_pressure_risk_desc'),
+    [v_e3e816.ASCVD_RISK]: v_8d41d7('health_analysis.vitals.ascvd_risk_desc'),
+    [v_e3e816.NORMALIZED_STRESS_INDEX]: v_8d41d7('health_analysis.vitals.normalized_stress_index_desc'),
+    [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: v_8d41d7('health_analysis.vitals.high_total_cholesterol_risk_desc'),
+    [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: v_8d41d7('health_analysis.vitals.high_fasting_glucose_risk_desc'),
+    [v_e3e816.LOW_HEMOGLOBIN_RISK]: v_8d41d7('health_analysis.vitals.low_hemoglobin_risk_desc'),
+    [v_e3e816.ASCVD_RISK_LEVEL]: v_8d41d7('health_analysis.vitals.ascvd_risk_level_desc'),
+    [v_e3e816.MEAN_ARTERIAL_PRESSURE]: v_8d41d7('health_analysis.vitals.mean_arterial_pressure_desc'),
+    [v_e3e816.CARDIAC_WORKLOAD]: v_8d41d7('health_analysis.vitals.cardiac_workload_desc'),
+    [v_e3e816.PULSE_PRESSURE]: v_8d41d7('health_analysis.vitals.pulse_pressure_desc'),
+    [v_e3e816.BODY_TENSION_SCORE]: v_8d41d7('health_analysis.vitals.body_tension_score_desc'),
   };
   return v_394a2e[v_3b27d9] || v_8d41d7('health_analysis.vitals.default_desc');
 };
@@ -388,7 +444,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           showBottomBackground={false}
         >
           <View style={v_d81136.container}>
-            <Text style={v_d81136.title}>{v_8d41d7('health_analysis.result_title')}</Text>
+            <Text style={v_d81136.title}>  {v_8d41d7('health_analysis.result_title')}</Text>
 
             {}
             <View style={v_d81136.resultSection}>

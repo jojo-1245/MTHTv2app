@@ -1411,7 +1411,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                                         onPress={() => v_4f73b9(v_01bee9)}
                                                         activeOpacity={0.8}
                                                     >
-                                                        <Text style={v_d81136.productButtonText}>상품 보러가기</Text>
+                                                        <Text style={v_d81136.productButtonText}>{v_8d41d7('skin.result.view_product')}</Text>
                                                         <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
                                                     </TouchableOpacity>
                                                 </View>
@@ -1491,11 +1491,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 {}
                 <View style={v_d81136.buttonSection}>
-                    <SecondaryButton
-                        title={v_8d41d7('skin.result.btn_save')}
-                        onPress={v_8d018e}
-                        fullWidth
-                    />
+                    {
+
+}
                     <PrimaryButton
                         title={v_8d41d7('skin.result.btn_new')}
                         onPress={v_a2f2ec}
