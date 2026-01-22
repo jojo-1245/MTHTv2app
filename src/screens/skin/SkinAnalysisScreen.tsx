@@ -840,17 +840,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     </Text>
                     {}
                     <View style={v_d81136.cameraButtonRow}>
-
-                        <TouchableOpacity
-                            style={v_d81136.cameraGalleryButton}
-                            onPress={() => {
-                                v_7f9a52();
-                                v_2e22e6('gallery');
-                            }}
-                        >
-                            <Ionicons name="images-outline" size={28} color="#FFFFFF" />
-                        </TouchableOpacity>
-
                         <TouchableOpacity
                             style={[
                                 v_d81136.cameraCaptureButton,
@@ -865,8 +854,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <View style={v_d81136.cameraCaptureInner} />
                             )}
                         </TouchableOpacity>
-
-                        <View style={{ width: 56 }} />
                     </View>
                 </View>
             </CameraView>
@@ -1054,6 +1041,22 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         !v_07cd8d?.isSizeOk
                     }
                     fullWidth
+                    style={
+                        (!v_82f4af ||
+                            !v_07cd8d?.hasFace ||
+                            !v_07cd8d?.isFrontal ||
+                            !v_07cd8d?.isSizeOk)
+                            ? v_d81136.primaryButtonDisabled
+                            : undefined
+                    }
+                    textStyle={
+                        (!v_82f4af ||
+                            !v_07cd8d?.hasFace ||
+                            !v_07cd8d?.isFrontal ||
+                            !v_07cd8d?.isSizeOk)
+                            ? v_d81136.primaryButtonDisabledText
+                            : undefined
+                    }
                 />
 
                 {
@@ -2605,6 +2608,13 @@ const v_d81136 = v_472849.create({
         backgroundColor: '#FFFFFF',
         borderWidth: 2,
         borderColor: v_1bfbd0.bluePrimary,
+    },
+    primaryButtonDisabled: {
+        backgroundColor: v_1bfbd0.border,
+        borderColor: v_1bfbd0.border,
+    },
+    primaryButtonDisabledText: {
+        color: v_1bfbd0.secondaryText,
     },
 
     recommendedSection: {

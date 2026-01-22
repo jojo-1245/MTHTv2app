@@ -471,7 +471,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
-          v_03e392.alert(v_8d41d7('common.search'), v_8c0b26.label);
+          v_9b57fc('Chat', {
+            initialSearchText: v_8c0b26.label,
+          });
         }
         break;
     }

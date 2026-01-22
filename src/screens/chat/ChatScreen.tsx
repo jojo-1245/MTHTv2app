@@ -16,10 +16,10 @@ import {
   v_0e1f26,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
+import { v_dec439, v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_556baf, v_5deec6 } from '../../components';
+import { v_729608, v_556baf, v_5deec6 } from '../../components';
 import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
@@ -186,10 +186,16 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
-          v_03e392.alert(v_8d41d7('common.notification'), v_8c0b26.label);
+          v_9b57fc('Chat', { initialSearchText: v_8c0b26.label });
         }
         break;
     }
+  };
+
+  const v_bb559e = () => {
+    v_41d55d([]);
+    v_f32824('');
+    v_c88681(null);
   };
 
   const v_465869 = () => {
@@ -346,29 +352,33 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     <>
       <StatusBar style={v_2f29a7 ? "dark" : "dark"} />
       <SafeView style={v_d81136.screen}>
-        {}
-        <View style={[v_d81136.header, { paddingTop: v_033e14.top + v_9b1a04.small }]}>
-          <TouchableOpacity
-            onPress={() => v_5fe1ef(true)}
-            style={v_d81136.menuButton}
-            activeOpacity={0.7}
-          >
-            <Feather name="menu" size={24} color="#374151" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={v_d81136.logoContainer}
-            onPress={() => v_9b57fc('MetaHome')}
-            activeOpacity={0.7}
-          >
-            <Text style={v_d81136.logoText}>
-              <Text style={v_d81136.logoMeta}>META </Text>
-              <Text style={v_d81136.logoHi}>Hi</Text>
-              <Text style={v_d81136.logoN}>N</Text>
-              <Text style={v_d81136.logoT}>T</Text>
-            </Text>
-          </TouchableOpacity>
-          <View style={v_d81136.headerRight} />
-        </View>
+        <Header
+          title="AI Chat"
+          leftAccessory={(
+            <TouchableOpacity
+              onPress={() => v_5fe1ef(true)}
+              style={v_d81136.headerIconButton}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel="메뉴 열기"
+              accessibilityHint="사이드바 메뉴를 엽니다"
+            >
+              <Feather name="menu" size={24} color="#374151" />
+            </TouchableOpacity>
+          )}
+          rightAccessory={(
+            <TouchableOpacity
+              style={v_d81136.headerIconButton}
+              onPress={v_bb559e}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel="새 채팅"
+              accessibilityHint="새 대화를 시작합니다"
+            >
+              <MaterialCommunityIcons name="square-edit-outline" size={24} color="#374151" />
+            </TouchableOpacity>
+          )}
+        />
 
         <KeyboardAvoidingView
           style={v_d81136.keyboardAvoid}
@@ -510,42 +520,11 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#FFFFFF',
   },
 
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: v_9b1a04.large,
-    paddingVertical: v_9b1a04.medium,
-    backgroundColor: '#FFFFFF',
-  },
-  menuButton: {
+  headerIconButton: {
     width: 44,
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  logoContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  logoText: {
-    fontSize: 22,
-    fontFamily: v_843035.bold,
-  },
-  logoMeta: {
-    color: '#4A5099',
-  },
-  logoHi: {
-    color: '#4A5099',
-  },
-  logoN: {
-    color: '#F59E0B',
-  },
-  logoT: {
-    color: '#EF4444',
-  },
-  headerRight: {
-    width: 44,
   },
 
   keyboardAvoid: {
