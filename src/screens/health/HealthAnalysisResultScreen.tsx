@@ -245,7 +245,7 @@ const v_6d92d1 = (v_3b27d9, v_3b402b, v_8d41d7): SummaryStatusInfo | null => {
   }
 };
 
-const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
+const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
   if (v_3b402b === null || v_3b402b === undefined) {
     return 'N/A';
   }
@@ -262,7 +262,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
       }
       return String(v_a4c14c);
     });
-    const v_87069f = v_3b402b.length > v_4b5e5d ? ` 외 ${v_3b402b.length - v_4b5e5d}개` : '';
+    const v_87069f = v_3b402b.length > v_4b5e5d ? ` ${v_8d41d7('health_analysis.result.more_items', { count: v_3b402b.length - v_4b5e5d })}` : '';
     return `${v_6d2b48.join(', ')} ms${v_87069f}`;
   }
 
@@ -282,7 +282,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
   ];
   if (v_f4d1c2.includes(v_3b27d9)) {
     const v_842d09 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    return v_842d09 === 1 ? '위험' : '정상';
+    return v_842d09 === 1 ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal');
   }
 
   const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -303,7 +303,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9): string => {
     } else if (v_3b27d9 === v_e3e816.MEAN_ARTERIAL_PRESSURE || v_3b27d9 === v_e3e816.PULSE_PRESSURE) {
       return `${v_549ed3.toFixed(1)} mmHg`;
     } else if (v_3b27d9 === v_e3e816.HEART_AGE) {
-      return `${v_549ed3.toFixed(0)} 세`;
+      return `${v_549ed3.toFixed(0)} ${v_8d41d7('health_analysis.result.age_unit')}`;
     } else {
       return v_549ed3.toFixed(1);
     }
@@ -459,7 +459,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           v_d371b8,
                         ]}
                       >
-                        {v_a6fe82(v_9390e8.value, v_653390)}
+                        {v_a6fe82(v_9390e8.value, v_653390, v_8d41d7)}
                       </Text>
                       {}
                       {v_75da5e && (
@@ -621,7 +621,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         {v_50f905(v_653390, v_8d41d7)}
                       </Text>
                       <Text style={v_d81136.sectionValue}>
-                        {v_a6fe82(v_9390e8.value, v_653390)}
+                        {v_a6fe82(v_9390e8.value, v_653390, v_8d41d7)}
                       </Text>
                       {v_828097 && (
                         <Text style={v_d81136.riskText}>{v_828097}</Text>
