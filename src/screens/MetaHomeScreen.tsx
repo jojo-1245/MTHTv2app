@@ -486,7 +486,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_128506 = (v_180423) => {
-    v_03e392.alert(v_8d41d7('common.confirm'), v_180423);
+    v_9b57fc('Chat', {
+      initialSearchText: v_180423,
+    });
   };
 
   const v_5e757d = () => {
