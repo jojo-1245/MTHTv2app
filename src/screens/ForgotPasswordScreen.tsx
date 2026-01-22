@@ -11,15 +11,18 @@ import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import { v_729608, v_cb41de, v_e775af } from '../components';
 import type { v_8ad91b } from '../navigation';
 
+import { v_772971 } from 'jmpfvteuuztnp';
+
 type Props = v_432191<v_8ad91b, 'ForgotPassword'>;
 
 const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
 
   return (
     <View style={v_d81136.screen}>
       <Header
-        title="Forgot password?"
+        title={v_8d41d7('login.forgot_password')}
         subtitle=""
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
@@ -31,22 +34,22 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       >
         <View style={v_d81136.form}>
           <TextField
-            label="Email address"
-            placeholder="Enter your email address"
+            label={v_8d41d7('login.email_label')}
+            placeholder={v_8d41d7('login.email_placeholder')}
             keyboardType="email-address"
             autoCapitalize="none"
             value={v_e0c7e8}
             onChangeText={v_fedf34}
           />
           <PrimaryButton
-            title="Send code"
+            title={v_8d41d7('forgot_password.send_code')}
             onPress={() => v_c65f5d.navigate('PasswordVerification')}
           />
 
           <View style={v_d81136.footerRow}>
-            <Text style={v_d81136.footerText}>Remember password? </Text>
+            <Text style={v_d81136.footerText}>{v_8d41d7('forgot_password.remember_pwd')}</Text>
             <TouchableOpacity onPress={() => v_c65f5d.navigate('Login')}>
-              <Text style={v_d81136.footerLink}>Log in</Text>
+              <Text style={v_d81136.footerLink}>{v_8d41d7('common.login')}</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -23,24 +23,16 @@ import {
 import type { v_8ad91b } from '../navigation';
 import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_4a0202, v_09d767, v_91bb22 } from '../services';
 
 type Props = v_432191<v_8ad91b, 'Signup'>;
 
-const v_21bdd5 = [
-  { value: 'male', label: '남' },
-  { value: 'female', label: '여' },
-] as const;
-
-const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
-type GenderOption = (typeof v_21bdd5)[number];
-type AgeOption = (typeof v_0c96f7)[number];
-
 const v_901315 =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
-const v_064327 = '8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함';
 
 const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
   const {
     selectedCountryDialCode: v_459d5e,
     selectedRegion: v_2f03bc,
@@ -48,10 +40,21 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     signupFormData: v_8d7bc8,
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
+
+  const v_21bdd5 = v_df9f57(() => [
+    { value: 'male', label: v_8d41d7('common.male') },
+    { value: 'female', label: v_8d41d7('common.female') },
+  ], [v_8d41d7]);
+
+  const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
+  type AgeOption = (typeof v_0c96f7)[number];
+
+  const v_064327 = v_8d41d7('signup.password_rule');
+
   const [v_a6fcf8, v_539b92] = v_5ab095(true);
   const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
   const [v_c3eac4, v_bdc43c] =
-    v_5ab095<typeof v_21bdd5[number]['value']>('male');
+    v_5ab095<'male' | 'female'>('male');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_1833e7, v_318f24] = v_5ab095('');
@@ -71,7 +74,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_559736 = (): string | null => {
     if (!v_8b47e4 || v_e0c7e8.length === 0) return null;
     if (!v_0e461e(v_e0c7e8)) {
-      return '올바른 이메일 형식을 입력해주세요.';
+      return v_8d41d7('signup.error_email_format');
     }
     return null;
   };
@@ -79,7 +82,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_8f5468 = (): string | null => {
     if (!v_5996d6 || v_9bf12c.length === 0) return null;
     if (!v_0e461e(v_9bf12c)) {
-      return '올바른 이메일 형식을 입력해주세요.';
+      return v_8d41d7('signup.error_email_format');
     }
     return null;
   };
@@ -106,7 +109,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
 
     if (v_9de4ac.length > 0) {
-      return `${v_9de4ac.join(', ')}가 필요합니다.`;
+      return v_8d41d7('signup.error_password_requirement', { errors: v_9de4ac.join(', ') });
     }
     return null;
   };
@@ -217,7 +220,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   return (
     <>
       <View style={v_d81136.screen}>
-        <Header title="회원가입" showBackButton onBackPress={() => v_c65f5d.goBack()} />
+        <Header title={v_8d41d7('signup.title')} showBackButton onBackPress={() => v_c65f5d.goBack()} />
         <SafeScrollView
           contentContainerStyle={v_d81136.content}
           keyboardShouldPersistTaps="handled"
@@ -227,8 +230,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.form}>
             {}
             <TextField
-              label="이름"
-              placeholder="Enter your Last name"
+              label={v_8d41d7('signup.name_label')}
+              placeholder={v_8d41d7('signup.name_placeholder')}
               value={v_1833e7}
               onChangeText={v_318f24}
               editable={!v_88dca2}
@@ -237,8 +240,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View>
               <TextField
-                label="Email"
-                placeholder="Enter your email address"
+                label={v_8d41d7('signup.email_label')}
+                placeholder={v_8d41d7('signup.email_placeholder')}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={v_e0c7e8}
@@ -253,8 +256,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View>
               <PasswordField
-                label="비밀번호"
-                placeholder="Password"
+                label={v_8d41d7('signup.password_label')}
+                placeholder={v_8d41d7('signup.password_placeholder')}
                 value={v_adc076}
                 onChangeText={v_57c91b}
                 editable={!v_88dca2}
@@ -268,8 +271,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <TextField
-              label="전화번호"
-              placeholder="010-1010-1000"
+              label={v_8d41d7('signup.phone_label')}
+              placeholder={v_8d41d7('signup.phone_placeholder')}
               keyboardType="phone-pad"
               value={v_d74a81}
               onChangeText={v_641550}
@@ -289,8 +292,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <SelectField
-              label="지역"
-              placeholder="Korea"
+              label={v_8d41d7('signup.region_label')}
+              placeholder={v_8d41d7('signup.region_placeholder')}
               value={v_56743f}
               onPress={v_b36a76}
               disabled={!v_590486 || v_88dca2}
@@ -298,14 +301,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <View>
-              <Text style={v_d81136.sectionLabel}>성별</Text>
+              <Text style={v_d81136.sectionLabel}>{v_8d41d7('signup.gender_label')}</Text>
               <View style={v_d81136.inlineOptions}>
                 {v_21bdd5.map((v_0bd920) => (
                   <OptionButton
                     key={v_0bd920.value}
                     label={v_0bd920.label}
                     selected={v_c3eac4 === v_0bd920.value}
-                    onPress={() => v_bdc43c(v_0bd920.value)}
+                    onPress={() => v_bdc43c(v_0bd920.value as 'male' | 'female')}
                   />
                 ))}
               </View>
@@ -313,7 +316,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <View>
-              <Text style={v_d81136.sectionLabel}>나이</Text>
+              <Text style={v_d81136.sectionLabel}>{v_8d41d7('signup.age_label')}</Text>
               <View style={v_d81136.inlineOptions}>
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
@@ -329,8 +332,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View>
               <TextField
-                label="추천이메일"
-                placeholder="oth-staff@example.invalid"
+                label={v_8d41d7('signup.referral_label')}
+                placeholder={v_8d41d7('signup.referral_placeholder')}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={v_9bf12c}
@@ -345,7 +348,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View style={v_d81136.checkboxWrapper}>
               <FormCheckbox
-                label="METAHiNT서비스 약관 및 개인정보 보호정책에 동의합니다."
+                label={v_8d41d7('signup.terms_agree')}
                 value={v_a6fcf8}
                 onChange={(v_3b402b) => !v_88dca2 && v_539b92(v_3b402b)}
               />
@@ -354,7 +357,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View style={v_d81136.buttonWrapper}>
               <PrimaryButton
-                title={v_88dca2 ? '가입 중...' : '가입하기'}
+                title={v_88dca2 ? v_8d41d7('signup.submitting') : v_8d41d7('signup.submit')}
                 onPress={v_47ed2f}
                 disabled={v_88dca2}
               />

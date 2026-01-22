@@ -22,6 +22,7 @@ import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import v_f595b9, { v_bf60de, v_003e74, v_050c3d, v_19b633 as v_9b42ad, v_9033e9, v_9aafc7 } from 'vpztcxjmsfanunln';
 import { v_570c34, v_5deec6 } from '../components';
+import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_16b893, v_53f592 } from '../constants';
@@ -37,87 +38,87 @@ interface HealthInfo {
   name: string;
 }
 
-const v_33dc2e = [
-  { id: '1', name: '할머니' },
-  { id: '2', name: '할아버지' },
-  { id: '3', name: '아버지' },
+const v_f7d55f = (v_8d41d7): HealthInfo[] => [
+  { id: '1', name: v_8d41d7('home.family_members.grandma') },
+  { id: '2', name: v_8d41d7('home.family_members.grandpa') },
+  { id: '3', name: v_8d41d7('home.family_members.father') },
 ];
 
 const { width: v_0d9f50 } = v_700696.get('window');
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
-const v_74dc09 = [
+const v_0b97e2 = (v_8d41d7) => [
   {
     id: '1',
-    question: '주름개선 하는방법 알려줘.',
-    preview: 'Youcod 주름개선 화장품 추천 .....',
+    question: v_8d41d7('home.popular_questions_list.q1.question'),
+    preview: v_8d41d7('home.popular_questions_list.q1.preview'),
   },
   {
     id: '2',
-    question: '다크서클 없애는 방법은?',
-    preview: '다크서클 개선을 위해서는 .....',
+    question: v_8d41d7('home.popular_questions_list.q2.question'),
+    preview: v_8d41d7('home.popular_questions_list.q2.preview'),
   },
   {
     id: '3',
-    question: '피부 수분 관리 방법',
-    preview: '피부 수분을 유지하려면 .....',
+    question: v_8d41d7('home.popular_questions_list.q3.question'),
+    preview: v_8d41d7('home.popular_questions_list.q3.preview'),
   },
   {
     id: '4',
-    question: '모공 축소하는 방법',
-    preview: '모공 관리를 위해서는 .....',
+    question: v_8d41d7('home.popular_questions_list.q4.question'),
+    preview: v_8d41d7('home.popular_questions_list.q4.preview'),
   },
 ];
 
 const v_191cd1 = [
     { id: 'skinType', label: 'Skin Type', score: 78, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
-    { id: 'spots', label: 'Spots', score: 78, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
-    { id: 'wrinkles', label: 'Wrinkles', score: 91, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
+    { id: 'age_spot', label: 'Spots', score: 78, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
+    { id: 'wrinkle', label: 'Wrinkles', score: 91, color: '#22C55E', radarBefore: 60, radarAfter: 80 },
     { id: 'texture', label: 'Texture', score: 96, color: '#06B6D4', radarBefore: 65, radarAfter: 85 },
     { id: 'acne', label: 'Acne', score: 96, color: '#9CA3AF', radarBefore: 70, radarAfter: 85 },
-    { id: 'darkCircles', label: 'Dark Circles', score: 77, color: '#9CA3AF', radarBefore: 50, radarAfter: 75 },
+    { id: 'dark_circle_v2', label: 'Dark Circles', score: 77, color: '#9CA3AF', radarBefore: 50, radarAfter: 75 },
     { id: 'redness', label: 'Redness', score: 99, color: '#EF4444', radarBefore: 55, radarAfter: 75 },
     { id: 'oiliness', label: 'Oiliness', score: 93, color: '#F97316', radarBefore: 45, radarAfter: 70 },
     { id: 'moisture', label: 'Moisture', score: 83, color: '#06B6D4', radarBefore: 55, radarAfter: 80 },
-    { id: 'pores', label: 'Pores', score: 87, color: '#84CC16', radarBefore: 45, radarAfter: 70 },
-    { id: 'eyeBags', label: 'Eye bags', score: 86, color: '#22C55E', radarBefore: 55, radarAfter: 75 },
+    { id: 'pore', label: 'Pores', score: 87, color: '#84CC16', radarBefore: 45, radarAfter: 70 },
+    { id: 'eye_bag', label: 'Eye bags', score: 86, color: '#22C55E', radarBefore: 55, radarAfter: 75 },
     { id: 'radiance', label: 'Radiance', score: 89, color: '#22C55E', radarBefore: 50, radarAfter: 80 },
     { id: 'firmness', label: 'Firmness', score: 90, color: '#EC4899', radarBefore: 40, radarAfter: 75 },
-    { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 81, color: '#06B6D4', radarBefore: 60, radarAfter: 80 },
-    { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 75, color: '#84CC16', radarBefore: 50, radarAfter: 70 },
+    { id: 'droopy_upper_eyelid', label: 'Droopy Upper Eyelid', score: 81, color: '#06B6D4', radarBefore: 60, radarAfter: 80 },
+    { id: 'droopy_lower_eyelid', label: 'Droopy Lower Eyelid', score: 75, color: '#84CC16', radarBefore: 50, radarAfter: 70 },
   ];
 
 const v_be142a = [
     { id: 'skinType', label: 'Skin Type', score: 72, color: '#8B4513', isButton: true, radarBefore: 0, radarAfter: 0 },
-    { id: 'spots', label: 'Spots', score: 65, color: '#F97316', radarBefore: 50, radarAfter: 65 },
-    { id: 'wrinkles', label: 'Wrinkles', score: 82, color: '#22C55E', radarBefore: 55, radarAfter: 70 },
+    { id: 'age_spot', label: 'Spots', score: 65, color: '#F97316', radarBefore: 50, radarAfter: 65 },
+    { id: 'wrinkle', label: 'Wrinkles', score: 82, color: '#22C55E', radarBefore: 55, radarAfter: 70 },
     { id: 'texture', label: 'Texture', score: 88, color: '#06B6D4', radarBefore: 60, radarAfter: 75 },
     { id: 'acne', label: 'Acne', score: 85, color: '#9CA3AF', radarBefore: 60, radarAfter: 75 },
-    { id: 'darkCircles', label: 'Dark Circles', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 65 },
+    { id: 'dark_circle_v2', label: 'Dark Circles', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 65 },
     { id: 'redness', label: 'Redness', score: 92, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
     { id: 'oiliness', label: 'Oiliness', score: 85, color: '#F97316', radarBefore: 40, radarAfter: 60 },
     { id: 'moisture', label: 'Moisture', score: 75, color: '#F97316', radarBefore: 50, radarAfter: 70 },
-    { id: 'pores', label: 'Pores', score: 78, color: '#84CC16', radarBefore: 40, radarAfter: 60 },
-    { id: 'eyeBags', label: 'Eye bags', score: 79, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
+    { id: 'pore', label: 'Pores', score: 78, color: '#84CC16', radarBefore: 40, radarAfter: 60 },
+    { id: 'eye_bag', label: 'Eye bags', score: 79, color: '#22C55E', radarBefore: 50, radarAfter: 70 },
     { id: 'radiance', label: 'Radiance', score: 80, color: '#22C55E', radarBefore: 45, radarAfter: 70 },
     { id: 'firmness', label: 'Firmness', score: 82, color: '#EC4899', radarBefore: 35, radarAfter: 65 },
-    { id: 'droopyUpper', label: 'Droopy Upper Eyelid', score: 74, color: '#06B6D4', radarBefore: 55, radarAfter: 70 },
-    { id: 'droopyLower', label: 'Droopy Lower Eyelid', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 60 },
+    { id: 'droopy_upper_eyelid', label: 'Droopy Upper Eyelid', score: 74, color: '#06B6D4', radarBefore: 55, radarAfter: 70 },
+    { id: 'droopy_lower_eyelid', label: 'Droopy Lower Eyelid', score: 68, color: '#F97316', radarBefore: 45, radarAfter: 60 },
   ];
 
 const v_2b90bf = '2026.01.15';
 const v_c10ca0 = '2025.12.20';
 
-const v_4a3ec5 = {
-  caution: ['모공', '수분'],  
-  danger: ['탄력'],           
-};
+const v_c213ed = (v_8d41d7) => ({
+  caution: [v_8d41d7('skin.concerns.pore'), v_8d41d7('skin.concerns.moisture')],  
+  danger: [v_8d41d7('skin.concerns.firmness')],           
+});
 
-const v_df3284 = {
-  caution: ['다크서클', '유분'],  
-  danger: ['잡티', '수분'],       
-};
+const v_f2f33a = (v_8d41d7) => ({
+  caution: [v_8d41d7('skin.concerns.dark_circle_v2'), v_8d41d7('skin.concerns.oiliness')],  
+  danger: [v_8d41d7('skin.concerns.age_spot'), v_8d41d7('skin.concerns.moisture')],       
+});
 
 const RadarChart: v_a3453e.FC<{
   data?: number[];  
@@ -352,6 +353,7 @@ const CircularGauge: v_a3453e.FC<{
 
 const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
+  const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
@@ -393,22 +395,22 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_a36c61 = v_204bf1 === 'recent' ? v_191cd1 : v_be142a;
   const v_d39d27 = v_204bf1 === 'recent' ? v_2b90bf : v_c10ca0;
   const v_287ba3 = v_204bf1 === 'recent' ? 17 : 19;
-  const v_972b6e = v_204bf1 === 'recent' ? v_4a3ec5 : v_df3284;
+  const v_972b6e = v_204bf1 === 'recent' ? v_c213ed(v_8d41d7) : v_f2f33a(v_8d41d7);
 
   const v_fc5fb7 = (v_740dd8): string => {
-    if (v_740dd8 >= 8) return '높음';
-    if (v_740dd8 >= 6) return '양호';
-    if (v_740dd8 >= 4) return '보통';
-    if (v_740dd8 >= 2) return '주의';
-    return '위험';
+    if (v_740dd8 >= 8) return v_8d41d7('home.health_labels.high');
+    if (v_740dd8 >= 6) return v_8d41d7('home.health_labels.good');
+    if (v_740dd8 >= 4) return v_8d41d7('home.health_labels.normal');
+    if (v_740dd8 >= 2) return v_8d41d7('home.health_labels.caution');
+    return v_8d41d7('home.health_labels.danger');
   };
 
   const v_d22127 = (v_fbe91e): string => {
-    if (v_fbe91e >= 9) return '우수단계';
-    if (v_fbe91e >= 7) return '양호단계';
-    if (v_fbe91e >= 5) return '보통단계';
-    if (v_fbe91e >= 3) return '주의단계';
-    return '위험단계';
+    if (v_fbe91e >= 9) return v_8d41d7('home.health_level_labels.excellent');
+    if (v_fbe91e >= 7) return v_8d41d7('home.health_level_labels.good');
+    if (v_fbe91e >= 5) return v_8d41d7('home.health_level_labels.normal');
+    if (v_fbe91e >= 3) return v_8d41d7('home.health_level_labels.caution');
+    return v_8d41d7('home.health_level_labels.danger');
   };
 
   const v_7d58f2 = v_df9f57(() => {
@@ -443,7 +445,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         v_9b57fc('Wallet');
         break;
       case 'shop':
-        v_03e392.alert('안내', 'Shop 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.shop_preparing'));
         break;
       case 'chat':
         v_9b57fc('Chat');
@@ -459,17 +461,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         break;
       case 'grandma':
       case 'grandpa':
-        v_03e392.alert('안내', '가족 프로필 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.family_preparing'));
         break;
       case 'history':
-        v_03e392.alert('안내', '검색 기록 화면은 준비 중입니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.history_preparing'));
         break;
       case 'myinfo':
         v_9b57fc('MyInfo');
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
-          v_03e392.alert('검색', v_8c0b26.label);
+          v_03e392.alert(v_8d41d7('common.search'), v_8c0b26.label);
         }
         break;
     }
@@ -484,7 +486,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_128506 = (v_180423) => {
-    v_03e392.alert('질문', v_180423);
+    v_03e392.alert(v_8d41d7('common.confirm'), v_180423);
   };
 
   const v_5e757d = () => {
@@ -544,7 +546,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       v_8c0b26 => !v_8c0b26.isButton && v_459c4b.includes(v_8c0b26.id)
     );
 
-    const v_e0187d = v_f7373f.map(v_8c0b26 => v_8c0b26.label);
+    const v_e0187d = v_f7373f.map(v_8c0b26 => v_8c0b26.id === 'skinType' ? 'Skin Type' : v_8d41d7(`skin.concerns.${v_8c0b26.id}`));
     const v_33efc5 = v_f7373f.map(v_8c0b26 => v_8c0b26.radarAfter);
 
     const v_e98932 = v_4c2f50
@@ -562,7 +564,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     };
   }, [v_459c4b, v_4c2f50]);
 
-  const v_b5f731 = ({ item: v_8c0b26 }: { item: typeof v_74dc09[0] }) => (
+  const v_b5f731 = ({ item: v_8c0b26 }: { item: any }) => (
     <TouchableOpacity
       style={v_d81136.questionCard}
       onPress={() => v_128506(v_8c0b26.question)}
@@ -598,7 +600,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 style={v_d81136.iconButton}
                 activeOpacity={0.7}
                 accessibilityRole="button"
-                accessibilityLabel="메뉴 열기"
+                accessibilityLabel={v_8d41d7('common.open_menu')}
               >
                 <Feather name="menu" size={24} color="#FFFFFF" />
               </TouchableOpacity>
@@ -607,7 +609,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 style={v_d81136.iconButton}
                 activeOpacity={0.7}
                 accessibilityRole="button"
-                accessibilityLabel="알림"
+                accessibilityLabel={v_8d41d7('common.notification')}
               >
                 <View style={v_d81136.notificationIconContainer}>
                   <Ionicons name="notifications-outline" size={24} color="#FFFFFF" />
@@ -620,8 +622,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
             {}
             <View style={v_d81136.greetingContainer}>
-              <Text style={v_d81136.greetingText}>안녕하세요.</Text>
-              <Text style={v_d81136.greetingTitle}>건강분석 AI 힌티 입니다</Text>
+              <Text style={v_d81136.greetingText}>{v_8d41d7('home.welcome')}</Text>
+              <Text style={v_d81136.greetingTitle}>{v_8d41d7('home.ai_intro')}</Text>
             </View>
 
             {}
@@ -640,7 +642,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             ]}>
               <TextInput
                 style={v_d81136.searchInput}
-                placeholder={(v_40f660 || v_437b17 || v_e870d1) ? "건강정보를 검색하세요" : "TED 님, 무엇이 궁금하신가요?"}
+                placeholder={(v_40f660 || v_437b17 || v_e870d1) ? v_8d41d7('home.search_health_placeholder') : v_8d41d7('home.search_placeholder')}
                 placeholderTextColor="#999"
                 value={v_89bb03}
                 onChangeText={v_39f9a7}
@@ -690,7 +692,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 <View style={v_d81136.searchExtraRight}>
                   <TouchableOpacity
                     style={v_d81136.searchExtraButton}
-                    onPress={() => v_03e392.alert('음성', '음성 검색 기능은 준비 중입니다.')}
+                    onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('common.voice_search_coming_soon'))}
                   >
                     <Ionicons name="mic-outline" size={24} color="#6B7280" />
                   </TouchableOpacity>
@@ -701,9 +703,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>인기있는 질문</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.popular_questions')}</Text>
             <FlatList
-              data={v_74dc09}
+              data={v_0b97e2(v_8d41d7)}
               renderItem={v_b5f731}
               keyExtractor={(v_8c0b26) => v_8c0b26.id}
               horizontal
@@ -716,7 +718,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>내 건강상태</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.my_health_status')}</Text>
             <View style={v_d81136.healthStatusCard}>
               {}
               <TouchableOpacity
@@ -724,8 +726,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 onPress={v_74d6ea}
                 activeOpacity={0.8}
               >
-                <Text style={v_d81136.analysisButtonText}>피부</Text>
-                <Text style={v_d81136.analysisButtonText}>분석하기</Text>
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.skin')}</Text>
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.skin_analysis')}</Text>
               </TouchableOpacity>
 
               {}
@@ -743,15 +745,15 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 onPress={v_ae6f36}
                 activeOpacity={0.8}
               >
-                <Text style={v_d81136.analysisButtonText}>건강</Text>
-                <Text style={v_d81136.analysisButtonText}>분석하기</Text>
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.health')}</Text>
+                <Text style={v_d81136.analysisButtonText}>{v_8d41d7('home.health_analysis')}</Text>
               </TouchableOpacity>
             </View>
           </View>
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>나의 건강레벨</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.my_health_level')}</Text>
             <View style={v_d81136.healthLevelCard}>
               <View style={[v_d81136.levelIconContainer, { backgroundColor: v_16b893[v_30ddf9 as keyof typeof v_16b893] + '20' }]}>
                 <MaterialCommunityIcons
@@ -768,7 +770,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Text style={v_d81136.levelStatus}>{v_d22127(v_30ddf9)}</Text>
                 </View>
                 <Text style={v_d81136.levelDescription}>
-                  상태 유지를 위한 지속적 관리 필요
+                  {v_8d41d7('home.health_level_desc')}
                 </Text>
               </View>
             </View>
@@ -776,7 +778,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>피부 분석 결과</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.skin_result_title')}</Text>
             <View style={v_d81136.skinAnalysisCard}>
               {}
               <View style={v_d81136.radarChartContainer}>
@@ -786,7 +788,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     height: v_7d58f2.radarChartSize
                   }]}>
                     <Text style={v_d81136.radarChartPlaceholderText}>
-                      피부 분석 결과가 없습니다{'\n'}피부 분석을 진행해주세요
+                      {v_8d41d7('home.no_skin_data')}
                     </Text>
                   </View>
                 ) : (
@@ -802,11 +804,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <View style={v_d81136.legendContainer}>
                     <View style={v_d81136.legendItem}>
                       <View style={v_d81136.legendLineSolid} />
-                      <Text style={v_d81136.legendText}>최근분석</Text>
+                      <Text style={v_d81136.legendText}>{v_8d41d7('home.recent_analysis')}</Text>
                     </View>
                     <View style={v_d81136.legendItem}>
                       <View style={v_d81136.legendLineDashed} />
-                      <Text style={v_d81136.legendText}>이전분석</Text>
+                      <Text style={v_d81136.legendText}>{v_8d41d7('home.previous_analysis')}</Text>
                     </View>
                   </View>
                 )}
@@ -828,7 +830,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                         v_d81136.analysisTabText,
                         v_204bf1 === 'recent' && v_d81136.analysisTabTextActive,
                       ]}>
-                        최근분석
+                        {v_8d41d7('home.recent_analysis')}
                       </Text>
                     </TouchableOpacity>
                   )}
@@ -845,7 +847,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                         v_d81136.analysisTabText,
                         v_204bf1 === 'previous' && v_d81136.analysisTabTextActive,
                       ]}>
-                        이전분석
+                        {v_8d41d7('home.previous_analysis')}
                       </Text>
                     </TouchableOpacity>
                   )}
@@ -854,7 +856,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
               {}
               {v_ea9dec && (
-                <Text style={v_d81136.analysisDateText}>분석일자: {v_d39d27}</Text>
+                <Text style={v_d81136.analysisDateText}>{v_8d41d7('home.analysis_date', { date: v_d39d27 })}</Text>
               )}
 
               {}
@@ -862,7 +864,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 <View style={v_d81136.warningSection}>
                   {v_972b6e.caution.length > 0 && (
                     <View style={v_d81136.warningRow}>
-                      <Text style={v_d81136.warningLabel}>주의</Text>
+                      <Text style={v_d81136.warningLabel}>{v_8d41d7('home.caution')}</Text>
                       <View style={v_d81136.tagContainer}>
                         {v_972b6e.caution.map((v_8c0b26, v_a56041) => (
                           <View key={`caution-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagWarning]}>
@@ -874,7 +876,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   )}
                   {v_972b6e.danger.length > 0 && (
                     <View style={v_d81136.warningRow}>
-                      <Text style={v_d81136.warningLabel}>경고</Text>
+                      <Text style={v_d81136.warningLabel}>{v_8d41d7('home.danger')}</Text>
                       <View style={v_d81136.tagContainer}>
                         {v_972b6e.danger.map((v_8c0b26, v_a56041) => (
                           <View key={`danger-${v_a56041}`} style={[v_d81136.tag, v_d81136.tagDanger]}>
@@ -889,7 +891,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
               {}
               <View style={v_d81136.diagnosticSection}>
-                <Text style={v_d81136.diagnosticTitle}>Live Diagnostic Results</Text>
+                <Text style={v_d81136.diagnosticTitle}>{v_8d41d7('skin.result.all_results')}</Text>
                 {}
                 {v_ea9dec && (
                   <Text style={v_d81136.skinAgeText}>SKIN AGE: {v_287ba3}</Text>
@@ -948,7 +950,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                             </Text>
                           </View>
                           <Text style={[v_d81136.diagnosticLabelNew, { fontSize: v_7d58f2.labelFontSize }]} numberOfLines={2}>
-                            {v_8c0b26.label}
+                            {v_8d41d7(`skin.concerns.${v_8c0b26.id}`)}
                           </Text>
                         </View>
                       );
@@ -958,7 +960,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
                 {}
                 <TouchableOpacity style={v_d81136.tryAgainButton} onPress={v_74d6ea}>
-                  <Text style={v_d81136.tryAgainText}>TRY AGAIN</Text>
+                  <Text style={v_d81136.tryAgainText}>{v_8d41d7('home.try_again')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -966,7 +968,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>나의 건강지수</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.my_health_index')}</Text>
             <View style={v_d81136.healthScoreCard}>
               {}
               <View style={v_d81136.gaugeContainer}>
@@ -979,13 +981,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
               {}
               <View style={v_d81136.healthScoreLabel}>
-                <Text style={v_d81136.healthScoreLabelText}>건강 지수</Text>
+                <Text style={v_d81136.healthScoreLabelText}>{v_8d41d7('home.health_index_label')}</Text>
                 <Ionicons name="information-circle-outline" size={16} color="#9CA3AF" />
               </View>
 
               {}
               <Text style={v_d81136.healthDisclaimer}>
-                측정된 지표는 의료용이 아닙니다
+                {v_8d41d7('home.medical_disclaimer')}
               </Text>
             </View>
           </View>
@@ -1008,19 +1010,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             { paddingBottom: v_033e14.bottom + v_9b1a04.medium }
           ]}>
             <View style={v_d81136.healthPanelHeader}>
-              <Text style={v_d81136.healthPanelTitle}>건강정보 불러오기</Text>
+              <Text style={v_d81136.healthPanelTitle}>{v_8d41d7('chat.health_info_title')}</Text>
               <TouchableOpacity onPress={() => {
                 v_aa40cb(false);
                 v_9b57fc('HealthConnection');
               }}>
-                <Text style={v_d81136.healthPanelLink}>건강정보 연결하기</Text>
+                <Text style={v_d81136.healthPanelLink}>{v_8d41d7('chat.health_info_connect')}</Text>
               </TouchableOpacity>
             </View>
             <ScrollView
               style={v_d81136.healthPanelList}
               showsVerticalScrollIndicator={false}
             >
-              {v_33dc2e.map((v_8c0b26) => (
+              {v_f7d55f(v_8d41d7).map((v_8c0b26) => (
                 <TouchableOpacity
                   key={v_8c0b26.id}
                   style={v_d81136.healthPanelItem}
@@ -1058,7 +1060,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
         >
           <Pressable style={v_d81136.modalContent} onPress={() => { }}>
             <View style={v_d81136.modalHeader}>
-              <Text style={v_d81136.modalTitle}>표시할 항목 선택</Text>
+              <Text style={v_d81136.modalTitle}>{v_8d41d7('home.select_items_title')}</Text>
               <TouchableOpacity
                 onPress={() => v_9fb738(false)}
                 style={v_d81136.modalCloseButton}
@@ -1073,13 +1075,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 style={v_d81136.selectAllButton}
                 onPress={() => v_54edde(true)}
               >
-                <Text style={v_d81136.selectAllText}>전체 선택</Text>
+                <Text style={v_d81136.selectAllText}>{v_8d41d7('skin.settings.select_all')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={v_d81136.selectAllButton}
                 onPress={() => v_54edde(false)}
               >
-                <Text style={v_d81136.selectAllText}>전체 해제</Text>
+                <Text style={v_d81136.selectAllText}>{v_8d41d7('skin.settings.deselect_all')}</Text>
               </TouchableOpacity>
             </View>
 
@@ -1092,7 +1094,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 >
                   <View style={v_d81136.modalItemLeft}>
                     <View style={[v_d81136.modalItemDot, { backgroundColor: v_53f592(v_8c0b26.score) }]} />
-                    <Text style={v_d81136.modalItemLabel}>{v_8c0b26.label}</Text>
+                    <Text style={v_d81136.modalItemLabel}>{v_8c0b26.id === 'skinType' ? 'Skin Type' : v_8d41d7(`skin.concerns.${v_8c0b26.id}`)}</Text>
                   </View>
                   <View style={[
                     v_d81136.checkbox,
@@ -1110,7 +1112,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               style={v_d81136.modalConfirmButton}
               onPress={() => v_9fb738(false)}
             >
-              <Text style={v_d81136.modalConfirmText}>확인</Text>
+              <Text style={v_d81136.modalConfirmText}>{v_8d41d7('common.confirm')}</Text>
             </TouchableOpacity>
           </Pressable>
         </Pressable>

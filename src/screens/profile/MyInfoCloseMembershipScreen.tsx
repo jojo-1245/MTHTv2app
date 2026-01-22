@@ -1,5 +1,6 @@
 import v_a3453e, { v_5ab095 } from 'bapkr';
 import { v_472849, v_19b633, v_3094a2 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
 import { v_729608, v_cb41de, v_8714fe, v_fa3feb, v_8e2768, v_570c34 } from '../../components';
@@ -9,6 +10,7 @@ import { v_a0daa8 } from '../../navigation';
 type Props = v_432191<v_8ad91b, 'MyInfoCloseMembership'>;
 
 const MyInfoCloseMembershipScreen: v_a3453e.FC<Props> = () => {
+  const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const [v_a6fcf8, v_539b92] = v_5ab095(false);
   const [v_889fad, v_c39b09] = v_5ab095(false);
@@ -24,25 +26,25 @@ const MyInfoCloseMembershipScreen: v_a3453e.FC<Props> = () => {
 
   return (
     <View style={v_d81136.container}>
-      <Header title="Close Membership" showBackButton onBackPress={v_c7ac57} />
+      <Header title={v_8d41d7('my_info_close_membership.title')} showBackButton onBackPress={v_c7ac57} />
       <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
         <View style={v_d81136.form}>
           <Text style={v_d81136.warningText}>
-            회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.
+            {v_8d41d7('my_info_close_membership.warning')}
           </Text>
           <FormCheckbox
-            label="위 내용을 확인했으며, 회원 탈퇴에 동의합니다."
+            label={v_8d41d7('my_info_close_membership.agree_label')}
             value={v_a6fcf8}
             onChange={v_539b92}
           />
           <View style={v_d81136.buttonContainer}>
             <SecondaryButton
-              title="취소"
+              title={v_8d41d7('my_info_close_membership.cancel_button')}
               onPress={v_c7ac57}
               style={v_d81136.cancelButton}
             />
             <PrimaryButton
-              title="탈퇴하기"
+              title={v_8d41d7('my_info_close_membership.delete_button')}
               onPress={v_0d28ed}
               style={v_d81136.deleteButton}
             />
@@ -51,8 +53,8 @@ const MyInfoCloseMembershipScreen: v_a3453e.FC<Props> = () => {
       </SafeScrollView>
       <AlertModal
         visible={v_889fad}
-        title="확인 필요"
-        message="회원 탈퇴에 동의해주세요."
+        title={v_8d41d7('my_info_close_membership.alert_title')}
+        message={v_8d41d7('my_info_close_membership.alert_message')}
         onConfirm={() => v_c39b09(false)}
       />
     </View>

@@ -11,6 +11,7 @@ import {
   v_e99fe0,
   v_9328cf,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
@@ -105,6 +106,7 @@ const v_a79016 = (v_3b27d9): string => {
 };
 
 const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
 
@@ -188,7 +190,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     const v_32cb14 = await v_ec0597();
     if (!v_32cb14) {
-      v_03e392.alert('권한 필요', '카메라 사용 권한이 필요합니다. 설정에서 권한을 허용해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('health_analysis.errors.camera_permission_required'));
       return;
     }
 
@@ -205,7 +207,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       const v_651d83 = v_fa53c9();
       if (!v_651d83) {
-        throw new Error('FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요.');
+        throw new Error(v_8d41d7('health_analysis.errors.license_key_not_set'));
       }
 
       console.log('라이센스 키 확인:', v_651d83 ? `${v_651d83.substring(0, 10)}...` : '없음');
@@ -224,7 +226,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       console.log('세션 생성 완료, 세션 객체:', !!v_a3ff5a.current);
 
       if (!v_a3ff5a.current) {
-        throw new Error('세션이 생성되지 않았습니다.');
+        throw new Error(v_8d41d7('health_analysis.errors.session_not_created'));
       }
 
       v_49296b(false);
@@ -244,11 +246,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         v_49296b(false);
 
         v_03e392.alert(
-          '세션 생성 실패',
-          `SDK 초기화 오류가 발생했습니다.\n\n다시 시도하시겠습니까?`,
+          v_8d41d7('health_analysis.errors.session_creation_failed'),
+          v_8d41d7('health_analysis.errors.sdk_init_error'),
           [
             {
-              text: '취소',
+              text: v_8d41d7('common.cancel'),
               style: 'cancel',
               onPress: () => {
                 v_3be953.current = true;
@@ -256,7 +258,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               },
             },
             {
-              text: '재시도',
+              text: v_8d41d7('home.try_again'),
               onPress: async () => {
 
                 console.log('세션 재생성 대기 중... (2초)');
@@ -274,11 +276,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
         const v_7a5fef = v_748547?.code || '알 수 없음';
         v_03e392.alert(
-          '세션 생성 실패',
-          `에러 코드: ${v_7a5fef}\n\n앱을 완전히 종료 후 다시 시작해주세요.`,
+          v_8d41d7('health_analysis.errors.session_creation_failed'),
+          v_8d41d7('health_analysis.errors.session_failed_code', { code: v_7a5fef }),
           [
             {
-              text: '확인',
+              text: v_8d41d7('common.confirm'),
               onPress: () => {
                 v_639227('intro');
               },
@@ -294,7 +296,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       if (v_bc50c7 === v_eb2401.READY) {
 
         if (!v_a3ff5a.current) {
-          v_03e392.alert('오류', '세션이 준비되지 않았습니다. 잠시 후 다시 시도해주세요.');
+          v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('health_analysis.errors.session_not_ready'));
           return;
         }
         console.log('측정 시작 요청, 세션 상태:', v_bc50c7);
@@ -320,24 +322,24 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
 
       let v_1744b9 = '';
-      let v_b5cd35 = '측정 오류';
+      let v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
 
       switch (v_7a5fef) {
         case 2042:
-          v_b5cd35 = '세션 오류';
-          v_1744b9 = `에러 코드: 2042\n\n세션 상태 오류가 발생했습니다.\n\n가능한 원인:\n- 세션이 준비되지 않은 상태에서 측정 시작\n- 세션 초기화가 완료되지 않음\n- 카메라 접근 문제\n\n해결 방법:\n1. "다시 측정하기" 버튼을 눌러 처음부터 다시 시작\n2. 앱을 완전히 종료 후 다시 실행\n3. 카메라 권한 확인`;
+          v_b5cd35 = v_8d41d7('health_analysis.errors.session_error');
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_2042');
           break;
         case 3003:
-          v_b5cd35 = '측정 오류';
-          v_1744b9 = `에러 코드: 3003\n\n측정 중 오류가 발생했습니다.\n\n확인 사항:\n- 얼굴이 카메라에 잘 보이는지 확인\n- 조명이 충분한지 확인\n- 카메라와의 거리 조정 (30-50cm)\n- 얼굴이 정면을 향하고 있는지 확인`;
+          v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_3003');
           break;
         default:
-          v_1744b9 = `에러 코드: ${v_7a5fef || '알 수 없음'}\n\n측정 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.`;
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_default', { code: v_7a5fef || '알 수 없음' });
       }
 
       v_03e392.alert(v_b5cd35, v_1744b9, [
         {
-          text: '확인',
+          text: v_8d41d7('common.confirm'),
           onPress: () => {
 
             if (v_a3ff5a.current) {
@@ -388,28 +390,28 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
 
       let v_1744b9 = '';
-      let v_b5cd35 = '측정 오류';
+      let v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
 
       switch (v_7a5fef) {
         case 2042:
-          v_b5cd35 = '세션 오류';
-          v_1744b9 = `에러 코드: 2042\n\n가능한 원인:\n- 라이센스 키 문제\n- 세션 초기화 실패\n- 카메라 접근 문제\n\n해결 방법:\n1. 앱을 완전히 종료 후 다시 실행\n2. 카메라 권한 확인\n3. 라이센스 키가 올바르게 설정되었는지 확인`;
+          v_b5cd35 = v_8d41d7('health_analysis.errors.session_error');
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_2042_detail');
           break;
         case 7009:
-          v_b5cd35 = '세션 생성 실패';
-          v_1744b9 = `에러 코드: 7009\n\n가능한 원인:\n- 라이센스 키 문제\n- SDK 초기화 실패\n- 카메라 초기화 문제\n\n앱을 재시작해보세요.`;
+          v_b5cd35 = v_8d41d7('health_analysis.errors.session_creation_failed');
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_7009');
           break;
         case 3003:
-          v_b5cd35 = '측정 오류';
-          v_1744b9 = `에러 코드: 3003\n\n측정 중 오류가 발생했습니다.\n\n확인 사항:\n- 얼굴이 카메라에 잘 보이는지 확인\n- 조명이 충분한지 확인\n- 카메라와의 거리 조정 (30-50cm)\n- 얼굴이 정면을 향하고 있는지 확인`;
+          v_b5cd35 = v_8d41d7('health_analysis.errors.measurement_error');
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_3003');
           break;
         default:
-          v_1744b9 = `에러 코드: ${v_7a5fef || '알 수 없음'}\n\n오류가 발생했습니다. 앱을 재시작하거나 잠시 후 다시 시도해주세요.`;
+          v_1744b9 = v_8d41d7('health_analysis.errors.error_unknown', { code: v_7a5fef || '알 수 없음' });
       }
 
       v_03e392.alert(v_b5cd35, v_1744b9, [
         {
-          text: '확인',
+          text: v_8d41d7('common.confirm'),
           onPress: () => {
 
             if (v_a3ff5a.current) {
@@ -554,19 +556,19 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     let v_bbcfff = '';
     switch (v_14a7eb.imageValidity) {
       case v_2be213.INVALID_DEVICE_ORIENTATION:
-        v_bbcfff = '기기 방향 오류';
+        v_bbcfff = v_8d41d7('health_analysis.image_validity.device_orientation');
         break;
       case v_2be213.INVALID_ROI:
-        v_bbcfff = '얼굴이 감지되지 않습니다';
+        v_bbcfff = v_8d41d7('health_analysis.image_validity.face_not_detected');
         break;
       case v_2be213.TILTED_HEAD:
-        v_bbcfff = '고개를 똑바로 세워주세요';
+        v_bbcfff = v_8d41d7('health_analysis.image_validity.tilted_head');
         break;
       case v_2be213.FACE_TOO_FAR:
-        v_bbcfff = '얼굴을 카메라에 더 가까이 해주세요';
+        v_bbcfff = v_8d41d7('health_analysis.image_validity.face_too_far');
         break;
       case v_2be213.UNEVEN_LIGHT:
-        v_bbcfff = '조명이 불균일합니다';
+        v_bbcfff = v_8d41d7('health_analysis.image_validity.uneven_light');
         break;
     }
     v_8a8952(v_bbcfff);
@@ -791,13 +793,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_7a93a3 = (): string => {
     switch (v_bc50c7) {
       case v_eb2401.READY:
-        return '측정 준비 완료. 시작 버튼을 눌러주세요.';
+        return v_8d41d7('health_analysis.measurement.state_ready');
       case v_eb2401.STARTING:
-        return '측정 시작 중... 얼굴을 카메라에 맞춰주세요.';
+        return v_8d41d7('health_analysis.measurement.state_starting');
       case v_eb2401.PROCESSING:
-        return `측정 중... (${v_e6c45c}초 남음)`;
+        return v_8d41d7('health_analysis.measurement.state_processing', { seconds: v_e6c45c });
       default:
-        return '측정 준비 중...';
+        return v_8d41d7('health_analysis.measurement.state_default');
     }
   };
 
@@ -832,7 +834,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         <StatusBar style="dark" />
         <SafeView style={v_d81136.screen}>
           <Header
-            title="건강분석"
+            title={v_8d41d7('health_analysis.intro.screen_title')}
             showBackButton
             onBackPress={() => v_c65f5d.goBack()}
           />
@@ -841,13 +843,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             showsVerticalScrollIndicator={false}
           >
             <View style={v_d81136.container}>
-              <Text style={v_d81136.title}>건강분석</Text>
+              <Text style={v_d81136.title}>{v_8d41d7('health_analysis.intro.screen_title')}</Text>
               <Text style={v_d81136.subtitle}>
-                카메라 사용 권한이 필요합니다.
+                {v_8d41d7('health_analysis.errors.camera_permission_required')}
               </Text>
               <View style={v_d81136.buttonContainer}>
                 <PrimaryButton
-                  title="카메라 권한 허용"
+                  title={v_8d41d7('health_analysis.intro.camera_permission_button')}
                   onPress={v_1e66f0}
                 />
               </View>
@@ -863,7 +865,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       <StatusBar style="dark" />
       <SafeView style={v_d81136.screen}>
         <Header
-          title="건강분석"
+          title={v_8d41d7('health_analysis.intro.screen_title')}
           showBackButton
           onBackPress={() => v_c65f5d.goBack()}
         />
@@ -878,41 +880,39 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               <Ionicons name="heart-outline" size={64} color={v_1bfbd0.bluePrimary} />
             </View>
 
-            <Text style={v_d81136.introTitle}>건강 정보 측정</Text>
+            <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
 
             <Text style={v_d81136.introDescription}>
-              카메라로 얼굴을 비추면{'\n'}
-              맥박, 혈압, 산소 포화도 등{'\n'}
-              다양한 건강 정보를 측정할 수 있습니다.
+              {v_8d41d7('health_analysis.intro.intro_description')}
             </Text>
 
             <View style={v_d81136.introGuidelines}>
-              <Text style={v_d81136.guidelinesTitle}>측정 시 주의사항</Text>
+              <Text style={v_d81136.guidelinesTitle}>{v_8d41d7('health_analysis.intro.guidelines_title')}</Text>
 
               <View style={v_d81136.guidelineItem}>
                 <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>얼굴이 카메라에 잘 보이도록 위치해주세요</Text>
+                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_1')}</Text>
               </View>
 
               <View style={v_d81136.guidelineItem}>
                 <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>조명이 균일하고 밝은 곳에서 측정하세요</Text>
+                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_2')}</Text>
               </View>
 
               <View style={v_d81136.guidelineItem}>
                 <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>정면을 바라보고 고정된 자세를 유지하세요</Text>
+                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_3')}</Text>
               </View>
 
               <View style={v_d81136.guidelineItem}>
                 <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>측정 중 움직이지 마세요 (약 60초 소요)</Text>
+                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
               </View>
             </View>
 
             <View style={v_d81136.introButtonContainer}>
               <PrimaryButton
-                title="측정하기"
+                title={v_8d41d7('health_analysis.intro.start_button')}
                 onPress={async () => {
 
                   const v_b6d66b = await v_ec0597();
@@ -940,9 +940,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     v_639227('measurement');
                   } else {
                     v_03e392.alert(
-                      '카메라 권한 필요',
-                      '건강 정보 측정을 위해서는 카메라 권한이 필요합니다.',
-                      [{ text: '확인' }]
+                      v_8d41d7('health_analysis.intro.camera_permission_title'),
+                      v_8d41d7('health_analysis.intro.camera_permission_message'),
+                      [{ text: v_8d41d7('common.confirm') }]
                     );
                   }
                 }}
@@ -1005,10 +1005,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   });
                 }}
                 accessibilityRole="button"
-                accessibilityLabel="개발자용 테스트 결과 보기"
-                accessibilityHint="탭하면 테스트 데이터로 건강분석 결과 화면으로 이동합니다"
+                accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
+                accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
               >
-                <Text style={v_d81136.devTestLinkText}>🧪 개발자용: 테스트 결과 보기</Text>
+                <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -1022,7 +1022,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       <StatusBar style="dark" />
       <SafeView style={v_d81136.screen}>
         <Header
-          title="건강분석"
+          title={v_8d41d7('health_analysis.measurement.screen_title')}
           showBackButton
           onBackPress={() => {
 
@@ -1048,7 +1048,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   v_56ef46();
                 }}
                 accessibilityRole="button"
-                accessibilityLabel="뒤로 가기"
+                accessibilityLabel={v_8d41d7('health_analysis.measurement.back_button')}
               >
                 <Ionicons name="close" size={28} color={v_1bfbd0.background} />
               </TouchableOpacity>
@@ -1058,13 +1058,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <View style={v_d81136.infoContainerOverlay}>
               {v_12abe8 && (
                 <View style={v_d81136.imageValidityContainer}>
-                  <Text style={v_d81136.imageValidityTitle}>얼굴 인식</Text>
+                  <Text style={v_d81136.imageValidityTitle}>{v_8d41d7('health_analysis.measurement.face_detection_title')}</Text>
                   <Text style={v_d81136.imageValidityText}>{v_12abe8}</Text>
                 </View>
               )}
               {v_b3c379 && !v_12abe8 && (
                 <View style={v_d81136.pulseRateContainer}>
-                  <Text style={v_d81136.pulseRateText}>맥박: {v_b3c379}</Text>
+                  <Text style={v_d81136.pulseRateText}>{v_8d41d7('health_analysis.measurement.pulse_rate', { value: v_b3c379 })}</Text>
                 </View>
               )}
             </View>
@@ -1082,8 +1082,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               {}
               <View style={v_d81136.guidanceContainer}>
                 <Text style={v_d81136.guidanceText}>
-                  가만히 앉아서 얼굴이 고르게 비추고{'\n'}
-                  배경에 광원이 없는지 확인합니다.
+                  {v_8d41d7('health_analysis.measurement.guidance_text')}
                 </Text>
               </View>
 
@@ -1092,11 +1091,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <PrimaryButton
                   title={
                     v_bc50c7 === v_eb2401.READY
-                      ? '측정 시작'
+                      ? v_8d41d7('health_analysis.measurement.button_start')
                       : v_bc50c7 === v_eb2401.STARTING ||
                         v_bc50c7 === v_eb2401.PROCESSING
-                        ? '측정 중지'
-                        : '대기 중...'
+                        ? v_8d41d7('health_analysis.measurement.button_stop')
+                        : v_8d41d7('health_analysis.measurement.button_waiting')
                   }
                   onPress={v_ac8071}
                   disabled={

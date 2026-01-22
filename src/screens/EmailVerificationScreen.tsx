@@ -11,9 +11,12 @@ import type { v_8ad91b } from '../navigation';
 import { v_729608, v_5427ed, v_cb41de, v_570c34, v_556baf } from '../components';
 import { v_8e2768 } from '../components';
 
+import { v_772971 } from 'jmpfvteuuztnp';
+
 type Props = v_432191<v_8ad91b, 'EmailVerification'>;
 
 const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const v_e0c7e8 = v_c7daf6.params?.email || 'oth-staff@example.invalid';
   const v_6c4ab9 = v_c7daf6.params?.redirectTo;
   const [v_c99bd2, v_537cbb] = v_5ab095('');
@@ -63,7 +66,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
     <>
       <SafeView style={v_d81136.screen}>
         <Header
-          title="인증코드를 입력하세요"
+          title={v_8d41d7('email_verification.title')}
           showBackButton
           onBackPress={() => v_c65f5d.goBack()}
         />
@@ -77,10 +80,9 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             {}
             <View style={v_d81136.descriptionContainer}>
               <Text style={v_d81136.descriptionText}>
-                <Text style={v_d81136.emailText}>{v_e0c7e8}</Text> 이메일로
-              </Text>
-              <Text style={v_d81136.descriptionText}>
-                보내드린 6자리 코드를 입력하세요.
+                {v_8d41d7('email_verification.description_prefix')}
+                <Text style={v_d81136.emailText}>{v_e0c7e8}</Text>
+                {v_8d41d7('email_verification.description_suffix')}
               </Text>
             </View>
 
@@ -98,7 +100,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             <View style={v_d81136.resendContainer}>
               <TouchableOpacity onPress={v_cf9840} disabled={v_cb36b1 > 0}>
                 <Text style={[v_d81136.resendText, v_cb36b1 <= 0 && v_d81136.resendTextActive]}>
-                  코드 재전송
+                  {v_8d41d7('email_verification.resend')}
                 </Text>
               </TouchableOpacity>
               <Text style={v_d81136.timerText}>{v_f85cd6(v_cb36b1)}</Text>
@@ -107,7 +109,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             {}
             <View style={v_d81136.buttonContainer}>
               <PrimaryButton
-                title="Verify"
+                title={v_8d41d7('email_verification.verify_btn')}
                 onPress={v_83b05b}
                 disabled={!v_93136a}
                 style={!v_93136a && v_d81136.buttonDisabled}
@@ -119,8 +121,8 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
 
       <AlertModal
         visible={v_3a2ef3}
-        title="인증 완료"
-        message="이메일 인증이 완료되었습니다."
+        title={v_8d41d7('email_verification.success_title')}
+        message={v_8d41d7('email_verification.success_message')}
         onConfirm={v_03cae9}
       />
     </>

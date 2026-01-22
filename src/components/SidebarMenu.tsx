@@ -10,6 +10,7 @@ import {
     v_4623af,
     v_3094a2,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_dec439, v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
@@ -42,6 +43,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     onMenuItemPress: v_1e7823,
     userProfile: v_2f4b56 = { name: 'TED' },
 }) => {
+    const { t: v_8d41d7 } = v_772971();
     const v_033e14 = v_e0068c();
     const v_e9b367 = v_e662ae(new v_a2349e.Value(-v_7a3013)).current;
 
@@ -69,19 +71,19 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
     ];
 
     const v_c08e0e = [
-        { id: 'skin', label: '피부 분석하기', materialIcon: 'face-woman-shimmer' },
-        { id: 'health', label: '건강 분석하기', materialIcon: 'heart-pulse' },
-        { id: 'connect', label: '건강정보 연결하기', icon: 'link' },
+        { id: 'skin', label: v_8d41d7('sidebar.skin_analysis'), materialIcon: 'face-woman-shimmer' },
+        { id: 'health', label: v_8d41d7('sidebar.health_analysis'), materialIcon: 'heart-pulse' },
+        { id: 'connect', label: v_8d41d7('sidebar.health_connect'), icon: 'link' },
     ];
 
     const v_ff33a4 = [
-        { id: 'grandma', label: '할머니', icon: 'user' },
-        { id: 'grandpa', label: '할아버지', icon: 'user' },
+        { id: 'grandma', label: v_8d41d7('home.family_members.grandma'), icon: 'user' },
+        { id: 'grandpa', label: v_8d41d7('home.family_members.grandpa'), icon: 'user' },
     ];
 
     const v_ef5773 = [
-        '비타민 보충할수 있는 영양제 알려줘',
-        '키클수 있는 영양제 알려줘',
+        v_8d41d7('sidebar.suggestions.vitamin'),
+        v_8d41d7('sidebar.suggestions.height'),
     ];
 
     const v_8e442f = (v_8c0b26) => {
@@ -131,7 +133,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                             onPress={v_0890f8}
                             activeOpacity={0.7}
                             accessibilityRole="button"
-                            accessibilityLabel="메뉴 닫기"
+                            accessibilityLabel={v_8d41d7('sidebar.close_menu')}
                         >
                             <Feather name="x" size={20} color={v_1bfbd0.text} />
                         </TouchableOpacity>
@@ -144,9 +146,9 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     >
                         {}
                         <View style={v_d81136.headerSection}>
-                            <Text style={v_d81136.headerTitle}>건강관리</Text>
-                            <Text style={v_d81136.headerSubtitle}>MetaHint Ai와 함께</Text>
-                            <Text style={v_d81136.headerDescription}>똑똑하게 관리하자</Text>
+                            <Text style={v_d81136.headerTitle}>{v_8d41d7('sidebar.header_title')}</Text>
+                            <Text style={v_d81136.headerSubtitle}>{v_8d41d7('sidebar.header_subtitle')}</Text>
+                            <Text style={v_d81136.headerDescription}>{v_8d41d7('sidebar.header_description')}</Text>
                         </View>
 
                         {}
@@ -244,10 +246,10 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                         <View style={v_d81136.menuSection}>
                             <TouchableOpacity
                                 style={v_d81136.menuItem}
-                                onPress={() => v_8e442f({ id: 'history', label: '검색 기록' })}
+                                onPress={() => v_8e442f({ id: 'history', label: v_8d41d7('sidebar.search_history') })}
                                 activeOpacity={0.7}
                                 accessibilityRole="button"
-                                accessibilityLabel="검색 기록"
+                                accessibilityLabel={v_8d41d7('sidebar.search_history')}
                             >
                                 <Feather
                                     name="clock"
@@ -255,7 +257,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                                     color={v_1bfbd0.text}
                                     style={v_d81136.menuIcon}
                                 />
-                                <Text style={v_d81136.menuText}>검색 기록</Text>
+                                <Text style={v_d81136.menuText}>{v_8d41d7('sidebar.search_history')}</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -279,10 +281,10 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                     {}
                     <TouchableOpacity
                         style={[v_d81136.userProfileSection, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}
-                        onPress={() => v_8e442f({ id: 'myinfo', label: '나의 정보' })}
+                        onPress={() => v_8e442f({ id: 'myinfo', label: v_8d41d7('sidebar.my_info') })}
                         activeOpacity={0.7}
                         accessibilityRole="button"
-                        accessibilityLabel="나의 정보"
+                        accessibilityLabel={v_8d41d7('sidebar.my_info')}
                     >
                         <View style={v_d81136.userAvatar}>
                             {v_2f4b56.avatar ? (

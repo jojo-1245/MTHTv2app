@@ -12,6 +12,7 @@ import {
     v_cf9c33,
     v_03e392,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_556baf, v_729608, v_cb41de } from '../../components';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
@@ -32,9 +33,9 @@ const v_5fd9ad = [
     { id: '3', email: 'hello@world.com', status: 'available' },
 ];
 
-const v_c3a1bc = [
-    { id: '10', email: 'oth-test@example.invalid', name: '할머니', status: 'connected' },
-    { id: '11', email: 'oth-test@example.invalid', name: '할아버지', status: 'connected' },
+const v_fcc1a4 = (v_8d41d7): HealthConnection[] => [
+    { id: '10', email: 'oth-test@example.invalid', name: v_8d41d7('home.family_members.grandma'), status: 'connected' },
+    { id: '11', email: 'oth-test@example.invalid', name: v_8d41d7('home.family_members.grandpa'), status: 'connected' },
 ];
 
 const v_840337 = [
@@ -44,13 +45,14 @@ const v_840337 = [
 type ViewMode = 'search' | 'form' | 'result';
 
 const HealthConnectionScreen: v_a3453e.FC = () => {
+    const { t: v_8d41d7 } = v_772971();
     const { goBack: v_c7ac57 } = v_a0daa8();
 
     const [v_0af1e7, v_9e8c08] = v_5ab095<ViewMode>('search');
 
     const [v_89bb03, v_39f9a7] = v_5ab095('');
     const [v_76148b, v_ff2199] = v_5ab095<HealthConnection[]>([]);
-    const [v_fb2a6e, v_afa1a3] = v_5ab095<HealthConnection[]>(v_c3a1bc);
+    const [v_fb2a6e, v_afa1a3] = v_5ab095<HealthConnection[]>(v_fcc1a4(v_8d41d7));
     const [v_5ca9b8, v_560d69] = v_5ab095<HealthConnection[]>(v_840337);
 
     const [v_98be11, v_82eb98] = v_5ab095('');
@@ -124,18 +126,18 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
 
     const v_3525bc = (v_389afb) => {
         const v_993c20 = v_fb2a6e.find(v_8c0b26 => v_8c0b26.id === v_389afb);
-        const v_d044ab = v_993c20?.name || v_993c20?.email || '항목';
+        const v_d044ab = v_993c20?.name || v_993c20?.email || v_8d41d7('health_connection.item');
 
         v_03e392.alert(
-            '건강정보 삭제',
-            `${v_d044ab}의 건강정보를 삭제하시겠습니까?`,
+            v_8d41d7('health_connection.delete_title'),
+            v_8d41d7('health_connection.delete_message', { name: v_d044ab }),
             [
                 {
-                    text: '취소',
+                    text: v_8d41d7('health_connection.delete_cancel'),
                     style: 'cancel',
                 },
                 {
-                    text: '삭제',
+                    text: v_8d41d7('health_connection.delete_confirm'),
                     style: 'destructive',
                     onPress: () => {
                         v_afa1a3(v_ba2215 => v_ba2215.filter(v_8c0b26 => v_8c0b26.id !== v_389afb));
@@ -201,7 +203,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
                 onPress={() => v_b9c704(v_8c0b26.id)}
                 activeOpacity={0.7}
             >
-                <Text style={v_d81136.cancelButtonText}>요청취소</Text>
+                <Text style={v_d81136.cancelButtonText}>{v_8d41d7('health_connection.request_cancel')}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -216,7 +218,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
                 <Ionicons name="search" size={20} color="#9CA3AF" style={v_d81136.searchIcon} />
                 <TextInput
                     style={v_d81136.searchInput}
-                    placeholder="추가하실 이메일을 입력하세요"
+                    placeholder={v_8d41d7('health_connection.search_placeholder')}
                     placeholderTextColor="#9CA3AF"
                     value={v_89bb03}
                     onChangeText={v_5e757d}
@@ -241,7 +243,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
             {}
             {v_fb2a6e.length > 0 && (
                 <View style={v_d81136.section}>
-                    <Text style={v_d81136.sectionTitle}>불러오기 가능한 건강정보</Text>
+                    <Text style={v_d81136.sectionTitle}>{v_8d41d7('health_connection.available_health_info')}</Text>
                     <FlatList
                         data={v_fb2a6e}
                         keyExtractor={v_8c0b26 => v_8c0b26.id}
@@ -279,7 +281,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
             >
                 {}
                 <View style={v_d81136.formGroup}>
-                    <Text style={v_d81136.formLabel}>Email</Text>
+                    <Text style={v_d81136.formLabel}>{v_8d41d7('health_connection.email_label')}</Text>
                     <View style={v_d81136.readOnlyField}>
                         <Text style={v_d81136.readOnlyText}>{v_98be11}</Text>
                     </View>
@@ -287,10 +289,10 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
 
                 {}
                 <View style={v_d81136.formGroup}>
-                    <Text style={v_d81136.formLabel}>등록할 이름</Text>
+                    <Text style={v_d81136.formLabel}>{v_8d41d7('health_connection.register_name_label')}</Text>
                     <TextInput
                         style={v_d81136.formInput}
-                        placeholder="할아버지"
+                        placeholder={v_8d41d7('health_connection.register_name_placeholder')}
                         placeholderTextColor="#D1D5DB"
                         value={v_8b4457}
                         onChangeText={v_2a4973}
@@ -299,10 +301,10 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
 
                 {}
                 <View style={v_d81136.formGroup}>
-                    <Text style={v_d81136.formLabel}>내가 누군지 알려주세요.</Text>
+                    <Text style={v_d81136.formLabel}>{v_8d41d7('health_connection.my_name_label')}</Text>
                     <TextInput
                         style={v_d81136.formInput}
-                        placeholder="신세경"
+                        placeholder={v_8d41d7('health_connection.my_name_placeholder')}
                         placeholderTextColor="#D1D5DB"
                         value={v_4b10f9}
                         onChangeText={v_bada8b}
@@ -313,7 +315,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
             {}
             <View style={v_d81136.submitButtonContainer}>
                 <PrimaryButton
-                    title={v_88dca2 ? "요청중..." : "요청하기"}
+                    title={v_88dca2 ? v_8d41d7('health_connection.requesting') : v_8d41d7('health_connection.request_button')}
                     onPress={v_41f83b}
                     disabled={!v_8b4457.trim() || !v_4b10f9.trim() || v_88dca2}
                 />
@@ -372,7 +374,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
     return (
         <SafeView style={v_d81136.screen}>
             <Header
-                title="건강정보 연결하기"
+                title={v_8d41d7('health_connection.title')}
                 showBackButton
                 onBackPress={v_6ca26b}
                 rightAccessory={
@@ -385,7 +387,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
                                 v_d81136.editButtonText,
                                 v_1b9174 && v_d81136.editButtonTextActive
                             ]}>
-                                {v_1b9174 ? '완료' : '편집'}
+                                {v_1b9174 ? v_8d41d7('health_connection.done') : v_8d41d7('health_connection.edit')}
                             </Text>
                         </TouchableOpacity>
                     ) : undefined

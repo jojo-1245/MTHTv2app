@@ -10,6 +10,8 @@ import { v_15cd36, v_729608, v_5427ed, v_cb41de } from '../../components';
 import { v_b00d6f } from '../../hooks';
 import { v_acfdec } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 
+import { v_772971 } from 'jmpfvteuuztnp';
+
 interface VerificationCodeTemplateProps {
   title: string;
   subtitle: v_4a8ba2;
@@ -27,13 +29,16 @@ export const VerificationCodeTemplate: v_a3453e.FC<VerificationCodeTemplateProps
   subtitle: v_dda473,
   onBack: v_64ccfb,
   onVerify: v_72a8c5,
-  resendLabel: v_94d343 = 'Resend code in',
+  resendLabel: v_94d343,
   onResend: v_6ee6a9,
   codeLength: v_5db458 = 4,
 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const [v_c99bd2, v_537cbb] = v_5ab095('');
   const [v_f74c59, v_a173ea] = v_5ab095(false);
   const { formatted: v_864a3e, reset: v_487a25 } = v_b00d6f(v_5db486);
+
+  const v_d2cc8b = v_94d343 || v_8d41d7('email_verification.resend_label');
 
   const v_83b05b = () => {
     if (v_c99bd2.length !== v_5db458) {
@@ -93,15 +98,15 @@ export const VerificationCodeTemplate: v_a3453e.FC<VerificationCodeTemplateProps
 
             <View style={v_d81136.resendRow}>
               <Text style={v_d81136.resendText}>
-                {v_94d343}
+                {v_d2cc8b}
                 <Text style={v_d81136.highlightText}> {v_864a3e}</Text>
               </Text>
               <TouchableOpacity onPress={v_cf9840}>
-                <Text style={v_d81136.resendButton}>Resend</Text>
+                <Text style={v_d81136.resendButton}>{v_8d41d7('email_verification.resend')}</Text>
               </TouchableOpacity>
             </View>
 
-            <PrimaryButton title="Verify" onPress={v_83b05b} />
+            <PrimaryButton title={v_8d41d7('email_verification.verify_btn')} onPress={v_83b05b} />
           </View>
         </View>
         <CustomNumberPad onPress={v_fceada} onDelete={v_57fac2} />

@@ -7,44 +7,47 @@ import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 
+import { v_772971 } from 'jmpfvteuuztnp';
+
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
 const MyInfoScreen: v_a3453e.FC<Props> = () => {
+  const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
 
   const v_0dea6d = [
     {
       id: 'edit',
-      title: 'Edit My Info',
-      description: '내 정보 수정',
+      title: v_8d41d7('profile.edit_my_info'),
+      description: v_8d41d7('profile.edit_my_info_desc'),
       iconName: 'account-edit' as const,
       route: 'MyInfoEmailAuth' as const, 
     },
     {
       id: 'settings',
-      title: 'Setting',
-      description: '설정',
+      title: v_8d41d7('profile.settings'),
+      description: v_8d41d7('profile.settings_desc'),
       iconName: 'cog' as const,
       route: 'MyInfoSettings' as const,
     },
     {
       id: 'notify',
-      title: 'Notify',
-      description: '알림 설정',
+      title: v_8d41d7('profile.notify'),
+      description: v_8d41d7('profile.notify_desc'),
       iconName: 'bell' as const,
       route: 'MyInfoNotify' as const,
     },
     {
       id: 'clauses',
-      title: 'Clause',
-      description: '약관 목록',
+      title: v_8d41d7('profile.clause'),
+      description: v_8d41d7('profile.clause_desc'),
       iconName: 'file-document' as const,
       route: 'MyInfoClauses' as const,
     },
     {
       id: 'faq',
-      title: '자주 묻는 질문',
-      description: 'FAQ',
+      title: v_8d41d7('profile.faq'),
+      description: v_8d41d7('profile.faq_desc'),
       iconName: 'help-circle' as const,
       route: 'MyInfoFaq' as const,
     },
@@ -53,7 +56,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
   return (
     <View style={v_d81136.container}>
       <Header
-        title="My Info"
+        title={v_8d41d7('profile.title')}
         showBackButton
         onBackPress={() => v_9b57fc('MetaHome')}
         rightAccessory={

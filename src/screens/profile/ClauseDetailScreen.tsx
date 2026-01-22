@@ -1,5 +1,6 @@
 import v_a3453e from 'bapkr';
 import { v_472849, v_19b633, v_3094a2 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
 import { v_729608, v_570c34 } from '../../components';
@@ -9,10 +10,11 @@ import { v_a0daa8 } from '../../navigation';
 type Props = v_432191<v_8ad91b, 'ClauseDetail'>;
 
 const ClauseDetailScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57 } = v_a0daa8();
   const { clauseType: v_4898e2 } = v_c7daf6.params;
 
-  const v_9f1622 = v_4898e2 === 'terms' ? '이용약관' : '개인정보 처리방침';
+  const v_9f1622 = v_4898e2 === 'terms' ? v_8d41d7('my_info_clauses.terms_title') : v_8d41d7('my_info_clauses.privacy_title');
 
   return (
     <View style={v_d81136.container}>
