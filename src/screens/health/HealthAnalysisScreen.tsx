@@ -202,6 +202,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_b3c379, v_f36dd5] = v_5ab095<string | undefined>();
   const [v_12abe8, v_8a8952] = v_5ab095<string | undefined>();
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
+  const [v_68b162, v_128f31] = v_5ab095(false);
 
   const v_b1faa7 = v_e662ae<boolean>(false);
 
@@ -226,6 +227,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_977633 = v_e662ae<number>(0);
 
   const v_1dd18f = v_e662ae<boolean>(false);
+
+  const v_567414 = v_e662ae<boolean>(false);
+
+  const v_8978ad = v_e662ae<any>(null);
+
+  const v_517d25 = v_e662ae<boolean>(false);
+
+  const v_e7c1c1 = v_e662ae<boolean>(false);
 
   const v_ec0597 = v_de06a3(async (): Promise<boolean> => {
     if (!v_d1a6bb) {
@@ -282,6 +291,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_8a8952(undefined);
     v_f36dd5(undefined);
     v_7fa926(0);
+    v_128f31(false);
     v_639227('intro');
   }, [v_98caa0]);
 
@@ -467,6 +477,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         console.log('측정 시작 요청, 세션 상태:', v_bc50c7);
 
         v_1dd18f.current = false;
+        v_567414.current = false;
+        v_e7c1c1.current = false;
+        v_128f31(false);
 
         await v_a3ff5a.current?.start(v_8ea06a);
       } else if (
@@ -474,7 +487,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         v_bc50c7 === v_eb2401.PROCESSING
       ) {
 
-        await v_a3ff5a.current?.stop();
+        v_567414.current = true;
+        await v_98b3fa();
       }
     } catch (v_9e86fd) {
       const v_748547 = v_9e86fd as v_89d8fd;
@@ -524,7 +538,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         },
       ]);
     }
-  }, [v_bc50c7, v_98caa0, v_8d41d7, v_141cf8]);
+  }, [v_bc50c7, v_98b3fa, v_98caa0, v_8d41d7, v_141cf8]);
 
   const v_b1eca7 = v_e662ae(false);
   v_c4deb2(() => {
@@ -543,6 +557,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     if (v_77ef6e === 3500 || (v_77ef6e && v_77ef6e >= 3000 && v_77ef6e < 4000)) {
       console.log('[얼굴 인식 경고] 무시 - 측정 계속 진행');
+
+      v_517d25.current = true;
+      v_977633.current = Math.max(v_977633.current, Date.now() + 3000);
+      v_128f31(true);
       v_b1eca7.current = true;
 
       return;
@@ -563,6 +581,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           return;
         }
         if (!v_a3ff5a.current || v_91943c !== 'measurement') {
+          return;
+        }
+        if (
+          v_bc50c7 !== v_eb2401.STARTING &&
+          v_bc50c7 !== v_eb2401.PROCESSING
+        ) {
           return;
         }
         if (v_1dd18f.current) {
@@ -591,29 +615,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           console.log('[3003 에러] 세션 없음/intro 상태 - 무시');
           return;
         }
+        if (
+          v_bc50c7 !== v_eb2401.STARTING &&
+          v_bc50c7 !== v_eb2401.PROCESSING
+        ) {
+          console.log('[3003 에러] READY 상태 - 무시');
+          return;
+        }
         if (v_1dd18f.current) {
           console.log('[3003 에러] 측정 완료 후 - 무시');
           return;
         }
-        if (v_977633.current && v_5c2f9f < v_977633.current) {
-          console.log('[3003 에러] 재생성 직후 - 무시', { until: v_977633.current });
-          return;
-        }
-        if (v_b98ddb.current) {
-          console.log('[3003 에러] 이미 팝업 표시됨 - 무시');
-          return;
-        }
-
-        v_b98ddb.current = true;
-        v_03e392.alert(v_8d41d7('health_analysis.errors.measurement_error'), v_8d41d7('health_analysis.errors.error_3003'), [
-          {
-            text: v_8d41d7('common.confirm'),
-            onPress: async () => {
-              console.log('[3003 에러 처리] 확인 클릭 - 세션 초기화');
-              await v_98b3fa();
-            },
-          },
-        ]);
+        console.log('[3003 에러] 팝업 없이 진행 - READY 복귀 대기');
         return;
       }
 
@@ -834,6 +847,16 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
+    if (v_d0a515 === v_8978ad.current) {
+      return;
+    }
+
+    if (v_e7c1c1.current) {
+      console.log('[결과 화면 이동 방지] 3003 복구 직후 - finalResults 무시');
+      v_8978ad.current = v_d0a515;
+      return;
+    }
+
     v_1dd18f.current = true;
     v_b9ada4.current = true;
     console.log('[측정 완료] finalResults 생성 - 3003 에러 무시 플래그 설정');
@@ -843,6 +866,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       v_b1faa7.current = false;
       v_1dd18f.current = false; 
+      return;
+    }
+
+    if (v_567414.current) {
+      console.log('[결과 화면 이동 방지] 사용자 측정 중단 - finalResults 무시');
+      v_8978ad.current = v_d0a515;
+      v_567414.current = false;
+      v_1dd18f.current = false;
       return;
     }
 
@@ -949,8 +980,16 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         results: v_9f8792,
         timestamp: new Date().toISOString(),
       });
+      v_8978ad.current = v_d0a515;
+      v_567414.current = false;
     }
-  }, [v_d0a515, v_c65f5d]);
+  }, [v_91943c, v_d0a515, v_c65f5d]);
+
+  v_c4deb2(() => {
+    if (v_91943c === 'measurement') {
+      v_567414.current = false;
+    }
+  }, [v_91943c]);
 
   v_c4deb2(() => {
     const v_7b6d17 = {
@@ -1076,7 +1115,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_7a93a3 = (): string => {
     switch (v_bc50c7) {
       case v_eb2401.READY:
-        return v_8d41d7('health_analysis.measurement.state_ready');
+        return v_68b162
+          ? v_8d41d7('health_analysis.measurement.state_ready_retry')
+          : v_8d41d7('health_analysis.measurement.state_ready');
       case v_eb2401.STARTING:
         return v_8d41d7('health_analysis.measurement.state_starting');
       case v_eb2401.PROCESSING:

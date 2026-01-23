@@ -501,6 +501,7 @@
             "pulse_rate": "Pulse: {{value}}",
             "face_detection_title": "Face Detection",
             "state_ready": "Ready to measure. Press the start button.",
+            "state_ready_retry": "Face not detected. Please start the measurement again.",
             "state_starting": "Starting measurement... Position your face in front of the camera.",
             "state_processing": "Measuring... ({{seconds}}s remaining)",
             "state_default": "Preparing to measure...",
