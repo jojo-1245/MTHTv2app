@@ -32,6 +32,7 @@ import { v_556baf } from '../components';
 const v_9b2456 = require('../../assets/images/main_top_img.png');
 const v_a6b742 = require('../../assets/images/character.png');
 const v_2e47ea = require('../../assets/images/robot_face.png');
+const v_b90e32 = require('../../assets/images/binah 2.png');
 
 interface HealthInfo {
   id: string;
@@ -367,6 +368,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_39cb7a, v_ecd01c] = v_5ab095(8); 
   const [v_30ddf9, v_ca2ef8] = v_5ab095(9); 
   const [v_9cb8cb, v_8cab62] = v_5ab095(true); 
+  const [v_a00b49, v_eeb201] = v_5ab095(false);
 
   const [v_e870d1, v_aa40cb] = v_5ab095(false);
   const [v_437b17, v_c88681] = v_5ab095<HealthInfo | null>(null);
@@ -412,6 +414,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     if (v_fbe91e >= 3) return v_8d41d7('home.health_level_labels.caution');
     return v_8d41d7('home.health_level_labels.danger');
   };
+
+  const v_0ac747 = v_8d41d7('health_analysis.result.wellness_score_help_text');
+  const v_898973 = v_df9f57(
+    () => v_0ac747.split('\n\n').filter(Boolean),
+    [v_0ac747],
+  );
+  const v_38a0b7 = v_df9f57(() => {
+    const v_b23b8d = v_8d41d7('health_analysis.result.wellness_score_oxygen_prefix');
+    return v_898973.findIndex((v_d64a40) => v_d64a40.includes(v_b23b8d));
+  }, [v_898973, v_8d41d7]);
 
   const v_7d58f2 = v_df9f57(() => {
     const v_3a6ab1 = v_9b1a04.large * 2; 
@@ -986,7 +998,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               {}
               <View style={v_d81136.healthScoreLabel}>
                 <Text style={v_d81136.healthScoreLabelText}>{v_8d41d7('home.health_index_label')}</Text>
+              <TouchableOpacity
+                onPress={() => v_eeb201(true)}
+                accessibilityRole="button"
+                accessibilityLabel={`${v_8d41d7('home.health_index_label')} ${v_8d41d7('common.show')}`}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
                 <Ionicons name="information-circle-outline" size={16} color="#9CA3AF" />
+              </TouchableOpacity>
               </View>
 
               {}
@@ -1120,6 +1139,109 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             </TouchableOpacity>
           </Pressable>
         </Pressable>
+      </Modal>
+      <Modal
+        visible={v_a00b49}
+        transparent
+        animationType="fade"
+        onRequestClose={() => v_eeb201(false)}
+      >
+        <View style={v_d81136.healthScoreModalOverlay}>
+          <View style={v_d81136.healthScoreModal}>
+            <View style={v_d81136.healthScoreModalHeader}>
+              <Text style={v_d81136.healthScoreModalTitle}>
+                {v_8d41d7('health_analysis.result.wellness_score_title')}
+              </Text>
+              <TouchableOpacity
+                onPress={() => v_eeb201(false)}
+                style={v_d81136.healthScoreModalCloseButton}
+                accessibilityRole="button"
+                accessibilityLabel={v_8d41d7('common.close')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Ionicons name="close" size={20} color="#6B7280" />
+              </TouchableOpacity>
+            </View>
+            <Text style={v_d81136.healthScoreModalSubtitle}>
+              {`${v_39cb7a}/10 | ${v_fc5fb7(v_39cb7a)}`}
+            </Text>
+            <View style={v_d81136.healthScoreRangeLabels}>
+              <View style={v_d81136.healthScoreRangeLabelLow}>
+                <Text style={v_d81136.healthScoreRangeLabelText}>
+                  {v_8d41d7('health_analysis.result.level_low')}
+                </Text>
+              </View>
+              <View style={v_d81136.healthScoreRangeLabelMedium}>
+                <Text style={v_d81136.healthScoreRangeLabelText}>
+                  {v_8d41d7('health_analysis.result.level_mid')}
+                </Text>
+              </View>
+              <View style={v_d81136.healthScoreRangeLabelHigh}>
+                <Text style={v_d81136.healthScoreRangeLabelText}>
+                  {v_8d41d7('health_analysis.result.level_high')}
+                </Text>
+              </View>
+            </View>
+            <View style={v_d81136.healthScoreRangeGrid}>
+              <View style={[v_d81136.healthScoreRangeGridSegment, v_d81136.healthScoreRangeGridLow]} />
+              <View style={[v_d81136.healthScoreRangeGridSegment, v_d81136.healthScoreRangeGridMedium]} />
+              <View style={[v_d81136.healthScoreRangeGridSegment, v_d81136.healthScoreRangeGridHigh]} />
+            </View>
+            <View style={v_d81136.healthScoreSegmentBar}>
+              {Array.from({ length: 10 }, (v_37eab7, v_a56041) => v_a56041 + 1).map((v_5832eb) => {
+                const v_37fe12 = [
+                  '#FF4D4F',
+                  '#FF6B3D',
+                  '#FF8A3D',
+                  '#FFB03D',
+                  '#FFD23D',
+                  '#FFE66D',
+                  '#C8E96B',
+                  '#8DDC6A',
+                  '#5FD46B',
+                  '#34C759',
+                ];
+                const v_225448 = Math.max(1, Math.min(10, Math.round(v_39cb7a)));
+                return (
+                  <View
+                    key={`home-modal-seg-${v_5832eb}`}
+                    style={[
+                      v_d81136.healthScoreSegment,
+                      { backgroundColor: v_37fe12[v_5832eb - 1] },
+                    ]}
+                  >
+                    {v_5832eb === v_225448 && <View style={v_d81136.healthScoreIndicator} />}
+                  </View>
+                );
+              })}
+            </View>
+            <View style={v_d81136.healthScoreSegmentNumbers}>
+              {Array.from({ length: 10 }, (v_37eab7, v_a56041) => v_a56041 + 1).map((v_5832eb) => (
+                <Text key={`home-modal-num-${v_5832eb}`} style={v_d81136.healthScoreSegmentNumber}>
+                  {v_5832eb}
+                </Text>
+              ))}
+            </View>
+            <ScrollView
+              style={v_d81136.healthScoreModalBody}
+              contentContainerStyle={v_d81136.healthScoreModalBodyContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {v_898973.map((v_d64a40, v_a56041) => (
+                <View key={`home-paragraph-${v_a56041}`} style={v_d81136.healthScoreParagraphBlock}>
+                  {v_a56041 === v_38a0b7 ? (
+                    <Image
+                      source={v_b90e32}
+                      style={v_d81136.healthScoreExampleImage}
+                      resizeMode="contain"
+                    />
+                  ) : null}
+                  <Text style={v_d81136.healthScoreModalText}>{v_d64a40}</Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
       </Modal>
     </>
   );
@@ -1954,6 +2076,140 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.small,
     fontFamily: v_843035.regular,
     color: '#9CA3AF',
+  },
+  healthScoreModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: v_9b1a04.large,
+  },
+  healthScoreModal: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: v_9b1a04.large,
+    width: '100%',
+    maxWidth: 420,
+    maxHeight: '85%',
+  },
+  healthScoreModalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: v_9b1a04.small,
+  },
+  healthScoreModalTitle: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.bold,
+    color: '#374151',
+  },
+  healthScoreModalCloseButton: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  healthScoreModalSubtitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#374151',
+    marginBottom: v_9b1a04.medium,
+  },
+  healthScoreRangeLabels: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: v_9b1a04.small / 2,
+  },
+  healthScoreRangeLabelText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: '#6B7280',
+    textAlign: 'center',
+  },
+  healthScoreRangeLabelLow: {
+    flex: 3,
+  },
+  healthScoreRangeLabelMedium: {
+    flex: 4,
+  },
+  healthScoreRangeLabelHigh: {
+    flex: 3,
+  },
+  healthScoreRangeGrid: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small / 2,
+    marginBottom: v_9b1a04.small / 2,
+  },
+  healthScoreRangeGridSegment: {
+    height: 2,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 3,
+  },
+  healthScoreRangeGridLow: {
+    flex: 3,
+  },
+  healthScoreRangeGridMedium: {
+    flex: 4,
+  },
+  healthScoreRangeGridHigh: {
+    flex: 3,
+  },
+  healthScoreSegmentBar: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  healthScoreSegment: {
+    flex: 1,
+    height: 10,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  healthScoreIndicator: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+  },
+  healthScoreSegmentNumbers: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: v_9b1a04.small / 2,
+  },
+  healthScoreSegmentNumber: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: '#6B7280',
+  },
+  healthScoreModalBody: {
+    width: '100%',
+    maxHeight: 420,
+    marginTop: v_9b1a04.medium,
+  },
+  healthScoreModalBodyContent: {
+    gap: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.small,
+  },
+  healthScoreParagraphBlock: {
+    gap: v_9b1a04.medium,
+  },
+  healthScoreExampleImage: {
+    width: '100%',
+    height: 180,
+  },
+  healthScoreModalText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    lineHeight: v_ef658a.medium + v_9b1a04.small,
   },
 });
 

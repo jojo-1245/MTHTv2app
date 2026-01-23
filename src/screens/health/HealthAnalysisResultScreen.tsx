@@ -415,6 +415,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const [v_6f0881, v_2fba89] = v_5ab095<InfoModalType>(null);
   const [v_9e9019, v_13a008] = v_5ab095<number | null>(null);
   const [v_0cc882, v_b4f3ee] = v_5ab095<number | null>(null);
+  const [v_1f3747, v_75fa2e] = v_5ab095(false);
 
   const v_b90e32 = require('../../../assets/images/binah 2.png');
   const v_b1d778 = require('../../../assets/images/binah 3.png');
@@ -678,6 +679,22 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       body: v_8d41d7('health_analysis.result.info.sd2_body'),
       image: v_2d36fb,
     },
+    [v_e3e816.PNS_ZONE]: {
+      title: v_8d41d7('health_analysis.result.info.pns_zone_title'),
+      body: v_8d41d7('health_analysis.result.info.pns_zone_body'),
+    },
+    [v_e3e816.PNS_INDEX]: {
+      title: v_8d41d7('health_analysis.result.info.pns_index_title'),
+      body: v_8d41d7('health_analysis.result.info.pns_index_body'),
+    },
+    [v_e3e816.SNS_INDEX]: {
+      title: v_8d41d7('health_analysis.result.info.sns_index_title'),
+      body: v_8d41d7('health_analysis.result.info.sns_index_body'),
+    },
+    [v_e3e816.SNS_ZONE]: {
+      title: v_8d41d7('health_analysis.result.info.sns_zone_title'),
+      body: v_8d41d7('health_analysis.result.info.sns_zone_body'),
+    },
   };
 
   const v_4594bf = v_9e9019 !== null ? v_ec82c6[v_9e9019] : null;
@@ -739,6 +756,43 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     }
     return null;
   };
+
+  const v_08e501 = new Set<number>([
+    v_e3e816.WELLNESS_LEVEL,
+    v_e3e816.HEART_AGE,
+    v_e3e816.WELLNESS_INDEX,
+  ]);
+
+  const v_f36ab0 = v_df9f57(() => {
+    const v_4622b9 = [];
+    const v_110a8b = new Set<number>();
+
+    Object.entries(v_a7f568)
+      .filter(([v_37eab7, v_9390e8]) => v_9390e8.value !== null && v_9390e8.value !== undefined)
+      .forEach(([v_3b27d9, v_9390e8]) => {
+        const v_653390 = Number(v_3b27d9);
+        if (v_08e501.has(v_653390)) {
+          return;
+        }
+        const v_d308b5 = v_0aaeba(v_653390, v_9390e8.value);
+        const v_75da5e = v_6d92d1(v_653390, v_9390e8.value, v_8d41d7);
+        const v_78d230 = v_75da5e?.type === 'warning';
+        const v_459d99 = v_75da5e?.type === 'danger';
+        const v_1bba75 = v_d308b5 === '위험' || v_78d230 || v_459d99;
+
+        if (v_1bba75 && !v_110a8b.has(v_653390)) {
+          v_110a8b.add(v_653390);
+          v_4622b9.push({
+            typeNum: v_653390,
+            name: v_50f905(v_653390, v_8d41d7),
+            statusLabel: v_d308b5 === '위험' ? '위험' : v_459d99 ? '위험' : '경고',
+            valueText: v_a6fe82(v_9390e8.value, v_653390, v_8d41d7),
+          });
+        }
+      });
+
+    return v_4622b9;
+  }, [v_a7f568, v_8d41d7, v_08e501]);
 
   const v_463ca2 = (v_d308b5) => {
     if (v_d308b5 === '위험') {
@@ -864,10 +918,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
   ]);
 
-  const v_08e501 = new Set<number>([
-    v_e3e816.WELLNESS_LEVEL,
-    v_e3e816.HEART_AGE,
-  ]);
   const v_8c0857 = v_26a76b.filter(v_b4fa6c =>
     v_b4fa6c.items.some(v_8c0b26 => v_1f8651(v_8c0b26.typeNum)),
   );
@@ -1394,7 +1444,76 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             </View>
           </View>
         </SafeScrollView>
+        <TouchableOpacity
+          style={v_d81136.abnormalFooter}
+          onPress={() => v_75fa2e(true)}
+          accessibilityRole="button"
+          accessibilityLabel="비정상적인 결과 보기"
+          accessibilityHint="비정상적인 결과 목록을 확인합니다"
+        >
+          <View style={v_d81136.abnormalFooterIcon}>
+            <Ionicons name="warning-outline" size={18} color={v_d8cb4d.warning.color} />
+          </View>
+          <Text style={v_d81136.abnormalFooterText}>
+            비정상적인 결과를 보려면 여기를 클릭하십시오
+          </Text>
+        </TouchableOpacity>
       </SafeView>
+      <Modal
+        visible={v_1f3747}
+        transparent
+        animationType="slide"
+        onRequestClose={() => v_75fa2e(false)}
+      >
+        <View style={v_d81136.abnormalModalOverlay}>
+          <View style={v_d81136.abnormalSheet}>
+            <View style={v_d81136.abnormalSheetHeader}>
+              <View style={v_d81136.abnormalSheetTitleRow}>
+                <Ionicons name="warning" size={18} color={v_d8cb4d.warning.color} />
+                <Text style={v_d81136.abnormalSheetTitle}>비정상적인 결과</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => v_75fa2e(false)}
+                style={v_d81136.modalCloseButton}
+                accessibilityRole="button"
+                accessibilityLabel={v_8d41d7('common.close')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Ionicons name="close" size={20} color={v_1bfbd0.secondaryText} />
+              </TouchableOpacity>
+            </View>
+            <SafeScrollView
+              style={v_d81136.abnormalSheetBody}
+              contentContainerStyle={v_d81136.abnormalSheetContent}
+              showsVerticalScrollIndicator={false}
+              showBottomBackground={false}
+            >
+              {v_f36ab0.length === 0 ? (
+                <Text style={v_d81136.abnormalEmptyText}>표시할 비정상 결과가 없습니다.</Text>
+              ) : (
+                v_f36ab0.map((v_8c0b26) => (
+                  <View key={`abnormal-${v_8c0b26.typeNum}`} style={v_d81136.abnormalItem}>
+                    <View style={v_d81136.abnormalItemHeader}>
+                      <Text style={v_d81136.abnormalItemName}>{v_8c0b26.name}</Text>
+                      <View
+                        style={[
+                          v_d81136.abnormalBadge,
+                          v_8c0b26.statusLabel === '위험'
+                            ? v_d81136.abnormalBadgeDanger
+                            : v_d81136.abnormalBadgeWarning,
+                        ]}
+                      >
+                        <Text style={v_d81136.abnormalBadgeText}>{v_8c0b26.statusLabel}</Text>
+                      </View>
+                    </View>
+                    <Text style={v_d81136.abnormalItemValue}>{v_8c0b26.valueText}</Text>
+                  </View>
+                ))
+              )}
+            </SafeScrollView>
+          </View>
+        </View>
+      </Modal>
       <Modal
         visible={Boolean(v_6f0881)}
         transparent
@@ -1810,6 +1929,125 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  abnormalFooter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: v_9b1a04.small / 2,
+    paddingVertical: v_9b1a04.medium,
+    paddingHorizontal: v_9b1a04.large,
+    borderRadius: 0,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: v_1bfbd0.border,
+    paddingTop: v_9b1a04.large,
+  },
+  abnormalFooterIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: v_1bfbd0.background,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.border,
+    position: 'absolute',
+    left: '50%',
+    top: 0,
+    transform: [{ translateY: -18 }],
+    bottom: 0,
+    zIndex: 1,
+  },
+  abnormalFooterText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+    textAlign: 'center',
+  },
+  abnormalModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    justifyContent: 'flex-end',
+  },
+  abnormalSheet: {
+    backgroundColor: v_1bfbd0.background,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: v_9b1a04.large,
+    maxHeight: '90%',
+    minHeight: '45%',
+  },
+  abnormalSheetHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: v_9b1a04.medium,
+  },
+  abnormalSheetTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
+  abnormalSheetTitle: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+  },
+  abnormalSheetBody: {
+    width: '100%',
+    flex: 1,
+    minHeight: 0,
+  },
+  abnormalSheetContent: {
+    gap: v_9b1a04.small,
+    paddingBottom: v_9b1a04.xlarge,
+  },
+  abnormalEmptyText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+    paddingVertical: v_9b1a04.large,
+  },
+  abnormalItem: {
+    borderWidth: 1,
+    borderColor: v_1bfbd0.border,
+    borderRadius: 12,
+    padding: v_9b1a04.medium,
+    backgroundColor: v_1bfbd0.background,
+  },
+  abnormalItemHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: v_9b1a04.small / 2,
+  },
+  abnormalItemName: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+    flex: 1,
+  },
+  abnormalItemValue: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  abnormalBadge: {
+    paddingHorizontal: v_9b1a04.small,
+    paddingVertical: v_9b1a04.small / 2,
+    borderRadius: 999,
+  },
+  abnormalBadgeWarning: {
+    backgroundColor: v_d8cb4d.warning.backgroundColor,
+  },
+  abnormalBadgeDanger: {
+    backgroundColor: v_d8cb4d.danger.backgroundColor,
+  },
+  abnormalBadgeText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+  },
   wellnessModalTitle: {
     fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,
@@ -1830,6 +2068,7 @@ const v_d81136 = v_472849.create({
   wellnessModalBodyScroll: {
     width: '100%',
     maxHeight: 420,
+    marginTop: v_9b1a04.medium,
   },
   wellnessModalBodyContent: {
     gap: v_9b1a04.medium,
