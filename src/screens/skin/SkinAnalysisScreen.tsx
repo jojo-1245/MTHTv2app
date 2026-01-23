@@ -1407,12 +1407,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                                 {}
                                                 <View style={v_d81136.productInfoArea}>
                                                     <Text style={v_d81136.productBrand}>{v_01bee9.brand}</Text>
-                                                    <Text style={v_d81136.productName} numberOfLines={2}>
-                                                        {v_01bee9.name}
-                                                    </Text>
-                                                    <Text style={v_d81136.productDescription} numberOfLines={1}>
-                                                        {v_01bee9.description}
-                                                    </Text>
+                                                    <Text style={v_d81136.productName} numberOfLines={2}>{v_01bee9.name}</Text>
+                                                    <Text style={v_d81136.productDescription} numberOfLines={1}>{v_01bee9.description}</Text>
 
                                                     <View style={v_d81136.productPriceRow}>
                                                         <Text style={v_d81136.productPriceLabel}>Price</Text>
@@ -2699,6 +2695,7 @@ const v_d81136 = v_472849.create({
         color: v_1bfbd0.text,
         lineHeight: 24,
         marginBottom: 4,
+        letterSpacing: -0.5,
     },
     productDescription: {
         fontSize: v_ef658a.medium,
