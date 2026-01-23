@@ -785,7 +785,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           v_4622b9.push({
             typeNum: v_653390,
             name: v_50f905(v_653390, v_8d41d7),
-            statusLabel: v_d308b5 === '위험' ? '위험' : v_459d99 ? '위험' : '경고',
+            statusType: v_d308b5 === '위험' || v_459d99 ? 'risk' : 'warning',
             valueText: v_a6fe82(v_9390e8.value, v_653390, v_8d41d7),
           });
         }
@@ -1166,7 +1166,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                 </View>
                                 {v_d308b5 && (
                                   <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
-                                    {v_d308b5}
+                                    {v_d308b5 === '정상'
+                                      ? v_8d41d7('health_analysis.result.normal')
+                                      : v_8d41d7('health_analysis.result.risk')}
                                   </Text>
                                 )}
                               </View>
@@ -1278,7 +1280,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             </View>
                             {v_d308b5 && (
                               <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
-                                {v_d308b5}
+                                {v_d308b5 === '정상'
+                                  ? v_8d41d7('health_analysis.result.normal')
+                                  : v_8d41d7('health_analysis.result.risk')}
                               </Text>
                             )}
                           </View>
@@ -1448,14 +1452,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           style={v_d81136.abnormalFooter}
           onPress={() => v_75fa2e(true)}
           accessibilityRole="button"
-          accessibilityLabel="비정상적인 결과 보기"
-          accessibilityHint="비정상적인 결과 목록을 확인합니다"
+          accessibilityLabel={v_8d41d7('health_analysis.result.abnormal_footer_label')}
+          accessibilityHint={v_8d41d7('health_analysis.result.abnormal_footer_hint')}
         >
           <View style={v_d81136.abnormalFooterIcon}>
             <Ionicons name="warning-outline" size={18} color={v_d8cb4d.warning.color} />
           </View>
           <Text style={v_d81136.abnormalFooterText}>
-            비정상적인 결과를 보려면 여기를 클릭하십시오
+            {v_8d41d7('health_analysis.result.abnormal_footer_text')}
           </Text>
         </TouchableOpacity>
       </SafeView>
@@ -1470,7 +1474,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             <View style={v_d81136.abnormalSheetHeader}>
               <View style={v_d81136.abnormalSheetTitleRow}>
                 <Ionicons name="warning" size={18} color={v_d8cb4d.warning.color} />
-                <Text style={v_d81136.abnormalSheetTitle}>비정상적인 결과</Text>
+                <Text style={v_d81136.abnormalSheetTitle}>
+                  {v_8d41d7('health_analysis.result.abnormal_sheet_title')}
+                </Text>
               </View>
               <TouchableOpacity
                 onPress={() => v_75fa2e(false)}
@@ -1489,7 +1495,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               showBottomBackground={false}
             >
               {v_f36ab0.length === 0 ? (
-                <Text style={v_d81136.abnormalEmptyText}>표시할 비정상 결과가 없습니다.</Text>
+                <Text style={v_d81136.abnormalEmptyText}>
+                  {v_8d41d7('health_analysis.result.abnormal_empty')}
+                </Text>
               ) : (
                 v_f36ab0.map((v_8c0b26) => (
                   <View key={`abnormal-${v_8c0b26.typeNum}`} style={v_d81136.abnormalItem}>
@@ -1498,12 +1506,16 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       <View
                         style={[
                           v_d81136.abnormalBadge,
-                          v_8c0b26.statusLabel === '위험'
+                          v_8c0b26.statusType === 'risk'
                             ? v_d81136.abnormalBadgeDanger
                             : v_d81136.abnormalBadgeWarning,
                         ]}
                       >
-                        <Text style={v_d81136.abnormalBadgeText}>{v_8c0b26.statusLabel}</Text>
+                        <Text style={v_d81136.abnormalBadgeText}>
+                          {v_8c0b26.statusType === 'risk'
+                            ? v_8d41d7('health_analysis.result.risk')
+                            : v_8d41d7('health_analysis.result.warning')}
+                        </Text>
                       </View>
                     </View>
                     <Text style={v_d81136.abnormalItemValue}>{v_8c0b26.valueText}</Text>

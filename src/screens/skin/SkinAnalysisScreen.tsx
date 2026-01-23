@@ -1462,21 +1462,23 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             return (
                                 <View key={v_ccf527.type} style={v_d81136.compactGridItem}>
                                     <View style={v_d81136.compactGridContent}>
-                                        <Text style={v_d81136.compactGridLabel} numberOfLines={1}>
+                                        <Text style={v_d81136.compactGridLabel} numberOfLines={2}>
                                             {v_8d41d7('skin.concerns.' + v_ccf527.type.replace('hd_', ''))}
                                         </Text>
+                                    </View>
+                                    <View style={v_d81136.compactGridBarRow}>
+                                        <View style={v_d81136.compactGridBar}>
+                                            <View style={[
+                                                v_d81136.compactGridBarFill,
+                                                {
+                                                    width: `${v_ccf527.score}%`,
+                                                    backgroundColor: v_5e5963
+                                                }
+                                            ]} />
+                                        </View>
                                         <Text style={[v_d81136.compactGridScore, { color: v_5e5963 }]}>
                                             {v_ccf527.score}
                                         </Text>
-                                    </View>
-                                    <View style={v_d81136.compactGridBar}>
-                                        <View style={[
-                                            v_d81136.compactGridBarFill,
-                                            {
-                                                width: `${v_ccf527.score}%`,
-                                                backgroundColor: v_5e5963
-                                            }
-                                        ]} />
                                     </View>
                                 </View>
                             );
@@ -2273,20 +2275,26 @@ const v_d81136 = v_472849.create({
         flexWrap: 'wrap',
         backgroundColor: v_1bfbd0.lightGray,
         borderRadius: 16,
-        padding: v_9b1a04.small,
-        gap: v_9b1a04.small,
+        padding: v_9b1a04.small / 2,
+        gap: v_9b1a04.small / 2,
     },
     compactGridItem: {
         width: '48%',
         backgroundColor: v_1bfbd0.background,
         borderRadius: 12,
-        padding: v_9b1a04.medium,
+        padding: v_9b1a04.small + v_9b1a04.small / 2,
+        justifyContent: 'space-between',
     },
     compactGridContent: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 8,
+        flex: 1,
+    },
+    compactGridBarRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
     },
     compactGridLabel: {
         flex: 1,
@@ -2294,12 +2302,16 @@ const v_d81136 = v_472849.create({
         fontFamily: v_843035.medium,
         color: v_1bfbd0.text,
         marginRight: 8,
+        lineHeight: v_ef658a.medium + 4,
     },
     compactGridScore: {
         fontSize: v_ef658a.large,
         fontFamily: v_843035.bold,
+        minWidth: 28,
+        textAlign: 'right',
     },
     compactGridBar: {
+        flex: 1,
         height: 6,
         borderRadius: 3,
         backgroundColor: '#F3F4F6',
