@@ -30,7 +30,7 @@ interface SummaryStatusInfo {
 type Props = v_432191<v_8ad91b, 'HealthAnalysisResult'>;
 
 const v_50f905 = (v_3b27d9, v_8d41d7): string => {
-  const v_f2dfb8 = { 
+  const v_f2dfb8 = {
     [v_e3e816.PULSE_RATE]: v_8d41d7('health_analysis.vitals.pulse_rate'),
     [v_e3e816.RESPIRATION_RATE]: v_8d41d7('health_analysis.vitals.respiration_rate'),
     [v_e3e816.OXYGEN_SATURATION]: v_8d41d7('health_analysis.vitals.oxygen_saturation'),
@@ -543,54 +543,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       <Text style={v_d81136.descriptionText}>
                         {v_2c4b08(v_653390, v_8d41d7)}
                       </Text>
-                      {(() => {
-
-                        if (v_9390e8.confidence && typeof v_9390e8.confidence === 'object' && 'level' in v_9390e8.confidence) {
-                          const v_fbe91e = (v_9390e8.confidence as any).level;
-                          let v_4e0432 = '';
-                          let v_53569e = 0;
-
-                          if (v_fbe91e === 0) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_unknown');
-                            v_53569e = 0;
-                          } else if (v_fbe91e === 1) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_low');
-                            v_53569e = 33;
-                          } else if (v_fbe91e === 2) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_medium');
-                            v_53569e = 67;
-                          } else if (v_fbe91e === 3) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_high');
-                            v_53569e = 100;
-                          }
-
-                          return (
-                            <Text style={v_d81136.confidenceText}>
-                              {v_8d41d7('health_analysis.result.confidence')}: {v_4e0432} ({v_53569e}%)
-                            </Text>
-                          );
-                        }
-
-                        if (typeof v_9390e8.confidence === 'number') {
-                          const v_ba2265 = (v_9390e8.confidence * 100).toFixed(1);
-                          if (!isNaN(Number(v_ba2265))) {
-                            return (
-                              <Text style={v_d81136.confidenceText}>
-                                {v_8d41d7('health_analysis.result.confidence')}: {v_ba2265}%
-                              </Text>
-                            );
-                          }
-                        }
-
-                        return null;
-                      })()}
-
                       {}
                       {v_314d3c && v_571c37[v_653390] && (
                         <View style={v_d81136.infoExpandContainer}>
                           <View style={v_d81136.infoExpandHeader}>
                             <Text style={v_d81136.infoExpandTitle}>
-                              {v_314d3c === 'wellnessIndex' 
+                              {v_314d3c === 'wellnessIndex'
                                 ? v_8d41d7('health_analysis.result.wellness_info.wellness_index_title')
                                 : v_8d41d7('health_analysis.result.wellness_info.wellness_level_title')}
                             </Text>
@@ -759,47 +717,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           )}
                         </View>
                       )}
-                      {(() => {
-
-                        if (v_9390e8.confidence && typeof v_9390e8.confidence === 'object' && 'level' in v_9390e8.confidence) {
-                          const v_fbe91e = (v_9390e8.confidence as any).level;
-                          let v_4e0432 = '';
-                          let v_53569e = 0;
-
-                          if (v_fbe91e === 0) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_unknown');
-                            v_53569e = 0;
-                          } else if (v_fbe91e === 1) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_low');
-                            v_53569e = 33;
-                          } else if (v_fbe91e === 2) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_medium');
-                            v_53569e = 67;
-                          } else if (v_fbe91e === 3) {
-                            v_4e0432 = v_8d41d7('health_analysis.result.confidence_high');
-                            v_53569e = 100;
-                          }
-
-                          return (
-                            <Text style={v_d81136.confidenceText}>
-                              {v_8d41d7('health_analysis.result.confidence')}: {v_4e0432} ({v_53569e}%)
-                            </Text>
-                          );
-                        }
-
-                        if (typeof v_9390e8.confidence === 'number') {
-                          const v_ba2265 = (v_9390e8.confidence * 100).toFixed(1);
-                          if (!isNaN(Number(v_ba2265))) {
-                            return (
-                              <Text style={v_d81136.confidenceText}>
-                                {v_8d41d7('health_analysis.result.confidence')}: {v_ba2265}%
-                              </Text>
-                            );
-                          }
-                        }
-
-                        return null;
-                      })()}
                     </View>
                   );
                 })}
