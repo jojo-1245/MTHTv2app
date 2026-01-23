@@ -416,6 +416,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const [v_9e9019, v_13a008] = v_5ab095<number | null>(null);
   const [v_0cc882, v_b4f3ee] = v_5ab095<number | null>(null);
   const [v_1f3747, v_75fa2e] = v_5ab095(false);
+  const v_224a01 = __DEV__ ? 0 : 0;
 
   const v_b90e32 = require('../../../assets/images/binah 2.png');
   const v_b1d778 = require('../../../assets/images/binah 3.png');
@@ -764,6 +765,22 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   ]);
 
   const v_f36ab0 = v_df9f57(() => {
+    if (v_224a01 > 0) {
+      const v_39e6fb = [
+        v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+        v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+        v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+      ];
+      return Array.from({ length: v_224a01 }, (v_37eab7, v_a56041) => {
+        const v_653390 = v_39e6fb[v_a56041 % v_39e6fb.length];
+        return {
+          typeNum: v_653390,
+          name: v_50f905(v_653390, v_8d41d7),
+          statusType: 'risk' as const,
+          valueText: v_8d41d7('health_analysis.result.risk'),
+        };
+      });
+    }
     const v_4622b9 = [];
     const v_110a8b = new Set<number>();
 
@@ -792,7 +809,15 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       });
 
     return v_4622b9;
-  }, [v_a7f568, v_8d41d7, v_08e501]);
+  }, [v_224a01, v_a7f568, v_8d41d7, v_08e501]);
+  const v_ee27d5 =
+    v_f36ab0.length >= 4
+      ? '45%'
+      : v_f36ab0.length > 0
+        ? 'auto'
+        : undefined;
+  const v_8e8471 =
+    v_f36ab0.length >= 4 ? '90%' : undefined;
 
   const v_463ca2 = (v_d308b5) => {
     if (v_d308b5 === '위험') {
@@ -1470,7 +1495,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         onRequestClose={() => v_75fa2e(false)}
       >
         <View style={v_d81136.abnormalModalOverlay}>
-          <View style={v_d81136.abnormalSheet}>
+          <View style={[v_d81136.abnormalSheet, { minHeight: v_ee27d5, maxHeight: v_8e8471 }]}>
             <View style={v_d81136.abnormalSheetHeader}>
               <View style={v_d81136.abnormalSheetTitleRow}>
                 <Ionicons name="warning" size={18} color={v_d8cb4d.warning.color} />
@@ -1488,18 +1513,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 <Ionicons name="close" size={20} color={v_1bfbd0.secondaryText} />
               </TouchableOpacity>
             </View>
-            <SafeScrollView
-              style={v_d81136.abnormalSheetBody}
-              contentContainerStyle={v_d81136.abnormalSheetContent}
-              showsVerticalScrollIndicator={false}
-              showBottomBackground={false}
-            >
-              {v_f36ab0.length === 0 ? (
-                <Text style={v_d81136.abnormalEmptyText}>
-                  {v_8d41d7('health_analysis.result.abnormal_empty')}
-                </Text>
-              ) : (
-                v_f36ab0.map((v_8c0b26) => (
+            {v_f36ab0.length >= 4 ? (
+              <SafeScrollView
+                style={v_472849.flatten([v_d81136.abnormalSheetBody, v_d81136.abnormalSheetBodyScroll])}
+                contentContainerStyle={v_d81136.abnormalSheetContent}
+                showsVerticalScrollIndicator={false}
+                showBottomBackground={false}
+              >
+                {v_f36ab0.map((v_8c0b26) => (
                   <View key={`abnormal-${v_8c0b26.typeNum}`} style={v_d81136.abnormalItem}>
                     <View style={v_d81136.abnormalItemHeader}>
                       <Text style={v_d81136.abnormalItemName}>{v_8c0b26.name}</Text>
@@ -1520,9 +1541,40 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     </View>
                     <Text style={v_d81136.abnormalItemValue}>{v_8c0b26.valueText}</Text>
                   </View>
-                ))
-              )}
-            </SafeScrollView>
+                ))}
+              </SafeScrollView>
+            ) : (
+              <View style={v_d81136.abnormalSheetContent}>
+                {v_f36ab0.length === 0 ? (
+                  <Text style={v_d81136.abnormalEmptyText}>
+                    {v_8d41d7('health_analysis.result.abnormal_empty')}
+                  </Text>
+                ) : (
+                  v_f36ab0.map((v_8c0b26) => (
+                    <View key={`abnormal-${v_8c0b26.typeNum}`} style={v_d81136.abnormalItem}>
+                      <View style={v_d81136.abnormalItemHeader}>
+                        <Text style={v_d81136.abnormalItemName}>{v_8c0b26.name}</Text>
+                        <View
+                          style={[
+                            v_d81136.abnormalBadge,
+                            v_8c0b26.statusType === 'risk'
+                              ? v_d81136.abnormalBadgeDanger
+                              : v_d81136.abnormalBadgeWarning,
+                          ]}
+                        >
+                          <Text style={v_d81136.abnormalBadgeText}>
+                            {v_8c0b26.statusType === 'risk'
+                              ? v_8d41d7('health_analysis.result.risk')
+                              : v_8d41d7('health_analysis.result.warning')}
+                          </Text>
+                        </View>
+                      </View>
+                      <Text style={v_d81136.abnormalItemValue}>{v_8c0b26.valueText}</Text>
+                    </View>
+                  ))
+                )}
+              </View>
+            )}
           </View>
         </View>
       </Modal>
@@ -1985,8 +2037,6 @@ const v_d81136 = v_472849.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: v_9b1a04.large,
-    maxHeight: '90%',
-    minHeight: '45%',
   },
   abnormalSheetHeader: {
     flexDirection: 'row',
@@ -2006,12 +2056,17 @@ const v_d81136 = v_472849.create({
   },
   abnormalSheetBody: {
     width: '100%',
-    flex: 1,
     minHeight: 0,
+  },
+  abnormalSheetBodyScroll: {
+    flex: 1,
+  },
+  abnormalSheetBodyAuto: {
+    flexGrow: 0,
   },
   abnormalSheetContent: {
     gap: v_9b1a04.small,
-    paddingBottom: v_9b1a04.xlarge,
+    marginBottom: v_9b1a04.xlarge + 10,
   },
   abnormalEmptyText: {
     fontSize: v_ef658a.small,

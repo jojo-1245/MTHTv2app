@@ -501,6 +501,7 @@
             "pulse_rate": "Denyut: {{value}}",
             "face_detection_title": "Deteksi Wajah",
             "state_ready": "Siap untuk mengukur. Tekan tombol mulai.",
+            "state_ready_retry": "Wajah tidak terdeteksi. Silakan mulai pengukuran lagi.",
             "state_starting": "Memulai pengukuran... Posisikan wajah Anda di depan kamera.",
             "state_processing": "Mengukur... ({{seconds}}s tersisa)",
             "state_default": "Mempersiapkan untuk mengukur...",
