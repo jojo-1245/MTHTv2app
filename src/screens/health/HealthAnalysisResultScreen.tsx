@@ -373,7 +373,11 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
   ];
   if (v_f4d1c2.includes(v_3b27d9)) {
     const v_842d09 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    return v_842d09 === 1 ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal');
+
+    if (v_842d09 === 0 || v_842d09 === 1) {
+      return v_842d09 === 1 ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal');
+    }
+
   }
 
   const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -427,6 +431,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_1f4a5d = require('../../../assets/images/binah 9.png');
   const v_2ca635 = require('../../../assets/images/binah 12.png');
   const v_2d36fb = require('../../../assets/images/binah 14.png');
+  const v_3f2f67 = require('../../../assets/images/binah17.png');
 
   const v_30e354 = (v_653390) => {
     v_e78f19(v_ba2215 => ({
@@ -638,7 +643,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     [v_e3e816.PRQ]: {
       title: v_8d41d7('health_analysis.result.info.prq_title'),
       body: v_8d41d7('health_analysis.result.info.prq_body'),
-      image: v_2ca635,
+      image: v_3f2f67,
     },
     [v_e3e816.OXYGEN_SATURATION]: {
       title: v_8d41d7('health_analysis.result.info.oxygen_saturation_title'),
@@ -653,12 +658,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     [v_e3e816.STRESS_LEVEL]: {
       title: v_8d41d7('health_analysis.result.info.stress_level_title'),
       body: v_8d41d7('health_analysis.result.info.stress_level_body'),
-      image: v_9dbc22,
+      images: [v_9dbc22, v_1f4a5d],
     },
     [v_e3e816.SDNN]: {
       title: v_8d41d7('health_analysis.result.info.hrv_sdnn_title'),
       body: v_8d41d7('health_analysis.result.info.hrv_sdnn_body'),
-      image: v_1f4a5d,
+      image: v_2ca635,
     },
     [v_e3e816.MEAN_RRI]: {
       title: v_8d41d7('health_analysis.result.info.mean_rri_title'),
@@ -1189,13 +1194,29 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                     color={v_d72c04.text}
                                   />
                                 </View>
-                                {v_d308b5 && (
-                                  <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
-                                    {v_d308b5 === '정상'
-                                      ? v_8d41d7('health_analysis.result.normal')
-                                      : v_8d41d7('health_analysis.result.risk')}
-                                  </Text>
-                                )}
+                                {v_d308b5 && (() => {
+
+                                  const v_a78cd1 = [
+                                    v_e3e816.ASCVD_RISK,
+                                    v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+                                    v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+                                    v_e3e816.LOW_HEMOGLOBIN_RISK,
+                                  ];
+                                  if (v_a78cd1.includes(v_8c0b26.typeNum)) {
+                                    const v_842d09 = typeof v_df7b8f(v_8c0b26.typeNum) === 'number' ? v_df7b8f(v_8c0b26.typeNum) : Number(v_df7b8f(v_8c0b26.typeNum));
+
+                                    if (v_842d09 !== 0 && v_842d09 !== 1 && !isNaN(v_842d09)) {
+                                      return null;
+                                    }
+                                  }
+                                  return (
+                                    <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                      {v_d308b5 === '정상'
+                                        ? v_8d41d7('health_analysis.result.normal')
+                                        : v_8d41d7('health_analysis.result.risk')}
+                                    </Text>
+                                  );
+                                })()}
                               </View>
                               <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
                               <View style={v_d81136.resultValueRow}>
@@ -1303,13 +1324,29 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                 color={v_d72c04.text}
                               />
                             </View>
-                            {v_d308b5 && (
-                              <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
-                                {v_d308b5 === '정상'
-                                  ? v_8d41d7('health_analysis.result.normal')
-                                  : v_8d41d7('health_analysis.result.risk')}
-                              </Text>
-                            )}
+                            {v_d308b5 && (() => {
+
+                              const v_a78cd1 = [
+                                v_e3e816.ASCVD_RISK,
+                                v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+                                v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+                                v_e3e816.LOW_HEMOGLOBIN_RISK,
+                              ];
+                              if (v_a78cd1.includes(v_653390)) {
+                                const v_842d09 = typeof v_9390e8.value === 'number' ? v_9390e8.value : Number(v_9390e8.value);
+
+                                if (v_842d09 !== 0 && v_842d09 !== 1 && !isNaN(v_842d09)) {
+                                  return null;
+                                }
+                              }
+                              return (
+                                <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                  {v_d308b5 === '정상'
+                                    ? v_8d41d7('health_analysis.result.normal')
+                                    : v_8d41d7('health_analysis.result.risk')}
+                                </Text>
+                              );
+                            })()}
                           </View>
                           <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
                           <View style={v_d81136.resultValueRow}>
@@ -1713,10 +1750,381 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               contentContainerStyle={v_d81136.wellnessModalBodyContent}
               showsVerticalScrollIndicator={false}
             >
-              {v_4594bf?.image ? (
-                <Image source={v_4594bf.image} style={v_d81136.wellnessExampleImage} resizeMode="contain" />
-              ) : null}
-              <Text style={v_d81136.wellnessModalBody}>{v_4594bf?.body}</Text>
+              {(() => {
+                if (!v_4594bf) {
+                  return null;
+                }
+                const v_706e98 = v_4594bf.images
+                  ? v_4594bf.images
+                  : v_4594bf.image
+                    ? [v_4594bf.image]
+                    : [];
+                const v_39f39e = v_4594bf.body
+                  ? v_4594bf.body.split('\n\n').filter(Boolean)
+                  : [];
+
+                if (
+                  v_9e9019 === v_e3e816.STRESS_LEVEL &&
+                  v_706e98.length === 2
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_659dc3 = -1;
+                  if (v_39416f) {
+                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('인체는') || v_e2a85c.includes('신체는'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('The human body') || v_e2a85c.includes('human body'),
+                    );
+                  } else if (v_d660f2) {
+                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Tubuh manusia') || v_e2a85c.includes('tubuh manusia'),
+                    );
+                  }
+
+                  let v_35b7a5 = -1;
+                  if (v_39416f) {
+                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('이 애플리케이션') || v_e2a85c.includes('빈야브스키') || v_e2a85c.includes('Baevsky'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('This application') || v_e2a85c.includes('Baevsky'),
+                    );
+                  } else if (v_d660f2) {
+                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Pengukuran tingkat stres aplikasi') || v_e2a85c.includes('Baevsky'),
+                    );
+                  }
+
+                  if (v_659dc3 >= 0 || v_35b7a5 >= 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_659dc3 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                            {v_a56041 === v_35b7a5 && v_706e98[1] ? (
+                              <Image
+                                source={v_706e98[1]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+
+                const v_d8f6f6 =
+                  v_706e98.length > 0 && v_706e98.length === v_39f39e.length - 1;
+                if (v_d8f6f6) {
+                  return (
+                    <View style={v_d81136.infoModalBodyStack}>
+                      {v_39f39e.map((v_d64a40, v_a56041) => (
+                        <View key={`info-paragraph-${v_a56041}`} style={v_d81136.infoModalParagraphBlock}>
+                          <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                          {v_706e98[v_a56041] ? (
+                            <Image
+                              source={v_706e98[v_a56041]}
+                              style={v_d81136.wellnessExampleImage}
+                              resizeMode="contain"
+                            />
+                          ) : null}
+                        </View>
+                      ))}
+                    </View>
+                  );
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.OXYGEN_SATURATION &&
+                  v_706e98.length > 0
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_1f890f = -1;
+                  if (v_39416f) {
+                    v_1f890f = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('저산소혈증'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_1f890f = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('hypoxemia') || v_e2a85c.includes('Hypoxemia'),
+                    );
+                  } else if (v_d660f2) {
+                    v_1f890f = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('hipoksemia') || v_e2a85c.includes('Hipoksemia'),
+                    );
+                  }
+
+                  if (v_1f890f > 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_1f890f - 1 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.BLOOD_PRESSURE &&
+                  v_706e98.length > 0 &&
+                  v_39f39e.length > 1
+                ) {
+                  return (
+                    <View style={v_d81136.infoModalBodyStack}>
+                      {v_39f39e.map((v_d64a40, v_a56041) => (
+                        <View
+                          key={`info-paragraph-${v_a56041}`}
+                          style={v_d81136.infoModalParagraphBlock}
+                        >
+                          <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                          {v_a56041 === 0 && v_706e98[0] ? (
+                            <Image
+                              source={v_706e98[0]}
+                              style={v_d81136.wellnessExampleImage}
+                              resizeMode="contain"
+                            />
+                          ) : null}
+                        </View>
+                      ))}
+                    </View>
+                  );
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.PULSE_RATE &&
+                  v_706e98.length > 0
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_c3488c = -1;
+                  if (v_39416f) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('심장은 온몸에') || v_e2a85c.includes('심장은'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Think of the heart') || v_e2a85c.includes('heart as a pump'),
+                    );
+                  } else if (v_d660f2) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Anggap jantung sebagai') || v_e2a85c.includes('jantung sebagai pompa'),
+                    );
+                  }
+
+                  if (v_c3488c > 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_c3488c - 1 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.RESPIRATION_RATE &&
+                  v_706e98.length > 0
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_c3488c = -1;
+                  if (v_39416f) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('숨을 들이실 때') || v_e2a85c.includes('숨을'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('When you inhale') || v_e2a85c.includes('you inhale'),
+                    );
+                  } else if (v_d660f2) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Saat Anda menghirup') || v_e2a85c.includes('menghirup'),
+                    );
+                  }
+
+                  if (v_c3488c > 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_c3488c - 1 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.PRQ &&
+                  v_706e98.length > 0
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_c3488c = -1;
+                  if (v_39416f) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('PRQ(맥박-호흡 비율)은') || v_e2a85c.includes('PRQ(맥박'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('PRQ (pulse rate-respiration rate ratio)') || v_e2a85c.includes('pulse rate-respiration rate ratio'),
+                    );
+                  } else if (v_d660f2) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('PRQ (rasio denyut nadi-laju pernapasan)') || v_e2a85c.includes('menunjukkan seberapa efisien jantung dan paru-paru'),
+                    );
+                  }
+
+                  if (v_c3488c > 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_c3488c - 1 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+
+                if (
+                  v_9e9019 === v_e3e816.SDNN &&
+                  v_706e98.length > 0
+                ) {
+                  const v_39416f = v_9c213b.language?.startsWith('ko');
+                  const v_d6be1a = v_9c213b.language?.startsWith('en');
+                  const v_d660f2 = v_9c213b.language?.startsWith('id');
+
+                  let v_c3488c = -1;
+                  if (v_39416f) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('개인의 심박은') || v_e2a85c.includes('심박은 일정한'),
+                    );
+                  } else if (v_d6be1a) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes("An individual's heartbeats") || v_e2a85c.includes("individual's heartbeats"),
+                    );
+                  } else if (v_d660f2) {
+                    v_c3488c = v_39f39e.findIndex((v_e2a85c) =>
+                      v_e2a85c.includes('Detak jantung individu') || v_e2a85c.includes('Detak jantung'),
+                    );
+                  }
+
+                  if (v_c3488c > 0) {
+                    return (
+                      <View style={v_d81136.infoModalBodyStack}>
+                        {v_39f39e.map((v_d64a40, v_a56041) => (
+                          <View
+                            key={`info-paragraph-${v_a56041}`}
+                            style={v_d81136.infoModalParagraphBlock}
+                          >
+                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                            {v_a56041 === v_c3488c - 1 && v_706e98[0] ? (
+                              <Image
+                                source={v_706e98[0]}
+                                style={v_d81136.wellnessExampleImage}
+                                resizeMode="contain"
+                              />
+                            ) : null}
+                          </View>
+                        ))}
+                      </View>
+                    );
+                  }
+                }
+                return (
+                  <>
+                    {v_706e98.length > 0 ? (
+                      <View style={v_d81136.infoModalImageStack}>
+                        {v_706e98.map((v_04e790, v_a56041) => (
+                          <Image
+                            key={`info-image-${v_a56041}`}
+                            source={v_04e790}
+                            style={v_d81136.wellnessExampleImage}
+                            resizeMode="contain"
+                          />
+                        ))}
+                      </View>
+                    ) : null}
+                    <Text style={v_d81136.wellnessModalBody}>{v_4594bf.body}</Text>
+                  </>
+                );
+              })()}
             </ScrollView>
           </View>
         </View>
@@ -2140,6 +2548,15 @@ const v_d81136 = v_472849.create({
   wellnessModalBodyContent: {
     gap: v_9b1a04.medium,
     paddingBottom: v_9b1a04.small,
+  },
+  infoModalBodyStack: {
+    gap: v_9b1a04.medium,
+  },
+  infoModalParagraphBlock: {
+    gap: v_9b1a04.medium,
+  },
+  infoModalImageStack: {
+    gap: v_9b1a04.medium,
   },
   wellnessParagraphBlock: {
     gap: v_9b1a04.medium,
