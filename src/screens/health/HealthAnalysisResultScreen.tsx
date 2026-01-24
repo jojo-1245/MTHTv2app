@@ -1767,68 +1767,34 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   v_9e9019 === v_e3e816.STRESS_LEVEL &&
                   v_706e98.length === 2
                 ) {
-                  const v_39416f = v_9c213b.language?.startsWith('ko');
-                  const v_d6be1a = v_9c213b.language?.startsWith('en');
-                  const v_d660f2 = v_9c213b.language?.startsWith('id');
-
-                  let v_659dc3 = -1;
-                  if (v_39416f) {
-                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('인체는') || v_e2a85c.includes('신체는'),
-                    );
-                  } else if (v_d6be1a) {
-                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('The human body') || v_e2a85c.includes('human body'),
-                    );
-                  } else if (v_d660f2) {
-                    v_659dc3 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('Tubuh manusia') || v_e2a85c.includes('tubuh manusia'),
-                    );
-                  }
-
-                  let v_35b7a5 = -1;
-                  if (v_39416f) {
-                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('이 애플리케이션') || v_e2a85c.includes('빈야브스키') || v_e2a85c.includes('Baevsky'),
-                    );
-                  } else if (v_d6be1a) {
-                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('This application') || v_e2a85c.includes('Baevsky'),
-                    );
-                  } else if (v_d660f2) {
-                    v_35b7a5 = v_39f39e.findIndex((v_e2a85c) =>
-                      v_e2a85c.includes('Pengukuran tingkat stres aplikasi') || v_e2a85c.includes('Baevsky'),
-                    );
-                  }
-
-                  if (v_659dc3 >= 0 || v_35b7a5 >= 0) {
-                    return (
-                      <View style={v_d81136.infoModalBodyStack}>
-                        {v_39f39e.map((v_d64a40, v_a56041) => (
-                          <View
-                            key={`info-paragraph-${v_a56041}`}
-                            style={v_d81136.infoModalParagraphBlock}
-                          >
-                            <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
-                            {v_a56041 === v_659dc3 && v_706e98[0] ? (
-                              <Image
-                                source={v_706e98[0]}
-                                style={v_d81136.wellnessExampleImage}
-                                resizeMode="contain"
-                              />
-                            ) : null}
-                            {v_a56041 === v_35b7a5 && v_706e98[1] ? (
-                              <Image
-                                source={v_706e98[1]}
-                                style={v_d81136.wellnessExampleImage}
-                                resizeMode="contain"
-                              />
-                            ) : null}
-                          </View>
-                        ))}
-                      </View>
-                    );
-                  }
+                  return (
+                    <View style={v_d81136.infoModalBodyStack}>
+                      {v_39f39e.map((v_d64a40, v_a56041) => (
+                        <View
+                          key={`info-paragraph-${v_a56041}`}
+                          style={v_d81136.infoModalParagraphBlock}
+                        >
+                          <Text style={v_d81136.wellnessModalBody}>{v_d64a40}</Text>
+                          {}
+                          {v_a56041 === 0 && v_706e98[0] ? (
+                            <Image
+                              source={v_706e98[0]}
+                              style={v_d81136.wellnessExampleImage}
+                              resizeMode="contain"
+                            />
+                          ) : null}
+                          {}
+                          {v_a56041 === 1 && v_706e98[1] ? (
+                            <Image
+                              source={v_706e98[1]}
+                              style={v_d81136.wellnessExampleImage}
+                              resizeMode="contain"
+                            />
+                          ) : null}
+                        </View>
+                      ))}
+                    </View>
+                  );
                 }
 
                 const v_d8f6f6 =
