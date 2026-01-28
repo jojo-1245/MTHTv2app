@@ -17,7 +17,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d4f1cc } from 'mbgbsytfgyr';
-import { v_729608, v_570c34, v_556baf, v_cb41de } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
@@ -40,6 +40,14 @@ import {
   v_e3e816,
 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
+import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
+import type { v_bc6a30 } from 'uktxzkvkahagapxcbvlpltsizdeouzhnoqevkvrotincgxkosilmmfsdlgpjgtfezlmwfovgmx';
+
+enum SmokingStatus {
+  UNSPECIFIED = 0,
+  SMOKER = 1,
+  NON_SMOKER = 2,
+}
 
 const v_fa53c9 = (): string => {
   try {
@@ -192,6 +200,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
 
   const v_a3ff5a = v_e662ae<v_6edea3 | undefined>(undefined);
+
+  const [v_2f3ab2, v_ad3226] = v_5ab095<string>('');
+  const [v_a5d6d1, v_e3a875] = v_5ab095<'male' | 'female' | null>(null);
+  const [v_ebc748, v_7dad08] = v_5ab095<string>('');
+  const [v_5b20cf, v_d42b39] = v_5ab095<string>('');
+  const [v_8f47c9, v_f04076] = v_5ab095<'smoker' | 'non_smoker' | 'unspecified' | null>(null);
+  const [v_78e93d, v_4f2a03] = v_5ab095<string | undefined>();
+  const [v_aa2d84, v_e142ed] = v_5ab095<string | undefined>();
+  const [v_c762f3, v_207ee4] = v_5ab095<string | undefined>();
 
   const [v_109b56, v_49296b] = v_5ab095(false);
   const [v_ee736b, v_054130] = v_5ab095<string | undefined>();
@@ -385,12 +402,56 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       console.log('카메라 초기화 대기 중... (1.5초)');
       await new Promise(v_6f7712 => setTimeout(v_6f7712, 1500));
 
+      const userInformation: v_bc6a30 = {};
+      if (v_2f3ab2 && !isNaN(Number(v_2f3ab2))) {
+        const v_2694bd = Number(v_2f3ab2);
+        if (v_2694bd > 0 && v_2694bd <= 120) {
+          v_7d2514.age = v_2694bd;
+        }
+      }
+      if (v_a5d6d1) {
+
+        v_7d2514.sex = v_a5d6d1 === 'male' ? v_689447.MALE : v_689447.FEMALE;
+      }
+      if (v_ebc748 && !isNaN(Number(v_ebc748))) {
+        const v_14832c = Number(v_ebc748);
+        if (v_14832c >= 10 && v_14832c <= 300) {
+          v_7d2514.weight = v_14832c;
+        }
+      }
+      if (v_5b20cf && !isNaN(Number(v_5b20cf))) {
+        const v_c86e33 = Number(v_5b20cf);
+        if (v_c86e33 >= 50 && v_c86e33 <= 250) {
+          v_7d2514.height = v_c86e33;
+        }
+      }
+      if (v_8f47c9) {
+
+        if (v_8f47c9 === 'smoker') {
+          v_7d2514.smokingStatus = SmokingStatus.SMOKER;
+        } else if (v_8f47c9 === 'non_smoker') {
+          v_7d2514.smokingStatus = SmokingStatus.NON_SMOKER;
+        } else if (v_8f47c9 === 'unspecified') {
+          v_7d2514.smokingStatus = SmokingStatus.UNSPECIFIED;
+        }
+      }
+
+      console.log('[사용자 정보 전달] 입력된 정보:', {
+        userAge: v_2f3ab2,
+        userGender: v_a5d6d1,
+        userWeight: v_ebc748,
+        userHeight: v_5b20cf,
+        userSmokingStatus: v_8f47c9,
+        userInformation: v_7d2514,
+        hasUserInfo: Object.keys(v_7d2514).length > 0,
+      });
+
       v_a3ff5a.current = await v_d55d6e.faceSession(
         {
           licenseKey: v_651d83,
         },
         {
-
+          userInformation: Object.keys(v_7d2514).length > 0 ? v_7d2514 : undefined,
         }
       );
       console.log('세션 생성 완료, 세션 객체:', !!v_a3ff5a.current);
@@ -464,7 +525,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         );
       }
     }
-  }, [v_ec0597, v_c1ef35, v_109b56, v_141cf8]);
+  }, [v_ec0597, v_c1ef35, v_109b56, v_141cf8, v_2f3ab2, v_a5d6d1, v_ebc748, v_5b20cf, v_8f47c9, v_8d41d7]);
 
   const v_ac8071 = v_de06a3(async () => {
     try {
@@ -749,6 +810,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_c5a97a.forEach(v_3b27d9 => console.log(`  ✅ ${v_a79016(v_3b27d9)} (${v_3b27d9})`));
       console.log(`라이센스에서 비활성화된 항목: ${v_8fb8a5.length}개`);
       v_8fb8a5.forEach(v_3b27d9 => console.log(`  ❌ ${v_a79016(v_3b27d9)} (${v_3b27d9})`));
+
+      const v_0feca7 = v_e3e816.HEART_AGE;
+      console.log('\n=== HEART_AGE 활성화 상태 확인 ===');
+      console.log(`HEART_AGE 타입 번호: ${v_0feca7}`);
+      console.log(`라이센스 활성화: ${v_9a1841.licenseEnabled.isEnabled(v_0feca7)}`);
+      console.log(`디바이스 활성화: ${v_9a1841.deviceEnabled.isEnabled(v_0feca7)}`);
+      console.log(`측정 모드 활성화: ${v_9a1841.measurementModeEnabled.isEnabled(v_0feca7)}`);
+      console.log('===================================\n');
       console.log(`디바이스에서 활성화된 항목: ${v_7a5c3a.length}개`);
       v_7a5c3a.forEach(v_3b27d9 => console.log(`  ✅ ${v_a79016(v_3b27d9)} (${v_3b27d9})`));
       console.log(`디바이스에서 비활성화된 항목: ${v_837eed.length}개`);
@@ -962,8 +1031,32 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           console.log(`      - 라이센스: ${v_c5a97a ? '✅' : '❌'}, 디바이스: ${v_7a5c3a ? '✅' : '❌'}, 측정모드: ${v_a89a2e ? '✅' : '❌'}`);
         }
       });
-      console.log('=== 전체 측정 결과 (RAW) ===');
-      console.log(JSON.stringify(v_9f8792, null, 2));
+
+      const v_0feca7 = v_e3e816.HEART_AGE;
+      const v_37fc8a = v_d0a515.getResult(v_0feca7);
+      console.log('\n=== HEART_AGE 측정 결과 확인 ===');
+      console.log(`HEART_AGE 타입 번호: ${v_0feca7}`);
+      console.log(`측정 결과 존재: ${v_37fc8a ? '✅ 있음' : '❌ 없음'}`);
+      if (v_37fc8a) {
+        console.log(`HEART_AGE 값:`, v_37fc8a);
+      } else {
+        console.log(`HEART_AGE가 측정되지 않았습니다.`);
+        console.log(`전달된 사용자 정보:`, {
+          age: v_2f3ab2 ? Number(v_2f3ab2) : undefined,
+          gender: v_a5d6d1,
+          sex: v_a5d6d1 === 'male' ? 'MALE (1)' : v_a5d6d1 === 'female' ? 'FEMALE (2)' : undefined,
+        });
+        console.log(`가능한 원인:`);
+        console.log(`  1. 측정 품질이 HEART_AGE 계산에 충분하지 않을 수 있음`);
+        console.log(`  2. 추가 정보(weight, height, smokingStatus)가 필요할 수 있음`);
+        console.log(`  3. SDK 내부 계산 조건이 충족되지 않았을 수 있음`);
+        console.log(`  4. 측정 시간이 부족했을 수 있음`);
+        console.log(`\n권장 사항:`);
+        console.log(`  - FzljtiliSignal 문서에서 HEART_AGE 계산 요구사항 확인`);
+        console.log(`  - FzljtiliSignal 지원팀에 문의하여 HEART_AGE 계산 조건 확인`);
+      }
+      console.log('===================================\n');
+      console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
       (async () => {
@@ -1225,6 +1318,130 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               <View style={v_d81136.guidelineItem}>
                 <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
                 <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
+              </View>
+            </View>
+
+            {}
+            <View style={v_d81136.userInfoForm}>
+              <Text style={v_d81136.userInfoTitle}>{v_8d41d7('health_analysis.intro.user_info_title')}</Text>
+              <Text style={v_d81136.userInfoDescription}>{v_8d41d7('health_analysis.intro.user_info_description')}</Text>
+
+              {}
+              <View style={v_d81136.formSection}>
+                <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.gender_label')}</Text>
+                <View style={v_d81136.inlineOptions}>
+                  <OptionButton
+                    label={v_8d41d7('common.male')}
+                    selected={v_a5d6d1 === 'male'}
+                    onPress={() => v_e3a875('male')}
+                    flex={1}
+                  />
+                  <OptionButton
+                    label={v_8d41d7('common.female')}
+                    selected={v_a5d6d1 === 'female'}
+                    onPress={() => v_e3a875('female')}
+                    flex={1}
+                  />
+                </View>
+              </View>
+
+              {}
+              <View style={v_d81136.formSection}>
+                <TextField
+                  label={v_8d41d7('health_analysis.intro.age_label')}
+                  placeholder={v_8d41d7('health_analysis.intro.age_placeholder')}
+                  value={v_2f3ab2}
+                  onChangeText={(v_9b6134) => {
+
+                    const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
+                    v_ad3226(v_66cb8a);
+
+                    if (v_66cb8a && (Number(v_66cb8a) <= 0 || Number(v_66cb8a) > 120)) {
+                      v_4f2a03(v_8d41d7('health_analysis.intro.age_error'));
+                    } else {
+                      v_4f2a03(undefined);
+                    }
+                  }}
+                  keyboardType="number-pad"
+                  maxLength={3}
+                  errorText={v_78e93d}
+                />
+              </View>
+
+              {}
+              <View style={v_d81136.formSection}>
+                <TextField
+                  label={v_8d41d7('health_analysis.intro.weight_label')}
+                  placeholder={v_8d41d7('health_analysis.intro.weight_placeholder')}
+                  value={v_ebc748}
+                  onChangeText={(v_9b6134) => {
+
+                    const v_66cb8a = v_9b6134.replace(/[^0-9.]/g, '');
+
+                    const v_468545 = v_66cb8a.split('.');
+                    const v_74d161 = v_468545.length > 2
+                      ? v_468545[0] + '.' + v_468545.slice(1).join('')
+                      : v_66cb8a;
+                    v_7dad08(v_74d161);
+
+                    if (v_74d161 && (Number(v_74d161) < 10 || Number(v_74d161) > 300)) {
+                      v_e142ed(v_8d41d7('health_analysis.intro.weight_error'));
+                    } else {
+                      v_e142ed(undefined);
+                    }
+                  }}
+                  keyboardType="decimal-pad"
+                  maxLength={6}
+                  errorText={v_aa2d84}
+                />
+              </View>
+
+              {}
+              <View style={v_d81136.formSection}>
+                <TextField
+                  label={v_8d41d7('health_analysis.intro.height_label')}
+                  placeholder={v_8d41d7('health_analysis.intro.height_placeholder')}
+                  value={v_5b20cf}
+                  onChangeText={(v_9b6134) => {
+
+                    const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
+                    v_d42b39(v_66cb8a);
+
+                    if (v_66cb8a && (Number(v_66cb8a) < 50 || Number(v_66cb8a) > 250)) {
+                      v_207ee4(v_8d41d7('health_analysis.intro.height_error'));
+                    } else {
+                      v_207ee4(undefined);
+                    }
+                  }}
+                  keyboardType="number-pad"
+                  maxLength={3}
+                  errorText={v_c762f3}
+                />
+              </View>
+
+              {}
+              <View style={v_d81136.formSection}>
+                <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.smoking_status_label')}</Text>
+                <View style={v_d81136.inlineOptions}>
+                  <OptionButton
+                    label={v_8d41d7('health_analysis.intro.smoking_status_smoker')}
+                    selected={v_8f47c9 === 'smoker'}
+                    onPress={() => v_f04076('smoker')}
+                    flex={1}
+                  />
+                  <OptionButton
+                    label={v_8d41d7('health_analysis.intro.smoking_status_non_smoker')}
+                    selected={v_8f47c9 === 'non_smoker'}
+                    onPress={() => v_f04076('non_smoker')}
+                    flex={1}
+                  />
+                  <OptionButton
+                    label={v_8d41d7('health_analysis.intro.smoking_status_unspecified')}
+                    selected={v_8f47c9 === 'unspecified'}
+                    onPress={() => v_f04076('unspecified')}
+                    flex={1}
+                  />
+                </View>
               </View>
             </View>
 
@@ -1504,6 +1721,40 @@ const v_d81136 = v_472849.create({
     color: v_1bfbd0.secondaryText,
     marginLeft: v_9b1a04.small,
     lineHeight: 20,
+  },
+  userInfoForm: {
+    backgroundColor: v_1bfbd0.background,
+    borderRadius: 12,
+    padding: v_9b1a04.large,
+    marginBottom: v_9b1a04.xlarge,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.border,
+  },
+  userInfoTitle: {
+    fontSize: 18,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+    marginBottom: v_9b1a04.small,
+  },
+  userInfoDescription: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    marginBottom: v_9b1a04.medium,
+    lineHeight: 20,
+  },
+  formSection: {
+    marginBottom: v_9b1a04.medium,
+  },
+  formLabel: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+    marginBottom: v_9b1a04.small,
+  },
+  inlineOptions: {
+    flexDirection: 'row',
+    gap: v_9b1a04.small,
   },
   introButtonContainer: {
     marginTop: v_9b1a04.large,

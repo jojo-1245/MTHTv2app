@@ -198,7 +198,13 @@ const v_005339 = (v_3b402b): GroupStatus | null => {
   if (isNaN(v_549ed3)) {
     return null;
   }
-  return v_549ed3 === 1 ? '위험' : '정상';
+
+  if (v_549ed3 === 0 || v_549ed3 === 1) {
+    return '정상'; 
+  } else if (v_549ed3 === 2 || v_549ed3 === 3) {
+    return '위험'; 
+  }
+  return null;
 };
 
 const v_2e7086 = (v_3b27d9, v_3b402b, v_8d41d7): string | null => {
@@ -376,11 +382,18 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
   ];
   if (v_f4d1c2.includes(v_3b27d9)) {
     const v_842d09 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+    if (!isNaN(v_842d09)) {
 
-    if (v_842d09 === 0 || v_842d09 === 1) {
-      return v_842d09 === 1 ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal');
+      if (v_842d09 === 0) {
+        return v_8d41d7('health_analysis.result.normal'); 
+      } else if (v_842d09 === 1) {
+        return v_8d41d7('health_analysis.result.normal'); 
+      } else if (v_842d09 === 2) {
+        return v_8d41d7('health_analysis.result.risk'); 
+      } else if (v_842d09 === 3) {
+        return v_8d41d7('health_analysis.result.risk'); 
+      }
     }
-
   }
 
   const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -438,6 +451,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const v_0bbee6 = v_e662ae(new v_a2349e.Value(0)).current;
   const v_15af7a = v_e662ae(0);
+  const v_d0de58 = v_e662ae(0); 
+  const v_905b11 = v_e662ae(0); 
   const v_1e0e1c = v_e662ae(114); 
   const [v_23f063, v_1ce906] = v_5ab095(false);
   const v_685d2a = v_e662ae<v_3094a2 | null>(null);
@@ -486,7 +501,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_3ca263 = (v_ba91d0) => {
     const v_755a94 = v_aa48a7.current[v_ba91d0];
 
-    const v_e59e6a = v_23f063 ? (v_15af7a.current || 80) : 0;
+    const v_e59e6a = v_1e0e1c.current + (v_905b11.current || 0);
 
     if (v_755a94 && v_e99f51.current) {
       v_755a94.measureLayout(
@@ -566,7 +581,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return null;
   };
 
-  const v_b1b76c = [v_e3e816.WELLNESS_INDEX];
+  const v_b1b76c = [v_e3e816.WELLNESS_INDEX, v_e3e816.HEART_AGE];
 
   const v_b30c6b = [];
   const v_53d27c = [];
@@ -604,24 +619,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     let v_205f1f = null;
     if (typeof v_cabbe9 === 'object' && v_cabbe9 !== null && v_cabbe9.level !== undefined) {
       v_205f1f = typeof v_cabbe9.level === 'number' ? v_cabbe9.level : Number(v_cabbe9.level);
-
     } else if (typeof v_cabbe9 === 'number') {
 
       v_205f1f = v_cabbe9;
-
     } else {
 
       const v_8decf8 = Number(v_cabbe9);
       if (isNaN(v_8decf8)) {
-
         return null;
       }
       v_205f1f = v_8decf8;
-
     }
 
     if (v_205f1f === null || isNaN(v_205f1f)) {
-
       return null;
     }
 
@@ -883,7 +893,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     if (v_653390 === v_e3e816.STRESS_LEVEL) {
       return v_399d2c(v_3b402b);
     }
+
     if (v_653390 === v_e3e816.BLOOD_PRESSURE) {
+      const v_5d0a1b = v_3b402b as any;
+      if (typeof v_5d0a1b === 'object' && v_5d0a1b !== null && !Array.isArray(v_5d0a1b)) {
+        const v_e7392b = typeof v_5d0a1b.systolic === 'number' ? v_5d0a1b.systolic : Number(v_5d0a1b.systolic);
+        const v_8cfeff = typeof v_5d0a1b.diastolic === 'number' ? v_5d0a1b.diastolic : Number(v_5d0a1b.diastolic);
+
+        if (!isNaN(v_e7392b) && !isNaN(v_8cfeff)) {
+
+          return (v_e7392b >= 140 || v_8cfeff >= 95) ? '위험' : '정상';
+        }
+      }
+
       return v_005339(v_df7b8f(v_e3e816.HIGH_BLOOD_PRESSURE_RISK));
     }
     if (v_653390 === v_e3e816.HIGH_BLOOD_PRESSURE_RISK) {
@@ -1165,7 +1187,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             style={[v_d81136.stickyHeader, { top: v_1e0e1c.current }]}
             onLayout={(v_d48baf) => {
               const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
-              v_15af7a.current = v_c86e33;
+              v_905b11.current = v_c86e33;
             }}
           >
             <View style={v_d81136.stickyHeaderContent}>
@@ -1175,7 +1197,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   v_653390 === v_e3e816.WELLNESS_INDEX ||
                   v_653390 === v_e3e816.WELLNESS_LEVEL
                 ) {
-                  return v_1867ed(v_653390);
+                  return (
+                    <View
+                      key={`${v_653390}-compact-wrapper`}
+                      onLayout={(v_d48baf) => {
+                        const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
+                        v_d0de58.current = v_c86e33;
+
+                        v_905b11.current = v_c86e33 + v_898946.current;
+                      }}
+                    >
+                      {v_1867ed(v_653390)}
+                    </View>
+                  );
                 }
                 return null;
               })}
@@ -1426,7 +1460,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   const { y: v_64877a, height: v_c86e33 } = v_d48baf.nativeEvent.layout;
                   v_154640.current = v_64877a;
                   v_898946.current = v_c86e33;
-                  v_15af7a.current += v_c86e33;
+
+                  if (v_d0de58.current > 0) {
+                    v_905b11.current = v_d0de58.current + v_c86e33;
+                  } else {
+
+                    v_905b11.current = v_15af7a.current;
+                  }
                 }}
               >
                 <ScrollView
