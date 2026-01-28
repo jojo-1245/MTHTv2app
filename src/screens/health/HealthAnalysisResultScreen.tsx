@@ -581,7 +581,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return null;
   };
 
-  const v_b1b76c = [v_e3e816.WELLNESS_INDEX];
+  const v_b1b76c = [v_e3e816.WELLNESS_INDEX, v_e3e816.HEART_AGE];
 
   const v_b30c6b = [];
   const v_53d27c = [];
@@ -619,28 +619,21 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     let v_205f1f = null;
     if (typeof v_cabbe9 === 'object' && v_cabbe9 !== null && v_cabbe9.level !== undefined) {
       v_205f1f = typeof v_cabbe9.level === 'number' ? v_cabbe9.level : Number(v_cabbe9.level);
-      console.log('[신뢰도 분석] confidence.level에서 추출한 레벨:', v_205f1f);
     } else if (typeof v_cabbe9 === 'number') {
 
       v_205f1f = v_cabbe9;
-      console.log('[신뢰도 분석] 숫자로 직접 제공된 레벨:', v_205f1f);
     } else {
 
       const v_8decf8 = Number(v_cabbe9);
       if (isNaN(v_8decf8)) {
-        console.log('[신뢰도 분석] 파싱 실패 - 숫자로 변환 불가');
         return null;
       }
       v_205f1f = v_8decf8;
-      console.log('[신뢰도 분석] 문자열에서 파싱한 레벨:', v_205f1f);
     }
 
     if (v_205f1f === null || isNaN(v_205f1f)) {
-      console.log('[신뢰도 분석] 최종 레벨이 유효하지 않음');
       return null;
     }
-
-    console.log('[신뢰도 분석] 최종 레벨:', v_205f1f);
 
     if (v_205f1f === 3) {
 
@@ -653,7 +646,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       return { label: v_8d41d7('health_analysis.result.confidence_low'), color: '#FF9800', percentValue: undefined }; 
     } else {
 
-      console.warn('[신뢰도 분석] 예상치 못한 레벨 값:', v_205f1f, '(예상: 1=LOW, 2=MEDIUM, 3=HIGH)');
       return null;
     }
   };
