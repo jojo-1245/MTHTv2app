@@ -962,7 +962,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           console.log(`      - 라이센스: ${v_c5a97a ? '✅' : '❌'}, 디바이스: ${v_7a5c3a ? '✅' : '❌'}, 측정모드: ${v_a89a2e ? '✅' : '❌'}`);
         }
       });
-      console.log('전체 결과:', v_9f8792);
+      console.log('=== 전체 측정 결과 (RAW) ===');
+      console.log(JSON.stringify(v_9f8792, null, 2));
       console.log('============================');
 
       (async () => {
