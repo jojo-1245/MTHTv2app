@@ -180,6 +180,10 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                 v_e3e816.PRQ,
                                                 v_e3e816.OXYGEN_SATURATION,
                                                 v_e3e816.SDNN,
+                                                v_e3e816.MEAN_RRI,
+                                                v_e3e816.RMSSD,
+                                                v_e3e816.PNS_INDEX,
+                                                v_e3e816.SNS_INDEX,
                                             ];
 
                                             if (v_9e9019 === v_e3e816.STRESS_LEVEL) {
@@ -280,15 +284,47 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                     v_022965 = 4; 
                                                     v_c9ee7b = 5; 
                                                 } else if (v_9e9019 === v_e3e816.OXYGEN_SATURATION) {
-                                                    v_43e24b = 90; v_d2c6bf = 100; v_362579 = 95; v_ba4c5f = 100; v_80cae9 = '%';
+
+                                                    v_43e24b = 85; v_d2c6bf = 100; v_362579 = 95; v_ba4c5f = 100; v_80cae9 = '%';
+                                                    v_0f5cba = true;
+                                                    v_022965 = 90; 
+                                                    v_c9ee7b = 95; 
                                                 } else if (v_9e9019 === v_e3e816.SDNN) {
-                                                    v_43e24b = 10; v_d2c6bf = 100; v_362579 = 50; v_ba4c5f = 100; v_80cae9 = 'ms';
+
+                                                    v_43e24b = 0; v_d2c6bf = 120; v_362579 = 50; v_ba4c5f = 120; v_80cae9 = 'ms';
+                                                    v_0f5cba = true;
+                                                    v_022965 = 30; 
+                                                    v_c9ee7b = 50; 
+                                                } else if (v_9e9019 === v_e3e816.MEAN_RRI) {
+
+                                                    v_43e24b = 400; v_d2c6bf = 1200; v_362579 = 600; v_ba4c5f = 1000; v_80cae9 = 'ms';
+                                                    v_0f5cba = true;
+                                                    v_022965 = 600; 
+                                                    v_c9ee7b = 1000; 
+                                                } else if (v_9e9019 === v_e3e816.RMSSD) {
+
+                                                    v_43e24b = 0; v_d2c6bf = 100; v_362579 = 50; v_ba4c5f = 100; v_80cae9 = 'ms';
+                                                    v_0f5cba = true;
+                                                    v_022965 = 20; 
+                                                    v_c9ee7b = 50; 
+                                                } else if (v_9e9019 === v_e3e816.PNS_INDEX) {
+
+                                                    v_43e24b = -3; v_d2c6bf = 3; v_362579 = 0; v_ba4c5f = 3; v_80cae9 = '';
+                                                    v_0f5cba = true;
+                                                    v_022965 = -1; 
+                                                    v_c9ee7b = 1; 
+                                                } else if (v_9e9019 === v_e3e816.SNS_INDEX) {
+
+                                                    v_43e24b = -3; v_d2c6bf = 3; v_362579 = -3; v_ba4c5f = 0; v_80cae9 = '';
+                                                    v_0f5cba = true;
+                                                    v_022965 = -1; 
+                                                    v_c9ee7b = 1; 
                                                 }
 
                                                 const v_7aed98 = ((v_362579 - v_43e24b) / (v_d2c6bf - v_43e24b)) * 100;
                                                 const v_40639b = ((v_ba4c5f - v_43e24b) / (v_d2c6bf - v_43e24b)) * 100;
 
-                                                if (v_0f5cba && (v_9e9019 === v_e3e816.PULSE_RATE || v_9e9019 === v_e3e816.RESPIRATION_RATE || v_9e9019 === v_e3e816.PRQ)) {
+                                                if (v_0f5cba) {
 
                                                     const v_331246 = 100 / 3;
 
@@ -324,15 +360,44 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                         v_e001fc = '#FFC107'; 
                                                         v_6f0c12 = '#4CAF50'; 
                                                         v_62b932 = '#F44336'; 
+                                                    } else if (v_9e9019 === v_e3e816.RESPIRATION_RATE) {
+                                                        v_e001fc = '#FFC107'; 
+                                                        v_6f0c12 = '#4CAF50'; 
+                                                        v_62b932 = '#FF9800'; 
                                                     } else if (v_9e9019 === v_e3e816.PRQ) {
                                                         v_e001fc = '#FF9800'; 
                                                         v_6f0c12 = '#4CAF50'; 
                                                         v_62b932 = '#E91E63'; 
-                                                    }
+                                                    } else if (v_9e9019 === v_e3e816.OXYGEN_SATURATION) {
 
-                                                    if (v_9e9019 === v_e3e816.PULSE_RATE || v_9e9019 === v_e3e816.RESPIRATION_RATE || v_9e9019 === v_e3e816.PRQ) {
-                                                        const v_823608 = v_9e9019 === v_e3e816.PULSE_RATE ? '심박수' : v_9e9019 === v_e3e816.RESPIRATION_RATE ? '호흡수' : 'PRQ';
-                                                        console.log(`[${v_823608} 그래프] numValue:`, v_549ed3, 'segment1End:', v_022965, 'segment2End:', v_c9ee7b, 'indicatorPercentage:', v_0645af);
+                                                        v_e001fc = '#F44336'; 
+                                                        v_6f0c12 = '#FFC107'; 
+                                                        v_62b932 = '#4CAF50'; 
+                                                    } else if (v_9e9019 === v_e3e816.SDNN) {
+
+                                                        v_e001fc = '#F44336'; 
+                                                        v_6f0c12 = '#FFC107'; 
+                                                        v_62b932 = '#4CAF50'; 
+                                                    } else if (v_9e9019 === v_e3e816.MEAN_RRI) {
+
+                                                        v_e001fc = '#F44336'; 
+                                                        v_6f0c12 = '#4CAF50'; 
+                                                        v_62b932 = '#FFC107'; 
+                                                    } else if (v_9e9019 === v_e3e816.RMSSD) {
+
+                                                        v_e001fc = '#F44336'; 
+                                                        v_6f0c12 = '#FFC107'; 
+                                                        v_62b932 = '#4CAF50'; 
+                                                    } else if (v_9e9019 === v_e3e816.PNS_INDEX) {
+
+                                                        v_e001fc = '#FF9800'; 
+                                                        v_6f0c12 = '#4CAF50'; 
+                                                        v_62b932 = '#2196F3'; 
+                                                    } else if (v_9e9019 === v_e3e816.SNS_INDEX) {
+
+                                                        v_e001fc = '#2196F3'; 
+                                                        v_6f0c12 = '#4CAF50'; 
+                                                        v_62b932 = '#FF9800'; 
                                                     }
 
                                                     return (
@@ -387,6 +452,22 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                                         <Text style={v_d81136.graphBarLabel}>{v_022965}{v_80cae9}</Text>
                                                                         <Text style={v_d81136.graphBarLabel}>{v_c9ee7b}{v_80cae9}</Text>
                                                                         <Text style={v_d81136.graphBarLabel}></Text>
+                                                                    </>
+                                                                ) : v_9e9019 === v_e3e816.OXYGEN_SATURATION ? (
+
+                                                                    <>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_43e24b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_022965}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_c9ee7b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_d2c6bf}{v_80cae9}</Text>
+                                                                    </>
+                                                                ) : v_9e9019 === v_e3e816.SDNN ? (
+
+                                                                    <>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_43e24b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_022965}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_c9ee7b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_d2c6bf}{v_80cae9}</Text>
                                                                     </>
                                                                 ) : (
 
