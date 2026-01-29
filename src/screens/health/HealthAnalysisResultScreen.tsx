@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_5ab095, v_e662ae } from 'bapkr';
+import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3 } from 'bapkr';
 import {
   v_aa7413,
   v_472849,
@@ -36,6 +36,303 @@ interface SummaryStatusInfo {
 }
 
 type Props = v_432191<v_8ad91b, 'HealthAnalysisResult'>;
+
+type DisplayItem = {
+  typeNum: number;
+  label?: string;
+  detailTypes?: number[];
+};
+
+interface ItemScrollButtonsHandle {
+  setActiveItem: (typeNum: number | null) => void;
+  scrollToStart: () => void;
+}
+
+interface ItemScrollButtonsProps {
+  items: DisplayItem[];
+  initialActiveTypeNum?: number | null;
+  onItemPress: (typeNum: number) => void;
+  getItemName: (typeNum: number, label?: string) => string;
+}
+
+const v_c2e8fd = v_a3453e.forwardRef<ItemScrollButtonsHandle, ItemScrollButtonsProps>(({
+  items: v_4622b9,
+  initialActiveTypeNum: v_c51afc = null,
+  onItemPress: v_659a80,
+  getItemName: v_be37d6,
+}, v_6d4ed3) => {
+  const [v_66d00d, v_c09e3a] = v_5ab095<number | null>(v_c51afc);
+  const v_e99f51 = v_e662ae<v_122070>(null);
+  const v_7ef1cd = v_e662ae(0);
+  const v_1bcd7a = v_e662ae(0);
+  const v_384389 = v_e662ae<{ x: number; width: number }[]>([]);
+  const v_0aff94 = v_e662ae(0);
+  const v_714814 = v_e662ae<number | null>(null); 
+  const v_bc9001 = [0, 80, 200, 400, 700]; 
+
+  const v_203241 = v_4622b9.length + '-' + v_4622b9.map((v_ebec57) => v_ebec57.typeNum).join(',');
+  v_a3453e.useEffect(() => {
+    v_384389.current = [];
+  }, [v_203241]);
+
+  v_a3453e.useEffect(() => {
+    v_714814.current = v_66d00d;
+  }, [v_66d00d]);
+
+  const v_98e655 = v_de06a3((v_653390): boolean => {
+    if (v_653390 == null) return false;
+    if (v_7ef1cd.current <= 0) return false;
+    const v_827eab = v_1bcd7a.current;
+    if (v_827eab <= 0) return false;
+    const v_a56041 = v_4622b9.findIndex((v_8c0b26) => v_8c0b26.typeNum === v_653390);
+    if (v_a56041 < 0) return false;
+    const v_6c4b91 = v_384389.current[v_a56041];
+    if (!v_6c4b91) return false;
+    const v_7e0b72 = v_7ef1cd.current;
+    if (v_827eab <= v_7e0b72) return true; 
+    const v_4a1b87 = v_6c4b91.x + v_6c4b91.width / 2;
+    let v_3a3e1f = v_4a1b87 - v_7e0b72 / 2;
+    v_3a3e1f = Math.max(0, Math.min(v_3a3e1f, v_827eab - v_7e0b72));
+    v_e99f51.current?.scrollTo({ x: v_3a3e1f, animated: true });
+    return true;
+  }, [v_4622b9]);
+
+  const v_172ddf = v_de06a3(() => {
+    const v_5f5d6d = v_714814.current;
+    if (v_5f5d6d != null) v_98e655(v_5f5d6d);
+  }, [v_98e655]);
+
+  const v_4c1a75 = v_de06a3((v_653390) => {
+    if (v_653390 == null) return;
+    v_714814.current = v_653390;
+    v_0aff94.current = 0;
+    const v_6a2f36 = () => {
+      if (v_98e655(v_653390)) return;
+      v_0aff94.current += 1;
+      const v_e86ad8 = v_0aff94.current;
+      if (v_e86ad8 < v_bc9001.length) {
+        setTimeout(v_6a2f36, v_bc9001[v_e86ad8]);
+      }
+    };
+    v_6a2f36();
+  }, [v_98e655]);
+
+  v_a3453e.useEffect(() => {
+    if (v_66d00d == null) return;
+    v_4c1a75(v_66d00d);
+  }, [v_66d00d, v_4c1a75]);
+
+  const v_96882b = v_de06a3((v_653390) => {
+    if (v_653390 == null) return;
+    v_714814.current = v_653390;
+    requestAnimationFrame(() => {
+      v_4c1a75(v_653390);
+    });
+  }, [v_4c1a75]);
+
+  v_a3453e.useImperativeHandle(v_6d4ed3, () => ({
+    setActiveItem: (v_653390) => {
+      v_c09e3a(v_653390);
+      v_96882b(v_653390);
+    },
+    scrollToStart: () => {
+      v_e99f51.current?.scrollTo({ x: 0, animated: false });
+    },
+  }), [v_96882b]);
+
+  if (v_4622b9.length === 0) return null;
+
+  return (
+    <ScrollView
+      ref={v_e99f51}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        flexDirection: 'row',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        gap: 4,
+      }}
+      onLayout={(v_9e86fd) => {
+        v_7ef1cd.current = v_9e86fd.nativeEvent.layout.width;
+        v_172ddf();
+      }}
+      onContentSizeChange={(v_32f7b8) => {
+        v_1bcd7a.current = v_32f7b8;
+        v_172ddf();
+      }}
+    >
+      {v_4622b9.map((v_8c0b26, v_a56041) => {
+        const v_d044ab = v_be37d6(v_8c0b26.typeNum, v_8c0b26.label);
+        const v_26dce6 = v_66d00d === v_8c0b26.typeNum;
+        return (
+          <View
+            key={v_8c0b26.typeNum}
+            onLayout={(v_9e86fd) => {
+              const { x: v_62c214, width: v_8e4fb6 } = v_9e86fd.nativeEvent.layout;
+              v_384389.current[v_a56041] = { x: v_62c214, width: v_8e4fb6 };
+              v_172ddf();
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                paddingHorizontal: 12,
+                paddingVertical: 6,
+              }}
+              onPress={() => v_659a80(v_8c0b26.typeNum)}
+              accessibilityRole="button"
+              accessibilityLabel={`${v_d044ab}(으)로 이동`}
+            >
+              <Text style={{
+                fontSize: 14,
+                fontFamily: v_843035.medium,
+                color: v_26dce6 ? '#0047AB' : '#666666',
+              }}>{v_d044ab}</Text>
+              {v_26dce6 && (
+                <View style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 12,
+                  right: 12,
+                  height: 2,
+                  backgroundColor: '#0047AB',
+                  borderRadius: 1,
+                }} />
+              )}
+            </TouchableOpacity>
+          </View>
+        );
+      })}
+    </ScrollView>
+  );
+});
+
+type CategoryTab = { id: string; label: string };
+function v_a3e57a({
+  categories: v_8bc599,
+  selectedCategory: v_69ddfb,
+  onCategoryPress: v_654c04,
+  tabContainerStyle: v_f7b28c,
+  tabContentStyle: v_7b0220,
+  tabButtonStyle: v_d5c4a8,
+  tabButtonActiveStyle: v_b1f81c,
+  tabTextStyle: v_293d85,
+  tabTextActiveStyle: v_5348d7,
+}: {
+  categories: CategoryTab[];
+  selectedCategory: string | null;
+  onCategoryPress: (categoryId: string | null) => void;
+  tabContainerStyle?: object;
+  tabContentStyle?: object;
+  tabButtonStyle?: object;
+  tabButtonActiveStyle?: object;
+  tabTextStyle?: object;
+  tabTextActiveStyle?: object;
+}) {
+  const v_e99f51 = v_e662ae<v_122070>(null);
+  const v_7ef1cd = v_e662ae(0);
+  const v_1bcd7a = v_e662ae(0);
+  const v_384389 = v_e662ae<{ x: number; width: number }[]>([]);
+  const v_b930a3 = v_e662ae<string | null>(null);
+  const v_1ede77 = v_e662ae(0);
+  const v_166c39 = [0, 80, 200, 400];
+
+  const v_203241 = v_8bc599.length + '-' + v_8bc599.map((v_3f4e2e) => v_3f4e2e.id).join(',');
+  v_a3453e.useEffect(() => {
+    v_384389.current = [];
+  }, [v_203241]);
+
+  v_a3453e.useEffect(() => {
+    v_b930a3.current = v_69ddfb;
+  }, [v_69ddfb]);
+
+  const v_518d06 = v_de06a3((v_11a5aa): boolean => {
+    if (v_11a5aa == null || v_7ef1cd.current <= 0) return false;
+    const v_827eab = v_1bcd7a.current;
+    if (v_827eab <= 0) return false;
+    const v_a56041 = v_8bc599.findIndex((v_3f4e2e) => v_3f4e2e.id === v_11a5aa);
+    if (v_a56041 < 0) return false;
+    const v_6c4b91 = v_384389.current[v_a56041];
+    if (!v_6c4b91) return false;
+    const v_7e0b72 = v_7ef1cd.current;
+    if (v_827eab <= v_7e0b72) return true;
+    const v_4a1b87 = v_6c4b91.x + v_6c4b91.width / 2;
+    let v_3a3e1f = v_4a1b87 - v_7e0b72 / 2;
+    v_3a3e1f = Math.max(0, Math.min(v_3a3e1f, v_827eab - v_7e0b72));
+    v_e99f51.current?.scrollTo({ x: v_3a3e1f, animated: true });
+    return true;
+  }, [v_8bc599]);
+
+  const v_172ddf = v_de06a3(() => {
+    const v_5f5d6d = v_b930a3.current;
+    if (v_5f5d6d != null) v_518d06(v_5f5d6d);
+  }, [v_518d06]);
+
+  const v_b6a3a0 = v_de06a3((v_11a5aa) => {
+    if (v_11a5aa == null) return;
+    v_b930a3.current = v_11a5aa;
+    v_1ede77.current = 0;
+    const v_6a2f36 = () => {
+      if (v_518d06(v_11a5aa)) return;
+      v_1ede77.current += 1;
+      const v_e86ad8 = v_1ede77.current;
+      if (v_e86ad8 < v_166c39.length) {
+        setTimeout(v_6a2f36, v_166c39[v_e86ad8]);
+      }
+    };
+    v_6a2f36();
+  }, [v_518d06]);
+
+  v_a3453e.useEffect(() => {
+    if (v_69ddfb != null) v_b6a3a0(v_69ddfb);
+  }, [v_69ddfb, v_b6a3a0]);
+
+  if (v_8bc599.length === 0) return null;
+
+  return (
+    <View style={v_f7b28c}>
+      <ScrollView
+        ref={v_e99f51}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={v_7b0220}
+        onLayout={(v_9e86fd) => {
+          v_7ef1cd.current = v_9e86fd.nativeEvent.layout.width;
+          v_172ddf();
+        }}
+        onContentSizeChange={(v_32f7b8) => {
+          v_1bcd7a.current = v_32f7b8;
+          v_172ddf();
+        }}
+      >
+        {v_8bc599.map((v_8b9cd4, v_a56041) => {
+          const v_599a41 = v_69ddfb === v_8b9cd4.id;
+          return (
+            <View
+              key={v_8b9cd4.id}
+              onLayout={(v_9e86fd) => {
+                const { x: v_62c214, width: v_8e4fb6 } = v_9e86fd.nativeEvent.layout;
+                v_384389.current[v_a56041] = { x: v_62c214, width: v_8e4fb6 };
+                v_172ddf();
+              }}
+            >
+              <TouchableOpacity
+                style={[v_d5c4a8, v_599a41 && v_b1f81c]}
+                onPress={() => v_654c04(v_599a41 ? null : v_8b9cd4.id)}
+                accessibilityRole="button"
+                accessibilityState={{ selected: v_599a41 }}
+              >
+                <Text style={[v_293d85, v_599a41 && v_5348d7]}>
+                  {v_8b9cd4.label}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
 
 type GroupStatus = '정상' | '위험';
 
@@ -451,6 +748,169 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const [v_e60cdc, v_a9d9cc] = v_5ab095<Record<string, boolean>>({});
 
+  const [v_69ddfb, v_09b78b] = v_5ab095<string | null>(null);
+
+  const v_8bc599 = v_df9f57(() => [
+    { id: 'vital-signs', label: v_8d41d7('health_analysis.result.category_vital_signs') },
+    { id: 'stress-recovery', label: v_8d41d7('health_analysis.result.category_stress_recovery') },
+    { id: 'risks', label: v_8d41d7('health_analysis.result.category_risks') },
+    { id: 'blood-tests', label: v_8d41d7('health_analysis.result.category_blood_tests') },
+    { id: 'cardiovascular', label: v_8d41d7('health_analysis.result.category_cardiovascular') },
+    { id: 'respiratory', label: v_8d41d7('health_analysis.result.category_respiratory') },
+  ], [v_8d41d7]);
+
+  const v_153eb4 = v_df9f57(() => ({
+    'vital-signs': [
+      v_e3e816.BLOOD_PRESSURE,
+      v_e3e816.PULSE_RATE,
+      v_e3e816.RESPIRATION_RATE,
+      v_e3e816.OXYGEN_SATURATION,
+      v_e3e816.CARDIAC_WORKLOAD,
+      v_e3e816.PULSE_PRESSURE,
+      v_e3e816.MEAN_ARTERIAL_PRESSURE,
+    ],
+    'risks': [
+      v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+      v_e3e816.ASCVD_RISK,
+      v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+      v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+      v_e3e816.LOW_HEMOGLOBIN_RISK,
+      v_e3e816.HEART_AGE,
+    ],
+    'blood-tests': [
+      v_e3e816.HEMOGLOBIN,
+      v_e3e816.HEMOGLOBIN_A1C,
+    ],
+    'cardiovascular': [
+      v_e3e816.BLOOD_PRESSURE,
+      v_e3e816.PULSE_RATE,
+      v_e3e816.OXYGEN_SATURATION,
+      v_e3e816.SDNN,
+      v_e3e816.PRQ,
+      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+      v_e3e816.ASCVD_RISK,
+      v_e3e816.HEART_AGE,
+      v_e3e816.CARDIAC_WORKLOAD,
+      v_e3e816.PULSE_PRESSURE,
+      v_e3e816.MEAN_ARTERIAL_PRESSURE,
+    ],
+    'respiratory': [
+      v_e3e816.RESPIRATION_RATE,
+      v_e3e816.PRQ,
+    ],
+    'stress-recovery': [
+      v_e3e816.SDNN,
+      v_e3e816.SNS_ZONE,
+      v_e3e816.STRESS_LEVEL,
+      v_e3e816.PNS_ZONE,
+    ],
+  }), []);
+
+  const v_bc04a2 = v_df9f57(() => [
+
+    { typeNum: v_e3e816.BLOOD_PRESSURE },
+
+    { typeNum: v_e3e816.PULSE_RATE },
+
+    { typeNum: v_e3e816.RESPIRATION_RATE },
+
+    { typeNum: v_e3e816.OXYGEN_SATURATION },
+
+    {
+      typeNum: v_e3e816.SDNN,
+      label: v_8d41d7('health_analysis.result.hrv_variability'),
+      detailTypes: [
+        v_e3e816.RMSSD,
+        v_e3e816.MEAN_RRI,
+        v_e3e816.SD1,
+        v_e3e816.SD2,
+      ],
+    },
+
+    {
+      typeNum: v_e3e816.SNS_ZONE,
+      label: v_8d41d7('health_analysis.result.stress_response'),
+      detailTypes: [v_e3e816.SNS_INDEX],
+    },
+
+    {
+      typeNum: v_e3e816.STRESS_LEVEL,
+      detailTypes: [
+        v_e3e816.STRESS_INDEX,
+        v_e3e816.NORMALIZED_STRESS_INDEX,
+      ],
+    },
+
+    {
+      typeNum: v_e3e816.PNS_ZONE,
+      label: v_8d41d7('health_analysis.result.recovery_ability'),
+      detailTypes: [v_e3e816.PNS_INDEX],
+    },
+
+    { typeNum: v_e3e816.PRQ },
+
+    { typeNum: v_e3e816.HEMOGLOBIN },
+
+    { typeNum: v_e3e816.HEMOGLOBIN_A1C },
+
+    { typeNum: v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK },
+
+    { typeNum: v_e3e816.HIGH_BLOOD_PRESSURE_RISK },
+
+    { typeNum: v_e3e816.ASCVD_RISK },
+
+    { typeNum: v_e3e816.HIGH_FASTING_GLUCOSE_RISK },
+
+    { typeNum: v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK },
+
+    { typeNum: v_e3e816.LOW_HEMOGLOBIN_RISK },
+
+    { typeNum: v_e3e816.HEART_AGE },
+
+    { typeNum: v_e3e816.CARDIAC_WORKLOAD },
+
+    { typeNum: v_e3e816.PULSE_PRESSURE },
+
+    { typeNum: v_e3e816.MEAN_ARTERIAL_PRESSURE },
+  ], [v_8d41d7]);
+
+  const v_930bc7 = v_df9f57(() => new Set([
+    v_e3e816.WELLNESS_INDEX,
+    v_e3e816.WELLNESS_LEVEL,
+
+  ]), []);
+
+  const v_ed9d34 = [
+    v_e3e816.ASCVD_RISK_LEVEL,
+    v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+    v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+    v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+    v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+    v_e3e816.LOW_HEMOGLOBIN_RISK,
+  ];
+
+  const v_7acdeb = v_df9f57(() => {
+    let v_4622b9 = v_bc04a2;
+
+    if (v_69ddfb) {
+      const v_c40786 = v_153eb4[v_69ddfb as keyof typeof v_153eb4] || [];
+      v_4622b9 = v_4622b9.filter(v_8c0b26 => v_c40786.includes(v_8c0b26.typeNum));
+    }
+
+    return v_4622b9.filter(v_8c0b26 => {
+      if (v_930bc7.has(v_8c0b26.typeNum)) return false;
+      const v_3b402b = v_a7f568?.[v_8c0b26.typeNum]?.value;
+      if (v_3b402b === undefined) return false;
+
+      if (v_ed9d34.includes(v_8c0b26.typeNum)) {
+        const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+        if (v_549ed3 === 0) return false;
+      }
+      return true;
+    });
+  }, [v_bc04a2, v_69ddfb, v_153eb4, v_930bc7, v_a7f568, v_ed9d34]);
+
   const v_e99f51 = v_e662ae<v_122070>(null);
   const v_aa48a7 = v_e662ae<Record<string, v_3094a2 | null>>({
     'vital-signs': null,
@@ -461,6 +921,15 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   });
   const v_b1db35 = v_e662ae<Record<string, number>>({});
 
+  const v_92b0b5 = v_e662ae<Record<number, v_3094a2 | null>>({});
+  const v_9aa77b = v_e662ae<v_3094a2 | null>(null);
+  const v_54e08d = v_e662ae(0); 
+  const v_7a44c5 = v_e662ae(0); 
+
+  const v_364a3f = v_e662ae<Record<number, number>>({});
+
+  const v_ab5f42 = v_e662ae<number | null>(null);
+
   const v_0bbee6 = v_e662ae(new v_a2349e.Value(0)).current;
   const v_15af7a = v_e662ae(0);
   const v_d0de58 = v_e662ae(0); 
@@ -470,6 +939,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_685d2a = v_e662ae<v_3094a2 | null>(null);
   const v_154640 = v_e662ae(0);
   const v_898946 = v_e662ae(0);
+
+  const v_9ed853 = v_e662ae<ItemScrollButtonsHandle>(null);
+  const v_63ec8f = v_e662ae<ItemScrollButtonsHandle>(null);
 
   const v_b90e32 = require('../../../assets/images/binah 2.png');
   const v_b1d778 = require('../../../assets/images/binah 3.png');
@@ -605,6 +1077,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     v_b1db35.current[v_ba91d0] = v_64877a;
   };
 
+  const v_2c8813 = v_e662ae(false);
+  const v_6eac53 = v_e662ae<ReturnType<typeof setTimeout> | null>(null);
+  const v_6ef413 = v_e662ae(false); 
+  const v_fe1cb8 = v_e662ae<ReturnType<typeof setTimeout> | null>(null);
+
   const v_941b26 = v_a2349e.event(
     [{ nativeEvent: { contentOffset: { y: v_0bbee6 } } }],
     {
@@ -612,12 +1089,116 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       listener: (v_d48baf) => {
         const v_8ebb45 = v_d48baf.nativeEvent.contentOffset.y;
 
+        v_7a44c5.current = v_8ebb45;
+        v_6ef413.current = true;
+
         const v_06b24c = v_154640.current + v_898946.current;
         const v_87820f = v_06b24c - v_1e0e1c.current;
-        v_1ce906(v_8ebb45 > v_87820f);
+        const v_f44c97 = 50;
+
+        if (!v_2c8813.current && v_8ebb45 > v_87820f) {
+          v_2c8813.current = true;
+          v_1ce906(true);
+        } else if (v_2c8813.current && v_8ebb45 < v_87820f - v_f44c97) {
+          v_2c8813.current = false;
+          v_1ce906(false);
+        }
+
+        if (v_fe1cb8.current) {
+          clearTimeout(v_fe1cb8.current);
+        }
+        v_fe1cb8.current = setTimeout(() => {
+          v_6ef413.current = false;
+
+          v_8a344d(v_7a44c5.current);
+        }, 500);
       },
     }
   );
+
+  const v_8a344d = (v_8ebb45) => {
+
+    if (v_7acdeb.length === 0) return;
+
+    if (v_8ebb45 < 0) return;
+
+    const v_02f376 = 150; 
+    let v_22df7a = null;
+    let v_c72770 = Infinity;
+    let v_ea7aaf = null;
+    let v_91e510 = -Infinity;
+
+    for (const v_8c0b26 of v_7acdeb) {
+      const v_04e91d = v_364a3f.current[v_8c0b26.typeNum];
+      if (v_04e91d === undefined) continue;
+
+      const v_8f8f97 = v_54e08d.current + v_04e91d;
+
+      const v_ca1ca9 = v_8f8f97 - v_8ebb45;
+
+      if (v_ca1ca9 > 0 && v_ca1ca9 > v_91e510) {
+        v_91e510 = v_ca1ca9;
+        v_ea7aaf = v_8c0b26.typeNum;
+      }
+
+      if (v_ca1ca9 >= v_02f376 - 30 && v_ca1ca9 < v_02f376 + 250) {
+        const v_926d1c = Math.abs(v_ca1ca9 - v_02f376);
+        if (v_926d1c < v_c72770) {
+          v_c72770 = v_926d1c;
+          v_22df7a = v_8c0b26.typeNum;
+        }
+      }
+    }
+
+    if (v_22df7a === null) {
+      if (v_8ebb45 < 200 && v_7acdeb.length > 0) {
+
+        v_22df7a = v_7acdeb[0].typeNum;
+      } else if (v_ea7aaf !== null) {
+
+        v_22df7a = v_ea7aaf;
+      }
+    }
+
+    if (v_22df7a !== null && v_22df7a !== v_ab5f42.current) {
+      v_ab5f42.current = v_22df7a;
+
+      v_9ed853.current?.setActiveItem(v_22df7a);
+      v_63ec8f.current?.setActiveItem(v_22df7a);
+    }
+  };
+
+  const v_0ee1c1 = (v_11a5aa) => {
+    v_09b78b(v_11a5aa);
+
+    v_9ed853.current?.scrollToStart();
+    v_63ec8f.current?.scrollToStart();
+  };
+
+  const v_743e81 = (v_653390) => {
+    const v_04e91d = v_364a3f.current[v_653390];
+
+    if (v_04e91d !== undefined && v_e99f51.current) {
+
+      if (v_fe1cb8.current) {
+        clearTimeout(v_fe1cb8.current);
+        v_fe1cb8.current = null;
+      }
+
+      const v_8f8f97 = v_54e08d.current + v_04e91d;
+      const v_02f376 = 130; 
+      const v_f72d75 = v_8f8f97 - v_02f376;
+
+      v_ab5f42.current = v_653390;
+      v_9ed853.current?.setActiveItem(v_653390);
+      v_63ec8f.current?.setActiveItem(v_653390);
+
+      v_e99f51.current?.scrollTo?.({
+        y: Math.max(0, v_f72d75),
+        animated: true,
+      });
+    }
+  };
 
   const v_1867ed = (v_653390) => {
     const v_dd0ca3 = v_653390 === v_e3e816.WELLNESS_INDEX;
@@ -645,7 +1226,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return null;
   };
 
-  const v_b1b76c = [v_e3e816.WELLNESS_INDEX, v_e3e816.HEART_AGE];
+  const v_b1b76c = [
+    v_e3e816.WELLNESS_INDEX,
+
+  ];
 
   const v_b30c6b = [];
   const v_53d27c = [];
@@ -669,15 +1253,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   v_53d27c.sort(([v_f80b64], [v_e3fa88]) => Number(v_f80b64) - Number(v_e3fa88));
 
   const v_df7b8f = (v_653390) => v_a7f568?.[v_653390]?.value;
-
-  const v_ed9d34 = [
-    v_e3e816.ASCVD_RISK_LEVEL,
-    v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
-    v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
-    v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
-    v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
-    v_e3e816.LOW_HEMOGLOBIN_RISK,
-  ];
 
   const v_1f8651 = (v_653390) => {
     const v_3b402b = v_df7b8f(v_653390);
@@ -1455,42 +2030,27 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 }
                 return null;
               })}
-              {v_8c0857.length > 0 && (
-                <View style={v_d81136.sectionNavContainer}>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={v_d81136.sectionNavContent}
-                  >
-                    {v_8c0857
-                      .filter(v_b4fa6c => ['vital-signs', 'respiratory', 'stress', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id))
-                      .map((v_b4fa6c) => {
-                        const v_44d16e = {
-                          'vital-signs': v_8d41d7('health_analysis.result.section_nav_vital_signs'),
-                          'respiratory': v_8d41d7('health_analysis.result.section_nav_respiratory'),
-                          'stress': v_8d41d7('health_analysis.result.section_nav_stress'),
-                          'hrv': v_8d41d7('health_analysis.result.section_nav_hrv'),
-                          'autonomic': v_8d41d7('health_analysis.result.section_nav_autonomic'),
-                          'cardiovascular': v_8d41d7('health_analysis.result.section_nav_cardiovascular'),
-                          'risk-prediction': v_8d41d7('health_analysis.result.section_nav_risk_prediction'),
-                        };
-                        return (
-                          <TouchableOpacity
-                            key={v_b4fa6c.id}
-                            style={v_d81136.sectionNavButton}
-                            onPress={() => v_3ca263(v_b4fa6c.id)}
-                            accessibilityRole="button"
-                            accessibilityLabel={`${v_44d16e[v_b4fa6c.id]} 섹션으로 이동`}
-                          >
-                            <Text style={v_d81136.sectionNavButtonText}>
-                              {v_44d16e[v_b4fa6c.id]}
-                            </Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-                  </ScrollView>
-                </View>
-              )}
+              {}
+              <CategoryTabScroll
+                categories={v_8bc599}
+                selectedCategory={v_69ddfb}
+                onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
+                tabContainerStyle={v_d81136.categoryTabContainer}
+                tabContentStyle={v_d81136.categoryTabContent}
+                tabButtonStyle={v_d81136.categoryTabButton}
+                tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
+                tabTextStyle={v_d81136.categoryTabText}
+                tabTextActiveStyle={v_d81136.categoryTabTextActive}
+              />
+
+              {}
+              <ItemScrollButtons
+                ref={v_63ec8f}
+                items={v_7acdeb}
+                initialActiveTypeNum={v_ab5f42.current}
+                onItemPress={v_743e81}
+                getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
+              />
             </View>
           </Animated.View>
         )}
@@ -1698,301 +2258,264 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             )}
 
             {}
-            {v_8c0857.length > 0 && (
-              <View
-                ref={v_685d2a}
-                style={v_d81136.sectionNavContainer}
-                onLayout={(v_d48baf) => {
-                  const { y: v_64877a, height: v_c86e33 } = v_d48baf.nativeEvent.layout;
-                  v_154640.current = v_64877a;
-                  v_898946.current = v_c86e33;
+            <View
+              ref={v_685d2a}
+              style={v_d81136.sectionNavContainer}
+              onLayout={(v_d48baf) => {
+                const { y: v_64877a, height: v_c86e33 } = v_d48baf.nativeEvent.layout;
+                v_154640.current = v_64877a;
+                v_898946.current = v_c86e33;
+                if (v_d0de58.current > 0) {
+                  v_905b11.current = v_d0de58.current + v_c86e33;
+                } else {
+                  v_905b11.current = v_15af7a.current;
+                }
+              }}
+            >
+              {}
+              <CategoryTabScroll
+                categories={v_8bc599}
+                selectedCategory={v_69ddfb}
+                onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
+                tabContainerStyle={v_d81136.categoryTabContainer}
+                tabContentStyle={v_d81136.categoryTabContent}
+                tabButtonStyle={v_d81136.categoryTabButton}
+                tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
+                tabTextStyle={v_d81136.categoryTabText}
+                tabTextActiveStyle={v_d81136.categoryTabTextActive}
+              />
 
-                  if (v_d0de58.current > 0) {
-                    v_905b11.current = v_d0de58.current + v_c86e33;
-                  } else {
-
-                    v_905b11.current = v_15af7a.current;
-                  }
-                }}
-              >
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={v_d81136.sectionNavContent}
-                >
-                  {v_8c0857
-                    .filter(v_b4fa6c => ['vital-signs', 'respiratory', 'stress', 'hrv', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id))
-                    .map((v_b4fa6c) => {
-                      const v_44d16e = {
-                        'vital-signs': v_8d41d7('health_analysis.result.section_nav_vital_signs'),
-                        'respiratory': v_8d41d7('health_analysis.result.section_nav_respiratory'),
-                        'stress': v_8d41d7('health_analysis.result.section_nav_stress'),
-                        'autonomic': v_8d41d7('health_analysis.result.section_nav_autonomic'),
-                        'cardiovascular': v_8d41d7('health_analysis.result.section_nav_cardiovascular'),
-                        'risk-prediction': v_8d41d7('health_analysis.result.section_nav_risk_prediction'),
-                      };
-                      return (
-                        <TouchableOpacity
-                          key={v_b4fa6c.id}
-                          style={v_d81136.sectionNavButton}
-                          onPress={() => v_3ca263(v_b4fa6c.id)}
-                          accessibilityRole="button"
-                          accessibilityLabel={`${v_44d16e[v_b4fa6c.id]} ${v_8d41d7('common.section')} ${v_8d41d7('common.navigate')}`}
-                        >
-                          <Text style={v_d81136.sectionNavButtonText}>
-                            {v_44d16e[v_b4fa6c.id]}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                </ScrollView>
-              </View>
-            )}
+              {}
+              <ItemScrollButtons
+                ref={v_9ed853}
+                items={v_7acdeb}
+                initialActiveTypeNum={v_ab5f42.current}
+                onItemPress={v_743e81}
+                getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
+              />
+            </View>
 
             {}
-            {v_8c0857.length > 0 && (
-              <>
-                {v_8c0857.map((v_b4fa6c) => (
-                  <View
-                    key={v_b4fa6c.id}
-                    ref={(v_6d4ed3) => {
-                      if (v_6d4ed3 && ['vital-signs', 'respiratory', 'stress', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id)) {
-                        v_aa48a7.current[v_b4fa6c.id] = v_6d4ed3;
-                      }
-                    }}
-                    onLayout={v_66288c(v_b4fa6c.id)}
-                  >
-                    <Text style={v_d81136.sectionHeader}>{v_b4fa6c.title}</Text>
-                    {v_b4fa6c.items.map((v_8c0b26) => {
-                      const v_72b4e2 = v_1f8651(v_8c0b26.typeNum);
-                      if (!v_72b4e2) {
-                        return null;
-                      }
-                      const v_1833e7 = v_8c0b26.label ?? v_50f905(v_8c0b26.typeNum, v_8d41d7);
-                      const v_1d99bf = v_fec579(v_72b4e2);
-                      const v_d308b5 = v_0aaeba(v_8c0b26.typeNum, v_df7b8f(v_8c0b26.typeNum));
-                      const v_d72c04 = v_463ca2(v_d308b5);
-                      const v_6856a9 = v_2c4b08(v_8c0b26.typeNum, v_8d41d7);
-                      const v_4b27b8 = Boolean(v_ec82c6[v_8c0b26.typeNum]);
-                      const v_d3e14c = `${v_b4fa6c.id}-${v_8c0b26.typeNum}`;
-                      const v_2eb761 = (v_8c0b26.detailTypes ?? []).filter(v_653390 => v_653390 !== v_8c0b26.typeNum);
-                      const v_d11c1e = v_2eb761.length > 0;
-                      const v_f6df37 = v_d11c1e;
+            {v_7acdeb.length > 0 && (
+              <View
+                style={v_d81136.flatListContainer}
+                ref={v_9aa77b}
+                onLayout={(v_d48baf) => {
+                  v_54e08d.current = v_d48baf.nativeEvent.layout.y;
+                }}
+              >
+                {v_7acdeb.map((v_8c0b26) => {
+                  const { typeNum: v_653390, label: v_fdf2c2, detailTypes: v_2eb761 } = v_8c0b26;
+                  const v_72b4e2 = v_1f8651(v_653390);
+                  if (!v_72b4e2) {
+                    return null;
+                  }
 
-                      const v_a8394b = v_b4fa6c.id === 'stress'
-                        ? v_2eb761.filter(v_653390 => v_653390 !== v_e3e816.BODY_TENSION_SCORE)
-                        : v_2eb761;
+                  const v_1833e7 = v_fdf2c2 ?? v_50f905(v_653390, v_8d41d7);
+                  const v_1d99bf = v_fec579(v_72b4e2);
+                  const v_d308b5 = v_0aaeba(v_653390, v_df7b8f(v_653390));
+                  const v_d72c04 = v_463ca2(v_d308b5);
+                  const v_6856a9 = v_2c4b08(v_653390, v_8d41d7);
+                  const v_4b27b8 = Boolean(v_ec82c6[v_653390]);
+                  const v_d3e14c = `flat-${v_653390}`;
+                  const v_c9f7af = v_2f5a10(v_653390);
+                  const v_7e392e = v_4b27b8 || (v_c9f7af && v_7b3177.has(v_653390));
 
-                      return (
-                        <View key={v_d3e14c} style={v_d81136.resultCard}>
-                          <View style={v_d81136.resultRow}>
-                            <View style={v_d81136.resultLeft}>
-                              <View style={v_d81136.resultIconRow}>
-                                <View style={[v_d81136.resultIconCircle, { backgroundColor: v_d72c04.background }]}>
-                                  <Ionicons
-                                    name={v_d308b5 === '위험' ? 'sad-outline' : 'happy-outline'}
-                                    size={20}
-                                    color={v_d72c04.text}
-                                  />
-                                </View>
-                                {v_d308b5 && (() => {
+                  const v_79e11c = (v_2eb761 ?? []).filter(v_a48992 =>
+                    v_a48992 !== v_653390 && v_a7f568?.[v_a48992]?.value !== undefined
+                  );
+                  const v_d11c1e = v_79e11c.length > 0;
 
-                                  const v_a78cd1 = [
-                                    v_e3e816.ASCVD_RISK,
-                                    v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
-                                    v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
-                                    v_e3e816.LOW_HEMOGLOBIN_RISK,
-                                  ];
-                                  if (v_a78cd1.includes(v_8c0b26.typeNum)) {
-                                    const v_842d09 = typeof v_df7b8f(v_8c0b26.typeNum) === 'number' ? v_df7b8f(v_8c0b26.typeNum) : Number(v_df7b8f(v_8c0b26.typeNum));
-
-                                    if (v_842d09 !== 0 && v_842d09 !== 1 && !isNaN(v_842d09)) {
-                                      return null;
-                                    }
-                                  }
-                                  return (
-                                    <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
-                                      {v_b4fa6c.id === 'respiratory'
-                                        ? (v_d308b5 === '정상'
-                                          ? v_8d41d7('health_analysis.result.normal')
-                                          : v_8d41d7('health_analysis.result.abnormal'))
-                                        : (v_d308b5 === '정상'
-                                          ? v_8d41d7('health_analysis.result.normal')
-                                          : v_8d41d7('health_analysis.result.risk'))}
-                                    </Text>
-                                  );
-                                })()}
-                              </View>
-                              <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
-                              {}
-                              {v_b4fa6c.id === 'respiratory' ? (
-                                <View style={v_d81136.resultValueRow}>
-                                  <Text style={v_d81136.resultValueText}>
-                                    {v_d308b5 === '정상'
-                                      ? v_8d41d7('health_analysis.result.normal')
-                                      : v_8d41d7('health_analysis.result.abnormal')}
-                                  </Text>
-                                </View>
-                              ) : (
-                                <View style={v_d81136.resultValueRow}>
-                                  <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
-                                  {v_1d99bf.unit ? (
-                                    <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
-                                  ) : null}
-                                </View>
-                              )}
-                            </View>
-                            <View style={v_d81136.resultDivider} />
-                            <View style={v_d81136.resultRight}>
-                              <View style={v_d81136.resultRightHeader}>
-                                <Text style={v_d81136.resultHeadline}>
-                                  {v_e4ae59(v_1833e7, v_d308b5, v_b4fa6c.id, v_8c0b26.typeNum, typeof v_df7b8f(v_8c0b26.typeNum) === 'number' ? v_df7b8f(v_8c0b26.typeNum) as number : undefined)}
-                                </Text>
-                                {v_4b27b8 && (
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      v_13a008(v_8c0b26.typeNum);
-                                      v_ea36df(v_b4fa6c.id);
-                                    }}
-                                    style={v_d81136.infoButton}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={`${v_1833e7} ${v_8d41d7('health_analysis.result.detail_info')}`}
-                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                                  >
-                                    <Ionicons
-                                      name="information-circle-outline"
-                                      size={16}
-                                      color={v_1bfbd0.secondaryText}
-                                    />
-                                  </TouchableOpacity>
-                                )}
-                              </View>
-                              {}
-                              <ExpandableDescription
-                                description={v_b4fa6c.id === 'respiratory'
-                                  ? v_8d41d7('health_analysis.result.respiratory_description')
-                                  : v_6856a9}
-                                descriptionKey={`group-${v_b4fa6c.id}-${v_8c0b26.typeNum}`}
-                              />
-                              {}
-                              {v_30687d(v_a7f568?.[v_8c0b26.typeNum]?.confidence) && (
-                                <View style={v_d81136.confidenceRow}>
-                                  <View style={[v_d81136.confidenceCircle, { backgroundColor: v_30687d(v_a7f568?.[v_8c0b26.typeNum]?.confidence)!.color }]} />
-                                  <Text style={v_d81136.confidenceText}>{v_30687d(v_a7f568?.[v_8c0b26.typeNum]?.confidence)!.label}</Text>
-                                </View>
-                              )}
-                            </View>
-                          </View>
-                          {v_f6df37 && (
-                            <TouchableOpacity
-                              style={v_d81136.resultToggle}
-                              onPress={() => v_d97574(v_d3e14c)}
-                              accessibilityRole="button"
-                              accessibilityLabel={`${v_1833e7} 상세 결과 ${v_7bfc20[v_d3e14c] ? v_8d41d7('health_analysis.result.hide') : v_8d41d7('health_analysis.result.show')}`}
-                            >
-                              <Text style={v_d81136.resultToggleText}>
-                                {v_7bfc20[v_d3e14c]
-                                  ? v_8d41d7('health_analysis.result.hide_results')
-                                  : v_8d41d7('health_analysis.result.show_all_results')}
-                              </Text>
+                  return (
+                    <View
+                      key={v_d3e14c}
+                      style={v_d81136.resultCard}
+                      ref={(v_6d4ed3) => {
+                        v_92b0b5.current[v_653390] = v_6d4ed3;
+                      }}
+                      onLayout={(v_d48baf) => {
+                        const { y: v_64877a } = v_d48baf.nativeEvent.layout;
+                        v_364a3f.current[v_653390] = v_64877a;
+                      }}
+                    >
+                      <View style={v_d81136.resultRow}>
+                        <View style={v_d81136.resultLeft}>
+                          <View style={v_d81136.resultIconRow}>
+                            <View style={[v_d81136.resultIconCircle, { backgroundColor: v_d72c04.background }]}>
                               <Ionicons
-                                name={v_7bfc20[v_d3e14c] ? 'remove-circle-outline' : 'add-circle-outline'}
-                                size={18}
-                                color={v_1bfbd0.secondaryText}
+                                name={v_d308b5 === '위험' ? 'sad-outline' : 'happy-outline'}
+                                size={20}
+                                color={v_d72c04.text}
                               />
-                            </TouchableOpacity>
-                          )}
-
-                          {v_f6df37 && v_7bfc20[v_d3e14c] && (
-                            <View style={v_d81136.resultDetailList}>
-                              {v_a8394b.map((v_653390) => {
-                                const v_c6afb7 = v_1f8651(v_653390);
-                                if (!v_c6afb7) {
-                                  return null;
-                                }
-
-                                const v_ed2859 = v_50f905(v_653390, v_8d41d7);
-                                const v_06dd00 = v_0aaeba(v_653390, v_df7b8f(v_653390));
-                                const v_9719bb = v_463ca2(v_06dd00);
-                                const v_11f033 = v_2c4b08(v_653390, v_8d41d7);
-                                const v_a7277f = v_fec579(v_c6afb7);
-                                const v_9eedea = Boolean(v_ec82c6[v_653390]);
-                                const v_61619d = v_30687d(v_a7f568?.[v_653390]?.confidence);
-                                const v_1c35ff = v_9c213b.language && v_9c213b.language.startsWith('ko') ? v_723f2d(v_ed2859, '은', '는') : '';
-                                const v_f1fd13 = v_06dd00 === '정상'
-                                  ? v_8d41d7('health_analysis.result.item_headline_normal', { name: v_ed2859, particle: v_1c35ff })
-                                  : v_06dd00 === '위험'
-                                    ? v_8d41d7('health_analysis.result.item_headline_risk', { name: v_ed2859, particle: v_1c35ff })
-                                    : v_8d41d7('health_analysis.result.item_headline_default', { name: v_ed2859, particle: v_1c35ff });
-
-                                return (
-                                  <View key={`${v_d3e14c}-${v_653390}`} style={v_d81136.stressDetailCard}>
-                                    <View style={v_d81136.stressDetailRow}>
-                                      <View style={v_d81136.stressDetailLeft}>
-                                        <Text style={v_d81136.stressDetailTitle}>{v_ed2859}</Text>
-                                        <View style={v_d81136.stressDetailValueRow}>
-                                          <Text style={v_d81136.stressDetailValue}>{v_a7277f.value}</Text>
-                                          {v_a7277f.unit ? (
-                                            <Text style={v_d81136.stressDetailUnit}>{v_a7277f.unit}</Text>
-                                          ) : null}
-                                        </View>
-                                      </View>
-                                      <View style={v_d81136.stressDetailDivider} />
-                                      <View style={v_d81136.stressDetailRight}>
-                                        <View style={v_d81136.stressDetailRightHeader}>
-                                          <Text style={v_d81136.stressDetailHeadline}>{v_f1fd13}</Text>
-                                          <View style={v_d81136.stressDetailIconRow}>
-                                            <View style={[v_d81136.stressDetailIconCircle, { backgroundColor: v_9719bb.background }]}>
-                                              <Ionicons
-                                                name={v_06dd00 === '위험' ? 'sad-outline' : 'happy-outline'}
-                                                size={16}
-                                                color={v_9719bb.text}
-                                              />
-                                            </View>
-                                            {v_9eedea && (
-                                              <TouchableOpacity
-                                                onPress={() => {
-                                                  v_13a008(v_653390);
-                                                  v_ea36df(null);
-                                                }}
-                                                style={v_d81136.stressDetailInfoButton}
-                                                accessibilityRole="button"
-                                                accessibilityLabel={`${v_ed2859} ${v_8d41d7('health_analysis.result.detail_info')}`}
-                                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                                              >
-                                                <Ionicons
-                                                  name="information-circle-outline"
-                                                  size={16}
-                                                  color={v_1bfbd0.secondaryText}
-                                                />
-                                              </TouchableOpacity>
-                                            )}
-                                          </View>
-                                        </View>
-                                        <ExpandableDescription
-                                          description={v_11f033}
-                                          descriptionKey={`detail-${v_d3e14c}-${v_653390}`}
-                                        />
-                                        {}
-                                        {v_61619d && (
-                                          <View style={v_d81136.confidenceRow}>
-                                            <View style={[v_d81136.confidenceCircle, { backgroundColor: v_61619d.color }]} />
-                                            <Text style={v_d81136.confidenceText}>{v_61619d.label}</Text>
-                                          </View>
-                                        )}
-                                      </View>
-                                    </View>
-                                  </View>
-                                );
-                              })}
+                            </View>
+                            {v_d308b5 && (
+                              <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                {v_d308b5 === '정상'
+                                  ? v_8d41d7('health_analysis.result.normal')
+                                  : v_8d41d7('health_analysis.result.risk')}
+                              </Text>
+                            )}
+                          </View>
+                          <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
+                          <View style={v_d81136.resultValueRow}>
+                            <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
+                            {v_1d99bf.unit ? (
+                              <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
+                            ) : null}
+                          </View>
+                        </View>
+                        <View style={v_d81136.resultDivider} />
+                        <View style={v_d81136.resultRight}>
+                          <View style={v_d81136.resultRightHeader}>
+                            <Text style={v_d81136.resultHeadline}>
+                              {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_df7b8f(v_653390) === 'number' ? v_df7b8f(v_653390) as number : undefined)}
+                            </Text>
+                            {v_7e392e && (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  if (v_7b3177.has(v_653390)) {
+                                    v_b4f3ee(v_653390);
+                                  } else {
+                                    v_13a008(v_653390);
+                                    v_ea36df(null);
+                                  }
+                                }}
+                                style={v_d81136.infoButton}
+                                accessibilityRole="button"
+                                accessibilityLabel={`${v_1833e7} ${v_8d41d7('health_analysis.result.detail_info')}`}
+                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                              >
+                                <Ionicons
+                                  name="information-circle-outline"
+                                  size={16}
+                                  color={v_1bfbd0.secondaryText}
+                                />
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                          <ExpandableDescription
+                            description={v_6856a9}
+                            descriptionKey={v_d3e14c}
+                          />
+                          {}
+                          {v_30687d(v_a7f568?.[v_653390]?.confidence) && (
+                            <View style={v_d81136.confidenceRow}>
+                              <View style={[v_d81136.confidenceCircle, { backgroundColor: v_30687d(v_a7f568?.[v_653390]?.confidence)!.color }]} />
+                              <Text style={v_d81136.confidenceText}>{v_30687d(v_a7f568?.[v_653390]?.confidence)!.label}</Text>
                             </View>
                           )}
                         </View>
-                      );
-                    })}
-                  </View>
-                ))}
-              </>
+                      </View>
+
+                      {}
+                      {v_d11c1e && (
+                        <TouchableOpacity
+                          style={v_d81136.resultToggle}
+                          onPress={() => v_d97574(v_d3e14c)}
+                          accessibilityRole="button"
+                          accessibilityLabel={`${v_1833e7} 상세 결과 ${v_7bfc20[v_d3e14c] ? v_8d41d7('health_analysis.result.hide') : v_8d41d7('health_analysis.result.show')}`}
+                        >
+                          <Text style={v_d81136.resultToggleText}>
+                            {v_7bfc20[v_d3e14c]
+                              ? v_8d41d7('health_analysis.result.hide_results')
+                              : v_8d41d7('health_analysis.result.show_all_results')}
+                          </Text>
+                          <Ionicons
+                            name={v_7bfc20[v_d3e14c] ? 'remove-circle-outline' : 'add-circle-outline'}
+                            size={18}
+                            color={v_1bfbd0.secondaryText}
+                          />
+                        </TouchableOpacity>
+                      )}
+
+                      {}
+                      {v_d11c1e && v_7bfc20[v_d3e14c] && (
+                        <View style={v_d81136.resultDetailList}>
+                          {v_79e11c.map((v_b47a43) => {
+                            const v_c6afb7 = v_1f8651(v_b47a43);
+                            if (!v_c6afb7) {
+                              return null;
+                            }
+                            const v_ed2859 = v_50f905(v_b47a43, v_8d41d7);
+                            const v_06dd00 = v_0aaeba(v_b47a43, v_df7b8f(v_b47a43));
+                            const v_9719bb = v_463ca2(v_06dd00);
+                            const v_11f033 = v_2c4b08(v_b47a43, v_8d41d7);
+                            const v_a7277f = v_fec579(v_c6afb7);
+                            const v_9eedea = Boolean(v_ec82c6[v_b47a43]);
+                            const v_61619d = v_30687d(v_a7f568?.[v_b47a43]?.confidence);
+                            const v_1c35ff = v_9c213b.language && v_9c213b.language.startsWith('ko') ? v_723f2d(v_ed2859, '은', '는') : '';
+                            const v_f1fd13 = v_06dd00 === '정상'
+                              ? v_8d41d7('health_analysis.result.item_headline_normal', { name: v_ed2859, particle: v_1c35ff })
+                              : v_06dd00 === '위험'
+                                ? v_8d41d7('health_analysis.result.item_headline_risk', { name: v_ed2859, particle: v_1c35ff })
+                                : v_8d41d7('health_analysis.result.item_headline_default', { name: v_ed2859, particle: v_1c35ff });
+
+                            return (
+                              <View key={`${v_d3e14c}-${v_b47a43}`} style={v_d81136.stressDetailCard}>
+                                <View style={v_d81136.stressDetailRow}>
+                                  <View style={v_d81136.stressDetailLeft}>
+                                    <Text style={v_d81136.stressDetailTitle}>{v_ed2859}</Text>
+                                    <View style={v_d81136.stressDetailValueRow}>
+                                      <Text style={v_d81136.stressDetailValue}>{v_a7277f.value}</Text>
+                                      {v_a7277f.unit ? (
+                                        <Text style={v_d81136.stressDetailUnit}>{v_a7277f.unit}</Text>
+                                      ) : null}
+                                    </View>
+                                  </View>
+                                  <View style={v_d81136.stressDetailDivider} />
+                                  <View style={v_d81136.stressDetailRight}>
+                                    <View style={v_d81136.stressDetailRightHeader}>
+                                      <Text style={v_d81136.stressDetailHeadline}>{v_f1fd13}</Text>
+                                      <View style={v_d81136.stressDetailIconRow}>
+                                        <View style={[v_d81136.stressDetailIconCircle, { backgroundColor: v_9719bb.background }]}>
+                                          <Ionicons
+                                            name={v_06dd00 === '위험' ? 'sad-outline' : 'happy-outline'}
+                                            size={16}
+                                            color={v_9719bb.text}
+                                          />
+                                        </View>
+                                        {v_9eedea && (
+                                          <TouchableOpacity
+                                            onPress={() => {
+                                              v_13a008(v_b47a43);
+                                              v_ea36df(null);
+                                            }}
+                                            style={v_d81136.stressDetailInfoButton}
+                                            accessibilityRole="button"
+                                            accessibilityLabel={`${v_ed2859} ${v_8d41d7('health_analysis.result.detail_info')}`}
+                                            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                          >
+                                            <Ionicons
+                                              name="information-circle-outline"
+                                              size={16}
+                                              color={v_1bfbd0.secondaryText}
+                                            />
+                                          </TouchableOpacity>
+                                        )}
+                                      </View>
+                                    </View>
+                                    <ExpandableDescription
+                                      description={v_11f033}
+                                      descriptionKey={`detail-${v_d3e14c}-${v_b47a43}`}
+                                    />
+                                    {}
+                                    {v_61619d && (
+                                      <View style={v_d81136.confidenceRow}>
+                                        <View style={[v_d81136.confidenceCircle, { backgroundColor: v_61619d.color }]} />
+                                        <Text style={v_d81136.confidenceText}>{v_61619d.label}</Text>
+                                      </View>
+                                    )}
+                                  </View>
+                                </View>
+                              </View>
+                            );
+                          })}
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
             )}
 
             {}
@@ -2901,6 +3424,76 @@ const v_d81136 = v_472849.create({
     marginTop: v_9b1a04.medium,
     marginBottom: v_9b1a04.small,
   },
+
+  categoryTabContainer: {
+    marginBottom: v_9b1a04.small,
+  },
+  categoryTabContent: {
+    paddingHorizontal: v_9b1a04.large,
+    gap: v_9b1a04.small,
+    alignItems: 'center',
+  },
+  categoryTabButton: {
+    paddingHorizontal: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.small,
+    borderRadius: 20,
+    backgroundColor: v_1bfbd0.backgroundSecondary,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.border,
+  },
+  categoryTabButtonActive: {
+    backgroundColor: '#0047AB',
+    borderColor: '#0047AB',
+  },
+  categoryTabText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+  },
+  categoryTabTextActive: {
+    color: '#FFFFFF',
+    fontFamily: v_843035.semibold,
+  },
+  clearCategoryButton: {
+    paddingHorizontal: v_9b1a04.small,
+    paddingVertical: v_9b1a04.small,
+  },
+  clearCategoryText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+    textDecorationLine: 'underline',
+  },
+
+  flatListContainer: {
+    paddingTop: v_9b1a04.small,
+  },
+
+  itemScrollContent: {
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.small,
+    gap: v_9b1a04.medium,
+  },
+  itemScrollButton: {
+    paddingHorizontal: v_9b1a04.small,
+    paddingVertical: v_9b1a04.small / 2,
+  },
+  itemScrollButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  itemScrollButtonTextActive: {
+    color: '#0047AB',
+    fontFamily: v_843035.semibold,
+  },
+  itemScrollButtonUnderline: {
+    height: 2,
+    backgroundColor: '#0047AB',
+    marginTop: 4,
+    borderRadius: 1,
+  },
+
   sectionNavContent: {
     paddingHorizontal: v_9b1a04.large,
     gap: v_9b1a04.small,
