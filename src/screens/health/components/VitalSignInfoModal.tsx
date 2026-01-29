@@ -177,6 +177,7 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                             const v_996062 = [
                                                 v_e3e816.PULSE_RATE,
                                                 v_e3e816.RESPIRATION_RATE,
+                                                v_e3e816.BLOOD_PRESSURE,
                                                 v_e3e816.PRQ,
                                                 v_e3e816.OXYGEN_SATURATION,
                                                 v_e3e816.SDNN,
@@ -292,7 +293,10 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                 let v_549ed3 = 0;
 
                                                 if (v_9740cd && v_9740cd.value !== undefined && v_9740cd.value !== null) {
-                                                    if (typeof v_9740cd.value === 'number') {
+                                                    if (v_9e9019 === v_e3e816.BLOOD_PRESSURE && typeof v_9740cd.value === 'object' && !Array.isArray(v_9740cd.value) && v_9740cd.value !== null) {
+                                                        const v_25a9c7 = v_9740cd.value as { systolic?: number; diastolic?: number };
+                                                        v_549ed3 = typeof v_25a9c7.systolic === 'number' && !isNaN(v_25a9c7.systolic) ? v_25a9c7.systolic : (typeof v_25a9c7.diastolic === 'number' && !isNaN(v_25a9c7.diastolic) ? v_25a9c7.diastolic : 0);
+                                                    } else if (typeof v_9740cd.value === 'number') {
                                                         v_549ed3 = v_9740cd.value;
                                                     } else if (typeof v_9740cd.value === 'string') {
                                                         v_549ed3 = parseFloat(v_9740cd.value);
@@ -303,7 +307,10 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
 
                                                 if (isNaN(v_549ed3) || v_549ed3 === 0) {
                                                     if (v_e005eb && v_e005eb.value !== undefined && v_e005eb.value !== null) {
-                                                        if (typeof v_e005eb.value === 'number') {
+                                                        if (v_9e9019 === v_e3e816.BLOOD_PRESSURE && typeof v_e005eb.value === 'object' && !Array.isArray(v_e005eb.value)) {
+                                                            const v_25a9c7 = v_e005eb.value as { systolic?: number; diastolic?: number };
+                                                            v_549ed3 = typeof v_25a9c7.systolic === 'number' && !isNaN(v_25a9c7.systolic) ? v_25a9c7.systolic : (typeof v_25a9c7.diastolic === 'number' && !isNaN(v_25a9c7.diastolic) ? v_25a9c7.diastolic : 0);
+                                                        } else if (typeof v_e005eb.value === 'number') {
                                                             v_549ed3 = v_e005eb.value;
                                                         } else if (typeof v_e005eb.value === 'string') {
                                                             v_549ed3 = parseFloat(v_e005eb.value);
@@ -338,6 +345,12 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                     v_0f5cba = true;
                                                     v_022965 = 12; 
                                                     v_c9ee7b = 20; 
+                                                } else if (v_9e9019 === v_e3e816.BLOOD_PRESSURE) {
+
+                                                    v_43e24b = 60; v_d2c6bf = 200; v_362579 = 90; v_ba4c5f = 119; v_80cae9 = 'mmHg';
+                                                    v_0f5cba = true;
+                                                    v_022965 = 90; 
+                                                    v_c9ee7b = 120; 
                                                 } else if (v_9e9019 === v_e3e816.PRQ) {
                                                     v_43e24b = 2; v_d2c6bf = 8; v_362579 = 3; v_ba4c5f = 5; v_80cae9 = '';
                                                     v_0f5cba = true;
@@ -424,6 +437,10 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                         v_e001fc = '#FFC107'; 
                                                         v_6f0c12 = '#4CAF50'; 
                                                         v_62b932 = '#FF9800'; 
+                                                    } else if (v_9e9019 === v_e3e816.BLOOD_PRESSURE) {
+                                                        v_e001fc = '#FFC107'; 
+                                                        v_6f0c12 = '#4CAF50'; 
+                                                        v_62b932 = '#F44336'; 
                                                     } else if (v_9e9019 === v_e3e816.PRQ) {
                                                         v_e001fc = '#FF9800'; 
                                                         v_6f0c12 = '#4CAF50'; 
@@ -522,6 +539,14 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                                         <Text style={v_d81136.graphBarLabel}>{v_d2c6bf}{v_80cae9}</Text>
                                                                     </>
                                                                 ) : v_9e9019 === v_e3e816.SDNN ? (
+
+                                                                    <>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_43e24b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_022965}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_c9ee7b}{v_80cae9}</Text>
+                                                                        <Text style={v_d81136.graphBarLabel}>{v_d2c6bf}{v_80cae9}</Text>
+                                                                    </>
+                                                                ) : v_9e9019 === v_e3e816.BLOOD_PRESSURE ? (
 
                                                                     <>
                                                                         <Text style={v_d81136.graphBarLabel}>{v_43e24b}{v_80cae9}</Text>

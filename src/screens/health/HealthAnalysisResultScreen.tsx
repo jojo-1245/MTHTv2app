@@ -753,10 +753,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_8bc599 = v_df9f57(() => [
     { id: 'vital-signs', label: v_8d41d7('health_analysis.result.category_vital_signs') },
     { id: 'stress-recovery', label: v_8d41d7('health_analysis.result.category_stress_recovery') },
-    { id: 'risks', label: v_8d41d7('health_analysis.result.category_risks') },
     { id: 'blood-tests', label: v_8d41d7('health_analysis.result.category_blood_tests') },
     { id: 'cardiovascular', label: v_8d41d7('health_analysis.result.category_cardiovascular') },
     { id: 'respiratory', label: v_8d41d7('health_analysis.result.category_respiratory') },
+    { id: 'risks', label: '미래위험도' },
   ], [v_8d41d7]);
 
   const v_153eb4 = v_df9f57(() => ({
