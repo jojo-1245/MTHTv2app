@@ -192,7 +192,7 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                 const v_cf086c = [
                                                     { min: 0, max: 0, icon: 'happy', iconLib: 'ionicons', color: '#4CAF50', label: '낮음' },
                                                     { min: 1, max: 1, icon: 'happy-outline', iconLib: 'ionicons', color: '#8BC34A', label: '정상' },
-                                                    { min: 2, max: 2, icon: 'emoticon-neutral-outline', iconLib: 'material', color: '#FFC107', label: '가벼움' },
+                                                    { min: 2, max: 2, icon: 'emoticon-neutral-outline', iconLib: 'material', color: '#FFC107', label: '경증' },
                                                     { min: 3, max: 4, icon: 'sad-outline', iconLib: 'ionicons', color: '#FF9800', label: '높음' },
                                                     { min: 5, max: 5, icon: 'sad', iconLib: 'ionicons', color: '#F44336', label: '매우 높음' },
                                                 ];
@@ -217,6 +217,66 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                                                                 color={v_26dce6 ? v_fbe91e.color : '#E0E0E0'}
                                                                             />
                                                                         )}
+                                                                    </View>
+                                                                    <Text style={[v_d81136.stressLevelLabel, v_26dce6 && { color: v_fbe91e.color, fontFamily: v_843035.semibold }]}>
+                                                                        {v_fbe91e.label}
+                                                                    </Text>
+                                                                </View>
+                                                            );
+                                                        })}
+                                                    </View>
+                                                );
+                                            } else if (v_9e9019 === v_e3e816.PNS_ZONE) {
+
+                                                const v_3bab71 = typeof v_e005eb.value === 'number' ? v_e005eb.value : Number(v_e005eb.value);
+                                                const v_4bfac1 = Math.round(v_3bab71);
+                                                const v_789923 = [
+                                                    { min: 1, max: 1, icon: 'sad', iconLib: 'ionicons', color: '#F44336', label: '낮음' },
+                                                    { min: 2, max: 2, icon: 'happy-outline', iconLib: 'ionicons', color: '#8BC34A', label: '보통' },
+                                                    { min: 3, max: 3, icon: 'happy', iconLib: 'ionicons', color: '#4CAF50', label: '높음' },
+                                                ];
+                                                return (
+                                                    <View style={v_d81136.stressLevelContainer}>
+                                                        {v_789923.map((v_fbe91e, v_a56041) => {
+                                                            const v_26dce6 = v_4bfac1 === v_fbe91e.min;
+                                                            return (
+                                                                <View key={v_a56041} style={v_d81136.stressLevelItem}>
+                                                                    <View style={[v_d81136.stressLevelIcon, v_26dce6 && { borderWidth: 2, borderColor: v_fbe91e.color }]}>
+                                                                        <Ionicons
+                                                                            name={v_fbe91e.icon as any}
+                                                                            size={32}
+                                                                            color={v_26dce6 ? v_fbe91e.color : '#E0E0E0'}
+                                                                        />
+                                                                    </View>
+                                                                    <Text style={[v_d81136.stressLevelLabel, v_26dce6 && { color: v_fbe91e.color, fontFamily: v_843035.semibold }]}>
+                                                                        {v_fbe91e.label}
+                                                                    </Text>
+                                                                </View>
+                                                            );
+                                                        })}
+                                                    </View>
+                                                );
+                                            } else if (v_9e9019 === v_e3e816.SNS_ZONE) {
+
+                                                const v_3bab71 = typeof v_e005eb.value === 'number' ? v_e005eb.value : Number(v_e005eb.value);
+                                                const v_4bfac1 = Math.round(v_3bab71);
+                                                const v_789923 = [
+                                                    { min: 1, max: 1, icon: 'happy', iconLib: 'ionicons', color: '#4CAF50', label: '낮음' },
+                                                    { min: 2, max: 2, icon: 'happy-outline', iconLib: 'ionicons', color: '#8BC34A', label: '보통' },
+                                                    { min: 3, max: 3, icon: 'sad', iconLib: 'ionicons', color: '#F44336', label: '높음' },
+                                                ];
+                                                return (
+                                                    <View style={v_d81136.stressLevelContainer}>
+                                                        {v_789923.map((v_fbe91e, v_a56041) => {
+                                                            const v_26dce6 = v_4bfac1 === v_fbe91e.min;
+                                                            return (
+                                                                <View key={v_a56041} style={v_d81136.stressLevelItem}>
+                                                                    <View style={[v_d81136.stressLevelIcon, v_26dce6 && { borderWidth: 2, borderColor: v_fbe91e.color }]}>
+                                                                        <Ionicons
+                                                                            name={v_fbe91e.icon as any}
+                                                                            size={32}
+                                                                            color={v_26dce6 ? v_fbe91e.color : '#E0E0E0'}
+                                                                        />
                                                                     </View>
                                                                     <Text style={[v_d81136.stressLevelLabel, v_26dce6 && { color: v_fbe91e.color, fontFamily: v_843035.semibold }]}>
                                                                         {v_fbe91e.label}

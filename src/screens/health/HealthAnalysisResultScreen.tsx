@@ -456,7 +456,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     'vital-signs': null,
     'respiratory': null,
     'stress': null,
-    'hrv': null,
+    'recovery': null,
+    'stress-response': null,
   });
   const v_b1db35 = v_e662ae<Record<string, number>>({});
 
@@ -1038,6 +1039,28 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     if (v_f4d1c2.includes(v_653390)) {
       return v_005339(v_3b402b);
     }
+
+    if (v_653390 === v_e3e816.PNS_ZONE) {
+      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+      if (!isNaN(v_549ed3)) {
+        const v_b66476 = Math.round(v_549ed3);
+        if (v_b66476 === 0) return null; 
+        if (v_b66476 === 1) return '위험'; 
+        return '정상'; 
+      }
+      return null;
+    }
+
+    if (v_653390 === v_e3e816.SNS_ZONE) {
+      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+      if (!isNaN(v_549ed3)) {
+        const v_b66476 = Math.round(v_549ed3);
+        if (v_b66476 === 0) return null; 
+        if (v_b66476 === 3) return '위험'; 
+        return '정상'; 
+      }
+      return null;
+    }
     const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
     if (!isNaN(v_549ed3)) {
       return '정상';
@@ -1125,7 +1148,42 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_8e8471 =
     v_f36ab0.length >= 4 ? '90%' : undefined;
 
-  const v_e4ae59 = (v_1833e7, v_d308b5, v_ba91d0) => {
+  const v_6b9e80 = (v_653390, v_344c85): string => {
+    const v_bdafd8 = {
+      [v_e3e816.SDNN]: v_8d41d7('health_analysis.vitals.sdnn_friendly'),
+      [v_e3e816.RMSSD]: v_8d41d7('health_analysis.vitals.rmssd_friendly'),
+      [v_e3e816.MEAN_RRI]: v_8d41d7('health_analysis.vitals.mean_rri_friendly'),
+      [v_e3e816.SD1]: v_8d41d7('health_analysis.vitals.sd1_friendly'),
+      [v_e3e816.SD2]: v_8d41d7('health_analysis.vitals.sd2_friendly'),
+      [v_e3e816.PRQ]: v_8d41d7('health_analysis.vitals.prq_friendly'),
+      [v_e3e816.PNS_INDEX]: v_8d41d7('health_analysis.vitals.pns_index_friendly'),
+      [v_e3e816.PNS_ZONE]: v_8d41d7('health_analysis.vitals.pns_zone_friendly'),
+      [v_e3e816.SNS_INDEX]: v_8d41d7('health_analysis.vitals.sns_index_friendly'),
+      [v_e3e816.SNS_ZONE]: v_8d41d7('health_analysis.vitals.sns_zone_friendly'),
+      [v_e3e816.LFHF]: v_8d41d7('health_analysis.vitals.lfhf_friendly'),
+    };
+    return v_bdafd8[v_653390] || v_344c85;
+  };
+
+  const v_0aab8b = (v_3b402b): string => {
+    if (v_3b402b === 0) return v_8d41d7('health_analysis.result.stress_level_low');
+    if (v_3b402b === 1) return v_8d41d7('health_analysis.result.stress_level_normal');
+    if (v_3b402b === 2) return v_8d41d7('health_analysis.result.stress_level_mild');
+    if (v_3b402b >= 3 && v_3b402b <= 4) return v_8d41d7('health_analysis.result.stress_level_high');
+    if (v_3b402b >= 5) return v_8d41d7('health_analysis.result.stress_level_very_high');
+    return v_8d41d7('health_analysis.result.normal');
+  };
+
+  const v_96052f = (v_3b402b): string => {
+    const v_b66476 = Math.round(v_3b402b);
+    if (v_b66476 === 0) return v_8d41d7('health_analysis.result.zone_level_unknown');
+    if (v_b66476 === 1) return v_8d41d7('health_analysis.result.zone_level_low');
+    if (v_b66476 === 2) return v_8d41d7('health_analysis.result.zone_level_medium');
+    if (v_b66476 >= 3) return v_8d41d7('health_analysis.result.zone_level_high');
+    return v_8d41d7('health_analysis.result.normal');
+  };
+
+  const v_e4ae59 = (v_1833e7, v_d308b5, v_ba91d0, v_653390, v_3b402b) => {
 
     if (v_ba91d0 === 'respiratory') {
       if (v_d308b5 === '정상') {
@@ -1135,15 +1193,28 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         return v_8d41d7('health_analysis.result.respiratory_headline_abnormal');
       }
     }
+
+    const v_8a1355 = v_653390 !== undefined ? v_6b9e80(v_653390, v_1833e7) : v_1833e7;
     const v_1c35ff =
-      v_9c213b.language && v_9c213b.language.startsWith('ko') ? v_723f2d(v_1833e7, '은', '는') : '';
+      v_9c213b.language && v_9c213b.language.startsWith('ko') ? v_723f2d(v_8a1355, '은', '는') : '';
+
+    if (v_653390 === v_e3e816.STRESS_LEVEL && v_3b402b !== undefined) {
+      const v_4e0432 = v_0aab8b(v_3b402b);
+      return v_8d41d7('health_analysis.result.item_headline_with_level', { name: v_8a1355, particle: v_1c35ff, level: v_4e0432 });
+    }
+
+    if ((v_653390 === v_e3e816.PNS_ZONE || v_653390 === v_e3e816.SNS_ZONE) && v_3b402b !== undefined) {
+      const v_4e0432 = v_96052f(v_3b402b);
+      return v_8d41d7('health_analysis.result.item_headline_with_level', { name: v_8a1355, particle: v_1c35ff, level: v_4e0432 });
+    }
+
     if (v_d308b5 === '정상') {
-      return v_8d41d7('health_analysis.result.item_headline_normal', { name: v_1833e7, particle: v_1c35ff });
+      return v_8d41d7('health_analysis.result.item_headline_normal', { name: v_8a1355, particle: v_1c35ff });
     }
     if (v_d308b5 === '위험') {
-      return v_8d41d7('health_analysis.result.item_headline_risk', { name: v_1833e7, particle: v_1c35ff });
+      return v_8d41d7('health_analysis.result.item_headline_risk', { name: v_8a1355, particle: v_1c35ff });
     }
-    return v_8d41d7('health_analysis.result.item_headline_default', { name: v_1833e7, particle: v_1c35ff });
+    return v_8d41d7('health_analysis.result.item_headline_default', { name: v_8a1355, particle: v_1c35ff });
   };
 
   const v_26a76b = [
@@ -1191,22 +1262,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       ],
     },
     {
-      id: 'hrv',
-      title: v_8d41d7('health_analysis.result.section_hrv'),
-      items: [
-        {
-          typeNum: v_e3e816.SDNN,
-          detailTypes: [
-            v_e3e816.RMSSD,
-            v_e3e816.SD1,
-            v_e3e816.SD2,
-            v_e3e816.MEAN_RRI,
-            v_e3e816.RRI,
-          ],
-        },
-      ],
-    },
-    {
       id: 'blood-pressure',
       title: v_8d41d7('health_analysis.result.section_blood_pressure'),
       items: [
@@ -1222,16 +1277,37 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     },
 
     {
+      id: 'recovery',
+      title: v_8d41d7('health_analysis.result.section_recovery'),
+      items: [
+        {
+          typeNum: v_e3e816.PNS_ZONE,
+          label: v_8d41d7('health_analysis.result.recovery_ability'),
+          detailTypes: [
+            v_e3e816.PNS_INDEX,
+          ],
+        },
+      ],
+    },
+
+    {
+      id: 'stress-response',
+      title: v_8d41d7('health_analysis.result.section_stress_response'),
+      items: [
+        {
+          typeNum: v_e3e816.SNS_ZONE,
+          label: v_8d41d7('health_analysis.result.stress_response'),
+          detailTypes: [
+            v_e3e816.SNS_INDEX,
+          ],
+        },
+      ],
+    },
+
+    {
       id: 'autonomic',
       title: v_8d41d7('health_analysis.result.section_autonomic'),
       items: [
-        { typeNum: v_e3e816.STRESS_LEVEL },
-        { typeNum: v_e3e816.STRESS_INDEX },
-        { typeNum: v_e3e816.NORMALIZED_STRESS_INDEX },
-        { typeNum: v_e3e816.PNS_INDEX },
-        { typeNum: v_e3e816.PNS_ZONE },
-        { typeNum: v_e3e816.SNS_INDEX },
-        { typeNum: v_e3e816.SNS_ZONE },
         { typeNum: v_e3e816.LFHF },
       ],
     },
@@ -1240,17 +1316,31 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       id: 'cardiovascular',
       title: v_8d41d7('health_analysis.result.section_cardiovascular'),
       items: [
-        { typeNum: v_e3e816.SDNN },
-        { typeNum: v_e3e816.RMSSD },
-        { typeNum: v_e3e816.MEAN_RRI },
-        { typeNum: v_e3e816.SD1 },
-        { typeNum: v_e3e816.SD2 },
-        { typeNum: v_e3e816.PRQ },
-        { typeNum: v_e3e816.MEAN_ARTERIAL_PRESSURE },
-        { typeNum: v_e3e816.PULSE_PRESSURE },
-        { typeNum: v_e3e816.CARDIAC_WORKLOAD },
-        { typeNum: v_e3e816.HEMOGLOBIN },
-        { typeNum: v_e3e816.HEMOGLOBIN_A1C },
+
+        {
+          typeNum: v_e3e816.SDNN,
+          detailTypes: [
+            v_e3e816.RMSSD,
+            v_e3e816.MEAN_RRI,
+            v_e3e816.SD1,
+            v_e3e816.SD2,
+          ],
+        },
+
+        {
+          typeNum: v_e3e816.MEAN_ARTERIAL_PRESSURE,
+          detailTypes: [
+            v_e3e816.PULSE_PRESSURE,
+            v_e3e816.CARDIAC_WORKLOAD,
+          ],
+        },
+
+        {
+          typeNum: v_e3e816.HEMOGLOBIN,
+          detailTypes: [
+            v_e3e816.HEMOGLOBIN_A1C,
+          ],
+        },
       ],
     },
 
@@ -1373,7 +1463,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     contentContainerStyle={v_d81136.sectionNavContent}
                   >
                     {v_8c0857
-                      .filter(v_b4fa6c => ['vital-signs', 'respiratory', 'stress', 'hrv', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id))
+                      .filter(v_b4fa6c => ['vital-signs', 'respiratory', 'stress', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id))
                       .map((v_b4fa6c) => {
                         const v_44d16e = {
                           'vital-signs': v_8d41d7('health_analysis.result.section_nav_vital_signs'),
@@ -1637,7 +1727,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         'vital-signs': v_8d41d7('health_analysis.result.section_nav_vital_signs'),
                         'respiratory': v_8d41d7('health_analysis.result.section_nav_respiratory'),
                         'stress': v_8d41d7('health_analysis.result.section_nav_stress'),
-                        'hrv': v_8d41d7('health_analysis.result.section_nav_hrv'),
                         'autonomic': v_8d41d7('health_analysis.result.section_nav_autonomic'),
                         'cardiovascular': v_8d41d7('health_analysis.result.section_nav_cardiovascular'),
                         'risk-prediction': v_8d41d7('health_analysis.result.section_nav_risk_prediction'),
@@ -1667,7 +1756,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   <View
                     key={v_b4fa6c.id}
                     ref={(v_6d4ed3) => {
-                      if (v_6d4ed3 && ['vital-signs', 'respiratory', 'stress', 'hrv', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id)) {
+                      if (v_6d4ed3 && ['vital-signs', 'respiratory', 'stress', 'autonomic', 'cardiovascular', 'risk-prediction'].includes(v_b4fa6c.id)) {
                         v_aa48a7.current[v_b4fa6c.id] = v_6d4ed3;
                       }
                     }}
@@ -1692,11 +1781,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
                       const v_a8394b = v_b4fa6c.id === 'stress'
                         ? v_2eb761.filter(v_653390 => v_653390 !== v_e3e816.BODY_TENSION_SCORE)
-                        : v_b4fa6c.id === 'hrv'
-                          ? v_2eb761.filter(v_653390 =>
-                            v_653390 === v_e3e816.RMSSD || v_653390 === v_e3e816.MEAN_RRI
-                          )
-                          : v_2eb761;
+                        : v_2eb761;
 
                       return (
                         <View key={v_d3e14c} style={v_d81136.resultCard}>
@@ -1761,7 +1846,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <View style={v_d81136.resultRight}>
                               <View style={v_d81136.resultRightHeader}>
                                 <Text style={v_d81136.resultHeadline}>
-                                  {v_e4ae59(v_1833e7, v_d308b5, v_b4fa6c.id)}
+                                  {v_e4ae59(v_1833e7, v_d308b5, v_b4fa6c.id, v_8c0b26.typeNum, typeof v_df7b8f(v_8c0b26.typeNum) === 'number' ? v_df7b8f(v_8c0b26.typeNum) as number : undefined)}
                                 </Text>
                                 {v_4b27b8 && (
                                   <TouchableOpacity
@@ -1884,7 +1969,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                             )}
                                           </View>
                                         </View>
-                                        <Text style={v_d81136.stressDetailDescription}>{v_11f033}</Text>
+                                        <ExpandableDescription
+                                          description={v_11f033}
+                                          descriptionKey={`detail-${v_d3e14c}-${v_653390}`}
+                                        />
                                         {}
                                         {v_61619d && (
                                           <View style={v_d81136.confidenceRow}>
@@ -1970,7 +2058,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         <View style={v_d81136.resultRight}>
                           <View style={v_d81136.resultRightHeader}>
                             <Text style={v_d81136.resultHeadline}>
-                              {v_e4ae59(v_1833e7, v_d308b5)}
+                              {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8.value === 'number' ? v_9390e8.value : undefined)}
                             </Text>
                             {v_4b27b8 && (
                               <TouchableOpacity
@@ -2233,7 +2321,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         <View style={v_d81136.resultRight}>
                           <View style={v_d81136.resultRightHeader}>
                             <Text style={v_d81136.resultHeadline}>
-                              {v_e4ae59(v_1833e7, v_d308b5)}
+                              {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                             </Text>
                             {v_4b27b8 && (
                               <TouchableOpacity
@@ -2430,7 +2518,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <View style={v_d81136.resultRight}>
                             <View style={v_d81136.resultRightHeader}>
                               <Text style={v_d81136.resultHeadline}>
-                                {v_e4ae59(v_1833e7, v_d308b5)}
+                                {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                               </Text>
                               {v_4b27b8 && (
                                 <TouchableOpacity
