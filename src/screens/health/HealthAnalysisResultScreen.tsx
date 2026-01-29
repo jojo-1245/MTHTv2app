@@ -881,6 +881,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   ]), []);
 
+  const v_7984d6 = v_df9f57(() => new Set([
+    v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+    v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+    v_e3e816.LOW_HEMOGLOBIN_RISK,
+  ]), []);
+
   const v_ed9d34 = [
     v_e3e816.ASCVD_RISK_LEVEL,
     v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
@@ -2370,7 +2376,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <Text style={v_d81136.resultHeadline}>
                               {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_df7b8f(v_653390) === 'number' ? v_df7b8f(v_653390) as number : undefined)}
                             </Text>
-                            {v_7e392e && (
+                            {v_7e392e && !v_7984d6.has(v_653390) && (
                               <TouchableOpacity
                                 onPress={() => {
                                   if (v_7b3177.has(v_653390)) {
@@ -2474,7 +2480,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                             color={v_9719bb.text}
                                           />
                                         </View>
-                                        {v_9eedea && (
+                                        {v_9eedea && !v_7984d6.has(v_b47a43) && (
                                           <TouchableOpacity
                                             onPress={() => {
                                               v_13a008(v_b47a43);
@@ -2583,7 +2589,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <Text style={v_d81136.resultHeadline}>
                               {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8.value === 'number' ? v_9390e8.value : undefined)}
                             </Text>
-                            {v_4b27b8 && (
+                            {v_4b27b8 && !v_7984d6.has(v_653390) && (
                               <TouchableOpacity
                                 onPress={() => {
                                   if (v_7b3177.has(v_653390)) {
@@ -2846,7 +2852,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <Text style={v_d81136.resultHeadline}>
                               {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                             </Text>
-                            {v_4b27b8 && (
+                            {v_4b27b8 && !v_7984d6.has(v_653390) && (
                               <TouchableOpacity
                                 onPress={() => {
                                   if (v_7b3177.has(v_653390)) {
@@ -3043,7 +3049,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                               <Text style={v_d81136.resultHeadline}>
                                 {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                               </Text>
-                              {v_4b27b8 && (
+                              {v_4b27b8 && !v_7984d6.has(v_653390) && (
                                 <TouchableOpacity
                                   onPress={() => {
                                     if (v_7b3177.has(v_653390)) {
