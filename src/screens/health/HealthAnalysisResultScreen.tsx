@@ -943,7 +943,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_1e0e1c = v_e662ae(114); 
   const [v_23f063, v_1ce906] = v_5ab095(false);
   const v_685d2a = v_e662ae<v_3094a2 | null>(null);
-  const v_154640 = v_e662ae(0);
+  const v_713327 = v_e662ae(0); 
+  const v_91eb96 = v_e662ae(0); 
   const v_898946 = v_e662ae(0);
 
   const v_9ed853 = v_e662ae<ItemScrollButtonsHandle>(null);
@@ -1098,8 +1099,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         v_7a44c5.current = v_8ebb45;
         v_6ef413.current = true;
 
-        const v_06b24c = v_154640.current + v_898946.current;
-        const v_87820f = v_06b24c - v_1e0e1c.current;
+        const v_048ae4 = v_713327.current + v_898946.current;
+        const v_87820f = v_048ae4 - v_1e0e1c.current;
         const v_f44c97 = 50;
 
         if (!v_2c8813.current && v_8ebb45 > v_87820f) {
@@ -1168,7 +1169,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     if (v_22df7a !== null && v_22df7a !== v_ab5f42.current) {
       v_ab5f42.current = v_22df7a;
-
       v_9ed853.current?.setActiveItem(v_22df7a);
       v_63ec8f.current?.setActiveItem(v_22df7a);
     }
@@ -1176,7 +1176,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const v_0ee1c1 = (v_11a5aa) => {
     v_09b78b(v_11a5aa);
-
     v_9ed853.current?.scrollToStart();
     v_63ec8f.current?.scrollToStart();
   };
@@ -2005,61 +2004,60 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           />
         </View>
         {}
-        {v_23f063 && v_b30c6b.length > 0 && (
-          <Animated.View
-            style={[v_d81136.stickyHeader, { top: v_1e0e1c.current }]}
-            onLayout={(v_d48baf) => {
-              const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
-              v_905b11.current = v_c86e33;
-            }}
-          >
-            <View style={v_d81136.stickyHeaderContent}>
-              {v_b30c6b.map(([v_3b27d9, v_9390e8]) => {
-                const v_653390 = Number(v_3b27d9);
-                if (
-                  v_653390 === v_e3e816.WELLNESS_INDEX ||
-                  v_653390 === v_e3e816.WELLNESS_LEVEL
-                ) {
-                  return (
-                    <View
-                      key={`${v_653390}-compact-wrapper`}
-                      onLayout={(v_d48baf) => {
-                        const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
-                        v_d0de58.current = v_c86e33;
-
-                        v_905b11.current = v_c86e33 + v_898946.current;
-                      }}
-                    >
-                      {v_1867ed(v_653390)}
-                    </View>
-                  );
-                }
-                return null;
-              })}
-              {}
-              <CategoryTabScroll
-                categories={v_8bc599}
-                selectedCategory={v_69ddfb}
-                onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
-                tabContainerStyle={v_d81136.categoryTabContainer}
-                tabContentStyle={v_d81136.categoryTabContent}
-                tabButtonStyle={v_d81136.categoryTabButton}
-                tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
-                tabTextStyle={v_d81136.categoryTabText}
-                tabTextActiveStyle={v_d81136.categoryTabTextActive}
-              />
-
-              {}
-              <ItemScrollButtons
-                ref={v_63ec8f}
-                items={v_7acdeb}
-                initialActiveTypeNum={v_ab5f42.current}
-                onItemPress={v_743e81}
-                getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
-              />
-            </View>
-          </Animated.View>
-        )}
+        <Animated.View
+          style={[
+            v_d81136.stickyHeader,
+            { top: v_1e0e1c.current },
+            !v_23f063 && { opacity: 0, pointerEvents: 'none' as const },
+          ]}
+          onLayout={(v_d48baf) => {
+            const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
+            v_905b11.current = v_c86e33;
+          }}
+        >
+          <View style={v_d81136.stickyHeaderContent}>
+            {v_b30c6b.length > 0 && v_b30c6b.map(([v_3b27d9, v_9390e8]) => {
+              const v_653390 = Number(v_3b27d9);
+              if (
+                v_653390 === v_e3e816.WELLNESS_INDEX ||
+                v_653390 === v_e3e816.WELLNESS_LEVEL
+              ) {
+                return (
+                  <View
+                    key={`${v_653390}-compact-wrapper`}
+                    onLayout={(v_d48baf) => {
+                      const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
+                      v_d0de58.current = v_c86e33;
+                      v_905b11.current = v_c86e33 + v_898946.current;
+                    }}
+                  >
+                    {v_1867ed(v_653390)}
+                  </View>
+                );
+              }
+              return null;
+            })}
+            {}
+            <CategoryTabScroll
+              categories={v_8bc599}
+              selectedCategory={v_69ddfb}
+              onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
+              tabContainerStyle={v_d81136.categoryTabContainer}
+              tabContentStyle={v_d81136.categoryTabContent}
+              tabButtonStyle={v_d81136.categoryTabButton}
+              tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
+              tabTextStyle={v_d81136.categoryTabText}
+              tabTextActiveStyle={v_d81136.categoryTabTextActive}
+            />
+            <ItemScrollButtons
+              ref={v_63ec8f}
+              items={v_7acdeb}
+              initialActiveTypeNum={v_ab5f42.current}
+              onItemPress={v_743e81}
+              getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
+            />
+          </View>
+        </Animated.View>
         <SafeScrollView
           ref={v_e99f51}
           contentContainerStyle={v_d81136.content}
@@ -2068,7 +2066,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           onScroll={v_941b26}
           scrollEventThrottle={16}
         >
-          <View style={v_d81136.container}>
+          {}
+          <View
+            style={v_d81136.container}
+            onLayout={(v_d48baf) => {
+              v_713327.current = v_d48baf.nativeEvent.layout.height;
+            }}
+          >
             <Text style={v_d81136.title}>  {v_8d41d7('health_analysis.result_title')}</Text>
 
             {}
@@ -2262,52 +2266,56 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 </View>
               </>
             )}
+          </View>
 
-            {}
-            <View
-              ref={v_685d2a}
-              style={v_d81136.sectionNavContainer}
-              onLayout={(v_d48baf) => {
-                const { y: v_64877a, height: v_c86e33 } = v_d48baf.nativeEvent.layout;
-                v_154640.current = v_64877a;
-                v_898946.current = v_c86e33;
-                if (v_d0de58.current > 0) {
-                  v_905b11.current = v_d0de58.current + v_c86e33;
-                } else {
-                  v_905b11.current = v_15af7a.current;
-                }
-              }}
-            >
-              {}
-              <CategoryTabScroll
-                categories={v_8bc599}
-                selectedCategory={v_69ddfb}
-                onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
-                tabContainerStyle={v_d81136.categoryTabContainer}
-                tabContentStyle={v_d81136.categoryTabContent}
-                tabButtonStyle={v_d81136.categoryTabButton}
-                tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
-                tabTextStyle={v_d81136.categoryTabText}
-                tabTextActiveStyle={v_d81136.categoryTabTextActive}
-              />
+          {}
+          <View
+            ref={v_685d2a}
+            style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.background }]}
+            onLayout={(v_d48baf) => {
+              const { height: v_c86e33 } = v_d48baf.nativeEvent.layout;
+              v_898946.current = v_c86e33;
+              if (v_d0de58.current > 0) {
+                v_905b11.current = v_d0de58.current + v_c86e33;
+              } else {
+                v_905b11.current = v_15af7a.current;
+              }
+            }}
+          >
+            <CategoryTabScroll
+              categories={v_8bc599}
+              selectedCategory={v_69ddfb}
+              onCategoryPress={(v_389afb) => v_0ee1c1(v_389afb)}
+              tabContainerStyle={v_d81136.categoryTabContainer}
+              tabContentStyle={v_d81136.categoryTabContent}
+              tabButtonStyle={v_d81136.categoryTabButton}
+              tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
+              tabTextStyle={v_d81136.categoryTabText}
+              tabTextActiveStyle={v_d81136.categoryTabTextActive}
+            />
+            <ItemScrollButtons
+              ref={v_9ed853}
+              items={v_7acdeb}
+              initialActiveTypeNum={v_ab5f42.current}
+              onItemPress={v_743e81}
+              getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
+            />
+          </View>
 
-              {}
-              <ItemScrollButtons
-                ref={v_9ed853}
-                items={v_7acdeb}
-                initialActiveTypeNum={v_ab5f42.current}
-                onItemPress={v_743e81}
-                getItemName={(v_653390, v_2869c1) => v_2869c1 ?? v_50f905(v_653390, v_8d41d7)}
-              />
-            </View>
-
+          {}
+          <View
+            style={v_d81136.container}
+            onLayout={(v_d48baf) => {
+              v_91eb96.current = v_d48baf.nativeEvent.layout.y;
+            }}
+          >
             {}
             {v_7acdeb.length > 0 && (
               <View
                 style={v_d81136.flatListContainer}
                 ref={v_9aa77b}
                 onLayout={(v_d48baf) => {
-                  v_54e08d.current = v_d48baf.nativeEvent.layout.y;
+                  v_54e08d.current = v_91eb96.current + v_d48baf.nativeEvent.layout.y;
                 }}
               >
                 {v_7acdeb.map((v_8c0b26) => {
