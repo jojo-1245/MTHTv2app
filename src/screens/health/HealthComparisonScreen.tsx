@@ -132,9 +132,44 @@ const v_d9d65f = v_472849.create({
   },
 });
 
+function v_11cdee({ name: v_1833e7 }: { name: string }) {
+  return (
+    <View style={v_e186fe.wrapper}>
+      <View style={v_e186fe.avatar}>
+        <Ionicons name="person-outline" size={16} color="#615FFF" />
+      </View>
+      <Text style={v_e186fe.text} numberOfLines={1}>
+        {v_1833e7}
+      </Text>
+    </View>
+  );
+}
+
+const v_e186fe = v_472849.create({
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  avatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(97, 95, 255, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+    maxWidth: 120,
+  },
+});
+
 export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Props) {
   const { t: v_8d41d7 } = v_772971();
-  const { recordA: v_1a2523, recordB: v_fe1802 } = v_c7daf6.params;
+  const { recordA: v_1a2523, recordB: v_fe1802, userName: v_f08a5e } = v_c7daf6.params;
   const [v_e7ae15, v_20745f] = v_5ab095(false);
   const [v_474c16, v_41fe7e] = v_5ab095(false);
   const [v_782929, v_3cc752] = v_5ab095<Set<string>>(
@@ -187,13 +222,16 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
         rightAccessory={
-          <TouchableOpacity
-            style={v_d81136.headerItemSelectBtn}
-            onPress={() => v_41fe7e(true)}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
-          </TouchableOpacity>
+          <View style={v_d81136.headerRightRow}>
+            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+            <TouchableOpacity
+              style={v_d81136.headerItemSelectBtn}
+              onPress={() => v_41fe7e(true)}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
+            </TouchableOpacity>
+          </View>
         }
       />
       <SafeScrollView
@@ -469,11 +507,15 @@ const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
   },
+  headerRightRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
   headerItemSelectBtn: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
-    marginRight: v_9b1a04.small,
   },
   container: {
     paddingBottom: v_9b1a04.xlarge * 2,

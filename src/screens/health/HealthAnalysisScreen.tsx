@@ -1369,9 +1369,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           >
             <HealthRecordsView
               onCompare={(v_678155) => {
+                const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                 v_c65f5d.navigate('HealthComparison', {
                   recordA: v_678155[0],
                   recordB: v_678155[1],
+                  userName: v_0c2f9b?.name,
                 });
               }}
             />

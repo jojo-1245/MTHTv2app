@@ -654,29 +654,44 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                   { paddingBottom: v_033e14.bottom + v_9b1a04.medium },
                 ]}
               >
-                <View style={v_d81136.detailTimestampWrapper}>
-                  <Text style={v_d81136.detailTimestamp}>
-                    {v_16897e(v_8cc501.date, v_8cc501.time)}
-                  </Text>
-                </View>
-
                 {}
-                <View style={v_d81136.healthIndexSection}>
-                  <View style={v_d81136.healthIndexRow}>
+                <View style={v_d81136.detailTimestampRow}>
+                  {v_b277c8 ? (
                     <TouchableOpacity
                       style={[v_d81136.navRecordBtn, !v_a144ca && v_d81136.navRecordBtnDisabled]}
                       onPress={v_6a56d2}
                       disabled={!v_a144ca}
                     >
-                      <Ionicons
-                        name="chevron-back"
-                        size={24}
-                        color={v_a144ca ? v_1bfbd0.text : v_1bfbd0.border}
-                      />
+                      <Ionicons name="chevron-back" size={24} color={v_a144ca ? v_1bfbd0.text : v_1bfbd0.border} />
                       <Text style={[v_d81136.navRecordText, !v_a144ca && v_d81136.navRecordTextDisabled]}>
                         {v_8d41d7('health_records.prev')}
                       </Text>
                     </TouchableOpacity>
+                  ) : (
+                    <View style={v_d81136.navRecordBtnPlaceholder} />
+                  )}
+                  <Text style={v_d81136.detailTimestamp} numberOfLines={1}>
+                    {v_16897e(v_8cc501.date, v_8cc501.time)}
+                  </Text>
+                  {v_b277c8 ? (
+                    <TouchableOpacity
+                      style={[v_d81136.navRecordBtn, !v_4a3fe8 && v_d81136.navRecordBtnDisabled]}
+                      onPress={v_f83132}
+                      disabled={!v_4a3fe8}
+                    >
+                      <Text style={[v_d81136.navRecordText, !v_4a3fe8 && v_d81136.navRecordTextDisabled]}>
+                        {v_8d41d7('health_records.next')}
+                      </Text>
+                      <Ionicons name="chevron-forward" size={24} color={v_4a3fe8 ? v_1bfbd0.text : v_1bfbd0.border} />
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={v_d81136.navRecordBtnPlaceholder} />
+                  )}
+                </View>
+
+                {}
+                <View style={v_d81136.healthIndexSection}>
+                  <View style={v_d81136.healthIndexRow}>
                     <View style={v_d81136.healthIndexCenter}>
                       <View style={v_d81136.healthIndexCircle}>
                         <HealthIndexRing value={v_8cc501.healthIndex} max={10} />
@@ -687,24 +702,6 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                         {v_8d41d7(`health_records.list_status_${v_54e295(v_8cc501.healthIndex)}`)}
                       </Text>
                     </View>
-                    {v_b277c8 ? (
-                      <TouchableOpacity
-                        style={[v_d81136.navRecordBtn, !v_4a3fe8 && v_d81136.navRecordBtnDisabled]}
-                        onPress={v_f83132}
-                        disabled={!v_4a3fe8}
-                      >
-                        <Text style={[v_d81136.navRecordText, !v_4a3fe8 && v_d81136.navRecordTextDisabled]}>
-                          {v_8d41d7('health_records.next')}
-                        </Text>
-                        <Ionicons
-                          name="chevron-forward"
-                          size={24}
-                          color={v_4a3fe8 ? v_1bfbd0.text : v_1bfbd0.border}
-                        />
-                      </TouchableOpacity>
-                    ) : (
-                      <View style={v_d81136.navRecordBtnPlaceholder} />
-                    )}
                   </View>
                 </View>
 
@@ -1132,11 +1129,14 @@ const v_d81136 = v_472849.create({
   modalScrollContent: {
     paddingBottom: v_9b1a04.xlarge,
   },
-  detailTimestampWrapper: {
+  detailTimestampRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: v_9b1a04.large,
   },
   detailTimestamp: {
+    flex: 1,
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.secondaryText,
@@ -1148,7 +1148,7 @@ const v_d81136 = v_472849.create({
   healthIndexRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
   },
   healthIndexCenter: {
