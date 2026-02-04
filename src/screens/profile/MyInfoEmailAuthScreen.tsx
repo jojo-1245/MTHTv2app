@@ -69,7 +69,6 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
               title={v_8d41d7('my_info_email_auth.send_code_button')}
               onPress={v_2de427}
               disabled={!v_a71df8}
-              style={!v_a71df8 && v_d81136.buttonDisabled}
             />
           </View>
         </SafeScrollView>
@@ -108,9 +107,6 @@ const v_d81136 = v_472849.create({
   },
   validationError: {
     color: v_1bfbd0.error,
-  },
-  buttonDisabled: {
-    opacity: 0.3,
   },
 });
 

@@ -10,6 +10,7 @@ import {
   v_7e4944,
 } from 'rcmrninabrnb';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_f235de } from 'wjvlskvsbzsrojdbjsl';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
@@ -56,6 +57,8 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
         {v_4622b9.map(v_8c0b26 => {
           const v_26dce6 = v_8c0b26.key === v_1f1e84;
           const v_13a0ae = v_8c0b26.key === 'aihinty';
+          const v_fe8fcb = v_8c0b26.key === 'wallet';
+          const v_4c45ec = '#615FFF';
 
           return (
             <TouchableOpacity
@@ -78,11 +81,17 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
                     <Image source={v_90fa17} style={v_d81136.aihintyRobotIcon} resizeMode="contain" />
                   </View>
                 </View>
+              ) : v_fe8fcb ? (
+                <Wallet
+                  size={22}
+                  color={v_26dce6 ? v_4c45ec : v_1bfbd0.secondaryText}
+                  strokeWidth={2}
+                />
               ) : (
                 <Feather
                   name={v_8c0b26.icon}
                   size={22}
-                  color={v_26dce6 ? v_1bfbd0.primary : v_1bfbd0.secondaryText}
+                  color={v_26dce6 ? v_4c45ec : v_1bfbd0.secondaryText}
                 />
               )}
               <Text
@@ -165,7 +174,7 @@ const v_d81136 = v_472849.create({
     marginTop: 4,
   },
   labelActive: {
-    color: v_1bfbd0.primary,
+    color: '#615FFF',
   },
   labelAihintyActive: {
     color: '#615FFF',

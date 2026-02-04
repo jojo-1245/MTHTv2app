@@ -32,8 +32,10 @@ const Button: v_a3453e.FC<ButtonProps> = ({
   rounded: v_f52086 = 10,
   style: v_7fa4e4,
   textStyle: v_197d6e,
+  disabled: v_4a6533,
   ...v_83bbcd
 }) => {
+  const v_1a6f6d = v_4a6533 === true;
   return (
     <TouchableOpacity
       activeOpacity={0.85}
@@ -43,7 +45,9 @@ const Button: v_a3453e.FC<ButtonProps> = ({
         v_145388 && v_d81136.fullWidth,
         { borderRadius: v_f52086 },
         v_7fa4e4,
+        v_1a6f6d && v_d81136.disabled,
       ]}
+      disabled={v_4a6533}
       {...v_83bbcd}
     >
       {v_86ef18 ? <View style={v_d81136.leftIcon}>{v_86ef18}</View> : null}
@@ -52,6 +56,7 @@ const Button: v_a3453e.FC<ButtonProps> = ({
           v_d81136.text,
           v_46e192 === 'filled' ? v_d81136.textFilled : v_d81136.textOutline,
           v_197d6e,
+          v_1a6f6d && v_d81136.textDisabled,
         ]}
         numberOfLines={1}
       >
@@ -83,6 +88,10 @@ const v_d81136 = v_472849.create({
     backgroundColor: v_1bfbd0.background,
     borderColor: v_1bfbd0.border,
   },
+  disabled: {
+    backgroundColor: '#9CA3AF',
+    borderColor: '#9CA3AF',
+  },
   text: {
     flexShrink: 1,
     fontSize: 16,
@@ -93,6 +102,9 @@ const v_d81136 = v_472849.create({
   },
   textOutline: {
     color: v_1bfbd0.text,
+  },
+  textDisabled: {
+    color: '#FFFFFF',
   },
   leftIcon: {
     marginRight: v_9b1a04.small,

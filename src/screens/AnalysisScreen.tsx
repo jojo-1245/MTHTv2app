@@ -6,7 +6,7 @@ import {
   v_3094a2,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_86c222, v_7ebf51, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
+import { v_86c222, v_a43dd8, v_7ebf51, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_570c34, v_1c1837, v_729608 } from '../components';
 import { v_556baf } from '../components';
@@ -65,7 +65,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
               activeOpacity={0.8}
             >
               <View style={[v_d81136.cardIconWrap, v_d81136.healthIconWrap]}>
-                <Heart size={24} color="#EF4444" />
+                <ClipboardList size={24} color="#EF4444" />
               </View>
               <View style={v_d81136.cardText}>
                 <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.health_records')}</Text>
@@ -93,11 +93,11 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={v_d81136.card}
-              onPress={() => v_9b57fc('SkinAnalysis', { previewResult: true })}
+              onPress={() => v_9b57fc('SkinAnalysis', { initialTab: 'records' })}
               activeOpacity={0.8}
             >
               <View style={[v_d81136.cardIconWrap, v_d81136.skinIconWrap]}>
-                <Droplet size={24} color="#3B82F6" />
+                <ClipboardList size={24} color="#3B82F6" />
               </View>
               <View style={v_d81136.cardText}>
                 <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.skin_records')}</Text>

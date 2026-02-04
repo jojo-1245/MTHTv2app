@@ -79,4 +79,8 @@ export { WalletHeaderCard } from './wallet/WalletHeaderCard';
 export type { WalletHeaderCardProps } from './wallet/WalletHeaderCard';
 export { WalletFilterDialog } from './wallet/WalletFilterDialog';
 export type { WalletFilterDialogProps, WalletFilterType, WalletFilterRange } from './wallet/WalletFilterDialog';
+export { WalletEarnCard } from './wallet/WalletEarnCard';
+export type { WalletEarnCardProps } from './wallet/WalletEarnCard';
+export { WalletHistoryItem } from './wallet/WalletHistoryItem';
+export type { WalletHistoryItemProps } from './wallet/WalletHistoryItem';
 

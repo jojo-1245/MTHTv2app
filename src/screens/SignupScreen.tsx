@@ -12,9 +12,9 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_624bd2 } from '../constants';
 import {
   v_8e2768,
   v_fa3feb,
+  v_dd725b,
   v_729608,
   v_e2ca42,
-  v_cb41de,
   v_89c10a,
   v_570c34,
   v_d56c0a,
@@ -356,7 +356,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             {}
             <View style={v_d81136.buttonWrapper}>
-              <PrimaryButton
+              <GradientButton
                 title={v_88dca2 ? v_8d41d7('signup.submitting') : v_8d41d7('signup.submit')}
                 onPress={v_47ed2f}
                 disabled={v_88dca2}
@@ -429,6 +429,7 @@ const v_d81136 = v_472849.create({
   },
   buttonWrapper: {
     marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.large,
   },
   loadingIndicator: {
     marginTop: v_9b1a04.small / 2,

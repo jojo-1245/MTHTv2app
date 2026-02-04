@@ -11,7 +11,8 @@ import {
     v_3094a2,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_dec439, v_f832ec } from 'zvyjokvuouwvifyzks';
+import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
@@ -22,7 +23,6 @@ export interface SidebarMenuItem {
     id: string;
     label: string;
     icon?: keyof typeof v_dec439.glyphMap;
-    materialIcon?: keyof typeof v_f832ec.glyphMap;
     onPress?: () => void;
 }
 
@@ -62,29 +62,6 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
             }).start();
         }
     }, [v_cf55be, v_e9b367]);
-
-    const v_4120d4 = [
-        { id: 'home', label: 'Home', icon: 'home' },
-        { id: 'wallet', label: 'Wallet', icon: 'credit-card' },
-        { id: 'shop', label: 'Shop', icon: 'shopping-cart' },
-        { id: 'chat', label: 'AI Chat', icon: 'message-circle' },
-    ];
-
-    const v_c08e0e = [
-        { id: 'skin', label: v_8d41d7('sidebar.skin_analysis'), materialIcon: 'face-woman-shimmer' },
-        { id: 'health', label: v_8d41d7('sidebar.health_analysis'), materialIcon: 'heart-pulse' },
-        { id: 'connect', label: v_8d41d7('sidebar.health_connect'), icon: 'link' },
-    ];
-
-    const v_ff33a4 = [
-        { id: 'grandma', label: v_8d41d7('home.family_members.grandma'), icon: 'user' },
-        { id: 'grandpa', label: v_8d41d7('home.family_members.grandpa'), icon: 'user' },
-    ];
-
-    const v_ef5773 = [
-        v_8d41d7('sidebar.suggestions.vitamin'),
-        v_8d41d7('sidebar.suggestions.height'),
-    ];
 
     const v_8e442f = (v_8c0b26) => {
         if (v_1e7823) {
@@ -152,92 +129,23 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                         </View>
 
                         {}
-                        <View style={v_d81136.divider} />
-
-                        {}
-                        <View style={v_d81136.menuSection}>
-                            {v_4120d4.map((v_8c0b26) => (
-                                <TouchableOpacity
-                                    key={v_8c0b26.id}
-                                    style={v_d81136.menuItem}
-                                    onPress={() => v_8e442f(v_8c0b26)}
-                                    activeOpacity={0.7}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={v_8c0b26.label}
-                                >
-                                    {v_8c0b26.icon && (
-                                        <Feather
-                                            name={v_8c0b26.icon}
-                                            size={20}
-                                            color={v_1bfbd0.text}
-                                            style={v_d81136.menuIcon}
-                                        />
-                                    )}
-                                    <Text style={v_d81136.menuText}>{v_8c0b26.label}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-
-                        {}
-                        <View style={v_d81136.divider} />
-
-                        {}
-                        <View style={v_d81136.menuSection}>
-                            {v_c08e0e.map((v_8c0b26) => (
-                                <TouchableOpacity
-                                    key={v_8c0b26.id}
-                                    style={v_d81136.menuItem}
-                                    onPress={() => v_8e442f(v_8c0b26)}
-                                    activeOpacity={0.7}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={v_8c0b26.label}
-                                >
-                                    {v_8c0b26.materialIcon ? (
-                                        <MaterialCommunityIcons
-                                            name={v_8c0b26.materialIcon}
-                                            size={20}
-                                            color={v_1bfbd0.text}
-                                            style={v_d81136.menuIcon}
-                                        />
-                                    ) : v_8c0b26.icon && (
-                                        <Feather
-                                            name={v_8c0b26.icon}
-                                            size={20}
-                                            color={v_1bfbd0.text}
-                                            style={v_d81136.menuIcon}
-                                        />
-                                    )}
-                                    <Text style={v_d81136.menuText}>{v_8c0b26.label}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-
-                        {}
-                        <View style={v_d81136.divider} />
-
-                        {}
-                        <View style={v_d81136.menuSection}>
-                            {v_ff33a4.map((v_8c0b26) => (
-                                <TouchableOpacity
-                                    key={v_8c0b26.id}
-                                    style={v_d81136.menuItem}
-                                    onPress={() => v_8e442f(v_8c0b26)}
-                                    activeOpacity={0.7}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={v_8c0b26.label}
-                                >
-                                    {v_8c0b26.icon && (
-                                        <Feather
-                                            name={v_8c0b26.icon}
-                                            size={20}
-                                            color={v_1bfbd0.text}
-                                            style={v_d81136.menuIcon}
-                                        />
-                                    )}
-                                    <Text style={v_d81136.menuText}>{v_8c0b26.label}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
+                        <TouchableOpacity
+                            style={v_d81136.newChatButton}
+                            onPress={() => v_8e442f({ id: 'newChat', label: v_8d41d7('sidebar.new_chat') })}
+                            activeOpacity={0.8}
+                            accessibilityRole="button"
+                            accessibilityLabel={v_8d41d7('sidebar.new_chat')}
+                        >
+                            <LinearGradient
+                                colors={['#4F39F6', '#9810FA', '#E60076']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                style={v_d81136.newChatGradient}
+                            >
+                                <Feather name="plus" size={20} color="#FFFFFF" />
+                                <Text style={v_d81136.newChatText}>{v_8d41d7('sidebar.new_chat')}</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
 
                         {}
                         <View style={v_d81136.divider} />
@@ -260,50 +168,7 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                                 <Text style={v_d81136.menuText}>{v_8d41d7('sidebar.search_history')}</Text>
                             </TouchableOpacity>
                         </View>
-
-                        {}
-                        <View style={v_d81136.suggestionsSection}>
-                            {v_ef5773.map((v_ba1d23, v_a56041) => (
-                                <TouchableOpacity
-                                    key={v_a56041}
-                                    style={v_d81136.suggestionTag}
-                                    onPress={() => v_8e442f({ id: `suggestion-${v_a56041}`, label: v_ba1d23 })}
-                                    activeOpacity={0.7}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={v_ba1d23}
-                                >
-                                    <Text style={v_d81136.suggestionText}>{v_ba1d23}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
                     </ScrollView>
-
-                    {}
-                    <TouchableOpacity
-                        style={[v_d81136.userProfileSection, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}
-                        onPress={() => v_8e442f({ id: 'myinfo', label: v_8d41d7('sidebar.my_info') })}
-                        activeOpacity={0.7}
-                        accessibilityRole="button"
-                        accessibilityLabel={v_8d41d7('sidebar.my_info')}
-                    >
-                        <View style={v_d81136.userAvatar}>
-                            {v_2f4b56.avatar ? (
-                                <View style={[v_d81136.avatarPlaceholder, { backgroundColor: v_2f4b56.placeholderColor || v_1bfbd0.buttonPrimary }]}>
-                                    <Text style={v_d81136.avatarText}>
-                                        {v_2f4b56.name.charAt(0).toUpperCase()}
-                                    </Text>
-                                </View>
-                            ) : (
-                                <View style={[v_d81136.avatarPlaceholder, { backgroundColor: v_2f4b56.placeholderColor || v_1bfbd0.buttonPrimary }]}>
-                                    <Text style={v_d81136.avatarText}>
-                                        {v_2f4b56.name.charAt(0).toUpperCase()}
-                                    </Text>
-                                </View>
-                            )}
-                        </View>
-                        <Text style={v_d81136.userName}>{v_2f4b56.name}</Text>
-                        <Feather name="chevron-right" size={20} color="#9CA3AF" style={v_d81136.profileArrow} />
-                    </TouchableOpacity>
                 </Animated.View>
             </View>
         </Modal>
@@ -358,7 +223,7 @@ const v_d81136 = v_472849.create({
         flex: 1,
     },
     scrollContent: {
-        paddingBottom: v_9b1a04.xlarge,
+        paddingBottom: v_9b1a04.xlarge * 2,
         paddingTop: v_9b1a04.xlarge,
     },
     headerSection: {
@@ -382,6 +247,25 @@ const v_d81136 = v_472849.create({
         fontSize: 14,
         fontFamily: v_843035.regular,
         color: v_1bfbd0.text,
+    },
+    newChatButton: {
+        marginHorizontal: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
+        borderRadius: 14,
+        overflow: 'hidden',
+    },
+    newChatGradient: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 14,
+        paddingHorizontal: v_9b1a04.large,
+        gap: 8,
+    },
+    newChatText: {
+        fontSize: 16,
+        fontFamily: v_843035.semibold,
+        color: '#FFFFFF',
     },
     divider: {
         height: 1,

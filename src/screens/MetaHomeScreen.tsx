@@ -47,6 +47,7 @@ const { width: v_0d9f50 } = v_700696.get('window');
 const v_66f2f8 = 12;
 const v_11fb5c = 16;
 const v_ff4e8b = 20;
+const v_006281 = 10;
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -70,7 +71,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_05cf57 = v_79dc58.filter(Boolean).length;
   const [v_dc679a] = v_5ab095(7500);
   const [v_011173] = v_5ab095(10000);
-  const [v_27d364, v_798518] = v_5ab095(0);
+  const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
+
+  const v_76f9c7 = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+  const v_113ab0 = 100;
+  const v_006281 = 10;
 
   const v_047e65 = v_39cb7a != null && v_39cb7a >= 8 ? v_8d41d7('home.health_labels.high') : v_39cb7a != null && v_39cb7a >= 6 ? v_8d41d7('home.health_labels.good') : v_8d41d7('home.health_labels.normal');
   const v_086582 = v_9ab1d9 != null && v_9ab1d9 >= 70 ? v_8d41d7('home.health_labels.high') : v_9ab1d9 != null && v_9ab1d9 >= 50 ? v_8d41d7('home.health_labels.normal') : v_8d41d7('home.health_labels.caution');
@@ -81,12 +86,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   const v_74d6ea = () => v_9b57fc('SkinAnalysis');
   const v_ae6f36 = () => v_9b57fc('HealthAnalysis');
+  const v_d85372 = () => v_9b57fc('HealthAnalysis', { initialTab: 'records' });
+  const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
 
-  const v_dd0316 = (v_9e86fd) => {
-    const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
-    const v_2365e9 = Math.round(v_cbddfc / (v_3af450 + v_11fb5c));
-    if (v_2365e9 >= 0 && v_2365e9 < v_684a52.length) {
-      v_798518(v_2365e9);
+  const v_c907cb = (v_c5110a) => {
+    if (v_dc679a >= v_c5110a && !v_a741d8.has(v_c5110a)) {
+      v_4d9060((v_ba2215) => new Set(v_ba2215).add(v_c5110a));
+      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('home.goal_reward_highlight') + ' ' + v_8d41d7('home.step_receive'));
     }
   };
 
@@ -120,7 +126,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                       {v_9cb8cb && <View style={v_d81136.notifBadge} />}
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={v_d81136.headerIconBtn} hitSlop={8}>
+                  <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.pointsPill]}>
                       <Coins size={20} color="#FFFFFF" />
                       <Text style={v_d81136.pointsText}>1250</Text>
@@ -133,7 +139,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
             {}
             <View style={v_d81136.metricsRow}>
-              <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_ae6f36} activeOpacity={0.9}>
+              <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_d85372} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Heart size={24} color="#EF4444" />
                   <Text style={v_d81136.metricTitle}>{v_8d41d7('home.health_index')}</Text>
@@ -155,7 +161,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   {v_39cb7a != null && <View style={[v_d81136.metricProgressFill, { width: `${(v_39cb7a / 10) * 100}%`, backgroundColor: '#3B82F6' }]} />}
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_74d6ea} activeOpacity={0.9}>
+              <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_8daf84} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Droplet size={24} color="#38BDF8" />
                   <Text style={v_d81136.metricTitle}>{v_8d41d7('home.skin_score')}</Text>
@@ -209,7 +215,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               end={{ x: 0.5, y: 1 }}
               style={v_d81136.aiHintyGradient}
             >
-              <Text style={v_d81136.aiHintyTop}>{v_8d41d7('home.check_health_without_hospital')}</Text>
               <View style={v_d81136.aiHintyTitleRow}>
                 <Image source={v_2e47ea} style={v_d81136.aiHintyRobot} resizeMode="contain" />
                 <Text style={v_d81136.aiHintyTitle}>{v_8d41d7('home.ai_hinty_health_checkup')}</Text>
@@ -232,12 +237,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           <View style={v_d81136.section}>
             <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.attendance_check')}</Text>
             <View style={v_d81136.attendanceCardWrapper}>
-              <LinearGradient
-                colors={['#EEF2FF', '#FAF5FF']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={v_d81136.attendanceCard}
-              >
+              <View style={v_d81136.attendanceCard}>
                 <View style={v_d81136.attendanceHeader}>
                   <View style={v_d81136.attendanceHeaderText}>
                     <Text style={v_d81136.attendanceMain}>{v_8d41d7('home.daily_attendance_coins')}</Text>
@@ -278,7 +278,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Coins size={14} color="#615FFF" />
                   <Text style={v_d81136.attendanceBonus}>{v_8d41d7('home.attendance_bonus')}</Text>
                 </View>
-              </LinearGradient>
+              </View>
             </View>
           </View>
 
@@ -287,7 +287,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.health_challenge')}</Text>
             <View style={v_d81136.challengeCardWrapper}>
               <LinearGradient
-                colors={['#ECFDF5', '#F0FDF4']}
+                colors={['#F5F3FF', '#EDE9FE', '#FDF4FF']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={v_d81136.challengeCard}
@@ -301,30 +301,73 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                       {v_8d41d7('home.goal_reward_suffix')}
                     </Text>
                   </View>
-                  <View style={v_d81136.ecgIcon}>
-                    <Activity size={24} color="#FFFFFF" />
+                  <View style={v_d81136.stepChallengeIcon}>
+                    <Footprints size={22} color="#7C3AED" />
                   </View>
                 </View>
                 <View style={v_d81136.stepsRow}>
                   <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.today_steps')}</Text>
                   <Text style={v_d81136.stepsValue}>{v_8d41d7('home.steps_format', { current: v_dc679a.toLocaleString(), goal: v_011173.toLocaleString() })}</Text>
                 </View>
-                <View style={v_d81136.progressBar}>
-                  <View style={[v_d81136.progressFill, { width: `${(v_dc679a / v_011173) * 100}%` }]} />
-                </View>
-                <Text style={v_d81136.stepsRemaining}>
-                  {v_8d41d7('home.steps_remaining_prefix')}
-                  <Text style={v_d81136.stepsRemainingHighlight}>{(v_011173 - v_dc679a).toLocaleString()}{v_8d41d7('home.steps_remaining_suffix')}</Text>
-                  {v_8d41d7('home.steps_remaining_tail')}
-                </Text>
-                <TouchableOpacity style={v_d81136.challengeBtn} activeOpacity={0.8}>
-                  <View style={v_d81136.challengeBtnInner}>
-                    <Coins size={18} color="#FFFFFF" />
-                    <Text style={v_d81136.challengeBtnText}>{v_8d41d7('home.get_coins_on_goal')}</Text>
-                  </View>
-                </TouchableOpacity>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={v_d81136.stepMilestonesList}
+                >
+                  {v_76f9c7.map((v_c5110a) => {
+                    const v_fa25a3 = v_dc679a >= v_c5110a;
+                    const v_ddef54 = v_a741d8.has(v_c5110a);
+                    const v_26dce6 = v_fa25a3 && !v_ddef54;
+                    const v_e0ed2f = !v_fa25a3;
+                    return (
+                      <View key={v_c5110a} style={[v_d81136.stepMilestoneCard, { width: v_113ab0 }]}>
+                        <Text style={v_d81136.stepMilestoneLabel}>
+                          {v_c5110a.toLocaleString()}
+                        </Text>
+                        <TouchableOpacity
+                          style={[
+                            v_d81136.stepMilestoneBtn,
+                            v_26dce6 && v_d81136.stepMilestoneBtnActive,
+                            v_ddef54 && v_d81136.stepMilestoneBtnClaimed,
+                            v_e0ed2f && v_d81136.stepMilestoneBtnInactive,
+                          ]}
+                          onPress={() => v_c907cb(v_c5110a)}
+                          disabled={!v_26dce6}
+                          activeOpacity={0.8}
+                        >
+                          {v_26dce6 ? (
+                            <LinearGradient
+                              colors={['#7C3AED', '#A78BFA']}
+                              start={{ x: 0, y: 0 }}
+                              end={{ x: 1, y: 0 }}
+                              style={v_d81136.stepMilestoneBtnGradient}
+                            >
+                              <Coins size={14} color="#FFFFFF" />
+                              <Text style={v_d81136.stepMilestoneBtnTextActive}>
+                                {v_8d41d7('home.step_receive')}
+                              </Text>
+                            </LinearGradient>
+                          ) : (
+                            <View style={v_d81136.stepMilestoneBtnInner}>
+                              <Coins size={14} color={v_ddef54 ? '#A78BFA' : '#9CA3AF'} />
+                              <Text
+                                style={[
+                                  v_d81136.stepMilestoneBtnText,
+                                  v_ddef54 && v_d81136.stepMilestoneBtnTextClaimed,
+                                  v_e0ed2f && v_d81136.stepMilestoneBtnTextInactive,
+                                ]}
+                              >
+                                {v_8d41d7('home.step_receive')}
+                              </Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
                 <View style={v_d81136.stepTip}>
-                  <Footprints size={16} color="#9CA3AF" />
+                  <Footprints size={16} color="#A78BFA" />
                   <Text style={v_d81136.stepTipText}>{v_8d41d7('home.step_tip')}</Text>
                 </View>
               </LinearGradient>
@@ -342,7 +385,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              onMomentumScrollEnd={v_dd0316}
               contentContainerStyle={v_d81136.productList}
               decelerationRate="fast"
               snapToInterval={v_3af450 + v_11fb5c}
@@ -368,11 +410,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 </View>
               ))}
             </ScrollView>
-            <View style={v_d81136.paginationDots}>
-              {v_684a52.map((v_37eab7, v_ebec57) => (
-                <View key={v_ebec57} style={[v_d81136.dot, v_ebec57 === v_27d364 && v_d81136.dotActive]} />
-              ))}
-            </View>
           </View>
 
         </SafeScrollView>
@@ -495,7 +532,7 @@ const v_d81136 = v_472849.create({
   familyDesc: { fontSize: 12, fontFamily: v_843035.regular, color: 'rgba(255,255,255,0.85)', marginTop: 4 },
   aiHintyBtn: { borderRadius: 12, paddingVertical: 14, alignItems: 'center', backgroundColor: '#FFFFFF' },
   aiHintyBtnText: { fontSize: 16, fontFamily: v_843035.bold, color: '#4F39F6' },
-  attendanceCardWrapper: { overflow: 'hidden', borderRadius: 14, borderWidth: 1.108, borderColor: '#E0E7FF', shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 6 },
+  attendanceCardWrapper: { overflow: 'hidden', borderRadius: 14, borderWidth: 1.108, borderColor: "#efefef", shadowColor: '#666666', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 6, backgroundColor: '#ffffff' },
   attendanceCard: { padding: v_9b1a04.large, overflow: 'hidden', borderRadius: 14 },
   attendanceHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 },
   attendanceHeaderText: { flex: 1 },
@@ -516,26 +553,120 @@ const v_d81136 = v_472849.create({
   attendanceBtn: { marginBottom: 12 },
   attendanceBonusRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
   attendanceBonus: { fontSize: 14, fontFamily: v_843035.regular, color: '#6B7280' },
-  challengeCardWrapper: { overflow: 'hidden', borderRadius: 14, borderWidth: 1.108, borderColor: '#D0FAE5', shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 6 },
-  challengeCard: { padding: v_9b1a04.large, overflow: 'hidden', borderRadius: 14 },
+  challengeCardWrapper: {
+    overflow: 'hidden',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E9E5FF',
+    shadowColor: '#7C3AED',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 6,
+  },
+  challengeCard: { padding: v_9b1a04.large, overflow: 'hidden', borderRadius: 12 },
   challengeHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 },
+  stepChallengeIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   challengeHeaderText: { flex: 1 },
-  challengeTitle: { fontSize: 17, fontFamily: v_843035.bold, color: v_1bfbd0.text, marginBottom: 4 },
+  challengeTitle: { fontSize: 18, fontFamily: v_843035.bold, color: '#4C1D95', marginBottom: 4 },
   challengeReward: { fontSize: 13, fontFamily: v_843035.regular, color: '#6B7280' },
-  challengeRewardHighlight: { fontFamily: v_843035.bold, color: '#22C55E' },
-  ecgIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#22C55E', alignItems: 'center', justifyContent: 'center' },
-  stepsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+  challengeRewardHighlight: { fontFamily: v_843035.bold, color: '#7C3AED' },
+  stepsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   stepsLabel: { fontSize: 14, fontFamily: v_843035.medium, color: '#6B7280' },
-  stepsValue: { fontSize: 16, fontFamily: v_843035.bold, color: v_1bfbd0.text },
-  progressBar: { height: 8, backgroundColor: '#E5E7EB', borderRadius: 4, overflow: 'hidden' },
-  progressFill: { height: '100%', backgroundColor: '#374151', borderRadius: 4 },
-  stepsRemaining: { fontSize: 13, fontFamily: v_843035.regular, color: '#6B7280', marginTop: 8 },
-  stepsRemainingHighlight: { fontFamily: v_843035.bold, color: '#22C55E' },
-  challengeBtn: { borderRadius: 12, marginTop: 16, backgroundColor: '#22C55E' },
-  challengeBtnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingVertical: 14 },
-  challengeBtnText: { fontSize: 16, fontFamily: v_843035.medium, color: '#FFFFFF' },
-  stepTip: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
-  stepTipText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF', flex: 1 },
+  stepsValue: { fontSize: 18, fontFamily: v_843035.bold, color: '#4C1D95' },
+  stepMilestonesList: {
+    flexDirection: 'row',
+    gap: v_006281,
+    paddingRight: v_ff4e8b,
+  },
+  stepMilestoneCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#EDE9FE',
+    alignItems: 'center',
+    aspectRatio: 1.05,
+    shadowColor: '#7C3AED',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  stepMilestoneLabel: {
+    fontSize: 14,
+    fontFamily: v_843035.bold,
+    color: '#4C1D95',
+    marginBottom: 8,
+  },
+  stepMilestoneBtn: {
+    width: '100%',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  stepMilestoneBtnActive: {
+    overflow: 'hidden',
+  },
+  stepMilestoneBtnClaimed: {
+    backgroundColor: '#F5F3FF',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepMilestoneBtnInactive: {
+    backgroundColor: '#F3F4F6',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepMilestoneBtnInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+  },
+  stepMilestoneBtnGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  stepMilestoneBtnText: {
+    fontSize: 12,
+    fontFamily: v_843035.semibold,
+    color: '#9CA3AF',
+  },
+  stepMilestoneBtnTextClaimed: {
+    color: '#A78BFA',
+  },
+  stepMilestoneBtnTextInactive: {
+    color: '#9CA3AF',
+  },
+  stepMilestoneBtnTextActive: {
+    fontSize: 12,
+    fontFamily: v_843035.bold,
+    color: '#FFFFFF',
+  },
+  stepTip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#EDE9FE',
+  },
+  stepTipText: { fontSize: 12, fontFamily: v_843035.regular, color: '#6B7280', flex: 1 },
   coinHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: v_9b1a04.medium },
   viewAll: { fontSize: 14, fontFamily: v_843035.semibold, color: '#3B82F6' },
   productList: { paddingRight: v_ff4e8b },
@@ -549,9 +680,6 @@ const v_d81136 = v_472849.create({
   productPriceText: { fontSize: 13, fontFamily: v_843035.bold, color: '#000000', letterSpacing: -0.5 },
   productRating: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   productRatingText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF' },
-  paginationDots: { flexDirection: 'row', justifyContent: 'center', gap: 6, marginTop: 12 },
-  dot: { width: 8, height: 8, borderRadius: 8, backgroundColor: '#D1D5DB' },
-  dotActive: { backgroundColor: '#3B82F6', },
   scrollView: { flex: 1 },
   scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge },
 });

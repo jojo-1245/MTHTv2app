@@ -112,7 +112,6 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
                 title={v_8d41d7('email_verification.verify_btn')}
                 onPress={v_83b05b}
                 disabled={!v_93136a}
-                style={!v_93136a && v_d81136.buttonDisabled}
               />
             </View>
           </View>
@@ -181,9 +180,6 @@ const v_d81136 = v_472849.create({
   },
   buttonContainer: {
     marginBottom: v_9b1a04.xlarge,
-  },
-  buttonDisabled: {
-    opacity: 0.5,
   },
 });
 
