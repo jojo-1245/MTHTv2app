@@ -20,7 +20,7 @@ const ClauseDetailScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
         <Header title={v_9f1622} showBackButton onBackPress={v_c7ac57} />
-        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
           <Text style={v_d81136.text}>
             {v_4898e2 === 'terms'
               ? `

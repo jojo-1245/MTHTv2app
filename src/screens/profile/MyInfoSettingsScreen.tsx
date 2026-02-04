@@ -59,7 +59,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
         <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
-        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
           <View style={v_d81136.menuSection}>
             {v_7f0fd3.map((v_8c0b26) => (
               <DashboardListItem

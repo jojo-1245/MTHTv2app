@@ -23,6 +23,8 @@ export interface AccountSelectorProps {
   onSelectAccount: (accountId: string) => void;
   onAddSubAccount?: () => void;
   onDeleteAccount?: (accountId: string) => void;
+
+  disabled?: boolean;
 }
 
 export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
@@ -31,6 +33,7 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
   onSelectAccount: v_92fed4,
   onAddSubAccount: v_ea2e32,
   onDeleteAccount: v_6162cd,
+  disabled: v_4a6533 = false,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const [v_c403c7, v_f099fd] = v_5ab095(false);
@@ -42,8 +45,9 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
     <>
       <TouchableOpacity
         style={v_d81136.trigger}
-        onPress={() => v_f099fd(true)}
+        onPress={() => !v_4a6533 && v_f099fd(true)}
         activeOpacity={0.8}
+        disabled={v_4a6533}
       >
         <View style={v_d81136.avatar}>
           <Feather name="user" size={18} color="#615FFF" />
@@ -51,11 +55,13 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
         <Text style={v_d81136.triggerText} numberOfLines={1}>
           {v_0c2f9b?.name || ''}
         </Text>
-        <Feather
-          name={v_c403c7 ? 'chevron-up' : 'chevron-down'}
-          size={16}
-          color={v_1bfbd0.secondaryText}
-        />
+        {!v_4a6533 && (
+          <Feather
+            name={v_c403c7 ? 'chevron-up' : 'chevron-down'}
+            size={16}
+            color={v_1bfbd0.secondaryText}
+          />
+        )}
       </TouchableOpacity>
 
       <Modal

@@ -49,7 +49,7 @@ const MyInfoFaqScreen: v_a3453e.FC<Props> = () => {
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
         <Header title={v_8d41d7('my_info_faq.title')} showBackButton onBackPress={v_c7ac57} />
-        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
           <View style={v_d81136.faqSection}>
             {v_de5157.map((v_8c0b26) => (
               <View key={v_8c0b26.id} style={v_d81136.faqItem}>

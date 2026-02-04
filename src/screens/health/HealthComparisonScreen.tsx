@@ -10,7 +10,7 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
-import v_f595b9, { v_bf60de, v_cd1400, v_5ade23, v_79a794 } from 'vpztcxjmsfanunln';
+import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 import { v_729608, v_570c34, v_556baf } from '../../components';
 import type { v_8ad91b } from '../../navigation';
@@ -39,9 +39,18 @@ function v_b5ebc4({ score: v_740dd8, date: v_8dffde, time: v_f985e6 }: { score: 
   const v_0c21c9 = v_4d2aec / 2 - v_41f026 / 2;
   const v_0288f8 = v_4d2aec / 2;
   const v_65e020 = 2 * Math.PI * v_0c21c9;
-  const v_a63fde = v_740dd8 / 10;
-  const v_80989c = v_65e020 * (1 - v_a63fde);
   const v_d308b5 = v_54e295(v_740dd8);
+
+  const v_812146 = (v_fd5f43): number => {
+    if (v_fd5f43 <= 3) return (v_fd5f43 / 3) * 0.33;
+    if (v_fd5f43 <= 6) return 0.33 + ((v_fd5f43 - 4) / 3) * 0.33;
+    return 0.66 + ((v_fd5f43 - 7) / 3) * 0.34;
+  };
+  const v_09e739 = v_812146(v_740dd8);
+  const v_4b6102 = -Math.PI / 2 + v_09e739 * 2 * Math.PI;
+  const v_e75d3b = v_0288f8 + v_0c21c9 * Math.cos(v_4b6102);
+  const v_576627 = v_0288f8 + v_0c21c9 * Math.sin(v_4b6102);
+  const v_5bc297 = v_740dd8 <= 3 ? '#DC2626' : v_740dd8 <= 6 ? '#FBBF24' : '#22C55E';
 
   return (
     <View style={v_d9d65f.card}>
@@ -49,33 +58,26 @@ function v_b5ebc4({ score: v_740dd8, date: v_8dffde, time: v_f985e6 }: { score: 
       <Text style={v_d9d65f.time}>{v_f985e6}</Text>
       <View style={v_d9d65f.gaugeWrap}>
         <Svg width={v_4d2aec} height={v_4d2aec}>
-          <Defs>
-            <LinearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <Stop offset="0%" stopColor="#FF5A5F" />
-              <Stop offset="50%" stopColor="#F6C343" />
-              <Stop offset="100%" stopColor="#3CCB7B" />
-            </LinearGradient>
-          </Defs>
-          <Circle
-            cx={v_0288f8}
-            cy={v_0288f8}
-            r={v_0c21c9}
-            stroke="#E5E7EB"
-            strokeWidth={v_41f026}
-            fill="none"
-          />
-          <Circle
-            cx={v_0288f8}
-            cy={v_0288f8}
-            r={v_0c21c9}
-            stroke="url(#gaugeGrad)"
-            strokeWidth={v_41f026}
-            strokeLinecap="round"
-            fill="none"
-            strokeDasharray={v_65e020}
-            strokeDashoffset={v_80989c}
-            transform={`rotate(-90 ${v_0288f8} ${v_0288f8})`}
-          />
+          {[
+            { color: '#DC2626', start: 0, len: 0.33 },
+            { color: '#FBBF24', start: 0.33, len: 0.33 },
+            { color: '#22C55E', start: 0.66, len: 0.34 },
+          ].map(({ color: v_3c2a3a, start: v_965edf, len: v_fe889f }) => (
+            <Circle
+              key={v_3c2a3a}
+              cx={v_0288f8}
+              cy={v_0288f8}
+              r={v_0c21c9}
+              stroke={v_3c2a3a}
+              strokeWidth={v_41f026}
+              strokeLinecap="round"
+              fill="none"
+              strokeDasharray={`${v_65e020 * v_fe889f} ${v_65e020 * (1 - v_fe889f)}`}
+              strokeDashoffset={-v_65e020 * v_965edf}
+              transform={`rotate(-90 ${v_0288f8} ${v_0288f8})`}
+            />
+          ))}
+          <Circle cx={v_e75d3b} cy={v_576627} r={4} fill={v_5bc297} stroke="#FFFFFF" strokeWidth={2} />
         </Svg>
         <View style={v_d9d65f.gaugeText}>
           <Text style={v_d9d65f.scoreText}>{v_740dd8}/10</Text>

@@ -97,12 +97,13 @@ export type RootStackParamList = {
   MyInfoCloseMembership: undefined;
   MyInfoFaq: undefined;
   ReferralShare: undefined;
-  SkinAnalysis: { previewResult?: boolean } | undefined;
+  SkinAnalysis: { previewResult?: boolean; initialTab?: 'measure' | 'records' } | undefined;
   Analysis: undefined;
-  HealthAnalysis: undefined;
+  HealthAnalysis: { initialTab?: 'measure' | 'records' } | undefined;
   HealthAnalysisResult: {
     results: Record<string, { value: any; confidence?: any }>;
     timestamp: string;
+    userName?: string;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };

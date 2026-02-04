@@ -43,7 +43,7 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
         <Header title={v_8d41d7('my_info_email_auth.title')} showBackButton onBackPress={v_c7ac57} />
-        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
           <View style={v_d81136.form}>
             <View style={v_d81136.inputContainer}>
               <TextField

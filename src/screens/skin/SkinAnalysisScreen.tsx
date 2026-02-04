@@ -26,12 +26,18 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_8c5b32 from 'quibwhxmgaihxjwrkkiuwoxpqb';
 import { v_772971 } from 'jmpfvteuuztnp';
+import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
+import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_37c282 = v_0d9f50 - 80; 
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837 } from '../../components';
+const v_0abe94 = 12;
+const v_48a60c = Math.floor((v_0d9f50 - 24) / 2.5); 
+import { v_a0daa8 } from '../../navigation';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590 } from '../../constants';
+import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d } from '../../constants';
 import {
     v_6bbbb9,
     type v_146928,
@@ -210,6 +216,19 @@ const v_638095 = {
     wrinkle: 'pulse-outline',       
 };
 
+const v_e131e9 = (v_740dd8): keyof typeof v_d8cb4d => {
+    if (v_740dd8 >= 90) return 'excellent';
+    if (v_740dd8 >= 80) return 'good';
+    if (v_740dd8 >= 70) return 'normal';
+    if (v_740dd8 >= 60) return 'warning';
+    return 'danger';
+};
+
+const v_b0b235 = (v_3b27d9): keyof typeof v_25515d.glyphMap => {
+    const v_b24339 = v_3b27d9 === 'hd_dark_circle' ? 'dark_circle_v2' : v_3b27d9.replace(/^hd_/, '');
+    return (v_638095[v_b24339] || 'water-outline') as keyof typeof v_25515d.glyphMap;
+};
+
 const v_3e09cd = {
     mode: 'sd',
     selectedConcerns: [
@@ -245,9 +264,35 @@ const v_3e09cd = {
     timestamp: new Date().toISOString(),
 };
 
+const v_48f046 = [
+    { id: '1', name: '김건강', isCurrent: true },
+    { id: '2', name: '할머니', isCurrent: false },
+    { id: '3', name: '엄마', isCurrent: false },
+    { id: '4', name: '아빠', isCurrent: false },
+];
+
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
+    const { navigate: v_9b57fc } = v_a0daa8();
     const v_bf6a8c = v_c7daf6.params?.previewResult;
+
+    const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
+        v_c7daf6.params?.initialTab ?? 'measure'
+    );
+    const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
+    const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
+    const [v_f4c7be, v_d5a103] = v_5ab095(false);
+
+    const v_5bc46a = v_de06a3((v_2453ad) => {
+        v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
+        v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
+    }, []);
+
+    const v_20289f = v_de06a3((v_af419b) => {
+        const v_ceee18 = String(Date.now());
+        v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
+        v_1f1e88(v_ceee18);
+    }, []);
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
 
@@ -270,6 +315,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_c5caed, v_e2f548] = v_5ab095(false);
 
     const [v_6e882f, v_6e04f8] = v_5ab095(0);
+
+    const [v_8da349, v_5bc608] = v_5ab095(0);
+
+    const [v_09e9e3, v_625d0a] = v_5ab095(false);
 
     const [v_c813f5, v_0d73a9] = v_5ab095<{ image: any; name: string } | null>(null);
 
@@ -1059,9 +1108,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     }
                 />
 
-                {
+                {}
+                <TouchableOpacity
+                    style={v_d81136.previewButton}
+                    onPress={() => {
+                        v_6f6f79(v_3e09cd);
+                        v_639227('result');
+                    }}
+                >
+                    <Ionicons name="eye-outline" size={16} color={v_1bfbd0.bluePrimary} />
+                    <Text style={v_d81136.previewButtonText}>{v_8d41d7('skin.capture.preview_mode')}</Text>
+                </TouchableOpacity>
 
-}
             </View>
         </>
     );
@@ -1245,57 +1303,105 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
 
         const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f } = v_579c77;
-        const v_54d0c6 = v_53f592(v_adfd7c);
+
+        const v_54d0c6 = v_adfd7c <= 33 ? '#DC2626' : v_adfd7c <= 66 ? '#FBBF24' : '#22C55E';
         const v_858eb9 = v_4d19dd(v_adfd7c);
 
         const v_b5b523 = v_17b30f.slice(0, 3);
         const v_5f1433 = v_17b30f.slice(-3).reverse();
 
+        const v_40248c = v_e521b9?.timestamp
+            ? (() => {
+                const v_d5dda0 = new Date(v_e521b9.timestamp);
+                const v_f8e6b9 = `${v_d5dda0.getFullYear()}.${String(v_d5dda0.getMonth() + 1).padStart(2, '0')}.${String(v_d5dda0.getDate()).padStart(2, '0')}`;
+                const v_df8a54 = v_d5dda0.toLocaleTimeString('ko-KR', { hour: 'numeric', minute: '2-digit', hour12: true });
+                return `${v_f8e6b9} ${v_df8a54}`;
+            })()
+            : '';
+
+        const v_778b2d = 80;
+        const v_474580 = 8;
+        const v_0c21c9 = (v_778b2d - v_474580) / 2;
+        const v_0288f8 = v_778b2d / 2;
+        const v_65e020 = 2 * Math.PI * v_0c21c9;
+
+        const v_812146 = (v_fd5f43): number => {
+            if (v_fd5f43 <= 33) return (v_fd5f43 / 33) * 0.33;
+            if (v_fd5f43 <= 66) return 0.33 + ((v_fd5f43 - 34) / 33) * 0.33;
+            return 0.66 + ((v_fd5f43 - 67) / 34) * 0.34;
+        };
+        const v_09e739 = v_812146(v_adfd7c);
+        const v_4b6102 = -Math.PI / 2 + v_09e739 * 2 * Math.PI;
+        const v_e75d3b = v_0288f8 + v_0c21c9 * Math.cos(v_4b6102);
+        const v_576627 = v_0288f8 + v_0c21c9 * Math.sin(v_4b6102);
+
         return (
             <>
                 {}
-                <View style={v_d81136.resultHeaderSection}>
-                    <View style={v_d81136.resultTitleRow}>
-                        <Ionicons name="checkmark-circle" size={28} color="#4CAF50" />
-                        <Text style={v_d81136.resultMainTitle}>{v_8d41d7('skin.result.title')}</Text>
+                <View style={v_d81136.resultHeaderStatus}>
+                    <View style={v_d81136.resultHeaderStatusRow}>
+                        <View style={v_d81136.resultHeaderCheckCircle}>
+                            <Ionicons name="checkmark" size={14} color="#FFFFFF" />
+                        </View>
+                        <Text style={v_d81136.resultHeaderStatusText}>{v_8d41d7('skin.result.measurement_complete')}</Text>
                     </View>
-                    {
-
-}
+                    {v_40248c ? (
+                        <Text style={v_d81136.resultHeaderDateText}>
+                            {v_8d41d7('skin.result.measurement_date')}: {v_40248c}
+                        </Text>
+                    ) : null}
                 </View>
 
                 {}
                 <View style={v_d81136.overallScoreCard}>
                     {}
-                    {(v_c2741d || v_82f4af) && (
-                        <View style={v_d81136.resultFaceImageContainer}>
-                            <Image
-                                source={{ uri: v_c2741d || v_82f4af || '' }}
-                                style={v_d81136.resultFaceImage}
-                                resizeMode="cover"
-                            />
-                        </View>
-                    )}
+                    <View style={v_d81136.resultFaceImageContainer}>
+                        <Image
+                            source={
+                                v_c2741d || v_82f4af
+                                    ? { uri: v_c2741d || v_82f4af || '' }
+                                    : require('../../../assets/images/character.png')
+                            }
+                            style={v_d81136.resultFaceImage}
+                            resizeMode="cover"
+                        />
+                    </View>
 
                     {}
                     <View style={v_d81136.overallScoreContent}>
-                        <Text style={v_d81136.overallScoreLabel}>{v_8d41d7('skin.result.overall_score')}</Text>
-                        <View style={v_d81136.overallScoreCircle}>
-                            <View style={[
-                                v_d81136.overallScoreRing,
-                                { borderColor: v_54d0c6 }
-                            ]}>
-                                <Text style={[v_d81136.overallScoreNumber, { color: v_54d0c6 }]}>
+                        <Text style={v_d81136.overallScoreLabel}>{v_8d41d7('skin.result.overall_score_avg')}</Text>
+                        <View style={[v_d81136.overallScoreCircle, { width: v_778b2d, height: v_778b2d }]}>
+                            <Svg width={v_778b2d} height={v_778b2d} style={{ position: 'absolute' }}>
+                                {[
+                                    { color: '#DC2626', start: 0, len: 0.33 },
+                                    { color: '#FBBF24', start: 0.33, len: 0.33 },
+                                    { color: '#22C55E', start: 0.66, len: 0.34 },
+                                ].map(({ color: v_3c2a3a, start: v_965edf, len: v_fe889f }) => (
+                                    <Circle
+                                        key={v_3c2a3a}
+                                        cx={v_0288f8}
+                                        cy={v_0288f8}
+                                        r={v_0c21c9}
+                                        stroke={v_3c2a3a}
+                                        strokeWidth={v_474580}
+                                        strokeLinecap="round"
+                                        fill="none"
+                                        strokeDasharray={`${v_65e020 * v_fe889f} ${v_65e020 * (1 - v_fe889f)}`}
+                                        strokeDashoffset={-v_65e020 * v_965edf}
+                                        transform={`rotate(-90 ${v_0288f8} ${v_0288f8})`}
+                                    />
+                                ))}
+                                <Circle cx={v_e75d3b} cy={v_576627} r={4} fill={v_54d0c6} stroke="#FFFFFF" strokeWidth={2} />
+                            </Svg>
+                            <View style={v_d81136.overallScoreGaugeText}>
+                                <Text style={v_d81136.overallScoreNumber}>
                                     {v_adfd7c}
                                 </Text>
-                                <Text style={v_d81136.overallScoreUnit}>{v_8d41d7('skin.result.score_unit')}</Text>
                             </View>
                         </View>
-                        <View style={[v_d81136.overallGradeBadge, { backgroundColor: v_54d0c6 + '20' }]}>
-                            <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
-                                {v_858eb9}
-                            </Text>
-                        </View>
+                        <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
+                            {v_858eb9}
+                        </Text>
                     </View>
                 </View>
 
@@ -1340,176 +1446,186 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 </View>
 
                 {}
-                {(() => {
-                    const v_265b71 = v_744c99(v_5f1433);
-                    return (
-                        <View style={v_d81136.recommendedSection}>
-                            <View style={v_d81136.recommendedHeader}>
-                                <View style={v_d81136.recommendedTitleRow}>
-                                    <Ionicons name="sparkles-outline" size={18} color="#D97706" />
-                                    <Text style={v_d81136.resultSectionTitle}>{v_8d41d7('skin.result.recommend_title')}</Text>
-                                </View>
-                                <Text style={v_d81136.recommendedSubtitle}>
-                                    {v_8d41d7('skin.result.recommend_subtitle')}
-                                </Text>
-                            </View>
-
-                            {}
-                            <View style={v_d81136.productSwiperContainer}>
-                                <ScrollView
-                                    horizontal
-                                    pagingEnabled
-                                    showsHorizontalScrollIndicator={false}
-                                    onScroll={v_dd0316}
-                                    scrollEventThrottle={16}
-                                    decelerationRate="fast"
-                                    snapToInterval={v_37c282}
-                                    snapToAlignment="start"
-                                    contentContainerStyle={v_d81136.productSwiperContent}
-                                >
-                                    {v_265b71.map((v_01bee9) => (
-                                        <View key={v_01bee9.id} style={v_d81136.productCardWrapper}>
-                                            <TouchableOpacity
-                                                style={v_d81136.productCard}
-                                                onPress={() => v_4f73b9(v_01bee9)}
-                                                activeOpacity={0.9}
-                                            >
-                                                {}
-                                                <Pressable
-                                                    style={v_d81136.productImageArea}
-                                                    onPress={(v_9e86fd) => {
-                                                        v_9e86fd.stopPropagation();
-                                                    }}
-                                                >
-                                                    <Image
-                                                        source={v_01bee9.image}
-                                                        style={v_d81136.productImage}
-                                                        resizeMode="contain"
-                                                    />
-                                                    {}
-                                                    <TouchableOpacity
-                                                        style={v_d81136.productImageZoomButton}
-                                                        onPress={(v_9e86fd) => {
-                                                            v_9e86fd.stopPropagation();
-                                                            v_0d73a9({
-                                                                image: v_01bee9.image,
-                                                                name: v_01bee9.name,
-                                                            });
-                                                        }}
-                                                        accessibilityRole="button"
-                                                        accessibilityLabel="이미지 확대"
-                                                        accessibilityHint="탭하면 이미지를 크게 볼 수 있습니다"
-                                                    >
-                                                        <Ionicons name="expand-outline" size={20} color="#FFFFFF" />
-                                                    </TouchableOpacity>
-                                                </Pressable>
-
-                                                {}
-                                                <View style={v_d81136.productInfoArea}>
-                                                    <Text style={v_d81136.productBrand}>{v_01bee9.brand}</Text>
-                                                    <Text style={v_d81136.productName} numberOfLines={2}>{v_01bee9.name}</Text>
-                                                    <Text style={v_d81136.productDescription} numberOfLines={1}>{v_01bee9.description}</Text>
-
-                                                    <View style={v_d81136.productPriceRow}>
-                                                        <Text style={v_d81136.productPriceLabel}>Price</Text>
-                                                        <Text style={v_d81136.productPrice}>
-                                                            {v_01bee9.price} <Text style={v_d81136.productCurrency}>{v_01bee9.currency}</Text>
-                                                        </Text>
-                                                    </View>
-
-                                                    <TouchableOpacity
-                                                        style={v_d81136.productButton}
-                                                        onPress={() => v_4f73b9(v_01bee9)}
-                                                        activeOpacity={0.8}
-                                                    >
-                                                        <Text style={v_d81136.productButtonText}>{v_8d41d7('skin.result.view_product')}</Text>
-                                                        <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    ))}
-                                </ScrollView>
-
-                                {}
-                                {v_265b71.length > 1 && (
-                                    <View style={v_d81136.productPagination}>
-                                        {v_265b71.map((v_37eab7, v_a56041) => (
-                                            <View
-                                                key={v_a56041}
-                                                style={[
-                                                    v_d81136.productPaginationDot,
-                                                    v_a56041 === v_6e882f && v_d81136.productPaginationDotActive,
-                                                ]}
-                                            />
-                                        ))}
-                                    </View>
-                                )}
-                            </View>
-                        </View>
-                    );
-                })()}
-
-                {}
-                <View style={v_d81136.resultSection}>
+                <View style={v_d81136.allResultsSection}>
                     <View style={v_d81136.resultSectionHeader}>
                         <Ionicons name="grid-outline" size={18} color={v_1bfbd0.bluePrimary} />
                         <Text style={v_d81136.resultSectionTitle}>{v_8d41d7('skin.result.all_results')}</Text>
                     </View>
-                    <View style={v_d81136.compactGrid}>
-                        {v_17b30f.map((v_ccf527) => {
-                            const v_5e5963 = v_53f592(v_ccf527.score);
-                            return (
-                                <View key={v_ccf527.type} style={v_d81136.compactGridItem}>
-                                    <View style={v_d81136.compactGridContent}>
-                                        <Text style={v_d81136.compactGridLabel} numberOfLines={2}>
-                                            {v_8d41d7('skin.concerns.' + v_ccf527.type.replace('hd_', ''))}
-                                        </Text>
-                                    </View>
-                                    <View style={v_d81136.compactGridBarRow}>
-                                        <View style={v_d81136.compactGridBar}>
-                                            <View style={[
-                                                v_d81136.compactGridBarFill,
-                                                {
-                                                    width: `${v_ccf527.score}%`,
-                                                    backgroundColor: v_5e5963
-                                                }
-                                            ]} />
+                    <View style={v_d81136.allResultsSwiperContainer}>
+                        <ScrollView
+                            horizontal
+                            pagingEnabled
+                            showsHorizontalScrollIndicator={false}
+                            style={v_d81136.allResultsSwiperScroll}
+                            onScroll={(e: v_bd64bf<v_da479e>) => {
+                                const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
+                                const v_2365e9 = Math.round(v_cbddfc / (v_48a60c + v_0abe94));
+                                v_5bc608(Math.min(v_2365e9, v_17b30f.length - 1));
+                            }}
+                            scrollEventThrottle={16}
+                            decelerationRate="fast"
+                            snapToInterval={v_48a60c + v_0abe94}
+                            snapToAlignment="start"
+                            contentContainerStyle={v_d81136.allResultsSwiperContent}
+                        >
+                            {v_17b30f.map((v_ccf527) => {
+                                const v_5e5963 = v_53f592(v_ccf527.score);
+                                const v_7be0c6 = v_4d19dd(v_ccf527.score);
+                                const v_ef4192 = v_e131e9(v_ccf527.score);
+                                const v_40e4fd = v_d8cb4d[v_ef4192];
+                                const v_ca36a5 = v_ccf527.score / 100;
+                                return (
+                                    <View key={v_ccf527.type} style={[v_d81136.allResultsCard, { width: v_48a60c }]}>
+                                        <View style={v_d81136.allResultsCardHeader}>
+                                            <Ionicons
+                                                name={v_b0b235(v_ccf527.type)}
+                                                size={18}
+                                                color={v_1bfbd0.bluePrimary}
+                                            />
+                                            <Text style={v_d81136.allResultsCardLabel} numberOfLines={1}>{v_ccf527.label}</Text>
                                         </View>
-                                        <Text style={[v_d81136.compactGridScore, { color: v_5e5963 }]}>
-                                            {v_ccf527.score}
-                                        </Text>
+                                        <View style={v_d81136.allResultsCardScoreRow}>
+                                            <View style={v_d81136.allResultsCardScoreWrap}>
+                                                <Text style={[v_d81136.allResultsCardScore, { color: v_5e5963 }]}>{v_ccf527.score}</Text>
+                                                <Text style={v_d81136.allResultsCardScoreTotal}>/ 100</Text>
+                                            </View>
+                                            <View style={[v_d81136.allResultsCardTag, { backgroundColor: v_40e4fd.backgroundColor }]}>
+                                                <Text style={[v_d81136.allResultsCardTagText, { color: v_40e4fd.color }]}>{v_7be0c6}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={v_d81136.allResultsCardProgressBg}>
+                                            <View
+                                                style={[
+                                                    v_d81136.allResultsCardProgressFill,
+                                                    { width: `${v_ca36a5 * 100}%`, backgroundColor: v_5e5963 },
+                                                ]}
+                                            />
+                                        </View>
                                     </View>
+                                );
+                            })}
+                        </ScrollView>
+                        {v_17b30f.length > 1 && (
+                            <View style={v_d81136.allResultsPagination}>
+                                <Text style={v_d81136.allResultsPaginationText}>
+                                    {v_8da349 + 1} / {v_17b30f.length}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+                </View>
+
+                {}
+                {!v_09e9e3 ? (
+                    <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={() => v_625d0a(true)}
+                        style={v_d81136.aiAnalysisStartCard}
+                    >
+                        <ExpoLinearGradient
+                            colors={['#AD46FF', '#6B4CBF', '#4A3B8C']}
+                            locations={[0, 0.5, 1]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={v_d81136.aiAnalysisStartGradient}
+                        >
+                            <View style={v_d81136.aiAnalysisStartHeader}>
+                                <View style={v_d81136.aiAnalysisStartIcon}>
+                                    <Ionicons name="sparkles" size={24} color="#FFFFFF" />
                                 </View>
-                            );
-                        })}
-                    </View>
+                                <Text style={v_d81136.aiAnalysisStartTitle}>{v_8d41d7('skin.result.ai_analysis_title')}</Text>
+                            </View>
+                            <Text style={v_d81136.aiAnalysisStartDesc}>{v_8d41d7('skin.result.ai_analysis_desc')}</Text>
+                            <View style={v_d81136.aiAnalysisStartButton}>
+                                <Text style={v_d81136.aiAnalysisStartButtonText}>{v_8d41d7('skin.result.ai_analysis_start_btn')}</Text>
+                            </View>
+                        </ExpoLinearGradient>
+                    </TouchableOpacity>
+                ) : (
+                    <>
+                        <View style={v_d81136.aiAnalysisCard}>
+                            <View style={v_d81136.aiAnalysisCardHeader}>
+                                <View style={v_d81136.aiAnalysisCardIcon}>
+                                    <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
+                                </View>
+                                <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('skin.result.ai_comprehensive_title')}</Text>
+                            </View>
+                            <View style={v_d81136.aiAnalysisSubCard}>
+                                <View style={v_d81136.aiAnalysisSectionHeader}>
+                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
+                                        <Ionicons name="water-outline" size={18} color="#22C55E" />
+                                    </View>
+                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_skin_summary')}</Text>
+                                </View>
+                                <Text style={v_d81136.aiAnalysisSectionText}>{v_8d41d7('skin.result.ai_skin_summary_sample')}</Text>
+                            </View>
+                            <View style={v_d81136.aiAnalysisSubCard}>
+                                <View style={v_d81136.aiAnalysisSectionHeader}>
+                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEF3C7' }]}>
+                                        <Ionicons name="bulb-outline" size={18} color="#F59E0B" />
+                                    </View>
+                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_improvement_points')}</Text>
+                                </View>
+                                <Text style={v_d81136.aiAnalysisSectionText}>• {v_8d41d7('skin.result.ai_improvement_sample_1')}</Text>
+                                <Text style={v_d81136.aiAnalysisSectionText}>• {v_8d41d7('skin.result.ai_improvement_sample_2')}</Text>
+                            </View>
+                            <View style={v_d81136.aiAnalysisSubCard}>
+                                <View style={v_d81136.aiAnalysisSectionHeader}>
+                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#F3F4F6' }]}>
+                                        <Ionicons name="warning-outline" size={18} color="#374151" />
+                                    </View>
+                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_precautions')}</Text>
+                                </View>
+                                <Text style={v_d81136.aiAnalysisSectionText}>{v_8d41d7('skin.result.ai_precautions_text')}</Text>
+                            </View>
+                        </View>
+                        {}
+                        <View style={v_d81136.aiProductsCard}>
+                            <View style={v_d81136.aiProductsHeader}>
+                                <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('skin.result.ai_recommended_products')}</Text>
+                                <Text style={v_d81136.aiProductsBadge}>{v_8d41d7('skin.result.ai_custom_recommend')}</Text>
+                            </View>
+                            <View style={v_d81136.aiProductList}>
+                                {v_744c99(v_5f1433).slice(0, 3).map((v_01bee9) => (
+                                    <TouchableOpacity
+                                        key={v_01bee9.id}
+                                        style={v_d81136.aiProductItem}
+                                        onPress={() => v_4f73b9(v_01bee9)}
+                                        activeOpacity={0.8}
+                                    >
+                                        <View style={[v_d81136.aiProductIconWrap, { backgroundColor: '#FFFFFF' }]}>
+                                            <Image source={v_01bee9.image} style={v_d81136.aiProductImage} resizeMode="contain" />
+                                        </View>
+                                        <View style={v_d81136.aiProductContent}>
+                                            <Text style={v_d81136.aiProductBrand}>{v_01bee9.brand}</Text>
+                                            <Text style={v_d81136.aiProductTitle}>{v_01bee9.name}</Text>
+                                            <Text style={v_d81136.aiProductDesc} numberOfLines={2}>{v_01bee9.description}</Text>
+                                            <View style={v_d81136.aiProductPoints}>
+                                                <Coins size={14} color="#615FFF" />
+                                                <Text style={v_d81136.aiProductPointsNumber}>{v_01bee9.price}</Text>
+                                                <Text style={v_d81136.aiProductPointsCurrency}>{v_01bee9.currency}</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                            <TouchableOpacity style={v_d81136.aiMoreButton}>
+                                <Text style={v_d81136.aiMoreButtonText}>{v_8d41d7('skin.result.ai_more_btn')}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
+
+                {}
+                <View style={v_d81136.resultDisclaimer}>
+                    <Text style={v_d81136.resultDisclaimerText}>{v_8d41d7('skin.result.disclaimer')}</Text>
                 </View>
 
                 {}
-                <View style={v_d81136.analysisInfoCard}>
-                    <View style={v_d81136.analysisInfoRow}>
-                        <Ionicons name="time-outline" size={16} color={v_1bfbd0.secondaryText} />
-                        <Text style={v_d81136.analysisInfoText}>
-                            {v_8d41d7('skin.result.analysis_date', { date: new Date(v_e521b9.timestamp).toLocaleString('ko-KR') })}
-                        </Text>
-                    </View>
-                    {
-
-}
-
-                </View>
-
-                {}
-                <View style={v_d81136.buttonSection}>
-                    {
-
-}
+                <View style={v_d81136.resultButtonSection}>
                     <PrimaryButton
-                        title={v_8d41d7('skin.result.btn_new')}
-                        onPress={() => v_c65f5d.navigate('MetaHome')}
-                        fullWidth
-                        style={{ marginTop: v_9b1a04.medium }}
+                        title={v_8d41d7('skin.result.btn_remake')}
+                        onPress={v_a2f2ec}
                     />
                 </View>
             </>
@@ -1525,6 +1641,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             <StatusBar style="dark" />
             <SafeView style={v_d81136.screen} showBottomBackground={false}>
                 <Header
+                    variant="healthAnalysis"
                     title={v_8d41d7('skin.title')}
                     showBackButton
                     onBackPress={() => {
@@ -1536,20 +1653,75 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             v_a2f2ec();
                         }
                     }}
+                    rightAccessory={
+                        <TouchableOpacity
+                            style={v_d81136.healthIconBtn}
+                            onPress={() => v_9b57fc('HealthAnalysis')}
+                            hitSlop={8}
+                        >
+                            <Heart size={22} color={v_1bfbd0.primary} />
+                        </TouchableOpacity>
+                    }
                 />
-                <SafeScrollView
-                    contentContainerStyle={v_d81136.content}
-                    showsVerticalScrollIndicator={false}
-                    showBottomBackground={false}
-                    disableBottomPadding={true}
-                >
-                    <View style={v_d81136.container}>
-                        {v_91943c === 'capture' && v_33853a()}
-                        {v_91943c === 'settings' && v_a5ba83()}
-                        {v_91943c === 'analyzing' && v_5f339d()}
-                        {v_91943c === 'result' && v_4ff022()}
+                <View style={v_d81136.tabBar}>
+                    <View style={v_d81136.tabRow}>
+                        <TouchableOpacity
+                            style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+                            onPress={() => v_02dd63('measure')}
+                        >
+                            <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                                {v_8d41d7('health_tabs.measure')}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+                            onPress={() => v_02dd63('records')}
+                        >
+                            <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                                {v_8d41d7('health_tabs.records')}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
-                </SafeScrollView>
+                    <AccountSelector
+                        accounts={v_c86f08}
+                        selectedAccountId={v_e7b2f2}
+                        onSelectAccount={v_1f1e88}
+                        onAddSubAccount={() => v_d5a103(true)}
+                        onDeleteAccount={v_5bc46a}
+                        disabled={v_91943c === 'result'}
+                    />
+                </View>
+                <AddUserModal
+                    visible={v_f4c7be}
+                    onClose={() => v_d5a103(false)}
+                    onAdd={v_20289f}
+                />
+                {v_ac1d22 === 'records' ? (
+                    <SafeScrollView
+                        contentContainerStyle={v_d81136.recordsContent}
+                        showsVerticalScrollIndicator={false}
+                        showBottomBackground={false}
+                    >
+                        <View style={v_d81136.recordsPlaceholder}>
+                            <Ionicons name="document-text-outline" size={48} color={v_1bfbd0.secondaryText} />
+                            <Text style={v_d81136.recordsPlaceholderText}>{v_8d41d7('skin.records_placeholder')}</Text>
+                        </View>
+                    </SafeScrollView>
+                ) : (
+                    <SafeScrollView
+                        contentContainerStyle={v_d81136.content}
+                        showsVerticalScrollIndicator={false}
+                        showBottomBackground={false}
+                        disableBottomPadding={true}
+                    >
+                        <View style={v_d81136.container}>
+                            {v_91943c === 'capture' && v_33853a()}
+                            {v_91943c === 'settings' && v_a5ba83()}
+                            {v_91943c === 'analyzing' && v_5f339d()}
+                            {v_91943c === 'result' && v_4ff022()}
+                        </View>
+                    </SafeScrollView>
+                )}
             </SafeView>
 
             {}
@@ -1634,6 +1806,54 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
 const v_d81136 = v_472849.create({
     screen: v_a61db3.screen,
+    healthIconBtn: {
+        padding: 8,
+    },
+    tabBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: v_9b1a04.large,
+        paddingVertical: v_9b1a04.medium,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F3F4F6',
+    },
+    tabRow: {
+        flexDirection: 'row',
+        gap: 24,
+    },
+    tab: {
+        paddingVertical: 8,
+    },
+    tabActive: {
+        borderBottomWidth: 3,
+        borderBottomColor: v_1bfbd0.buttonPrimary,
+    },
+    tabText: {
+        fontSize: 16,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+    },
+    tabTextActive: {
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+    },
+    recordsContent: {
+        flexGrow: 1,
+        paddingBottom: v_9b1a04.xlarge,
+    },
+    recordsPlaceholder: {
+        flex: 1,
+        padding: v_9b1a04.large,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    recordsPlaceholderText: {
+        marginTop: v_9b1a04.medium,
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+    },
     content: {
         ...v_a61db3.content,
         minHeight: '100%',
@@ -1890,7 +2110,7 @@ const v_d81136 = v_472849.create({
         color: v_1bfbd0.text,
     },
     guideList: {
-        gap: 6,
+        gap: 8,
     },
     guideItem: {
         fontSize: v_ef658a.medium,
@@ -2103,9 +2323,33 @@ const v_d81136 = v_472849.create({
         marginTop: v_9b1a04.medium,
     },
 
-    resultHeaderSection: {
+    resultHeaderStatus: {
         alignItems: 'center',
         marginBottom: v_9b1a04.medium,
+    },
+    resultHeaderStatusRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 6,
+    },
+    resultHeaderCheckCircle: {
+        width: 22,
+        height: 22,
+        borderRadius: 11,
+        backgroundColor: v_1bfbd0.buttonPrimary,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    resultHeaderStatusText: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.buttonPrimary,
+    },
+    resultHeaderDateText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
     },
     resultTitleRow: {
         flexDirection: 'row',
@@ -2162,6 +2406,16 @@ const v_d81136 = v_472849.create({
     overallScoreCircle: {
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'relative',
+    },
+    overallScoreGaugeText: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     overallScoreRing: {
         width: 100,
@@ -2173,24 +2427,14 @@ const v_d81136 = v_472849.create({
         backgroundColor: v_1bfbd0.lightGray,
     },
     overallScoreNumber: {
-        fontSize: 36,
+        fontSize: 24,
         fontFamily: v_843035.bold,
-    },
-    overallScoreUnit: {
-        fontSize: v_ef658a.small,
-        fontFamily: v_843035.regular,
-        color: v_1bfbd0.secondaryText,
-        marginTop: -4,
-    },
-    overallGradeBadge: {
-        paddingHorizontal: 16,
-        paddingVertical: 6,
-        borderRadius: 20,
-        marginTop: v_9b1a04.small,
+        color: '#1A202C',
     },
     overallGradeText: {
-        fontSize: v_ef658a.medium,
+        fontSize: v_ef658a.small,
         fontFamily: v_843035.semibold,
+        marginTop: v_9b1a04.small / 2,
     },
 
     resultSection: {
@@ -2217,9 +2461,9 @@ const v_d81136 = v_472849.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.06,
         shadowRadius: 8,
-        elevation: 2,
+        elevation: 0,
         borderWidth: 1,
-        borderColor: '#F3F4F6',
+        borderColor: v_1bfbd0.border,
     },
     highlightColumn: {
         width: '50%', 
@@ -2268,6 +2512,322 @@ const v_d81136 = v_472849.create({
         fontFamily: v_843035.bold,
         width: 28,
         textAlign: 'right',
+    },
+
+    allResultsSection: {
+        marginTop: v_9b1a04.medium,
+        overflow: 'visible',
+    },
+    allResultsSwiperContainer: {
+        marginTop: v_9b1a04.small,
+        overflow: 'visible',
+    },
+    allResultsSwiperScroll: {
+        overflow: 'visible',
+    },
+    allResultsSwiperContent: {
+        paddingLeft: 0,
+        paddingRight: v_9b1a04.large,
+        gap: 12,
+    },
+    allResultsCard: {
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+        overflow: 'visible',
+        alignItems: 'stretch',
+    },
+    allResultsCardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginBottom: v_9b1a04.medium,
+    },
+    allResultsCardLabel: {
+        flex: 1,
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+        letterSpacing: -0.5,
+    },
+    allResultsCardScoreRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 2,
+    },
+    allResultsCardScoreWrap: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        gap: 2,
+    },
+    allResultsCardScore: {
+        fontSize: 24,
+        fontFamily: v_843035.bold,
+    },
+    allResultsCardScoreTotal: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+    },
+    allResultsCardTag: {
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
+    },
+    allResultsCardTagText: {
+        fontSize: 11,
+        fontFamily: v_843035.semibold,
+    },
+    allResultsCardProgressBg: {
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#F3F4F6',
+        overflow: 'hidden',
+        marginTop: v_9b1a04.small,
+    },
+    allResultsCardProgressFill: {
+        height: '100%',
+        borderRadius: 3,
+    },
+    allResultsPagination: {
+        alignItems: 'center',
+        marginTop: v_9b1a04.medium,
+    },
+    allResultsPaginationText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.secondaryText,
+    },
+
+    aiAnalysisStartCard: {
+        marginTop: v_9b1a04.large,
+        borderRadius: 16,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 6,
+    },
+    aiAnalysisStartGradient: {
+        padding: v_9b1a04.large,
+    },
+    aiAnalysisStartHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+        marginBottom: v_9b1a04.medium,
+    },
+    aiAnalysisStartIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    aiAnalysisStartTitle: {
+        fontSize: v_ef658a.xlarge,
+        fontFamily: v_843035.bold,
+        color: '#FFFFFF',
+    },
+    aiAnalysisStartDesc: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: '#FFFFFF',
+        lineHeight: 22,
+        marginBottom: v_9b1a04.xlarge,
+        opacity: 0.95,
+    },
+    aiAnalysisStartButton: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        paddingVertical: v_9b1a04.medium,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    aiAnalysisStartButtonText: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.semibold,
+        color: '#4A3B8C',
+    },
+    aiAnalysisCard: {
+        marginTop: v_9b1a04.large,
+        backgroundColor: '#F5F3F8',
+        borderRadius: 16,
+        padding: v_9b1a04.large,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+    },
+    aiAnalysisCardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+        marginBottom: v_9b1a04.medium,
+    },
+    aiAnalysisCardIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        backgroundColor: v_1bfbd0.buttonPrimary,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    aiAnalysisCardTitle: {
+        fontSize: v_ef658a.xlarge,
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+    },
+    aiAnalysisSubCard: {
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 12,
+        padding: v_9b1a04.medium,
+        marginBottom: v_9b1a04.medium,
+    },
+    aiAnalysisSectionHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.small,
+        marginBottom: v_9b1a04.small,
+    },
+    aiAnalysisSubCardIcon: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    aiAnalysisSectionTitle: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+    },
+    aiAnalysisSectionText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        lineHeight: 22,
+    },
+    aiProductsCard: {
+        marginTop: v_9b1a04.medium,
+        backgroundColor: v_1bfbd0.background,
+        borderRadius: 16,
+        padding: v_9b1a04.large,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+    },
+    aiProductsHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: v_9b1a04.medium,
+    },
+    aiProductsTitle: {
+        fontSize: v_ef658a.large,
+        fontFamily: v_843035.bold,
+        color: v_1bfbd0.text,
+    },
+    aiProductsBadge: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.primary,
+    },
+    aiProductList: {
+        gap: v_9b1a04.small,
+    },
+    aiProductItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: v_9b1a04.medium,
+        padding: v_9b1a04.medium,
+        backgroundColor: v_1bfbd0.backgroundSecondary,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+    },
+    aiProductIconWrap: {
+        width: 56,
+        height: 56,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+    },
+    aiProductImage: {
+        width: 40,
+        height: 40,
+    },
+    aiProductContent: {
+        flex: 1,
+    },
+    aiProductBrand: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginBottom: 2,
+        textTransform: 'uppercase',
+    },
+    aiProductTitle: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+        marginBottom: 4,
+    },
+    aiProductDesc: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginBottom: 4,
+    },
+    aiProductPoints: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    aiProductPointsNumber: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+    },
+    aiProductPointsCurrency: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.medium,
+        color: v_1bfbd0.secondaryText,
+    },
+    aiMoreButton: {
+        marginTop: v_9b1a04.medium,
+        paddingVertical: v_9b1a04.medium,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
+        borderRadius: 12,
+    },
+    aiMoreButtonText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
+    },
+    resultDisclaimer: {
+        marginTop: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
+        padding: v_9b1a04.medium,
+        backgroundColor: '#FFF3CD',
+        borderRadius: 8,
+    },
+    resultDisclaimerText: {
+        fontSize: 14,
+        fontFamily: v_843035.regular,
+        color: '#856404',
+        lineHeight: 20,
+        textAlign: 'center',
+    },
+    resultButtonSection: {
+        marginTop: v_9b1a04.xlarge,
+        paddingBottom: v_9b1a04.large,
     },
 
     compactGrid: {
