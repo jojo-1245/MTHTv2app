@@ -30,7 +30,7 @@ import v_5fdcb2 from '../screens/profile/ClauseDetailScreen';
 import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
 import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 import v_52f825 from '../screens/profile/ReferralShareScreen';
-import { v_852e99 } from '../screens/skin';
+import { v_852e99, v_8b28f5 } from '../screens/skin';
 import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
 import v_7f9fad from '../screens/AnalysisScreen';
 import { v_02d653 } from '../screens/chat';
@@ -98,6 +98,11 @@ export type RootStackParamList = {
   MyInfoFaq: undefined;
   ReferralShare: undefined;
   SkinAnalysis: { previewResult?: boolean; initialTab?: 'measure' | 'records' } | undefined;
+  SkinComparison: {
+    recordA: { id: string; date: string; time: string; overallScore: number; skinAge: number; gradeKey: string; items: { key: string; label: string; score: number }[]; cautionKeys: string[] };
+    recordB: { id: string; date: string; time: string; overallScore: number; skinAge: number; gradeKey: string; items: { key: string; label: string; score: number }[]; cautionKeys: string[] };
+    userName?: string;
+  };
   Analysis: undefined;
   HealthAnalysis: { initialTab?: 'measure' | 'records' } | undefined;
   HealthAnalysisResult: {
@@ -108,6 +113,7 @@ export type RootStackParamList = {
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
     recordB: { id: string; date: string; time: string; healthIndex: number; items: any[] };
+    userName?: string;
   };
   HealthConnection: undefined;
   Chat: {
@@ -160,6 +166,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
         <Stack.Screen name="ReferralShare" component={v_52f825} />
         <Stack.Screen name="SkinAnalysis" component={v_852e99} />
+        <Stack.Screen name="SkinComparison" component={v_8b28f5} />
         <Stack.Screen name="Analysis" component={v_7f9fad} />
         <Stack.Screen name="HealthAnalysis" component={v_daf220} />
         <Stack.Screen name="HealthAnalysisResult" component={v_cb47c8} />

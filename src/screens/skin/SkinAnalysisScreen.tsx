@@ -35,6 +35,7 @@ const v_0abe94 = 12;
 const v_48a60c = Math.floor((v_0d9f50 - 24) / 2.5); 
 import { v_a0daa8 } from '../../navigation';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
+import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d } from '../../constants';
@@ -1702,10 +1703,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         showsVerticalScrollIndicator={false}
                         showBottomBackground={false}
                     >
-                        <View style={v_d81136.recordsPlaceholder}>
-                            <Ionicons name="document-text-outline" size={48} color={v_1bfbd0.secondaryText} />
-                            <Text style={v_d81136.recordsPlaceholderText}>{v_8d41d7('skin.records_placeholder')}</Text>
-                        </View>
+                        <SkinRecordsView
+                            onCompare={(v_678155) => {
+                                const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+                                v_c65f5d.navigate('SkinComparison', {
+                                    recordA: v_678155[0],
+                                    recordB: v_678155[1],
+                                    userName: v_0c2f9b?.name,
+                                });
+                            }}
+                        />
                     </SafeScrollView>
                 ) : (
                     <SafeScrollView

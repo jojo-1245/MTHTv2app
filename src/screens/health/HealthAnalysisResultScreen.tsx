@@ -1898,6 +1898,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 v_c65f5d.navigate('HealthComparison', {
                   recordA: v_678155[0],
                   recordB: v_678155[1],
+                  userName: v_f08a5e,
                 });
               }}
             />
