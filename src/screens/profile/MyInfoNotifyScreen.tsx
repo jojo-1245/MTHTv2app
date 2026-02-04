@@ -21,7 +21,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
-import { v_729608, v_570c34 } from '../../components';
+import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 type Props = v_432191<v_8ad91b, 'MyInfoNotify'>;
@@ -404,80 +404,82 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
       : 16;
 
   return (
-    <KeyboardAvoidingView
-      style={v_d81136.flex}
-      behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={v_326be8.OS === 'ios' ? 0 : 0}
-      enabled={v_326be8.OS === 'ios' ? true : v_ac3ab7}
-    >
-      <View style={v_d81136.container}>
-        <StatusBar style="dark" />
-        <Header
-          title={v_8d41d7('my_info_notify.title')}
-          onBackPress={v_c7ac57}
-          showBackButton
-        />
+    <MainLayout activeKey="myinfo">
+      <KeyboardAvoidingView
+        style={v_d81136.flex}
+        behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={v_326be8.OS === 'ios' ? 0 : 0}
+        enabled={v_326be8.OS === 'ios' ? true : v_ac3ab7}
+      >
+        <View style={v_d81136.container}>
+          <StatusBar style="dark" />
+          <Header
+            title={v_8d41d7('my_info_notify.title')}
+            onBackPress={v_c7ac57}
+            showBackButton
+          />
 
-        {v_683210 ? (
-          <View style={v_d81136.loadingContainer}>
-            <ActivityIndicator size="large" color={v_1bfbd0.buttonPrimary} />
-          </View>
-        ) : (
-          <SafeScrollView
-            ref={v_e99f51}
-            style={v_d81136.list}
-            backgroundColor={'#f2f2f7'}
-            contentContainerStyle={v_d81136.listContent}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-            onContentSizeChange={v_11b765}
-            onScrollBeginDrag={v_397f64}
-            refreshControl={<RefreshControl refreshing={v_612e9f} onRefresh={v_d5345f} />}
-            showBottomBackground={false}
-          >
-            {v_b9c00c.length === 0 && !v_683210 ? (
-              <View style={v_d81136.emptyContainer}>
-                <Text style={v_d81136.emptyText}>{v_8d41d7('my_info_notify.empty')}</Text>
-              </View>
-            ) : (
-              v_718f6b()
-            )}
-          </SafeScrollView>
-        )}
+          {v_683210 ? (
+            <View style={v_d81136.loadingContainer}>
+              <ActivityIndicator size="large" color={v_1bfbd0.buttonPrimary} />
+            </View>
+          ) : (
+            <SafeScrollView
+              ref={v_e99f51}
+              style={v_d81136.list}
+              backgroundColor={'#f2f2f7'}
+              contentContainerStyle={v_d81136.listContent}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              onContentSizeChange={v_11b765}
+              onScrollBeginDrag={v_397f64}
+              refreshControl={<RefreshControl refreshing={v_612e9f} onRefresh={v_d5345f} />}
+              showBottomBackground={false}
+            >
+              {v_b9c00c.length === 0 && !v_683210 ? (
+                <View style={v_d81136.emptyContainer}>
+                  <Text style={v_d81136.emptyText}>{v_8d41d7('my_info_notify.empty')}</Text>
+                </View>
+              ) : (
+                v_718f6b()
+              )}
+            </SafeScrollView>
+          )}
 
-        <View
-          style={[
-            v_d81136.inputBar,
-            {
-              paddingBottom: v_5dedb1,
-            },
-          ]}
-        >
-          <View style={v_d81136.inputWrapper}>
-            <TextInput
-              style={v_d81136.input}
-              placeholder={v_8d41d7('my_info_notify.message_placeholder')}
-              placeholderTextColor={v_1bfbd0.placeholder}
-              value={v_180423}
-              onChangeText={v_8f2787}
-              editable={!v_5e23ec}
-            />
-          </View>
-          <TouchableOpacity
-            style={[v_d81136.sendButton, v_5e23ec && v_d81136.sendButtonDisabled]}
-            onPress={v_465869}
-            activeOpacity={0.8}
-            disabled={v_5e23ec}
+          <View
+            style={[
+              v_d81136.inputBar,
+              {
+                paddingBottom: v_5dedb1,
+              },
+            ]}
           >
-            {v_5e23ec ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <Text style={v_d81136.sendButtonText}>{v_8d41d7('my_info_notify.send_button')}</Text>
-            )}
-          </TouchableOpacity>
+            <View style={v_d81136.inputWrapper}>
+              <TextInput
+                style={v_d81136.input}
+                placeholder={v_8d41d7('my_info_notify.message_placeholder')}
+                placeholderTextColor={v_1bfbd0.placeholder}
+                value={v_180423}
+                onChangeText={v_8f2787}
+                editable={!v_5e23ec}
+              />
+            </View>
+            <TouchableOpacity
+              style={[v_d81136.sendButton, v_5e23ec && v_d81136.sendButtonDisabled]}
+              onPress={v_465869}
+              activeOpacity={0.8}
+              disabled={v_5e23ec}
+            >
+              {v_5e23ec ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={v_d81136.sendButtonText}>{v_8d41d7('my_info_notify.send_button')}</Text>
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </MainLayout>
   );
 };
 

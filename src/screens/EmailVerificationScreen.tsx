@@ -64,7 +64,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
 
   return (
     <>
-      <SafeView style={v_d81136.screen}>
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title={v_8d41d7('email_verification.title')}
           showBackButton

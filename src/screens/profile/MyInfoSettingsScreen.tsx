@@ -3,7 +3,7 @@ import { v_472849, v_19b633, v_3094a2, v_aa7413, v_4623af, v_09d0e5 } from 'rcmr
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
-import { v_729608, v_ae275d, v_570c34 } from '../../components';
+import { v_729608, v_ae275d, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -56,70 +56,72 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     ];
 
   return (
-    <View style={v_d81136.container}>
-      <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
-      <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
-        <View style={v_d81136.menuSection}>
-          {v_7f0fd3.map((v_8c0b26) => (
-            <DashboardListItem
-              key={v_8c0b26.id}
-              title={v_8c0b26.title}
-              description={v_8c0b26.description}
-              iconName={v_8c0b26.iconName}
-              onPress={v_8c0b26.route ? () => v_9b57fc(v_8c0b26.route as any) : v_8c0b26.onPress}
-              style={v_d81136.menuItem}
-              meta={v_8c0b26.meta}
-            />
-          ))}
-        </View>
-      </SafeScrollView>
-
-      <Modal
-        visible={v_106b0c}
-        transparent
-        animationType="fade"
-        onRequestClose={() => v_47daa9(false)}
-      >
-        <Pressable
-          style={v_d81136.modalOverlay}
-          onPress={() => v_47daa9(false)}
-        >
-          <View style={v_d81136.modalContent}>
-            <Text style={v_d81136.modalTitle}>{v_8d41d7('common.select_language')}</Text>
-            <View style={v_d81136.languageList}>
-              {v_d4d423.map((v_5254bf) => (
-                <TouchableOpacity
-                  key={v_5254bf.code}
-                  style={[
-                    v_d81136.languageItem,
-                    v_9c213b.language === v_5254bf.code && v_d81136.activeLanguageItem,
-                  ]}
-                  onPress={() => v_ae07ea(v_5254bf.code)}
-                >
-                  <Text
-                    style={[
-                      v_d81136.languageText,
-                      v_9c213b.language === v_5254bf.code && v_d81136.activeLanguageText,
-                    ]}
-                  >
-                    {v_5254bf.label}
-                  </Text>
-                  {v_9c213b.language === v_5254bf.code && (
-                    <View style={v_d81136.activeDot} />
-                  )}
-                </TouchableOpacity>
-              ))}
-            </View>
-            <TouchableOpacity
-              style={v_d81136.cancelButton}
-              onPress={() => v_47daa9(false)}
-            >
-              <Text style={v_d81136.cancelButtonText}>{v_8d41d7('common.cancel')}</Text>
-            </TouchableOpacity>
+    <MainLayout activeKey="myinfo">
+      <View style={v_d81136.container}>
+        <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+          <View style={v_d81136.menuSection}>
+            {v_7f0fd3.map((v_8c0b26) => (
+              <DashboardListItem
+                key={v_8c0b26.id}
+                title={v_8c0b26.title}
+                description={v_8c0b26.description}
+                iconName={v_8c0b26.iconName}
+                onPress={v_8c0b26.route ? () => v_9b57fc(v_8c0b26.route as any) : v_8c0b26.onPress}
+                style={v_d81136.menuItem}
+                meta={v_8c0b26.meta}
+              />
+            ))}
           </View>
-        </Pressable>
-      </Modal>
-    </View>
+        </SafeScrollView>
+
+        <Modal
+          visible={v_106b0c}
+          transparent
+          animationType="fade"
+          onRequestClose={() => v_47daa9(false)}
+        >
+          <Pressable
+            style={v_d81136.modalOverlay}
+            onPress={() => v_47daa9(false)}
+          >
+            <View style={v_d81136.modalContent}>
+              <Text style={v_d81136.modalTitle}>{v_8d41d7('common.select_language')}</Text>
+              <View style={v_d81136.languageList}>
+                {v_d4d423.map((v_5254bf) => (
+                  <TouchableOpacity
+                    key={v_5254bf.code}
+                    style={[
+                      v_d81136.languageItem,
+                      v_9c213b.language === v_5254bf.code && v_d81136.activeLanguageItem,
+                    ]}
+                    onPress={() => v_ae07ea(v_5254bf.code)}
+                  >
+                    <Text
+                      style={[
+                        v_d81136.languageText,
+                        v_9c213b.language === v_5254bf.code && v_d81136.activeLanguageText,
+                      ]}
+                    >
+                      {v_5254bf.label}
+                    </Text>
+                    {v_9c213b.language === v_5254bf.code && (
+                      <View style={v_d81136.activeDot} />
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <TouchableOpacity
+                style={v_d81136.cancelButton}
+                onPress={() => v_47daa9(false)}
+              >
+                <Text style={v_d81136.cancelButtonText}>{v_8d41d7('common.cancel')}</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Modal>
+      </View>
+    </MainLayout>
   );
 };
 

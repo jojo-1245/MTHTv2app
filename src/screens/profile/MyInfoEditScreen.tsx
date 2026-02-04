@@ -17,6 +17,7 @@ import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f, v_624bd2 } from '../.
 import {
   v_8e2768,
   v_729608,
+  v_1c1837,
   v_e2ca42,
   v_cb41de,
   v_89c10a,
@@ -39,26 +40,26 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     { value: 'female', label: v_8d41d7('common.female') },
   ] as const;
 
-const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
-type GenderOption = (typeof v_21bdd5)[number];
-type AgeOption = (typeof v_0c96f7)[number];
+  const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
+  type GenderOption = (typeof v_21bdd5)[number];
+  type AgeOption = (typeof v_0c96f7)[number];
 
-const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
-const v_b6e838 = /[^A-Za-z0-9~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+  const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
+  const v_b6e838 = /[^A-Za-z0-9~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
 
-const v_857dfe = (v_3b402b): boolean => {
-  const v_b947d5 = v_3b402b.length >= 8;
-  const v_9dd411 = /[A-Z]/.test(v_3b402b);
-  const v_1cf57e = /[a-z]/.test(v_3b402b);
-  const v_5af9de = /\d/.test(v_3b402b);
-  const v_a5927f = v_3a9aef.test(v_3b402b);
+  const v_857dfe = (v_3b402b): boolean => {
+    const v_b947d5 = v_3b402b.length >= 8;
+    const v_9dd411 = /[A-Z]/.test(v_3b402b);
+    const v_1cf57e = /[a-z]/.test(v_3b402b);
+    const v_5af9de = /\d/.test(v_3b402b);
+    const v_a5927f = v_3a9aef.test(v_3b402b);
 
-  return v_b947d5 && v_9dd411 && v_1cf57e && v_5af9de && v_a5927f;
-};
+    return v_b947d5 && v_9dd411 && v_1cf57e && v_5af9de && v_a5927f;
+  };
 
-const v_3c3484 = (v_3b402b): boolean => {
-  return v_b6e838.test(v_3b402b);
-};
+  const v_3c3484 = (v_3b402b): boolean => {
+    return v_b6e838.test(v_3b402b);
+  };
 
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const {
@@ -252,8 +253,7 @@ const v_3c3484 = (v_3b402b): boolean => {
   };
 
   return (
-    <>
-
+    <MainLayout activeKey="myinfo">
       <View style={v_d81136.screen}>
         <Header title={v_8d41d7('my_info_edit.title')} showBackButton onBackPress={v_c7ac57} />
         <SafeScrollView
@@ -390,7 +390,7 @@ const v_3c3484 = (v_3b402b): boolean => {
         message={v_153a89.message}
         onConfirm={v_34f542}
       />
-    </>
+    </MainLayout>
   );
 };
 

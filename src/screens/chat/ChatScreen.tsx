@@ -19,7 +19,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_729608, v_556baf, v_5deec6 } from '../../components';
+import { v_729608, v_556baf, v_5deec6, v_1c1837 } from '../../components';
 import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
@@ -349,9 +349,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   };
 
   return (
-    <>
+    <MainLayout activeKey="aihinty">
       <StatusBar style={v_2f29a7 ? "dark" : "dark"} />
-      <SafeView style={v_d81136.screen}>
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title="AI Chat"
           leftAccessory={(
@@ -510,7 +510,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         onMenuItemPress={v_18219f}
         userProfile={{ name: 'TED' }}
       />
-    </>
+    </MainLayout>
   );
 };
 

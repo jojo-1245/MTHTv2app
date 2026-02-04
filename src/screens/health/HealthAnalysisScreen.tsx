@@ -13,11 +13,14 @@ import {
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
+import { v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
+import { v_a0daa8 } from '../../navigation';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d4f1cc } from 'mbgbsytfgyr';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v_ee2389, v_1c1837 } from '../../components';
+import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
@@ -179,10 +182,38 @@ const v_a79016 = (v_3b27d9): string => {
   return v_f2dfb8[v_3b27d9] || `UNKNOWN(${v_3b27d9})`;
 };
 
+const v_48f046 = [
+  { id: '1', name: '김건강', isCurrent: true },
+  { id: '2', name: '할머니', isCurrent: false },
+  { id: '3', name: '엄마', isCurrent: false },
+  { id: '4', name: '아빠', isCurrent: false },
+];
+
 const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
+  const { navigate: v_9b57fc } = v_a0daa8();
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
+  const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
+  const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
+  const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
+
+  const v_5bc46a = v_de06a3((v_2453ad) => {
+    v_d690d0((v_ba2215) => {
+      const v_a448ad = v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad);
+      return v_a448ad;
+    });
+    v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
+  }, []);
+
+  const [v_f4c7be, v_d5a103] = v_5ab095(false);
+
+  const v_20289f = v_de06a3((v_af419b) => {
+
+    const v_ceee18 = String(Date.now());
+    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
+    v_1f1e88(v_ceee18);
+  }, []);
 
   const v_bc50c7 = v_34ffee();
   const v_288ac3 = v_96a72c();
@@ -206,6 +237,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_ebc748, v_7dad08] = v_5ab095<string>('');
   const [v_5b20cf, v_d42b39] = v_5ab095<string>('');
   const [v_8f47c9, v_f04076] = v_5ab095<'smoker' | 'non_smoker' | 'unspecified' | null>(null);
+  const [v_6b257a, v_5a7c46] = v_5ab095<'normal' | 'low' | 'high' | null>(null);
   const [v_78e93d, v_4f2a03] = v_5ab095<string | undefined>();
   const [v_aa2d84, v_e142ed] = v_5ab095<string | undefined>();
   const [v_c762f3, v_207ee4] = v_5ab095<string | undefined>();
@@ -1244,9 +1276,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   if (!v_d1a6bb?.granted && !v_109b56) {
     return (
-      <>
+      <MainLayout activeKey="analysis">
         <StatusBar style="dark" />
-        <SafeView style={v_d81136.screen}>
+        <SafeView style={v_d81136.screen} showBottomBackground={false}>
           <Header
             title={v_8d41d7('health_analysis.intro.screen_title')}
             showBackButton
@@ -1270,286 +1302,345 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
           </SafeScrollView>
         </SafeView>
-      </>
+      </MainLayout>
     );
   }
 
   const v_2704c1 = () => (
     <>
       <StatusBar style="dark" />
-      <SafeView style={v_d81136.screen}>
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
-          title={v_8d41d7('health_analysis.intro.screen_title')}
+          variant="healthAnalysis"
+          title={v_8d41d7('home.health_analysis')}
           showBackButton
           onBackPress={() => v_c65f5d.goBack()}
+          rightAccessory={
+            <TouchableOpacity
+              style={v_d81136.skinIconBtn}
+              onPress={() => v_9b57fc('SkinAnalysis')}
+              hitSlop={8}
+            >
+              <Droplet size={22} color={v_1bfbd0.primary} />
+            </TouchableOpacity>
+          }
         />
-        <SafeScrollView
-          contentContainerStyle={v_d81136.introContent}
-          showsVerticalScrollIndicator={false}
-          showBottomBackground={false}
-          disableBottomPadding={true}
-          autoAdjustKeyboardPadding={true}
-        >
-          <View style={v_d81136.introContainer}>
-
-            <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
-
-            <Text style={v_d81136.introDescription}>
-              {v_8d41d7('health_analysis.intro.intro_description')}
-            </Text>
-
-            <View style={v_d81136.introGuidelines}>
-              <Text style={v_d81136.guidelinesTitle}>{v_8d41d7('health_analysis.intro.guidelines_title')}</Text>
-
-              <View style={v_d81136.guidelineItem}>
-                <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_1')}</Text>
-              </View>
-
-              <View style={v_d81136.guidelineItem}>
-                <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_2')}</Text>
-              </View>
-
-              <View style={v_d81136.guidelineItem}>
-                <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_3')}</Text>
-              </View>
-
-              <View style={v_d81136.guidelineItem}>
-                <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
-              </View>
-            </View>
-
-            {}
-            <View style={v_d81136.userInfoForm}>
-              <Text style={v_d81136.userInfoTitle}>{v_8d41d7('health_analysis.intro.user_info_title')}</Text>
-              <Text style={v_d81136.userInfoDescription}>{v_8d41d7('health_analysis.intro.user_info_description')}</Text>
-
-              {}
-              <View style={v_d81136.formSection}>
-                <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.gender_label')}</Text>
-                <View style={v_d81136.inlineOptions}>
-                  <OptionButton
-                    label={v_8d41d7('common.male')}
-                    selected={v_a5d6d1 === 'male'}
-                    onPress={() => v_e3a875('male')}
-                    flex={1}
-                  />
-                  <OptionButton
-                    label={v_8d41d7('common.female')}
-                    selected={v_a5d6d1 === 'female'}
-                    onPress={() => v_e3a875('female')}
-                    flex={1}
-                  />
-                </View>
-              </View>
-
-              {}
-              <View style={v_d81136.formSection}>
-                <TextField
-                  label={v_8d41d7('health_analysis.intro.age_label')}
-                  placeholder={v_8d41d7('health_analysis.intro.age_placeholder')}
-                  value={v_2f3ab2}
-                  onChangeText={(v_9b6134) => {
-
-                    const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
-                    v_ad3226(v_66cb8a);
-
-                    if (v_66cb8a && (Number(v_66cb8a) <= 0 || Number(v_66cb8a) > 120)) {
-                      v_4f2a03(v_8d41d7('health_analysis.intro.age_error'));
-                    } else {
-                      v_4f2a03(undefined);
-                    }
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={3}
-                  errorText={v_78e93d}
-                />
-              </View>
-
-              {}
-              <View style={v_d81136.formSection}>
-                <TextField
-                  label={v_8d41d7('health_analysis.intro.weight_label')}
-                  placeholder={v_8d41d7('health_analysis.intro.weight_placeholder')}
-                  value={v_ebc748}
-                  onChangeText={(v_9b6134) => {
-
-                    const v_66cb8a = v_9b6134.replace(/[^0-9.]/g, '');
-
-                    const v_468545 = v_66cb8a.split('.');
-                    const v_74d161 = v_468545.length > 2
-                      ? v_468545[0] + '.' + v_468545.slice(1).join('')
-                      : v_66cb8a;
-                    v_7dad08(v_74d161);
-
-                    if (v_74d161 && (Number(v_74d161) < 10 || Number(v_74d161) > 300)) {
-                      v_e142ed(v_8d41d7('health_analysis.intro.weight_error'));
-                    } else {
-                      v_e142ed(undefined);
-                    }
-                  }}
-                  keyboardType="decimal-pad"
-                  maxLength={6}
-                  errorText={v_aa2d84}
-                />
-              </View>
-
-              {}
-              <View style={v_d81136.formSection}>
-                <TextField
-                  label={v_8d41d7('health_analysis.intro.height_label')}
-                  placeholder={v_8d41d7('health_analysis.intro.height_placeholder')}
-                  value={v_5b20cf}
-                  onChangeText={(v_9b6134) => {
-
-                    const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
-                    v_d42b39(v_66cb8a);
-
-                    if (v_66cb8a && (Number(v_66cb8a) < 50 || Number(v_66cb8a) > 250)) {
-                      v_207ee4(v_8d41d7('health_analysis.intro.height_error'));
-                    } else {
-                      v_207ee4(undefined);
-                    }
-                  }}
-                  keyboardType="number-pad"
-                  maxLength={3}
-                  errorText={v_c762f3}
-                />
-              </View>
-
-              {}
-              <View style={v_d81136.formSection}>
-                <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.smoking_status_label')}</Text>
-                <View style={v_d81136.inlineOptions}>
-                  <OptionButton
-                    label={v_8d41d7('health_analysis.intro.smoking_status_smoker')}
-                    selected={v_8f47c9 === 'smoker'}
-                    onPress={() => v_f04076('smoker')}
-                    flex={1}
-                  />
-                  <OptionButton
-                    label={v_8d41d7('health_analysis.intro.smoking_status_non_smoker')}
-                    selected={v_8f47c9 === 'non_smoker'}
-                    onPress={() => v_f04076('non_smoker')}
-                    flex={1}
-                  />
-                  <OptionButton
-                    label={v_8d41d7('health_analysis.intro.smoking_status_unspecified')}
-                    selected={v_8f47c9 === 'unspecified'}
-                    onPress={() => v_f04076('unspecified')}
-                    flex={1}
-                  />
-                </View>
-              </View>
-            </View>
-
-            <View style={v_d81136.introButtonContainer}>
-              <PrimaryButton
-                title={v_8d41d7('health_analysis.intro.start_button')}
-                onPress={async () => {
-
-                  const v_b6d66b = await v_ec0597();
-                  if (v_b6d66b) {
-                    console.log('측정하기 버튼 클릭 - 상태 초기화');
-
-                    if (v_a3ff5a.current) {
-                      console.log('기존 세션 종료 중...');
-                      await v_98caa0();
-                      v_a3ff5a.current = undefined;
-
-                      console.log('SDK 정리 대기 중... (2초)');
-                      await new Promise(v_6f7712 => setTimeout(v_6f7712, 2000));
-                    }
-
-                    v_ce2e95.current = false;
-                    v_3be953.current = false; 
-                    v_49296b(false);
-                    v_b1faa7.current = false;
-                    v_8a8952(undefined);
-                    v_f36dd5(undefined);
-                    v_7fa926(0);
-                    v_b0aeaf(false);
-
-                    v_639227('measurement');
-                  } else {
-                    v_03e392.alert(
-                      v_8d41d7('health_analysis.intro.camera_permission_title'),
-                      v_8d41d7('health_analysis.intro.camera_permission_message'),
-                      [{ text: v_8d41d7('common.confirm') }]
-                    );
-                  }
-                }}
-                fullWidth
-              />
-
-              {}
-              <TouchableOpacity
-                style={v_d81136.devTestLink}
-                onPress={() => {
-
-                  const v_2d2278 = {
-
-                    [v_e3e816.WELLNESS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                    [v_e3e816.WELLNESS_LEVEL]: { confidence: { level: 2 }, value: 4 },
-                    [v_e3e816.HEART_AGE]: { confidence: { level: 1 }, value: 35 },
-
-                    [v_e3e816.PULSE_RATE]: { confidence: { level: 2 }, value: 72 },
-                    [v_e3e816.RESPIRATION_RATE]: { confidence: { level: 2 }, value: 16 },
-                    [v_e3e816.OXYGEN_SATURATION]: { confidence: { level: 2 }, value: 98.5 },
-                    [v_e3e816.BLOOD_PRESSURE]: { confidence: { level: 1 }, value: { systolic: 120, diastolic: 80 } },
-
-                    [v_e3e816.STRESS_LEVEL]: { confidence: { level: 1 }, value: 3 },
-                    [v_e3e816.STRESS_INDEX]: { confidence: { level: 1 }, value: 706 },
-                    [v_e3e816.NORMALIZED_STRESS_INDEX]: { confidence: { level: 1 }, value: 17 },
-
-                    [v_e3e816.RRI]: { confidence: { level: 1 }, value: [] }, 
-                    [v_e3e816.MEAN_RRI]: { confidence: { level: 1 }, value: 850 },
-                    [v_e3e816.SDNN]: { confidence: { level: 1 }, value: 45.2 },
-                    [v_e3e816.RMSSD]: { confidence: { level: 1 }, value: 32.5 },
-                    [v_e3e816.SD1]: { confidence: { level: 1 }, value: 23.1 },
-                    [v_e3e816.SD2]: { confidence: { level: 1 }, value: 58.4 },
-                    [v_e3e816.PRQ]: { confidence: { level: 1 }, value: 1.8 },
-                    [v_e3e816.LFHF]: { confidence: { level: 1 }, value: 2.1 },
-
-                    [v_e3e816.PNS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                    [v_e3e816.PNS_ZONE]: { confidence: { level: 1 }, value: 2 },
-                    [v_e3e816.SNS_INDEX]: { confidence: { level: 1 }, value: 25 },
-                    [v_e3e816.SNS_ZONE]: { confidence: { level: 1 }, value: 1 },
-
-                    [v_e3e816.HEMOGLOBIN]: { confidence: { level: 1 }, value: 14.5 },
-                    [v_e3e816.HEMOGLOBIN_A1C]: { confidence: { level: 1 }, value: 5.2 },
-
-                    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.LOW_HEMOGLOBIN_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: { confidence: undefined, value: 1 },
-                    [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.ASCVD_RISK]: { confidence: undefined, value: 0 },
-                    [v_e3e816.ASCVD_RISK_LEVEL]: { confidence: undefined, value: 2 },
-
-                    [v_e3e816.MEAN_ARTERIAL_PRESSURE]: { confidence: { level: 1 }, value: 93.3 },
-                    [v_e3e816.PULSE_PRESSURE]: { confidence: { level: 1 }, value: 40 },
-                    [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
-                    [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
-                  };
-                  v_c65f5d.navigate('HealthAnalysisResult', {
-                    results: v_2d2278,
-                    timestamp: new Date().toISOString(),
-                  });
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
-                accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
-              >
-                <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
-              </TouchableOpacity>
-
-            </View>
+        <View style={v_d81136.tabBar}>
+          <View style={v_d81136.tabRow}>
+            <TouchableOpacity
+              style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+              onPress={() => v_02dd63('measure')}
+            >
+              <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                {v_8d41d7('health_tabs.measure')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+              onPress={() => v_02dd63('records')}
+            >
+              <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                {v_8d41d7('health_tabs.records')}
+              </Text>
+            </TouchableOpacity>
           </View>
-        </SafeScrollView>
+          <AccountSelector
+            accounts={v_c86f08}
+            selectedAccountId={v_e7b2f2}
+            onSelectAccount={v_1f1e88}
+            onAddSubAccount={() => v_d5a103(true)}
+            onDeleteAccount={v_5bc46a}
+          />
+        </View>
+        <AddUserModal
+          visible={v_f4c7be}
+          onClose={() => v_d5a103(false)}
+          onAdd={v_20289f}
+        />
+        {v_ac1d22 === 'records' ? (
+          <SafeScrollView
+            contentContainerStyle={v_d81136.recordsContent}
+            showsVerticalScrollIndicator={false}
+            showBottomBackground={false}
+          >
+            <HealthRecordsView
+              onCompare={(v_678155) => {
+                v_c65f5d.navigate('HealthComparison', {
+                  recordA: v_678155[0],
+                  recordB: v_678155[1],
+                });
+              }}
+            />
+          </SafeScrollView>
+        ) : (
+          <SafeScrollView
+            contentContainerStyle={v_d81136.introContent}
+            showsVerticalScrollIndicator={false}
+            showBottomBackground={false}
+            disableBottomPadding={true}
+            autoAdjustKeyboardPadding={true}
+          >
+            <View style={v_d81136.introContainer}>
+
+              <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
+
+              <Text style={v_d81136.introDescription}>
+                {v_8d41d7('health_analysis.intro.intro_description')}
+              </Text>
+
+              <View style={v_d81136.introGuidelines}>
+                <Text style={v_d81136.guidelinesTitle}>{v_8d41d7('health_analysis.intro.guidelines_title')}</Text>
+
+                <View style={v_d81136.guidelineItem}>
+                  <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                  <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_1')}</Text>
+                </View>
+
+                <View style={v_d81136.guidelineItem}>
+                  <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                  <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_2')}</Text>
+                </View>
+
+                <View style={v_d81136.guidelineItem}>
+                  <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                  <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_3')}</Text>
+                </View>
+
+                <View style={v_d81136.guidelineItem}>
+                  <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                  <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
+                </View>
+              </View>
+
+              {}
+              <View style={v_d81136.userInfoForm}>
+                <Text style={v_d81136.userInfoTitle}>{v_8d41d7('health_analysis.intro.user_info_title')}</Text>
+                <Text style={v_d81136.userInfoDescription}>{v_8d41d7('health_analysis.intro.user_info_description')}</Text>
+
+                {}
+                <View style={v_d81136.formSection}>
+                  <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.gender_label')}</Text>
+                  <View style={v_d81136.inlineOptions}>
+                    <OptionButton
+                      label={v_8d41d7('common.male')}
+                      selected={v_a5d6d1 === 'male'}
+                      onPress={() => v_e3a875('male')}
+                      flex={1}
+                    />
+                    <OptionButton
+                      label={v_8d41d7('common.female')}
+                      selected={v_a5d6d1 === 'female'}
+                      onPress={() => v_e3a875('female')}
+                      flex={1}
+                    />
+                  </View>
+                </View>
+
+                {}
+                <View style={v_d81136.formSection}>
+                  <TextField
+                    label={v_8d41d7('health_analysis.intro.age_label')}
+                    placeholder={v_8d41d7('health_analysis.intro.age_placeholder')}
+                    value={v_2f3ab2}
+                    onChangeText={(v_9b6134) => {
+
+                      const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
+                      v_ad3226(v_66cb8a);
+
+                      if (v_66cb8a && (Number(v_66cb8a) <= 0 || Number(v_66cb8a) > 120)) {
+                        v_4f2a03(v_8d41d7('health_analysis.intro.age_error'));
+                      } else {
+                        v_4f2a03(undefined);
+                      }
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                    errorText={v_78e93d}
+                  />
+                </View>
+
+                {}
+                <View style={v_d81136.formSection}>
+                  <TextField
+                    label={v_8d41d7('health_analysis.intro.weight_label')}
+                    placeholder={v_8d41d7('health_analysis.intro.weight_placeholder')}
+                    value={v_ebc748}
+                    onChangeText={(v_9b6134) => {
+
+                      const v_66cb8a = v_9b6134.replace(/[^0-9.]/g, '');
+
+                      const v_468545 = v_66cb8a.split('.');
+                      const v_74d161 = v_468545.length > 2
+                        ? v_468545[0] + '.' + v_468545.slice(1).join('')
+                        : v_66cb8a;
+                      v_7dad08(v_74d161);
+
+                      if (v_74d161 && (Number(v_74d161) < 10 || Number(v_74d161) > 300)) {
+                        v_e142ed(v_8d41d7('health_analysis.intro.weight_error'));
+                      } else {
+                        v_e142ed(undefined);
+                      }
+                    }}
+                    keyboardType="decimal-pad"
+                    maxLength={6}
+                    errorText={v_aa2d84}
+                  />
+                </View>
+
+                {}
+                <View style={v_d81136.formSection}>
+                  <TextField
+                    label={v_8d41d7('health_analysis.intro.height_label')}
+                    placeholder={v_8d41d7('health_analysis.intro.height_placeholder')}
+                    value={v_5b20cf}
+                    onChangeText={(v_9b6134) => {
+
+                      const v_66cb8a = v_9b6134.replace(/[^0-9]/g, '');
+                      v_d42b39(v_66cb8a);
+
+                      if (v_66cb8a && (Number(v_66cb8a) < 50 || Number(v_66cb8a) > 250)) {
+                        v_207ee4(v_8d41d7('health_analysis.intro.height_error'));
+                      } else {
+                        v_207ee4(undefined);
+                      }
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                    errorText={v_c762f3}
+                  />
+                </View>
+
+                {}
+                <View style={v_d81136.formSection}>
+                  <Text style={v_d81136.formLabel}>{v_8d41d7('health_analysis.intro.smoking_status_label')}</Text>
+                  <View style={v_d81136.inlineOptions}>
+                    <OptionButton
+                      label={v_8d41d7('health_analysis.intro.smoking_status_smoker')}
+                      selected={v_8f47c9 === 'smoker'}
+                      onPress={() => v_f04076('smoker')}
+                      flex={1}
+                    />
+                    <OptionButton
+                      label={v_8d41d7('health_analysis.intro.smoking_status_non_smoker')}
+                      selected={v_8f47c9 === 'non_smoker'}
+                      onPress={() => v_f04076('non_smoker')}
+                      flex={1}
+                    />
+                    <OptionButton
+                      label={v_8d41d7('health_analysis.intro.smoking_status_unspecified')}
+                      selected={v_8f47c9 === 'unspecified'}
+                      onPress={() => v_f04076('unspecified')}
+                      flex={1}
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <View style={v_d81136.introButtonContainer}>
+                <PrimaryButton
+                  title={v_8d41d7('health_analysis.intro.start_button')}
+                  onPress={async () => {
+
+                    const v_b6d66b = await v_ec0597();
+                    if (v_b6d66b) {
+                      console.log('측정하기 버튼 클릭 - 상태 초기화');
+
+                      if (v_a3ff5a.current) {
+                        console.log('기존 세션 종료 중...');
+                        await v_98caa0();
+                        v_a3ff5a.current = undefined;
+
+                        console.log('SDK 정리 대기 중... (2초)');
+                        await new Promise(v_6f7712 => setTimeout(v_6f7712, 2000));
+                      }
+
+                      v_ce2e95.current = false;
+                      v_3be953.current = false; 
+                      v_49296b(false);
+                      v_b1faa7.current = false;
+                      v_8a8952(undefined);
+                      v_f36dd5(undefined);
+                      v_7fa926(0);
+                      v_b0aeaf(false);
+
+                      v_639227('measurement');
+                    } else {
+                      v_03e392.alert(
+                        v_8d41d7('health_analysis.intro.camera_permission_title'),
+                        v_8d41d7('health_analysis.intro.camera_permission_message'),
+                        [{ text: v_8d41d7('common.confirm') }]
+                      );
+                    }
+                  }}
+                  fullWidth
+                />
+
+                {}
+                <TouchableOpacity
+                  style={v_d81136.devTestLink}
+                  onPress={() => {
+
+                    const v_2d2278 = {
+
+                      [v_e3e816.WELLNESS_INDEX]: { confidence: { level: 1 }, value: 84 },
+                      [v_e3e816.WELLNESS_LEVEL]: { confidence: { level: 2 }, value: 4 },
+                      [v_e3e816.HEART_AGE]: { confidence: { level: 1 }, value: 35 },
+
+                      [v_e3e816.PULSE_RATE]: { confidence: { level: 2 }, value: 72 },
+                      [v_e3e816.RESPIRATION_RATE]: { confidence: { level: 2 }, value: 16 },
+                      [v_e3e816.OXYGEN_SATURATION]: { confidence: { level: 2 }, value: 98.5 },
+                      [v_e3e816.BLOOD_PRESSURE]: { confidence: { level: 1 }, value: { systolic: 120, diastolic: 80 } },
+
+                      [v_e3e816.STRESS_LEVEL]: { confidence: { level: 1 }, value: 3 },
+                      [v_e3e816.STRESS_INDEX]: { confidence: { level: 1 }, value: 706 },
+                      [v_e3e816.NORMALIZED_STRESS_INDEX]: { confidence: { level: 1 }, value: 17 },
+
+                      [v_e3e816.RRI]: { confidence: { level: 1 }, value: [] }, 
+                      [v_e3e816.MEAN_RRI]: { confidence: { level: 1 }, value: 850 },
+                      [v_e3e816.SDNN]: { confidence: { level: 1 }, value: 45.2 },
+                      [v_e3e816.RMSSD]: { confidence: { level: 1 }, value: 32.5 },
+                      [v_e3e816.SD1]: { confidence: { level: 1 }, value: 23.1 },
+                      [v_e3e816.SD2]: { confidence: { level: 1 }, value: 58.4 },
+                      [v_e3e816.PRQ]: { confidence: { level: 1 }, value: 1.8 },
+                      [v_e3e816.LFHF]: { confidence: { level: 1 }, value: 2.1 },
+
+                      [v_e3e816.PNS_INDEX]: { confidence: { level: 1 }, value: 84 },
+                      [v_e3e816.PNS_ZONE]: { confidence: { level: 1 }, value: 2 },
+                      [v_e3e816.SNS_INDEX]: { confidence: { level: 1 }, value: 25 },
+                      [v_e3e816.SNS_ZONE]: { confidence: { level: 1 }, value: 1 },
+
+                      [v_e3e816.HEMOGLOBIN]: { confidence: { level: 1 }, value: 14.5 },
+                      [v_e3e816.HEMOGLOBIN_A1C]: { confidence: { level: 1 }, value: 5.2 },
+
+                      [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.LOW_HEMOGLOBIN_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: { confidence: undefined, value: 1 },
+                      [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.ASCVD_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.ASCVD_RISK_LEVEL]: { confidence: undefined, value: 2 },
+
+                      [v_e3e816.MEAN_ARTERIAL_PRESSURE]: { confidence: { level: 1 }, value: 93.3 },
+                      [v_e3e816.PULSE_PRESSURE]: { confidence: { level: 1 }, value: 40 },
+                      [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
+                      [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
+                    };
+                    v_c65f5d.navigate('HealthAnalysisResult', {
+                      results: v_2d2278,
+                      timestamp: new Date().toISOString(),
+                    });
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
+                  accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
+                >
+                  <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
+                </TouchableOpacity>
+
+              </View>
+            </View>
+          </SafeScrollView>
+        )}
       </SafeView>
     </>
   );
@@ -1557,7 +1648,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_629820 = () => (
     <>
       <StatusBar style="dark" />
-      <SafeView style={v_d81136.screen}>
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title={v_8d41d7('health_analysis.measurement.screen_title')}
           showBackButton
@@ -1647,14 +1738,67 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   );
 
   if (v_91943c === 'intro') {
-    return v_2704c1();
+    return <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>;
   }
 
-  return v_629820();
+  return <MainLayout activeKey="analysis">{v_629820()}</MainLayout>;
 };
 
 const v_d81136 = v_472849.create({
   screen: v_a61db3.screen,
+  skinIconBtn: {
+    padding: 8,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.medium,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  tabRow: {
+    flexDirection: 'row',
+    gap: 24,
+  },
+  tab: {
+    paddingVertical: 8,
+  },
+  tabActive: {
+    borderBottomWidth: 3,
+    borderBottomColor: v_1bfbd0.buttonPrimary,
+  },
+  tabText: {
+    fontSize: 16,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+  },
+  tabTextActive: {
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+  },
+  recordsPlaceholder: {
+    flex: 1,
+    padding: v_9b1a04.large,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  recordsContent: {
+    flexGrow: 1,
+    paddingBottom: v_9b1a04.xlarge,
+  },
+  recordsNavBtn: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    backgroundColor: v_1bfbd0.buttonPrimary,
+    borderRadius: 12,
+  },
+  recordsNavText: {
+    fontSize: 16,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.background,
+  },
   content: {
     ...v_a61db3.content,
     minHeight: '100%',

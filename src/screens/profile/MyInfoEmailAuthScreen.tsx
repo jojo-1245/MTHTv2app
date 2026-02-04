@@ -3,7 +3,7 @@ import { v_472849, v_3094a2, v_19b633 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04, v_34d45f } from '../../constants';
-import { v_729608, v_cb41de, v_570c34, v_e775af } from '../../components';
+import { v_729608, v_cb41de, v_570c34, v_e775af, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -40,39 +40,41 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
   };
 
   return (
-    <View style={v_d81136.container}>
-      <Header title={v_8d41d7('my_info_email_auth.title')} showBackButton onBackPress={v_c7ac57} />
-      <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
-        <View style={v_d81136.form}>
-          <View style={v_d81136.inputContainer}>
-            <TextField
-              label={v_8d41d7('my_info_email_auth.email_label')}
-              placeholder={v_8d41d7('my_info_email_auth.email_placeholder')}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={v_e0c7e8}
-              onChangeText={v_a64837}
+    <MainLayout activeKey="myinfo">
+      <View style={v_d81136.container}>
+        <Header title={v_8d41d7('my_info_email_auth.title')} showBackButton onBackPress={v_c7ac57} />
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+          <View style={v_d81136.form}>
+            <View style={v_d81136.inputContainer}>
+              <TextField
+                label={v_8d41d7('my_info_email_auth.email_label')}
+                placeholder={v_8d41d7('my_info_email_auth.email_placeholder')}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={v_e0c7e8}
+                onChangeText={v_a64837}
+              />
+              {v_41ff46 && (
+                <Text
+                  style={[
+                    v_d81136.validationText,
+                    v_a71df8 ? v_d81136.validationSuccess : v_d81136.validationError,
+                  ]}
+                >
+                  {v_a71df8 ? v_8d41d7('my_info_email_auth.email_valid') : v_8d41d7('my_info_email_auth.email_invalid')}
+                </Text>
+              )}
+            </View>
+            <PrimaryButton
+              title={v_8d41d7('my_info_email_auth.send_code_button')}
+              onPress={v_2de427}
+              disabled={!v_a71df8}
+              style={!v_a71df8 && v_d81136.buttonDisabled}
             />
-            {v_41ff46 && (
-              <Text
-                style={[
-                  v_d81136.validationText,
-                  v_a71df8 ? v_d81136.validationSuccess : v_d81136.validationError,
-                ]}
-              >
-                {v_a71df8 ? v_8d41d7('my_info_email_auth.email_valid') : v_8d41d7('my_info_email_auth.email_invalid')}
-              </Text>
-            )}
           </View>
-          <PrimaryButton
-            title={v_8d41d7('my_info_email_auth.send_code_button')}
-            onPress={v_2de427}
-            disabled={!v_a71df8}
-            style={!v_a71df8 && v_d81136.buttonDisabled}
-          />
-        </View>
-      </SafeScrollView>
-    </View>
+        </SafeScrollView>
+      </View>
+    </MainLayout>
   );
 };
 

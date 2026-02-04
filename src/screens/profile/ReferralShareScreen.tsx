@@ -13,7 +13,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
-import { v_729608, v_570c34, v_556baf } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -78,94 +78,96 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
     };
 
     return (
-        <SafeView style={v_d81136.container}>
-            <Header
-                title={v_8d41d7('referral_share.title')}
-                showBackButton
-                onBackPress={v_c7ac57}
-            />
+        <MainLayout activeKey="myinfo">
+            <SafeView style={v_d81136.container}>
+                <Header
+                    title={v_8d41d7('referral_share.title')}
+                    showBackButton
+                    onBackPress={v_c7ac57}
+                />
 
-            <SafeScrollView
-                style={v_d81136.scrollView}
-                contentContainerStyle={v_d81136.content}
-                showBottomBackground={false}
-                disableBottomPadding={true}
-            >
-                {}
-                <View style={v_d81136.congratsSection}>
-                    <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_1')}</Text>
-                    <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_2')}</Text>
-                </View>
-
-                {}
-                <View style={[v_d81136.gradeBadge, { backgroundColor: v_f9dce7.badgeBg }]}>
-                    <View style={[v_d81136.gradeIconCircle, { backgroundColor: v_f9dce7.badge }]}>
-                        <Text style={v_d81136.gradeIconText}>{v_8faf23}</Text>
+                <SafeScrollView
+                    style={v_d81136.scrollView}
+                    contentContainerStyle={v_d81136.content}
+                    showBottomBackground={false}
+                    disableBottomPadding={true}
+                >
+                    {}
+                    <View style={v_d81136.congratsSection}>
+                        <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_1')}</Text>
+                        <Text style={v_d81136.congratsTitle}>{v_8d41d7('referral_share.congrats_2')}</Text>
                     </View>
-                    <Text style={[v_d81136.gradeText, { color: v_f9dce7.badgeText }]}>{v_b32f09}</Text>
-                </View>
 
-                {}
-                <View style={v_d81136.cardContainer}>
-                    <ImageBackground
-                        source={v_7be0c6 === 'gold' ? v_be7143 : v_581451}
-                        style={v_d81136.card}
-                        imageStyle={v_d81136.cardImage}
-                        resizeMode="cover"
-                    >
-                        {}
-                        <View style={v_d81136.cardHeader}>
-                            <View>
-                                <Text style={v_d81136.cardPinLabel}>No.{v_92b6a6}</Text>
-                                <Text style={v_d81136.cardLicenceText}>Licenced Code</Text>
+                    {}
+                    <View style={[v_d81136.gradeBadge, { backgroundColor: v_f9dce7.badgeBg }]}>
+                        <View style={[v_d81136.gradeIconCircle, { backgroundColor: v_f9dce7.badge }]}>
+                            <Text style={v_d81136.gradeIconText}>{v_8faf23}</Text>
+                        </View>
+                        <Text style={[v_d81136.gradeText, { color: v_f9dce7.badgeText }]}>{v_b32f09}</Text>
+                    </View>
+
+                    {}
+                    <View style={v_d81136.cardContainer}>
+                        <ImageBackground
+                            source={v_7be0c6 === 'gold' ? v_be7143 : v_581451}
+                            style={v_d81136.card}
+                            imageStyle={v_d81136.cardImage}
+                            resizeMode="cover"
+                        >
+                            {}
+                            <View style={v_d81136.cardHeader}>
+                                <View>
+                                    <Text style={v_d81136.cardPinLabel}>No.{v_92b6a6}</Text>
+                                    <Text style={v_d81136.cardLicenceText}>Licenced Code</Text>
+                                </View>
+                                <Image
+                                    source={v_96cb41}
+                                    style={v_d81136.cardSymbol}
+                                    resizeMode="contain"
+                                />
                             </View>
-                            <Image
-                                source={v_96cb41}
-                                style={v_d81136.cardSymbol}
-                                resizeMode="contain"
-                            />
-                        </View>
 
-                        {}
-                        <View style={v_d81136.cardFooter}>
-                            <Text style={v_d81136.cardSinceText}>
-                                Since. {v_3ed1e9}
-                            </Text>
-                        </View>
-                    </ImageBackground>
-                </View>
-
-                {}
-                <View style={v_d81136.spacer} />
-            </SafeScrollView>
-
-            {}
-            <View style={v_d81136.bottomSection}>
-                {}
-                <View style={v_d81136.pinDisplayContainer}>
-                    <View style={v_d81136.pinDisplay}>
-                        <Text style={v_d81136.pinLabel}>{v_8d41d7('referral_share.pin_label')}</Text>
-                        <Text style={v_d81136.pinValue}>{v_92b6a6}</Text>
+                            {}
+                            <View style={v_d81136.cardFooter}>
+                                <Text style={v_d81136.cardSinceText}>
+                                    Since. {v_3ed1e9}
+                                </Text>
+                            </View>
+                        </ImageBackground>
                     </View>
+
+                    {}
+                    <View style={v_d81136.spacer} />
+                </SafeScrollView>
+
+                {}
+                <View style={v_d81136.bottomSection}>
+                    {}
+                    <View style={v_d81136.pinDisplayContainer}>
+                        <View style={v_d81136.pinDisplay}>
+                            <Text style={v_d81136.pinLabel}>{v_8d41d7('referral_share.pin_label')}</Text>
+                            <Text style={v_d81136.pinValue}>{v_92b6a6}</Text>
+                        </View>
+                        <TouchableOpacity
+                            style={v_d81136.copyButton}
+                            onPress={v_682edd}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={[v_d81136.copyButtonText, { color: v_f9dce7.primary }]}>{v_8d41d7('referral_share.copy_button')}</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {}
                     <TouchableOpacity
-                        style={v_d81136.copyButton}
-                        onPress={v_682edd}
-                        activeOpacity={0.7}
+                        style={v_d81136.kakaoButton}
+                        onPress={v_316053}
+                        activeOpacity={0.8}
                     >
-                        <Text style={[v_d81136.copyButtonText, { color: v_f9dce7.primary }]}>{v_8d41d7('referral_share.copy_button')}</Text>
+                        <Text style={v_d81136.kakaoButtonText}>{v_8d41d7('referral_share.kakao_share_button')}</Text>
                     </TouchableOpacity>
                 </View>
-
-                {}
-                <TouchableOpacity
-                    style={v_d81136.kakaoButton}
-                    onPress={v_316053}
-                    activeOpacity={0.8}
-                >
-                    <Text style={v_d81136.kakaoButtonText}>{v_8d41d7('referral_share.kakao_share_button')}</Text>
-                </TouchableOpacity>
-            </View>
-        </SafeView>
+            </SafeView>
+        </MainLayout>
     );
 };
 

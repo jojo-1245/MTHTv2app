@@ -15,7 +15,7 @@ import {
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_556baf, v_729608, v_cb41de } from '../../components';
+import { v_556baf, v_729608, v_cb41de, v_1c1837 } from '../../components';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_a0daa8 } from '../../navigation';
 
@@ -373,33 +373,35 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
     );
 
     return (
-        <SafeView style={v_d81136.screen}>
-            <StatusBar style="dark" />
-            <Header
-                title={v_8d41d7('health_connection.title')}
-                showBackButton
-                onBackPress={v_6ca26b}
-                rightAccessory={
-                    v_0af1e7 !== 'form' && v_fb2a6e.length > 0 ? (
-                        <TouchableOpacity
-                            style={v_d81136.editButton}
-                            onPress={v_2b88e3}
-                        >
-                            <Text style={[
-                                v_d81136.editButtonText,
-                                v_1b9174 && v_d81136.editButtonTextActive
-                            ]}>
-                                {v_1b9174 ? v_8d41d7('health_connection.done') : v_8d41d7('health_connection.edit')}
-                            </Text>
-                        </TouchableOpacity>
-                    ) : undefined
-                }
-            />
+        <MainLayout activeKey="analysis">
+            <SafeView style={v_d81136.screen} showBottomBackground={false}>
+                <StatusBar style="dark" />
+                <Header
+                    title={v_8d41d7('health_connection.title')}
+                    showBackButton
+                    onBackPress={v_6ca26b}
+                    rightAccessory={
+                        v_0af1e7 !== 'form' && v_fb2a6e.length > 0 ? (
+                            <TouchableOpacity
+                                style={v_d81136.editButton}
+                                onPress={v_2b88e3}
+                            >
+                                <Text style={[
+                                    v_d81136.editButtonText,
+                                    v_1b9174 && v_d81136.editButtonTextActive
+                                ]}>
+                                    {v_1b9174 ? v_8d41d7('health_connection.done') : v_8d41d7('health_connection.edit')}
+                                </Text>
+                            </TouchableOpacity>
+                        ) : undefined
+                    }
+                />
 
-            {v_0af1e7 === 'search' && v_c43d50()}
-            {v_0af1e7 === 'form' && v_28d9b7()}
-            {v_0af1e7 === 'result' && v_e33fdf()}
-        </SafeView>
+                {v_0af1e7 === 'search' && v_c43d50()}
+                {v_0af1e7 === 'form' && v_28d9b7()}
+                {v_0af1e7 === 'result' && v_e33fdf()}
+            </SafeView>
+        </MainLayout>
     );
 };
 

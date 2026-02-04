@@ -3,7 +3,7 @@ import { v_472849, v_19b633, v_3094a2 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
-import { v_729608, v_570c34 } from '../../components';
+import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -17,12 +17,13 @@ const ClauseDetailScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const v_9f1622 = v_4898e2 === 'terms' ? v_8d41d7('my_info_clauses.terms_title') : v_8d41d7('my_info_clauses.privacy_title');
 
   return (
-    <View style={v_d81136.container}>
-      <Header title={v_9f1622} showBackButton onBackPress={v_c7ac57} />
-      <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
-        <Text style={v_d81136.text}>
-          {v_4898e2 === 'terms'
-            ? `
+    <MainLayout activeKey="myinfo">
+      <View style={v_d81136.container}>
+        <Header title={v_9f1622} showBackButton onBackPress={v_c7ac57} />
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+          <Text style={v_d81136.text}>
+            {v_4898e2 === 'terms'
+              ? `
 XRUN Location-Based Service Terms and Conditions
 
 Article 1 (Purpose)
@@ -83,7 +84,7 @@ Address: First Floor, First St. Vincent Bank Ltd Building, James Street, Kingsto
 email: oth-test@example.invalid
 *Addendum Article 1 (Effective Date) These Terms and Conditions are effective as of July 11, 2022.
 `
-            : `
+              : `
 PRIVACY POLICY
 
 1. What is Privacy Policy? XRUN LLC (hereinafter referred to as the "Company") collects, uses, and provides personal information based on the consent of users, and actively guarantees the rights of users (the right to self-determination of personal information). The Company complies with relevant laws and regulations on personal information protection and the guidelines of the Republic of Korea that must be complied with by information and communication service providers. "Personal Information Handling Policy" means the guidelines that must be followed by the company so that users can use the service with confidence by protecting their valuable personal information. This privacy policy applies to XRUN account-based services (hereinafter referred to as 'services') provided by the company.
@@ -106,9 +107,10 @@ You may also contact national privacy agencies (KISA, Supreme Prosecutors' Offic
 
 Announcement Date: July 11, 2022 / Effective Date: July 11, 2022
               `}
-        </Text>
-      </SafeScrollView>
-    </View>
+          </Text>
+        </SafeScrollView>
+      </View>
+    </MainLayout>
   );
 };
 
