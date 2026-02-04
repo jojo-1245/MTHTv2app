@@ -217,10 +217,7 @@ const ListHomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeView style={styles.screen}>
       <Header title="목록" />
-      <SafeScrollView
-        contentContainerStyle={styles.content}
-        showBottomBackground={false}  // BottomNav가 있으면 false
-      >
+      <SafeScrollView contentContainerStyle={styles.content}>
         {/* 콘텐츠 */}
       </SafeScrollView>
       <BottomNavigationBar items={navItems} activeKey="home" />
@@ -233,7 +230,7 @@ const ListHomeScreen: React.FC<Props> = ({ navigation }) => {
 1. **SafeScrollView 우선 사용**: 대부분의 화면은 `SafeScrollView`를 사용
 2. **SafeView 사용 조건**: `BottomNavigationBar`가 있는 화면에서 최외곽 컨테이너로 사용
 3. **autoAdjustKeyboardPadding**: 입력 폼이 있는 화면에서 `true`로 설정
-4. **showBottomBackground**: `BottomNavigationBar`가 있으면 `false`로 설정
+4. **showBottomBackground (중요)**: SafeView/SafeScrollView가 화면 최상위(첫 번째) 요소일 때 `showBottomBackground={false}` 사용 금지. 이 속성이 false이면 디바이스 하단 메뉴바와 콘텐츠가 겹침. 중첩된 경우에만 false 사용 가능.
 5. **maxWidth: 780**: 내부 컨테이너에 항상 적용하여 태블릿 대응
 6. **Header 컴포넌트**: 모든 화면에서 상단 헤더 사용
 

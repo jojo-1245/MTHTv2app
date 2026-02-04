@@ -3,7 +3,7 @@ import { v_472849, v_3094a2 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
-import { v_729608, v_ae275d, v_570c34 } from '../../components';
+import { v_729608, v_ae275d, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -31,23 +31,25 @@ const MyInfoClausesScreen: v_a3453e.FC<Props> = () => {
   ];
 
   return (
-    <View style={v_d81136.container}>
-      <Header title={v_8d41d7('my_info_clauses.title')} showBackButton onBackPress={v_c7ac57} />
-      <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
-        <View style={v_d81136.menuSection}>
-          {v_f82747.map((v_8c0b26) => (
-            <DashboardListItem
-              key={v_8c0b26.id}
-              title={v_8c0b26.title}
-              description={v_8c0b26.description}
-              iconName={v_8c0b26.iconName}
-              onPress={() => v_9b57fc('ClauseDetail', { clauseType: v_8c0b26.clauseType })}
-              style={v_d81136.menuItem}
-            />
-          ))}
-        </View>
-      </SafeScrollView>
-    </View>
+    <MainLayout activeKey="myinfo">
+      <View style={v_d81136.container}>
+        <Header title={v_8d41d7('my_info_clauses.title')} showBackButton onBackPress={v_c7ac57} />
+        <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content}>
+          <View style={v_d81136.menuSection}>
+            {v_f82747.map((v_8c0b26) => (
+              <DashboardListItem
+                key={v_8c0b26.id}
+                title={v_8c0b26.title}
+                description={v_8c0b26.description}
+                iconName={v_8c0b26.iconName}
+                onPress={() => v_9b57fc('ClauseDetail', { clauseType: v_8c0b26.clauseType })}
+                style={v_d81136.menuItem}
+              />
+            ))}
+          </View>
+        </SafeScrollView>
+      </View>
+    </MainLayout>
   );
 };
 

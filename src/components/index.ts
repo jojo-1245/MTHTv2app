@@ -11,8 +11,12 @@ export { default as SocialButton } from './SocialButton';
 export type { SocialButtonProps, SocialButtonVariant } from './SocialButton';
 
 export { default as Header } from './Header';
-export type { HeaderProps } from './Header';
+export type { HeaderProps, HeaderVariant } from './Header';
 
+export { AccountSelector } from './AccountSelector';
+export type { AccountSelectorProps, AccountItem } from './AccountSelector';
+export { AddUserModal } from './AddUserModal';
+export type { AddUserModalProps } from './AddUserModal';
 export { default as FormCheckbox } from './FormCheckbox';
 
 export { default as OtpInput } from './OtpInput';
@@ -34,6 +38,9 @@ export type {
   BottomNavigationBarProps,
   BottomNavigationItem,
 } from './BottomNavigationBar';
+
+export { default as MainLayout } from './MainLayout';
+export type { MainLayoutProps } from './MainLayout';
 
 export { default as DashboardListItem } from './DashboardListItem';
 export type {

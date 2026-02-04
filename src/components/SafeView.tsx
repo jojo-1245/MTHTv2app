@@ -72,10 +72,12 @@ const v_d81136 = v_472849.create({
     wrapper: {
         flex: 1,
         position: 'relative',
+        overflow: 'visible',
     },
     container: {
         flex: 1,
         position: 'relative',
+        overflow: 'visible',
     },
     bottomBackground: {
         position: 'absolute',

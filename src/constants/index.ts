@@ -12,7 +12,7 @@ export const v_1bfbd0 = {
   text: '#10192d',
   error: '#ff0000',
   success: '#00ff00',
-  buttonPrimary: '#3A3C79',
+  buttonPrimary: '#4F39F6',
   buttonSecondary: '#5e62ac',
   buttonTertiary: '#fafafa',
   headerText: '#10192d',
@@ -29,7 +29,7 @@ export const v_1bfbd0 = {
 
 export const v_963c2c= {
   background: '#ffffff',
-  bottomBackground: '#fafafa',
+  bottomBackground: '#000000',
 }
 
 import { v_326be8 } from 'rcmrninabrnb';

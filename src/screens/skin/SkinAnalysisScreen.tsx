@@ -29,7 +29,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_37c282 = v_0d9f50 - 80; 
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590 } from '../../constants';
 import {
@@ -1517,13 +1517,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     };
 
     if (v_91943c === 'camera') {
-        return v_c8ac01();
+        return <MainLayout activeKey="analysis">{v_c8ac01()}</MainLayout>;
     }
 
     return (
-        <>
+        <MainLayout activeKey="analysis">
             <StatusBar style="dark" />
-            <SafeView style={v_d81136.screen}>
+            <SafeView style={v_d81136.screen} showBottomBackground={false}>
                 <Header
                     title={v_8d41d7('skin.title')}
                     showBackButton
@@ -1628,7 +1628,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     )}
                 />
             )}
-        </>
+        </MainLayout>
     );
 };
 
