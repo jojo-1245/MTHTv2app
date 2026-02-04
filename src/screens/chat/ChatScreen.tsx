@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_e662ae, v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_e662ae, v_c4deb2, v_df9f57, v_de06a3 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -16,26 +16,24 @@ import {
   v_0e1f26,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_dec439, v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
+import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
+import { v_c940dd, v_b6b6d9 } from 'wjvlskvsbzsrojdbjsl';
+import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_729608, v_556baf, v_5deec6, v_1c1837 } from '../../components';
+import { v_729608, v_556baf, v_5deec6, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
 import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 
-const v_2e47ea = require('../../../assets/images/robot_face.png');
+const v_90fa17 = require('../../../assets/images/robot_face.png');
 
-interface HealthInfo {
-  id: string;
-  name: string;
-}
-
-const v_f7d55f = (v_8d41d7): HealthInfo[] => [
-  { id: '1', name: v_8d41d7('chat.family_members.grandma') },
-  { id: '2', name: v_8d41d7('chat.family_members.grandpa') },
-  { id: '3', name: v_8d41d7('chat.family_members.father') },
+const v_48f046 = [
+  { id: '1', name: '김건강', isCurrent: true },
+  { id: '2', name: '할머니', isCurrent: false },
+  { id: '3', name: '엄마', isCurrent: false },
+  { id: '4', name: '아빠', isCurrent: false },
 ];
 
 type Props = v_432191<v_8ad91b, 'Chat'>;
@@ -52,11 +50,43 @@ interface Product {
   discount?: string;
 }
 
+const v_34de63 = [
+  'hypertension', 'diabetes', 'heart_disease', 'cardiovascular', 'respiratory', 'thyroid',
+  'gastrointestinal', 'liver', 'kidney', 'arthritis', 'osteoporosis', 'cancer',
+] as const;
+
+const v_14e5f6 = [
+  'bp_med', 'diabetes_med', 'lipid_med', 'heart_med', 'thyroid_med', 'stomach_med',
+  'painkiller', 'anti_inflammatory', 'antibiotics', 'vitamins', 'supplements', 'sleeping_pills',
+] as const;
+
+const v_be27c3 = [
+  'non_smoker', 'past_smoker', 'current_light', 'current_heavy',
+] as const;
+
+const v_42f050 = [
+  'none', 'occasional', 'moderate', 'frequent', 'daily',
+] as const;
+
+interface ChatMessageActionButton {
+  label: string;
+  action: 'load_health_data' | 'start_questionnaire';
+}
+interface ChatMessageQuestionnaire {
+  questionId: string;
+  completed?: boolean;
+  completedResult?: string;
+}
 interface ChatMessage {
   id: string;
   type: 'user' | 'ai';
   text: string;
+  createdAt: number;
   products?: Product[];
+  actionButton?: ChatMessageActionButton;
+  isLoading?: boolean;
+  questionnaire?: ChatMessageQuestionnaire;
+  healthReport?: boolean;
 }
 
 const v_44ff40 = (v_8d41d7): Product[] => [
@@ -102,36 +132,32 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const v_033e14 = v_e0068c();
   const v_e99f51 = v_e662ae<v_122070>(null);
 
-  const v_8387df = [
-    {
-      id: '1',
-      type: 'user',
-      text: v_8d41d7('chat.sample_messages.user_message'),
-    },
-    {
-      id: '2',
-      type: 'ai',
-      text: v_8d41d7('chat.sample_messages.ai_message'),
-      products: v_44ff40(v_8d41d7),
-    },
-  ];
-
-  const [v_fa56e0, v_41d55d] = v_5ab095<ChatMessage[]>(v_8387df);
+  const [v_fa56e0, v_41d55d] = v_5ab095<ChatMessage[]>([]);
   const [v_a469c7, v_f32824] = v_5ab095('');
   const [v_3ba9c6, v_655a4e] = v_5ab095(false);
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
   const [v_6e882f, v_6e04f8] = v_5ab095<{ [key: string]: number }>({});
 
-  const [v_e870d1, v_aa40cb] = v_5ab095(false);
-  const [v_437b17, v_c88681] = v_5ab095<HealthInfo | null>(null);
+  const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
+  const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
+  const [v_f4c7be, v_d5a103] = v_5ab095(false);
   const [v_7e4acc, v_de86c2] = v_5ab095(0);
+  const [v_8b20f6, v_d60b8e] = v_5ab095<{
+    [messageId: string]: { selectedIds: string[]; otherValues: string[]; showOtherInput: boolean; otherInputText: string };
+  }>({});
+
+  const v_20289f = v_de06a3((v_af419b) => {
+    const v_ceee18 = String(Date.now());
+    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
+    v_1f1e88(v_ceee18);
+  }, []);
 
   v_c4deb2(() => {
     if (v_c7daf6.params?.initialSearchText) {
       v_f32824(v_c7daf6.params.initialSearchText);
     }
     if (v_c7daf6.params?.initialHealthInfo) {
-      v_c88681(v_c7daf6.params.initialHealthInfo);
+      v_1f1e88(v_c7daf6.params.initialHealthInfo.id);
     }
   }, [v_c7daf6.params]);
 
@@ -165,6 +191,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       case 'chat':
 
         break;
+      case 'newChat':
+        v_bb559e();
+        break;
       case 'skin':
         v_9b57fc('SkinAnalysis');
         break;
@@ -195,16 +224,292 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const v_bb559e = () => {
     v_41d55d([]);
     v_f32824('');
-    v_c88681(null);
+    v_1f1e88('1');
+  };
+
+  const v_84bbe1 = v_de06a3(() => {
+    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+    const v_f08a5e = v_0c2f9b.name;
+    const v_5c2f9f = Date.now();
+    const v_c0e79a = {
+      id: v_5c2f9f.toString(),
+      type: 'ai',
+      text: v_8d41d7('chat.health_checkup_response', { name: v_f08a5e }),
+      createdAt: v_5c2f9f,
+      actionButton: {
+        label: v_8d41d7('chat.load_recent_data', { name: v_f08a5e }),
+        action: 'load_health_data',
+      },
+    };
+    v_41d55d((v_ba2215) => [...v_ba2215, v_c0e79a]);
+    setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+  }, [v_c86f08, v_e7b2f2, v_8d41d7]);
+
+  const v_f26426 = v_de06a3(() => {
+    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+    const v_f08a5e = v_0c2f9b.name;
+    const v_2b273c = `loading-${Date.now()}`;
+    const v_fa3864 = {
+      id: v_2b273c,
+      type: 'ai',
+      text: v_8d41d7('chat.loading_health_data', { name: v_f08a5e }),
+      createdAt: Date.now(),
+      isLoading: true,
+    };
+    v_41d55d((v_ba2215) => [...v_ba2215, v_fa3864]);
+    setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+
+    setTimeout(() => {
+      const v_80d73f = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+      const v_e5db92 = {
+        id: (Date.now() + 1).toString(),
+        type: 'ai',
+        text: v_8d41d7('chat.health_data_loaded', {
+          name: v_f08a5e,
+          measureDate: v_80d73f,
+          healthIndex: '9',
+        }),
+        createdAt: Date.now(),
+        actionButton: {
+          label: v_8d41d7('chat.start_questionnaire'),
+          action: 'start_questionnaire',
+        },
+      };
+      v_41d55d((v_ba2215) => [...v_ba2215.filter((v_35f85c) => !v_35f85c.isLoading), v_e5db92]);
+      setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+    }, 2500);
+  }, [v_c86f08, v_e7b2f2, v_8d41d7]);
+
+  const v_3736a1 = v_de06a3(() => {
+    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+    const v_f08a5e = v_0c2f9b.name;
+    const v_5c2f9f = Date.now();
+    const v_7da572 = {
+      id: v_5c2f9f.toString(),
+      type: 'ai',
+      text: v_8d41d7('chat.questionnaire_intro', { name: v_f08a5e }),
+      createdAt: v_5c2f9f,
+      questionnaire: { questionId: 'q1' },
+    };
+    v_41d55d((v_ba2215) => [...v_ba2215, v_7da572]);
+    v_d60b8e((v_ba2215) => ({
+      ...v_ba2215,
+      [v_5c2f9f.toString()]: { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' },
+    }));
+    setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+  }, [v_c86f08, v_e7b2f2, v_8d41d7]);
+
+  const v_c52828 = v_de06a3((v_7f4466, v_e0cd25, v_9187e5) => {
+    v_d60b8e((v_ba2215) => {
+      const v_b6e533 = v_ba2215[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+      const v_a63968 = v_9187e5
+        ? (v_b6e533.selectedIds.includes(v_e0cd25) ? [] : [v_e0cd25])
+        : (v_b6e533.selectedIds.includes(v_e0cd25)
+          ? v_b6e533.selectedIds.filter((v_389afb) => v_389afb !== v_e0cd25)
+          : [...v_b6e533.selectedIds, v_e0cd25]);
+      return { ...v_ba2215, [v_7f4466]: { ...v_b6e533, selectedIds: v_a63968 } };
+    });
+  }, []);
+
+  const v_99af19 = v_de06a3((v_7f4466) => {
+    v_d60b8e((v_ba2215) => {
+      const v_b6e533 = v_ba2215[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+      return { ...v_ba2215, [v_7f4466]: { ...v_b6e533, showOtherInput: !v_b6e533.showOtherInput } };
+    });
+  }, []);
+
+  const v_1f7836 = v_de06a3((v_7f4466, v_9b6134) => {
+    v_d60b8e((v_ba2215) => {
+      const v_b6e533 = v_ba2215[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+      return { ...v_ba2215, [v_7f4466]: { ...v_b6e533, otherInputText: v_9b6134 } };
+    });
+  }, []);
+
+  const v_bd7fbe = v_de06a3((v_7f4466) => {
+    v_d60b8e((v_ba2215) => {
+      const v_b6e533 = v_ba2215[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+      const v_9b6134 = v_b6e533.otherInputText.trim();
+      if (!v_9b6134) return v_ba2215;
+      return {
+        ...v_ba2215,
+        [v_7f4466]: {
+          ...v_b6e533,
+          otherValues: [...v_b6e533.otherValues, v_9b6134],
+          otherInputText: '',
+        },
+      };
+    });
+  }, []);
+
+  const v_bb30b0 = v_de06a3((v_7f4466, v_9b6134) => {
+    v_d60b8e((v_ba2215) => ({
+      ...v_ba2215,
+      [v_7f4466]: {
+        ...(v_ba2215[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' }),
+        otherInputText: v_9b6134,
+      },
+    }));
+  }, []);
+
+  const v_e3b06a = v_de06a3(
+    (v_7f4466) => {
+      const v_badeaf = v_fa56e0.find((v_35f85c) => v_35f85c.id === v_7f4466);
+      const v_d253eb = v_badeaf?.questionnaire?.questionId;
+      const v_b6e533 = v_8b20f6[v_7f4466] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+
+      const v_f37094 = v_d253eb === 'q1';
+      const v_bab22e = v_d253eb === 'q2';
+      const v_e732a4 = v_d253eb === 'q3';
+      const v_7107f8 = v_d253eb === 'q4';
+      const v_a2eb48 = v_d253eb === 'q5';
+
+      let v_095c2f;
+      if (v_e732a4) {
+        v_095c2f = (v_b6e533.otherInputText || '').trim() || v_8d41d7('chat.questionnaire_no_allergy');
+      } else if (v_7107f8 || v_a2eb48) {
+        const v_ef6c25 = v_7107f8 ? 'chat.questionnaire_smoking_options' : 'chat.questionnaire_drinking_options';
+        v_095c2f = v_b6e533.selectedIds.length > 0
+          ? v_8d41d7(`${v_ef6c25}.${v_b6e533.selectedIds[0]}`)
+          : v_8d41d7('chat.questionnaire_no_allergy');
+      } else {
+        const v_ef6c25 = v_f37094 ? 'chat.questionnaire_options' : 'chat.questionnaire_medication_options';
+        const v_c427ea = v_b6e533.selectedIds.map((v_389afb) => v_8d41d7(`${v_ef6c25}.${v_389afb}`));
+        const v_b6119c = v_b6e533.otherValues.length > 0 ? v_b6e533.otherValues.join(', ') : '';
+        v_095c2f = [...v_c427ea, v_b6119c].filter(Boolean).join(', ') || v_8d41d7('chat.questionnaire_no_allergy');
+      }
+
+      const v_5c2f9f = Date.now();
+      const v_e629b5 = {
+        id: v_5c2f9f.toString(),
+        type: 'user',
+        text: v_095c2f,
+        createdAt: v_5c2f9f,
+      };
+
+      const v_87cb2b = [
+        ...v_fa56e0.map((v_35f85c) =>
+          v_35f85c.id === v_7f4466 && v_35f85c.questionnaire
+            ? { ...v_35f85c, questionnaire: { ...v_35f85c.questionnaire, completed: true, completedResult: v_095c2f } }
+            : v_35f85c
+        ),
+        v_e629b5,
+      ];
+
+      if (v_f37094) {
+        const v_f300f8 = {
+          id: (v_5c2f9f + 1).toString(),
+          type: 'ai',
+          text: '',
+          createdAt: v_5c2f9f + 1,
+          questionnaire: { questionId: 'q2' },
+        };
+        v_87cb2b.push(v_f300f8);
+        v_d60b8e((v_ba2215) => ({
+          ...v_ba2215,
+          [(v_5c2f9f + 1).toString()]: { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' },
+        }));
+      } else if (v_bab22e) {
+        const v_e262aa = {
+          id: (v_5c2f9f + 1).toString(),
+          type: 'ai',
+          text: '',
+          createdAt: v_5c2f9f + 1,
+          questionnaire: { questionId: 'q3' },
+        };
+        v_87cb2b.push(v_e262aa);
+        v_d60b8e((v_ba2215) => ({
+          ...v_ba2215,
+          [(v_5c2f9f + 1).toString()]: { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' },
+        }));
+      } else if (v_e732a4) {
+        const v_d6ea2c = {
+          id: (v_5c2f9f + 1).toString(),
+          type: 'ai',
+          text: '',
+          createdAt: v_5c2f9f + 1,
+          questionnaire: { questionId: 'q4' },
+        };
+        v_87cb2b.push(v_d6ea2c);
+        v_d60b8e((v_ba2215) => ({
+          ...v_ba2215,
+          [(v_5c2f9f + 1).toString()]: { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' },
+        }));
+      } else if (v_7107f8) {
+        const v_62a28c = {
+          id: (v_5c2f9f + 1).toString(),
+          type: 'ai',
+          text: '',
+          createdAt: v_5c2f9f + 1,
+          questionnaire: { questionId: 'q5' },
+        };
+        v_87cb2b.push(v_62a28c);
+        v_d60b8e((v_ba2215) => ({
+          ...v_ba2215,
+          [(v_5c2f9f + 1).toString()]: { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' },
+        }));
+      } else if (v_a2eb48) {
+        const v_2b273c = `loading-${v_5c2f9f + 1}`;
+        const v_fa3864 = {
+          id: v_2b273c,
+          type: 'ai',
+          text: v_8d41d7('chat.loading_questionnaire_analysis'),
+          createdAt: v_5c2f9f + 1,
+          isLoading: true,
+        };
+        v_87cb2b.push(v_fa3864);
+      }
+
+      v_41d55d(v_87cb2b);
+      v_d60b8e((v_ba2215) => {
+        const v_a448ad = { ...v_ba2215 };
+        delete v_a448ad[v_7f4466];
+        return v_a448ad;
+      });
+      setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+
+      if (v_a2eb48) {
+        setTimeout(() => {
+          const v_2dceb6 = Date.now();
+          const v_914053 = {
+            id: `report-intro-${v_2dceb6}`,
+            type: 'ai',
+            text: v_8d41d7('chat.health_report_intro'),
+            createdAt: v_2dceb6,
+          };
+          const v_7dc9dc = {
+            id: `report-${v_2dceb6 + 1}`,
+            type: 'ai',
+            text: '',
+            createdAt: v_2dceb6 + 1,
+            healthReport: true,
+          };
+          v_41d55d((v_ba2215) => [...v_ba2215.filter((v_35f85c) => !v_35f85c.isLoading), v_914053, v_7dc9dc]);
+          setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 100);
+        }, 2500);
+      }
+    },
+    [v_8b20f6, v_fa56e0, v_c86f08, v_e7b2f2, v_8d41d7]
+  );
+
+  const v_517050 = (v_42044e) => {
+    const v_d5dda0 = new Date(v_42044e);
+    const v_5c2f9f = new Date();
+    const v_147971 = v_d5dda0.toDateString() === v_5c2f9f.toDateString();
+    if (v_147971) {
+      return v_d5dda0.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+    }
+    return v_d5dda0.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
   const v_465869 = () => {
     if (!v_a469c7.trim()) return;
 
+    const v_5c2f9f = Date.now();
     const v_54d6ff = {
-      id: Date.now().toString(),
+      id: v_5c2f9f.toString(),
       type: 'user',
       text: v_a469c7.trim(),
+      createdAt: v_5c2f9f,
     };
 
     v_41d55d(v_ba2215 => [...v_ba2215, v_54d6ff]);
@@ -219,6 +524,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         id: (Date.now() + 1).toString(),
         type: 'ai',
         text: v_8d41d7('chat.ai_preparing'),
+        createdAt: Date.now(),
       };
       v_41d55d(v_ba2215 => [...v_ba2215, v_37c94a]);
 
@@ -232,17 +538,13 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     v_03e392.alert(v_8d41d7('chat.view_product'), `${v_01bee9.name}`);
   };
 
-  const v_74f1f5 = () => {
-    v_aa40cb(v_ba2215 => !v_ba2215);
+  const v_07b9b4 = (v_2453ad) => {
+    v_1f1e88(v_2453ad);
   };
 
-  const v_073b8f = (v_e60aa7) => {
-    v_c88681(v_e60aa7);
-    v_aa40cb(false);
-  };
-
-  const v_80b796 = () => {
-    v_c88681(null);
+  const v_5bc46a = (v_2453ad) => {
+    v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
+    v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
   };
 
   const v_dd0316 = (
@@ -297,11 +599,20 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   );
 
   const v_82c167 = (v_a8cd21) => {
+    const v_f8e6b9 = v_517050(v_a8cd21.createdAt);
     if (v_a8cd21.type === 'user') {
       return (
         <View key={v_a8cd21.id} style={v_d81136.userMessageContainer}>
-          <View style={v_d81136.userMessage}>
-            <Text style={v_d81136.userMessageText}>{v_a8cd21.text}</Text>
+          <View style={v_d81136.userBubbleWrap}>
+            <LinearGradient
+              colors={['#615FFF', '#AD46FF']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={v_d81136.userMessage}
+            >
+              <Text style={v_d81136.userMessageText}>{v_a8cd21.text}</Text>
+            </LinearGradient>
+            <Text style={v_d81136.userMessageDateOuter}>{v_f8e6b9}</Text>
           </View>
         </View>
       );
@@ -311,39 +622,347 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 
     return (
       <View key={v_a8cd21.id} style={v_d81136.aiMessageContainer}>
-        <Text style={v_d81136.aiMessageText}>{v_a8cd21.text}</Text>
-
-        {v_a8cd21.products && v_a8cd21.products.length > 0 && (
-          <View style={v_d81136.productsContainer}>
-            {}
-            <ScrollView
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onScroll={(v_9e86fd) => v_dd0316(v_9e86fd, v_a8cd21.id)}
-              scrollEventThrottle={16}
-              decelerationRate="fast"
-              snapToInterval={v_37c282}
-              snapToAlignment="start"
-              contentContainerStyle={v_d81136.productSwiperContent}
-            >
-              {v_a8cd21.products.map(v_80b207)}
-            </ScrollView>
-
-            {}
-            <View style={v_d81136.pagination}>
-              {v_a8cd21.products.map((v_37eab7, v_a56041) => (
-                <View
-                  key={v_a56041}
-                  style={[
-                    v_d81136.paginationDot,
-                    v_a56041 === v_2bcb8f && v_d81136.paginationDotActive,
-                  ]}
-                />
-              ))}
-            </View>
+        <View style={v_d81136.aiMessageRow}>
+          <View style={v_d81136.aiAvatarWrap}>
+            <Image source={v_90fa17} style={v_d81136.aiAvatarImage} resizeMode="contain" />
           </View>
-        )}
+          <View style={v_d81136.aiBubbleWrap}>
+            <View style={v_d81136.aiBubble}>
+              {v_a8cd21.text ? <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text> : null}
+              {v_a8cd21.questionnaire && (() => {
+                const v_0ba044 = v_a8cd21.questionnaire.completed;
+                const v_61e622 = v_a8cd21.questionnaire.completedResult;
+                if (v_0ba044 && v_61e622) {
+                  const v_258c83 = {
+                    q1: v_8d41d7('chat.questionnaire_q1'),
+                    q2: v_8d41d7('chat.questionnaire_q2'),
+                    q3: v_8d41d7('chat.questionnaire_q3'),
+                    q4: v_8d41d7('chat.questionnaire_q4'),
+                    q5: v_8d41d7('chat.questionnaire_q5'),
+                  };
+                  const v_2869c1 = v_258c83[v_a8cd21.questionnaire.questionId] || '';
+                  return (
+                    <View style={v_d81136.questionnaireContainer}>
+                      <Text style={v_d81136.questionnaireQuestion}>{v_2869c1}</Text>
+                      <Text style={v_d81136.questionnaireCompletedResult}>{v_61e622}</Text>
+                    </View>
+                  );
+                }
+                const v_f90ad7 = v_8b20f6[v_a8cd21.id] || { selectedIds: [], otherValues: [], showOtherInput: false, otherInputText: '' };
+                const v_e732a4 = v_a8cd21.questionnaire.questionId === 'q3';
+                const v_7107f8 = v_a8cd21.questionnaire.questionId === 'q4';
+                const v_a2eb48 = v_a8cd21.questionnaire.questionId === 'q5';
+                if (v_e732a4) {
+                  return (
+                    <View style={v_d81136.questionnaireContainer}>
+                      <Text style={v_d81136.questionnaireQuestion}>{v_8d41d7('chat.questionnaire_q3')}</Text>
+                      <TextInput
+                        style={v_d81136.questionnaireAllergyInput}
+                        placeholder={v_8d41d7('chat.questionnaire_q3_placeholder')}
+                        placeholderTextColor="#9CA3AF"
+                        value={v_f90ad7.otherInputText}
+                        onChangeText={(v_9b6134) => v_bb30b0(v_a8cd21.id, v_9b6134)}
+                        multiline={false}
+                      />
+                      <TouchableOpacity
+                        style={v_d81136.questionnaireCompleteButton}
+                        onPress={() => v_e3b06a(v_a8cd21.id)}
+                        activeOpacity={0.8}
+                      >
+                        <LinearGradient
+                          colors={['#615FFF', '#AD46FF']}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={v_d81136.questionnaireCompleteButtonGradient}
+                        >
+                          <Text style={v_d81136.questionnaireCompleteButtonText}>
+                            {v_8d41d7('chat.questionnaire_complete_input')}
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }
+                if (v_7107f8) {
+                  return (
+                    <View style={v_d81136.questionnaireContainer}>
+                      <Text style={v_d81136.questionnaireQuestion}>{v_8d41d7('chat.questionnaire_q4')}</Text>
+                      <View style={v_d81136.questionnaireOptionsGrid}>
+                        {v_be27c3.map((v_c58503) => (
+                          <TouchableOpacity
+                            key={v_c58503}
+                            style={[v_d81136.questionnaireOption, v_d81136.questionnaireOptionFullWidth, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionSelected]}
+                            onPress={() => v_c52828(v_a8cd21.id, v_c58503, true)}
+                            activeOpacity={0.7}
+                          >
+                            <Text style={[v_d81136.questionnaireOptionText, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionTextSelected]}>
+                              {v_8d41d7(`chat.questionnaire_smoking_options.${v_c58503}`)}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                      <TouchableOpacity
+                        style={v_d81136.questionnaireCompleteButton}
+                        onPress={() => v_e3b06a(v_a8cd21.id)}
+                        activeOpacity={0.8}
+                      >
+                        <LinearGradient
+                          colors={['#615FFF', '#AD46FF']}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={v_d81136.questionnaireCompleteButtonGradient}
+                        >
+                          <Text style={v_d81136.questionnaireCompleteButtonText}>
+                            {v_8d41d7('chat.questionnaire_complete', { count: v_f90ad7.selectedIds.length || 0 })}
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }
+                if (v_a2eb48) {
+                  return (
+                    <View style={v_d81136.questionnaireContainer}>
+                      <Text style={v_d81136.questionnaireQuestion}>{v_8d41d7('chat.questionnaire_q5')}</Text>
+                      <View style={v_d81136.questionnaireOptionsGrid}>
+                        {v_42f050.map((v_c58503) => (
+                          <TouchableOpacity
+                            key={v_c58503}
+                            style={[v_d81136.questionnaireOption, v_d81136.questionnaireOptionFullWidth, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionSelected]}
+                            onPress={() => v_c52828(v_a8cd21.id, v_c58503, true)}
+                            activeOpacity={0.7}
+                          >
+                            <Text style={[v_d81136.questionnaireOptionText, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionTextSelected]}>
+                              {v_8d41d7(`chat.questionnaire_drinking_options.${v_c58503}`)}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                      <TouchableOpacity
+                        style={v_d81136.questionnaireCompleteButton}
+                        onPress={() => v_e3b06a(v_a8cd21.id)}
+                        activeOpacity={0.8}
+                      >
+                        <LinearGradient
+                          colors={['#615FFF', '#AD46FF']}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={v_d81136.questionnaireCompleteButtonGradient}
+                        >
+                          <Text style={v_d81136.questionnaireCompleteButtonText}>
+                            {v_8d41d7('chat.questionnaire_complete', { count: v_f90ad7.selectedIds.length || 0 })}
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }
+                const v_ccd7bf = v_f90ad7.selectedIds.length + v_f90ad7.otherValues.length;
+                const v_bab22e = v_a8cd21.questionnaire.questionId === 'q2';
+                const v_a366b0 = v_bab22e ? v_14e5f6 : v_34de63;
+                const v_ef6c25 = v_bab22e ? 'chat.questionnaire_medication_options' : 'chat.questionnaire_options';
+                const v_de31f5 = v_bab22e ? v_8d41d7('chat.questionnaire_q2') : v_8d41d7('chat.questionnaire_q1');
+                const v_665b92 = v_bab22e ? v_8d41d7('chat.questionnaire_q2_instruction') : v_8d41d7('chat.questionnaire_q1_instruction');
+                return (
+                  <View style={v_d81136.questionnaireContainer}>
+                    <Text style={v_d81136.questionnaireQuestion}>{v_de31f5}</Text>
+                    <Text style={v_d81136.questionnaireInstruction}>{v_665b92}</Text>
+                    <View style={v_d81136.questionnaireOptionsGrid}>
+                      {v_a366b0.map((v_c58503) => (
+                        <TouchableOpacity
+                          key={v_c58503}
+                          style={[v_d81136.questionnaireOption, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionSelected]}
+                          onPress={() => v_c52828(v_a8cd21.id, v_c58503)}
+                          activeOpacity={0.7}
+                        >
+                          <Text style={[v_d81136.questionnaireOptionText, v_f90ad7.selectedIds.includes(v_c58503) && v_d81136.questionnaireOptionTextSelected]}>
+                            {v_8d41d7(`${v_ef6c25}.${v_c58503}`)}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                    <TouchableOpacity
+                      style={v_d81136.questionnaireOtherOption}
+                      onPress={() => v_99af19(v_a8cd21.id)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={v_d81136.questionnaireOtherOptionText}>{v_8d41d7('chat.questionnaire_other')}</Text>
+                    </TouchableOpacity>
+                    {v_f90ad7.showOtherInput && (
+                      <View style={v_d81136.questionnaireOtherInputRow}>
+                        <TextInput
+                          style={v_d81136.questionnaireOtherInput}
+                          placeholder={v_8d41d7('chat.questionnaire_other_placeholder')}
+                          placeholderTextColor="#9CA3AF"
+                          value={v_f90ad7.otherInputText}
+                          onChangeText={(v_9b6134) => v_1f7836(v_a8cd21.id, v_9b6134)}
+                        />
+                        <TouchableOpacity
+                          style={v_d81136.questionnaireAddButton}
+                          onPress={() => v_bd7fbe(v_a8cd21.id)}
+                          activeOpacity={0.8}
+                        >
+                          <Text style={v_d81136.questionnaireAddButtonText}>{v_8d41d7('chat.questionnaire_add')}</Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                    <TouchableOpacity
+                      style={v_d81136.questionnaireCompleteButton}
+                      onPress={() => v_e3b06a(v_a8cd21.id)}
+                      activeOpacity={0.8}
+                    >
+                      <LinearGradient
+                        colors={['#615FFF', '#AD46FF']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={v_d81136.questionnaireCompleteButtonGradient}
+                      >
+                        <Text style={v_d81136.questionnaireCompleteButtonText}>
+                          {v_8d41d7('chat.questionnaire_complete', { count: v_ccd7bf })}
+                        </Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })()}
+              {v_a8cd21.healthReport && (() => {
+                const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+                const v_f08a5e = v_0c2f9b.name;
+                const v_d5dda0 = new Date();
+                const v_0dee40 = `${v_d5dda0.getFullYear()}.${String(v_d5dda0.getMonth() + 1).padStart(2, '0')}.${String(v_d5dda0.getDate()).padStart(2, '0')}`;
+                return (
+                  <View style={v_d81136.healthReportContainer}>
+                    <Text style={v_d81136.healthReportTitle}>{v_8d41d7('chat.health_report_title')}</Text>
+                    <Text style={v_d81136.healthReportSubtitle}>{v_8d41d7('chat.health_report_subtitle')}</Text>
+                    <Text style={v_d81136.healthReportMeta}>{v_8d41d7('chat.health_report_patient')}: {v_f08a5e}  {v_8d41d7('chat.health_report_date')}: {v_0dee40}</Text>
+                    <View style={v_d81136.healthReportSection}>
+                      <View style={v_d81136.healthReportSectionBar} />
+                      <Text style={v_d81136.healthReportSectionTitle}>{v_8d41d7('chat.health_report_section_physical')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_height')}</Text><Text style={v_d81136.healthReportValue}>170.0 cm</Text></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_weight')}</Text><Text style={v_d81136.healthReportValue}>68.5 kg</Text></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_bmi')}</Text><Text style={v_d81136.healthReportValue}>23.7 kg/m²</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_waist')}</Text><Text style={v_d81136.healthReportValue}>82.0 cm</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportSection}>
+                      <View style={v_d81136.healthReportSectionBar} />
+                      <Text style={v_d81136.healthReportSectionTitle}>{v_8d41d7('chat.health_report_section_bp_vision')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_bp')}</Text><Text style={v_d81136.healthReportValue}>125/82 mmHg</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeCaution]}><Text style={[v_d81136.healthReportBadgeText, v_d81136.healthReportBadgeTextCaution]}>{v_8d41d7('chat.health_report_status_caution')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_vision_left')}</Text><Text style={v_d81136.healthReportValue}>1.0</Text></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_vision_right')}</Text><Text style={v_d81136.healthReportValue}>1.0</Text></View>
+                    <View style={v_d81136.healthReportSection}>
+                      <View style={v_d81136.healthReportSectionBar} />
+                      <Text style={v_d81136.healthReportSectionTitle}>{v_8d41d7('chat.health_report_section_blood')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_hemoglobin')}</Text><Text style={v_d81136.healthReportValue}>14.2 g/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_glucose')}</Text><Text style={v_d81136.healthReportValue}>102 mg/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeCaution]}><Text style={[v_d81136.healthReportBadgeText, v_d81136.healthReportBadgeTextCaution]}>{v_8d41d7('chat.health_report_status_caution')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_cholesterol')}</Text><Text style={v_d81136.healthReportValue}>195 mg/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_hdl')}</Text><Text style={v_d81136.healthReportValue}>52 mg/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_ldl')}</Text><Text style={v_d81136.healthReportValue}>118 mg/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_triglycerides')}</Text><Text style={v_d81136.healthReportValue}>125 mg/dL</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={v_d81136.healthReportRow}><Text style={v_d81136.healthReportLabel}>{v_8d41d7('chat.health_report_ast')}</Text><Text style={v_d81136.healthReportValue}>28 U/L</Text><View style={[v_d81136.healthReportBadge, v_d81136.healthReportBadgeNormal]}><Text style={v_d81136.healthReportBadgeText}>{v_8d41d7('chat.health_report_status_normal')}</Text></View></View>
+                    <View style={[v_d81136.healthReportPrecautionBox]}>
+                      <View style={v_d81136.healthReportPrecautionHeader}>
+                        <Ionicons name="warning" size={18} color="#B45309" />
+                        <Text style={v_d81136.healthReportPrecautionTitle}>{v_8d41d7('chat.health_report_precautions')}</Text>
+                      </View>
+                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_bp')}</Text>
+                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_glucose')}</Text>
+                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_lifestyle')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportImprovementSection}>
+                      <View style={v_d81136.healthReportImprovementLine} />
+                      <Ionicons name="bulb-outline" size={18} color="#3B82F6" style={v_d81136.healthReportImprovementIcon} />
+                      <Text style={v_d81136.healthReportImprovementTitle}>{v_8d41d7('chat.health_report_improvement')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportImprovementBlock}>
+                      <Text style={v_d81136.healthReportImprovementSubtitle}>1. {v_8d41d7('chat.health_report_improvement_diet')}</Text>
+                      <Text style={v_d81136.healthReportImprovementText}>• {v_8d41d7('chat.health_report_improvement_diet_items')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportImprovementBlock}>
+                      <Text style={v_d81136.healthReportImprovementSubtitle}>2. {v_8d41d7('chat.health_report_improvement_exercise')}</Text>
+                      <Text style={v_d81136.healthReportImprovementText}>• {v_8d41d7('chat.health_report_improvement_exercise_items')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportImprovementBlock}>
+                      <Text style={v_d81136.healthReportImprovementSubtitle}>3. {v_8d41d7('chat.health_report_improvement_lifestyle')}</Text>
+                      <Text style={v_d81136.healthReportImprovementText}>• {v_8d41d7('chat.health_report_improvement_lifestyle_items')}</Text>
+                    </View>
+                    <View style={v_d81136.healthReportImprovementBlock}>
+                      <Text style={v_d81136.healthReportImprovementSubtitle}>4. {v_8d41d7('chat.health_report_improvement_checkup')}</Text>
+                      <Text style={v_d81136.healthReportImprovementText}>• {v_8d41d7('chat.health_report_improvement_checkup_items')}</Text>
+                    </View>
+                    <Text style={v_d81136.healthReportDoctorTitle}>{v_8d41d7('chat.health_report_doctor_opinion')}</Text>
+                    <Text style={v_d81136.healthReportDoctorText}>{v_8d41d7('chat.health_report_doctor_text')}</Text>
+                    <View style={v_d81136.healthReportButtons}>
+                      <TouchableOpacity style={v_d81136.healthReportButtonOutline} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_download_pdf'))} activeOpacity={0.8}>
+                        <Feather name="download" size={18} color="#615FFF" />
+                        <Text style={v_d81136.healthReportButtonOutlineText}>{v_8d41d7('chat.health_report_download_pdf')}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={v_d81136.healthReportButtonPrimary} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_recommend_hospital'))} activeOpacity={0.8}>
+                        <LinearGradient colors={['#615FFF', '#AD46FF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={v_d81136.healthReportButtonGradient}>
+                          <Text style={v_d81136.healthReportButtonPrimaryText}>{v_8d41d7('chat.health_report_recommend_hospital')}</Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              })()}
+              {v_a8cd21.actionButton && (
+                <TouchableOpacity
+                  style={v_d81136.aiBubbleActionButton}
+                  onPress={() => {
+                    if (v_a8cd21.actionButton!.action === 'load_health_data') v_f26426();
+                    else if (v_a8cd21.actionButton!.action === 'start_questionnaire') v_3736a1();
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <LinearGradient
+                    colors={['#615FFF', '#AD46FF']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={v_d81136.aiBubbleActionButtonGradient}
+                  >
+                    {v_a8cd21.actionButton.action === 'load_health_data' ? (
+                      <Stethoscope size={18} color="#FFFFFF" strokeWidth={2} />
+                    ) : (
+                      <Ionicons name="sparkles" size={18} color="#FFFFFF" />
+                    )}
+                    <Text style={v_d81136.aiBubbleActionButtonText}>{v_a8cd21.actionButton.label}</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={v_d81136.aiMessageDateOuter}>{v_f8e6b9}</Text>
+            {v_a8cd21.products && v_a8cd21.products.length > 0 && (
+              <View style={v_d81136.productsContainer}>
+                <ScrollView
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                  onScroll={(v_9e86fd) => v_dd0316(v_9e86fd, v_a8cd21.id)}
+                  scrollEventThrottle={16}
+                  decelerationRate="fast"
+                  snapToInterval={v_37c282}
+                  snapToAlignment="start"
+                  contentContainerStyle={v_d81136.productSwiperContent}
+                >
+                  {v_a8cd21.products.map(v_80b207)}
+                </ScrollView>
+                <View style={v_d81136.pagination}>
+                  {v_a8cd21.products.map((v_37eab7, v_a56041) => (
+                    <View
+                      key={v_a56041}
+                      style={[
+                        v_d81136.paginationDot,
+                        v_a56041 === v_2bcb8f && v_d81136.paginationDotActive,
+                      ]}
+                    />
+                  ))}
+                </View>
+              </View>
+            )}
+          </View>
+        </View>
       </View>
     );
   };
@@ -353,30 +972,30 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       <StatusBar style={v_2f29a7 ? "dark" : "dark"} />
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
-          title="AI Chat"
+          variant="analysis"
+          title={v_8d41d7('chat.title')}
+          subtitle={v_8d41d7('chat.subtitle')}
+          containerStyle={{ paddingTop: v_033e14.top + v_9b1a04.medium }}
           leftAccessory={(
-            <TouchableOpacity
-              onPress={() => v_5fe1ef(true)}
-              style={v_d81136.headerIconButton}
-              activeOpacity={0.7}
-              accessibilityRole="button"
-              accessibilityLabel="메뉴 열기"
-              accessibilityHint="사이드바 메뉴를 엽니다"
-            >
-              <Feather name="menu" size={24} color="#374151" />
-            </TouchableOpacity>
-          )}
-          rightAccessory={(
-            <TouchableOpacity
-              style={v_d81136.headerIconButton}
-              onPress={v_bb559e}
-              activeOpacity={0.7}
-              accessibilityRole="button"
-              accessibilityLabel="새 채팅"
-              accessibilityHint="새 대화를 시작합니다"
-            >
-              <MaterialCommunityIcons name="square-edit-outline" size={24} color="#374151" />
-            </TouchableOpacity>
+            <View style={v_d81136.headerLeft}>
+              <TouchableOpacity
+                onPress={() => v_5fe1ef(true)}
+                style={v_d81136.headerIconButton}
+                activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel="메뉴 열기"
+              >
+                <Feather name="menu" size={22} color="#374151" />
+              </TouchableOpacity>
+              <LinearGradient
+                colors={['#4F39F6', '#9810FA']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={v_d81136.headerIconGradient}
+              >
+                <Ionicons name="chatbubbles" size={22} color="#FFFFFF" />
+              </LinearGradient>
+            </View>
           )}
         />
 
@@ -393,16 +1012,65 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
+            <View style={v_d81136.introChatContainer}>
+              {}
+              <View style={v_d81136.aiMessageRow}>
+                <View style={v_d81136.aiAvatarWrap}>
+                  <Image source={v_90fa17} style={v_d81136.aiAvatarImage} resizeMode="contain" />
+                </View>
+                <View style={v_d81136.aiBubbleWrap}>
+                  <View style={v_d81136.aiBubble}>
+                    <Text style={v_d81136.aiBubbleText}>{v_8d41d7('chat.ai_welcome')}</Text>
+                  </View>
+                  <Text style={v_d81136.aiMessageDateOuter}>
+                    {new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
+                  </Text>
+                  {}
+                  <TouchableOpacity
+                    style={v_d81136.startHealthButton}
+                    onPress={v_84bbe1}
+                    activeOpacity={0.8}
+                  >
+                    <View style={v_d81136.startHealthButtonBorder}>
+                      <LinearGradient
+                        colors={['#615FFF', '#AD46FF']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={v_d81136.startHealthButtonGradient}
+                      >
+                        <Stethoscope size={24} color="#FFFFFF" strokeWidth={2} />
+                        <View style={v_d81136.startHealthButtonTextWrap}>
+                          <Text style={v_d81136.startHealthButtonText}>{v_8d41d7('chat.start_health_checkup')}</Text>
+                          <Text style={v_d81136.startHealthButtonSub}>{v_8d41d7('chat.start_health_checkup_sub')}</Text>
+                        </View>
+                      </LinearGradient>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
             {v_fa56e0.map(v_82c167)}
           </ScrollView>
 
           {}
-          <View style={[v_d81136.inputContainer]}>
+          <View style={v_d81136.inputContainer}>
+            {}
+            <View style={v_d81136.accountRow}>
+              <AccountSelector
+                accounts={v_c86f08}
+                selectedAccountId={v_e7b2f2}
+                onSelectAccount={v_07b9b4}
+                onAddSubAccount={() => v_d5a103(true)}
+                onDeleteAccount={v_5bc46a}
+              />
+            </View>
+
+            {}
             <View style={[v_d81136.inputBar, v_3ba9c6 && v_d81136.inputBarFocused]}>
               <TextInput
                 style={v_d81136.textInput}
                 placeholder={v_8d41d7('chat.placeholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor="#9CA3AF"
                 value={v_a469c7}
                 onChangeText={v_f32824}
                 onSubmitEditing={v_465869}
@@ -411,97 +1079,30 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 returnKeyType="send"
                 multiline={false}
               />
-              {v_a469c7.trim() ? (
-                <TouchableOpacity
-                  onPress={v_465869}
+              <TouchableOpacity
+                onPress={v_465869}
+                style={v_d81136.sendButtonWrap}
+                activeOpacity={0.8}
+                disabled={!v_a469c7.trim()}
+              >
+                <LinearGradient
+                  colors={v_a469c7.trim() ? ['#4F39F6', '#E60076'] : ['#D1D5DB', '#9CA3AF']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
                   style={v_d81136.sendButton}
                 >
-                  <Ionicons name="arrow-up" size={20} color="#FFFFFF" />
-                </TouchableOpacity>
-              ) : null}
-            </View>
-
-            {}
-            <View style={v_d81136.inputExtras}>
-              <View style={v_d81136.extraLeft}>
-                <TouchableOpacity
-                  style={[v_d81136.extraButton, v_e870d1 && v_d81136.extraButtonActive]}
-                  onPress={v_74f1f5}
-                >
-                  <Ionicons name="add" size={24} color={v_e870d1 ? '#4A5099' : '#6B7280'} />
-                </TouchableOpacity>
-
-                {}
-                {v_437b17 && (
-                  <TouchableOpacity
-                    style={v_d81136.selectedHealthTag}
-                    onPress={v_80b796}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={v_d81136.selectedHealthTagText}>{v_437b17.name}</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-
-              <View style={v_d81136.extraRight}>
-                <TouchableOpacity
-                  style={v_d81136.extraButton}
-                  onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.voice_preparing'))}
-                >
-                  <Ionicons name="mic-outline" size={24} color="#6B7280" />
-                </TouchableOpacity>
-              </View>
+                  <SendHorizontal size={18} color="#FFFFFF" strokeWidth={2} />
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
           </View>
         </KeyboardAvoidingView>
 
-        {}
-        {v_e870d1 && (
-          <TouchableOpacity
-            style={v_d81136.healthPanelBackdrop}
-            activeOpacity={1}
-            onPress={() => v_aa40cb(false)}
-          />
-        )}
-
-        {}
-        {v_e870d1 && (
-          <View style={[
-            v_d81136.healthPanel,
-            {
-              bottom: v_7e4acc > 0 ? v_7e4acc + 10 : 0,
-              paddingBottom: v_7e4acc > 0 ? v_9b1a04.medium : v_033e14.bottom + v_9b1a04.medium
-            }
-          ]}>
-            <View style={v_d81136.healthPanelHeader}>
-              <Text style={v_d81136.healthPanelTitle}>{v_8d41d7('chat.health_info_title')}</Text>
-              <TouchableOpacity onPress={() => {
-                v_aa40cb(false);
-                v_9b57fc('HealthConnection');
-              }}>
-                <Text style={v_d81136.healthPanelLink}>{v_8d41d7('chat.health_info_connect')}</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView
-              style={v_d81136.healthPanelList}
-              showsVerticalScrollIndicator={false}
-            >
-              {v_f7d55f(v_8d41d7).map((v_8c0b26) => (
-                <TouchableOpacity
-                  key={v_8c0b26.id}
-                  style={v_d81136.healthPanelItem}
-                  onPress={() => v_073b8f(v_8c0b26)}
-                  activeOpacity={0.7}
-                >
-                  <View style={v_d81136.healthPanelAvatar}>
-                    <Image source={v_2e47ea} style={v_d81136.healthPanelAvatarImage} />
-                  </View>
-                  <Text style={v_d81136.healthPanelItemText}>{v_8c0b26.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-        )}
+        <AddUserModal
+          visible={v_f4c7be}
+          onClose={() => v_d5a103(false)}
+          onAdd={v_20289f}
+        />
       </SafeView>
 
       <SidebarMenu
@@ -517,12 +1118,27 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F9FAFB',
   },
 
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginRight: 12,
+  },
   headerIconButton: {
     width: 44,
     height: 44,
+    borderRadius: 12,
+    backgroundColor: v_1bfbd0.headerIconBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerIconGradient: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -533,19 +1149,444 @@ const v_d81136 = v_472849.create({
 
   chatArea: {
     flex: 1,
+    backgroundColor: '#F9FAFB',
   },
   chatContent: {
-    paddingHorizontal: v_9b1a04.large,
-    paddingVertical: v_9b1a04.medium,
+    paddingHorizontal: v_9b1a04.small,
+    paddingVertical: v_9b1a04.small,
     flexGrow: 1,
+  },
+
+  introChatContainer: {
+    paddingTop: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.xlarge,
+  },
+  aiMessageRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: v_9b1a04.large,
+    gap: 0,
+  },
+  aiAvatarWrap: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aiAvatarImage: {
+    width: 32,
+    height: 32,
+  },
+  aiBubbleWrap: {
+    flex: 1,
+    maxWidth: '85%',
+  },
+  aiBubble: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    borderTopLeftRadius: 4,
+    paddingHorizontal: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.small + 4,
+    ...(v_326be8.OS === 'ios'
+      ? {
+        shadowColor: '#615FFF',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+      }
+      : {
+        shadowColor: '#615FFF',
+        elevation: 2,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+      }),
+  },
+  aiBubbleText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: '#374151',
+    lineHeight: 22,
+  },
+  aiBubbleActionButton: {
+    marginTop: v_9b1a04.medium,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  aiBubbleActionButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  aiBubbleActionButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  healthReportContainer: {
+    marginTop: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.xlarge,
+  },
+  healthReportTitle: {
+    fontSize: v_ef658a.large + 2,
+    fontFamily: v_843035.bold,
+    color: '#111827',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  healthReportSubtitle: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#9CA3AF',
+    textAlign: 'center',
+    marginBottom: v_9b1a04.medium,
+  },
+  healthReportMeta: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    marginBottom: v_9b1a04.medium,
+  },
+  healthReportSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
+  healthReportSectionBar: {
+    width: 4,
+    height: 18,
+    backgroundColor: '#615FFF',
+    borderRadius: 2,
+    marginRight: 8,
+  },
+  healthReportSectionTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+  },
+  healthReportRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 6,
+    gap: 8,
+  },
+  healthReportLabel: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    minWidth: 120,
+  },
+  healthReportValue: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: '#374151',
+    flex: 1,
+  },
+  healthReportBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  healthReportBadgeNormal: {
+    backgroundColor: '#D1FAE5',
+  },
+  healthReportBadgeCaution: {
+    backgroundColor: '#FEF3C7',
+  },
+  healthReportBadgeText: {
+    fontSize: 11,
+    fontFamily: v_843035.semibold,
+    color: '#065F46',
+  },
+  healthReportBadgeTextCaution: {
+    color: '#92400E',
+  },
+  healthReportPrecautionBox: {
+    backgroundColor: '#FFFBEB',
+    borderRadius: 12,
+    padding: v_9b1a04.medium,
+    marginTop: v_9b1a04.medium,
+    borderWidth: 1,
+    borderColor: '#FDE68A',
+  },
+  healthReportPrecautionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 8,
+  },
+  healthReportPrecautionTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#92400E',
+  },
+  healthReportPrecautionItem: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#78350F',
+    lineHeight: 20,
+    marginBottom: 4,
+  },
+  healthReportImprovementSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
+  healthReportImprovementLine: {
+    width: 4,
+    height: 18,
+    backgroundColor: '#93C5FD',
+    borderRadius: 2,
+    marginRight: 8,
+  },
+  healthReportImprovementIcon: {
+    marginRight: 6,
+  },
+  healthReportImprovementTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+  },
+  healthReportImprovementBlock: {
+    marginBottom: v_9b1a04.small,
+  },
+  healthReportImprovementSubtitle: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+    marginBottom: 4,
+  },
+  healthReportImprovementText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    lineHeight: 20,
+  },
+  healthReportDoctorTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
+  healthReportDoctorText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    lineHeight: 20,
+    marginBottom: v_9b1a04.medium,
+  },
+  healthReportButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: v_9b1a04.small,
+    marginBottom: 4,
+  },
+  healthReportButtonOutline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#615FFF',
+  },
+  healthReportButtonOutlineText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.semibold,
+    color: '#615FFF',
+  },
+  healthReportButtonPrimary: {
+    flex: 1,
+    borderRadius: 10,
+    ...(v_326be8.OS === 'android' ? {} : { overflow: 'hidden' }),
+  },
+  healthReportButtonGradient: {
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
+  healthReportButtonPrimaryText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  questionnaireContainer: {
+    marginTop: v_9b1a04.medium,
+  },
+  questionnaireQuestion: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+    marginBottom: 6,
+  },
+  questionnaireCompletedResult: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    marginTop: 4,
+  },
+  questionnaireInstruction: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    marginBottom: v_9b1a04.medium,
+  },
+  questionnaireAllergyInput: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: '#374151',
+    marginBottom: v_9b1a04.medium,
+  },
+  questionnaireOptionsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: v_9b1a04.small,
+  },
+  questionnaireOption: {
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    backgroundColor: '#F3F4F6',
+    width: '47%',
+  },
+  questionnaireOptionSelected: {
+    backgroundColor: '#E0E7FF',
+  },
+  questionnaireOptionFullWidth: {
+    width: '100%',
+  },
+  questionnaireOptionText: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#374151',
+  },
+  questionnaireOptionTextSelected: {
+    fontFamily: v_843035.semibold,
+    color: '#615FFF',
+  },
+  questionnaireOtherOption: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    backgroundColor: '#F3F4F6',
+    marginBottom: v_9b1a04.small,
+  },
+  questionnaireOtherOptionText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: '#374151',
+  },
+  questionnaireOtherInputRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: v_9b1a04.small,
+  },
+  questionnaireOtherInput: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: '#374151',
+  },
+  questionnaireAddButton: {
+    backgroundColor: '#615FFF',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+  },
+  questionnaireAddButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  questionnaireCompleteButton: {
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginTop: v_9b1a04.small,
+  },
+  questionnaireCompleteButtonGradient: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  questionnaireCompleteButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  aiMessageDateOuter: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#9CA3AF',
+    marginTop: 6,
+  },
+  startHealthButton: {
+    marginTop: v_9b1a04.medium,
+    alignSelf: 'stretch',
+  },
+  startHealthButtonBorder: {
+    borderRadius: 14,
+    borderWidth: 1.108,
+    borderColor: 'rgba(124, 134, 255, 0.30)',
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.10,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  startHealthButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    gap: 12,
+  },
+  startHealthButtonTextWrap: {
+    flex: 1,
+    flexShrink: 0,
+  },
+  startHealthButtonText: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  startHealthButtonSub: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: 'rgba(255,255,255,0.9)',
+    marginTop: 4,
   },
 
   userMessageContainer: {
     alignItems: 'flex-end',
     marginBottom: v_9b1a04.medium,
   },
+  userBubbleWrap: {
+    maxWidth: '80%',
+    alignItems: 'flex-end',
+  },
   userMessage: {
-    backgroundColor: '#E5E7EB',
     borderRadius: 20,
     borderTopRightRadius: 4,
     paddingHorizontal: v_9b1a04.medium,
@@ -555,20 +1596,27 @@ const v_d81136 = v_472849.create({
   userMessageText: {
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.regular,
-    color: '#374151',
+    color: '#FFFFFF',
     lineHeight: 22,
+  },
+  userMessageDate: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: 'rgba(255,255,255,0.85)',
+    marginTop: 6,
+    alignSelf: 'flex-end',
+  },
+  userMessageDateOuter: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: '#9CA3AF',
+    marginTop: 6,
+    alignSelf: 'flex-end',
   },
 
   aiMessageContainer: {
     alignItems: 'flex-start',
     marginBottom: v_9b1a04.large,
-  },
-  aiMessageText: {
-    fontSize: v_ef658a.medium,
-    fontFamily: v_843035.regular,
-    color: '#374151',
-    lineHeight: 22,
-    marginBottom: v_9b1a04.medium,
   },
 
   productsContainer: {
@@ -769,82 +1817,44 @@ const v_d81136 = v_472849.create({
 
   inputContainer: {
     paddingHorizontal: v_9b1a04.large,
-    paddingTop: v_9b1a04.small,
-    backgroundColor: '#F9FAFB',
+    paddingVertical: v_9b1a04.small,
+    backgroundColor: '#ffffff',
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
+  },
+  accountRow: {
+    marginBottom: v_9b1a04.small,
   },
   inputBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 25,
-    paddingHorizontal: v_9b1a04.large,
-    paddingVertical: 4,
+    backgroundColor: '#F9FAFB',
+    borderRadius: v_9b1a04.small,
+    paddingHorizontal: v_9b1a04.small,
+    paddingVertical: 6,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: v_1bfbd0.border,
   },
   inputBarFocused: {
-    borderColor: '#4A5099',
+    borderColor: '#4F39F6',
+    backgroundColor: '#FFFFFF',
   },
   textInput: {
     flex: 1,
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.regular,
     color: v_1bfbd0.text,
-    paddingVertical: 12,
+    paddingVertical: 10,
+  },
+  sendButtonWrap: {
+    marginLeft: 4,
   },
   sendButton: {
-    backgroundColor: '#4A5099',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: v_9b1a04.small,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  inputExtras: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: v_9b1a04.small,
-  },
-  extraLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: v_9b1a04.small,
-  },
-  extraButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  extraButtonActive: {
-    borderColor: '#4A5099',
-    backgroundColor: '#EEF2FF',
-  },
-  extraRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: v_9b1a04.small,
-  },
-  selectedHealthTag: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: '#A5B4FC',
-    backgroundColor: '#EEF2FF',
-  },
-  selectedHealthTagText: {
-    fontSize: v_ef658a.medium,
-    fontFamily: v_843035.medium,
-    color: '#4A5099',
   },
 });
 

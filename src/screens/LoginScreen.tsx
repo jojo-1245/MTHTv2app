@@ -16,9 +16,9 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_624bd2 } from '../constants';
 import {
   v_8e2768,
   v_fa3feb,
+  v_dd725b,
   v_729608,
   v_e2ca42,
-  v_cb41de,
   v_570c34,
   v_e775af,
 } from '../components';
@@ -158,7 +158,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={v_d81136.linkText}>{v_8d41d7('login.forgot_password')}</Text>
               </TouchableOpacity>
               <View style={v_d81136.buttonWrapper}>
-                <PrimaryButton
+                <GradientButton
                   title={v_cd31a8 ? v_8d41d7('login.logging_in') : v_8d41d7('common.login')}
                   onPress={v_ec4736}
                   disabled={v_cd31a8}

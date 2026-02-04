@@ -457,6 +457,7 @@ const v_d81136 = v_472849.create({
   },
   buttonWrapper: {
     marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.large,
   },
   loadingIndicator: {
     marginTop: v_9b1a04.small / 2,

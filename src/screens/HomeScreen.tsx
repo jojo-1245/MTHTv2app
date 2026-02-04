@@ -11,7 +11,7 @@ import { v_1bfbd0, v_a61db3, v_ef658a, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_cb41de, v_570c34, v_556baf, v_8714fe } from '../components';
+import { v_dd725b, v_570c34, v_556baf, v_8714fe } from '../components';
 
 type Props = v_432191<v_8ad91b, 'Home'>;
 
@@ -64,7 +64,7 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
 
       {}
       <View style={v_d81136.buttonContainer}>
-        <PrimaryButton
+        <GradientButton
           title={v_8d41d7('common.login')}
           onPress={v_ec4736}
           fullWidth={true}
