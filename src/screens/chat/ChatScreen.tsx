@@ -14,10 +14,11 @@ import {
   v_da479e,
   v_bd64bf,
   v_0e1f26,
+  v_39a996,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_c940dd, v_b6b6d9 } from 'wjvlskvsbzsrojdbjsl';
+import { v_c940dd, v_b6b6d9, v_2af98c } from 'wjvlskvsbzsrojdbjsl';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
@@ -628,7 +629,14 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
           </View>
           <View style={v_d81136.aiBubbleWrap}>
             <View style={v_d81136.aiBubble}>
-              {v_a8cd21.text ? <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text> : null}
+              {v_a8cd21.isLoading ? (
+                <View style={v_d81136.loadingBubble}>
+                  <ActivityIndicator size="small" color="#615FFF" />
+                  <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text>
+                </View>
+              ) : v_a8cd21.text ? (
+                <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text>
+              ) : null}
               {v_a8cd21.questionnaire && (() => {
                 const v_0ba044 = v_a8cd21.questionnaire.completed;
                 const v_61e622 = v_a8cd21.questionnaire.completedResult;
@@ -993,7 +1001,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 end={{ x: 1, y: 1 }}
                 style={v_d81136.headerIconGradient}
               >
-                <Ionicons name="chatbubbles" size={22} color="#FFFFFF" />
+                <Bot size={24} color="#FFFFFF" strokeWidth={2} />
               </LinearGradient>
             </View>
           )}
@@ -1200,6 +1208,11 @@ const v_d81136 = v_472849.create({
         borderWidth: 1,
         borderColor: '#E5E7EB',
       }),
+  },
+  loadingBubble: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   aiBubbleText: {
     fontSize: v_ef658a.medium,
