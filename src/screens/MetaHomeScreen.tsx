@@ -189,6 +189,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.my_health_management')}</Text>
             <View style={v_d81136.managementRow}>
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_ae6f36} activeOpacity={0.8}>
+                <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]} />
                 <View style={[v_d81136.mgmtIconWrap, { backgroundColor: '#FEE2E2' }]}>
                   <Heart size={28} color="#EF4444" />
                 </View>
@@ -197,6 +198,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 <Text style={v_d81136.mgmtLink}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_74d6ea} activeOpacity={0.8}>
+                <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(59, 130, 246, 0.15)' }]} />
                 <View style={[v_d81136.mgmtIconWrap, { backgroundColor: '#DBEAFE' }]}>
                   <Droplet size={28} color="#3B82F6" />
                 </View>
@@ -514,8 +516,24 @@ const v_d81136 = v_472849.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
+    overflow: 'hidden',
   },
-  mgmtIconWrap: { width: 48, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  mgmtCardDeco: {
+    position: 'absolute',
+    top: -24,
+    right: -24,
+    width: 85,
+    height: 85,
+    borderRadius: 85,
+    opacity: 0.3,
+  },
+  mgmtIconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   mgmtTitle: { fontSize: v_ef658a.large, fontFamily: v_843035.bold, color: v_1bfbd0.text, marginTop: 12 },
   mgmtSub: { fontSize: 12, fontFamily: v_843035.regular, color: '#6B7280', marginTop: 4 },
   mgmtLink: { fontSize: 14, fontFamily: v_843035.semibold, color: '#3B82F6', marginTop: 8 },
