@@ -27,7 +27,7 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import { v_570c34, v_1c1837 } from '../components';
+import { v_570c34, v_1c1837, v_dd725b } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
@@ -269,17 +269,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     </View>
                   ))}
                 </View>
-                <TouchableOpacity style={v_d81136.attendanceBtn} activeOpacity={0.8}>
-                  <LinearGradient
-                    colors={['#615FFF', '#AD46FF']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={v_d81136.attendanceBtnGrad}
-                  >
-                    <Coins size={18} color="#FFFFFF" />
-                    <Text style={v_d81136.attendanceBtnText}>{v_8d41d7('home.today_attendance_check')}</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                <GradientButton
+                  title={v_8d41d7('home.today_attendance_check')}
+                  leftIcon={<Coins size={18} color="#FFFFFF" />}
+                  style={v_d81136.attendanceBtn}
+                />
                 <View style={v_d81136.attendanceBonusRow}>
                   <Coins size={14} color="#615FFF" />
                   <Text style={v_d81136.attendanceBonus}>{v_8d41d7('home.attendance_bonus')}</Text>
@@ -519,9 +513,7 @@ const v_d81136 = v_472849.create({
   weekDayPending: { backgroundColor: '#FFD740' },
   weekDayHintIcon: { width: 24, height: 24 },
   weekDayText: { fontSize: 12, fontFamily: v_843035.medium, color: '#9CA3AF', marginTop: 8 },
-  attendanceBtn: { borderRadius: 12, overflow: 'hidden', marginBottom: 12 },
-  attendanceBtnGrad: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingVertical: 14 },
-  attendanceBtnText: { fontSize: 16, fontFamily: v_843035.bold, color: '#FFFFFF' },
+  attendanceBtn: { marginBottom: 12 },
   attendanceBonusRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
   attendanceBonus: { fontSize: 14, fontFamily: v_843035.regular, color: '#6B7280' },
   challengeCardWrapper: { overflow: 'hidden', borderRadius: 14, borderWidth: 1.108, borderColor: '#D0FAE5', shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 6 },

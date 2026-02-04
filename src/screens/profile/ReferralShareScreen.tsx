@@ -13,7 +13,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
-import { v_729608, v_570c34, v_556baf, v_1c1837 } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_1c1837, v_dd725b } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 
@@ -79,7 +79,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
 
     return (
         <MainLayout activeKey="myinfo">
-            <SafeView style={v_d81136.container}>
+            <SafeView style={v_d81136.container} showBottomBackground={false} >
                 <Header
                     title={v_8d41d7('referral_share.title')}
                     showBackButton
@@ -91,6 +91,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
                     contentContainerStyle={v_d81136.content}
                     showBottomBackground={false}
                     disableBottomPadding={true}
+                    showsVerticalScrollIndicator={false}
                 >
                     {}
                     <View style={v_d81136.congratsSection}>
@@ -158,13 +159,10 @@ const ReferralShareScreen: v_a3453e.FC<Props> = () => {
                     </View>
 
                     {}
-                    <TouchableOpacity
-                        style={v_d81136.kakaoButton}
+                    <GradientButton
+                        title={v_8d41d7('referral_share.kakao_share_button')}
                         onPress={v_316053}
-                        activeOpacity={0.8}
-                    >
-                        <Text style={v_d81136.kakaoButtonText}>{v_8d41d7('referral_share.kakao_share_button')}</Text>
-                    </TouchableOpacity>
+                    />
                 </View>
             </SafeView>
         </MainLayout>
@@ -317,18 +315,6 @@ const v_d81136 = v_472849.create({
     copyButtonText: {
         fontSize: v_ef658a.medium,
         fontFamily: v_843035.semibold,
-    },
-    kakaoButton: {
-        backgroundColor: '#4A5099',
-        borderRadius: 12,
-        paddingVertical: v_9b1a04.medium,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    kakaoButtonText: {
-        fontSize: v_ef658a.large,
-        fontFamily: v_843035.semibold,
-        color: '#FFFFFF',
     },
 });
 

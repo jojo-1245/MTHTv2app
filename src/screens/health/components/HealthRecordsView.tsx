@@ -11,8 +11,8 @@ import {
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import v_f595b9, { v_bf60de, v_cd1400, v_5ade23 as v_cf7fad, v_79a794 } from 'vpztcxjmsfanunln';
+import { v_dd725b } from '../../../components';
+import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 
 export interface MeasurementItem {
@@ -491,22 +491,14 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
           </View>
         </View>
       ) : (
-        <TouchableOpacity
-          style={v_d81136.compareBtn}
+        <GradientButton
+          title={v_8d41d7('health_records.start_comparative_analysis')}
+          leftIcon={<Ionicons name="git-compare-outline" size={20} color="#fff" />}
+          rightIcon={<Ionicons name="sparkles-outline" size={16} color="#fff" />}
+          colors={['#615FFF', '#AD46FF']}
           onPress={v_2daa27}
-          activeOpacity={0.85}
-        >
-          <LinearGradient
-            colors={['#4F39F6', '#6B5BFF']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={v_d81136.compareBtnGradient}
-          >
-            <Ionicons name="git-compare-outline" size={20} color="#fff" />
-            <Text style={v_d81136.compareBtnText}>{v_8d41d7('health_records.start_comparative_analysis')}</Text>
-            <Ionicons name="sparkles-outline" size={16} color="#fff" />
-          </LinearGradient>
-        </TouchableOpacity>
+          style={v_d81136.compareBtn}
+        />
       )}
 
       {v_0af1e7 === 'calendar' ? (
@@ -810,39 +802,42 @@ function v_3ec516({ value: v_3b402b, max: v_d2c6bf }: { value: number; max: numb
   const v_05b441 = 80;
   const v_474580 = 8;
   const v_0c21c9 = (v_05b441 - v_474580) / 2;
+  const v_0288f8 = v_05b441 / 2;
   const v_65e020 = 2 * Math.PI * v_0c21c9;
-  const v_a63fde = v_3b402b / v_d2c6bf;
-  const v_80989c = v_65e020 * (1 - v_a63fde);
+
+  const v_812146 = (v_fd5f43): number => {
+    if (v_fd5f43 <= 3) return (v_fd5f43 / 3) * 0.33;
+    if (v_fd5f43 <= 6) return 0.33 + ((v_fd5f43 - 4) / 3) * 0.33;
+    return 0.66 + ((v_fd5f43 - 7) / 3) * 0.34;
+  };
+  const v_09e739 = v_812146(v_3b402b);
+  const v_4b6102 = -Math.PI / 2 + v_09e739 * 2 * Math.PI;
+  const v_e75d3b = v_0288f8 + v_0c21c9 * Math.cos(v_4b6102);
+  const v_576627 = v_0288f8 + v_0c21c9 * Math.sin(v_4b6102);
+  const v_5bc297 = v_3b402b <= 3 ? '#DC2626' : v_3b402b <= 6 ? '#FBBF24' : '#22C55E';
 
   return (
     <Svg width={v_05b441} height={v_05b441} style={{ position: 'absolute' }}>
-      <Defs>
-        <SvgLinearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-          <Stop offset="0" stopColor="#4CAF50" />
-          <Stop offset="0.5" stopColor="#FFC107" />
-          <Stop offset="1" stopColor="#FF5722" />
-        </SvgLinearGradient>
-      </Defs>
-      <Circle
-        cx={v_05b441 / 2}
-        cy={v_05b441 / 2}
-        r={v_0c21c9}
-        stroke="#E8E8E8"
-        strokeWidth={v_474580}
-        fill="none"
-      />
-      <Circle
-        cx={v_05b441 / 2}
-        cy={v_05b441 / 2}
-        r={v_0c21c9}
-        stroke="url(#grad)"
-        strokeWidth={v_474580}
-        fill="none"
-        strokeDasharray={v_65e020}
-        strokeDashoffset={v_80989c}
-        strokeLinecap="round"
-        transform={`rotate(-90 ${v_05b441 / 2} ${v_05b441 / 2})`}
-      />
+      {[
+        { color: '#DC2626', start: 0, len: 0.33 },
+        { color: '#FBBF24', start: 0.33, len: 0.33 },
+        { color: '#22C55E', start: 0.66, len: 0.34 },
+      ].map(({ color: v_3c2a3a, start: v_965edf, len: v_fe889f }) => (
+        <Circle
+          key={v_3c2a3a}
+          cx={v_0288f8}
+          cy={v_0288f8}
+          r={v_0c21c9}
+          stroke={v_3c2a3a}
+          strokeWidth={v_474580}
+          strokeLinecap="round"
+          fill="none"
+          strokeDasharray={`${v_65e020 * v_fe889f} ${v_65e020 * (1 - v_fe889f)}`}
+          strokeDashoffset={-v_65e020 * v_965edf}
+          transform={`rotate(-90 ${v_0288f8} ${v_0288f8})`}
+        />
+      ))}
+      <Circle cx={v_e75d3b} cy={v_576627} r={4} fill={v_5bc297} stroke="#FFFFFF" strokeWidth={2} />
     </Svg>
   );
 }
@@ -975,20 +970,6 @@ const v_d81136 = v_472849.create({
   },
   compareBtn: {
     marginBottom: v_9b1a04.large,
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  compareBtnGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 14,
-  },
-  compareBtnText: {
-    fontSize: v_ef658a.medium,
-    fontFamily: v_843035.bold,
-    color: '#fff',
   },
   calendarCard: {
     backgroundColor: '#fff',

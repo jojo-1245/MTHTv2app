@@ -189,12 +189,14 @@ const v_48f046 = [
   { id: '4', name: '아빠', isCurrent: false },
 ];
 
-const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
-  const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
+  const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
+    v_c7daf6.params?.initialTab ?? 'measure'
+  );
   const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
   const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
 
@@ -1113,9 +1115,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         console.log('[결과 화면 이동] 3003 에러 관련 플래그 리셋 및 세션 종료 완료');
       })();
 
+      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
       v_c65f5d.navigate('HealthAnalysisResult', {
         results: v_9f8792,
         timestamp: new Date().toISOString(),
+        userName: v_0c2f9b?.name,
       });
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
@@ -1625,9 +1629,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
                       [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
                     };
+                    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                     v_c65f5d.navigate('HealthAnalysisResult', {
                       results: v_2d2278,
                       timestamp: new Date().toISOString(),
+                      userName: v_0c2f9b?.name,
                     });
                   }}
                   accessibilityRole="button"

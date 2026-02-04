@@ -261,6 +261,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           autoAdjustKeyboardPadding={true}
+          showBottomBackground={false}
+          disableBottomPadding={true}
         >
           <View style={v_d81136.form}>
             <TextField

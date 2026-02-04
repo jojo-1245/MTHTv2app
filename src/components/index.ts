@@ -1,6 +1,9 @@
 export { default as Button } from './Button';
 export type { ButtonProps, ButtonVariant } from './Button';
 
+export { default as GradientButton } from './GradientButton';
+export type { GradientButtonProps } from './GradientButton';
+
 export { default as PrimaryButton } from './PrimaryButton';
 export type { PrimaryButtonProps } from './PrimaryButton';
 

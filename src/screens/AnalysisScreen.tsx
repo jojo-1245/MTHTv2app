@@ -61,7 +61,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={v_d81136.card}
-              onPress={() => v_9b57fc('HealthConnection')}
+              onPress={() => v_9b57fc('HealthAnalysis', { initialTab: 'records' })}
               activeOpacity={0.8}
             >
               <View style={[v_d81136.cardIconWrap, v_d81136.healthIconWrap]}>

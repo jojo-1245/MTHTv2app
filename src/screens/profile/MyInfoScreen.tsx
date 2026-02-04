@@ -76,6 +76,8 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         <SafeScrollView
           style={v_d81136.scrollView}
           contentContainerStyle={v_d81136.content}
+          showBottomBackground={false}
+          disableBottomPadding={true}
         >
           <View style={v_d81136.profileSection}>
             <View style={v_d81136.profileInfoSection}>
