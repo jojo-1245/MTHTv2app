@@ -559,11 +559,11 @@ const v_d81136 = v_472849.create({
   },
   mgmtCardDeco: {
     position: 'absolute',
-    top: -24,
-    right: -24,
-    width: 85,
-    height: 85,
-    borderRadius: 85,
+    top: -20,
+    right: -25,
+    width: 75,
+    height: 75,
+    borderRadius: 75,
     opacity: 0.3,
   },
   mgmtCardDeco2: {
