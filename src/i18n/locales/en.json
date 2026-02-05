@@ -244,6 +244,7 @@
             "high": "High",
             "good": "Good",
             "normal": "Normal",
+            "low": "Low",
             "caution": "Caution",
             "danger": "Danger"
         },

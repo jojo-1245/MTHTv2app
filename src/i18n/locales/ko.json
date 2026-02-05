@@ -190,6 +190,7 @@
             "high": "높음",
             "good": "양호",
             "normal": "보통",
+            "low": "낮음",
             "caution": "주의",
             "danger": "위험"
         },

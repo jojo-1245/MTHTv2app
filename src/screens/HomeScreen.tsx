@@ -74,6 +74,7 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
           title={v_8d41d7('common.signup')}
           onPress={v_c5a058}
           fullWidth={true}
+          style={v_d81136.loginButton}
         />
       </View>
 
