@@ -108,7 +108,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_c907cb = (v_c5110a) => {
     if (v_dc679a >= v_c5110a && !v_a741d8.has(v_c5110a)) {
       v_4d9060((v_ba2215) => new Set(v_ba2215).add(v_c5110a));
-      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('home.goal_reward_highlight') + ' ' + v_8d41d7('home.step_receive'));
+      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('home.steps_reward') + ' ' + v_8d41d7('home.step_receive'));
     }
   };
 
@@ -650,6 +650,7 @@ const v_d81136 = v_472849.create({
   stepsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   stepsLabel: { fontSize: 14, fontFamily: v_843035.medium, color: '#6B7280' },
   stepsValue: { fontSize: 14, fontFamily: v_843035.bold, color: '#4C1D95' },
+  stepsValueGoal: { fontFamily: v_843035.regular },
   stepMilestonesList: {
     flexDirection: 'row',
     gap: v_006281,
