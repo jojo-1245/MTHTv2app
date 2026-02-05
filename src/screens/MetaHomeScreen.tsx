@@ -67,6 +67,7 @@ const v_66f2f8 = 12;
 const v_11fb5c = 16;
 const v_ff4e8b = 20;
 const v_006281 = 10;
+const v_c19e2d = 100; 
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -101,7 +102,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     });
   };
   const [v_dc679a, v_4b95c4] = v_5ab095(0);
-  const [v_011173] = v_5ab095(10000);
+  const v_011173 = v_c19e2d;
   const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
   const [v_264467, v_e882e2] = v_5ab095(false);
@@ -558,7 +559,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 </View>
                 <View style={v_d81136.stepsRow}>
                   <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.today_steps')}</Text>
-                  <Text style={v_d81136.stepsValue}>{v_8d41d7('home.steps_format', { current: v_dc679a.toLocaleString(), goal: v_011173.toLocaleString() })}</Text>
+                  <Text style={v_d81136.stepsValue}>
+                    <Text style={v_d81136.stepsValueCurrent}>{v_dc679a.toLocaleString()}</Text>
+                    <Text style={v_d81136.stepsValueSlash}>/</Text>
+                    <Text style={v_d81136.stepsValueGoal}>{v_011173.toLocaleString()}</Text>
+                    <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.steps_unit')}</Text>
+                  </Text>
                 </View>
                 <ScrollView
                   horizontal
@@ -878,8 +884,11 @@ const v_d81136 = v_472849.create({
   challengeRewardHighlight: { fontFamily: v_843035.bold, color: '#7C3AED' },
   stepsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   stepsLabel: { fontSize: 14, fontFamily: v_843035.medium, color: '#6B7280' },
-  stepsValue: { fontSize: 14, fontFamily: v_843035.bold, color: '#4C1D95' },
-  stepsValueGoal: { fontFamily: v_843035.regular },
+  stepsValue: { fontSize: 14, fontFamily: v_843035.bold },
+  stepsValueCurrent: { color: '#4C1D95' },
+  stepsValueSlash: { color: '#9CA3AF' },
+  stepsValueGoal: { color: '#9CA3AF', fontFamily: v_843035.regular },
+  stepsValueUnit: { color: '#9CA3AF', fontFamily: v_843035.regular },
   stepMilestonesList: {
     flexDirection: 'row',
     gap: v_006281,
