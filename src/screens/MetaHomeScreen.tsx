@@ -27,11 +27,11 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import { v_570c34, v_1c1837, v_dd725b } from '../components';
+import { v_570c34, v_1c1837, v_dd725b, v_1a40c4 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
-import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../constants';
+import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 
 const v_9b2456 = require('../../assets/images/main_top_img.png');
@@ -89,8 +89,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_113ab0 = 120;
   const v_006281 = 10;
 
-  const v_047e65 = v_39cb7a != null && v_39cb7a >= 8 ? v_8d41d7('home.health_labels.high') : v_39cb7a != null && v_39cb7a >= 6 ? v_8d41d7('home.health_labels.good') : v_8d41d7('home.health_labels.normal');
-  const v_086582 = v_9ab1d9 != null && v_9ab1d9 >= 70 ? v_8d41d7('home.health_labels.high') : v_9ab1d9 != null && v_9ab1d9 >= 50 ? v_8d41d7('home.health_labels.normal') : v_8d41d7('home.health_labels.caution');
+  const v_30ddf9 = v_39cb7a != null ? v_b47b09(v_39cb7a) : null;
+  const v_129031 = v_9ab1d9 != null ? v_57793c(v_9ab1d9) : null;
+  const v_047e65 = v_30ddf9 ? v_8d41d7(`home.health_labels.${v_30ddf9}`) : '';
+  const v_086582 = v_129031 ? v_8d41d7(`home.health_labels.${v_129031}`) : '';
+  const v_b08678 = v_30ddf9 ? v_f54309[v_30ddf9] : null;
+  const v_5d590c = v_129031 ? v_f54309[v_129031] : null;
   const v_597fae = (v_06db8f - v_ff4e8b * 2 - v_66f2f8) / 2;
   const v_312c9c = Math.floor((v_06db8f - v_ff4e8b * 2 - v_9b1a04.large * 2 - 6 * 2) / 7);
   const v_765ddb = v_06db8f - v_ff4e8b * 2;
@@ -163,14 +167,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     <Text style={v_d81136.metricScore}>{v_39cb7a != null ? v_39cb7a : '--'}</Text>
                     {v_39cb7a != null && <Text style={v_d81136.metricScoreUnit}>/ 10</Text>}
                   </View>
-                  {v_39cb7a != null && (
-                    <View style={[v_d81136.metricTag, { backgroundColor: '#3B82F620' }]}>
-                      <Text style={[v_d81136.metricTagText, { color: '#3B82F6' }]}>{v_047e65}</Text>
+                  {v_39cb7a != null && v_b08678 && (
+                    <View style={[v_d81136.metricTag, { backgroundColor: v_b08678.bgColor }]}>
+                      <Text style={[v_d81136.metricTagText, { color: v_b08678.color }]}>{v_047e65}</Text>
                     </View>
                   )}
                 </View>
                 <View style={v_d81136.metricProgressBar}>
-                  {v_39cb7a != null && <View style={[v_d81136.metricProgressFill, { width: `${(v_39cb7a / 10) * 100}%`, backgroundColor: '#3B82F6' }]} />}
+                  {v_39cb7a != null && v_b08678 && <View style={[v_d81136.metricProgressFill, { width: `${(v_39cb7a / 10) * 100}%`, backgroundColor: v_b08678.color }]} />}
                 </View>
               </TouchableOpacity>
               <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_8daf84} activeOpacity={0.9}>
@@ -184,14 +188,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     <Text style={v_d81136.metricScore}>{v_9ab1d9 != null ? v_9ab1d9 : '--'}</Text>
                     {v_9ab1d9 != null && <Text style={v_d81136.metricScoreUnit}>/ 100</Text>}
                   </View>
-                  {v_9ab1d9 != null && (
-                    <View style={[v_d81136.metricTag, { backgroundColor: '#F9731620' }]}>
-                      <Text style={[v_d81136.metricTagText, { color: '#F97316' }]}>{v_086582}</Text>
+                  {v_9ab1d9 != null && v_5d590c && (
+                    <View style={[v_d81136.metricTag, { backgroundColor: v_5d590c.bgColor }]}>
+                      <Text style={[v_d81136.metricTagText, { color: v_5d590c.color }]}>{v_086582}</Text>
                     </View>
                   )}
                 </View>
                 <View style={v_d81136.metricProgressBar}>
-                  {v_9ab1d9 != null && <View style={[v_d81136.metricProgressFill, { width: `${v_9ab1d9}%`, backgroundColor: '#F97316' }]} />}
+                  {v_9ab1d9 != null && v_5d590c && <View style={[v_d81136.metricProgressFill, { width: `${v_9ab1d9}%`, backgroundColor: v_5d590c.color }]} />}
                 </View>
               </TouchableOpacity>
             </View>
@@ -202,15 +206,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             <View style={v_d81136.managementRow}>
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_ae6f36} activeOpacity={0.8}>
                 <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]} />
+                <View style={[v_d81136.mgmtCardDeco2, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]} />
                 <View style={[v_d81136.mgmtIconWrap, { backgroundColor: '#FEE2E2' }]}>
                   <Heart size={28} color="#EF4444" />
                 </View>
-                <Text style={v_d81136.mgmtTitle}>{v_8d41d7('home.health_analysis')}</Text>
-                <Text style={v_d81136.mgmtSub}>{v_8d41d7('home.comprehensive_health_check')}</Text>
-                <Text style={v_d81136.mgmtLink}>{v_8d41d7('home.start_btn')}</Text>
+                <View>
+                  <Text style={v_d81136.mgmtTitle}>{v_8d41d7('home.health_analysis')}</Text>
+                  <Text style={v_d81136.mgmtSub}>{v_8d41d7('home.comprehensive_health_check')}</Text>
+                </View>
+                <Text style={[v_d81136.mgmtLink, { color: '#EF4444' }]}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_74d6ea} activeOpacity={0.8}>
                 <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(59, 130, 246, 0.15)' }]} />
+                <View style={[v_d81136.mgmtCardDeco2, { backgroundColor: 'rgba(59, 130, 246, 0.15)' }]} />
                 <View style={[v_d81136.mgmtIconWrap, { backgroundColor: '#DBEAFE' }]}>
                   <Droplet size={28} color="#3B82F6" />
                 </View>
@@ -222,7 +230,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           </View>
 
           {}
-          <TouchableOpacity style={v_d81136.aiHintyCard} onPress={v_ae6f36} activeOpacity={0.9}>
+          <View style={v_d81136.aiHintyCard}>
             <LinearGradient
               colors={['#615FFF', '#AD46FF']}
               start={{ x: 0.5, y: 0 }}
@@ -241,11 +249,15 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Text style={v_d81136.familyDesc}>{v_8d41d7('home.family_health_desc')}</Text>
                 </View>
               </View>
-              <View style={v_d81136.aiHintyBtn}>
-                <Text style={v_d81136.aiHintyBtnText}>{v_8d41d7('home.ai_hinty_start')}</Text>
-              </View>
+              <Button
+                variant="filled"
+                title={v_8d41d7('home.ai_hinty_start')}
+                onPress={v_ae6f36}
+                style={v_d81136.aiHintyBtn}
+                textStyle={v_d81136.aiHintyBtnText}
+              />
             </LinearGradient>
-          </TouchableOpacity>
+          </View>
 
           {}
           <View style={v_d81136.section}>
@@ -441,8 +453,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           </View>
 
         </SafeScrollView>
-      </SafeView>
-    </MainLayout>
+      </SafeView >
+    </MainLayout >
   );
 };
 
@@ -543,6 +555,7 @@ const v_d81136 = v_472849.create({
     shadowRadius: 8,
     elevation: 4,
     overflow: 'hidden',
+    alignItems: 'center',
   },
   mgmtCardDeco: {
     position: 'absolute',
@@ -551,6 +564,15 @@ const v_d81136 = v_472849.create({
     width: 85,
     height: 85,
     borderRadius: 85,
+    opacity: 0.3,
+  },
+  mgmtCardDeco2: {
+    position: 'absolute',
+    bottom: -24,
+    left: -24,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
     opacity: 0.3,
   },
   mgmtIconWrap: {
@@ -574,8 +596,8 @@ const v_d81136 = v_472849.create({
   familySectionInner: { flex: 1 },
   familyTitle: { fontSize: 14, fontFamily: v_843035.semibold, color: '#FFFFFF' },
   familyDesc: { fontSize: 12, fontFamily: v_843035.regular, color: 'rgba(255,255,255,0.85)', marginTop: 4 },
-  aiHintyBtn: { borderRadius: 12, paddingVertical: 14, alignItems: 'center', backgroundColor: '#FFFFFF' },
-  aiHintyBtnText: { fontSize: 16, fontFamily: v_843035.bold, color: '#4F39F6' },
+  aiHintyBtn: { backgroundColor: '#FFFFFF', borderWidth: 0 },
+  aiHintyBtnText: { color: '#4F39F6' },
   attendanceCardWrapper: { overflow: 'hidden', borderRadius: 14, borderWidth: 1.108, borderColor: "#efefef", shadowColor: '#666666', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 6, backgroundColor: '#ffffff' },
   attendanceCard: { padding: v_9b1a04.large, overflow: 'hidden', borderRadius: 14 },
   attendanceHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 },

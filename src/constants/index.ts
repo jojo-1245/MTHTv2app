@@ -25,6 +25,10 @@ export const v_1bfbd0 = {
   iconMuted: '#8E8E93',
   toggleTrackOff: '#dddddd',
   toggleTrackOn: '#000000',
+
+  scoreLevelHigh: '#16A34A',    
+  scoreLevelNormal: '#F97316',  
+  scoreLevelLow: '#DC2626',    
 };
 
 export const v_963c2c= {
@@ -134,6 +138,26 @@ export const v_d8cb4d = {
     backgroundColor: '#FEF2F2', 
   },
 } as const;
+
+export type ScoreLevelKey = 'high' | 'normal' | 'low';
+
+export const v_f54309 = {
+  high: { color: v_1bfbd0.scoreLevelHigh, bgColor: `${v_1bfbd0.scoreLevelHigh}20` },
+  normal: { color: v_1bfbd0.scoreLevelNormal, bgColor: `${v_1bfbd0.scoreLevelNormal}20` },
+  low: { color: v_1bfbd0.scoreLevelLow, bgColor: `${v_1bfbd0.scoreLevelLow}20` },
+};
+
+export const v_b47b09 = (v_740dd8): ScoreLevelKey => {
+  if (v_740dd8 >= 7) return 'high';
+  if (v_740dd8 >= 4) return 'normal';
+  return 'low';
+};
+
+export const v_57793c = (v_740dd8): ScoreLevelKey => {
+  if (v_740dd8 >= 80) return 'high';
+  if (v_740dd8 >= 60) return 'normal';
+  return 'low';
+};
 
 export const v_a61db3 = {
   container: {

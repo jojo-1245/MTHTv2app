@@ -189,6 +189,7 @@
             "high": "Tinggi",
             "good": "Baik",
             "normal": "Normal",
+            "low": "Rendah",
             "caution": "Peringatan",
             "danger": "Bahaya"
         },
