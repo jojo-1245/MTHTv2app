@@ -830,6 +830,7 @@
             "intro_title": "Pengukuran Informasi Kesehatan",
             "intro_description": "Izin kamera diperlukan untuk pengukuran.\nSetelah memasukkan informasi dasar, Anda dapat mengukur. Setelah selesai, Anda dapat melihat berbagai informasi kesehatan seperti denyut nadi, tekanan darah, dan saturasi oksigen, serta menerima diagnosis dari AI Hinty.",
             "flow_subtitle": "Anda dapat melakukan pemeriksaan kesehatan melalui langkah-langkah berikut",
+            "flow_badge_step": "Step {{n}}",
             "flow_step_1": "Izin Kamera",
             "flow_step_1_desc": "Izinkan akses kamera untuk pengukuran",
             "flow_step_2": "Info Dasar",
