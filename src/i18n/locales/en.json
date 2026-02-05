@@ -196,7 +196,7 @@
         "today_step_goal": "Today's Step Goal",
         "goal_reward": "Get +100 MTHT when goal achieved!",
         "goal_reward_prefix": "Get ",
-        "goal_reward_highlight": "+100 MTHT",
+        "goal_reward_highlight": "+10 MTHT",
         "goal_reward_suffix": " when goal achieved!",
         "today_steps": "Today's steps",
         "steps_format": "{{current}}/{{goal}} steps",
