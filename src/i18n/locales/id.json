@@ -238,7 +238,7 @@
         "today_step_goal": "Target Langkah Hari Ini",
         "goal_reward": "Dapatkan +100 MTHT saat mencapai target!",
         "goal_reward_prefix": "Dapatkan ",
-        "goal_reward_highlight": "+100 MTHT",
+        "goal_reward_highlight": "+10 MTHT",
         "goal_reward_suffix": " saat mencapai target!",
         "today_steps": "Langkah hari ini",
         "steps_format": "{{current}}/{{goal}} langkah",
