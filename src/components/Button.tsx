@@ -57,7 +57,7 @@ const Button: v_a3453e.FC<ButtonProps> = ({
           v_d81136.text,
           v_46e192 === 'filled' || v_15c15b ? v_d81136.textFilled : v_d81136.textOutline,
           v_197d6e,
-          v_1a6f6d && v_d81136.textDisabled,
+          v_1a6f6d && !v_15c15b && v_d81136.textDisabled,
         ]}
         numberOfLines={1}
       >
@@ -75,15 +75,14 @@ const Button: v_a3453e.FC<ButtonProps> = ({
           v_d81136.base,
           v_d81136.gradientTouchable,
           v_145388 && v_d81136.fullWidth,
-          { borderRadius: v_f52086 },
+          { borderRadius: v_f52086, opacity: v_1a6f6d ? 0.6 : 1 },
           v_7fa4e4,
-          v_1a6f6d && v_d81136.disabled,
         ]}
         disabled={v_4a6533}
         {...v_83bbcd}
       >
         <LinearGradient
-          colors={v_1a6f6d ? ['#9CA3AF', '#9CA3AF'] : [...v_291db0]}
+          colors={[...v_291db0]}
           start={v_3a2eba}
           end={v_29812d}
           style={[v_d81136.gradientInner, { borderRadius: v_f52086 }]}
