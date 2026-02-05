@@ -67,14 +67,26 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_9cb8cb] = v_5ab095(true);
   const [v_39cb7a] = v_5ab095<number | null>(8);
   const [v_9ab1d9] = v_5ab095<number | null>(65);
-  const [v_79dc58] = v_5ab095([true, true, true, true, true, true, false]); 
+
+  const [v_79dc58, v_5b2bbb] = v_5ab095([true, true, true, false, false, false, false]); 
   const v_05cf57 = v_79dc58.filter(Boolean).length;
+
+  const v_8aab53 = (new Date().getDay() + 6) % 7;
+  const v_74891a = v_79dc58[v_8aab53];
+
+  const v_d0c5d7 = () => {
+    v_5b2bbb((v_ba2215) => {
+      const v_a448ad = [...v_ba2215];
+      v_a448ad[v_8aab53] = true;
+      return v_a448ad;
+    });
+  };
   const [v_dc679a] = v_5ab095(7500);
   const [v_011173] = v_5ab095(10000);
   const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
 
   const v_76f9c7 = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-  const v_113ab0 = 100;
+  const v_113ab0 = 120;
   const v_006281 = 10;
 
   const v_047e65 = v_39cb7a != null && v_39cb7a >= 8 ? v_8d41d7('home.health_labels.high') : v_39cb7a != null && v_39cb7a >= 6 ? v_8d41d7('home.health_labels.good') : v_8d41d7('home.health_labels.normal');
@@ -243,10 +255,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 <View style={v_d81136.attendanceHeader}>
                   <View style={v_d81136.attendanceHeaderText}>
                     <Text style={v_d81136.attendanceMain}>{v_8d41d7('home.daily_attendance_coins')}</Text>
-                    <Text style={v_d81136.attendanceSub}>
-                      {v_8d41d7('home.consecutive_prefix')}
-                      <Text style={v_d81136.attendanceSubHighlight}>{v_05cf57}{v_8d41d7('home.consecutive_suffix')}</Text>
-                      {v_8d41d7('home.consecutive_tail')}
+
+                    {
+
+}
+                    <Text style={v_d81136.challengeReward}>
+                      {v_8d41d7('home.attendance_reward_prefix')}
+                      <Text style={v_d81136.attendanceRewardHighlight}>{v_8d41d7('home.attendance_reward_highlight')}</Text>
+                      {v_8d41d7('home.attendance_reward_suffix')}
                     </Text>
                   </View>
                   <View style={v_d81136.calendarIcon}>
@@ -255,6 +271,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 </View>
                 <View style={v_d81136.weekStatus}>
                   <Text style={v_d81136.weekLabel}>{v_8d41d7('home.week_attendance_status')}</Text>
+
                   <Text style={v_d81136.weekDays}>{v_8d41d7('home.days_format', { current: v_05cf57, total: 7 })}</Text>
                 </View>
                 <View style={v_d81136.weekGrid}>
@@ -272,13 +289,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   ))}
                 </View>
                 <GradientButton
-                  title={v_8d41d7('home.today_attendance_check')}
-                  leftIcon={<Coins size={18} color="#FFFFFF" />}
-                  style={v_d81136.attendanceBtn}
+                  title={v_74891a ? v_8d41d7('home.attendance_check_complete') : v_8d41d7('home.attendance_check')}
+                  leftIcon={<Coins size={16} color="#FFFFFF" />}
+                  style={[v_d81136.attendanceBtn, v_74891a && v_d81136.attendanceBtnDisabled]}
+                  onPress={v_d0c5d7}
+                  disabled={v_74891a}
                 />
                 <View style={v_d81136.attendanceBonusRow}>
                   <Coins size={14} color="#615FFF" />
-                  <Text style={v_d81136.attendanceBonus}>{v_8d41d7('home.attendance_bonus')}</Text>
+                  <Text style={v_d81136.attendanceBonus}>
+                    {v_8d41d7('home.attendance_bonus_prefix')}
+                    <Text style={v_d81136.attendanceBonusHighlight}>{v_8d41d7('home.attendance_bonus_highlight')}</Text>
+                    {v_8d41d7('home.attendance_bonus_suffix')}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -323,8 +346,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     const v_e0ed2f = !v_fa25a3;
                     return (
                       <View key={v_c5110a} style={[v_d81136.stepMilestoneCard, { width: v_113ab0 }]}>
+                        <Text style={v_d81136.stepMilestoneLabelText}>
+                          {v_8d41d7('home.steps_milestone', { count: v_c5110a })}
+                        </Text>
                         <Text style={v_d81136.stepMilestoneLabel}>
-                          {v_c5110a.toLocaleString()}
+                          +10M
                         </Text>
                         <TouchableOpacity
                           style={[
@@ -561,6 +587,7 @@ const v_d81136 = v_472849.create({
   weekStatus: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
   weekLabel: { fontSize: 13, fontFamily: v_843035.regular, color: '#6B7280' },
   weekDays: { fontSize: 13, fontFamily: v_843035.semibold, color: '#615FFF' },
+  attendanceRewardHighlight: { fontFamily: v_843035.bold, color: '#615FFF' },
   weekGrid: { flexDirection: 'row', justifyContent: 'space-between', gap: 2, marginBottom: 16 },
   weekDayCol: { flex: 1, alignItems: 'center', minWidth: 0 },
   weekDayBox: { borderRadius: 12, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
@@ -569,8 +596,10 @@ const v_d81136 = v_472849.create({
   weekDayHintIcon: { width: 24, height: 24 },
   weekDayText: { fontSize: 12, fontFamily: v_843035.medium, color: '#9CA3AF', marginTop: 8 },
   attendanceBtn: { marginBottom: 12 },
-  attendanceBonusRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
-  attendanceBonus: { fontSize: 14, fontFamily: v_843035.regular, color: '#6B7280' },
+  attendanceBtnDisabled: { opacity: 0.6 },
+  attendanceBonusRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, letterSpacing: -0.5 },
+  attendanceBonus: { fontSize: v_ef658a.medium, color: '#6B7280', letterSpacing: -0.5 },
+  attendanceBonusHighlight: { fontFamily: v_843035.bold, color: '#615FFF' },
   challengeCardWrapper: {
     overflow: 'hidden',
     borderRadius: 12,
@@ -598,7 +627,7 @@ const v_d81136 = v_472849.create({
   challengeRewardHighlight: { fontFamily: v_843035.bold, color: '#7C3AED' },
   stepsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   stepsLabel: { fontSize: 14, fontFamily: v_843035.medium, color: '#6B7280' },
-  stepsValue: { fontSize: 18, fontFamily: v_843035.bold, color: '#4C1D95' },
+  stepsValue: { fontSize: 14, fontFamily: v_843035.bold, color: '#4C1D95' },
   stepMilestonesList: {
     flexDirection: 'row',
     gap: v_006281,
@@ -623,6 +652,13 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.bold,
     color: '#4C1D95',
     marginBottom: 8,
+  },
+  stepMilestoneLabelText: {
+    fontSize: v_ef658a.small,
+    letterSpacing: -0.5,
+    fontFamily: v_843035.regular,
+    textAlign: 'center',
+    color: '#6B7280',
   },
   stepMilestoneBtn: {
     width: '100%',

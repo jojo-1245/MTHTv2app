@@ -13,6 +13,7 @@ import {
     v_aa7413,
     v_da479e,
     v_bd64bf,
+    v_f2c756,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_78ceb7, v_d4f1cc } from 'mbgbsytfgyr';
@@ -274,7 +275,7 @@ const v_48f046 = [
 
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
-    const { navigate: v_9b57fc } = v_a0daa8();
+    const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
     const v_bf6a8c = v_c7daf6.params?.previewResult;
 
     const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
@@ -532,13 +533,27 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             if (v_04e790 === 'camera') {
                 const { status: v_d308b5 } = await v_d05ab5.requestCameraPermissionsAsync();
                 if (v_d308b5 !== 'granted') {
-                    v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.camera_permission'));
+                    v_03e392.alert(
+                        v_8d41d7('skin.alerts.permission_required'),
+                        v_8d41d7('skin.alerts.camera_permission_required'),
+                        [
+                            { text: v_8d41d7('common.cancel'), onPress: () => v_c7ac57() },
+                            { text: v_8d41d7('skin.alerts.open_settings'), onPress: () => v_f2c756.openSettings() },
+                        ]
+                    );
                     return;
                 }
             } else {
                 const { status: v_d308b5 } = await v_d05ab5.requestMediaLibraryPermissionsAsync();
                 if (v_d308b5 !== 'granted') {
-                    v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.gallery_permission'));
+                    v_03e392.alert(
+                        v_8d41d7('skin.alerts.permission_required'),
+                        v_8d41d7('skin.alerts.gallery_permission_required'),
+                        [
+                            { text: v_8d41d7('common.cancel'), onPress: () => v_c7ac57() },
+                            { text: v_8d41d7('skin.alerts.open_settings'), onPress: () => v_f2c756.openSettings() },
+                        ]
+                    );
                     return;
                 }
             }
@@ -579,7 +594,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_7db762(false);
             v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
         }
-    }, [v_c00289, v_8d41d7]);
+    }, [v_c00289, v_8d41d7, v_c7ac57]);
 
     const v_46964a = v_de06a3(() => {
         v_e2f548(true);
@@ -589,12 +604,19 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         if (!v_d1a6bb?.granted) {
             const v_43c42e = await v_1e66f0();
             if (!v_43c42e.granted) {
-                v_03e392.alert(v_8d41d7('skin.alerts.permission_required'), v_8d41d7('skin.alerts.camera_permission'));
+                v_03e392.alert(
+                    v_8d41d7('skin.alerts.permission_required'),
+                    v_8d41d7('skin.alerts.camera_permission_required'),
+                    [
+                        { text: v_8d41d7('common.cancel'), onPress: () => v_c7ac57() },
+                        { text: v_8d41d7('skin.alerts.open_settings'), onPress: () => v_f2c756.openSettings() },
+                    ]
+                );
                 return;
             }
         }
         v_639227('camera');
-    }, [v_d1a6bb, v_1e66f0]);
+    }, [v_d1a6bb, v_1e66f0, v_8d41d7, v_c7ac57]);
 
     const v_eb4a5e = v_de06a3(() => {
         v_e2f548(false);
