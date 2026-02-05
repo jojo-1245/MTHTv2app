@@ -1,6 +1,9 @@
-import v_a3453e, { v_5ab095 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae } from 'bapkr';
 import {
   v_03e392,
+  v_a2349e,
+  v_cdbae1,
+  v_326be8,
   v_472849,
   v_19b633,
   v_4623af,
@@ -25,16 +28,32 @@ import {
   v_2e2f88,
 } from 'wjvlskvsbzsrojdbjsl';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
+import {
+  v_0c7e2f,
+  v_381355,
+  v_8348d9,
+} from '../services/stepTrackingService';
+import {
+  v_157cb4,
+  v_5c2ccb,
+} from '../services/permissionService';
 
-const v_9b2456 = require('../../assets/images/main_top_img.png');
+const v_8bf63f = 'metahint_step_notification_enabled';
+
+const v_87993b = require('../../assets/images/logo_white.png');
+const v_103040 = require('../../assets/images/hinti_01.png');   
+const v_450056 = require('../../assets/images/hinti_mouth.png'); 
+const v_ca495a = require('../../assets/images/background_01.png'); 
 const v_2e47ea = require('../../assets/images/robot_face.png');
 const v_9c75ed = [
   require('../../assets/images/product/yucod_01.png'),
@@ -61,7 +80,7 @@ const v_2eadfb = ['월', '화', '수', '목', '금', '토', '일'];
 
 const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { t: v_8d41d7 } = v_772971();
+  const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const [v_9cb8cb] = v_5ab095(true);
@@ -81,11 +100,82 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       return v_a448ad;
     });
   };
-  const [v_dc679a] = v_5ab095(7500);
+  const [v_dc679a, v_4b95c4] = v_5ab095(0);
   const [v_011173] = v_5ab095(10000);
   const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
+  const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
+  const [v_264467, v_e882e2] = v_5ab095(false);
 
-  const v_76f9c7 = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+  v_c4deb2(() => {
+    const v_5dedf9 = async () => {
+      await v_157cb4();
+      if (v_326be8.OS === 'android') {
+        await v_5c2ccb();
+      }
+    };
+    v_5dedf9();
+  }, []);
+
+  const v_80e790 = v_de06a3(async () => {
+    const v_81e2ef = await v_e84827.getItem(v_8bf63f);
+    const v_d20c84 = v_81e2ef === 'true';
+    v_e882e2(v_d20c84);
+    if (v_d20c84 && v_0c7e2f()) {
+      const v_43c42e = await v_381355(v_011173, v_8d41d7('home.step_unit'));
+      if (!v_43c42e.success) {
+        v_e882e2(false);
+        await v_e84827.setItem(v_8bf63f, 'false');
+      }
+    }
+  }, [v_011173, v_8d41d7]);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_80e790();
+    }, [v_80e790])
+  );
+
+  v_c4deb2(() => {
+    if (!v_264467 || !v_0c7e2f()) return;
+    v_8348d9(v_dc679a, v_011173, v_8d41d7('home.step_unit'));
+  }, [v_dc679a, v_011173, v_264467, v_8d41d7]);
+
+  v_c4deb2(() => {
+    let v_269481 = null;
+
+    const v_391ff4 = async () => {
+      try {
+        const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+        const v_37a1a7 = await v_5dafcb.isAvailableAsync();
+        v_64b293(v_37a1a7);
+
+        if (v_37a1a7) {
+          const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
+          if (v_d308b5 !== 'granted') {
+            const { status: v_ecf593 } = await v_5dafcb.requestPermissionsAsync();
+            if (v_ecf593 !== 'granted') {
+              v_64b293(false);
+              return;
+            }
+          }
+          v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
+            v_4b95c4(v_43c42e.steps);
+          });
+        }
+      } catch {
+        v_64b293(false);
+      }
+    };
+
+    v_391ff4();
+
+    return () => {
+      v_269481?.remove();
+    };
+  }, []);
+
+  const v_2258bf = 10;
+  const v_76f9c7 = Array.from({ length: 10 }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
   const v_113ab0 = 120;
   const v_006281 = 10;
 
@@ -112,6 +202,114 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     }
   };
 
+  const v_6562a2 = [v_8d41d7('home.greeting_1'), v_8d41d7('home.greeting_2'), v_8d41d7('home.greeting_3'), v_8d41d7('home.greeting_4'), v_8d41d7('home.greeting_5')];
+  const [v_8b86b7, v_2dd25e] = v_5ab095(0);
+  const [v_4f4bca, v_ffe20b] = v_5ab095(0);
+  const [v_fb1b38, v_5bb39b] = v_5ab095(false);
+  const v_d37c41 = v_6562a2[v_8b86b7] ?? v_6562a2[0];
+  const v_b0abd9 = 900;  
+  const v_91066c = 850;    
+  const v_ca0213 = 500; 
+  const v_11ce69 = v_0d9f50 * 0.85; 
+
+  const v_38f64a = v_e662ae(new v_a2349e.Value(0)).current;
+  const v_d6e359 = v_e662ae(new v_a2349e.Value(0)).current;
+
+  const v_66c9e2 = v_de06a3(() => {
+    v_a2349e.timing(v_38f64a, {
+      toValue: 1,
+      duration: v_b0abd9,
+      easing: v_cdbae1.out(v_cdbae1.cubic),
+      useNativeDriver: true,
+    }).start(({ finished: v_cc0753 }) => {
+      if (v_cc0753) v_5bb39b(true);
+    });
+  }, [v_38f64a]);
+
+  const v_365347 = v_de06a3(() => {
+    v_5bb39b(false);
+    v_a2349e.timing(v_38f64a, {
+      toValue: 0,
+      duration: v_91066c,
+      easing: v_cdbae1.in(v_cdbae1.cubic),
+      useNativeDriver: true,
+    }).start(({ finished: v_cc0753 }) => {
+      if (!v_cc0753) return;
+      v_ffe20b(0);
+      v_2dd25e(0); 
+      setTimeout(() => v_66c9e2(), v_ca0213); 
+    });
+  }, [v_38f64a, v_66c9e2]);
+
+  v_c4deb2(() => {
+    v_2dd25e(0);
+    v_ffe20b(0);
+    v_5bb39b(false);
+    v_38f64a.setValue(0);
+    v_66c9e2();
+  }, [v_9c213b.language, v_38f64a, v_66c9e2]);
+
+  v_c4deb2(() => {
+    if (!v_fb1b38) return;
+    if (v_4f4bca >= v_d37c41.length) {
+      const v_58a659 = setTimeout(() => {
+        const v_3dfb75 = v_8b86b7 >= v_6562a2.length - 1;
+        if (v_3dfb75) {
+          v_365347(); 
+        } else {
+          v_ffe20b(0);
+          v_2dd25e((v_ebec57) => v_ebec57 + 1); 
+        }
+      }, 2000);
+      return () => clearTimeout(v_58a659);
+    }
+    const v_cb36b1 = setTimeout(() => v_ffe20b((v_ebec57) => v_ebec57 + 1), 70);
+    return () => clearTimeout(v_cb36b1);
+  }, [v_fb1b38, v_4f4bca, v_d37c41, v_6562a2.length, v_8b86b7, v_365347]);
+
+  v_c4deb2(() => {
+    let anim: v_a2349e.CompositeAnimation | null = null;
+    const v_4b24d2 = setTimeout(() => {
+      v_f582ff = v_a2349e.loop(
+        v_a2349e.sequence([
+          v_a2349e.timing(v_d6e359, {
+            toValue: 1,
+            duration: 850,
+            easing: v_cdbae1.inOut(v_cdbae1.ease),
+            useNativeDriver: true,
+          }),
+          v_a2349e.timing(v_d6e359, {
+            toValue: 0,
+            duration: 850,
+            easing: v_cdbae1.inOut(v_cdbae1.ease),
+            useNativeDriver: true,
+          }),
+        ])
+      );
+      v_f582ff.start();
+    }, v_b0abd9);
+    return () => {
+      clearTimeout(v_4b24d2);
+      v_f582ff?.stop();
+    };
+  }, [v_d6e359]);
+
+  const v_ed31f2 = v_38f64a.interpolate({ inputRange: [0, 1], outputRange: [v_11ce69, 0] });
+  const v_4c3e9a = v_38f64a.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] });
+  const v_35a29b = v_d6e359.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] });
+  const v_a37637 = v_a2349e.multiply(v_4c3e9a, v_35a29b);
+
+  const [v_80f47a, v_59c1e9] = v_5ab095(false);
+  const v_738ed0 = v_fb1b38 && v_4f4bca < v_d37c41.length;
+  v_c4deb2(() => {
+    if (!v_738ed0) {
+      v_59c1e9(false);
+      return;
+    }
+    const v_ad1d65 = setInterval(() => v_59c1e9((v_ba2215) => !v_ba2215), 120);
+    return () => clearInterval(v_ad1d65);
+  }, [v_738ed0]);
+
   return (
     <MainLayout activeKey="home">
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -131,9 +329,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               style={[v_d81136.headerGradient, { paddingTop: v_033e14.top + v_9b1a04.medium }]}
             >
               <View style={v_d81136.headerTop}>
-                <View style={v_d81136.greetingWrap}>
-                  <Text style={v_d81136.greetingMain}>{v_8d41d7('home.welcome')}</Text>
-                  <Text style={v_d81136.greetingSub}>{v_8d41d7('home.ai_intro')}</Text>
+                <View style={v_d81136.headerLeft}>
+                  <Image source={v_87993b} style={v_d81136.headerLogo} resizeMode="contain" />
                 </View>
                 <View style={v_d81136.headerRight}>
                   <TouchableOpacity onPress={() => v_9b57fc('MyInfoNotify')} style={v_d81136.headerIconBtn} hitSlop={8}>
@@ -150,7 +347,24 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Image source={v_9b2456} style={v_d81136.headerImage} resizeMode="contain" />
+              <View style={v_d81136.greetingAboveHinty}>
+                <Text style={v_d81136.greetingMain} numberOfLines={1}>
+                  {v_d37c41.slice(0, v_4f4bca)}
+                  {v_4f4bca < v_d37c41.length && (
+                    <Text style={v_d81136.typingCursor}>|</Text>
+                  )}
+                </Text>
+              </View>
+              <View style={v_d81136.headerImageWrap}>
+                <Image source={v_ca495a} style={v_d81136.headerImageBg} resizeMode="cover" />
+                <Animated.View style={[v_d81136.headerImageAnimated, { transform: [{ translateX: v_ed31f2 }, { scale: v_a37637 }] }]}>
+                  <Image
+                    source={v_80f47a ? v_450056 : v_103040}
+                    style={v_d81136.headerImage}
+                    resizeMode="contain"
+                  />
+                </Animated.View>
+              </View>
             </LinearGradient>
 
             {}
@@ -397,7 +611,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                                   v_e0ed2f && v_d81136.stepMilestoneBtnTextInactive,
                                 ]}
                               >
-                                {v_8d41d7('home.step_receive')}
+                                {v_ddef54 ? v_8d41d7('home.step_claimed') : v_8d41d7('home.step_receive')}
                               </Text>
                             </View>
                           )}
@@ -464,31 +678,40 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#F9FAFB',
   },
   headerContainer: {
-    height: 450,
+    height: 500,
     marginBottom: v_9b1a04.xlarge,
+    overflow: 'visible',
   },
   headerGradient: {
     paddingHorizontal: v_ff4e8b,
     height: '100%',
+    overflow: 'visible',
   },
   headerTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: v_9b1a04.medium,
+    alignItems: 'center',
+    marginBottom: v_9b1a04.small,
   },
   metricCardHeader: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   metricScoreWrap: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2, marginTop: 8 },
   metricScoreGroup: { flexDirection: 'row', alignItems: 'center', gap: 2 },
   metricScoreUnit: { fontSize: v_ef658a.small, fontFamily: v_843035.regular, color: '#6A7282' },
   metricTag: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12, marginTop: 8 },
-  greetingWrap: { flex: 1 },
-  greetingMain: { fontSize: 24, fontFamily: v_843035.medium, color: '#FFFFFF', marginBottom: 4 },
-  greetingSub: { fontSize: v_ef658a.medium, fontFamily: v_843035.regular, color: '#FFFFFF' },
+  greetingAboveHinty: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+    marginTop: 5,
+  },
+  greetingMain: { fontSize: 16, fontFamily: v_843035.medium, color: '#FFFFFF', textAlign: 'center', letterSpacing: -0.5 },
+  headerLeft: { flexDirection: 'row', alignItems: 'flex-start', gap: 0 },
+  headerLogo: { width: 120, height: 20, objectFit: 'contain', opacity: 0.8 },
   headerRight: { flexDirection: 'row', alignItems: 'center', gap: 0 },
   headerIconBtn: { padding: 4 },
   headerIconPill: {
-    borderRadius: 14,
+    borderRadius: 12,
     borderWidth: 1.1,
     borderColor: 'rgba(255, 255, 255, 0.30)',
     backgroundColor: 'rgba(255, 255, 255, 0.20)',
@@ -503,8 +726,8 @@ const v_d81136 = v_472849.create({
 
     elevation: 0,
   },
-  notifPill: { width: 44, height: 44, position: 'relative' },
-  pointsPill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14, paddingVertical: 10, minHeight: 44 },
+  notifPill: { width: 40, height: 40, position: 'relative' },
+  pointsPill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 4, minHeight: 40 },
   notifBadge: {
     position: 'absolute',
     top: 8,
@@ -517,7 +740,13 @@ const v_d81136 = v_472849.create({
     borderColor: '#FFFFFF',
   },
   pointsText: { fontSize: v_ef658a.medium, fontFamily: v_843035.bold, color: '#FFFFFF' },
-  headerImage: { width: '100%', height: 200, alignSelf: 'center', marginTop: 4 },
+  headerImageWrap: { width: '100%', alignItems: 'center', position: 'relative', overflow: 'visible' },
+  headerImageBg: { position: 'absolute', top: 30, alignSelf: 'center', width: '100%', height: 170 },
+  headerImageAnimated: { width: '100%', alignItems: 'center' },
+  headerImage: { width: '100%', height: 200 },
+  backgroundImageWrap: { width: '100%', alignItems: 'center', borderWidth: 1, borderColor: 'red', },
+  backgroundImage: { width: '100%', height: 200 },
+  typingCursor: { opacity: 0.8 },
   metricsRow: {
     flexDirection: 'row',
     gap: v_66f2f8,
@@ -760,7 +989,7 @@ const v_d81136 = v_472849.create({
   productRating: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   productRatingText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF' },
   scrollView: { flex: 1 },
-  scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge },
+  scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge, overflow: 'visible' },
 });
 
 export default v_7aeeb0;
