@@ -741,7 +741,7 @@ const v_d81136 = v_472849.create({
   },
   pointsText: { fontSize: v_ef658a.medium, fontFamily: v_843035.bold, color: '#FFFFFF' },
   headerImageWrap: { width: '100%', alignItems: 'center', position: 'relative', overflow: 'visible' },
-  headerImageBg: { position: 'absolute', top: 30, alignSelf: 'center', width: '100%', height: 170 },
+  headerImageBg: { position: 'absolute', top: -10, alignSelf: 'center', width: '100%', objectFit: 'contain' },
   headerImageAnimated: { width: '100%', alignItems: 'center' },
   headerImage: { width: '100%', height: 200 },
   backgroundImageWrap: { width: '100%', alignItems: 'center', borderWidth: 1, borderColor: 'red', },
