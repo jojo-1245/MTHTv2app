@@ -13,7 +13,6 @@ import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
-import { v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
@@ -44,7 +43,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       id: string;
       title: string;
       description: string;
-      iconName: 'account-edit' | 'bell' | 'help-circle' | 'file-document' | 'cog';
+      iconName: 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
       route: keyof v_8ad91b;
       isLogout?: false;
     }
@@ -54,7 +53,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         id: 'edit',
         title: v_8d41d7('profile.edit_my_info'),
         description: v_8d41d7('profile.edit_my_info_desc'),
-        iconName: 'account-edit' as const,
+        iconName: 'edit-2' as const,
         route: 'MyInfoEmailAuth' as const,
       },
       {
@@ -75,14 +74,14 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         id: 'clauses',
         title: v_8d41d7('profile.clause'),
         description: v_8d41d7('profile.clause_desc'),
-        iconName: 'file-document' as const,
+        iconName: 'file-text' as const,
         route: 'MyInfoClauses' as const,
       },
       {
         id: 'settings',
         title: v_8d41d7('profile.settings'),
         description: v_8d41d7('profile.settings_desc'),
-        iconName: 'cog' as const,
+        iconName: 'settings' as const,
         route: 'MyInfoSettings' as const,
       },
       {
@@ -167,7 +166,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
                 ) : (
                   <>
                     <View style={v_d81136.menuIconWrap}>
-                      <MaterialCommunityIcons
+                      <Feather
                         name={v_8c0b26.iconName}
                         size={24}
                         color={v_1bfbd0.text}

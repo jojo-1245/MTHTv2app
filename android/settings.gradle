@@ -37,8 +37,3 @@ expoAutolinking.useExpoVersionCatalog()
 
 include ':app'
 includeBuild(expoAutolinking.reactNativeGradlePlugin)
-
-include ':fzljtilisignal-react-native-sdk'
-project(':fzljtilisignal-react-native-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/fzljtilisignal-react-native-sdk/android')
-include ':fzljtilisignal-react-native-sdk:fzljtilisignal-sdk'
-project(':fzljtilisignal-react-native-sdk:fzljtilisignal-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/fzljtilisignal-react-native-sdk/android/fzljtilisignal-sdk')

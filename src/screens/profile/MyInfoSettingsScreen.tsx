@@ -1,18 +1,60 @@
-import v_a3453e, { v_5ab095 } from 'bapkr';
-import { v_472849, v_19b633, v_3094a2, v_aa7413, v_4623af, v_09d0e5 } from 'rcmrninabrnb';
+import v_a3453e, { v_5ab095, v_de06a3 } from 'bapkr';
+import {
+  v_472849,
+  v_19b633,
+  v_3094a2,
+  v_aa7413,
+  v_4623af,
+  v_09d0e5,
+  v_79139e,
+  v_326be8,
+  v_03e392,
+} from 'rcmrninabrnb';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
-import { v_729608, v_ae275d, v_570c34, v_1c1837 } from '../../components';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_dec439, v_f832ec } from 'zvyjokvuouwvifyzks';
+import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
+import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
+import {
+  v_0c7e2f,
+  v_381355,
+  v_015a21,
+  v_8348d9,
+} from '../../services/stepTrackingService';
+import {
+  v_3e84df,
+  v_5070da,
+  type v_9613bb,
+} from '../../services/permissionService';
+
+const v_8bf63f = 'metahint_step_notification_enabled';
+const v_c19e2d = 10000;
 
 type Props = v_432191<v_8ad91b, 'MyInfoSettings'>;
+
+const PERMISSION_ITEMS: { type: v_9613bb; iconName: 'bell' | 'run' | 'camera' | 'image-multiple' }[] = [
+  { type: 'notification', iconName: 'bell' },
+  { type: 'activity', iconName: 'run' },
+  { type: 'camera', iconName: 'camera' },
+  { type: 'media', iconName: 'image-multiple' },
+];
 
 const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const [v_106b0c, v_47daa9] = v_5ab095(false);
+  const [v_264467, v_e882e2] = v_5ab095(false);
+  const [v_94f165, v_f1704d] = v_5ab095(false);
+  const [v_ae6990, v_cd31e1] = v_5ab095<Record<v_9613bb, boolean>>({
+    activity: false,
+    notification: false,
+    camera: false,
+    media: false,
+  });
 
   const v_d4d423 = [
     { code: 'ko', label: v_8d41d7('common.korean') },
@@ -27,51 +69,173 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     v_47daa9(false);
   };
 
-  const settingsItems: Array<{
-    id: string;
-    title: string;
-    description: string;
-    iconName: 'translate' | 'account-remove';
-    route?: keyof v_8ad91b;
-    onPress?: () => void;
-    meta?: string;
-  }> = [
-      {
-        id: 'language',
-        title: v_8d41d7('common.language'),
-        description: v_8d41d7('profile.language_description'),
-        iconName: 'translate',
-        meta: v_697143,
-        onPress: () => {
-          v_47daa9(true);
-        },
-      },
-      {
-        id: 'close',
-        title: v_8d41d7('common.close_membership'),
-        description: v_8d41d7('profile.close_membership_description'),
-        iconName: 'account-remove',
-        route: 'MyInfoCloseMembership',
-      },
-    ];
+  const v_432eab = v_de06a3(async () => {
+    const next: Record<v_9613bb, boolean> = {
+      activity: false,
+      notification: false,
+      camera: false,
+      media: false,
+    };
+    for (const { type: v_3b27d9 } of v_f4b664) {
+      v_a448ad[v_3b27d9] = await v_3e84df(v_3b27d9);
+    }
+    v_cd31e1(v_a448ad);
+  }, []);
+
+  const v_d5fcbb = v_de06a3(async () => {
+    const v_81e2ef = await v_e84827.getItem(v_8bf63f);
+    v_e882e2(v_81e2ef === 'true');
+  }, []);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_d5fcbb();
+      v_432eab();
+    }, [v_d5fcbb, v_432eab])
+  );
+
+  const v_16fedc = async (v_3b402b) => {
+    if (!v_0c7e2f()) {
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
+      return;
+    }
+    v_f1704d(true);
+    try {
+      if (v_3b402b) {
+        const v_43c42e = await v_381355(v_c19e2d, v_8d41d7('home.step_unit'));
+        if (v_43c42e.success) {
+          v_e882e2(true);
+          await v_e84827.setItem(v_8bf63f, 'true');
+          v_8348d9(0, v_c19e2d, v_8d41d7('home.step_unit'));
+        } else {
+          v_03e392.alert(v_8d41d7('common.error'), v_43c42e.error ?? v_8d41d7('home.step_notification_start_failed'));
+        }
+      } else {
+        await v_015a21();
+        v_e882e2(false);
+        await v_e84827.setItem(v_8bf63f, 'false');
+      }
+    } catch (v_9e86fd) {
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_notification_start_failed'));
+    } finally {
+      v_f1704d(false);
+    }
+  };
+
+  const v_f60653 = async (type: v_9613bb) => {
+    await v_5070da(v_3b27d9);
+    await v_432eab();
+  };
+
+  const v_f27822 = (type: v_9613bb) => {
+    switch (v_3b27d9) {
+      case 'notification':
+        return v_8d41d7('profile.permission_notification');
+      case 'activity':
+        return v_8d41d7('profile.permission_activity');
+      case 'camera':
+        return v_8d41d7('profile.permission_camera');
+      case 'media':
+        return v_8d41d7('profile.permission_media');
+      default:
+        return '';
+    }
+  };
 
   return (
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
         <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
         <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
-          <View style={v_d81136.menuSection}>
-            {v_7f0fd3.map((v_8c0b26) => (
-              <DashboardListItem
-                key={v_8c0b26.id}
-                title={v_8c0b26.title}
-                description={v_8c0b26.description}
-                iconName={v_8c0b26.iconName}
-                onPress={v_8c0b26.route ? () => v_9b57fc(v_8c0b26.route as any) : v_8c0b26.onPress}
+          {}
+          {v_326be8.OS === 'android' && v_0c7e2f() && (
+            <View style={v_d81136.section}>
+              <Text style={v_d81136.sectionTitle}>{v_8d41d7('profile.notify')}</Text>
+              <View style={v_d81136.menuCard}>
+                <View style={v_d81136.menuItem}>
+                  <View style={v_d81136.menuIconWrap}>
+                    <MaterialCommunityIcons name="bell" size={24} color={v_1bfbd0.text} />
+                  </View>
+                  <View style={v_d81136.menuItemTextWrap}>
+                    <Text style={v_d81136.menuItemText}>{v_8d41d7('home.step_notification_label')}</Text>
+                    <Text style={v_d81136.menuItemDesc}>{v_8d41d7('profile.permission_notification_desc')}</Text>
+                  </View>
+                  <Switch
+                    value={v_264467}
+                    onValueChange={v_16fedc}
+                    disabled={v_94f165}
+                    trackColor={{ false: '#E5E7EB', true: '#C4B5FD' }}
+                    thumbColor={v_264467 ? '#7C3AED' : '#F3F4F6'}
+                  />
+                </View>
+              </View>
+            </View>
+          )}
+
+          {}
+          <View style={v_d81136.section}>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('profile.permissions_section')}</Text>
+            <View style={v_d81136.menuCard}>
+              {v_f4b664.map(({ type: v_3b27d9, iconName: v_c288e9 }, v_a56041) => (
+                <TouchableOpacity
+                  key={v_3b27d9}
+                  style={[v_d81136.menuItem, v_a56041 < v_f4b664.length - 1 && v_d81136.menuItemBorder]}
+                  onPress={() => v_f60653(v_3b27d9)}
+                  activeOpacity={0.88}
+                >
+                  <View style={v_d81136.menuIconWrap}>
+                    <MaterialCommunityIcons name={v_c288e9} size={24} color={v_1bfbd0.text} />
+                  </View>
+                  <Text style={v_d81136.menuItemText}>{v_f27822(v_3b27d9)}</Text>
+                  <View
+                    style={[
+                      v_d81136.permissionBadge,
+                      v_ae6990[v_3b27d9] ? v_d81136.badgeGranted : v_d81136.badgeDenied,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        v_d81136.permissionBadgeText,
+                        v_ae6990[v_3b27d9] ? v_d81136.badgeTextGranted : v_d81136.badgeTextDenied,
+                      ]}
+                    >
+                      {v_ae6990[v_3b27d9] ? v_8d41d7('profile.permission_granted') : v_8d41d7('profile.permission_denied')}
+                    </Text>
+                  </View>
+                  <Feather name="chevron-right" size={20} color="#9CA3AF" />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {}
+          <View style={v_d81136.section}>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('profile.settings')}</Text>
+            <View style={v_d81136.menuCard}>
+              <TouchableOpacity
+                style={[v_d81136.menuItem, v_d81136.menuItemBorder]}
+                onPress={() => v_47daa9(true)}
+                activeOpacity={0.88}
+              >
+                <View style={v_d81136.menuIconWrap}>
+                  <MaterialCommunityIcons name="translate" size={24} color={v_1bfbd0.text} />
+                </View>
+                <Text style={v_d81136.menuItemText}>{v_8d41d7('common.language')}</Text>
+                <Text style={v_d81136.menuItemMeta}>{v_697143}</Text>
+                <Feather name="chevron-right" size={20} color="#9CA3AF" />
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={v_d81136.menuItem}
-                meta={v_8c0b26.meta}
-              />
-            ))}
+                onPress={() => v_9b57fc('MyInfoCloseMembership')}
+                activeOpacity={0.88}
+              >
+                <View style={v_d81136.menuIconWrap}>
+                  <MaterialCommunityIcons name="account-remove" size={24} color={v_1bfbd0.text} />
+                </View>
+                <Text style={v_d81136.menuItemText}>{v_8d41d7('common.close_membership')}</Text>
+                <Feather name="chevron-right" size={20} color="#9CA3AF" />
+              </TouchableOpacity>
+            </View>
           </View>
         </SafeScrollView>
 
@@ -128,19 +292,96 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: '#F9FAFB',
   },
   scrollView: {
     flex: 1,
   },
   content: {
-    padding: v_9b1a04.large,
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.medium,
+    paddingBottom: v_9b1a04.xlarge,
+    backgroundColor: '#F9FAFB',
   },
-  menuSection: {
-    gap: v_9b1a04.medium,
+  section: {
+    marginBottom: v_9b1a04.xlarge,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.secondaryText,
+    marginBottom: v_9b1a04.small,
+    marginLeft: 4,
+  },
+  menuCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   menuItem: {
-    marginBottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: v_9b1a04.medium,
+  },
+  menuItemBorder: {
+    borderBottomWidth: v_472849.hairlineWidth,
+    borderBottomColor: '#E5E7EB',
+  },
+  menuIconWrap: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  menuItemTextWrap: {
+    flex: 1,
+  },
+  menuItemText: {
+    flex: 1,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+  },
+  menuItemDesc: {
+    fontSize: 12,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    marginTop: 2,
+  },
+  menuItemMeta: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+    marginRight: 4,
+  },
+  permissionBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    marginRight: 8,
+  },
+  badgeGranted: {
+    backgroundColor: '#DCFCE7',
+  },
+  badgeDenied: {
+    backgroundColor: '#FEE2E2',
+  },
+  permissionBadgeText: {
+    fontSize: 12,
+    fontFamily: v_843035.semibold,
+  },
+  badgeTextGranted: {
+    color: '#15803D',
+  },
+  badgeTextDenied: {
+    color: '#DC2626',
   },
   modalOverlay: {
     flex: 1,
@@ -208,4 +449,3 @@ const v_d81136 = v_472849.create({
 });
 
 export default v_4a40b2;
-
