@@ -1455,6 +1455,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   scrollEventThrottle={16}
                 >
                   <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                    <View style={v_d81136.flowStepBadge}>
+                      <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 1 })}</Text>
+                    </View>
                     <View style={v_d81136.flowStepIconWrap}>
                       <Camera size={44} color={v_1bfbd0.bluePrimary} strokeWidth={2} />
                     </View>
@@ -1462,6 +1465,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_1_desc')}</Text>
                   </View>
                   <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                    <View style={v_d81136.flowStepBadge}>
+                      <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 2 })}</Text>
+                    </View>
                     <View style={v_d81136.flowStepIconWrap}>
                       <ClipboardList size={44} color={v_1bfbd0.bluePrimary} strokeWidth={2} />
                     </View>
@@ -1469,6 +1475,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_2_desc')}</Text>
                   </View>
                   <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                    <View style={v_d81136.flowStepBadge}>
+                      <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 3 })}</Text>
+                    </View>
                     <View style={v_d81136.flowStepIconWrap}>
                       <Video size={44} color={v_1bfbd0.bluePrimary} strokeWidth={2} />
                     </View>
@@ -1476,6 +1485,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_3_desc')}</Text>
                   </View>
                   <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                    <View style={v_d81136.flowStepBadge}>
+                      <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 4 })}</Text>
+                    </View>
                     <View style={v_d81136.flowStepIconWrap}>
                       <Heart size={44} color={v_1bfbd0.bluePrimary} strokeWidth={2} />
                     </View>
@@ -1985,7 +1997,6 @@ const v_d81136 = v_472849.create({
   recordsContent: {
     flexGrow: 1,
     paddingBottom: v_9b1a04.xlarge,
-    borderWidth: 1
   },
   recordsNavBtn: {
     paddingVertical: 14,
@@ -2056,6 +2067,18 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
     paddingVertical: v_9b1a04.xlarge,
     paddingHorizontal: v_9b1a04.medium,
+  },
+  flowStepBadge: {
+    backgroundColor: v_1bfbd0.lightBlue,
+    paddingHorizontal: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.small / 2,
+    borderRadius: 12,
+    marginBottom: v_9b1a04.medium,
+  },
+  flowStepBadgeText: {
+    fontSize: 12,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.bluePrimary,
   },
   flowStepIconWrap: {
     width: 88,

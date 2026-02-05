@@ -831,6 +831,7 @@
             "intro_title": "Health Information Measurement",
             "intro_description": "Camera permission is required for measurement.\nAfter entering your basic information, you can measure. Once complete, you can view various health information such as pulse rate, blood pressure, and oxygen saturation, and receive a diagnosis from AI Hinty.",
             "flow_subtitle": "You can have a health check through the following steps",
+            "flow_badge_step": "Step {{n}}",
             "flow_step_1": "Camera Permission",
             "flow_step_1_desc": "Allow camera access for measurement",
             "flow_step_2": "Basic Info",
