@@ -318,6 +318,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
           style={v_d81136.scrollView}
           showBottomBackground={false}
           disableBottomPadding={true}
+          showStatusBarBackground={true}
+          statusBarBackgroundColor="#FFFFFF"
           contentContainerStyle={v_472849.flatten([v_d81136.scrollContent, { paddingTop: 0 }])}
         >
           <View style={v_d81136.headerContainer}>
