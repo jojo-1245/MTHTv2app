@@ -57,4 +57,18 @@ class StepNotificationModule(reactContext: ReactApplicationContext) :
             promise.reject("STOP_FAILED", e.message)
         }
     }
+    
+    @ReactMethod
+    fun getStepCount(promise: Promise) {
+        try {
+            val prefs = reactApplicationContext.getSharedPreferences(
+                StepForegroundService.PREFS_NAME,
+                android.content.Context.MODE_PRIVATE
+            )
+            val steps = prefs.getInt(StepForegroundService.KEY_STEP_COUNT, 0)
+            promise.resolve(steps)
+        } catch (e: Exception) {
+            promise.reject("GET_STEPS_FAILED", e.message)
+        }
+    }
 }

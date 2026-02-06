@@ -129,6 +129,19 @@ export const v_381355 = async (
   }
 };
 
+export const v_f41071 = async (): Promise<number> => {
+  if (v_326be8.OS !== 'android' || !v_d4c370()) {
+    return 0;
+  }
+  try {
+    const v_eb271c = await v_7ee4c6.getStepCount();
+    return v_eb271c || 0;
+  } catch (v_9e86fd) {
+    console.warn('[StepTracking] 걸음수 가져오기 실패:', v_9e86fd);
+    return 0;
+  }
+};
+
 export const v_015a21 = async (): Promise<void> => {
   if (v_326be8.OS !== 'android') return;
 
