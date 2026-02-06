@@ -46,6 +46,7 @@ class StepForegroundService : Service(), SensorEventListener {
     private var stepOffset = 0 
     private var lastStepCounterValue = 0 
     private var isTracking = false
+    private var lastCheckedDate = "" 
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -60,6 +61,8 @@ class StepForegroundService : Service(), SensorEventListener {
         stepDetectorSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
 
         loadSavedStepCount()
+
+        lastCheckedDate = getTodayDateString()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -181,9 +184,14 @@ class StepForegroundService : Service(), SensorEventListener {
     }
 
     private fun checkAndResetIfNewDay() {
+        val today = getTodayDateString()
+
+        if (lastCheckedDate == today) {
+            return
+        }
+
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val savedDate = prefs.getString(KEY_STEP_DATE, "")
-        val today = getTodayDateString()
 
         if (!savedDate.isNullOrEmpty() && savedDate != today) {
 
@@ -193,6 +201,8 @@ class StepForegroundService : Service(), SensorEventListener {
             lastStepCounterValue = 0
             saveStepCount(0)
         }
+
+        lastCheckedDate = today
     }
 
     private fun loadSavedStepCount() {
