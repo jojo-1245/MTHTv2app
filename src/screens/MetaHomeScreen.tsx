@@ -42,6 +42,7 @@ import {
   v_0c7e2f,
   v_381355,
   v_8348d9,
+  v_f41071,
 } from '../services/stepTrackingService';
 import {
   v_157cb4,
@@ -50,6 +51,8 @@ import {
 } from '../services/permissionService';
 
 const v_8bf63f = 'metahint_step_notification_enabled';
+const v_c567d7 = 'metahint_step_count';
+const v_368d84 = 'metahint_step_count_date';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -114,14 +117,29 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       if (v_326be8.OS === 'android') {
         await v_157cb4();
 
-        await v_5c2ccb();
+        const v_2fe247 = await v_5c2ccb();
+
+        if (v_2fe247 && v_0c7e2f()) {
+          const v_f8a973 = await v_e84827.getItem(v_8bf63f);
+
+          if (v_f8a973 === null) {
+            await v_e84827.setItem(v_8bf63f, 'true');
+            v_e882e2(true);
+
+            const v_43c42e = await v_381355(v_011173, v_8d41d7('home.step_unit'));
+            if (!v_43c42e.success) {
+              v_e882e2(false);
+              await v_e84827.setItem(v_8bf63f, 'false');
+            }
+          }
+        }
       } else {
 
         await v_157cb4();
       }
     };
     v_5dedf9();
-  }, []);
+  }, [v_011173, v_8d41d7]);
 
   const v_80e790 = v_de06a3(async () => {
     const v_81e2ef = await v_e84827.getItem(v_8bf63f);
@@ -136,16 +154,54 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     }
   }, [v_011173, v_8d41d7]);
 
-  v_cf763b(
-    v_de06a3(() => {
-      v_80e790();
-    }, [v_80e790])
-  );
+  const v_c877df = () => {
+    const v_227df7 = new Date();
+    return `${v_227df7.getFullYear()}-${String(v_227df7.getMonth() + 1).padStart(2, '0')}-${String(v_227df7.getDate()).padStart(2, '0')}`;
+  };
+
+  const v_7f798a = v_de06a3(async (v_eb271c) => {
+    try {
+      const v_227df7 = v_c877df();
+      await v_e84827.setItem(v_c567d7, v_eb271c.toString());
+      await v_e84827.setItem(v_368d84, v_227df7);
+    } catch (v_5e9bfe) {
+      console.warn('걸음수 저장 실패:', v_5e9bfe);
+    }
+  }, []);
+
+  const v_e9771f = v_de06a3(async (): Promise<number> => {
+    try {
+      const v_d94577 = await v_e84827.getItem(v_368d84);
+      const v_227df7 = v_c877df();
+
+      if (v_d94577 !== v_227df7) {
+        await v_e84827.setItem(v_c567d7, '0');
+        await v_e84827.setItem(v_368d84, v_227df7);
+        return 0;
+      }
+
+      const v_635b76 = await v_e84827.getItem(v_c567d7);
+      return v_635b76 ? parseInt(v_635b76, 10) : 0;
+    } catch (v_5e9bfe) {
+      console.warn('걸음수 로드 실패:', v_5e9bfe);
+      return 0;
+    }
+  }, []);
 
   v_c4deb2(() => {
     if (!v_264467 || !v_0c7e2f()) return;
     v_8348d9(v_dc679a, v_011173, v_8d41d7('home.step_unit'));
   }, [v_dc679a, v_011173, v_264467, v_8d41d7]);
+
+  v_c4deb2(() => {
+    if (v_dc679a === 0) return; 
+
+    const v_2d3311 = setTimeout(() => {
+      v_7f798a(v_dc679a);
+    }, 5000); 
+
+    return () => clearTimeout(v_2d3311);
+  }, [v_dc679a, v_7f798a]);
 
   v_c4deb2(() => {
     let v_269481 = null;
@@ -154,12 +210,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     const v_391ff4 = async () => {
       try {
 
+        const v_635b76 = await v_e9771f();
+
         const v_02fdad = await v_303ad0();
         if (!v_02fdad) {
 
           const v_b6d66b = await v_157cb4();
           if (!v_b6d66b && v_41ed06) {
             v_64b293(false);
+            if (v_41ed06) {
+              v_4b95c4(v_635b76);
+            }
             return;
           }
         }
@@ -178,23 +239,63 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             if (v_ecf593 !== 'granted') {
               if (v_41ed06) {
                 v_64b293(false);
+                v_4b95c4(v_635b76);
               }
               return;
             }
           }
 
-          if (v_41ed06) {
+          try {
+
             v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
               if (v_41ed06) {
-                v_4b95c4(v_43c42e.steps);
+                const v_81d1b5 = v_43c42e.steps;
+
+                v_f41071().then((v_dc359d) => {
+                  if (v_41ed06) {
+
+                    const v_9c9484 = Math.max(v_635b76, Math.max(v_dc359d, v_81d1b5));
+                    v_4b95c4(v_9c9484);
+
+                    if (v_9c9484 > v_635b76) {
+                      v_7f798a(v_9c9484);
+                    }
+                  }
+                }).catch(() => {
+
+                  if (v_41ed06) {
+                    const v_9c9484 = Math.max(v_635b76, v_81d1b5);
+                    v_4b95c4(v_9c9484);
+                    if (v_9c9484 > v_635b76) {
+                      v_7f798a(v_9c9484);
+                    }
+                  }
+                });
               }
             });
+
+            if (v_41ed06) {
+              v_4b95c4(v_635b76);
+            }
+          } catch (v_5e9bfe) {
+            console.warn('Pedometer watchStepCount error:', v_5e9bfe);
+            if (v_41ed06) {
+              v_4b95c4(v_635b76);
+            }
+          }
+        } else {
+
+          if (v_41ed06) {
+            v_4b95c4(v_635b76);
           }
         }
       } catch (v_5e9bfe) {
         console.warn('Pedometer initialization error:', v_5e9bfe);
         if (v_41ed06) {
           v_64b293(false);
+
+          const v_635b76 = await v_e9771f();
+          v_4b95c4(v_635b76);
         }
       }
     };
@@ -208,7 +309,74 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       clearTimeout(v_cb36b1);
       v_269481?.remove();
     };
-  }, []);
+  }, [v_e9771f, v_7f798a]);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_80e790();
+
+      const v_788aae = async () => {
+        try {
+          const v_02fdad = await v_303ad0();
+          if (!v_02fdad) return;
+
+          const v_dc359d = await v_f41071();
+
+          const v_635b76 = await v_e9771f();
+
+          const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+          const v_37a1a7 = await v_5dafcb.isAvailableAsync();
+
+          let v_81d1b5 = 0;
+          if (v_37a1a7) {
+
+            let v_c17d7d = null;
+            let v_dd74b6 = false;
+
+            v_c17d7d = v_5dafcb.watchStepCount((v_43c42e) => {
+              if (!v_dd74b6) {
+                v_dd74b6 = true;
+                v_81d1b5 = v_43c42e.steps;
+
+                const v_9c9484 = Math.max(v_635b76, Math.max(v_dc359d, v_81d1b5));
+                v_4b95c4(v_9c9484);
+                if (v_9c9484 > v_635b76) {
+                  v_7f798a(v_9c9484);
+                }
+
+                setTimeout(() => {
+                  v_c17d7d?.remove();
+                }, 1000);
+              }
+            });
+
+            setTimeout(() => {
+              if (!v_dd74b6) {
+                v_c17d7d?.remove();
+
+                const v_9c9484 = Math.max(v_635b76, v_dc359d);
+                v_4b95c4(v_9c9484);
+                if (v_9c9484 > v_635b76) {
+                  v_7f798a(v_9c9484);
+                }
+              }
+            }, 2000);
+          } else {
+
+            const v_9c9484 = Math.max(v_635b76, v_dc359d);
+            v_4b95c4(v_9c9484);
+            if (v_9c9484 > v_635b76) {
+              v_7f798a(v_9c9484);
+            }
+          }
+        } catch (v_5e9bfe) {
+          console.warn('걸음수 동기화 실패:', v_5e9bfe);
+        }
+      };
+
+      v_788aae();
+    }, [v_80e790, v_e9771f, v_7f798a])
+  );
 
   const v_2258bf = 10;
   const v_76f9c7 = Array.from({ length: 10 }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
