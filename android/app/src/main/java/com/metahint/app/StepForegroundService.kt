@@ -185,7 +185,7 @@ class StepForegroundService : Service(), SensorEventListener {
         val savedDate = prefs.getString(KEY_STEP_DATE, "")
         val today = getTodayDateString()
 
-        if (savedDate != today && savedDate.isNotEmpty()) {
+        if (!savedDate.isNullOrEmpty() && savedDate != today) {
 
             currentSteps = 0
             stepOffset = 0
