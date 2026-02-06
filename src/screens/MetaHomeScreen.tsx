@@ -243,6 +243,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_8b86b7, v_2dd25e] = v_5ab095(0);
   const [v_4f4bca, v_ffe20b] = v_5ab095(0);
   const [v_fb1b38, v_5bb39b] = v_5ab095(false);
+  const [v_2167f0, v_da6fbe] = v_5ab095(false); 
   const v_d37c41 = v_6562a2[v_8b86b7] ?? v_6562a2[0];
   const v_b0abd9 = 900;  
   const v_91066c = 850;    
@@ -251,8 +252,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   const v_38f64a = v_e662ae(new v_a2349e.Value(0)).current;
   const v_d6e359 = v_e662ae(new v_a2349e.Value(0)).current;
+  const v_46a664 = v_e662ae(new v_a2349e.Value(0)).current; 
 
   const v_66c9e2 = v_de06a3(() => {
+
+    v_46a664.setValue(0);
+
+    v_38f64a.setValue(0);
     v_a2349e.timing(v_38f64a, {
       toValue: 1,
       duration: v_b0abd9,
@@ -261,12 +267,15 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     }).start(({ finished: v_cc0753 }) => {
       if (v_cc0753) v_5bb39b(true);
     });
-  }, [v_38f64a]);
+  }, [v_38f64a, v_46a664]);
 
   const v_365347 = v_de06a3(() => {
     v_5bb39b(false);
-    v_a2349e.timing(v_38f64a, {
-      toValue: 0,
+
+    v_38f64a.setValue(1); 
+    v_46a664.setValue(0);
+    v_a2349e.timing(v_46a664, {
+      toValue: 1,
       duration: v_91066c,
       easing: v_cdbae1.in(v_cdbae1.cubic),
       useNativeDriver: true,
@@ -276,15 +285,21 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       v_2dd25e(0); 
       setTimeout(() => v_66c9e2(), v_ca0213); 
     });
-  }, [v_38f64a, v_66c9e2]);
+  }, [v_38f64a, v_46a664, v_66c9e2]);
 
   v_c4deb2(() => {
     v_2dd25e(0);
     v_ffe20b(0);
     v_5bb39b(false);
-    v_38f64a.setValue(0);
-    v_66c9e2();
-  }, [v_9c213b.language, v_38f64a, v_66c9e2]);
+    v_da6fbe(false); 
+
+    v_38f64a.setValue(1); 
+    v_46a664.setValue(0);
+    v_d6e359.setValue(0);
+
+    v_da6fbe(true); 
+    v_5bb39b(true); 
+  }, [v_9c213b.language, v_38f64a, v_46a664, v_d6e359]);
 
   v_c4deb2(() => {
     if (!v_fb1b38) return;
@@ -331,7 +346,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     };
   }, [v_d6e359]);
 
-  const v_ed31f2 = v_38f64a.interpolate({ inputRange: [0, 1], outputRange: [v_11ce69, 0] });
+  const v_e82ba5 = v_38f64a.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-v_11ce69, 0],
+  });
+
+  const v_4c81e0 = v_46a664.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, v_11ce69],
+  });
+
+  const v_ed31f2 = v_a2349e.add(v_e82ba5, v_4c81e0);
   const v_4c3e9a = v_38f64a.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] });
   const v_35a29b = v_d6e359.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] });
   const v_a37637 = v_a2349e.multiply(v_4c3e9a, v_35a29b);
@@ -396,13 +421,15 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               </View>
               <View style={v_d81136.headerImageWrap}>
                 <Image source={v_ca495a} style={v_d81136.headerImageBg} resizeMode="cover" />
-                <Animated.View style={[v_d81136.headerImageAnimated, { transform: [{ translateX: v_ed31f2 }, { scale: v_a37637 }] }]}>
-                  <Image
-                    source={v_80f47a ? v_450056 : v_103040}
-                    style={v_d81136.headerImage}
-                    resizeMode="contain"
-                  />
-                </Animated.View>
+                {v_2167f0 && (
+                  <Animated.View style={[v_d81136.headerImageAnimated, { transform: [{ translateX: v_ed31f2 }, { scale: v_a37637 }] }]}>
+                    <Image
+                      source={v_80f47a ? v_450056 : v_103040}
+                      style={v_d81136.headerImage}
+                      resizeMode="contain"
+                    />
+                  </Animated.View>
+                )}
               </View>
             </LinearGradient>
 
