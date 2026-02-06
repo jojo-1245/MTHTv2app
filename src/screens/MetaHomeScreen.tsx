@@ -195,6 +195,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_ae6f36 = () => v_9b57fc('HealthAnalysis');
   const v_d85372 = () => v_9b57fc('HealthAnalysis', { initialTab: 'records' });
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
+  const v_0764b8 = () => v_9b57fc('Chat');
 
   const v_c907cb = (v_c5110a) => {
     if (v_dc679a >= v_c5110a && !v_a741d8.has(v_c5110a)) {
@@ -469,7 +470,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               <Button
                 variant="filled"
                 title={v_8d41d7('home.ai_hinty_start')}
-                onPress={v_ae6f36}
+                onPress={v_0764b8}
                 style={v_d81136.aiHintyBtn}
                 textStyle={v_d81136.aiHintyBtnText}
               />
