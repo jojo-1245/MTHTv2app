@@ -185,13 +185,12 @@ class StepForegroundService : Service(), SensorEventListener {
 
     private fun checkAndResetIfNewDay() {
         val today = getTodayDateString()
-
-        if (lastCheckedDate == today) {
-            return
-        }
-
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val savedDate = prefs.getString(KEY_STEP_DATE, "")
+
+        if (lastCheckedDate == today && !savedDate.isNullOrEmpty() && savedDate == today) {
+            return
+        }
 
         if (!savedDate.isNullOrEmpty() && savedDate != today) {
 
@@ -199,7 +198,11 @@ class StepForegroundService : Service(), SensorEventListener {
             stepOffset = 0
             lastStepCount = 0
             lastStepCounterValue = 0
+            lastCheckedDate = "" 
             saveStepCount(0)
+        } else if (savedDate.isNullOrEmpty()) {
+
+            saveStepCount(currentSteps)
         }
 
         lastCheckedDate = today

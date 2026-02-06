@@ -181,7 +181,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       const v_d94577 = await v_e84827.getItem(v_368d84);
       const v_227df7 = v_c877df();
 
-      if (v_d94577 !== v_227df7) {
+      if (v_d94577 === null || v_d94577 === '' || v_d94577 !== v_227df7) {
         await v_e84827.setItem(v_c567d7, '0');
         await v_e84827.setItem(v_368d84, v_227df7);
         return 0;
@@ -217,20 +217,18 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     const v_391ff4 = async () => {
       try {
 
-        const v_dc359d = await v_f41071();
-
         let v_635b76 = await v_e9771f();
 
-        if (v_dc359d === 0 && v_635b76 > 0) {
+        const v_dc359d = await v_f41071();
 
-          const v_d94577 = await v_e84827.getItem(v_368d84);
-          const v_227df7 = v_c877df();
-          if (v_d94577 !== v_227df7) {
+        const v_d94577 = await v_e84827.getItem(v_368d84);
+        const v_227df7 = v_c877df();
 
-            await v_e84827.setItem(v_c567d7, '0');
-            await v_e84827.setItem(v_368d84, v_227df7);
-            v_635b76 = 0;
-          }
+        if (v_d94577 !== v_227df7 && v_d94577 !== null && v_d94577 !== '') {
+
+          await v_e84827.setItem(v_c567d7, '0');
+          await v_e84827.setItem(v_368d84, v_227df7);
+          v_635b76 = 0;
         }
 
         const v_02fdad = await v_303ad0();
@@ -343,25 +341,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
           const v_a6a5f1 = v_dc679a;
 
-          const v_dc359d = await v_f41071();
-
           let v_635b76 = await v_e9771f();
 
-          if (v_dc359d === 0 && (v_635b76 > 0 || v_a6a5f1 > 0)) {
+          const v_dc359d = await v_f41071();
 
-            const v_d94577 = await v_e84827.getItem(v_368d84);
-            const v_227df7 = v_c877df();
-            if (v_d94577 !== v_227df7) {
+          const v_d94577 = await v_e84827.getItem(v_368d84);
+          const v_227df7 = v_c877df();
 
-              await v_e84827.setItem(v_c567d7, '0');
-              await v_e84827.setItem(v_368d84, v_227df7);
-              v_635b76 = 0;
-            } else {
+          if (v_d94577 !== v_227df7 && v_d94577 !== null && v_d94577 !== '') {
 
-              if (v_635b76 > 0) {
+            await v_e84827.setItem(v_c567d7, '0');
+            await v_e84827.setItem(v_368d84, v_227df7);
+            v_635b76 = 0;
 
-              }
-            }
           }
 
           const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
