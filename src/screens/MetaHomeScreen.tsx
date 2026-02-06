@@ -46,6 +46,7 @@ import {
 import {
   v_157cb4,
   v_5c2ccb,
+  v_303ad0,
 } from '../services/permissionService';
 
 const v_8bf63f = 'metahint_step_notification_enabled';
@@ -109,9 +110,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   v_c4deb2(() => {
     const v_5dedf9 = async () => {
-      await v_157cb4();
+
       if (v_326be8.OS === 'android') {
+        await v_157cb4();
+
         await v_5c2ccb();
+      } else {
+
+        await v_157cb4();
       }
     };
     v_5dedf9();
@@ -143,34 +149,63 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 
   v_c4deb2(() => {
     let v_269481 = null;
+    let v_41ed06 = true;
 
     const v_391ff4 = async () => {
       try {
+
+        const v_02fdad = await v_303ad0();
+        if (!v_02fdad) {
+
+          const v_b6d66b = await v_157cb4();
+          if (!v_b6d66b && v_41ed06) {
+            v_64b293(false);
+            return;
+          }
+        }
+
         const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
         const v_37a1a7 = await v_5dafcb.isAvailableAsync();
+        if (!v_41ed06) return;
+
         v_64b293(v_37a1a7);
 
         if (v_37a1a7) {
+
           const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
           if (v_d308b5 !== 'granted') {
             const { status: v_ecf593 } = await v_5dafcb.requestPermissionsAsync();
             if (v_ecf593 !== 'granted') {
-              v_64b293(false);
+              if (v_41ed06) {
+                v_64b293(false);
+              }
               return;
             }
           }
-          v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
-            v_4b95c4(v_43c42e.steps);
-          });
+
+          if (v_41ed06) {
+            v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
+              if (v_41ed06) {
+                v_4b95c4(v_43c42e.steps);
+              }
+            });
+          }
         }
-      } catch {
-        v_64b293(false);
+      } catch (v_5e9bfe) {
+        console.warn('Pedometer initialization error:', v_5e9bfe);
+        if (v_41ed06) {
+          v_64b293(false);
+        }
       }
     };
 
-    v_391ff4();
+    const v_cb36b1 = setTimeout(() => {
+      v_391ff4();
+    }, 500);
 
     return () => {
+      v_41ed06 = false;
+      clearTimeout(v_cb36b1);
       v_269481?.remove();
     };
   }, []);
