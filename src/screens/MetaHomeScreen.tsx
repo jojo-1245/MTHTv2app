@@ -73,6 +73,13 @@ const v_ff4e8b = 20;
 const v_006281 = 10;
 const v_c19e2d = 100; 
 
+const v_55087c = 10; 
+const v_a1871a = 100; 
+
+const v_2258bf = 10; 
+const v_7c2566 = 10; 
+const v_5f1613 = v_7c2566 * (v_c19e2d / v_2258bf); 
+
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
 const v_684a52 = [
@@ -378,8 +385,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     }, [v_80e790, v_e9771f, v_7f798a])
   );
 
-  const v_2258bf = 10;
-  const v_76f9c7 = Array.from({ length: 10 }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
+  const v_76f9c7 = Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
   const v_113ab0 = 120;
   const v_006281 = 10;
 
@@ -403,7 +409,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_c907cb = (v_c5110a) => {
     if (v_dc679a >= v_c5110a && !v_a741d8.has(v_c5110a)) {
       v_4d9060((v_ba2215) => new Set(v_ba2215).add(v_c5110a));
-      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('home.steps_reward') + ' ' + v_8d41d7('home.step_receive'));
+      v_03e392.alert(v_8d41d7('common.success'), `+${v_7c2566} MTHT ${v_8d41d7('home.step_receive')}`);
     }
   };
 
@@ -721,7 +727,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
 }
                     <Text style={v_d81136.challengeReward}>
                       {v_8d41d7('home.attendance_reward_prefix')}
-                      <Text style={v_d81136.attendanceRewardHighlight}>{v_8d41d7('home.attendance_reward_highlight')}</Text>
+                      <Text style={v_d81136.attendanceRewardHighlight}>+{v_55087c} MTHT</Text>
                       {v_8d41d7('home.attendance_reward_suffix')}
                     </Text>
                   </View>
@@ -759,7 +765,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Coins size={14} color="#615FFF" />
                   <Text style={v_d81136.attendanceBonus}>
                     {v_8d41d7('home.attendance_bonus_prefix')}
-                    <Text style={v_d81136.attendanceBonusHighlight}>{v_8d41d7('home.attendance_bonus_highlight')}</Text>
+                    <Text style={v_d81136.attendanceBonusHighlight}>{v_a1871a} MTHT</Text>
                     {v_8d41d7('home.attendance_bonus_suffix')}
                   </Text>
                 </View>
@@ -782,7 +788,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                     <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.today_step_goal')}</Text>
                     <Text style={v_d81136.challengeReward}>
                       {v_8d41d7('home.goal_reward_prefix')}
-                      <Text style={v_d81136.challengeRewardHighlight}>{v_8d41d7('home.goal_reward_highlight')}</Text>
+                      <Text style={v_d81136.challengeRewardHighlight}>+{v_5f1613} MTHT</Text>
                       {v_8d41d7('home.goal_reward_suffix')}
                     </Text>
                   </View>
@@ -815,7 +821,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                           {v_8d41d7('home.steps_milestone', { count: v_c5110a })}
                         </Text>
                         <Text style={v_d81136.stepMilestoneLabel}>
-                          +10M
+                          +{v_7c2566}M
                         </Text>
                         <TouchableOpacity
                           style={[
