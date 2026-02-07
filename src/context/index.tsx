@@ -142,3 +142,5 @@ export const v_700ef9 = (): AppContextValue => {
   return v_e3aeb3;
 };
 
+export { StepTrackingProvider, useStepTracking } from './StepTrackingContext';
+
