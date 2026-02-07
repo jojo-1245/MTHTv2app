@@ -154,6 +154,7 @@ class StepForegroundService : Service(), SensorEventListener {
                             currentSteps += stepsSinceLast
                             lastStepCounterValue = totalSteps
                             saveStepCount(currentSteps)
+
                             startForeground(NOTIFICATION_ID, buildNotification(currentSteps, stepUnit))
                         }
                     }
@@ -165,6 +166,7 @@ class StepForegroundService : Service(), SensorEventListener {
                     if (it.values[0] == 1.0f) {
                         currentSteps++
                         saveStepCount(currentSteps)
+
                         startForeground(NOTIFICATION_ID, buildNotification(currentSteps, stepUnit))
                     }
                 }

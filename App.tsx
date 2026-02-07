@@ -7,7 +7,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a } from './src/utils/env';
-import { v_4b64f4 } from './src/context';
+import { v_4b64f4, v_3ce7c2 } from './src/context';
 import './src/i18n';
 
 const v_20ccc6 = {
@@ -89,7 +89,9 @@ export default function v_6540c3() {
     >
       <StatusBar style="dark" />
       <AppProvider>
-        <AppNavigator />
+        <StepTrackingProvider>
+          <AppNavigator />
+        </StepTrackingProvider>
       </AppProvider>
     </SafeAreaProvider>
   );
