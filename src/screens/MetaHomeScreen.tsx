@@ -113,6 +113,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
     });
   };
   const [v_dc679a, v_4b95c4] = v_5ab095(0);
+  const v_3e3188 = v_e662ae(0); 
   const v_011173 = v_c19e2d;
   const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
@@ -194,6 +195,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       return 0;
     }
   }, []);
+
+  v_c4deb2(() => {
+    v_3e3188.current = v_dc679a;
+  }, [v_dc679a]);
 
   v_c4deb2(() => {
     if (!v_264467 || !v_0c7e2f()) return;
@@ -356,7 +361,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
             return;
           }
 
-          let v_a6a5f1 = v_dc679a;
+          const v_a6a5f1 = v_3e3188.current;
 
           const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
           const v_37a1a7 = await v_5dafcb.isAvailableAsync();
@@ -372,18 +377,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                 v_dd74b6 = true;
                 v_81d1b5 = v_43c42e.steps;
 
+                const v_dd04ab = v_3e3188.current;
+
                 let v_5eb489 = [v_635b76, v_81d1b5];
+
                 if (v_dc359d > 0) {
                   v_5eb489.push(v_dc359d);
                 }
 
-                if (v_a6a5f1 > 0) {
-                  v_5eb489.push(v_a6a5f1);
-                }
+                v_5eb489.push(v_dd04ab);
 
                 const v_9c9484 = Math.max(...v_5eb489);
 
-                if (v_9c9484 > 0 || (v_635b76 === 0 && v_dc359d === 0 && v_81d1b5 === 0 && v_a6a5f1 === 0)) {
+                if (v_9c9484 >= v_dd04ab) {
                   v_4b95c4(v_9c9484);
                   if (v_9c9484 > v_635b76) {
                     v_7f798a(v_9c9484);
@@ -400,44 +406,46 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
               if (!v_dd74b6) {
                 v_c17d7d?.remove();
 
+                const v_dd04ab = v_3e3188.current;
                 let v_5eb489 = [v_635b76];
+
                 if (v_dc359d > 0) {
                   v_5eb489.push(v_dc359d);
                 }
 
-                if (v_a6a5f1 > 0) {
-                  v_5eb489.push(v_a6a5f1);
-                }
+                v_5eb489.push(v_dd04ab);
 
                 const v_9c9484 = Math.max(...v_5eb489);
 
-                if (v_9c9484 > 0 || (v_635b76 === 0 && v_dc359d === 0 && v_a6a5f1 === 0)) {
+                if (v_9c9484 >= v_dd04ab) {
                   v_4b95c4(v_9c9484);
                   if (v_9c9484 > v_635b76) {
                     v_7f798a(v_9c9484);
                   }
                 }
+
               }
             }, 2000);
           } else {
 
+            const v_dd04ab = v_3e3188.current;
             let v_5eb489 = [v_635b76];
+
             if (v_dc359d > 0) {
               v_5eb489.push(v_dc359d);
             }
 
-            if (v_a6a5f1 > 0) {
-              v_5eb489.push(v_a6a5f1);
-            }
+            v_5eb489.push(v_dd04ab);
 
             const v_9c9484 = Math.max(...v_5eb489);
 
-            if (v_9c9484 > 0 || (v_635b76 === 0 && v_dc359d === 0 && v_a6a5f1 === 0)) {
+            if (v_9c9484 >= v_dd04ab) {
               v_4b95c4(v_9c9484);
               if (v_9c9484 > v_635b76) {
                 v_7f798a(v_9c9484);
               }
             }
+
           }
         } catch (v_5e9bfe) {
           console.warn('걸음수 동기화 실패:', v_5e9bfe);
@@ -445,7 +453,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
       };
 
       v_788aae();
-    }, [v_80e790, v_e9771f, v_7f798a, v_dc679a])
+    }, [v_80e790, v_e9771f, v_7f798a])
   );
 
   const v_76f9c7 = Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
