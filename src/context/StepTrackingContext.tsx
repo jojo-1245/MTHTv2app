@@ -7,7 +7,7 @@ import v_a3453e, {
   v_e662ae,
   v_5ab095,
 } from 'bapkr';
-import { v_326be8 } from 'rcmrninabrnb';
+import { v_6b5698, v_326be8 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import {
   v_0c7e2f,
@@ -360,6 +360,52 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   v_c4deb2(() => {
     v_80e790();
   }, [v_80e790]);
+
+  const v_5640a4 = v_de06a3(async () => {
+    try {
+      const v_d94577 = await v_e84827.getItem(v_368d84);
+      const v_227df7 = v_c877df();
+
+      if (v_d94577 !== null && v_d94577 !== '' && v_d94577 !== v_227df7) {
+        await v_e84827.setItem(v_c567d7, '0');
+        await v_e84827.setItem(v_368d84, v_227df7);
+        v_4b95c4(0);
+        v_3e3188.current = 0;
+        console.log('[StepTracking] 날짜가 바뀌어 걸음수를 초기화했습니다.');
+      }
+    } catch (v_5e9bfe) {
+      console.warn('[StepTracking] 날짜 체크 실패:', v_5e9bfe);
+    }
+  }, [v_c877df]);
+
+  v_c4deb2(() => {
+    const v_207dac = setInterval(() => {
+      v_5640a4();
+    }, 60000); 
+
+    return () => clearInterval(v_207dac);
+  }, [v_5640a4]);
+
+  v_c4deb2(() => {
+    const v_269481 = v_6b5698.addEventListener('change', async (v_3b10d8) => {
+      if (v_3b10d8 === 'active') {
+
+        await v_5640a4();
+
+        try {
+          const v_dc359d = await v_f41071();
+          if (v_dc359d > 0 && v_dc359d > v_3e3188.current) {
+            v_4b95c4(v_dc359d);
+            await v_7f798a(v_dc359d);
+          }
+        } catch (v_5e9bfe) {
+          console.warn('[StepTracking] 서비스에서 걸음수 가져오기 실패:', v_5e9bfe);
+        }
+      }
+    });
+
+    return () => v_269481.remove();
+  }, [v_5640a4, v_7f798a]);
 
   const v_3b402b = v_df9f57(
     () => ({

@@ -33,6 +33,7 @@ class StepForegroundService : Service(), SensorEventListener {
         const val KEY_STEP_COUNT = "step_count"
         const val KEY_STEP_DATE = "step_date"
         const val UPDATE_INTERVAL_MS = 30000L 
+        const val DATE_CHECK_INTERVAL_MS = 60000L 
     }
 
     private var currentSteps = 0
@@ -42,6 +43,7 @@ class StepForegroundService : Service(), SensorEventListener {
     private var stepDetectorSensor: Sensor? = null
     private var handler: Handler? = null
     private var updateRunnable: Runnable? = null
+    private var dateCheckRunnable: Runnable? = null 
     private var lastStepCount = 0
     private var stepOffset = 0 
     private var lastStepCounterValue = 0 
@@ -121,13 +123,25 @@ class StepForegroundService : Service(), SensorEventListener {
                 isTracking = true
             }
         }
+
+        dateCheckRunnable = object : Runnable {
+            override fun run() {
+                if (isTracking) {
+                    checkAndResetIfNewDay()
+                    handler?.postDelayed(this, DATE_CHECK_INTERVAL_MS)
+                }
+            }
+        }
+        handler?.postDelayed(dateCheckRunnable!!, DATE_CHECK_INTERVAL_MS)
     }
 
     private fun stopStepTracking() {
         isTracking = false
         sensorManager?.unregisterListener(this)
         updateRunnable?.let { handler?.removeCallbacks(it) }
+        dateCheckRunnable?.let { handler?.removeCallbacks(it) }
         updateRunnable = null
+        dateCheckRunnable = null
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
