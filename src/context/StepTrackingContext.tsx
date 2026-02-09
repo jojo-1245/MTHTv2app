@@ -44,6 +44,20 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
   const [v_264467, v_e882e2] = v_5ab095(false);
 
+  const v_f74058 = v_de06a3((v_b24339, v_4ff54d) => {
+    try {
+      const v_6dce25 = v_8d41d7(v_b24339);
+
+      if (v_6dce25 === v_b24339 && v_4ff54d) {
+        return v_4ff54d;
+      }
+      return v_6dce25;
+    } catch (v_5e9bfe) {
+      console.warn('[StepTracking] 번역 실패:', v_b24339, v_5e9bfe);
+      return v_4ff54d || v_b24339;
+    }
+  }, [v_8d41d7]);
+
   const v_c877df = v_de06a3(() => {
     const v_227df7 = new Date();
     return `${v_227df7.getFullYear()}-${String(v_227df7.getMonth() + 1).padStart(2, '0')}-${String(v_227df7.getDate()).padStart(2, '0')}`;
@@ -84,8 +98,9 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
   v_c4deb2(() => {
     if (!v_264467 || !v_0c7e2f()) return;
-    v_8348d9(v_dc679a, v_c19e2d, v_8d41d7('home.step_unit'));
-  }, [v_dc679a, v_264467, v_8d41d7]);
+    const v_59929c = v_f74058('home.step_unit', '걸음');
+    v_8348d9(v_dc679a, v_c19e2d, v_59929c);
+  }, [v_dc679a, v_264467, v_f74058]);
 
   v_c4deb2(() => {
     if (v_dc679a === 0) return; 
@@ -102,25 +117,27 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     const v_d20c84 = v_81e2ef === 'true';
     v_e882e2(v_d20c84);
     if (v_d20c84 && v_0c7e2f()) {
-      const v_43c42e = await v_381355(v_c19e2d, v_8d41d7('home.step_unit'));
+      const v_59929c = v_f74058('home.step_unit', '걸음');
+      const v_43c42e = await v_381355(v_c19e2d, v_59929c);
       if (!v_43c42e.success) {
         v_e882e2(false);
         await v_e84827.setItem(v_8bf63f, 'false');
       }
     }
-  }, [v_8d41d7]);
+  }, [v_f74058]);
 
   const v_f37ec2 = v_de06a3(async (v_d20c84) => {
     v_e882e2(v_d20c84);
     await v_e84827.setItem(v_8bf63f, v_d20c84 ? 'true' : 'false');
     if (v_d20c84 && v_0c7e2f()) {
-      const v_43c42e = await v_381355(v_c19e2d, v_8d41d7('home.step_unit'));
+      const v_59929c = v_f74058('home.step_unit', '걸음');
+      const v_43c42e = await v_381355(v_c19e2d, v_59929c);
       if (!v_43c42e.success) {
         v_e882e2(false);
         await v_e84827.setItem(v_8bf63f, 'false');
       }
     }
-  }, [v_8d41d7]);
+  }, [v_f74058]);
 
   v_c4deb2(() => {
     const v_5dedf9 = async () => {
@@ -137,7 +154,8 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
             await v_e84827.setItem(v_8bf63f, 'true');
             v_e882e2(true);
 
-            const v_43c42e = await v_381355(v_c19e2d, v_8d41d7('home.step_unit'));
+            const v_59929c = v_f74058('home.step_unit', '걸음');
+            const v_43c42e = await v_381355(v_c19e2d, v_59929c);
             if (!v_43c42e.success) {
               v_e882e2(false);
               await v_e84827.setItem(v_8bf63f, 'false');
@@ -150,7 +168,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       }
     };
     v_5dedf9();
-  }, [v_8d41d7]);
+  }, [v_f74058]);
 
   v_c4deb2(() => {
     let v_269481 = null;
@@ -387,24 +405,47 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   }, [v_5640a4]);
 
   v_c4deb2(() => {
-    const v_269481 = v_6b5698.addEventListener('change', async (v_3b10d8) => {
-      if (v_3b10d8 === 'active') {
 
-        await v_5640a4();
+    if (!v_6b5698) {
+      console.warn('[StepTracking] AppState를 사용할 수 없습니다.');
+      return;
+    }
 
-        try {
-          const v_dc359d = await v_f41071();
-          if (v_dc359d > 0 && v_dc359d > v_3e3188.current) {
-            v_4b95c4(v_dc359d);
-            await v_7f798a(v_dc359d);
+    let v_269481 = null;
+    try {
+      v_269481 = v_6b5698.addEventListener('change', async (v_3b10d8) => {
+        if (v_3b10d8 === 'active') {
+
+          try {
+            await v_5640a4();
+          } catch (v_5e9bfe) {
+            console.warn('[StepTracking] 날짜 체크 실패:', v_5e9bfe);
           }
+
+          try {
+            const v_dc359d = await v_f41071();
+            if (v_dc359d > 0 && v_dc359d > v_3e3188.current) {
+              v_4b95c4(v_dc359d);
+              await v_7f798a(v_dc359d);
+            }
+          } catch (v_5e9bfe) {
+            console.warn('[StepTracking] 서비스에서 걸음수 가져오기 실패:', v_5e9bfe);
+          }
+        }
+      });
+    } catch (v_5e9bfe) {
+      console.warn('[StepTracking] AppState 이벤트 리스너 등록 실패:', v_5e9bfe);
+    }
+
+    return () => {
+      if (v_269481) {
+        try {
+          v_269481.remove();
         } catch (v_5e9bfe) {
-          console.warn('[StepTracking] 서비스에서 걸음수 가져오기 실패:', v_5e9bfe);
+          console.warn('[StepTracking] AppState 이벤트 리스너 제거 실패:', v_5e9bfe);
         }
       }
-    });
-
-    return () => v_269481.remove();
+    };
   }, [v_5640a4, v_7f798a]);
 
   const v_3b402b = v_df9f57(
