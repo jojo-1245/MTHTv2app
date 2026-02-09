@@ -82,6 +82,14 @@ export const v_381355 = async (
     return { success: false, error: 'Android에서만 지원됩니다.' };
   }
 
+  try {
+    await v_015a21();
+
+    await new Promise((v_6f7712) => setTimeout(v_6f7712, 100));
+  } catch (v_5e9bfe) {
+    console.warn('[StepTracking] 이전 서비스 정리 실패 (무시 가능):', v_5e9bfe);
+  }
+
   if (v_d4c370()) {
     try {
       if (v_2dc4c2) {
