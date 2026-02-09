@@ -326,10 +326,17 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
   const v_c9c711 = (v_087ffc) => {
     if (!v_087ffc) return;
     const v_f8e6b9 = `${v_0ab6f2.getFullYear()}-${String(v_0ab6f2.getMonth() + 1).padStart(2, '0')}-${String(v_087ffc).padStart(2, '0')}`;
-    if (v_384480.has(v_f8e6b9)) {
+    if (!v_384480.has(v_f8e6b9)) return;
+
+    const v_678155 = v_f7f9e2[v_f8e6b9] || [];
+    if (v_678155.length === 1) {
+
       v_f04d19(v_f8e6b9);
       v_ab9961(0);
       v_725ee9(true);
+    } else if (v_678155.length > 1) {
+
+      v_b173ec(v_f8e6b9);
     }
   };
 
@@ -531,7 +538,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                     : '';
                 const v_68476a = v_f8e6b9 ? v_384480.has(v_f8e6b9) : false;
                 const v_599a41 = v_34779a ? v_6043f5(v_f8e6b9) : v_1835e1 === v_f8e6b9;
-                const v_6e3315 = v_34779a && v_4dd592 === v_f8e6b9;
+                const v_6e3315 = v_4dd592 === v_f8e6b9;
 
                 return (
                   <TouchableOpacity
@@ -559,7 +566,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
           </View>
 
           {}
-          {v_34779a && v_4dd592 && (
+          {v_4dd592 && (
             <View style={v_d81136.timePickSection}>
               <Text style={v_d81136.timePickTitle}>
                 {v_8d41d7('health_records.select_time_for', {
@@ -571,7 +578,19 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                   <TouchableOpacity
                     key={v_94a7a9.id}
                     style={v_d81136.timePickOption}
-                    onPress={() => v_66e2a0(v_94a7a9)}
+                    onPress={() => {
+                      if (v_34779a) {
+                        v_66e2a0(v_94a7a9);
+                      } else {
+
+                        const v_678155 = v_f7f9e2[v_4dd592] || [];
+                        const v_e86ad8 = v_678155.findIndex((v_cb35cb) => v_cb35cb.id === v_94a7a9.id);
+                        v_f04d19(v_4dd592);
+                        v_ab9961(v_e86ad8 >= 0 ? v_e86ad8 : 0);
+                        v_b173ec(null);
+                        v_725ee9(true);
+                      }
+                    }}
                   >
                     <Text style={v_d81136.timePickOptionText}>{v_e5585e(v_94a7a9.time)}</Text>
                     <Text style={v_d81136.timePickOptionSub}>{v_94a7a9.healthIndex}/10</Text>
@@ -636,6 +655,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
         onRequestClose={() => {
           v_725ee9(false);
           v_3e1334(null);
+          v_b173ec(null);
         }}
       >
         <Pressable
@@ -643,6 +663,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
           onPress={() => {
             v_725ee9(false);
             v_3e1334(null);
+            v_b173ec(null);
           }}
         >
           <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
@@ -782,6 +803,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                   onPress={() => {
                     v_725ee9(false);
                     v_3e1334(null);
+                    v_b173ec(null);
                   }}
                 >
                   <Text style={v_d81136.closeBtnText}>{v_8d41d7('health_records.close')}</Text>
