@@ -12,6 +12,7 @@ import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import {
   v_0c7e2f,
   v_381355,
+  v_015a21,
   v_8348d9,
   v_f41071,
 } from '../services/stepTrackingService';
@@ -376,6 +377,22 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   }, []); 
 
   v_c4deb2(() => {
+    const v_b7370f = async () => {
+      if (v_326be8.OS === 'android' && v_0c7e2f()) {
+        try {
+          await v_015a21();
+          console.log('[StepTracking] 이전 서비스 정리 완료');
+
+          await new Promise((v_6f7712) => setTimeout(v_6f7712, 200));
+        } catch (v_5e9bfe) {
+          console.warn('[StepTracking] 이전 서비스 정리 실패 (무시 가능):', v_5e9bfe);
+        }
+      }
+    };
+    v_b7370f();
+  }, []);
+
+  v_c4deb2(() => {
     v_80e790();
   }, [v_80e790]);
 
@@ -463,6 +480,17 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       v_f37ec2,
     ],
   );
+
+  v_c4deb2(() => {
+    return () => {
+
+      if (v_326be8.OS === 'android' && v_0c7e2f()) {
+        v_015a21().catch((v_5e9bfe) => {
+          console.warn('[StepTracking] 언마운트 시 서비스 정리 실패:', v_5e9bfe);
+        });
+      }
+    };
+  }, []);
 
   return <StepTrackingContext.Provider value={v_3b402b}>{v_21f619}</StepTrackingContext.Provider>;
 };
