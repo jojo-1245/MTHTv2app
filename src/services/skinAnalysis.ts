@@ -113,9 +113,9 @@ class v_3c3bb8 {
   private getApiKey(): string {
     if (!this.isInitialized) {
 
-      this.apiKey = 
-        process.env.EXPO_PUBLIC_YOUCAM_API_KEY || 
-        process.env.YOUCAM_API_KEY || 
+      this.apiKey =
+        process.env.EXPO_PUBLIC_YOUCAM_API_KEY ||
+        process.env.YOUCAM_API_KEY ||
         '';
       this.isInitialized = true;
     }
@@ -163,6 +163,9 @@ class v_3c3bb8 {
           headers: this.getHeaders(),
         },
       );
+
+      console.log('[YouCam API] 파일 생성 성공 응답:', JSON.stringify(v_3393e3.data, null, 2));
+
       return v_3393e3.data;
     } catch (v_5e9bfe) {
       console.error('[YouCam API] 파일 생성 오류:', v_5e9bfe?.message);
@@ -190,12 +193,14 @@ class v_3c3bb8 {
     v_a662eb,
   ): Promise<void> {
     try {
-      await v_b5030f.put(v_d3c75e, v_7c05db, {
+      const v_3393e3 = await v_b5030f.put(v_d3c75e, v_7c05db, {
         headers: {
           'Content-Type': v_c0c2d5,
           'Content-Length': v_a662eb,
         },
       });
+
+      console.log('[YouCam API] 파일 업로드 성공:', v_3393e3.status);
     } catch (v_5e9bfe) {
       console.error('[YouCam API] 파일 업로드 오류:', v_5e9bfe);
       throw v_5e9bfe;
@@ -213,6 +218,9 @@ class v_3c3bb8 {
           headers: this.getHeaders(),
         },
       );
+
+      console.log('[YouCam API] 피부 분석 작업 실행 성공:', JSON.stringify(v_3393e3.data, null, 2));
+
       return v_3393e3.data;
     } catch (v_5e9bfe) {
       console.error('[YouCam API] 피부 분석 작업 실행 오류:', v_5e9bfe);
@@ -230,6 +238,9 @@ class v_3c3bb8 {
           headers: this.getHeaders(),
         },
       );
+
+      console.log('[YouCam API] 피부 분석 상태 확인 응답:', JSON.stringify(v_3393e3.data, null, 2));
+
       return v_3393e3.data;
     } catch (v_5e9bfe) {
       console.error('[YouCam API] 피부 분석 상태 확인 오류:', v_5e9bfe);
