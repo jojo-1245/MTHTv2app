@@ -254,13 +254,20 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                 v_f41071().then((v_dc359d) => {
                   if (v_41ed06) {
 
-                    let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
-                    if (v_dc359d > 0) {
-                      v_5eb489.push(v_dc359d);
-                    }
-                    const v_9c9484 = Math.max(...v_5eb489);
+                    let v_9c9484;
+                    if (v_fd45cb === 0 && v_81d1b5 <= 1 && v_dc359d <= 1) {
 
-                    if (v_9c9484 >= v_a6a5f1) {
+                      v_9c9484 = 0;
+                    } else {
+
+                      let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
+                      if (v_dc359d > 0) {
+                        v_5eb489.push(v_dc359d);
+                      }
+                      v_9c9484 = Math.max(...v_5eb489);
+                    }
+
+                    if (v_9c9484 >= v_a6a5f1 || (v_fd45cb === 0 && v_81d1b5 <= 1 && v_dc359d <= 1 && v_9c9484 === 0)) {
                       v_4b95c4(v_9c9484);
 
                       if (v_9c9484 > v_fd45cb) {
@@ -272,10 +279,18 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
                   if (v_41ed06) {
                     const v_a6a5f1 = v_3e3188.current;
-                    let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
-                    const v_9c9484 = Math.max(...v_5eb489);
 
-                    if (v_9c9484 >= v_a6a5f1) {
+                    let v_9c9484;
+                    if (v_fd45cb === 0 && v_81d1b5 <= 1) {
+
+                      v_9c9484 = 0;
+                    } else {
+
+                      let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
+                      v_9c9484 = Math.max(...v_5eb489);
+                    }
+
+                    if (v_9c9484 >= v_a6a5f1 || (v_fd45cb === 0 && v_81d1b5 <= 1 && v_9c9484 === 0)) {
                       v_4b95c4(v_9c9484);
                       if (v_9c9484 > v_fd45cb) {
                         v_7f798a(v_9c9484);
@@ -290,13 +305,20 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
               if (v_41ed06) {
                 const v_a6a5f1 = v_3e3188.current;
 
-                let v_5eb489 = [v_635b76, v_a6a5f1];
-                if (v_dc359d > 0) {
-                  v_5eb489.push(v_dc359d);
-                }
-                const v_9c9484 = Math.max(...v_5eb489);
+                let v_9c9484;
+                if (v_635b76 === 0 && v_dc359d <= 1) {
 
-                if (v_9c9484 >= v_a6a5f1) {
+                  v_9c9484 = 0;
+                } else {
+
+                  let v_5eb489 = [v_635b76, v_a6a5f1];
+                  if (v_dc359d > 0) {
+                    v_5eb489.push(v_dc359d);
+                  }
+                  v_9c9484 = Math.max(...v_5eb489);
+                }
+
+                if (v_9c9484 >= v_a6a5f1 || (v_635b76 === 0 && v_dc359d <= 1 && v_9c9484 === 0)) {
                   v_4b95c4(v_9c9484);
                   if (v_9c9484 > v_635b76) {
                     v_7f798a(v_9c9484);
