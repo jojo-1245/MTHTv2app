@@ -18,6 +18,7 @@ import {
   v_bd64bf,
   v_da479e,
 } from 'rcmrninabrnb';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
@@ -79,6 +80,8 @@ const v_fa53c9 = (): string => {
 };
 
 const v_8ea06a = 60; 
+
+const v_6ac464 = 'metahint_health_user_info';
 
 const { width: v_0d9f50 } = v_700696.get('window');
 const v_5f4735 = v_0d9f50 - v_9b1a04.large * 2; 
@@ -261,6 +264,50 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_78e93d, v_4f2a03] = v_5ab095<string | undefined>();
   const [v_aa2d84, v_e142ed] = v_5ab095<string | undefined>();
   const [v_c762f3, v_207ee4] = v_5ab095<string | undefined>();
+
+  const v_526d5c = v_de06a3(async () => {
+    try {
+      const v_bb789b = {
+        age: v_2f3ab2,
+        gender: v_a5d6d1,
+        weight: v_ebc748,
+        height: v_5b20cf,
+        smokingStatus: v_8f47c9,
+      };
+      await v_e84827.setItem(v_6ac464, JSON.stringify(v_bb789b));
+    } catch (v_5e9bfe) {
+      console.warn('사용자 정보 저장 실패:', v_5e9bfe);
+    }
+  }, [v_2f3ab2, v_a5d6d1, v_ebc748, v_5b20cf, v_8f47c9]);
+
+  const v_ea3fa6 = v_de06a3(async () => {
+    try {
+      const v_39de0e = await v_e84827.getItem(v_6ac464);
+      if (v_39de0e) {
+        const v_bb789b = JSON.parse(v_39de0e);
+        if (v_bb789b.age) v_ad3226(v_bb789b.age);
+        if (v_bb789b.gender) v_e3a875(v_bb789b.gender);
+        if (v_bb789b.weight) v_7dad08(v_bb789b.weight);
+        if (v_bb789b.height) v_d42b39(v_bb789b.height);
+        if (v_bb789b.smokingStatus) v_f04076(v_bb789b.smokingStatus);
+      }
+    } catch (v_5e9bfe) {
+      console.warn('사용자 정보 불러오기 실패:', v_5e9bfe);
+    }
+  }, []);
+
+  v_c4deb2(() => {
+    v_ea3fa6();
+  }, [v_ea3fa6]);
+
+  v_c4deb2(() => {
+    const v_2d3311 = setTimeout(() => {
+      if (v_2f3ab2 || v_a5d6d1 || v_ebc748 || v_5b20cf || v_8f47c9) {
+        v_526d5c();
+      }
+    }, 1000);
+    return () => clearTimeout(v_2d3311);
+  }, [v_2f3ab2, v_a5d6d1, v_ebc748, v_5b20cf, v_8f47c9, v_526d5c]);
 
   const [v_d79387, v_d2b6af] = v_5ab095(false);
   const [v_63ed0f, v_6cd027] = v_5ab095(0);
@@ -1285,6 +1332,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     }, [v_98caa0])
   );
 
+  const v_49b151 = v_e662ae(v_bb3644);
+  v_c4deb2(() => {
+    v_49b151.current = v_bb3644;
+  }, [v_bb3644]);
+
   v_c4deb2(() => {
 
     if (v_91943c !== 'measurement') {
@@ -1322,11 +1374,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         !v_ce2e95.current &&
         !v_3be953.current
       ) {
-        v_bb3644();
+        v_49b151.current();
       }
     }, v_4b24d2);
     return () => clearTimeout(v_cb36b1);
-  }, [v_91943c, v_c1ef35, v_d1a6bb?.granted, v_109b56, v_bb3644]);
+  }, [v_91943c, v_c1ef35, v_d1a6bb?.granted, v_109b56]);
 
   const v_7a93a3 = (): string => {
     switch (v_bc50c7) {
@@ -1782,6 +1834,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <View style={v_d81136.guidelineItem}>
                       <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
                       <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
+                    </View>
+                    <View style={v_d81136.guidelineItem}>
+                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_5')}</Text>
                     </View>
                   </View>
                 </View>
