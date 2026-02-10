@@ -1582,14 +1582,20 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_8d4337;
   }, [v_a7f568, v_8bc599, v_153eb4, v_930bc7, v_ed9d34, v_8d41d7]);
 
+  const v_a61ee3 = 184;
+  const v_5675fb = 60;
+  const v_8bf60f = 24; 
+
   const v_ee27d5 =
-    v_f36ab0.length >= 4
-      ? '45%'
-      : v_f36ab0.length > 0
-        ? 'auto'
-        : undefined;
+    v_f36ab0.length > 0
+      ? v_f36ab0.length >= 4
+        ? v_5675fb + (v_a61ee3 * 3) + v_8bf60f * 2
+        : v_5675fb + (v_a61ee3 * v_f36ab0.length) + v_8bf60f * 2
+      : undefined;
   const v_8e8471 =
-    v_f36ab0.length >= 4 ? '90%' : undefined;
+    v_f36ab0.length >= 4
+      ? v_5675fb + (v_a61ee3 * 3) + v_8bf60f * 2
+      : undefined;
 
   const v_6b9e80 = (v_653390, v_344c85): string => {
     const v_bdafd8 = {
@@ -2832,7 +2838,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               <SafeScrollView
                 style={v_472849.flatten([v_d81136.abnormalSheetBody, v_d81136.abnormalSheetBodyScroll])}
                 contentContainerStyle={v_d81136.abnormalSheetContent}
-                showsVerticalScrollIndicator={false}
+                showsVerticalScrollIndicator={true}
                 showBottomBackground={false}
               >
                 {v_f36ab0.map((v_8c0b26) => {
