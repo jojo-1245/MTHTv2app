@@ -216,6 +216,10 @@ class StepForegroundService : Service(), SensorEventListener {
             lastStepCounterValue = 0
             lastCheckedDate = "" 
             saveStepCount(0)
+
+            if (isTracking) {
+                startForeground(NOTIFICATION_ID, buildNotification(0, stepUnit))
+            }
         } else if (savedDate.isNullOrEmpty()) {
 
             saveStepCount(currentSteps)
