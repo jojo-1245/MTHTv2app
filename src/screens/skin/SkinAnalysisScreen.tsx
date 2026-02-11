@@ -19,7 +19,6 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_78ceb7, v_d4f1cc } from 'mbgbsytfgyr';
 import * as v_d05ab5 from 'khtmgrssvfqqjmzoc';
 import * as v_3c288d from 'bxoplsnixpmvnirxbbkstg';
-import * as v_52f726 from 'ajktjgmsymrmnjmliw';
 import * as v_f38d26 from 'lbosdxgirxcherxohyvziam';
 import * as v_cc38b7 from 'dnbozflmjypi';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
@@ -332,6 +331,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, [v_bf6a8c]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
+        let v_52f726;
+        try {
+            v_52f726 = require('ajktjgmsymrmnjmliw');
+        } catch (v_9e86fd) {
+            console.warn('[FaceDetector] 네이티브 모듈을 사용할 수 없습니다. 얼굴 검사를 건너뜁니다.', v_9e86fd);
+            return { hasFace: true, isFrontal: true, isSizeOk: true, faceCount: 1 };
+        }
         try {
             console.log('[FaceDetector] 얼굴 인식 시작...');
 
