@@ -103,25 +103,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_ec4736 = async () => {
 
     v_c65f5d.navigate('MetaHome');
-  };
-
-  const v_2c36a1 = () => {
-
-    console.log('카카오 로그인');
-    v_c65f5d.navigate('MetaHome');
-  };
-
-  const v_40f9f9 = () => {
-
-    console.log('네이버 로그인');
-    v_c65f5d.navigate('MetaHome');
-  };
-
-  const v_6dd38d = () => {
-
-    console.log('구글 로그인');
-    v_c65f5d.navigate('MetaHome');
-  };
+  }
 
   return (
     <>
@@ -192,7 +174,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <View style={v_d81136.socialButtons}>
                   <TouchableOpacity
                     style={[v_d81136.socialButton, v_d81136.kakaoButton]}
-                    onPress={v_2c36a1}
+                    onPress={handleKakaoLogin}
                     disabled={v_cd31a8}
                     activeOpacity={0.85}
                   >
@@ -203,7 +185,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[v_d81136.socialButton, v_d81136.naverButton]}
-                    onPress={v_40f9f9}
+                    onPress={handleNaverLogin}
                     disabled={v_cd31a8}
                     activeOpacity={0.85}
                   >
@@ -216,7 +198,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[v_d81136.socialButton, v_d81136.googleButton]}
-                    onPress={v_6dd38d}
+                    onPress={handleGoogleLogin}
                     disabled={v_cd31a8}
                     activeOpacity={0.85}
                   >

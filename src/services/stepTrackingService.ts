@@ -1,16 +1,17 @@
 
 
 import { v_80fa10, v_326be8 } from 'rcmrninabrnb';
-import type v_8467a5 from 'bsiaazmwsayjedvznfsir';
-import { v_e0d03f } from 'bsiaazmwsayjedvznfsir';
 
 const v_5c0646 = 'metahint-step-tracking';
 const v_0c9506 = 'step-tracking-silent';
 const v_84d070 = 1;
 
-let notifee: typeof v_8467a5 | null = null;
+const v_125c1b = 2;
+
+let v_2dc4c2 = null;
 try {
-  v_2dc4c2 = require('bsiaazmwsayjedvznfsir').default;
+  const v_1010b8 = require('bsiaazmwsayjedvznfsir');
+  v_2dc4c2 = v_1010b8.default;
 } catch {
   v_2dc4c2 = null;
 }
@@ -62,7 +63,7 @@ export const v_8348d9 = async (
         smallIcon: 'ic_launcher',
         ongoing: true,
         style: {
-          type: v_e0d03f.BIGTEXT,
+          type: v_125c1b,
           text: v_eb271c.toLocaleString(),
           title: v_59929c,
         },
@@ -126,7 +127,7 @@ export const v_381355 = async (
         smallIcon: 'ic_launcher',
         ongoing: true,
         asForegroundService: true,
-        style: { type: v_e0d03f.BIGTEXT, text: '0', title: v_59929c },
+        style: { type: AndroidStyle.BIGTEXT, text: '0', title: v_59929c },
         pressAction: { id: 'default', launchActivity: 'default' },
       },
     });
