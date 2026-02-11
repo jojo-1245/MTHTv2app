@@ -269,6 +269,7 @@ const v_d81136 = v_472849.create({
     width: 80,
     height: 80,
     marginRight: 12,
+    marginBottom: -12,
   },
   profileInfo: {
     flex: 1,
