@@ -186,7 +186,7 @@ const v_d81136 = v_472849.create({
     },
     sidebar: {
         width: v_7a3013,
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         height: '100%',
         shadowColor: '#000',
         shadowOffset: { width: 2, height: 0 },
@@ -202,7 +202,7 @@ const v_d81136 = v_472849.create({
         top: 0,
         left: 0,
         right: 0,
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         zIndex: 100,
     },
     closeButtonContainer: {
@@ -313,7 +313,7 @@ const v_d81136 = v_472849.create({
         paddingVertical: v_9b1a04.medium,
         borderTopWidth: 1,
         borderTopColor: '#E3E9ED',
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
     },
     userAvatar: {
         marginRight: v_9b1a04.medium,
@@ -329,7 +329,7 @@ const v_d81136 = v_472849.create({
     avatarText: {
         fontSize: 16,
         fontFamily: v_843035.bold,
-        color: v_1bfbd0.background,
+        color: v_1bfbd0.white,
     },
     userName: {
         fontSize: 16,

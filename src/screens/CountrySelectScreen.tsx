@@ -108,7 +108,7 @@ const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
 const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   content: {
     flex: 1,

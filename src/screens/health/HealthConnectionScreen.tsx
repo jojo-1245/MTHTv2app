@@ -408,7 +408,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
 const v_d81136 = v_472849.create({
     screen: {
         flex: 1,
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
     },
     editButton: {
         paddingHorizontal: 8,
@@ -557,7 +557,7 @@ const v_d81136 = v_472849.create({
         color: v_1bfbd0.text,
     },
     formInput: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderWidth: 1,
         borderColor: '#E5E7EB',
         borderRadius: 12,

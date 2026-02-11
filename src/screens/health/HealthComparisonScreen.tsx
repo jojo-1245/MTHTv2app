@@ -800,7 +800,7 @@ const v_d81136 = v_472849.create({
     padding: v_9b1a04.large,
   },
   modalContent: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     width: '100%',
     maxHeight: '80%',

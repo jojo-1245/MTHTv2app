@@ -179,7 +179,7 @@ const v_d81136 = v_472849.create({
     minHeight: 56,
   },
   outlineTouchable: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderWidth: 0,
     position: 'absolute',
     top: 0,
@@ -205,7 +205,7 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.semibold,
   },
   textFilled: {
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
   },
   textOutline: {
     color: v_1bfbd0.text,

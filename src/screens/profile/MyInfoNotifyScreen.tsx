@@ -274,7 +274,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: v_1bfbd0.background,
   },
   headerLeft: {
     flexDirection: 'row',
@@ -310,6 +310,7 @@ const v_d81136 = v_472849.create({
   },
   list: {
     flex: 1,
+    backgroundColor: v_1bfbd0.background,
   },
   listContent: {
     paddingHorizontal: v_9b1a04.medium,

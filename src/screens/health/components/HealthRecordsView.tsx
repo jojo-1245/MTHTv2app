@@ -866,6 +866,7 @@ const v_d81136 = v_472849.create({
     flex: 1,
     paddingHorizontal: v_9b1a04.large,
     paddingTop: v_9b1a04.medium,
+    backgroundColor: v_1bfbd0.background,
   },
   viewModeRow: {
     flexDirection: 'row',

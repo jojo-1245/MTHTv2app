@@ -70,6 +70,7 @@ const v_d81136 = v_472849.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
     padding: v_9b1a04.large,
@@ -86,7 +87,6 @@ const v_d81136 = v_472849.create({
     marginBottom: v_9b1a04.medium,
   },
   buttonContainer: {
-    flexDirection: 'row',
     gap: v_9b1a04.medium,
     marginTop: v_9b1a04.large,
   },

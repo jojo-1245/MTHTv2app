@@ -194,7 +194,7 @@ const ExampleScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.white,
   },
   content: {
     flexGrow: 1,
@@ -238,7 +238,7 @@ const ListHomeScreen: React.FC<Props> = ({ navigation }) => {
 ```typescript
 screen: {
   flex: 1,
-  backgroundColor: COLORS.background,
+  backgroundColor: COLORS.white,
 }
 
 content: {

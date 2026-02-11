@@ -292,7 +292,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: v_1bfbd0.background,
   },
   scrollView: {
     flex: 1,
@@ -390,7 +390,7 @@ const v_d81136 = v_472849.create({
     padding: v_9b1a04.large,
   },
   modalContent: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 24,
     padding: v_9b1a04.xlarge,
     elevation: 5,

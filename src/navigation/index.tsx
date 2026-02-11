@@ -111,6 +111,8 @@ export type RootStackParamList = {
     results: Record<string, { value: any; confidence?: any }>;
     timestamp: string;
     userName?: string;
+    accounts?: Array<{ id: string; name: string; isCurrent?: boolean }>;
+    selectedAccountId?: string;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
