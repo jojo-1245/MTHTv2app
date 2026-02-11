@@ -177,7 +177,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
                 {v_8c0b26.isLogout ? (
                   <>
                     <View style={v_d81136.menuIconWrap}>
-                      <Ionicons name="log-out-outline" size={24} color="#EF4444" />
+                      <Ionicons name="log-out-outline" size={24} />
                     </View>
                     <Text style={v_d81136.menuItemTextLogout}>{v_8c0b26.title}</Text>
                   </>
@@ -364,7 +364,6 @@ const v_d81136 = v_472849.create({
     flex: 1,
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
-    color: '#EF4444',
   },
   footer: {
     alignItems: 'center',
