@@ -27,7 +27,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_35200c, v_91bb22, type v_d4ca6e } from '../services/signupApi';
+import { v_35200c, v_c1a440, v_91bb22, type v_d4ca6e } from '../services/signupApi';
 import { v_9553a4, v_369014 } from '../constants/regions';
 import { v_5c7129, type v_107459, v_f91692 } from '../utils/countryUtils';
 import { v_11e39e } from '../services/countryApi';
@@ -403,12 +403,35 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     try {
       await v_35200c(v_931bf0);
       await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
-      v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), () => {
-        v_c65f5d.navigate('Login');
+      v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), async () => {
+        try {
+          await v_c1a440({ email: v_8f37ac, purpose: 'signup' });
+          v_c65f5d.navigate('EmailVerification', { email: v_8f37ac, purpose: 'signup' });
+        } catch (v_49263d) {
+          const v_badeaf = v_49263d instanceof Error ? v_49263d.message : v_8d41d7('signup.error_unknown');
+          v_889fad(v_8d41d7('signup.error_title'), v_badeaf);
+          v_c65f5d.navigate('EmailVerification', { email: v_8f37ac, purpose: 'signup' });
+        }
       });
     } catch (v_5e9bfe) {
-      const v_a8cd21 =
+      if (__DEV__) {
+        const v_2ebd05 = v_5e9bfe as { response?: { status?: number; data?: unknown }; message?: string };
+        console.log('[회원가입] 에러:', {
+          message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+          responseStatus: v_2ebd05.response?.status,
+          responseData: v_2ebd05.response?.data,
+          fullError: v_5e9bfe,
+        });
+      }
+      let v_a8cd21 =
         v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('signup.error_unknown');
+      if (
+        !v_a8cd21 ||
+        v_a8cd21.toLowerCase().includes('unexpected error') ||
+        v_a8cd21.toLowerCase().includes('unexpected errpr')
+      ) {
+        v_a8cd21 = v_8d41d7('signup.error_unknown');
+      }
       v_889fad(v_8d41d7('signup.error_title'), v_a8cd21);
     } finally {
       v_e33ec0(false);

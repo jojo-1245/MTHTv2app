@@ -56,12 +56,17 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
 
   const v_83b05b = async () => {
     if (v_c99bd2.length !== 6 || !v_e0c7e8) return;
+    const v_849cde = v_c99bd2.replace(/\D/g, '').slice(0, 6);
+    if (v_849cde.length !== 6) return;
     v_ff0c7a(true);
     v_b5337f(null);
+    if (__DEV__) {
+      console.log('[이메일 인증] 요청:', { email: v_e0c7e8, code: v_849cde, purpose: v_fa63e0 });
+    }
     try {
       await v_f947a7({
         email: v_e0c7e8,
-        code: v_c99bd2,
+        code: v_849cde,
         purpose: v_fa63e0,
       });
       v_e50001(true);
