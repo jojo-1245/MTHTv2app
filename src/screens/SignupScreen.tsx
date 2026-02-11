@@ -393,11 +393,11 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_7ebe28 = (): number =>
-    v_c3eac4 === 'none' ? 0 : v_91bb22.getGenderCode(v_c3eac4);
+    v_c3eac4 === 'none' ? v_1f5cda : v_91bb22.getGenderCode(v_c3eac4);
 
   const v_a02735 = v_df9f57(() => {
     return (v_3b402b): number =>
-      v_3b402b === 'select' ? 0 : v_91bb22.getAgeCode(v_3b402b);
+      v_3b402b === 'select' ? v_1f5cda : v_91bb22.getAgeCode(v_3b402b);
   }, []);
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
