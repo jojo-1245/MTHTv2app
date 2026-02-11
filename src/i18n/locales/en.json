@@ -1483,8 +1483,10 @@
         "title": "Identity Verification",
         "email_label": "Email",
         "email_placeholder": "oth-user@example.invalid",
-        "email_valid": "Email is available.",
+        "email_valid": "Valid email format. We can send a verification code to this address.",
         "email_invalid": "Invalid email format.",
+        "email_match": "Matches your login email.",
+        "email_not_match": "Does not match your login email. Enter your own email.",
         "send_code_button": "Send Verification Code"
     },
     "health_connection": {
