@@ -51,6 +51,39 @@ function normalizeError(error: unknown): Error {
   return new Error('요청 중 알 수 없는 오류가 발생했습니다.');
 }
 
+export type SendVerificationPayload = {
+  email: string;
+  purpose?: 'signup' | 'password_reset' | 'profile_change' | 'login';
+};
+
+export async function sendVerification(payload: SendVerificationPayload): Promise<void> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  const body = { email: payload.email, purpose: payload.purpose ?? 'signup' };
+  if (__DEV__) {
+    console.log('[signupApi] send-verification 요청:', { url: `${baseURL}/oth-path`, body });
+  }
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, body, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.log('[signupApi] send-verification 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+    throw normalizeError(error);
+  }
+}
+
 export type VerifyEmailPayload = {
   email: string;
   code: string;
@@ -63,6 +96,9 @@ export async function verifyEmail(payload: VerifyEmailPayload): Promise<void> {
   const baseURL = env.GATEWAY;
   const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  if (__DEV__) {
+    console.log('[signupApi] verify-email 요청:', { url: `${baseURL}/oth-path`, payload });
+  }
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
