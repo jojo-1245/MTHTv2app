@@ -42,11 +42,12 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   } = v_700ef9();
 
   const v_21bdd5 = v_df9f57(() => [
-    { value: 'male', label: v_8d41d7('common.male') },
-    { value: 'female', label: v_8d41d7('common.female') },
+    { value: 'none' as const, label: v_8d41d7('signup.select') },
+    { value: 'male' as const, label: v_8d41d7('common.male') },
+    { value: 'female' as const, label: v_8d41d7('common.female') },
   ], [v_8d41d7]);
 
-  const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
+  const v_0c96f7 = ['select', '10', '20', '30', '40', '50+'] as const;
   type AgeOption = (typeof v_0c96f7)[number];
 
   const v_064327 = v_8d41d7('signup.password_rule');
@@ -54,8 +55,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_a6fcf8, v_539b92] = v_5ab095(true);
   const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
   const [v_c3eac4, v_bdc43c] =
-    v_5ab095<'male' | 'female'>('male');
-  const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
+    v_5ab095<'none' | 'male' | 'female'>('none');
+  const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
@@ -203,10 +204,12 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return v_9a3638.test(v_3b402b);
   };
 
-  const v_7ebe28 = () => v_91bb22.getGenderCode(v_c3eac4);
+  const v_7ebe28 = (): number =>
+    v_c3eac4 === 'none' ? 0 : v_91bb22.getGenderCode(v_c3eac4);
 
   const v_a02735 = v_df9f57(() => {
-    return (v_3b402b) => v_91bb22.getAgeCode(v_3b402b);
+    return (v_3b402b): number =>
+      v_3b402b === 'select' ? 0 : v_91bb22.getAgeCode(v_3b402b);
   }, []);
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
@@ -261,7 +264,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         mobile_code: v_6c3a47,
       }),
       gender: v_7ebe28(),
-      age_range: v_a02735(v_f83808),
+      age_range: v_f83808 === 'select' ? 0 : v_a02735(v_f83808 as '10' | '20' | '30' | '40' | '50+'),
       ...(v_a4d981 && { country: v_a4d981, country_code: v_a4d981 }),
       ...(v_94bdf5 !== undefined && v_94bdf5 > 0 && { region_id: v_94bdf5 }),
       os_type: v_91bb22.getOSCode(),
@@ -390,7 +393,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     key={v_0bd920.value}
                     label={v_0bd920.label}
                     selected={v_c3eac4 === v_0bd920.value}
-                    onPress={() => v_bdc43c(v_0bd920.value as 'male' | 'female')}
+                    onPress={() => v_bdc43c(v_0bd920.value)}
                   />
                 ))}
               </View>
@@ -403,7 +406,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
                     key={v_0bd920}
-                    label={v_0bd920}
+                    label={v_0bd920 === 'select' ? v_8d41d7('signup.select') : v_0bd920}
                     selected={v_f83808 === v_0bd920}
                     onPress={() => v_64a312(v_0bd920)}
                   />

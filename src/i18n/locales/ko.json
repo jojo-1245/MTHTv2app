@@ -336,6 +336,7 @@
         "phone_placeholder": "010-1010-1000",
         "region_label": "지역",
         "region_placeholder": "대한민국",
+        "select": "선택",
         "gender_label": "성별",
         "age_label": "나이",
         "referral_label": "추천이메일",
