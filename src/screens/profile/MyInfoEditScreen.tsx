@@ -404,6 +404,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
   const v_4d1e97 = v_459d5e?.dialCode ?? '+82';
+  const v_c01add =
+    v_459d5e?.iso2 === 'select' || v_459d5e?.dialCode === '0';
 
   const v_02f61c = async () => {
     const v_affc3e = v_1833e7.trim();
@@ -440,6 +442,9 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
       v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.password_mismatch'));
       return;
     }
+
+    const v_a4d981 = v_c01add ? '0' : (v_459d5e?.iso2?.toUpperCase() ?? '');
+    const v_6c3a47 = v_c01add ? null : (v_4d1e97.replace(/\+/g, '') || null);
 
     v_e33ec0(true);
     try {
