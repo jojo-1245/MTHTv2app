@@ -138,6 +138,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         routes: [{ name: 'MetaHome' }],
       });
     } catch (v_5e9bfe) {
+
       const v_4b5200 = v_8d41d7('login.error_unknown');
       let v_d6bda5 = v_4b5200;
       if (v_5e9bfe instanceof Error) {
