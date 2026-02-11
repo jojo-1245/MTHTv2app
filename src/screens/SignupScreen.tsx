@@ -264,7 +264,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         mobile_code: v_6c3a47,
       }),
       gender: v_7ebe28(),
-      age_range: v_f83808 === 'select' ? 0 : v_a02735(v_f83808 as '10' | '20' | '30' | '40' | '50+'),
+      age_range: v_a02735(v_f83808),
       ...(v_a4d981 && { country: v_a4d981, country_code: v_a4d981 }),
       ...(v_94bdf5 !== undefined && v_94bdf5 > 0 && { region_id: v_94bdf5 }),
       os_type: v_91bb22.getOSCode(),
