@@ -318,7 +318,10 @@
         "error_invalid_email": "Silakan masukkan alamat email yang valid.",
         "error_empty_password": "Silakan masukkan kata sandi Anda.",
         "error_failed": "Gagal Masuk",
-        "error_unknown": "Terjadi kesalahan yang tidak diketahui saat masuk."
+        "error_unknown": "Terjadi kesalahan yang tidak diketahui saat masuk.",
+        "kakao_login": "Masuk dengan Kakao",
+        "naver_login": "Masuk dengan Naver",
+        "google_login": "Masuk dengan Google"
     },
     "signup": {
         "title": "Daftar",

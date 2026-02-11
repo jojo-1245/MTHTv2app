@@ -319,7 +319,10 @@
         "error_invalid_email": "Please enter a valid email address.",
         "error_empty_password": "Please enter your password.",
         "error_failed": "Login Failed",
-        "error_unknown": "An unknown error occurred during login."
+        "error_unknown": "An unknown error occurred during login.",
+        "kakao_login": "Kakao Login",
+        "naver_login": "Naver Login",
+        "google_login": "Google Login"
     },
     "signup": {
         "title": "Sign Up",
