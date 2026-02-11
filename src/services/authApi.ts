@@ -56,10 +56,28 @@ export async function loginMember(params: {
       { timeout: API_TIMEOUT, headers }
     );
     const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
-    if (__DEV__) {
-      console.log('[authApi] login 응답:', { status: res.status, hasData: !!data });
+    const payload: LoginAuthPayload =
+      typeof data === 'object' && data !== null ? data : { token: data };
+    const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
+    if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
+      const tokenFromHeader = authHeader.slice(7).trim();
+      if (tokenFromHeader) {
+        payload.accessToken = tokenFromHeader;
+        payload.access_token = tokenFromHeader;
+        payload.token = tokenFromHeader;
+      }
     }
-    return typeof data === 'object' && data !== null ? data : { token: data };
+    if (__DEV__) {
+      const hasToken =
+        !!(payload.accessToken ?? payload.access_token ?? payload.token);
+      console.log('[authApi] login 응답:', {
+        status: res.status,
+        hasData: !!data,
+        hasToken,
+        tokenFromHeader: !!authHeader,
+      });
+    }
+    return payload;
   } catch (error) {
     if (__DEV__ && axios.isAxiosError(error)) {
       console.error('[authApi] login 에러:', {
@@ -72,18 +90,45 @@ export async function loginMember(params: {
   }
 }
 
-export async function persistAuthSession(payload: LoginAuthPayload): Promise<void> {
-  const token =
-    payload.accessToken ??
-    payload.access_token ??
-    payload.token;
-  if (token && typeof token === 'string') {
-    await AsyncStorage.setItem(STORAGE_KEYS.authToken, token);
+function getTokenFromPayload(payload: LoginAuthPayload): string | null {
+  let raw = payload.accessToken ?? payload.access_token ?? payload.token;
+  if (raw && typeof raw === 'string') return raw;
+  const pl = payload as Record<string, unknown>;
+  const data = pl.data;
+  if (data && typeof data === 'object' && data !== null) {
+    const d = data as Record<string, unknown>;
+    raw = (d.accessToken ?? d.access_token ?? d.token) as string | undefined;
+    if (typeof raw === 'string') return raw;
   }
-  if (payload.user !== undefined && payload.user !== null) {
+  const tokens = pl.tokens;
+  if (tokens && typeof tokens === 'object' && tokens !== null) {
+    const t = tokens as Record<string, unknown>;
+    raw = (t.accessToken ?? t.access_token ?? t.token ?? t.access) as string | undefined;
+    if (typeof raw === 'string') return raw;
+  }
+  if (typeof tokens === 'string') return tokens;
+  return null;
+}
+
+export async function persistAuthSession(payload: LoginAuthPayload): Promise<void> {
+  const token = getTokenFromPayload(payload);
+  if (token) {
+    await AsyncStorage.setItem(STORAGE_KEYS.authToken, token);
+    if (__DEV__) {
+      console.log('[authApi] persistAuthSession: 토큰 저장 완료');
+    }
+  } else {
+    if (__DEV__) {
+      console.warn('[authApi] persistAuthSession: 응답에서 토큰을 찾지 못함', {
+        keys: payload ? Object.keys(payload) : [],
+      });
+    }
+  }
+  const userPayload = payload.user ?? (payload as Record<string, unknown>).member;
+  if (userPayload !== undefined && userPayload !== null) {
     await AsyncStorage.setItem(
       STORAGE_KEYS.memberInfo,
-      typeof payload.user === 'string' ? payload.user : JSON.stringify(payload.user)
+      typeof userPayload === 'string' ? userPayload : JSON.stringify(userPayload)
     );
   }
   await AsyncStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
@@ -102,8 +147,25 @@ export async function getMe(): Promise<MeProfile> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
-  const token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
-  if (!token) throw new Error('로그인이 필요합니다.');
+  let token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+  if (!token) {
+    const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
+    if (memberJson) {
+      try {
+        const member = JSON.parse(memberJson) as Record<string, unknown>;
+        const t = member?.accessToken ?? member?.access_token ?? member?.token;
+        if (typeof t === 'string') token = t;
+      } catch {
+
+      }
+    }
+  }
+  if (!token) {
+    if (__DEV__) {
+      console.warn('[authApi] getMe: 저장된 토큰 없음. 로그인 응답 형식 확인 필요.');
+    }
+    throw new Error('로그인이 필요합니다.');
+  }
   if (__DEV__) {
     console.log('[authApi] getMe 요청:', { url: `${baseURL}/oth-path` });
   }
