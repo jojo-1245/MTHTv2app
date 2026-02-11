@@ -155,9 +155,27 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
     );
   }
 
-  const v_8a1355 = v_727031
-    ? [v_727031.firstname, v_727031.lastname].filter(Boolean).join(' ') || v_727031.email
-    : '';
+  const v_8a1355 = (() => {
+    if (!v_727031) return '';
+    const v_e2a85c = v_727031 as Record<string, unknown>;
+    const v_ea719c = v_727031.firstname ?? v_e2a85c.firstName ?? '';
+    const v_506e86 = v_727031.lastname ?? v_e2a85c.lastName ?? '';
+    const v_e75c90 = [v_ea719c, v_506e86].filter(Boolean).join(' ').trim();
+    if (v_e75c90) return v_e75c90;
+    const v_22c69a = v_e2a85c.name;
+    if (typeof v_22c69a === 'string' && v_22c69a.trim()) return v_22c69a.trim();
+    const v_439359 = v_e2a85c.member ?? v_e2a85c.user;
+    if (v_439359 && typeof v_439359 === 'object') {
+      const v_f4e98d = v_439359 as Record<string, unknown>;
+      const v_d5ce63 = v_f4e98d.firstname ?? v_f4e98d.firstName ?? '';
+      const v_da2b61 = v_f4e98d.lastname ?? v_f4e98d.lastName ?? '';
+      const v_832926 = [v_d5ce63, v_da2b61].filter(Boolean).join(' ').trim();
+      if (v_832926) return v_832926;
+      const v_5cf6f5 = v_f4e98d.name;
+      if (typeof v_5cf6f5 === 'string' && v_5cf6f5.trim()) return v_5cf6f5.trim();
+    }
+    return v_727031.email ?? '';
+  })();
   const v_b43178 = v_727031?.email ?? '';
 
   return (
@@ -182,9 +200,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
             <View style={v_d81136.profileInfo}>
               <Text style={v_d81136.name}>{v_8a1355}</Text>
               <Text style={v_d81136.email}>{v_b43178}</Text>
-              {v_727031?.referral_code ? (
-                <Text style={v_d81136.referralCode}>{v_8d41d7('profile.referral_code')}: {v_727031.referral_code}</Text>
-              ) : null}
             </View>
             <TouchableOpacity
               style={v_d81136.referralBtn}
@@ -293,12 +308,6 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
     color: '#FFFFFF',
-  },
-  referralCode: {
-    fontSize: 12,
-    fontFamily: v_843035.regular,
-    color: v_1bfbd0.secondaryText,
-    marginTop: 4,
   },
   scrollView: {
     flex: 1,
