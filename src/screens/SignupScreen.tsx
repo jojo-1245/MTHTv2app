@@ -24,12 +24,12 @@ import type { v_8ad91b } from '../navigation';
 import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_4a0202, v_09d767, v_91bb22 } from '../services';
+import { v_35200c, v_91bb22, type v_d4ca6e } from '../services/signupApi';
+import { v_9553a4 } from '../constants/regions';
 
 type Props = v_432191<v_8ad91b, 'Signup'>;
 
-const v_901315 =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]).{8,}$/;
+const v_64964e = /^(?=.*[a-zA-Z])(?=.*\d).{8,128}$/;
 
 const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
@@ -89,29 +89,15 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_1743a3 = (): string | null => {
     if (!v_fd8548 || v_adc076.length === 0) return null;
-
+    if (v_64964e.test(v_adc076)) return null;
     const v_9de4ac = [];
-
-    if (v_adc076.length < 8) {
-      v_9de4ac.push('8자 이상');
-    }
-    if (!/[a-z]/.test(v_adc076)) {
-      v_9de4ac.push('영문 소문자');
-    }
-    if (!/[A-Z]/.test(v_adc076)) {
-      v_9de4ac.push('영문 대문자');
-    }
-    if (!/\d/.test(v_adc076)) {
-      v_9de4ac.push('숫자');
-    }
-    if (!/[~`!@#$%^&*()_\-+={}[\]|\\:;"'<>,.?/]/.test(v_adc076)) {
-      v_9de4ac.push('특수문자');
-    }
-
-    if (v_9de4ac.length > 0) {
-      return v_8d41d7('signup.error_password_requirement', { errors: v_9de4ac.join(', ') });
-    }
-    return null;
+    if (v_adc076.length < 8) v_9de4ac.push('8자 이상');
+    else if (v_adc076.length > 128) v_9de4ac.push('128자 이하');
+    if (!/[a-zA-Z]/.test(v_adc076)) v_9de4ac.push('영문');
+    if (!/\d/.test(v_adc076)) v_9de4ac.push('숫자');
+    return v_9de4ac.length
+      ? v_8d41d7('signup.error_password_requirement', { errors: v_9de4ac.join(', ') })
+      : null;
   };
 
   const v_4e8e4d = v_559736();
@@ -213,9 +199,73 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_4d1e97 = v_459d5e?.dialCode ?? '+82';
 
   const v_47ed2f = async () => {
+    const v_8f37ac = v_e0c7e8.trim().toLowerCase();
+    const v_affc3e = v_1833e7.trim();
+    const v_088b9e = v_9c3d15(v_d74a81);
+    const v_6c3a47 = v_4d1e97.replace(/\+/g, '') || '82';
+    const v_a4d981 = v_459d5e?.iso2?.toUpperCase() ?? '';
+    const v_94bdf5 =
+      v_590486 && v_2f03bc
+        ? v_9553a4(v_2f03bc.iso2)
+        : undefined;
 
-    v_c65f5d.navigate('EmailVerification', { email: v_e0c7e8 });
-  }
+    if (!v_8f37ac) {
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_email'));
+      return;
+    }
+    if (v_8f37ac.length < 5 || v_8f37ac.length > 255) {
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_email_format'));
+      return;
+    }
+    if (!v_1d0f03(v_8f37ac)) {
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_invalid_email'));
+      return;
+    }
+    if (!v_affc3e || v_affc3e.length > 200) {
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_name'));
+      return;
+    }
+    if (!v_64964e.test(v_adc076)) {
+      v_889fad(v_8d41d7('signup.error_input'), v_064327);
+      return;
+    }
+    if (!v_a6fcf8) {
+      v_889fad(v_8d41d7('signup.error_terms_required'), v_8d41d7('signup.error_terms_message'));
+      return;
+    }
+
+    const payload: v_d4ca6e = {
+      email: v_8f37ac,
+      password: v_adc076,
+      name: v_affc3e,
+      ...(v_088b9e && {
+        mobile: `${v_4d1e97}${v_088b9e}`,
+        mobile_code: v_6c3a47,
+      }),
+      gender: v_7ebe28(),
+      age_range: v_a02735(v_f83808),
+      ...(v_a4d981 && { country: v_a4d981, country_code: v_a4d981 }),
+      ...(v_94bdf5 !== undefined && v_94bdf5 > 0 && { region_id: v_94bdf5 }),
+      os_type: v_91bb22.getOSCode(),
+      language: 'en',
+      ...(v_9bf12c.trim() && { referral_code: v_9bf12c.trim() }),
+    };
+
+    v_e33ec0(true);
+    try {
+      await v_35200c(v_931bf0);
+      await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
+      v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), () => {
+        v_c65f5d.navigate('EmailVerification', { email: v_8f37ac });
+      });
+    } catch (v_5e9bfe) {
+      const v_a8cd21 =
+        v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('signup.error_unknown');
+      v_889fad(v_8d41d7('signup.error_title'), v_a8cd21);
+    } finally {
+      v_e33ec0(false);
+    }
+  };
 
   return (
     <>
