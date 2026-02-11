@@ -169,17 +169,17 @@ const createAxiosInstance = (navigation?: any) => {
     throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
   }
 
-  if (!oth-secret) {
-    throw new Error('클라이언트 토큰이 설정되지 않았습니다. CLIENT_TOKEN 또는 GATEWAY_AUTH_CODE를 확인해주세요.');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (oth-secret) {
+    headers.Authorization = `Bearer ${oth-secret}`;
   }
 
   const instance = axios.create({
     baseURL,
     timeout: API_TIMEOUT,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${oth-secret}`,
-    },
+    headers,
   });
 
   instance.interceptors.request.use(
@@ -265,7 +265,7 @@ export type RegisterMemberPayload = {
 
 export type LoginPayload = {
   email: string;
-  pin: string;
+  password: string;
 };
 
 const unwrapResponse = <T>(response: ApiResponse<T>): T => {
