@@ -13,7 +13,16 @@ import {
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_34d45f, v_624bd2 } from '../../constants';
+import {
+  v_1bfbd0,
+  v_a61db3,
+  v_843035,
+  v_9553a4,
+  v_1f5cda,
+  v_9b1a04,
+  v_34d45f,
+  v_624bd2,
+} from '../../constants';
 import {
   v_8e2768,
   v_729608,
@@ -227,6 +236,13 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
       v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.region_required'));
       return;
     }
+
+    const v_94bdf5 =
+      v_2f03bc && v_2f03bc.dialCode !== '0'
+        ? v_9553a4(v_2f03bc.iso2) ||
+          parseInt(v_2f03bc.dialCode, 10) ||
+          v_1f5cda
+        : v_1f5cda;
 
     if (v_adc076 && !v_857dfe(v_adc076)) {
       v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('signup.password_rule'));

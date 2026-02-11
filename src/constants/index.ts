@@ -265,6 +265,7 @@ export { COUNTRY_DIAL_CODES } from './countryDialCodes';
 export {
   REGIONS_AS_COUNTRY_DIAL_CODES,
   GLOBAL_REGION,
+  REGION_ID_SELECT,
   getRegionsByCountryIso2,
   getRegionIdByIso2,
   getIso2ByRegionId,

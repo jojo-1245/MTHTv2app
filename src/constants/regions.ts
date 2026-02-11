@@ -20,6 +20,8 @@ export const REGIONS_AS_COUNTRY_DIAL_CODES: v_da1883[] = [
   { iso2: '제주특별자치도', name: '제주특별자치도', dialCode: '64', flagEmoji: '📍', countryCode: 82 },
 ];
 
+export const v_1f5cda = 2112;
+
 export const GLOBAL_REGION: v_da1883 = {
   iso2: 'global',
   name: 'Global',
