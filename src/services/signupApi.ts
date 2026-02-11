@@ -8,8 +8,8 @@ export type SignupPayload = {
   email: string;
   password: string;
   name: string;
-  mobile?: string;
-  mobile_code?: string;
+  mobile?: string | null;
+  mobile_code?: string | null;
   gender?: number;
   age_range?: number;
   country?: string;

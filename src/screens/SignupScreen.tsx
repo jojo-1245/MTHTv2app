@@ -397,7 +397,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_a02735 = v_df9f57(() => {
     return (v_3b402b): number =>
-      v_3b402b === 'select' ? v_1f5cda : v_91bb22.getAgeCode(v_3b402b);
+      v_3b402b === 'select' ? 2290 : v_91bb22.getAgeCode(v_3b402b);
   }, []);
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
@@ -411,14 +411,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_c01add =
       v_459d5e?.iso2 === 'select' || v_459d5e?.dialCode === '0';
     const v_a4d981 = v_c01add
-      ? '2112'
+      ? '0'
       : (v_459d5e?.iso2?.toUpperCase() ?? '');
     const v_94bdf5 =
       v_5f1e0e && v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
           parseInt(v_2f03bc.dialCode, 10) ||
-          v_1f5cda
-        : v_1f5cda;
+          0
+        : 0;
 
     if (!v_8f37ac) {
       v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_email'));
@@ -453,13 +453,15 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       email: v_8f37ac,
       password: v_adc076,
       name: v_affc3e,
-      ...(v_088b9e && {
-        mobile: `${v_4d1e97}${v_088b9e}`,
-        mobile_code: v_6c3a47,
-      }),
+      ...(v_088b9e
+        ? {
+            mobile: `${v_4d1e97}${v_088b9e}`,
+            mobile_code: v_6c3a47,
+          }
+        : { mobile: null, mobile_code: null }),
       gender: v_7ebe28(),
       age_range: v_a02735(v_f83808),
-      ...(v_a4d981 && { country: v_a4d981, country_code: v_a4d981 }),
+      ...(v_a4d981 !== undefined && v_a4d981 !== '' && { country: v_a4d981, country_code: v_a4d981 }),
       region_id: v_94bdf5,
       os_type: v_91bb22.getOSCode(),
       language: v_9c213b.language?.startsWith('ko') ? 'ko' : v_9c213b.language?.startsWith('id') ? 'id' : 'en',
