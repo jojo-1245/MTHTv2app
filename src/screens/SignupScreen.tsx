@@ -1,8 +1,11 @@
 import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
+  v_9cabcb,
+  v_aa7413,
   v_472849,
   v_19b633,
+  v_79c4f2,
   v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
@@ -25,7 +28,11 @@ import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_35200c, v_91bb22, type v_d4ca6e } from '../services/signupApi';
-import { v_9553a4 } from '../constants/regions';
+import { v_9553a4, v_369014 } from '../constants/regions';
+import { v_5c7129, type v_107459, v_f91692 } from '../utils/countryUtils';
+import { v_11e39e } from '../services/countryApi';
+import { v_9ad700 } from '../utils/regionSubcodeMapping';
+import type { v_da1883 } from '../types';
 
 type Props = v_432191<v_8ad91b, 'Signup'>;
 
@@ -35,7 +42,9 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const {
     selectedCountryDialCode: v_459d5e,
+    setSelectedCountryDialCode: v_f693e7,
     selectedRegion: v_2f03bc,
+    setSelectedRegion: v_2f2d51,
     setSelectMode: v_67ab1c,
     signupFormData: v_8d7bc8,
     updateSignupFormData: v_a776b5,
@@ -68,6 +77,12 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_fd8548, v_1cf99d] = v_5ab095(false);
   const [v_564829, v_d9575d] = v_5ab095(false);
   const [v_5996d6, v_735c4d] = v_5ab095(false);
+
+  const [v_963133, v_24b641] = v_5ab095<v_da1883[]>([]);
+  const [v_5f1e0e, v_dad6ca] = v_5ab095(false);
+  const [v_0908db, v_1c41ce] = v_5ab095(false);
+  const [v_3a64df, v_c73419] = v_5ab095(false);
+  const [v_7962f1, v_6a0bf8] = v_5ab095('');
 
   const v_0e461e = (v_3b402b): boolean => {
     const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -140,9 +155,94 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   }, [v_8d7bc8.phone]);
 
+  v_c4deb2(() => {
+    if (!v_459d5e?.iso2) {
+      v_24b641([]);
+      v_dad6ca(false);
+      return;
+    }
+    const v_cc0c7d = v_459d5e.iso2.toLowerCase();
+    const v_a4d981 =
+      (v_f91692[v_cc0c7d] ??
+        v_459d5e.countryCode ??
+        parseInt(v_459d5e.dialCode.replace(/\D/g, ''), 10)) ||
+      0;
+    if (!v_a4d981) {
+      const v_0debf4 = v_369014(v_459d5e.iso2);
+      v_24b641(v_0debf4);
+      v_dad6ca(v_0debf4.length > 0 && v_0debf4[0].iso2 !== 'global');
+      return;
+    }
+    let v_2008a4 = false;
+    v_1c41ce(true);
+    v_5c7129(
+      (v_c99bd2) => v_11e39e(v_c99bd2),
+      v_a4d981,
+      v_459d5e.iso2,
+      v_369014(v_459d5e.iso2)
+    )
+      .then((result: v_107459) => {
+        if (v_2008a4) return;
+        v_24b641(v_43c42e.regions);
+        v_dad6ca(v_43c42e.hasRegions);
+      })
+      .catch(() => {
+        if (!v_2008a4) {
+          const v_0debf4 = v_369014(v_459d5e.iso2);
+          v_24b641(v_0debf4);
+          v_dad6ca(v_0debf4.length > 0 && v_0debf4[0].iso2 !== 'global');
+        }
+      })
+      .finally(() => {
+        if (!v_2008a4) v_1c41ce(false);
+      });
+    return () => {
+      v_2008a4 = true;
+    };
+  }, [v_459d5e?.iso2, v_459d5e?.countryCode, v_459d5e?.dialCode]);
+
   const v_590486 =
     v_459d5e?.iso2?.toLowerCase() === 'kr';
-  const v_56743f = v_2f03bc?.name ?? (v_590486 ? '' : 'Global');
+
+  const selectOptionRegion: v_da1883 = v_df9f57(
+    () => ({
+      iso2: 'select',
+      name: v_8d41d7('country_select.select_option') || '선택',
+      dialCode: '0',
+      flagEmoji: '📍',
+      countryCode: 0,
+    }),
+    [v_8d41d7]
+  );
+
+  const v_159ceb =
+    v_459d5e?.countryCode ??
+    (v_459d5e?.iso2
+      ? v_f91692[v_459d5e.iso2.toLowerCase()]
+      : 0);
+
+  const v_ba4a54 = (item: v_da1883): string => {
+    if (v_8c0b26.iso2 === 'select' || v_8c0b26.iso2 === 'global' || v_8c0b26.dialCode === '0') {
+      return v_8c0b26.iso2 === 'global' ? (v_8d41d7('country_select.select_option') || '선택') : v_8c0b26.name;
+    }
+    const v_c99bd2 = v_8c0b26.countryCode ?? v_159ceb;
+    const v_cde5e2 = v_c99bd2 ? v_9ad700.includes(v_c99bd2) : false;
+    const v_b5249e = v_cde5e2
+      ? `regions.${v_c99bd2}_${v_8c0b26.dialCode}`
+      : `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
+    const v_6dce25 = v_8d41d7(v_b5249e);
+    return v_6dce25 !== v_b5249e ? v_6dce25 : v_8c0b26.name;
+  };
+
+  const v_56743f = (() => {
+    const v_ed2e96 = v_8d41d7('country_select.select_option') || '선택';
+    if (!v_5f1e0e) return v_ed2e96;
+    if (!v_2f03bc || v_2f03bc.iso2 === 'select' || v_2f03bc.iso2 === 'global' || v_2f03bc.dialCode === '0') {
+      return v_ed2e96;
+    }
+    return v_ba4a54(v_2f03bc);
+  })();
+
   const v_67cb9c =
     v_459d5e?.name ??
     v_459d5e?.iso2?.toUpperCase() ??
@@ -164,12 +264,37 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_c65f5d.navigate('CountrySelect', { mode: 'country' });
   };
 
+  const v_904f1e = v_df9f57(
+    () => [v_24d92d, ...v_963133],
+    [v_24d92d, v_963133]
+  );
+
+  const v_4e187d = v_df9f57(() => {
+    if (!v_7962f1.trim()) return v_904f1e;
+    const v_1cfe9a = v_7962f1.trim().toLowerCase();
+    return v_904f1e.filter((v_8c0b26) => {
+      const v_8a1355 = v_ba4a54(v_8c0b26);
+      return (
+        v_8c0b26.name.toLowerCase().includes(v_1cfe9a) ||
+        (v_8a1355 && v_8a1355.toLowerCase().includes(v_1cfe9a)) ||
+        v_8c0b26.iso2.toLowerCase().includes(v_1cfe9a)
+      );
+    });
+  }, [v_904f1e, v_7962f1, v_8d41d7, v_159ceb]);
+
   const v_b36a76 = () => {
-    if (!v_590486) {
-      return;
+    if (!v_5f1e0e || v_88dca2) return;
+    v_c73419(true);
+  };
+
+  const v_477add = (region: v_da1883) => {
+    if (v_a6c30b.iso2 === 'select' || v_a6c30b.dialCode === '0') {
+      v_2f2d51(v_24d92d);
+    } else {
+      v_2f2d51(v_a6c30b);
     }
-    v_67ab1c('region');
-    v_c65f5d.navigate('CountrySelect', { mode: 'region' });
+    v_c73419(false);
+    v_6a0bf8('');
   };
 
   const v_641550 = (v_3b402b) => {
@@ -222,8 +347,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_6c3a47 = v_4d1e97.replace(/\+/g, '') || '82';
     const v_a4d981 = v_459d5e?.iso2?.toUpperCase() ?? '';
     const v_94bdf5 =
-      v_590486 && v_2f03bc
-        ? v_9553a4(v_2f03bc.iso2)
+      v_5f1e0e && v_2f03bc && v_2f03bc.dialCode !== '0'
+        ? v_9553a4(v_2f03bc.iso2) ||
+          parseInt(v_2f03bc.dialCode, 10) ||
+          0
         : undefined;
 
     if (!v_8f37ac) {
@@ -277,7 +404,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       await v_35200c(v_931bf0);
       await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
       v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), () => {
-        v_c65f5d.navigate('EmailVerification', { email: v_8f37ac });
+        v_c65f5d.navigate('Login');
       });
     } catch (v_5e9bfe) {
       const v_a8cd21 =
@@ -381,7 +508,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               placeholder={v_8d41d7('signup.region_placeholder')}
               value={v_56743f}
               onPress={v_b36a76}
-              disabled={!v_590486 || v_88dca2}
+              disabled={!v_5f1e0e || v_88dca2}
             />
 
             {}
@@ -464,6 +591,92 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         message={v_153a89.message}
         onConfirm={v_34f542}
       />
+
+      {}
+      <Modal
+        animationType="slide"
+        transparent
+        visible={v_3a64df}
+        onRequestClose={() => {
+          v_c73419(false);
+          v_6a0bf8('');
+        }}
+      >
+        <View style={v_d81136.modalOverlay}>
+          <TouchableOpacity
+            style={v_d81136.modalBackdrop}
+            activeOpacity={1}
+            onPress={() => {
+              v_c73419(false);
+              v_6a0bf8('');
+            }}
+          />
+          <View style={v_d81136.modalContent}>
+            <View style={v_d81136.modalHeader}>
+              <Text style={v_d81136.modalTitle}>
+                {v_8d41d7('country_select.title_region') || '지역 선택'}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  v_c73419(false);
+                  v_6a0bf8('');
+                }}
+              >
+                <Text style={v_d81136.modalCloseButton}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={v_d81136.modalSearchBox}>
+              <Feather name="search" size={18} color={v_1bfbd0.secondaryText} />
+              <TextInput
+                style={v_d81136.modalSearchInput}
+                value={v_7962f1}
+                onChangeText={v_6a0bf8}
+                placeholder={v_8d41d7('country_select.search_placeholder_region') || '지역 검색'}
+                placeholderTextColor={v_1bfbd0.secondaryText}
+                autoCorrect={false}
+              />
+            </View>
+            {v_0908db ? (
+              <View style={v_d81136.modalLoadingContainer}>
+                <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+              </View>
+            ) : (
+              <FlatList
+                data={v_4e187d}
+                keyExtractor={(v_8c0b26, v_a56041) =>
+                  `${v_8c0b26.iso2}-${v_8c0b26.dialCode}-${v_8c0b26.countryCode}-${v_a56041}`
+                }
+                renderItem={({ item: v_8c0b26 }) => (
+                  <TouchableOpacity
+                    style={v_d81136.modalRow}
+                    onPress={() => v_477add(v_8c0b26)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={v_d81136.modalRowFlag}>{v_8c0b26.flagEmoji}</Text>
+                    <Text style={v_d81136.modalRowText}>
+                      {v_ba4a54(v_8c0b26)}
+                    </Text>
+                    {(v_2f03bc?.iso2 === v_8c0b26.iso2 &&
+                      v_2f03bc?.dialCode === v_8c0b26.dialCode) ? (
+                      <Feather name="check" size={18} color={v_1bfbd0.text} />
+                    ) : null}
+                  </TouchableOpacity>
+                )}
+                contentContainerStyle={v_d81136.modalListContent}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                ListEmptyComponent={
+                  <View style={v_d81136.modalEmptyState}>
+                    <Text style={v_d81136.modalEmptyText}>
+                      {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
+                    </Text>
+                  </View>
+                }
+              />
+            )}
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -531,6 +744,90 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
     marginTop: 4,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  modalBackdrop: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  modalContent: {
+    backgroundColor: v_1bfbd0.background,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    maxHeight: '80%',
+    paddingBottom: v_9b1a04.large,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.medium,
+    borderBottomWidth: 1,
+    borderBottomColor: v_1bfbd0.border,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.text,
+  },
+  modalCloseButton: {
+    fontSize: 20,
+    color: v_1bfbd0.secondaryText,
+    padding: 4,
+  },
+  modalSearchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginHorizontal: v_9b1a04.large,
+    marginVertical: v_9b1a04.small,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: v_1bfbd0.lightGray || '#f5f5f5',
+    borderRadius: 8,
+  },
+  modalSearchInput: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
+    padding: 0,
+  },
+  modalLoadingContainer: {
+    padding: v_9b1a04.large * 2,
+    alignItems: 'center',
+  },
+  modalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: 14,
+    gap: 12,
+  },
+  modalRowFlag: {
+    fontSize: 20,
+  },
+  modalRowText: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
+  },
+  modalListContent: {
+    paddingBottom: v_9b1a04.large,
+  },
+  modalEmptyState: {
+    padding: v_9b1a04.large * 2,
+    alignItems: 'center',
+  },
+  modalEmptyText: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
   },
 });
 

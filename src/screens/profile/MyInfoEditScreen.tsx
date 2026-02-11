@@ -105,9 +105,13 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     });
   }, []);
 
-  const v_56743f = v_2f03bc
-    ? `${v_2f03bc.name} (${v_2f03bc.dialCode})`
-    : '';
+  const v_56743f = (() => {
+    if (!v_2f03bc) return '';
+    if (v_2f03bc.iso2 === 'select' || v_2f03bc.iso2 === 'global' || v_2f03bc.dialCode === '0') {
+      return v_8d41d7('country_select.select_option') || '선택';
+    }
+    return `${v_2f03bc.name} (${v_2f03bc.dialCode})`;
+  })();
 
   const v_cbf7db = () => {
     v_9b57fc('CountrySelect', { mode: 'country' });

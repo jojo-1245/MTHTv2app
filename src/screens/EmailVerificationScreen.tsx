@@ -1,5 +1,6 @@
 import v_a3453e, { v_5ab095, v_c4deb2 } from 'bapkr';
 import {
+  v_39a996,
   v_472849,
   v_19b633,
   v_4623af,
@@ -10,17 +11,26 @@ import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_729608, v_5427ed, v_cb41de, v_570c34, v_556baf } from '../components';
 import { v_8e2768 } from '../components';
-
+import { v_f947a7 } from '../services/signupApi';
 import { v_772971 } from 'jmpfvteuuztnp';
 
 type Props = v_432191<v_8ad91b, 'EmailVerification'>;
 
+const v_4fb1a1 = ['signup', 'password_reset', 'profile_change'] as const;
+type PurposeType = (typeof v_4fb1a1)[number];
+
 const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7 } = v_772971();
-  const v_e0c7e8 = v_c7daf6.params?.email || 'oth-staff@example.invalid';
-  const v_6c4ab9 = v_c7daf6.params?.redirectTo;
+  const v_24baff = v_c7daf6.params ?? {};
+  const v_e0c7e8 = typeof v_24baff.email === 'string' && v_24baff.email ? v_24baff.email : '';
+  const v_fa63e0 = v_4fb1a1.includes(v_24baff.purpose as PurposeType)
+    ? (v_24baff.purpose as PurposeType)
+    : 'signup';
+  const v_6c4ab9 = v_24baff.redirectTo;
   const [v_c99bd2, v_537cbb] = v_5ab095('');
   const [v_3a2ef3, v_e50001] = v_5ab095(false);
+  const [v_f136c1, v_b5337f] = v_5ab095<{ title: string; message: string } | null>(null);
+  const [v_d1dd8f, v_ff0c7a] = v_5ab095(false);
   const [v_cb36b1, v_6a8302] = v_5ab095(300); 
 
   v_c4deb2(() => {
@@ -44,9 +54,35 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
     v_537cbb('');
   };
 
-  const v_83b05b = () => {
-    if (v_c99bd2.length === 6) {
+  const v_83b05b = async () => {
+    if (v_c99bd2.length !== 6 || !v_e0c7e8) return;
+    v_ff0c7a(true);
+    v_b5337f(null);
+    try {
+      await v_f947a7({
+        email: v_e0c7e8,
+        code: v_c99bd2,
+        purpose: v_fa63e0,
+      });
       v_e50001(true);
+    } catch (v_49263d) {
+      let v_a8cd21 = '인증에 실패했습니다. 코드를 확인하거나 재전송 후 다시 시도해주세요.';
+      try {
+        v_a8cd21 =
+          v_49263d instanceof Error ? v_49263d.message : v_8d41d7('email_verification.error_verify');
+        if (!v_a8cd21 || v_a8cd21 === 'email_verification.error_verify') {
+          v_a8cd21 = '인증에 실패했습니다. 코드를 확인하거나 재전송 후 다시 시도해주세요.';
+        }
+        if (v_a8cd21.toLowerCase().includes('unexpected error')) {
+          v_a8cd21 = v_8d41d7('email_verification.error_verify') || v_a8cd21;
+        }
+      } catch (v_37eab7) {
+
+      }
+      const v_9f1622 = v_8d41d7('email_verification.error_title') || '인증 실패';
+      v_b5337f({ title: v_9f1622, message: v_a8cd21 });
+    } finally {
+      v_ff0c7a(false);
     }
   };
 
@@ -61,6 +97,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
   };
 
   const v_93136a = v_c99bd2.length === 6;
+  const v_15a612 = v_93136a && !!v_e0c7e8 && !v_d1dd8f;
 
   return (
     <>
@@ -81,7 +118,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             <View style={v_d81136.descriptionContainer}>
               <Text style={v_d81136.descriptionText}>
                 {v_8d41d7('email_verification.description_prefix')}
-                <Text style={v_d81136.emailText}>{v_e0c7e8}</Text>
+                <Text style={v_d81136.emailText}>{v_e0c7e8 || '—'}</Text>
                 {v_8d41d7('email_verification.description_suffix')}
               </Text>
             </View>
@@ -109,10 +146,13 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             {}
             <View style={v_d81136.buttonContainer}>
               <PrimaryButton
-                title={v_8d41d7('email_verification.verify_btn')}
+                title={v_d1dd8f ? v_8d41d7('email_verification.verifying') || '확인 중...' : v_8d41d7('email_verification.verify_btn')}
                 onPress={v_83b05b}
-                disabled={!v_93136a}
+                disabled={!v_15a612}
               />
+              {v_d1dd8f && (
+                <ActivityIndicator size="small" color={v_1bfbd0.primary} style={v_d81136.loadingIndicator} />
+              )}
             </View>
           </View>
         </SafeScrollView>
@@ -124,6 +164,14 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
         message={v_8d41d7('email_verification.success_message')}
         onConfirm={v_03cae9}
       />
+      {v_f136c1 && (
+        <AlertModal
+          visible
+          title={v_f136c1.title}
+          message={v_f136c1.message}
+          onConfirm={() => v_b5337f(null)}
+        />
+      )}
     </>
   );
 };
@@ -180,6 +228,10 @@ const v_d81136 = v_472849.create({
   },
   buttonContainer: {
     marginBottom: v_9b1a04.xlarge,
+  },
+  loadingIndicator: {
+    marginTop: v_9b1a04.small,
+    alignSelf: 'center',
   },
 });
 

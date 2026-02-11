@@ -1,23 +1,23 @@
 import type { v_da1883 } from '../types';
 
 export const REGIONS_AS_COUNTRY_DIAL_CODES: v_da1883[] = [
-  { iso2: 'seoul', name: '서울', dialCode: '1', flagEmoji: '📍' },
-  { iso2: 'busan', name: '부산', dialCode: '2', flagEmoji: '📍' },
-  { iso2: 'daegu', name: '대구', dialCode: '3', flagEmoji: '📍' },
-  { iso2: 'incheon', name: '인천', dialCode: '4', flagEmoji: '📍' },
-  { iso2: 'gwangju', name: '광주', dialCode: '5', flagEmoji: '📍' },
-  { iso2: 'daejeon', name: '대전', dialCode: '6', flagEmoji: '📍' },
-  { iso2: 'ulsan', name: '울산', dialCode: '7', flagEmoji: '📍' },
-  { iso2: 'sejong', name: '세종', dialCode: '8', flagEmoji: '📍' },
-  { iso2: 'gyeonggi', name: '경기', dialCode: '9', flagEmoji: '📍' },
-  { iso2: 'gangwon', name: '강원', dialCode: '10', flagEmoji: '📍' },
-  { iso2: 'chungbuk', name: '충북', dialCode: '11', flagEmoji: '📍' },
-  { iso2: 'chungnam', name: '충남', dialCode: '12', flagEmoji: '📍' },
-  { iso2: 'jeonbuk', name: '전북', dialCode: '13', flagEmoji: '📍' },
-  { iso2: 'jeonnam', name: '전남', dialCode: '14', flagEmoji: '📍' },
-  { iso2: 'gyeongbuk', name: '경북', dialCode: '15', flagEmoji: '📍' },
-  { iso2: 'gyeongnam', name: '경남', dialCode: '16', flagEmoji: '📍' },
-  { iso2: 'jeju', name: '제주', dialCode: '17', flagEmoji: '📍' },
+  { iso2: '서울', name: '서울', dialCode: '2', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '경기도', name: '경기도', dialCode: '31', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '인천광역시', name: '인천광역시', dialCode: '32', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '강원도', name: '강원도', dialCode: '33', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '충청남도', name: '충청남도', dialCode: '41', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '대전광역시', name: '대전광역시', dialCode: '42', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '충청북도', name: '충청북도', dialCode: '43', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '세종특별자치시', name: '세종특별자치시', dialCode: '44', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '부산광역시', name: '부산광역시', dialCode: '51', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '울산광역시', name: '울산광역시', dialCode: '52', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '대구광역시', name: '대구광역시', dialCode: '53', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '경상북도', name: '경상북도', dialCode: '54', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '경상남도', name: '경상남도', dialCode: '55', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '전라남도', name: '전라남도', dialCode: '61', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '광주광역시', name: '광주광역시', dialCode: '62', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '전라북도', name: '전라북도', dialCode: '63', flagEmoji: '📍', countryCode: 82 },
+  { iso2: '제주특별자치도', name: '제주특별자치도', dialCode: '64', flagEmoji: '📍', countryCode: 82 },
 ];
 
 export const GLOBAL_REGION: v_da1883 = {
@@ -25,15 +25,26 @@ export const GLOBAL_REGION: v_da1883 = {
   name: 'Global',
   dialCode: '0',
   flagEmoji: '🌐',
+  countryCode: 0,
 };
+
+const v_34a9c8 = ['kr', 'jp', 'cn', 'us', 'id'];
 
 export const v_369014 = (v_cc0c7d): v_da1883[] => {
   if (!v_cc0c7d) {
     return [v_789afd];
   }
-  return v_cc0c7d.toLowerCase() === 'kr'
-    ? v_52495e
-    : [v_789afd];
+  const v_550aed = v_cc0c7d.toLowerCase();
+  if (!v_34a9c8.includes(v_550aed)) {
+    return [v_789afd];
+  }
+  if (v_550aed === 'kr') {
+    return v_52495e;
+  }
+  if (v_550aed === 'id') {
+    return v_52495e.filter((v_cb35cb) => v_cb35cb.countryCode === 62);
+  }
+  return [v_789afd];
 };
 
 export const v_9553a4 = (v_cc0c7d): number => {
@@ -54,4 +65,3 @@ export const v_6946fd = (v_389afb): string => {
   );
   return v_a6c30b ? v_a6c30b.name : v_789afd.name;
 };
-
