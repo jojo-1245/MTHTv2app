@@ -51,6 +51,32 @@ function normalizeError(error: unknown): Error {
   return new Error('요청 중 알 수 없는 오류가 발생했습니다.');
 }
 
+export type VerifyEmailPayload = {
+  email: string;
+  code: string;
+  purpose: 'signup' | 'password_reset' | 'profile_change';
+  device_info?: Record<string, unknown>;
+};
+
+export async function verifyEmail(payload: VerifyEmailPayload): Promise<void> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, payload, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
 export async function signup(payload: SignupPayload): Promise<void> {
   const env = getEnv();
   const baseURL = env.GATEWAY;

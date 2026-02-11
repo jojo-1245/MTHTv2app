@@ -48,6 +48,7 @@ export type RootStackParamList = {
   EmailVerification:
   | {
     email?: string;
+    purpose?: 'signup' | 'password_reset' | 'profile_change';
     redirectTo?: keyof RootStackParamList;
   }
   | undefined;

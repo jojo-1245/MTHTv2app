@@ -8,11 +8,8 @@ import v_a3453e, {
 } from 'bapkr';
 import type { v_da1883 } from '../types';
 import { v_202d44 } from '../constants/countryDialCodes';
-import {
-  v_52495e,
-  v_789afd,
-  v_369014,
-} from '../constants/regions';
+import { v_789afd, v_369014 } from '../constants/regions';
+import { v_e30d2f } from '../utils/countryStateCityUtils';
 
 export type SelectMode = 'country' | 'region';
 
@@ -37,12 +34,16 @@ interface AppContextValue {
   openAddTokenDialog: () => void;
 }
 
+const v_24a9a4 = v_e30d2f();
 const v_d7c38a =
-  v_202d44.find((v_b9bbbd) => v_b9bbbd.iso2 === 'kr') ||
+  (v_24a9a4.length > 0
+    ? v_24a9a4.find((v_3f4e2e) => v_3f4e2e.iso2.toLowerCase() === 'kr')
+    : null) ??
+  v_202d44.find((v_b9bbbd) => v_b9bbbd.iso2 === 'kr') ??
   v_202d44[0];
 const v_2a5c62 =
   v_d7c38a.iso2.toLowerCase() === 'kr'
-    ? v_52495e[0]
+    ? v_369014('kr')[0] ?? v_789afd
     : v_789afd;
 
 const v_b657db = v_af12cb<AppContextValue | undefined>(undefined);
@@ -95,10 +96,26 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
   }, []);
 
   v_c4deb2(() => {
+    const v_6505f6 =
+      v_2f03bc.dialCode === '0' ||
+      v_2f03bc.iso2 === 'select' ||
+      v_2f03bc.iso2 === 'global';
+    if (v_6505f6) return;
     const v_e94fdf = v_369014(v_459d5e.iso2);
-    const v_d2a53b = v_e94fdf.some((v_a6c30b) => v_a6c30b.iso2 === v_2f03bc.iso2);
-    if (!v_d2a53b) {
-      v_2f2d51(v_e94fdf[0] || v_789afd);
+
+    const v_341347 =
+      v_e94fdf.length > 0 &&
+      !(v_e94fdf.length === 1 && v_e94fdf[0].iso2 === 'global');
+    if (!v_341347) return;
+    const v_d2a53b = v_e94fdf.some(
+      (v_cb35cb) =>
+        v_cb35cb.countryCode === v_2f03bc.countryCode &&
+        v_cb35cb.dialCode === v_2f03bc.dialCode
+    );
+    if (!v_d2a53b && v_e94fdf.length > 0) {
+      v_2f2d51(v_e94fdf[0]);
+    } else if (!v_d2a53b) {
+      v_2f2d51(v_789afd);
     }
   }, [v_459d5e, v_2f03bc, v_2f2d51]);
 

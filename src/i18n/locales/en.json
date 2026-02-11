@@ -565,7 +565,8 @@
         "title_country": "Select Country",
         "title_region": "Select Region",
         "search_placeholder_country": "Search country name or dial code",
-        "search_placeholder_region": "Search region name or code"
+        "search_placeholder_region": "Search region name or code",
+        "select_option": "Select"
     },
     "email_verification": {
         "title": "Enter Verification Code",

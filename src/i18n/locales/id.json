@@ -564,7 +564,8 @@
         "title_country": "Pilih Negara",
         "title_region": "Pilih Wilayah",
         "search_placeholder_country": "Cari nama negara atau kode telepon",
-        "search_placeholder_region": "Cari nama wilayah atau kode"
+        "search_placeholder_region": "Cari nama wilayah atau kode",
+        "select_option": "Pilih"
     },
     "email_verification": {
         "title": "Masukkan Kode Verifikasi",
