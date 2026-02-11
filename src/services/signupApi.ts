@@ -73,6 +73,13 @@ export async function verifyEmail(payload: VerifyEmailPayload): Promise<void> {
       headers,
     });
   } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.log('[signupApi] verify-email 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
     throw normalizeError(error);
   }
 }
@@ -92,6 +99,16 @@ export async function signup(payload: SignupPayload): Promise<void> {
       headers,
     });
   } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.log('[signupApi] signup 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+        config: { url: error.config?.url, method: error.config?.method },
+      });
+    } else if (__DEV__ && error instanceof Error) {
+      console.log('[signupApi] signup 에러 (비-Axios):', { message: error.message, error });
+    }
     throw normalizeError(error);
   }
 }
