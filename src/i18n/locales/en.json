@@ -329,6 +329,8 @@
         "email_placeholder": "Enter your email address",
         "password_label": "Password",
         "password_placeholder": "Password",
+        "password_confirm_label": "Confirm Password",
+        "password_confirm_placeholder": "Re-enter password",
         "phone_label": "Phone Number",
         "phone_placeholder": "010-1010-1000",
         "region_label": "Region",

@@ -328,6 +328,8 @@
         "email_placeholder": "Masukkan alamat email Anda",
         "password_label": "Kata Sandi",
         "password_placeholder": "Kata Sandi",
+        "password_confirm_label": "Konfirmasi Kata Sandi",
+        "password_confirm_placeholder": "Masukkan ulang kata sandi",
         "phone_label": "Nomor Telepon",
         "phone_placeholder": "010-1010-1000",
         "region_label": "Wilayah",
