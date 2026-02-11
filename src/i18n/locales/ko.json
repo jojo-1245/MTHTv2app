@@ -320,7 +320,10 @@
         "error_invalid_email": "올바른 이메일 주소를 입력해주세요.",
         "error_empty_password": "비밀번호를 입력해주세요.",
         "error_failed": "로그인 실패",
-        "error_unknown": "로그인 중 알 수 없는 오류가 발생했습니다."
+        "error_unknown": "로그인 중 알 수 없는 오류가 발생했습니다.",
+        "kakao_login": "카카오 로그인",
+        "naver_login": "네이버 로그인",
+        "google_login": "구글 로그인"
     },
     "signup": {
         "title": "회원가입",

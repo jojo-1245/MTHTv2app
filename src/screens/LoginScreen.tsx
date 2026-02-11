@@ -1,7 +1,6 @@
 import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
-  v_cf9c33,
   v_0e1f26,
   v_e767d1,
   v_326be8,
@@ -22,12 +21,10 @@ import {
   v_570c34,
   v_e775af,
 } from '../components';
+import { v_25515d } from 'zvyjokvuouwvifyzks';
 import type { v_8ad91b } from '../navigation';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_67ec53, v_d41982 } from '../services';
-
-const v_186735 = require('../../assets/images/symbol.png');
-const v_b48f8e = require('../../assets/images/logo.png');
 
 type Props = v_432191<v_8ad91b, 'Login'>;
 
@@ -106,14 +103,32 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_ec4736 = async () => {
 
     v_c65f5d.navigate('MetaHome');
-  }
+  };
+
+  const v_2c36a1 = () => {
+
+    console.log('카카오 로그인');
+    v_c65f5d.navigate('MetaHome');
+  };
+
+  const v_40f9f9 = () => {
+
+    console.log('네이버 로그인');
+    v_c65f5d.navigate('MetaHome');
+  };
+
+  const v_6dd38d = () => {
+
+    console.log('구글 로그인');
+    v_c65f5d.navigate('MetaHome');
+  };
 
   return (
     <>
       <View style={v_d81136.screen}>
         <Header
           showBackButton
-          title=""
+          title={v_8d41d7('common.login')}
           onBackPress={v_6ca26b}
           containerStyle={v_d81136.flatHeader}
         />
@@ -124,11 +139,6 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           autoAdjustKeyboardPadding={true}
         >
           <View style={v_d81136.inner}>
-            <View style={v_d81136.logoSection}>
-              <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
-              <Image source={v_b48f8e} style={v_d81136.logo} resizeMode="contain" />
-            </View>
-
             <View style={v_d81136.form}>
               <TextField
                 label={v_8d41d7('login.email_label')}
@@ -170,6 +180,52 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     style={v_d81136.loadingIndicator}
                   />
                 )}
+              </View>
+
+              <View style={v_d81136.socialLoginSection}>
+                <View style={v_d81136.socialDivider}>
+                  <View style={v_d81136.dividerLine} />
+                  <Text style={v_d81136.dividerText}>또는</Text>
+                  <View style={v_d81136.dividerLine} />
+                </View>
+
+                <View style={v_d81136.socialButtons}>
+                  <TouchableOpacity
+                    style={[v_d81136.socialButton, v_d81136.kakaoButton]}
+                    onPress={v_2c36a1}
+                    disabled={v_cd31a8}
+                    activeOpacity={0.85}
+                  >
+                    <View style={v_d81136.socialIconWrapper}>
+                      <Ionicons name="chatbubble" size={20} color="#000000" />
+                    </View>
+                    <Text style={v_d81136.kakaoButtonText}>{v_8d41d7('login.kakao_login')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[v_d81136.socialButton, v_d81136.naverButton]}
+                    onPress={v_40f9f9}
+                    disabled={v_cd31a8}
+                    activeOpacity={0.85}
+                  >
+                    <View style={v_d81136.socialIconWrapper}>
+                      <View style={v_d81136.naverIconContainer}>
+                        <Text style={v_d81136.naverIconText}>N</Text>
+                      </View>
+                    </View>
+                    <Text style={v_d81136.naverButtonText}>{v_8d41d7('login.naver_login')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[v_d81136.socialButton, v_d81136.googleButton]}
+                    onPress={v_6dd38d}
+                    disabled={v_cd31a8}
+                    activeOpacity={0.85}
+                  >
+                    <View style={v_d81136.socialIconWrapper}>
+                      <Ionicons name="logo-google" size={20} color="#4285F4" />
+                    </View>
+                    <Text style={v_d81136.googleButtonText}>{v_8d41d7('login.google_login')}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
@@ -213,25 +269,11 @@ const v_d81136 = v_472849.create({
     maxWidth: 780,
     alignItems: 'center',
   },
-  logoSection: {
-    alignItems: 'center',
-    gap: v_9b1a04.large,
-    marginBottom: 48,
-  },
-  symbol: {
-    width: 120,
-    height: 120,
-  },
-  logo: {
-    width: 160,
-    height: 40,
-  },
   form: {
     width: '100%',
     gap: v_9b1a04.medium,
   },
   buttonWrapper: {
-    marginTop: v_9b1a04.small,
   },
   loadingIndicator: {
     marginTop: v_9b1a04.small / 2,
@@ -242,6 +284,88 @@ const v_d81136 = v_472849.create({
   },
   linkText: {
     fontSize: 13,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+  },
+  socialLoginSection: {
+    width: '100%',
+    gap: v_9b1a04.medium,
+    paddingTop: v_9b1a04.medium,
+  },
+  socialDivider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+    marginTop: v_9b1a04.small,
+    marginBottom: v_9b1a04.medium,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: v_1bfbd0.border,
+  },
+  dividerText: {
+    fontSize: 13,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  socialButtons: {
+    width: '100%',
+    gap: v_9b1a04.small,
+  },
+  socialButton: {
+    width: '100%',
+    minHeight: 56,
+    paddingHorizontal: v_9b1a04.large,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
+  socialIconWrapper: {
+    marginRight: v_9b1a04.small,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  naverIconContainer: {
+    width: 20,
+    height: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  naverIconText: {
+    fontSize: 14,
+    fontFamily: v_843035.bold,
+    color: '#03C75A',
+    fontWeight: 'bold',
+  },
+  kakaoButton: {
+    backgroundColor: '#FEE500',
+    borderColor: '#FEE500',
+  },
+  kakaoButtonText: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: '#000000',
+  },
+  naverButton: {
+    backgroundColor: '#03C75A',
+    borderColor: '#03C75A',
+  },
+  naverButtonText: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: '#FFFFFF',
+  },
+  googleButton: {
+    backgroundColor: v_1bfbd0.background,
+    borderColor: v_1bfbd0.border,
+  },
+  googleButtonText: {
+    fontSize: 14,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
   },
