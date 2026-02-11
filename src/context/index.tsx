@@ -34,17 +34,17 @@ interface AppContextValue {
   openAddTokenDialog: () => void;
 }
 
+const SELECT_COUNTRY: v_da1883 = {
+  iso2: 'select',
+  name: 'Select',
+  dialCode: '0',
+  flagEmoji: '🌐',
+  countryCode: 0,
+};
+
 const v_24a9a4 = v_e30d2f();
-const v_d7c38a =
-  (v_24a9a4.length > 0
-    ? v_24a9a4.find((v_3f4e2e) => v_3f4e2e.iso2.toLowerCase() === 'kr')
-    : null) ??
-  v_202d44.find((v_b9bbbd) => v_b9bbbd.iso2 === 'kr') ??
-  v_202d44[0];
-const v_2a5c62 =
-  v_d7c38a.iso2.toLowerCase() === 'kr'
-    ? v_369014('kr')[0] ?? v_789afd
-    : v_789afd;
+const v_d7c38a = v_d8e1a7;
+const v_2a5c62 = v_789afd;
 
 const v_b657db = v_af12cb<AppContextValue | undefined>(undefined);
 
@@ -67,9 +67,11 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
 
   const v_f693e7 = v_de06a3((country: v_da1883) => {
     v_e10000(v_b9bbbd);
+    v_cf3738(v_789afd);
     v_eee6b0((v_ba2215) => ({
       ...v_ba2215,
       countryIso2: v_b9bbbd.iso2,
+      regionIso2: v_789afd.iso2,
     }));
   }, []);
 
@@ -89,9 +91,11 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
   }, []);
 
   const v_4df356 = v_de06a3(() => {
+    v_e10000(v_d8e1a7);
+    v_cf3738(v_789afd);
     v_eee6b0({
-      countryIso2: v_d7c38a.iso2,
-      regionIso2: v_2a5c62.iso2,
+      countryIso2: v_d8e1a7.iso2,
+      regionIso2: v_789afd.iso2,
     });
   }, []);
 
