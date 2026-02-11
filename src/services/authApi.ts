@@ -88,3 +88,56 @@ export async function persistAuthSession(payload: LoginAuthPayload): Promise<voi
   }
   await AsyncStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
 }
+
+export interface MeProfile {
+  email?: string;
+  firstname?: string;
+  lastname?: string;
+  referral_code?: string;
+  tier?: 'silver' | 'gold' | string;
+  [key: string]: unknown;
+}
+
+export async function getMe(): Promise<MeProfile> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  const token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+  if (!token) throw new Error('로그인이 필요합니다.');
+  if (__DEV__) {
+    console.log('[authApi] getMe 요청:', { url: `${baseURL}/oth-path` });
+  }
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.get<ApiResponse<MeProfile>>(`${baseURL}/oth-path`, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+    const data = res.data?.data ?? (res.data as unknown as MeProfile);
+    if (__DEV__) {
+      console.log('[authApi] getMe 응답:', { status: res.status, hasData: !!data });
+    }
+    if (typeof data === 'object' && data !== null) return data as MeProfile;
+    return { email: String(data) };
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.error('[authApi] getMe 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+    throw normalizeError(error);
+  }
+}
+
+export async function clearAuthSession(): Promise<void> {
+  await AsyncStorage.multiRemove([
+    STORAGE_KEYS.authToken,
+    STORAGE_KEYS.memberInfo,
+    STORAGE_KEYS.isLoggedIn,
+  ]);
+}

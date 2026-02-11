@@ -1,2 +1,7 @@
-export { loginMember, persistAuthSession } from './authApi';
-export type { LoginAuthPayload } from './authApi';
+export {
+  loginMember,
+  persistAuthSession,
+  getMe,
+  clearAuthSession,
+} from './authApi';
+export type { LoginAuthPayload, MeProfile } from './authApi';
