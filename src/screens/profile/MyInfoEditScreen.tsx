@@ -1,8 +1,6 @@
 import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
-  v_e767d1,
-  v_326be8,
   v_472849,
   v_19b633,
   v_4623af,
@@ -11,8 +9,8 @@ import {
   v_5e8657,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
-import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import {
   v_1bfbd0,
   v_a61db3,
@@ -21,8 +19,9 @@ import {
   v_1f5cda,
   v_9b1a04,
   v_34d45f,
-  v_624bd2,
 } from '../../constants';
+import { v_202d44 } from '../../constants/countryDialCodes';
+import { v_789afd, v_52495e } from '../../constants/regions';
 import {
   v_8e2768,
   v_729608,
@@ -38,6 +37,8 @@ import type { v_8ad91b } from '../../navigation';
 import { v_700ef9 } from '../../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_a0daa8 } from '../../navigation';
+import { v_7ef860 } from '../../services/authApi';
+import type { v_2c95cc } from '../../services/authApi';
 
 type Props = v_432191<v_8ad91b, 'MyInfoEdit'>;
 
@@ -73,7 +74,9 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
   const { goBack: v_c7ac57, navigate: v_9b57fc } = v_a0daa8();
   const {
     selectedCountryDialCode: v_459d5e,
+    setSelectedCountryDialCode: v_f693e7,
     selectedRegion: v_2f03bc,
+    setSelectedRegion: v_2f2d51,
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
 
@@ -104,15 +107,70 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     title: '',
     message: '',
   });
+  const [v_3ee07c, v_3b5fd6] = v_5ab095(true);
 
-  v_c4deb2(() => {
-
-    v_e84827.getItem(v_624bd2.savedEmail).then((v_60fc43) => {
-      if (v_60fc43) {
-        v_fedf34(v_60fc43);
-      }
-    });
-  }, []);
+  v_cf763b(
+    v_a3453e.useCallback(() => {
+      let v_2008a4 = false;
+      v_3b5fd6(true);
+      v_7ef860()
+        .then((profile: v_2c95cc) => {
+          if (v_2008a4) return;
+          const v_e2a85c = v_727031 as Record<string, unknown>;
+          if (v_e2a85c.email && typeof v_e2a85c.email === 'string') v_fedf34(v_e2a85c.email.trim());
+          const v_2d1621 =
+            (v_e2a85c.name as string) ||
+            [v_e2a85c.firstname, v_e2a85c.lastname].filter(Boolean).join(' ').trim() ||
+            '';
+          if (v_2d1621) v_318f24(v_2d1621);
+          const v_49ea09 = (v_e2a85c.mobile ?? v_e2a85c.phone) as string | undefined;
+          if (v_49ea09 && typeof v_49ea09 === 'string') {
+            const v_e6d4a6 = v_49ea09.replace(/\D/g, '');
+            v_fcce73(v_e6d4a6);
+            v_a776b5({ phone: v_e6d4a6 });
+          }
+          const v_d199d8 = v_e2a85c.gender as number | undefined;
+          if (v_d199d8 === 2110) v_bdc43c('male');
+          else if (v_d199d8 === 2111) v_bdc43c('female');
+          const v_2d2cbc = v_e2a85c.age_range as number | undefined;
+          const v_c3889d = {
+            2210: '10',
+            2220: '20',
+            2230: '30',
+            2240: '40',
+            2250: '50+',
+          };
+          if (v_2d2cbc != null && v_c3889d[v_2d2cbc]) v_64a312(v_c3889d[v_2d2cbc]);
+          const v_dbd26e = ((v_e2a85c.country as string) ?? '').toLowerCase();
+          if (v_dbd26e) {
+            const v_b9bbbd = v_202d44.find(
+              (v_3f4e2e) => v_3f4e2e.iso2.toLowerCase() === v_dbd26e
+            );
+            if (v_b9bbbd) v_f693e7(v_b9bbbd);
+          }
+          const v_94bdf5 = (v_e2a85c.region_id as number) ?? 0;
+          if (v_94bdf5 > 0 && v_94bdf5 !== v_1f5cda) {
+            const v_a6c30b = v_52495e.find(
+              (v_cb35cb) => parseInt(v_cb35cb.dialCode, 10) === v_94bdf5
+            );
+            if (v_a6c30b) v_2f2d51(v_a6c30b);
+          } else {
+            v_2f2d51(v_789afd);
+          }
+        })
+        .catch(() => {
+          if (!v_2008a4) {
+            v_fedf34('');
+          }
+        })
+        .finally(() => {
+          if (!v_2008a4) v_3b5fd6(false);
+        });
+      return () => {
+        v_2008a4 = true;
+      };
+    }, [v_f693e7, v_2f2d51, v_a776b5])
+  );
 
   const v_56743f = (() => {
     if (!v_2f03bc) return '';
@@ -272,6 +330,18 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
     }
   };
 
+  if (v_3ee07c) {
+    return (
+      <MainLayout activeKey="myinfo">
+        <View style={[v_d81136.screen, v_d81136.centered]}>
+          <Header title={v_8d41d7('my_info_edit.title')} showBackButton onBackPress={v_c7ac57} />
+          <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+          <Text style={v_d81136.loadingText}>{v_8d41d7('profile.loading')}</Text>
+        </View>
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.screen}>
@@ -423,6 +493,16 @@ const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
     backgroundColor: v_1bfbd0.background,
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
   },
   content: {
     flexGrow: 1,
