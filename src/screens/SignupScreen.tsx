@@ -28,7 +28,7 @@ import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_35200c, v_c1a440, v_91bb22, type v_d4ca6e } from '../services/signupApi';
-import { v_9553a4, v_369014 } from '../constants/regions';
+import { v_9553a4, v_369014, v_1f5cda } from '../constants/regions';
 import { v_5c7129, type v_107459, v_f91692 } from '../utils/countryUtils';
 import { v_11e39e } from '../services/countryApi';
 import { v_9ad700 } from '../utils/regionSubcodeMapping';
@@ -350,8 +350,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_5f1e0e && v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
           parseInt(v_2f03bc.dialCode, 10) ||
-          0
-        : undefined;
+          v_1f5cda
+        : v_1f5cda;
 
     if (!v_8f37ac) {
       v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_email'));
@@ -393,7 +393,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       gender: v_7ebe28(),
       age_range: v_a02735(v_f83808),
       ...(v_a4d981 && { country: v_a4d981, country_code: v_a4d981 }),
-      ...(v_94bdf5 !== undefined && v_94bdf5 > 0 && { region_id: v_94bdf5 }),
+      region_id: v_94bdf5,
       os_type: v_91bb22.getOSCode(),
       language: v_9c213b.language?.startsWith('ko') ? 'ko' : v_9c213b.language?.startsWith('id') ? 'id' : 'en',
       ...(v_9bf12c.trim() && { referral_code: v_9bf12c.trim() }),
