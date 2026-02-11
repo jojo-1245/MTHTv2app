@@ -1482,8 +1482,10 @@
         "title": "Verifikasi Identitas",
         "email_label": "Email",
         "email_placeholder": "oth-user@example.invalid",
-        "email_valid": "Email tersedia.",
+        "email_valid": "Format email valid. Kami dapat mengirim kode verifikasi ke alamat ini.",
         "email_invalid": "Format email tidak valid.",
+        "email_match": "Cocok dengan email login Anda.",
+        "email_not_match": "Tidak cocok dengan email login. Masukkan email Anda sendiri.",
         "send_code_button": "Kirim Kode Verifikasi"
     },
     "health_connection": {
