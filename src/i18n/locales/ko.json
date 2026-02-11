@@ -34,7 +34,9 @@
         "search": "검색",
         "show": "보기",
         "hide": "숨기기",
-        "try_again": "재시도"
+        "try_again": "재시도",
+        "currency_unit": "원",
+        "previous": "이전"
     },
     "account_selector": {
         "title": "계정 선택",
@@ -323,7 +325,8 @@
         "error_unknown": "로그인 중 알 수 없는 오류가 발생했습니다.",
         "kakao_login": "카카오 로그인",
         "naver_login": "네이버 로그인",
-        "google_login": "구글 로그인"
+        "google_login": "구글 로그인",
+        "apple_login": "애플 로그인"
     },
     "signup": {
         "title": "회원가입",
@@ -392,12 +395,32 @@
         "faq": "자주 묻는 질문",
         "faq_desc": "FAQ",
         "logout": "로그아웃",
+        "nft_held": "보유중인 NFT",
+        "nft_count": "{{count}}개",
+        "nft_unit": "개",
         "referral": "레퍼럴",
         "consecutive_days": "일 연속",
         "analyses_completed": "분석 완료",
         "purchases_completed": "구매 완료",
         "app_version": "MetaHint Health v1.0.0",
         "copyright": "© 2026 MetaHint. All rights reserved."
+    },
+    "profit_distribution": {
+        "title": "수익배분",
+        "subtitle": "NFT 홀더 수익 현황",
+        "period_label": "수익배분 기간",
+        "nft_held": "보유 중인 NFT",
+        "unit": "개",
+        "detailed_breakdown": "수익 상세 내역",
+        "advertising_profit": "광고 및 부가서비스 수익",
+        "advertising_subtitle": "광고 및 서비스 매출",
+        "product_profit": "제품 매출 수익",
+        "product_subtitle": "제품 판매 매출",
+        "estimated_profit_label": "내 NFT {{count}}개 기준 예상 수익",
+        "next_distribution": "다음 배분일",
+        "guide_title": "수익배분 안내",
+        "guide_item1": "광고 수익, 부가서비스 수익의 10%",
+        "guide_item2": "제품 매출액의 5%"
     },
     "skin": {
         "products": {

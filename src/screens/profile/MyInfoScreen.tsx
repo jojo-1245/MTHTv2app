@@ -107,6 +107,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
           showBottomBackground={false}
           disableBottomPadding={true}
         >
+
           {}
           <View style={v_d81136.profileCard}>
             <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
@@ -123,6 +124,23 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
               <Text style={v_d81136.referralText}>{v_8d41d7('profile.referral')}</Text>
             </TouchableOpacity>
           </View>
+
+          {}
+          <TouchableOpacity
+            style={v_d81136.nftInfoCard}
+            onPress={() => v_9b57fc('ProfitDistribution')}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel={v_8d41d7('profile.nft_held')}
+          >
+            <View style={v_d81136.nftInfoContent}>
+              <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
+              <Text style={v_d81136.nftInfoText}>
+                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>50{v_8d41d7('profile.nft_unit')}</Text>
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
+          </TouchableOpacity>
 
           {}
           <View style={v_d81136.metricsRow}>
@@ -204,6 +222,35 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_9b1a04.medium,
     paddingBottom: v_9b1a04.xlarge,
     backgroundColor: '#F9FAFB',
+  },
+  nftInfoCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: v_9b1a04.medium,
+    marginBottom: v_9b1a04.medium,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  nftInfoContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_9b1a04.small,
+  },
+  nftInfoText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
+  },
+  nftInfoCount: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.bold,
+    color: '#2B7FFF',
   },
   profileCard: {
     flexDirection: 'row',
