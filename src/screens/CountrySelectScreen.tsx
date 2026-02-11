@@ -181,18 +181,8 @@ const CountrySelectScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
   const v_6121dc = (item: v_da1883) => {
     if (v_34e5bb === 'region') {
       v_2f2d51(v_8c0b26);
-      console.log('[CountrySelect] 지역 선택:', {
-        선택: v_8c0b26,
-        국가번호_countryCode: v_459d5e?.countryCode,
-        지역_리스트: v_e94fdf,
-      });
     } else {
       v_f693e7(v_8c0b26);
-      console.log('[CountrySelect] 국가 선택:', {
-        선택: v_8c0b26,
-        국가번호_countryCode: v_8c0b26.countryCode,
-        국가번호_dialCode: v_8c0b26.dialCode,
-      });
     }
     v_67ab1c(v_34e5bb);
     v_c65f5d.goBack();
