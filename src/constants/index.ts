@@ -18,6 +18,7 @@ export const v_1bfbd0 = {
   headerText: '#10192d',
   headerIconBg: '#F8FAFC',
   border: '#d8dadc',
+  borderLight: '#eaeaea',
   placeholder: 'rgba(0, 0, 0, 0.5)',
   mutedText: '#3C3C43',
   secondaryText: '#666666',

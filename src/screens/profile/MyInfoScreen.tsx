@@ -145,14 +145,23 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
           {}
           <View style={v_d81136.metricsRow}>
             <View style={[v_d81136.metricCard, v_d81136.metricCardBlue]}>
+              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapBlue]}>
+                <Ionicons name="calendar-outline" size={20} color="#3B82F6" />
+              </View>
               <Text style={v_d81136.metricValue}>{v_338926.consecutiveDays}</Text>
               <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.consecutive_days')}</Text>
             </View>
             <View style={[v_d81136.metricCard, v_d81136.metricCardPink]}>
+              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapPink]}>
+                <Ionicons name="checkmark-circle-outline" size={20} color="#EC4899" />
+              </View>
               <Text style={v_d81136.metricValue}>{v_338926.analysesCompleted}</Text>
               <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.analyses_completed')}</Text>
             </View>
             <View style={[v_d81136.metricCard, v_d81136.metricCardYellow]}>
+              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapYellow]}>
+                <Ionicons name="bag-outline" size={20} color="#F59E0B" />
+              </View>
               <Text style={v_d81136.metricValue}>{v_338926.purchasesCompleted}</Text>
               <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.purchases_completed')}</Text>
             </View>
@@ -223,6 +232,7 @@ const v_d81136 = v_472849.create({
     paddingBottom: v_9b1a04.xlarge,
     backgroundColor: '#F9FAFB',
   },
+
   nftInfoCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -231,11 +241,8 @@ const v_d81136 = v_472849.create({
     borderRadius: 16,
     padding: v_9b1a04.medium,
     marginBottom: v_9b1a04.medium,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.borderLight,
   },
   nftInfoContent: {
     flexDirection: 'row',
@@ -258,12 +265,9 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: v_9b1a04.medium,
-    marginBottom: v_9b1a04.medium,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    marginBottom: v_9b1a04.small,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.borderLight,
   },
   tierBadge: {
     width: 80,
@@ -299,43 +303,73 @@ const v_d81136 = v_472849.create({
   metricsRow: {
     flexDirection: 'row',
     gap: 10,
-    marginBottom: v_9b1a04.xlarge,
+    marginBottom: v_9b1a04.medium,
   },
   metricCard: {
     flex: 1,
-    borderRadius: 12,
-    padding: v_9b1a04.medium,
+    aspectRatio: 1,
+    borderRadius: 16,
+    padding: v_9b1a04.small,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: v_1bfbd0.borderLight,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   metricCardBlue: {
-    backgroundColor: '#E0F2FE',
+    borderTopWidth: 3,
+    borderTopColor: '#3B82F6',
   },
   metricCardPink: {
-    backgroundColor: '#FCE7F3',
+    borderTopWidth: 3,
+    borderTopColor: '#EC4899',
   },
   metricCardYellow: {
-    backgroundColor: '#FEF3C7',
+    borderTopWidth: 3,
+    borderTopColor: '#F59E0B',
+  },
+  metricIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  metricIconWrapBlue: {
+    backgroundColor: '#EFF6FF',
+  },
+  metricIconWrapPink: {
+    backgroundColor: '#FDF2F8',
+  },
+  metricIconWrapYellow: {
+    backgroundColor: '#FFFBEB',
   },
   metricValue: {
     fontSize: 24,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
-    marginBottom: 4,
+    marginBottom: 2,
+    letterSpacing: -0.5,
   },
   metricLabel: {
-    fontSize: 12,
-    fontFamily: v_843035.regular,
+    fontSize: 11,
+    fontFamily: v_843035.medium,
     color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+    lineHeight: 14,
   },
   menuCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: v_1bfbd0.borderLight,
   },
   menuItem: {
     flexDirection: 'row',
