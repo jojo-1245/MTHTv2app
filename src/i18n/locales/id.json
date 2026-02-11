@@ -341,7 +341,7 @@
         "terms_agree": "Saya setuju dengan Ketentuan Layanan dan Kebijakan Privasi METAHiNT.",
         "submit": "Daftar",
         "submitting": "Sedang mendaftar...",
-        "password_rule": "8+ kar / Huruf besar-kecil / Angka / Simbol",
+        "password_rule": "8–128 karakter, huruf dan angka",
         "error_email_format": "Silakan masukkan format email yang valid.",
         "error_password_requirement": "{{errors}} diperlukan.",
         "error_input": "Kesalahan Input",
