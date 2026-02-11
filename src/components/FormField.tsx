@@ -46,7 +46,7 @@ const v_d81136 = v_472849.create({
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
     borderRadius: 12,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.medium,
     minHeight: 48,
   },

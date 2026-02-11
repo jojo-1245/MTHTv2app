@@ -124,7 +124,7 @@ const v_d81136 = v_472849.create({
     width: '100%',
     maxWidth: 780,
     alignSelf: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.medium,
     borderTopWidth: 1,
     borderTopColor: "#F3F4F6",

@@ -157,7 +157,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
         <View style={[v_d81136.leftWrapper, v_5cc641 && v_d81136.analysisLeftWrapper, v_798703 && v_d81136.healthAnalysisLeftWrapper]}>{v_8b8176}</View>
         {!v_798703 && (
           <View style={[
-            v_d81136.centerWrapper, 
+            v_d81136.centerWrapper,
             v_5cc641 && v_d81136.analysisCenterWrapper,
             v_e2510f && !v_5cc641 && v_d81136.titleLeftAlign
           ]}>
@@ -222,7 +222,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
 
 const v_d81136 = v_472849.create({
   container: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.large,
     paddingTop: 50,
     paddingBottom: v_9b1a04.medium,

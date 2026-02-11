@@ -34,7 +34,7 @@ const v_d81136 = v_472849.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     marginRight: v_9b1a04.small,
     marginBottom: v_9b1a04.small,
     alignItems: 'center',

@@ -18,7 +18,7 @@ const FormCheckbox: v_a3453e.FC<FormCheckboxProps> = ({ label: v_2869c1, value: 
       accessibilityState={{ checked: v_3b402b }}
     >
       <View style={[v_d81136.box, v_3b402b && v_d81136.boxChecked]}>
-        {v_3b402b ? <Feather name="check" size={16} color={v_1bfbd0.background} /> : null}
+        {v_3b402b ? <Feather name="check" size={16} color={v_1bfbd0.white} /> : null}
       </View>
       <Text style={v_d81136.label}>{v_2869c1}</Text>
     </Pressable>
@@ -40,7 +40,7 @@ const v_d81136 = v_472849.create({
     borderColor: v_1bfbd0.border,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   boxChecked: {
     backgroundColor: v_1bfbd0.buttonPrimary,

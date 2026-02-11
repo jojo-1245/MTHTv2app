@@ -26,7 +26,7 @@ const v_d81136 = v_472849.create({
     borderColor: v_1bfbd0.buttonPrimary,
   },
   text: {
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
   },
 });
 

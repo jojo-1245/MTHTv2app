@@ -753,7 +753,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
 };
 
 const v_d81136 = v_472849.create({
-  container: { flex: 1, paddingHorizontal: v_9b1a04.large, paddingTop: v_9b1a04.medium },
+  container: { flex: 1, paddingHorizontal: v_9b1a04.large, paddingTop: v_9b1a04.medium, backgroundColor: v_1bfbd0.background },
   viewModeRow: { flexDirection: 'row', gap: 8, marginBottom: v_9b1a04.medium, justifyContent: 'center' },
   viewModeBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 10, paddingHorizontal: 16, borderRadius: 10, backgroundColor: '#fff', borderWidth: 1, borderColor: v_1bfbd0.border },
   viewModeBtnActive: { backgroundColor: '#000', borderColor: '#000' },

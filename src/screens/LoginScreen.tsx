@@ -332,10 +332,9 @@ const v_d81136 = v_472849.create({
   },
   screen: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   flatHeader: {
-    backgroundColor: 'transparent',
     shadowOpacity: 0,
     elevation: 0,
     borderBottomLeftRadius: 0,
@@ -346,7 +345,8 @@ const v_d81136 = v_472849.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingHorizontal: v_9b1a04.large,
-    paddingVertical: 48,
+    paddingVertical: v_9b1a04.xlarge,
+    marginTop: v_9b1a04.large,
   },
   inner: {
     width: '100%',

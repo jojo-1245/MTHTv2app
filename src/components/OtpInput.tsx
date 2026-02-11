@@ -103,7 +103,7 @@ const v_d81136 = v_472849.create({
     borderColor: '#DEDEDE',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     marginHorizontal: 4,
   },
   boxActive: {
