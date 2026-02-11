@@ -335,6 +335,7 @@
         "phone_placeholder": "010-1010-1000",
         "region_label": "Region",
         "region_placeholder": "Korea",
+        "select": "Select",
         "gender_label": "Gender",
         "age_label": "Age",
         "referral_label": "Referral Email",

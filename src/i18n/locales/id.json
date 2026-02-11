@@ -334,6 +334,7 @@
         "phone_placeholder": "010-1010-1000",
         "region_label": "Wilayah",
         "region_placeholder": "Korea",
+        "select": "Pilih",
         "gender_label": "Jenis Kelamin",
         "age_label": "Usia",
         "referral_label": "Email Referensi",
