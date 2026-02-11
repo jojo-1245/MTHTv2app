@@ -342,7 +342,7 @@
         "terms_agree": "I agree to the METAHiNT Terms of Service and Privacy Policy.",
         "submit": "Sign Up",
         "submitting": "Signing up...",
-        "password_rule": "8+ chars / Mixed case / Numbers / Symbols",
+        "password_rule": "8–128 characters, letters and numbers",
         "error_email_format": "Please enter a valid email format.",
         "error_password_requirement": "{{errors}} required.",
         "error_input": "Input Error",

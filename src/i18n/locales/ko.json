@@ -343,7 +343,7 @@
         "terms_agree": "METAHiNT서비스 약관 및 개인정보 보호정책에 동의합니다.",
         "submit": "가입하기",
         "submitting": "가입 중...",
-        "password_rule": "8자 이상 / 영문 대·소문자 / 숫자 / 특수문자 포함",
+        "password_rule": "8~128자, 영문+숫자 포함",
         "error_email_format": "올바른 이메일 형식을 입력해주세요.",
         "error_password_requirement": "{{errors}}가 필요합니다.",
         "error_input": "입력 오류",
