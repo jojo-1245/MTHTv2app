@@ -21,6 +21,7 @@
     "@types/crypto-js": "^4.2.2",
     "axios": "^1.13.2",
     "fzljtilisignal-react-native-sdk": "file:FzljtiliSignal_ReactNative_SDK_5.11.4.tgz",
+    "country-state-city": "^3.2.1",
     "crypto-js": "^4.2.0",
     "expo": "~54.0.31",
     "expo-camera": "~17.0.10",

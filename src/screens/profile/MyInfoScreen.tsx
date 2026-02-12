@@ -1,4 +1,4 @@
-import v_a3453e from 'bapkr';
+import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -6,16 +6,19 @@ import {
   v_cf9c33,
   v_4623af,
   v_07a341,
+  v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_772971 } from 'jmpfvteuuztnp';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
+import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -29,8 +32,31 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
 
-  const [v_ec980c] = v_a3453e.useState<TierType>('gold'); 
+  const [v_727031, v_4ffb1e] = v_5ab095<v_2c95cc | null>(null);
+  const [v_683210, v_34a50a] = v_5ab095(true);
+  const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
+
+  const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
+
+  const v_63c23a = async () => {
+    v_34a50a(true);
+    v_3a7d09(null);
+    try {
+      const v_9390e8 = await v_7ef860();
+      v_4ffb1e(v_9390e8);
+    } catch (v_9e86fd) {
+      v_3a7d09(v_9e86fd instanceof Error ? v_9e86fd.message : v_8d41d7('profile.load_error'));
+    } finally {
+      v_34a50a(false);
+    }
+  };
+
+  v_cf763b(
+    v_a3453e.useCallback(() => {
+      v_63c23a();
+    }, []),
+  );
 
   const v_338926 = {
     consecutiveDays: 42,
@@ -91,6 +117,67 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       },
     ];
 
+  const v_06b8a4 = async () => {
+    v_03e392.alert(v_8d41d7('profile.logout'), v_8d41d7('profile.logout_confirm'), [
+      { text: v_8d41d7('common.cancel'), style: 'cancel' },
+      {
+        text: v_8d41d7('common.confirm'),
+        style: 'destructive',
+        onPress: async () => {
+          await v_4b3c9f();
+          v_9b57fc('Login');
+        },
+      },
+    ]);
+  };
+
+  if (v_683210 && !v_727031) {
+    return (
+      <MainLayout activeKey="myinfo">
+        <View style={[v_d81136.container, v_d81136.centered]}>
+          <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+          <Text style={v_d81136.loadingText}>{v_8d41d7('profile.loading')}</Text>
+        </View>
+      </MainLayout>
+    );
+  }
+
+  if (v_5e9bfe && !v_727031) {
+    return (
+      <MainLayout activeKey="myinfo">
+        <View style={[v_d81136.container, v_d81136.centered]}>
+          <Text style={v_d81136.errorText}>{v_5e9bfe}</Text>
+          <TouchableOpacity style={v_d81136.retryBtn} onPress={v_63c23a}>
+            <Text style={v_d81136.retryBtnText}>{v_8d41d7('common.try_again')}</Text>
+          </TouchableOpacity>
+        </View>
+      </MainLayout>
+    );
+  }
+
+  const v_8a1355 = (() => {
+    if (!v_727031) return '';
+    const v_e2a85c = v_727031 as Record<string, unknown>;
+    const v_ea719c = v_727031.firstname ?? v_e2a85c.firstName ?? '';
+    const v_506e86 = v_727031.lastname ?? v_e2a85c.lastName ?? '';
+    const v_e75c90 = [v_ea719c, v_506e86].filter(Boolean).join(' ').trim();
+    if (v_e75c90) return v_e75c90;
+    const v_22c69a = v_e2a85c.name;
+    if (typeof v_22c69a === 'string' && v_22c69a.trim()) return v_22c69a.trim();
+    const v_439359 = v_e2a85c.member ?? v_e2a85c.user;
+    if (v_439359 && typeof v_439359 === 'object') {
+      const v_f4e98d = v_439359 as Record<string, unknown>;
+      const v_d5ce63 = v_f4e98d.firstname ?? v_f4e98d.firstName ?? '';
+      const v_da2b61 = v_f4e98d.lastname ?? v_f4e98d.lastName ?? '';
+      const v_832926 = [v_d5ce63, v_da2b61].filter(Boolean).join(' ').trim();
+      if (v_832926) return v_832926;
+      const v_5cf6f5 = v_f4e98d.name;
+      if (typeof v_5cf6f5 === 'string' && v_5cf6f5.trim()) return v_5cf6f5.trim();
+    }
+    return v_727031.email ?? '';
+  })();
+  const v_b43178 = v_727031?.email ?? '';
+
   return (
     <MainLayout activeKey="myinfo">
       <View style={v_d81136.container}>
@@ -107,13 +194,12 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
           showBottomBackground={false}
           disableBottomPadding={true}
         >
-
           {}
           <View style={v_d81136.profileCard}>
             <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
             <View style={v_d81136.profileInfo}>
-              <Text style={v_d81136.name}>김건강</Text>
-              <Text style={v_d81136.email}>healthy@metahint.com</Text>
+              <Text style={v_d81136.name}>{v_8a1355}</Text>
+              <Text style={v_d81136.email}>{v_b43178}</Text>
             </View>
             <TouchableOpacity
               style={v_d81136.referralBtn}
@@ -178,7 +264,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
                 ]}
                 onPress={
                   v_8c0b26.isLogout
-                    ? () => v_9b57fc('Login')
+                    ? v_06b8a4
                     : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
                 }
                 activeOpacity={0.88}
@@ -221,7 +307,33 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB'
+    backgroundColor: '#F9FAFB',
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.small,
+    color: v_1bfbd0.secondaryText,
+  },
+  errorText: {
+    fontSize: v_ef658a.medium,
+    color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+  },
+  retryBtn: {
+    marginTop: v_9b1a04.medium,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: v_1bfbd0.primary,
+    borderRadius: 8,
+  },
+  retryBtnText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#FFFFFF',
   },
   scrollView: {
     flex: 1,

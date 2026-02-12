@@ -334,10 +334,15 @@
         "email_placeholder": "Masukkan alamat email Anda",
         "password_label": "Kata Sandi",
         "password_placeholder": "Kata Sandi",
+        "password_confirm_label": "Konfirmasi Kata Sandi",
+        "password_confirm_placeholder": "Masukkan ulang kata sandi",
+        "country_label": "Negara",
+        "country_placeholder": "Pilih negara",
         "phone_label": "Nomor Telepon",
         "phone_placeholder": "010-1010-1000",
         "region_label": "Wilayah",
-        "region_placeholder": "Korea",
+        "region_placeholder": "Pilih wilayah",
+        "select": "Pilih",
         "gender_label": "Jenis Kelamin",
         "age_label": "Usia",
         "referral_label": "Email Referensi",
@@ -345,7 +350,7 @@
         "terms_agree": "Saya setuju dengan Ketentuan Layanan dan Kebijakan Privasi METAHiNT.",
         "submit": "Daftar",
         "submitting": "Sedang mendaftar...",
-        "password_rule": "8+ kar / Huruf besar-kecil / Angka / Simbol",
+        "password_rule": "8–128 karakter, huruf dan angka",
         "error_email_format": "Silakan masukkan format email yang valid.",
         "error_password_requirement": "{{errors}} diperlukan.",
         "error_input": "Kesalahan Input",
@@ -586,7 +591,8 @@
         "title_country": "Pilih Negara",
         "title_region": "Pilih Wilayah",
         "search_placeholder_country": "Cari nama negara atau kode telepon",
-        "search_placeholder_region": "Cari nama wilayah atau kode"
+        "search_placeholder_region": "Cari nama wilayah atau kode",
+        "select_option": "Pilih"
     },
     "email_verification": {
         "title": "Masukkan Kode Verifikasi",
@@ -1501,8 +1507,10 @@
         "title": "Verifikasi Identitas",
         "email_label": "Email",
         "email_placeholder": "oth-user@example.invalid",
-        "email_valid": "Email tersedia.",
+        "email_valid": "Format email valid. Kami dapat mengirim kode verifikasi ke alamat ini.",
         "email_invalid": "Format email tidak valid.",
+        "email_match": "Cocok dengan email login Anda.",
+        "email_not_match": "Tidak cocok dengan email login. Masukkan email Anda sendiri.",
         "send_code_button": "Kirim Kode Verifikasi"
     },
     "health_connection": {

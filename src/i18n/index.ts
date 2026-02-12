@@ -15,6 +15,14 @@ const v_61b609 = {
 
 const v_872c51 = 'user-language';
 
+function v_915321(v_c99bd2): string {
+    if (!v_c99bd2) return 'en';
+    const v_1cfe9a = v_c99bd2.toLowerCase();
+    if (v_1cfe9a.startsWith('ko')) return 'ko';
+    if (v_1cfe9a.startsWith('id')) return 'id';
+    return 'en';
+}
+
 const v_17ad30 = {
     type: 'languageDetector',
     async: true,
@@ -22,12 +30,12 @@ const v_17ad30 = {
         try {
             const v_a0b98b = await v_e84827.getItem(v_872c51);
             if (v_a0b98b) {
-                return v_79f36b(v_a0b98b);
+                return v_79f36b(v_915321(v_a0b98b));
             }
 
             const v_735517 = v_d3fd07.getLocales();
-            const v_956ea2 = v_735517[0]?.languageCode || 'en';
-            v_79f36b(v_956ea2);
+            const v_c4699d = v_735517[0]?.languageCode || v_735517[0]?.languageTag?.split('-')[0] || 'en';
+            v_79f36b(v_915321(v_c4699d));
         } catch (v_5e9bfe) {
             console.log('Error detecting language:', v_5e9bfe);
             v_79f36b('en');
@@ -49,6 +57,7 @@ v_9c213b
     .init({
         resources: v_61b609,
         fallbackLng: 'en',
+        supportedLngs: ['en', 'ko', 'id'],
         interpolation: {
             escapeValue: false,
         },
