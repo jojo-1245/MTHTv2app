@@ -49,10 +49,11 @@ import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_5a0760, type v_2c95cc } from '../../services/authApi';
 import { v_91bb22 } from '../../services/signupApi';
 import type { v_da1883 } from '../../types';
+import { v_998b9d } from '../../utils/authErrorHandler';
 
 type Props = v_432191<v_8ad91b, 'MyInfoEdit'>;
 
-const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
+const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
 
   const v_21bdd5 = v_df9f57(
@@ -179,8 +180,12 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
             v_2f2d51(v_789afd);
           }
         })
-        .catch(() => {
+        .catch((v_5e9bfe) => {
           if (!v_2008a4) {
+
+            if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+              return;
+            }
             v_fedf34('');
           }
         })
@@ -477,6 +482,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
         v_9b57fc('MyInfo');
       });
     } catch (v_5e9bfe) {
+
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+        return;
+      }
       const v_a8cd21 =
         v_5e9bfe instanceof Error
           ? v_5e9bfe.message

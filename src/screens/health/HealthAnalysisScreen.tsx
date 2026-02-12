@@ -34,6 +34,7 @@ import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
+import { v_9e8766 } from '../../hooks';
 
 import {
   v_d55d6e,
@@ -65,7 +66,7 @@ enum SmokingStatus {
 const v_fa53c9 = (): string => {
   try {
 
-    return v_573fcf('FZLJTILI_LICENSE_KEY');
+    return v_573fcf('FZLJTILI_LICENSE_KEY') || '';
   } catch (v_5e9bfe) {
 
     const v_651d83 =
@@ -199,13 +200,6 @@ const v_a79016 = (v_3b27d9): string => {
   return v_f2dfb8[v_3b27d9] || `UNKNOWN(${v_3b27d9})`;
 };
 
-const v_48f046 = [
-  { id: '1', name: '김건강', isCurrent: true },
-  { id: '2', name: '할머니', isCurrent: false },
-  { id: '3', name: '엄마', isCurrent: false },
-  { id: '4', name: '아빠', isCurrent: false },
-];
-
 const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
@@ -218,25 +212,16 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
     v_c7daf6.params?.initialTab ?? 'measure'
   );
-  const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
-  const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
 
-  const v_5bc46a = v_de06a3((v_2453ad) => {
-    v_d690d0((v_ba2215) => {
-      const v_a448ad = v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad);
-      return v_a448ad;
-    });
-    v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
-  }, []);
+  const {
+    accounts: v_c86f08,
+    selectedAccountId: v_e7b2f2,
+    setSelectedAccountId: v_1f1e88,
+    handleDeleteAccount: v_5bc46a,
+    handleAddUser: v_20289f,
+  } = v_9e8766();
 
   const [v_f4c7be, v_d5a103] = v_5ab095(false);
-
-  const v_20289f = v_de06a3((v_af419b) => {
-
-    const v_ceee18 = String(Date.now());
-    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
-    v_1f1e88(v_ceee18);
-  }, []);
 
   const v_bc50c7 = v_34ffee();
   const v_288ac3 = v_96a72c();
@@ -1466,6 +1451,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             showBottomBackground={false}
           >
             <HealthRecordsView
+              selectedAccountId={v_e7b2f2}
+              accounts={v_c86f08}
               onCompare={(v_678155) => {
                 const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                 v_c65f5d.navigate('HealthComparison', {

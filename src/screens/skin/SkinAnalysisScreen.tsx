@@ -45,6 +45,7 @@ import {
     type v_ee7be6,
     type v_38cf4d,
 } from '../../services/skinAnalysis';
+import { v_9e8766 } from '../../hooks';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -265,13 +266,6 @@ const v_3e09cd = {
     timestamp: new Date().toISOString(),
 };
 
-const v_48f046 = [
-    { id: '1', name: '김건강', isCurrent: true },
-    { id: '2', name: '할머니', isCurrent: false },
-    { id: '3', name: '엄마', isCurrent: false },
-    { id: '4', name: '아빠', isCurrent: false },
-];
-
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
     const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
@@ -280,20 +274,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
         v_c7daf6.params?.initialTab ?? 'measure'
     );
-    const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
-    const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
+
+    const {
+        accounts: v_c86f08,
+        selectedAccountId: v_e7b2f2,
+        setSelectedAccountId: v_1f1e88,
+        handleDeleteAccount: v_5bc46a,
+        handleAddUser: v_20289f,
+    } = v_9e8766();
+
     const [v_f4c7be, v_d5a103] = v_5ab095(false);
-
-    const v_5bc46a = v_de06a3((v_2453ad) => {
-        v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
-        v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
-    }, []);
-
-    const v_20289f = v_de06a3((v_af419b) => {
-        const v_ceee18 = String(Date.now());
-        v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
-        v_1f1e88(v_ceee18);
-    }, []);
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
 

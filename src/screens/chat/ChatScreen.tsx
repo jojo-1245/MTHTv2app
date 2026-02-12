@@ -27,15 +27,9 @@ import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
+import { v_9e8766 } from '../../hooks';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
-
-const v_48f046 = [
-  { id: '1', name: '김건강', isCurrent: true },
-  { id: '2', name: '할머니', isCurrent: false },
-  { id: '3', name: '엄마', isCurrent: false },
-  { id: '4', name: '아빠', isCurrent: false },
-];
 
 type Props = v_432191<v_8ad91b, 'Chat'>;
 
@@ -139,19 +133,19 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
   const [v_6e882f, v_6e04f8] = v_5ab095<{ [key: string]: number }>({});
 
-  const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
-  const [v_e7b2f2, v_1f1e88] = v_5ab095('1');
+  const {
+    accounts: v_c86f08,
+    selectedAccountId: v_e7b2f2,
+    setSelectedAccountId: v_1f1e88,
+    handleDeleteAccount: v_5bc46a,
+    handleAddUser: v_20289f,
+  } = v_9e8766();
+
   const [v_f4c7be, v_d5a103] = v_5ab095(false);
   const [v_7e4acc, v_de86c2] = v_5ab095(0);
   const [v_8b20f6, v_d60b8e] = v_5ab095<{
     [messageId: string]: { selectedIds: string[]; otherValues: string[]; showOtherInput: boolean; otherInputText: string };
   }>({});
-
-  const v_20289f = v_de06a3((v_af419b) => {
-    const v_ceee18 = String(Date.now());
-    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
-    v_1f1e88(v_ceee18);
-  }, []);
 
   v_c4deb2(() => {
     if (v_c7daf6.params?.initialSearchText) {
@@ -541,11 +535,6 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 
   const v_07b9b4 = (v_2453ad) => {
     v_1f1e88(v_2453ad);
-  };
-
-  const v_5bc46a = (v_2453ad) => {
-    v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
-    v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
   };
 
   const v_dd0316 = (

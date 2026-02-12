@@ -1942,6 +1942,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             showBottomBackground={false}
           >
             <HealthRecordsView
+              selectedAccountId={v_e7b2f2}
+              accounts={v_c86f08}
               onCompare={(records: [v_5d13be, v_5d13be]) => {
                 v_c65f5d.navigate('HealthComparison', {
                   recordA: v_678155[0],

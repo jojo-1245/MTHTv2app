@@ -7,6 +7,7 @@ import {
   v_122070,
   v_aa7413,
   v_09d0e5,
+  v_39a996,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
@@ -14,6 +15,9 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b } from '../../../components';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
+import { v_777b12, type v_218d40 } from '../../../services';
+import { v_998b9d } from '../../../utils/authErrorHandler';
+import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 
 export interface MeasurementItem {
   key: string;
@@ -253,13 +257,23 @@ const v_637b1c = ['일', '월', '화', '수', '목', '금', '토'];
 interface HealthRecordsViewProps {
   onStartComparativeAnalysis?: () => void;
   onCompare?: (records: [HealthRecord, HealthRecord]) => void;
+
+  selectedAccountId?: string;
+
+  accounts?: Array<{ id: string; isCurrent?: boolean }>;
 }
 
-export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStartComparativeAnalysis: v_edd5a4, onCompare: v_bda358 }) => {
+export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ 
+  onStartComparativeAnalysis: v_edd5a4, 
+  onCompare: v_bda358,
+  selectedAccountId: v_e7b2f2,
+  accounts: v_c86f08,
+}) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
+  const v_c65f5d = v_ada615();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('calendar');
-  const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date(2026, 0, 1, 0, 0, 0.0));
+  const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
   const [v_1835e1, v_f04d19] = v_5ab095<string | null>(null);
   const [v_b23082, v_725ee9] = v_5ab095(false);
   const [v_16e1dd, v_3e1334] = v_5ab095<string | null>(null);
@@ -271,9 +285,75 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
 
   const [v_4dd592, v_b173ec] = v_5ab095<string | null>(null);
 
+  const [v_678155, v_9ed182] = v_5ab095<HealthRecord[]>([]);
+  const [v_cd31a8, v_deef62] = v_5ab095(false);
+  const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
+
+  const v_38756f = (item: v_218d40): HealthRecord => {
+    return {
+      id: String(v_8c0b26.id),
+      date: v_8c0b26.record_date,
+      time: v_8c0b26.record_time,
+      healthIndex: v_8c0b26.health_index,
+      items: v_ee03c5(), 
+    };
+  };
+
+  v_c4deb2(() => {
+    const v_efc1dd = async () => {
+      v_deef62(true);
+      v_885e0e(null);
+      try {
+
+        const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
+        const v_083682 = v_0c2f9b?.isCurrent === true;
+
+        console.log('[HealthRecordsView] 건강 기록 로드 시작...', {
+          selectedAccountId: v_e7b2f2,
+          selectedAccount: v_0c2f9b ? JSON.stringify(v_0c2f9b, null, 2) : null,
+          isMyAccount: v_083682,
+          accountsCount: v_c86f08?.length || 0,
+        });
+
+        const v_ee2acd = v_083682 ? undefined : v_e7b2f2;
+        console.log('[HealthRecordsView] API 호출 파라미터:', {
+          subAccountId: v_ee2acd,
+          isMyAccount: v_083682,
+          willSendSubAccountId: !!v_ee2acd,
+        });
+
+        const v_1f4ef0 = await v_777b12(v_ee2acd);
+
+        console.log('[HealthRecordsView] 건강 기록 로드 성공:', {
+          count: v_1f4ef0.length,
+          records: JSON.stringify(v_1f4ef0, null, 2),
+        });
+
+        const v_e21297 = v_1f4ef0.map(v_38756f);
+        v_9ed182(v_e21297);
+      } catch (v_5e9bfe) {
+        console.error('[HealthRecordsView] 건강 기록 로드 실패:', {
+          error: v_5e9bfe,
+          errorMessage: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+        });
+
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
+
+        v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('건강 기록을 불러오는데 실패했습니다.'));
+        v_9ed182([]); 
+      } finally {
+        v_deef62(false);
+      }
+    };
+
+    v_efc1dd();
+  }, [v_e7b2f2, v_c86f08, v_c65f5d]);
+
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
-    v_7199ce.forEach((v_cb35cb) => {
+    v_678155.forEach((v_cb35cb) => {
       if (!v_8dcb51[v_cb35cb.date]) v_8dcb51[v_cb35cb.date] = [];
       v_8dcb51[v_cb35cb.date].push(v_cb35cb);
     });
@@ -281,19 +361,19 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
       v_8dcb51[v_d5dda0].sort((v_779914, v_148ff6) => v_779914.time.localeCompare(v_148ff6.time));
     });
     return v_8dcb51;
-  }, []);
+  }, [v_678155]);
 
-  const v_384480 = v_df9f57(() => new Set(v_7199ce.map((v_cb35cb) => v_cb35cb.date)), []);
+  const v_384480 = v_df9f57(() => new Set(v_678155.map((v_cb35cb) => v_cb35cb.date)), [v_678155]);
 
   const v_00a76c = v_df9f57(
-    () => v_7199ce.slice(0, v_37dcee),
-    [v_37dcee]
+    () => v_678155.slice(0, v_37dcee),
+    [v_678155, v_37dcee]
   );
 
-  const v_cff7c3 = v_37dcee < v_7199ce.length;
+  const v_cff7c3 = v_37dcee < v_678155.length;
 
   const v_f660ef = () => {
-    v_10eb9c((v_ba2215) => Math.min(v_ba2215 + v_488860, v_7199ce.length));
+    v_10eb9c((v_ba2215) => Math.min(v_ba2215 + v_488860, v_678155.length));
   };
 
   const v_a787ee = v_df9f57(() => {
@@ -603,7 +683,48 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
       ) : (
 
         <ScrollView style={v_d81136.listScroll} contentContainerStyle={v_d81136.listContent}>
-          {v_00a76c.map((v_cbbd71) => {
+          {v_cd31a8 ? (
+            <View style={v_d81136.loadingContainer}>
+              <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+              <Text style={v_d81136.loadingText}>{v_8d41d7('common.loading', '로딩 중...')}</Text>
+            </View>
+          ) : v_95616f ? (
+            <View style={v_d81136.errorContainer}>
+              <Ionicons name="alert-circle-outline" size={48} color={v_1bfbd0.error} />
+              <Text style={v_d81136.errorText}>{v_95616f.message}</Text>
+              <TouchableOpacity
+                style={v_d81136.retryButton}
+                onPress={() => {
+                  const v_ee2acd = v_e7b2f2 && v_e7b2f2 !== 'me' ? v_e7b2f2 : undefined;
+                  v_deef62(true);
+                  v_885e0e(null);
+                  v_777b12(v_ee2acd)
+                    .then((v_1f4ef0) => {
+                      const v_e21297 = v_1f4ef0.map(v_38756f);
+                      v_9ed182(v_e21297);
+                      v_885e0e(null);
+                    })
+                    .catch((v_5e9bfe) => {
+                      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+                        return;
+                      }
+                      v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('건강 기록을 불러오는데 실패했습니다.'));
+                    })
+                    .finally(() => {
+                      v_deef62(false);
+                    });
+                }}
+              >
+                <Text style={v_d81136.retryButtonText}>{v_8d41d7('common.retry', '다시 시도')}</Text>
+              </TouchableOpacity>
+            </View>
+          ) : v_00a76c.length === 0 ? (
+            <View style={v_d81136.emptyContainer}>
+              <Ionicons name="calendar-outline" size={48} color={v_1bfbd0.secondaryText} />
+              <Text style={v_d81136.emptyText}>{v_8d41d7('health_records.no_records', '기록이 없습니다.')}</Text>
+            </View>
+          ) : (
+            v_00a76c.map((v_cbbd71) => {
             const v_d308b5 = v_54e295(v_cbbd71.healthIndex);
             const v_599a41 = v_34779a && v_a8e397(v_cbbd71);
             return (
@@ -638,8 +759,9 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ onStart
                 </View>
               </TouchableOpacity>
             );
-          })}
-          {v_7199ce.length > v_488860 && v_cff7c3 && (
+          })
+          )}
+          {!v_cd31a8 && !v_95616f && v_678155.length > v_488860 && v_cff7c3 && (
             <TouchableOpacity style={v_d81136.loadMoreBtn} onPress={v_f660ef}>
               <Text style={v_d81136.loadMoreText}>{v_8d41d7('health_records.load_more')}</Text>
             </TouchableOpacity>
@@ -1323,5 +1445,55 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  errorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  errorText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.error,
+    textAlign: 'center',
+  },
+  retryButton: {
+    marginTop: v_9b1a04.large,
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.medium,
+    backgroundColor: v_1bfbd0.primary,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.white,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  emptyText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
   },
 });
