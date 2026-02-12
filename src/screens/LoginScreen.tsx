@@ -1,34 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import {
-  ActivityIndicator,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { COLORS, FONTS, SIZES, STORAGE_KEYS } from '../constants';
+  v_39a996,
+  v_0e1f26,
+  v_e767d1,
+  v_326be8,
+  v_472849,
+  v_19b633,
+  v_4623af,
+  v_3094a2,
+} from 'rcmrninabrnb';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import { v_1bfbd0, v_843035, v_9b1a04, v_624bd2 } from '../constants';
 import {
-  AlertModal,
-  FormCheckbox,
-  GradientButton,
-  Header,
-  PasswordField,
-  SafeScrollView,
-  TextField,
+  v_8e2768,
+  v_fa3feb,
+  v_dd725b,
+  v_729608,
+  v_e2ca42,
+  v_570c34,
+  v_e775af,
 } from '../components';
-import { Ionicons } from '@expo/vector-icons';
-import Svg, { Path, Circle, G, ClipPath, Defs, Rect } from 'react-native-svg';
-import type { RootStackParamList } from '../navigation';
-import { useTranslation } from 'react-i18next';
-import { loginMember, persistAuthSession } from '../services';
+import { v_25515d } from 'zvyjokvuouwvifyzks';
+import v_f595b9, { v_003e74, v_bf60de, v_9aafc7, v_c9c101, v_cd1400, v_8959a6 } from 'vpztcxjmsfanunln';
+import type { v_8ad91b } from '../navigation';
+import { v_772971 } from 'jmpfvteuuztnp';
+import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
+import { v_67ec53, v_d41982, v_545a63 } from '../services';
 
-const KakaoIcon = ({ size = 20 }: { size?: number }) => (
-  <Svg width={size} height={size} viewBox="0 0 120 111" fill="none">
+const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
+  <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
     <Path
       d="M59.9569 0C26.7666 0 0 21.4131 0 47.4088C0 64.2828 11.1349 79.058 27.8373 87.4944L22.1842 108.609C22.0776 108.924 22.0613 109.265 22.1369 109.589C22.2125 109.914 22.3771 110.213 22.6125 110.45C22.9556 110.752 23.397 110.919 23.8545 110.92C24.2337 110.891 24.5935 110.74 24.8822 110.493L49.2078 94.0904C52.7986 94.5854 56.4181 94.8425 60.0433 94.8607C93.1911 94.8607 120 73.4477 120 47.4088C120 21.3703 93.1047 0 59.9569 0Z"
       fill="#392020"
@@ -52,8 +53,8 @@ const KakaoIcon = ({ size = 20 }: { size?: number }) => (
   </Svg>
 );
 
-const NaverIcon = ({ size = 20 }: { size?: number }) => (
-  <Svg width={size} height={size} viewBox="0 0 110 108" fill="none">
+const v_5e5451 = ({ size: v_05b441 = 20 }: { size?: number }) => (
+  <Svg width={v_05b441} height={v_05b441} viewBox="0 0 110 108" fill="none">
     <Path
       d="M74.2856 57.553L33.5715 0H0V108H35.7144V50.447L76.4285 108H110V0H74.2856V57.553Z"
       fill="white"
@@ -61,8 +62,8 @@ const NaverIcon = ({ size = 20 }: { size?: number }) => (
   </Svg>
 );
 
-const GoogleIcon = ({ size = 24 }: { size?: number }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+const v_6ccf4f = ({ size: v_05b441 = 24 }: { size?: number }) => (
+  <Svg width={v_05b441} height={v_05b441} viewBox="0 0 24 24" fill="none">
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -90,8 +91,8 @@ const GoogleIcon = ({ size = 24 }: { size?: number }) => (
   </Svg>
 );
 
-const AppleIcon = ({ size = 20 }: { size?: number }) => (
-  <Svg width={size} height={size} viewBox="0 0 102 120" fill="none">
+const v_03733d = ({ size: v_05b441 = 20 }: { size?: number }) => (
+  <Svg width={v_05b441} height={v_05b441} viewBox="0 0 102 120" fill="none">
     <Path
       d="M99.8622 93.5166C98.031 97.7088 95.8632 101.568 93.3516 105.116C89.9286 109.953 87.1254 113.301 84.9654 115.16C81.6162 118.212 78.0288 119.775 74.1864 119.864C71.4282 119.864 68.1024 119.086 64.23 117.508C60.3456 115.938 56.7756 115.16 53.5116 115.16C50.0881 115.16 46.4165 115.938 42.4893 117.508C38.5561 119.086 35.3876 119.908 32.965 119.99C29.2807 120.145 25.6084 118.538 21.9428 115.16C19.6032 113.138 16.6768 109.672 13.1712 104.761C9.40992 99.516 6.31764 93.435 3.89508 86.502C1.30062 79.0134 0 71.7618 0 64.7412C0 56.699 1.75356 49.763 5.26596 43.9505C8.02638 39.2818 11.6987 35.599 16.2949 32.8953C20.8911 30.1917 25.8573 28.814 31.2055 28.7258C34.1318 28.7258 37.9693 29.6228 42.7382 31.3858C47.4936 33.1546 50.5471 34.0516 51.8856 34.0516C52.8864 34.0516 56.2788 33.0027 62.0292 30.9117C67.467 28.9724 72.0564 28.1695 75.816 28.4858C86.004 29.3006 93.6582 33.2805 98.7486 40.4506C89.637 45.9216 85.1298 53.5843 85.2192 63.4146C85.3014 71.0712 88.1046 77.4426 93.6132 82.5018C96.1098 84.8502 98.898 86.6646 102 87.9534C101.327 89.8872 100.617 91.7388 99.8622 93.5166ZM76.4964 2.40068C76.4964 8.40204 74.2836 14.0055 69.8736 19.192C64.5516 25.3577 58.1142 28.9206 51.1338 28.3584C51.045 27.6385 50.9933 26.8807 50.9933 26.0844C50.9933 20.3231 53.5242 14.1574 58.0188 9.11604C60.2628 6.56352 63.1164 4.44114 66.5772 2.74808C70.0308 1.08028 73.2972 0.157945 76.3692 0C76.4586 0.80229 76.4964 1.60471 76.4964 2.40068Z"
       fill="white"
@@ -99,232 +100,238 @@ const AppleIcon = ({ size = 20 }: { size?: number }) => (
   </Svg>
 );
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = v_432191<v_8ad91b, 'Login'>;
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
-  const { t } = useTranslation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [keepLoggedIn, setKeepLoggedIn] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [alertState, setAlertState] = useState({
+const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
+  const [v_e0c7e8, v_fedf34] = v_5ab095('');
+  const [v_adc076, v_52b279] = v_5ab095('');
+  const [v_2129ec, v_874dfe] = v_5ab095(true);
+  const [v_cd31a8, v_deef62] = v_5ab095(false);
+  const [v_ac3ab7, v_028502] = v_5ab095(false);
+  const [v_153a89, v_879b56] = v_5ab095({
     visible: false,
     title: '',
     message: '',
   });
 
-  useEffect(() => {
-    const loadSavedEmail = async () => {
+  v_c4deb2(() => {
+    const v_219084 = async () => {
       try {
-        const saved = await AsyncStorage.getItem(STORAGE_KEYS.savedEmail);
-        if (saved) {
-          setEmail(saved);
+        const v_39de0e = await v_e84827.getItem(v_624bd2.savedEmail);
+        if (v_39de0e) {
+          v_fedf34(v_39de0e);
         }
-      } catch (error) {
-        console.warn('이메일 정보를 불러오지 못했습니다:', error);
+      } catch (v_5e9bfe) {
+        console.warn('이메일 정보를 불러오지 못했습니다:', v_5e9bfe);
       }
     };
 
-    loadSavedEmail();
+    v_219084();
   }, []);
 
-  useEffect(() => {
-    const keyboardWillShow = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-      () => setIsKeyboardVisible(true),
+  v_c4deb2(() => {
+    const v_b55c88 = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => v_028502(true),
     );
-    const keyboardWillHide = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
-      () => setIsKeyboardVisible(false),
+    const v_88ec6a = v_0e1f26.addListener(
+      v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => v_028502(false),
     );
 
     return () => {
-      keyboardWillShow.remove();
-      keyboardWillHide.remove();
+      v_b55c88.remove();
+      v_88ec6a.remove();
     };
   }, []);
 
-  const validateEmail = (value: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
+  const v_1d0f03 = (v_3b402b) => {
+    const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return v_9a3638.test(v_3b402b);
   };
 
-  const handleBack = () => {
-    navigation.reset({
+  const v_6ca26b = () => {
+    v_c65f5d.reset({
       index: 0,
       routes: [{ name: 'Home' }],
     });
   };
 
-  const showAlert = (title: string, message: string) => {
-    setAlertState({
+  const v_889fad = (v_9f1622, v_a8cd21) => {
+    v_879b56({
       visible: true,
-      title,
-      message,
+      title: v_9f1622,
+      message: v_a8cd21,
     });
   };
 
-  const handleAlertConfirm = () => {
-    setAlertState({
+  const v_34f542 = () => {
+    v_879b56({
       visible: false,
       title: '',
       message: '',
     });
   };
 
-  const handleLogin = async () => {
+  const v_ec4736 = async () => {
 
-    navigation.navigate('MetaHome');
+    v_c65f5d.navigate('MetaHome');
   };
 
-  const handleKakaoLogin = () => {
+  const v_2c36a1 = () => {
 
     console.log('카카오 로그인');
-    navigation.navigate('MetaHome');
+    v_c65f5d.navigate('MetaHome');
   };
 
-  const handleNaverLogin = () => {
+  const v_40f9f9 = () => {
 
     console.log('네이버 로그인');
-    navigation.navigate('MetaHome');
+    v_c65f5d.navigate('MetaHome');
   };
 
-  const handleGoogleLogin = () => {
-
-    console.log('구글 로그인');
-    navigation.navigate('MetaHome');
-  };
-
-      navigation.reset({
+  const v_6dd38d = async () => {
+    v_deef62(true);
+    try {
+      if (v_326be8.OS === 'android') {
+        const v_a11c85 = await v_4eac84.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        if (!v_a11c85) {
+          v_889fad(v_8d41d7('common.error'), v_8d41d7('login.error_unknown'));
+          return;
+        }
+      }
+      const v_3393e3 = await v_4eac84.signIn();
+      if (v_3393e3.type !== 'success' || !v_3393e3.data?.idToken) {
+        if (v_3393e3.type === 'cancelled') return;
+        v_889fad(v_8d41d7('common.error'), v_8d41d7('login.error_unknown'));
+        return;
+      }
+      const v_b50834 = v_3393e3.data.idToken;
+      const v_931bf0 = await v_545a63({ provider: 'google', token: v_b50834 });
+      await v_d41982(v_931bf0);
+      v_c65f5d.reset({
         index: 0,
         routes: [{ name: 'MetaHome' }],
       });
-    } catch (error) {
-      const defaultMessage = t('login.error_unknown');
-      let resolvedMessage = defaultMessage;
-      if (error instanceof Error) {
-        const normalized = error.message || '';
-        if (/invalid email or password/i.test(normalized)) {
-          resolvedMessage = t('login.error_failed');
-        } else {
-          resolvedMessage = normalized;
-        }
-      }
-      showAlert(t('login.error_failed'), resolvedMessage);
+    } catch (v_5e9bfe) {
+      const v_4b5200 = v_8d41d7('login.error_unknown');
+      const v_d6bda5 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_4b5200;
+      v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);
     } finally {
-      setIsLoading(false);
+      v_deef62(false);
     }
   };
-  const handleAppleLogin = () => {
+
+  const v_ef4111 = () => {
 
     console.log('애플 로그인');
-    navigation.navigate('MetaHome');
+    v_c65f5d.navigate('MetaHome');
   };
   return (
     <>
-      <View style={styles.screen}>
+      <View style={v_d81136.screen}>
         <Header
           showBackButton
-          title={t('common.login')}
-          onBackPress={handleBack}
-          containerStyle={styles.flatHeader}
+          title={v_8d41d7('common.login')}
+          onBackPress={v_6ca26b}
+          containerStyle={v_d81136.flatHeader}
         />
         <SafeScrollView
-          contentContainerStyle={styles.content}
+          contentContainerStyle={v_d81136.content}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           autoAdjustKeyboardPadding={true}
         >
-          <View style={styles.inner}>
-            <View style={styles.form}>
+          <View style={v_d81136.inner}>
+            <View style={v_d81136.form}>
               <TextField
-                label={t('login.email_label')}
-                placeholder={t('login.email_placeholder')}
+                label={v_8d41d7('login.email_label')}
+                placeholder={v_8d41d7('login.email_placeholder')}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
-                editable={!isLoading}
+                value={v_e0c7e8}
+                onChangeText={v_fedf34}
+                editable={!v_cd31a8}
               />
               <PasswordField
-                label={t('login.password_label')}
-                placeholder={t('login.password_placeholder')}
-                value={password}
-                onChangeText={setPassword}
-                editable={!isLoading}
+                label={v_8d41d7('login.password_label')}
+                placeholder={v_8d41d7('login.password_placeholder')}
+                value={v_adc076}
+                onChangeText={v_52b279}
+                editable={!v_cd31a8}
               />
               <FormCheckbox
-                label={t('login.keep_logged_in')}
-                value={keepLoggedIn}
-                onChange={setKeepLoggedIn}
+                label={v_8d41d7('login.keep_logged_in')}
+                value={v_2129ec}
+                onChange={v_874dfe}
               />
               <TouchableOpacity
-                style={styles.linkButton}
-                onPress={() => navigation.navigate('ForgotPassword')}
+                style={v_d81136.linkButton}
+                onPress={() => v_c65f5d.navigate('ForgotPassword')}
               >
-                <Text style={styles.linkText}>{t('login.forgot_password')}</Text>
+                <Text style={v_d81136.linkText}>{v_8d41d7('login.forgot_password')}</Text>
               </TouchableOpacity>
-              <View style={styles.buttonWrapper}>
+              <View style={v_d81136.buttonWrapper}>
                 <GradientButton
-                  title={isLoading ? t('login.logging_in') : t('common.login')}
-                  onPress={handleLogin}
-                  disabled={isLoading}
+                  title={v_cd31a8 ? v_8d41d7('login.logging_in') : v_8d41d7('common.login')}
+                  onPress={v_ec4736}
+                  disabled={v_cd31a8}
                 />
-                {isLoading && (
+                {v_cd31a8 && (
                   <ActivityIndicator
                     size="small"
-                    color={COLORS.buttonPrimary}
-                    style={styles.loadingIndicator}
+                    color={v_1bfbd0.buttonPrimary}
+                    style={v_d81136.loadingIndicator}
                   />
                 )}
               </View>
 
-              <View style={styles.socialLoginSection}>
-                <View style={styles.socialDivider}>
-                  <View style={styles.dividerLine} />
-                  <Text style={styles.dividerText}>또는</Text>
-                  <View style={styles.dividerLine} />
+              <View style={v_d81136.socialLoginSection}>
+                <View style={v_d81136.socialDivider}>
+                  <View style={v_d81136.dividerLine} />
+                  <Text style={v_d81136.dividerText}>또는</Text>
+                  <View style={v_d81136.dividerLine} />
                 </View>
 
-                <View style={styles.socialButtons}>
+                <View style={v_d81136.socialButtons}>
                   <TouchableOpacity
-                    style={[styles.socialIconButton, styles.kakaoButton]}
-                    onPress={handleKakaoLogin}
-                    disabled={isLoading}
+                    style={[v_d81136.socialIconButton, v_d81136.kakaoButton]}
+                    onPress={v_2c36a1}
+                    disabled={v_cd31a8}
                     activeOpacity={0.85}
                     accessibilityRole="button"
-                    accessibilityLabel={t('login.kakao_login')}
+                    accessibilityLabel={v_8d41d7('login.kakao_login')}
                   >
                     <KakaoIcon size={32} />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={[styles.socialIconButton, styles.naverButton]}
-                    onPress={handleNaverLogin}
-                    disabled={isLoading}
+                    style={[v_d81136.socialIconButton, v_d81136.naverButton]}
+                    onPress={v_40f9f9}
+                    disabled={v_cd31a8}
                     activeOpacity={0.85}
                     accessibilityRole="button"
-                    accessibilityLabel={t('login.naver_login')}
+                    accessibilityLabel={v_8d41d7('login.naver_login')}
                   >
                     <NaverIcon size={24} />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={[styles.socialIconButton, styles.googleButton]}
-                    onPress={handleGoogleLogin}
-                    disabled={isLoading}
+                    style={[v_d81136.socialIconButton, v_d81136.googleButton]}
+                    onPress={v_6dd38d}
+                    disabled={v_cd31a8}
                     activeOpacity={0.85}
                     accessibilityRole="button"
-                    accessibilityLabel={t('login.google_login')}
+                    accessibilityLabel={v_8d41d7('login.google_login')}
                   >
                     <GoogleIcon size={24} />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={[styles.socialIconButton, styles.appleButton]}
-                    onPress={handleAppleLogin}
-                    disabled={isLoading}
+                    style={[v_d81136.socialIconButton, v_d81136.appleButton]}
+                    onPress={v_ef4111}
+                    disabled={v_cd31a8}
                     activeOpacity={0.85}
                     accessibilityRole="button"
-                    accessibilityLabel={t('login.apple_login')}
+                    accessibilityLabel={v_8d41d7('login.apple_login')}
                   >
                     <AppleIcon size={24} />
                   </TouchableOpacity>
@@ -336,36 +343,36 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <AlertModal
-        visible={alertState.visible}
-        title={alertState.title}
-        message={alertState.message}
-        onConfirm={handleAlertConfirm}
+        visible={v_153a89.visible}
+        title={v_153a89.title}
+        message={v_153a89.message}
+        onConfirm={v_34f542}
       />
     </>
   );
 };
 
-const styles = StyleSheet.create({
+const v_d81136 = v_472849.create({
   flex: {
     flex: 1,
   },
   screen: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: v_1bfbd0.white,
   },
   flatHeader: {
     shadowOpacity: 0,
     elevation: 0,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    paddingVertical: SIZES.medium,
+    paddingVertical: v_9b1a04.medium,
   },
   content: {
     flexGrow: 1,
     alignItems: 'center',
-    paddingHorizontal: SIZES.large,
-    paddingVertical: SIZES.xlarge,
-    marginTop: SIZES.large,
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.xlarge,
+    marginTop: v_9b1a04.large,
   },
   inner: {
     width: '100%',
@@ -374,12 +381,12 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    gap: SIZES.medium,
+    gap: v_9b1a04.medium,
   },
   buttonWrapper: {
   },
   loadingIndicator: {
-    marginTop: SIZES.small / 2,
+    marginTop: v_9b1a04.small / 2,
     alignSelf: 'center',
   },
   linkButton: {
@@ -387,37 +394,37 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 13,
-    fontFamily: FONTS.medium,
-    color: COLORS.text,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
   },
   socialLoginSection: {
     width: '100%',
-    gap: SIZES.medium,
-    paddingTop: SIZES.medium,
+    gap: v_9b1a04.medium,
+    paddingTop: v_9b1a04.medium,
   },
   socialDivider: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SIZES.small,
-    marginTop: SIZES.small,
-    marginBottom: SIZES.medium,
+    gap: v_9b1a04.small,
+    marginTop: v_9b1a04.small,
+    marginBottom: v_9b1a04.medium,
   },
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: COLORS.border,
+    backgroundColor: v_1bfbd0.border,
   },
   dividerText: {
     fontSize: 13,
-    fontFamily: FONTS.medium,
-    color: COLORS.secondaryText,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
   },
   socialButtons: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: SIZES.medium,
+    gap: v_9b1a04.medium,
   },
   socialIconButton: {
     width: 56,
@@ -436,8 +443,8 @@ const styles = StyleSheet.create({
     borderColor: '#03C75A',
   },
   googleButton: {
-    backgroundColor: COLORS.background,
-    borderColor: COLORS.border,
+    backgroundColor: v_1bfbd0.background,
+    borderColor: v_1bfbd0.border,
   },
   appleButton: {
     backgroundColor: '#000000',
@@ -445,5 +452,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default v_f4f851;
 

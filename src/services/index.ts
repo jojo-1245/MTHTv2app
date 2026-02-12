@@ -1,5 +1,6 @@
 export {
   loginMember,
+  socialLogin,
   persistAuthSession,
   getMe,
   updateProfile,
