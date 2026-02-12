@@ -19,6 +19,7 @@ import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
+import { v_998b9d } from '../../utils/authErrorHandler';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -27,7 +28,7 @@ const v_46b407 = require('../../../assets/images/myinfo_silver.png');
 
 type TierType = 'silver' | 'gold';
 
-const MyInfoScreen: v_a3453e.FC<Props> = () => {
+const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
@@ -35,6 +36,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
   const [v_727031, v_4ffb1e] = v_5ab095<v_2c95cc | null>(null);
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
+  const [v_d11128, v_36c42a] = v_5ab095(false);
 
   const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
@@ -46,6 +48,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
       const v_9390e8 = await v_7ef860();
       v_4ffb1e(v_9390e8);
     } catch (v_9e86fd) {
+
+      if (v_998b9d(v_c65f5d, v_9e86fd)) {
+        return;
+      }
       v_3a7d09(v_9e86fd instanceof Error ? v_9e86fd.message : v_8d41d7('profile.load_error'));
     } finally {
       v_34a50a(false);
@@ -124,8 +130,22 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
         text: v_8d41d7('common.confirm'),
         style: 'destructive',
         onPress: async () => {
-          await v_4b3c9f();
-          v_9b57fc('Login');
+          v_36c42a(true);
+          try {
+            await v_4b3c9f();
+
+            v_c65f5d.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+          } catch (v_5e9bfe) {
+            console.error('[MyInfoScreen] 로그아웃 실패:', v_5e9bfe);
+            v_03e392.alert(
+              v_8d41d7('common.error'),
+              v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('profile.logout_error', '로그아웃 중 오류가 발생했습니다.'),
+            );
+            v_36c42a(false);
+          }
         },
       },
     ]);
@@ -272,9 +292,15 @@ const MyInfoScreen: v_a3453e.FC<Props> = () => {
                 {v_8c0b26.isLogout ? (
                   <>
                     <View style={v_d81136.menuIconWrap}>
-                      <Ionicons name="log-out-outline" size={24} />
+                      {v_d11128 ? (
+                        <ActivityIndicator size="small" color={v_1bfbd0.text} />
+                      ) : (
+                        <Ionicons name="log-out-outline" size={24} />
+                      )}
                     </View>
-                    <Text style={v_d81136.menuItemTextLogout}>{v_8c0b26.title}</Text>
+                    <Text style={v_d81136.menuItemTextLogout}>
+                      {v_d11128 ? v_8d41d7('profile.logging_out', '로그아웃 중...') : v_8c0b26.title}
+                    </Text>
                   </>
                 ) : (
                   <>

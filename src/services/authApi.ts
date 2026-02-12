@@ -55,9 +55,56 @@ export async function loginMember(params: {
       body,
       { timeout: API_TIMEOUT, headers }
     );
+
+    if (__DEV__) {
+      console.log('[authApi] login 원본 응답:', {
+        status: res.status,
+        data: JSON.stringify(res.data, null, 2),
+      });
+    }
+
     const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
-    const payload: LoginAuthPayload =
-      typeof data === 'object' && data !== null ? data : { token: data };
+
+    let payload: LoginAuthPayload = {};
+
+    if (data && typeof data === 'object' && data !== null) {
+      const dataObj = data as Record<string, unknown>;
+
+      if (dataObj.tokens && typeof dataObj.tokens === 'object' && dataObj.tokens !== null) {
+        const tokens = dataObj.tokens as Record<string, unknown>;
+        const accessToken = tokens.accessToken || tokens.access_token || tokens.token;
+        if (typeof accessToken === 'string') {
+          payload.accessToken = accessToken;
+          payload.access_token = accessToken;
+          payload.token = accessToken;
+        }
+        const refreshToken = tokens.refreshToken || tokens.refresh_token;
+        if (typeof refreshToken === 'string') {
+          payload.refreshToken = refreshToken;
+          payload.refresh_token = refreshToken;
+        }
+
+        payload.tokens = dataObj.tokens;
+      }
+
+      if (dataObj.member) {
+        payload.user = dataObj.member;
+        payload.member = dataObj.member;
+      }
+
+      if (!payload.accessToken) {
+        const directToken = dataObj.accessToken ?? dataObj.access_token ?? dataObj.token;
+        if (typeof directToken === 'string') {
+          payload.accessToken = directToken;
+          payload.access_token = directToken;
+          payload.token = directToken;
+        }
+      }
+    } else {
+
+      payload = typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : { token: data };
+    }
+
     const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
     if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
       const tokenFromHeader = authHeader.slice(7).trim();
@@ -67,16 +114,18 @@ export async function loginMember(params: {
         payload.token = tokenFromHeader;
       }
     }
+
     if (__DEV__) {
       const hasToken =
         !!(payload.accessToken ?? payload.access_token ?? payload.token);
-      console.log('[authApi] login 응답:', {
-        status: res.status,
-        hasData: !!data,
+      console.log('[authApi] login 파싱된 payload:', {
         hasToken,
+        hasMember: !!payload.member || !!payload.user,
         tokenFromHeader: !!authHeader,
+        payloadKeys: Object.keys(payload),
       });
     }
+
     return payload;
   } catch (error) {
     if (__DEV__ && axios.isAxiosError(error)) {
@@ -160,17 +209,42 @@ function getTokenFromPayload(payload: LoginAuthPayload): string | null {
   return null;
 }
 
-export async function persistAuthSession(payload: LoginAuthPayload): Promise<void> {
+export async function persistAuthSession(
+  payload: LoginAuthPayload,
+  keepLoggedIn: boolean = true
+): Promise<void> {
+  if (__DEV__) {
+    console.log('[authApi] persistAuthSession 시작:', {
+      payloadKeys: payload ? Object.keys(payload) : [],
+      hasAccessToken: !!(payload.accessToken || payload.access_token || payload.token),
+      hasTokens: !!(payload as Record<string, unknown>).tokens,
+    });
+  }
+
   const token = getTokenFromPayload(payload);
+  if (__DEV__) {
+    console.log('[authApi] getTokenFromPayload 결과:', {
+      tokenFound: !!token,
+      tokenLength: token ? token.length : 0,
+      tokenPreview: token ? `${token.substring(0, 20)}...` : null,
+    });
+  }
+
   if (token) {
     await AsyncStorage.setItem(STORAGE_KEYS.authToken, token);
+
+    const savedToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
     if (__DEV__) {
-      console.log('[authApi] persistAuthSession: 토큰 저장 완료');
+      console.log('[authApi] persistAuthSession: 토큰 저장 완료', {
+        saved: !!savedToken,
+        savedLength: savedToken ? savedToken.length : 0,
+      });
     }
   } else {
     if (__DEV__) {
       console.warn('[authApi] persistAuthSession: 응답에서 토큰을 찾지 못함', {
         keys: payload ? Object.keys(payload) : [],
+        payload: JSON.stringify(payload, null, 2),
       });
     }
   }
@@ -181,7 +255,26 @@ export async function persistAuthSession(payload: LoginAuthPayload): Promise<voi
       typeof userPayload === 'string' ? userPayload : JSON.stringify(userPayload)
     );
   }
-  await AsyncStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
+
+  if (keepLoggedIn) {
+    await AsyncStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
+    if (__DEV__) {
+      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장');
+    }
+  } else {
+
+    await AsyncStorage.removeItem(STORAGE_KEYS.isLoggedIn);
+    if (__DEV__) {
+      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장 안 함');
+    }
+  }
+
+  if (__DEV__) {
+    console.log('[authApi] persistAuthSession 완료', {
+      keepLoggedIn,
+      isLoggedInSaved: keepLoggedIn,
+    });
+  }
 }
 
 export interface MeProfile {
@@ -197,24 +290,63 @@ export async function getMe(): Promise<MeProfile> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  if (__DEV__) {
+    console.log('[authApi] getMe: 토큰 읽기 시작...');
+  }
+
   let token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+  if (__DEV__) {
+    console.log('[authApi] AsyncStorage에서 authToken 읽기:', {
+      found: !!token,
+      length: token ? token.length : 0,
+      preview: token ? `${token.substring(0, 20)}...` : null,
+    });
+  }
+
   if (!token) {
     const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
+    if (__DEV__) {
+      console.log('[authApi] memberInfo에서 토큰 찾기 시도:', {
+        hasMemberInfo: !!memberJson,
+      });
+    }
     if (memberJson) {
       try {
         const member = JSON.parse(memberJson) as Record<string, unknown>;
         const t = member?.accessToken ?? member?.access_token ?? member?.token;
-        if (typeof t === 'string') token = t;
-      } catch {
-
+        if (typeof t === 'string') {
+          token = t;
+          if (__DEV__) {
+            console.log('[authApi] memberInfo에서 토큰 찾음:', {
+              length: token.length,
+              preview: `${token.substring(0, 20)}...`,
+            });
+          }
+        }
+      } catch (error) {
+        if (__DEV__) {
+          console.error('[authApi] memberInfo 파싱 에러:', error);
+        }
       }
     }
   }
+
   if (!token) {
+
     if (__DEV__) {
-      console.warn('[authApi] getMe: 저장된 토큰 없음. 로그인 응답 형식 확인 필요.');
+      const allKeys = await AsyncStorage.getAllKeys();
+      console.warn('[authApi] getMe: 저장된 토큰 없음. 로그인 응답 형식 확인 필요.', {
+        allStorageKeys: allKeys,
+        hasAuthTokenKey: allKeys.includes(STORAGE_KEYS.authToken),
+        hasMemberInfoKey: allKeys.includes(STORAGE_KEYS.memberInfo),
+        hasIsLoggedInKey: allKeys.includes(STORAGE_KEYS.isLoggedIn),
+      });
     }
     throw new Error('로그인이 필요합니다.');
+  }
+
+  if (__DEV__) {
+    console.log('[authApi] 토큰 확인 완료, API 요청 진행');
   }
   if (__DEV__) {
     console.log('[authApi] getMe 요청:', { url: `${baseURL}/oth-path` });
