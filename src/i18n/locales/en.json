@@ -335,10 +335,15 @@
         "email_placeholder": "Enter your email address",
         "password_label": "Password",
         "password_placeholder": "Password",
+        "password_confirm_label": "Confirm Password",
+        "password_confirm_placeholder": "Re-enter password",
+        "country_label": "Country",
+        "country_placeholder": "Select country",
         "phone_label": "Phone Number",
         "phone_placeholder": "010-1010-1000",
         "region_label": "Region",
-        "region_placeholder": "Korea",
+        "region_placeholder": "Select region",
+        "select": "Select",
         "gender_label": "Gender",
         "age_label": "Age",
         "referral_label": "Referral Email",
@@ -346,7 +351,7 @@
         "terms_agree": "I agree to the METAHiNT Terms of Service and Privacy Policy.",
         "submit": "Sign Up",
         "submitting": "Signing up...",
-        "password_rule": "8+ chars / Mixed case / Numbers / Symbols",
+        "password_rule": "8–128 characters, letters and numbers",
         "error_email_format": "Please enter a valid email format.",
         "error_password_requirement": "{{errors}} required.",
         "error_input": "Input Error",
@@ -587,7 +592,8 @@
         "title_country": "Select Country",
         "title_region": "Select Region",
         "search_placeholder_country": "Search country name or dial code",
-        "search_placeholder_region": "Search region name or code"
+        "search_placeholder_region": "Search region name or code",
+        "select_option": "Select"
     },
     "email_verification": {
         "title": "Enter Verification Code",
@@ -1502,8 +1508,10 @@
         "title": "Identity Verification",
         "email_label": "Email",
         "email_placeholder": "oth-user@example.invalid",
-        "email_valid": "Email is available.",
+        "email_valid": "Valid email format. We can send a verification code to this address.",
         "email_invalid": "Invalid email format.",
+        "email_match": "Matches your login email.",
+        "email_not_match": "Does not match your login email. Enter your own email.",
         "send_code_button": "Send Verification Code"
     },
     "health_connection": {
