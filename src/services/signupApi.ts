@@ -8,15 +8,13 @@ export type SignupPayload = {
   email: string;
   password: string;
   name: string;
-  mobile?: string | null;
-  mobile_code?: string | null;
+  mobile?: string | null; 
   gender?: number | null;
   age_range?: number | null;
-  country?: string | null;
-  country_code?: string | null;
-  region_id?: number | null;
-  os_type?: number;
-  language?: string;
+  country?: string | null; 
+  region_id?: number | null; 
+  os_type?: number; 
+  language?: string; 
   referral_code?: string;
 };
 
@@ -34,14 +32,101 @@ export const SignupHelpers = {
 type ApiResponse<T> = {
   success: boolean;
   data?: T;
-  error?: { message: string; statusCode?: number };
+  error?: {
+    message: string;
+    statusCode?: number;
+    code?: string;
+    details?: Array<{ field?: string; message?: string; [key: string]: unknown }>;
+  };
 };
 
 function normalizeError(error: unknown): Error {
   if (axios.isAxiosError(error)) {
     const apiResponse = error.response?.data as ApiResponse<unknown> | undefined;
+    const errorData = apiResponse?.error;
+
+    if (errorData?.code === '2002' || errorData?.message?.toLowerCase().includes('validation')) {
+      const details = errorData.details;
+      if (Array.isArray(details) && details.length > 0) {
+
+        const detailMessages: string[] = [];
+
+        for (const detail of details) {
+          if (typeof detail === 'string') {
+
+            try {
+              const parsed = JSON.parse(detail);
+              if (Array.isArray(parsed)) {
+
+                for (const item of parsed) {
+                  if (typeof item === 'object' && item !== null) {
+                    const itemObj = item as Record<string, unknown>;
+                    const path = Array.isArray(itemObj.path) ? itemObj.path.join('.') : undefined;
+                    const msg = itemObj.message || path || JSON.stringify(item);
+                    if (msg) detailMessages.push(String(msg));
+                  }
+                }
+              } else if (typeof parsed === 'object' && parsed !== null) {
+                const parsedObj = parsed as Record<string, unknown>;
+                const path = Array.isArray(parsedObj.path) ? parsedObj.path.join('.') : undefined;
+                const msg = parsedObj.message || path || JSON.stringify(parsed);
+                if (msg) detailMessages.push(String(msg));
+              } else {
+                detailMessages.push(detail);
+              }
+            } catch {
+
+              detailMessages.push(detail);
+            }
+          } else if (typeof detail === 'object' && detail !== null) {
+
+            const detailObj = detail as Record<string, unknown>;
+
+            if (typeof detailObj.message === 'string' && detailObj.message.trim().startsWith('[')) {
+              try {
+                const parsedMessage = JSON.parse(detailObj.message);
+                if (Array.isArray(parsedMessage)) {
+
+                  for (const item of parsedMessage) {
+                    if (typeof item === 'object' && item !== null) {
+                      const itemObj = item as Record<string, unknown>;
+                      const path = Array.isArray(itemObj.path) ? itemObj.path.join('.') : undefined;
+                      const msg = itemObj.message || path || JSON.stringify(item);
+                      if (msg) detailMessages.push(String(msg));
+                    }
+                  }
+                } else {
+
+                  const path = Array.isArray(detailObj.path) ? detailObj.path.join('.') : undefined;
+                  const msg = detailObj.message || detailObj.field || path || JSON.stringify(detail);
+                  if (msg) detailMessages.push(String(msg));
+                }
+              } catch {
+
+                const path = Array.isArray(detailObj.path) ? detailObj.path.join('.') : undefined;
+                const msg = detailObj.message || detailObj.field || path || JSON.stringify(detail);
+                if (msg) detailMessages.push(String(msg));
+              }
+            } else {
+
+              const path = Array.isArray(detailObj.path) ? detailObj.path.join('.') : undefined;
+              const msg = detailObj.message || detailObj.field || path || JSON.stringify(detail);
+              if (msg) detailMessages.push(String(msg));
+            }
+          } else {
+            detailMessages.push(String(detail));
+          }
+        }
+
+        if (detailMessages.length > 0) {
+          const combinedMessage = detailMessages.join(', ');
+          return new Error(combinedMessage);
+        }
+      }
+    }
+
     const message =
-      apiResponse?.error?.message ||
+      errorData?.message ||
       error.response?.statusText ||
       error.message ||
       '요청 중 오류가 발생했습니다.';
@@ -135,16 +220,6 @@ export async function signup(payload: SignupPayload): Promise<void> {
       headers,
     });
   } catch (error) {
-    if (__DEV__ && axios.isAxiosError(error)) {
-      console.log('[signupApi] signup 에러:', {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message,
-        config: { url: error.config?.url, method: error.config?.method },
-      });
-    } else if (__DEV__ && error instanceof Error) {
-      console.log('[signupApi] signup 에러 (비-Axios):', { message: error.message, error });
-    }
     throw normalizeError(error);
   }
 }

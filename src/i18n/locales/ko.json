@@ -366,6 +366,7 @@
         "success_title": "회원가입 완료",
         "success_message": "이메일 인증을 진행해주세요.",
         "error_title": "회원가입 실패",
+        "error_validation": "입력 정보를 확인해주세요.",
         "error_unknown": "회원가입 중 알 수 없는 오류가 발생했습니다."
     },
     "profile": {
