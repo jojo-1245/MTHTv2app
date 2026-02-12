@@ -69,10 +69,10 @@ export default function v_6540c3() {
     if (!v_4c1272) return;
     try {
       const v_c9c489 = v_e4a763();
-      if (v_c9c489.GOOGLE_IOS_CLIENT_ID || v_c9c489.GOOGLE_ANDROID_CLIENT_ID) {
+      if (v_c9c489.GOOGLE_IOS_CLIENT_ID || v_c9c489.GOOGLE_ANDROID_CLIENT_ID || v_c9c489.GOOGLE_WEB_CLIENT_ID) {
         v_4eac84.configure({
           iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID,
-          webClientId: v_c9c489.GOOGLE_ANDROID_CLIENT_ID,
+          webClientId: v_c9c489.GOOGLE_WEB_CLIENT_ID ?? v_c9c489.GOOGLE_ANDROID_CLIENT_ID,
         });
       }
     } catch {

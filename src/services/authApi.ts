@@ -91,7 +91,7 @@ export async function loginMember(params: {
 }
 
 export async function socialLogin(params: {
-  provider: 'google';
+  provider: 'google' | 'apple';
   token: string;
 }): Promise<LoginAuthPayload> {
   const env = getEnv();

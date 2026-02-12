@@ -325,7 +325,8 @@
         "kakao_login": "Kakao Login",
         "naver_login": "Naver Login",
         "google_login": "Google Login",
-        "apple_login": "Apple Login"
+        "apple_login": "Apple Login",
+        "apple_ios_only": "Apple Sign In is only available on iOS."
     },
     "signup": {
         "title": "Sign Up",
