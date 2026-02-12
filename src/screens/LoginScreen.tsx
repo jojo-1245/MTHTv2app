@@ -26,6 +26,7 @@ import v_f595b9, { v_003e74, v_bf60de, v_9aafc7, v_c9c101, v_cd1400, v_8959a6 } 
 import type { v_8ad91b } from '../navigation';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
+import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import { v_67ec53, v_d41982, v_545a63 } from '../services';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
@@ -223,10 +224,40 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   };
 
-  const v_ef4111 = () => {
-
-    console.log('애플 로그인');
-    v_c65f5d.navigate('MetaHome');
+  const v_ef4111 = async () => {
+    if (v_326be8.OS !== 'ios') {
+      v_889fad(v_8d41d7('login.error_failed'), v_8d41d7('login.apple_ios_only'));
+      return;
+    }
+    v_deef62(true);
+    try {
+      const v_68e4c4 = await v_6d394a.signInAsync({
+        requestedScopes: [
+          v_6d394a.AppleAuthenticationScope.FULL_NAME,
+          v_6d394a.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      const v_21cc31 = v_68e4c4.identityToken;
+      if (!v_21cc31) {
+        v_889fad(v_8d41d7('login.error_failed'), v_8d41d7('login.error_unknown'));
+        return;
+      }
+      const v_931bf0 = await v_545a63({ provider: 'apple', token: v_21cc31 });
+      await v_d41982(v_931bf0);
+      v_c65f5d.reset({
+        index: 0,
+        routes: [{ name: 'MetaHome' }],
+      });
+    } catch (v_5e9bfe) {
+      const v_c99bd2 = v_5e9bfe && typeof v_5e9bfe === 'object' && 'code' in v_5e9bfe ? (v_5e9bfe as { code: string }).code : '';
+      if (v_c99bd2 === 'ERR_REQUEST_CANCELED' || v_c99bd2 === 'ERR_CANCELED') {
+        return;
+      }
+      const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
+      v_889fad(v_8d41d7('login.error_failed'), v_a8cd21);
+    } finally {
+      v_deef62(false);
+    }
   };
   return (
     <>
