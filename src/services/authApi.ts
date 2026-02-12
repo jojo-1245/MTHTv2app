@@ -196,6 +196,83 @@ export async function getMe(): Promise<MeProfile> {
   }
 }
 
+export interface UpdateProfilePayload {
+  name: string;
+  mobile?: string | null;
+  mobile_code?: string | null;
+  country?: string | null;
+  country_code?: string | null;
+  region_id?: number | null;
+  gender?: number | null;
+  age_range?: number | null;
+  password?: string;
+}
+
+export async function updateProfile(payload: UpdateProfilePayload): Promise<MeProfile> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  let token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+  if (!token) {
+    const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
+    if (memberJson) {
+      try {
+        const member = JSON.parse(memberJson) as Record<string, unknown>;
+        const t = member?.accessToken ?? member?.access_token ?? member?.token;
+        if (typeof t === 'string') token = t;
+      } catch {
+
+      }
+    }
+  }
+  if (!token) throw new Error('로그인이 필요합니다.');
+
+  const profilePath = env.PROFILE_UPDATE_PATH ?? '/oth-path';
+  const url = `${baseURL}${profilePath.startsWith('/') ? profilePath : `/${profilePath}`}`;
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+  const body: Record<string, unknown> = {
+    name: payload.name,
+  };
+  if (payload.mobile !== undefined) body.mobile = payload.mobile;
+  if (payload.mobile_code !== undefined) body.mobile_code = payload.mobile_code;
+  if (payload.country !== undefined) body.country = payload.country;
+  if (payload.country_code !== undefined) body.country_code = payload.country_code;
+  if (payload.region_id !== undefined) body.region_id = payload.region_id;
+  if (payload.gender !== undefined) body.gender = payload.gender;
+  if (payload.age_range !== undefined) body.age_range = payload.age_range;
+  if (payload.password != null && payload.password !== '') body.password = payload.password;
+
+  if (__DEV__) {
+    console.log('[authApi] updateProfile 요청:', { url, method: 'PUT', body: { ...body, password: body.password ? '***' : undefined } });
+  }
+  try {
+    const res = await axios.put<ApiResponse<MeProfile>>(url, body, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+    const data = res.data?.data ?? (res.data as unknown as MeProfile);
+    if (__DEV__) {
+      console.log('[authApi] updateProfile 응답:', { status: res.status, hasData: !!data });
+    }
+    if (typeof data === 'object' && data !== null) return data as MeProfile;
+    return {};
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      const errData = error.response?.data as { error?: { details?: unknown; message?: string } } | undefined;
+      console.error('[authApi] updateProfile 에러:', {
+        status: error.response?.status,
+        message: errData?.error?.message ?? error.message,
+        details: errData?.error?.details,
+        fullData: error.response?.data,
+      });
+    }
+    throw normalizeError(error);
+  }
+}
+
 export async function clearAuthSession(): Promise<void> {
   await AsyncStorage.multiRemove([
     STORAGE_KEYS.authToken,

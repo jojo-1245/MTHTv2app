@@ -10,11 +10,11 @@ export type SignupPayload = {
   name: string;
   mobile?: string | null;
   mobile_code?: string | null;
-  gender?: number;
-  age_range?: number;
-  country?: string;
-  country_code?: string;
-  region_id?: number;
+  gender?: number | null;
+  age_range?: number | null;
+  country?: string | null;
+  country_code?: string | null;
+  region_id?: number | null;
   os_type?: number;
   language?: string;
   referral_code?: string;
