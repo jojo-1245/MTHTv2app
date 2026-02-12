@@ -4,7 +4,8 @@ export const v_1bfbd0 = {
   primary: '#343a5a',
   secondary: '#ffdc04',
   bluePrimary: '#3B72F2',
-  background: '#ffffff',
+  white: '#ffffff',
+  background: '#F9FAFB',
   backgroundSecondary: '#F8FAFC',
   lightBlue: '#F5F9FF',
   lightGray: '#fafafa',
@@ -18,6 +19,7 @@ export const v_1bfbd0 = {
   headerText: '#10192d',
   headerIconBg: '#F8FAFC',
   border: '#d8dadc',
+  borderLight: '#eaeaea',
   placeholder: 'rgba(0, 0, 0, 0.5)',
   mutedText: '#3C3C43',
   secondaryText: '#666666',
@@ -29,6 +31,7 @@ export const v_1bfbd0 = {
   scoreLevelHigh: '#16A34A',    
   scoreLevelNormal: '#F97316',  
   scoreLevelLow: '#DC2626',    
+
 };
 
 export const v_963c2c= {
@@ -179,6 +182,7 @@ export const v_a61db3 = {
     flexGrow: 1,
     paddingHorizontal: v_9b1a04.large,
     paddingTop: 32,
+    backgroundColor: v_1bfbd0.background
   },
 
   stepText: {

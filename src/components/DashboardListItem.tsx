@@ -110,7 +110,7 @@ const v_d81136 = v_472849.create({
     borderRadius: 20,
     borderWidth: v_472849.hairlineWidth,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   iconWrapper: {
     width: 48,

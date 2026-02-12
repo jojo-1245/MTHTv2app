@@ -66,10 +66,12 @@ function v_60fa3c({
   recordA: v_1a2523,
   recordB: v_fe1802,
   selectedKeys: v_122c3a,
+  backgroundColor: v_f7b9fb,
 }: {
   recordA: v_cb37be;
   recordB: v_cb37be;
   selectedKeys: string[];
+  backgroundColor?: string;
 }) {
   const { t: v_8d41d7 } = v_772971();
   const v_f4e98d = v_122c3a.length || 1;
@@ -119,7 +121,7 @@ function v_60fa3c({
   });
 
   return (
-    <View style={v_fbfcbd.wrap}>
+    <View style={[v_fbfcbd.wrap, v_f7b9fb && { backgroundColor: v_f7b9fb }]}>
       <Svg width={v_47dd8d} height={v_47dd8d}>
         {}
         {v_e1e10d.map((v_553162, v_ebec57) => (
@@ -216,12 +218,14 @@ function v_5db904({
   dateStrA: v_335f4f,
   dateStrB: v_8f59fa,
   selectedKeys: v_122c3a,
+  backgroundColor: v_f7b9fb,
 }: {
   recordA: v_cb37be;
   recordB: v_cb37be;
   dateStrA: string;
   dateStrB: string;
   selectedKeys: string[];
+  backgroundColor?: string;
 }) {
   const { t: v_8d41d7 } = v_772971();
   const v_e60572 = (v_b24339, v_0debf4) =>
@@ -230,7 +234,7 @@ function v_5db904({
   const v_e66bb4 = v_122c3a;
 
   return (
-    <View style={v_86ef3a.wrap}>
+    <View style={[v_86ef3a.wrap, v_f7b9fb && { backgroundColor: v_f7b9fb }]}>
       <View style={v_86ef3a.headerRow}>
         <Text style={[v_86ef3a.cellLabel, v_86ef3a.headerCell]}>
           {v_8d41d7('skin_comparison.item')}
@@ -275,7 +279,6 @@ function v_5db904({
 
 const v_86ef3a = v_472849.create({
   wrap: {
-    backgroundColor: '#F8FAFC',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
@@ -453,6 +456,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           dateStrA={v_c1c940(v_1a2523.date)}
           dateStrB={v_c1c940(v_fe1802.date)}
           selectedKeys={v_831a4c}
+          backgroundColor={v_1bfbd0.white}
         />
 
         {}
@@ -654,7 +658,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 }
 
 const v_d81136 = v_472849.create({
-  screen: { flex: 1 },
+  screen: { flex: 1, },
   headerRightRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -666,7 +670,7 @@ const v_d81136 = v_472849.create({
     padding: 8,
     marginRight: v_9b1a04.small,
   },
-  container: { paddingBottom: v_9b1a04.xlarge * 2 },
+  container: { paddingBottom: v_9b1a04.xlarge * 2, backgroundColor: v_1bfbd0.background },
   sectionTitle: {
     fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,
@@ -847,7 +851,7 @@ const v_d81136 = v_472849.create({
     padding: v_9b1a04.large,
   },
   modalContent: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     width: '100%',
     maxHeight: '80%',

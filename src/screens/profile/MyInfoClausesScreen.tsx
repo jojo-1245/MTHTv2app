@@ -60,12 +60,13 @@ const v_d81136 = v_472849.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
     padding: v_9b1a04.large,
   },
   menuSection: {
-    gap: v_9b1a04.medium,
+    gap: v_9b1a04.small,
   },
   menuItem: {
     marginBottom: 0,

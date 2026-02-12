@@ -34,7 +34,9 @@
         "search": "Cari",
         "show": "Tampilkan",
         "hide": "Sembunyikan",
-        "try_again": "Coba Lagi"
+        "try_again": "Coba Lagi",
+        "currency_unit": "KRW",
+        "previous": "Sebelumnya"
     },
     "account_selector": {
         "title": "Pilihan Akun",
@@ -318,7 +320,11 @@
         "error_invalid_email": "Silakan masukkan alamat email yang valid.",
         "error_empty_password": "Silakan masukkan kata sandi Anda.",
         "error_failed": "Gagal Masuk",
-        "error_unknown": "Terjadi kesalahan yang tidak diketahui saat masuk."
+        "error_unknown": "Terjadi kesalahan yang tidak diketahui saat masuk.",
+        "kakao_login": "Masuk dengan Kakao",
+        "naver_login": "Masuk dengan Naver",
+        "google_login": "Masuk dengan Google",
+        "apple_login": "Masuk dengan Apple"
     },
     "signup": {
         "title": "Daftar",
@@ -393,11 +399,30 @@
         "faq_desc": "Pertanyaan yang Sering Diajukan",
         "logout": "Keluar",
         "referral": "Referral",
+        "nft_held": "NFT yang Dimiliki",
+        "nft_unit": "",
         "consecutive_days": "hari berturut-turut",
         "analyses_completed": "analisis selesai",
         "purchases_completed": "pembelian selesai",
         "app_version": "MetaHint Health v1.0.0",
         "copyright": "© 2026 MetaHint. All rights reserved."
+    },
+    "profit_distribution": {
+        "title": "Distribusi Keuntungan",
+        "subtitle": "Status Keuntungan Pemegang NFT",
+        "period_label": "Periode Distribusi Keuntungan",
+        "nft_held": "NFT yang Dimiliki",
+        "unit": "",
+        "detailed_breakdown": "Rincian Keuntungan",
+        "advertising_profit": "Keuntungan Iklan dan Layanan Tambahan",
+        "advertising_subtitle": "Penjualan Iklan dan Layanan",
+        "product_profit": "Keuntungan Penjualan Produk",
+        "product_subtitle": "Pendapatan Penjualan Produk",
+        "estimated_profit_label": "Perkiraan Keuntungan berdasarkan {{count}} NFT saya",
+        "next_distribution": "Tanggal Distribusi Berikutnya",
+        "guide_title": "Panduan Distribusi Keuntungan",
+        "guide_item1": "10% dari Keuntungan Iklan, Keuntungan Layanan Tambahan",
+        "guide_item2": "5% dari Pendapatan Penjualan Produk"
     },
     "skin": {
         "products": {

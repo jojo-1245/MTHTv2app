@@ -144,17 +144,23 @@ const Header: v_a3453e.FC<HeaderProps> = ({
   }, [v_de8f73, v_a80b4a, v_16994b, v_8d41d7]);
 
   const v_a3707d = v_033e14.top + v_9b1a04.small;
+  const v_d839ea = v_5cc641 || v_798703 || (v_e2510f && !v_5cc641 && !v_798703);
   return (
     <View style={[
       v_d81136.container,
       v_5cc641 && v_d81136.analysisContainer,
-      (v_5cc641 || v_798703) && { paddingTop: v_a3707d },
+      v_d839ea && !v_5cc641 && !v_798703 && v_d81136.backButtonContainer,
+      (v_5cc641 || v_798703 || (v_e2510f && !v_5cc641 && !v_798703)) && { paddingTop: v_a3707d },
       v_4affe9,
     ]}>
       <View style={[v_d81136.topRow, v_5cc641 && v_d81136.analysisTopRow]}>
         <View style={[v_d81136.leftWrapper, v_5cc641 && v_d81136.analysisLeftWrapper, v_798703 && v_d81136.healthAnalysisLeftWrapper]}>{v_8b8176}</View>
         {!v_798703 && (
-          <View style={[v_d81136.centerWrapper, v_5cc641 && v_d81136.analysisCenterWrapper]}>
+          <View style={[
+            v_d81136.centerWrapper,
+            v_5cc641 && v_d81136.analysisCenterWrapper,
+            v_e2510f && !v_5cc641 && v_d81136.titleLeftAlign
+          ]}>
             <Text
               style={[v_d81136.title, v_5cc641 && v_d81136.analysisTitle, v_672cf3]}
               numberOfLines={1}
@@ -216,7 +222,7 @@ const Header: v_a3453e.FC<HeaderProps> = ({
 
 const v_d81136 = v_472849.create({
   container: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.large,
     paddingTop: 50,
     paddingBottom: v_9b1a04.medium,
@@ -228,6 +234,16 @@ const v_d81136 = v_472849.create({
     zIndex: 10,
   },
   analysisContainer: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 20,
+    paddingBottom: v_9b1a04.medium,
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  backButtonContainer: {
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingBottom: v_9b1a04.medium,
@@ -317,6 +333,11 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: v_9b1a04.medium,
+  },
+  titleLeftAlign: {
+    alignItems: 'flex-start',
+    paddingHorizontal: 0,
+    paddingLeft: 12,
   },
   rightWrapper: {
     width: 48,

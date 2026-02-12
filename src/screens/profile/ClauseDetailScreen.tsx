@@ -117,10 +117,10 @@ Announcement Date: July 11, 2022 / Effective Date: July 11, 2022
 const v_d81136 = v_472849.create({
   container: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
   },
   scrollView: {
     flex: 1,
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
     padding: v_9b1a04.large,
