@@ -29,7 +29,7 @@ import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_35200c, v_c1a440, v_91bb22, type v_d4ca6e } from '../services/signupApi';
 import { v_202d44 } from '../constants/countryDialCodes';
-import { v_9553a4, v_369014, v_1f5cda } from '../constants/regions';
+import { v_9553a4, v_369014 } from '../constants/regions';
 import { v_5c7129, type v_107459, v_f91692 } from '../utils/countryUtils';
 import { v_11e39e } from '../services/countryApi';
 import { v_9ad700 } from '../utils/regionSubcodeMapping';
@@ -392,12 +392,12 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return v_9a3638.test(v_3b402b);
   };
 
-  const v_7ebe28 = (): number =>
-    v_c3eac4 === 'none' ? v_1f5cda : v_91bb22.getGenderCode(v_c3eac4);
+  const v_7ebe28 = (): number | null =>
+    v_c3eac4 === 'none' ? null : v_91bb22.getGenderCode(v_c3eac4);
 
   const v_a02735 = v_df9f57(() => {
-    return (v_3b402b): number =>
-      v_3b402b === 'select' ? 2290 : v_91bb22.getAgeCode(v_3b402b);
+    return (v_3b402b): number | null =>
+      v_3b402b === 'select' ? null : v_91bb22.getAgeCode(v_3b402b);
   }, []);
 
   const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
@@ -410,7 +410,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_c01add =
       v_459d5e?.iso2 === 'select' || v_459d5e?.dialCode === '0';
     const v_a4d981 = v_c01add
-      ? '0'
+      ? null
       : (v_459d5e?.iso2?.toUpperCase() ?? '');
     const v_6c3a47 = v_c01add
       ? null
@@ -419,8 +419,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_5f1e0e && v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
           parseInt(v_2f03bc.dialCode, 10) ||
-          0
-        : 0;
+          null
+        : null;
 
     if (!v_8f37ac) {
       v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_email'));
@@ -463,7 +463,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           }),
       gender: v_7ebe28(),
       age_range: v_a02735(v_f83808),
-      ...(v_a4d981 !== undefined && v_a4d981 !== '' && { country: v_a4d981, country_code: v_a4d981 }),
+      country: v_a4d981,
+      country_code: v_a4d981,
       region_id: v_94bdf5,
       os_type: v_91bb22.getOSCode(),
       language: v_9c213b.language?.startsWith('ko') ? 'ko' : v_9c213b.language?.startsWith('id') ? 'id' : 'en',

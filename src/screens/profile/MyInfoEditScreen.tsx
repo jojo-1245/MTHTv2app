@@ -46,8 +46,8 @@ import type { v_8ad91b } from '../../navigation';
 import { v_700ef9 } from '../../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_a0daa8 } from '../../navigation';
-import { v_7ef860 } from '../../services/authApi';
-import type { v_2c95cc } from '../../services/authApi';
+import { v_7ef860, v_5a0760, type v_2c95cc } from '../../services/authApi';
+import { v_91bb22 } from '../../services/signupApi';
 import type { v_da1883 } from '../../types';
 
 type Props = v_432191<v_8ad91b, 'MyInfoEdit'>;
@@ -55,13 +55,17 @@ type Props = v_432191<v_8ad91b, 'MyInfoEdit'>;
 const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
 
-  const v_21bdd5 = [
-    { value: 'male', label: v_8d41d7('common.male') },
-    { value: 'female', label: v_8d41d7('common.female') },
-  ] as const;
+  const v_21bdd5 = v_df9f57(
+    () => [
+      { value: 'none' as const, label: v_8d41d7('signup.select') },
+      { value: 'male' as const, label: v_8d41d7('common.male') },
+      { value: 'female' as const, label: v_8d41d7('common.female') },
+    ],
+    [v_8d41d7]
+  );
 
-  const v_0c96f7 = ['10', '20', '30', '40', '50+'] as const;
-  type GenderOption = (typeof v_21bdd5)[number];
+  const v_0c96f7 = ['select', '10', '20', '30', '40', '50+'] as const;
+  type GenderOptionValue = 'none' | 'male' | 'female';
   type AgeOption = (typeof v_0c96f7)[number];
 
   const v_3a9aef = /[~`!@#$%^&*()_\-+={}\[\]|\\:;"'<>,.?/]/;
@@ -96,8 +100,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_d74a81, v_fcce73] = v_5ab095('');
-  const [v_c3eac4, v_bdc43c] = v_5ab095<'male' | 'female'>('male');
-  const [v_f83808, v_64a312] = v_5ab095<AgeOption>('20');
+  const [v_c3eac4, v_bdc43c] = v_5ab095<GenderOptionValue>('none');
+  const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
@@ -146,8 +150,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
           const v_d199d8 = v_e2a85c.gender as number | undefined;
           if (v_d199d8 === 2110) v_bdc43c('male');
           else if (v_d199d8 === 2111) v_bdc43c('female');
+          else v_bdc43c('none');
           const v_2d2cbc = v_e2a85c.age_range as number | undefined;
           const v_c3889d = {
+            2290: 'select',
             2210: '10',
             2220: '20',
             2230: '30',
@@ -155,6 +161,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
             2250: '50+',
           };
           if (v_2d2cbc != null && v_c3889d[v_2d2cbc]) v_64a312(v_c3889d[v_2d2cbc]);
+          else v_64a312('select');
           const v_dbd26e = ((v_e2a85c.country as string) ?? '').toLowerCase();
           if (v_dbd26e) {
             const v_b9bbbd = v_202d44.find(
@@ -430,8 +437,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
       v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
           parseInt(v_2f03bc.dialCode, 10) ||
-          v_1f5cda
-        : v_1f5cda;
+          null
+        : null;
 
     if (v_adc076 && !v_857dfe(v_adc076)) {
       v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('signup.password_rule'));
@@ -443,13 +450,29 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
       return;
     }
 
-    const v_a4d981 = v_c01add ? '0' : (v_459d5e?.iso2?.toUpperCase() ?? '');
+    const v_a4d981 = v_c01add ? null : (v_459d5e?.iso2?.toUpperCase() ?? '');
     const v_6c3a47 = v_c01add ? null : (v_4d1e97.replace(/\+/g, '') || null);
+    const v_d199d8 = v_c3eac4 === 'none' ? null : v_91bb22.getGenderCode(v_c3eac4);
+    const v_78ba6e = v_f83808 === 'select' ? null : v_91bb22.getAgeCode(v_f83808);
+
+    const v_49ea09 =
+      v_c01add || !v_088b9e
+        ? null
+        : `${v_4d1e97.startsWith('+') ? v_4d1e97 : `+${v_4d1e97}`}${v_088b9e}`;
 
     v_e33ec0(true);
     try {
-
-      await new Promise((v_6f7712) => setTimeout(v_6f7712, 1000));
+      await v_5a0760({
+        name: v_affc3e,
+        mobile: v_49ea09,
+        mobile_code: v_6c3a47,
+        country: v_a4d981,
+        country_code: v_a4d981,
+        region_id: v_94bdf5,
+        gender: v_d199d8,
+        age_range: v_78ba6e,
+        ...(v_adc076.trim() !== '' && { password: v_adc076.trim() }),
+      });
       v_889fad(v_8d41d7('common.success'), v_8d41d7('my_info_edit.errors.update_success'), () => {
         v_9b57fc('MyInfo');
       });
@@ -560,7 +583,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = () => {
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
                     key={v_0bd920}
-                    label={v_0bd920}
+                    label={v_0bd920 === 'select' ? v_8d41d7('signup.select') : v_0bd920}
                     selected={v_f83808 === v_0bd920}
                     onPress={() => v_64a312(v_0bd920)}
                   />
