@@ -92,7 +92,7 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.medium,
     paddingVertical: v_9b1a04.small,
   },

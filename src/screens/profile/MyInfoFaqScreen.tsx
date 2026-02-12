@@ -86,18 +86,19 @@ const v_d81136 = v_472849.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
     padding: v_9b1a04.large,
   },
   faqSection: {
-    gap: v_9b1a04.medium,
+    gap: v_9b1a04.small,
   },
   faqItem: {
     borderRadius: 12,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     overflow: 'hidden',
   },
   questionRow: {

@@ -34,7 +34,9 @@
         "search": "Search",
         "show": "Show",
         "hide": "Hide",
-        "try_again": "Try Again"
+        "try_again": "Try Again",
+        "currency_unit": "KRW",
+        "previous": "Previous"
     },
     "account_selector": {
         "title": "Account Selection",
@@ -319,7 +321,11 @@
         "error_invalid_email": "Please enter a valid email address.",
         "error_empty_password": "Please enter your password.",
         "error_failed": "Login Failed",
-        "error_unknown": "An unknown error occurred during login."
+        "error_unknown": "An unknown error occurred during login.",
+        "kakao_login": "Kakao Login",
+        "naver_login": "Naver Login",
+        "google_login": "Google Login",
+        "apple_login": "Apple Login"
     },
     "signup": {
         "title": "Sign Up",
@@ -394,11 +400,30 @@
         "faq_desc": "Frequently Asked Questions",
         "logout": "Logout",
         "referral": "Referral",
+        "nft_held": "NFTs Held",
+        "nft_unit": "",
         "consecutive_days": "consecutive days",
         "analyses_completed": "analyses completed",
         "purchases_completed": "purchases completed",
         "app_version": "MetaHint Health v1.0.0",
         "copyright": "© 2026 MetaHint. All rights reserved."
+    },
+    "profit_distribution": {
+        "title": "Profit Distribution",
+        "subtitle": "NFT Holder Profit Status",
+        "period_label": "Profit Distribution Period",
+        "nft_held": "NFTs Held",
+        "unit": "",
+        "detailed_breakdown": "Detailed Profit Breakdown",
+        "advertising_profit": "Advertising and Ancillary Service Profit",
+        "advertising_subtitle": "Advertising and Service Sales",
+        "product_profit": "Product Sales Profit",
+        "product_subtitle": "Product Sales Revenue",
+        "estimated_profit_label": "Estimated Profit based on my {{count}} NFTs",
+        "next_distribution": "Next Distribution Date",
+        "guide_title": "Profit Distribution Guide",
+        "guide_item1": "10% of Advertising Profit, Ancillary Service Profit",
+        "guide_item2": "5% of Product Sales Revenue"
     },
     "skin": {
         "products": {

@@ -1241,6 +1241,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         results: v_9f8792,
         timestamp: new Date().toISOString(),
         userName: v_0c2f9b?.name,
+        accounts: v_c86f08,
+        selectedAccountId: v_e7b2f2,
       });
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
@@ -1449,6 +1451,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             onSelectAccount={v_1f1e88}
             onAddSubAccount={() => v_d5a103(true)}
             onDeleteAccount={v_5bc46a}
+            disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
           />
         </View>
         <AddUserModal
@@ -1640,6 +1643,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                       results: v_2d2278,
                       timestamp: new Date().toISOString(),
                       userName: v_0c2f9b?.name,
+                      accounts: v_c86f08,
+                      selectedAccountId: v_e7b2f2,
                     });
                   }}
                   accessibilityRole="button"
@@ -1667,6 +1672,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           style={v_d81136.stepModalKeyboardAvoid}
         >
           <View style={v_d81136.stepModalOverlay}>
+            <View style={v_d81136.stepModalSpacer} />
             <View style={[v_d81136.stepModalContent, { paddingBottom: v_9b1a04.xlarge + v_ea7233 }]}>
               {}
               <TouchableOpacity
@@ -1938,7 +1944,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 accessibilityRole="button"
                 accessibilityLabel={v_8d41d7('health_analysis.measurement.back_button')}
               >
-                <Ionicons name="close" size={28} color={v_1bfbd0.background} />
+                <Ionicons name="close" size={28} color={v_1bfbd0.white} />
               </TouchableOpacity>
             </View>
 
@@ -2023,6 +2029,7 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_9b1a04.medium,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
+    backgroundColor: '#ffffff',
   },
   tabRow: {
     flexDirection: 'row',
@@ -2053,6 +2060,7 @@ const v_d81136 = v_472849.create({
   recordsContent: {
     flexGrow: 1,
     paddingBottom: v_9b1a04.xlarge,
+    backgroundColor: v_1bfbd0.background,
   },
   recordsNavBtn: {
     paddingVertical: 14,
@@ -2063,7 +2071,7 @@ const v_d81136 = v_472849.create({
   recordsNavText: {
     fontSize: 16,
     fontFamily: v_843035.bold,
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
   },
   content: {
     ...v_a61db3.content,
@@ -2076,6 +2084,7 @@ const v_d81136 = v_472849.create({
   introContent: {
     ...v_a61db3.content,
     minHeight: '100%',
+    backgroundColor: v_1bfbd0.background,
   },
   introContainer: {
     ...v_a61db3.container,
@@ -2177,7 +2186,7 @@ const v_d81136 = v_472849.create({
     width: 24,
   },
   introGuidelines: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.large,
     marginBottom: v_9b1a04.xlarge,
@@ -2204,7 +2213,7 @@ const v_d81136 = v_472849.create({
     lineHeight: 20,
   },
   userInfoForm: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.large,
     marginBottom: v_9b1a04.xlarge,
@@ -2252,16 +2261,19 @@ const v_d81136 = v_472849.create({
   stepModalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'flex-end',
+  },
+  stepModalSpacer: {
+    flex: 1,
   },
   stepModalContent: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: v_9b1a04.xlarge,
     paddingTop: v_9b1a04.large,
     paddingBottom: v_9b1a04.xlarge, 
     position: 'relative',
+    maxHeight: '80%',
   },
   stepModalCloseBtn: {
     position: 'absolute',
@@ -2389,7 +2401,7 @@ const v_d81136 = v_472849.create({
     paddingBottom: v_9b1a04.xlarge,
     paddingHorizontal: v_9b1a04.large,
     alignItems: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
 
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -2432,13 +2444,13 @@ const v_d81136 = v_472849.create({
   imageValidityTitle: {
     fontSize: 14,
     fontFamily: v_843035.bold,
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
     marginBottom: v_9b1a04.small / 2,
   },
   imageValidityText: {
     fontSize: 14,
     fontFamily: v_843035.regular,
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
     textAlign: 'center',
   },
   pulseRateContainer: {
@@ -2460,7 +2472,7 @@ const v_d81136 = v_472849.create({
   pulseRateText: {
     fontSize: 18,
     fontFamily: v_843035.bold,
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
@@ -2475,7 +2487,7 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
     textAlign: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.xlarge,
     paddingVertical: v_9b1a04.medium,
     borderRadius: 12,
@@ -2501,7 +2513,7 @@ const v_d81136 = v_472849.create({
     marginTop: v_9b1a04.medium,
     fontSize: 14,
     fontFamily: v_843035.medium,
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
     textAlign: 'center',
     backgroundColor: 'rgba(255, 193, 7, 0.8)',
     paddingHorizontal: v_9b1a04.large,

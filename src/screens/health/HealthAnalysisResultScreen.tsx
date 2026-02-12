@@ -17,7 +17,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837 } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
 import { v_047250 } from './components';
 import type { v_5d13be } from './components/HealthRecordsView';
 import type { v_8ad91b } from '../../navigation';
@@ -614,9 +614,27 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e } = v_c7daf6.params;
+  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
+
+  const v_48f046 = v_f074c5 || [
+    { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
+  ];
+  const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
+  const [v_e7b2f2, v_1f1e88] = v_5ab095(v_565544 || '1');
+  const [v_f4c7be, v_d5a103] = v_5ab095(false);
+
+  const v_5bc46a = (v_2453ad) => {
+    v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
+    v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
+  };
+
+  const v_20289f = (v_af419b) => {
+    const v_ceee18 = String(Date.now());
+    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
+    v_1f1e88(v_ceee18);
+  };
 
   const [v_571c37, v_e78f19] = v_5ab095<Record<number, boolean>>({});
 
@@ -1900,8 +1918,23 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               </Text>
             </TouchableOpacity>
           </View>
-          <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+          {v_ac1d22 === 'records' ? (
+            <AccountSelector
+              accounts={v_c86f08}
+              selectedAccountId={v_e7b2f2}
+              onSelectAccount={v_1f1e88}
+              onAddSubAccount={() => v_d5a103(true)}
+              onDeleteAccount={v_5bc46a}
+            />
+          ) : (
+            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+          )}
         </View>
+        <AddUserModal
+          visible={v_f4c7be}
+          onClose={() => v_d5a103(false)}
+          onAdd={v_20289f}
+        />
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}
@@ -2178,7 +2211,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               {}
               <View
                 ref={v_685d2a}
-                style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.background }]}
+                style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.white }]}
               >
                 <CategoryTabScroll
                   categories={v_8bc599}
@@ -2783,9 +2816,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     title={v_8d41d7('health_analysis.result.finish_button')}
                     onPress={() => {
 
-                      v_c65f5d.reset({
-                        index: 0,
-                        routes: [{ name: 'MetaHome' }],
+                      v_c65f5d.navigate('HealthAnalysis', {
+                        initialTab: 'measure',
                       });
                     }}
                   />
@@ -3452,7 +3484,7 @@ const v_d81136 = v_472849.create({
     textAlign: 'center',
   },
   resultSection: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.backgroundSecondary,
     borderRadius: 12,
     padding: v_9b1a04.large,
     marginBottom: v_9b1a04.medium,
@@ -3494,7 +3526,7 @@ const v_d81136 = v_472849.create({
   },
   metricCard: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.medium,
     alignItems: 'center',
@@ -3714,7 +3746,7 @@ const v_d81136 = v_472849.create({
   },
   aiCategorizedSummaryCard: {
     marginTop: v_9b1a04.large,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     padding: v_9b1a04.large,
     borderWidth: 1,
@@ -3817,7 +3849,7 @@ const v_d81136 = v_472849.create({
     justifyContent: 'center',
   },
   aiAnalysisSubCard: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.medium,
     marginBottom: v_9b1a04.medium,
@@ -3898,7 +3930,7 @@ const v_d81136 = v_472849.create({
   },
   aiProductsCard: {
     marginTop: v_9b1a04.large,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     padding: v_9b1a04.large,
     borderWidth: 1,
@@ -4034,7 +4066,7 @@ const v_d81136 = v_472849.create({
     color: v_1bfbd0.text,
   },
   wellnessCard: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.large,
     marginBottom: v_9b1a04.medium,
@@ -4164,7 +4196,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_9b1a04.large,
   },
   wellnessModal: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 20,
     padding: v_9b1a04.large,
     width: '100%',
@@ -4201,7 +4233,7 @@ const v_d81136 = v_472849.create({
     borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
     position: 'absolute',
@@ -4223,7 +4255,7 @@ const v_d81136 = v_472849.create({
     justifyContent: 'flex-end',
   },
   abnormalSheet: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: v_9b1a04.large,
@@ -4270,7 +4302,7 @@ const v_d81136 = v_472849.create({
     borderColor: v_1bfbd0.border,
     borderRadius: 12,
     padding: v_9b1a04.medium,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   abnormalItemHeader: {
     flexDirection: 'row',
@@ -4392,7 +4424,7 @@ const v_d81136 = v_472849.create({
     borderRadius: 10,
     backgroundColor: v_1bfbd0.primary,
     borderWidth: 2,
-    borderColor: v_1bfbd0.background,
+    borderColor: v_1bfbd0.white,
     transform: [{ translateX: -10 }],
   },
   graphBarLabels: {
@@ -4447,7 +4479,7 @@ const v_d81136 = v_472849.create({
     height: 180,
   },
   groupCard: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 12,
     padding: v_9b1a04.large,
     marginBottom: v_9b1a04.medium,
@@ -4455,7 +4487,7 @@ const v_d81136 = v_472849.create({
     borderColor: v_1bfbd0.border,
   },
   resultCard: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     marginBottom: v_9b1a04.small,
     borderWidth: 1,
@@ -4601,7 +4633,7 @@ const v_d81136 = v_472849.create({
     justifyContent: 'flex-end',
   },
   allResultsModalContent: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: v_9b1a04.large,
@@ -4644,7 +4676,7 @@ const v_d81136 = v_472849.create({
   },
 
   stressDetailCard: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 10,
     padding: v_9b1a04.medium,
     marginBottom: v_9b1a04.small,

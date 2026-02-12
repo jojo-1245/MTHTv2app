@@ -967,7 +967,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             style={v_d81136.changeImageButton}
                             onPress={v_46964a}
                         >
-                            <Ionicons name="camera" size={20} color={v_1bfbd0.background} />
+                            <Ionicons name="camera" size={20} color={v_1bfbd0.white} />
                         </TouchableOpacity>
                     </>
                 ) : (
@@ -998,7 +998,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 {v_bbcab1 && (
                     <View style={v_d81136.validatingOverlay}>
-                        <ActivityIndicator size="large" color={v_1bfbd0.background} />
+                        <ActivityIndicator size="large" color={v_1bfbd0.white} />
                         <Text style={v_d81136.validatingText}>{v_8d41d7('skin.capture.validating')}</Text>
                     </View>
                 )}
@@ -1223,7 +1223,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                         v_599a41 && v_d81136.checkboxSelected,
                                     ]}>
                                         {v_599a41 && (
-                                            <Ionicons name="checkmark" size={14} color={v_1bfbd0.background} />
+                                            <Ionicons name="checkmark" size={14} color={v_1bfbd0.white} />
                                         )}
                                     </View>
                                     <Text style={[
@@ -1717,7 +1717,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         onSelectAccount={v_1f1e88}
                         onAddSubAccount={() => v_d5a103(true)}
                         onDeleteAccount={v_5bc46a}
-                        disabled={v_91943c === 'result'}
+                        disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
                     />
                 </View>
                 <AddUserModal
@@ -1876,6 +1876,7 @@ const v_d81136 = v_472849.create({
     recordsContent: {
         flexGrow: 1,
         paddingBottom: v_9b1a04.xlarge,
+        backgroundColor: v_1bfbd0.background,
     },
     recordsPlaceholder: {
         flex: 1,
@@ -1926,7 +1927,7 @@ const v_d81136 = v_472849.create({
     imageUploadArea: {
         width: '100%',
         aspectRatio: 3 / 4,
-        backgroundColor: v_1bfbd0.lightGray,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 20,
         overflow: 'hidden',
         borderWidth: 2,
@@ -2072,7 +2073,7 @@ const v_d81136 = v_472849.create({
     validatingText: {
         fontSize: v_ef658a.medium,
         fontFamily: v_843035.medium,
-        color: v_1bfbd0.background,
+        color: v_1bfbd0.white,
         marginTop: v_9b1a04.medium,
     },
 
@@ -2404,7 +2405,7 @@ const v_d81136 = v_472849.create({
     },
 
     overallScoreCard: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 20,
         padding: v_9b1a04.large,
         flexDirection: 'row',
@@ -2489,7 +2490,7 @@ const v_d81136 = v_472849.create({
 
     highlightRow: {
         flexDirection: 'row',
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 16,
         marginTop: v_9b1a04.medium,
         shadowColor: '#000',
@@ -2566,7 +2567,7 @@ const v_d81136 = v_472849.create({
         gap: 12,
     },
     allResultsCard: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 12,
         padding: v_9b1a04.medium,
         borderWidth: 1,
@@ -2717,7 +2718,7 @@ const v_d81136 = v_472849.create({
         color: v_1bfbd0.text,
     },
     aiAnalysisSubCard: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 12,
         padding: v_9b1a04.medium,
         marginBottom: v_9b1a04.medium,
@@ -2748,7 +2749,7 @@ const v_d81136 = v_472849.create({
     },
     aiProductsCard: {
         marginTop: v_9b1a04.medium,
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 16,
         padding: v_9b1a04.large,
         borderWidth: 1,
@@ -2875,7 +2876,7 @@ const v_d81136 = v_472849.create({
     },
     compactGridItem: {
         width: '48%',
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 12,
         padding: v_9b1a04.small + v_9b1a04.small / 2,
         justifyContent: 'space-between',
@@ -2971,13 +2972,13 @@ const v_d81136 = v_472849.create({
         gap: v_9b1a04.small,
     },
     concernGridItem: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 12,
         padding: v_9b1a04.medium,
         marginBottom: v_9b1a04.small,
     },
     concernGridItemHorizontal: {
-        backgroundColor: v_1bfbd0.background,
+        backgroundColor: v_1bfbd0.white,
         borderRadius: 12,
         padding: v_9b1a04.medium,
         flexDirection: 'row',

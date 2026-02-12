@@ -61,7 +61,7 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_9b1a04.medium,
     paddingHorizontal: v_9b1a04.medium,
     borderRadius: 16,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderWidth: v_472849.hairlineWidth,
     borderColor: '#EEF1F6',
   },
