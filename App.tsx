@@ -4,9 +4,10 @@ import * as v_7c6176 from 'cnykflwqacloajvnqn';
 import { v_c06f2c } from 'kjiqsgell';
 import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
+import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
-import { v_a2474a } from './src/utils/env';
+import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2 } from './src/context';
 import './src/i18n';
 
@@ -63,6 +64,21 @@ export default function v_6540c3() {
         v_bf8912(true);
       });
   }, []);
+
+  v_c4deb2(() => {
+    if (!v_4c1272) return;
+    try {
+      const v_c9c489 = v_e4a763();
+      if (v_c9c489.GOOGLE_IOS_CLIENT_ID || v_c9c489.GOOGLE_ANDROID_CLIENT_ID) {
+        v_4eac84.configure({
+          iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID,
+          webClientId: v_c9c489.GOOGLE_ANDROID_CLIENT_ID,
+        });
+      }
+    } catch {
+
+    }
+  }, [v_4c1272]);
 
   v_c4deb2(() => {
     if (v_43f571) {

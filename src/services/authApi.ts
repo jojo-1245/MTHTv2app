@@ -90,6 +90,56 @@ export async function loginMember(params: {
   }
 }
 
+export async function socialLogin(params: {
+  provider: 'google';
+  token: string;
+}): Promise<LoginAuthPayload> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  const body = { provider: params.provider, token: params.token };
+  if (__DEV__) {
+    console.log('[authApi] social-login 요청:', { url: `${baseURL}/oth-path`, provider: params.provider });
+  }
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    const res = await axios.post<ApiResponse<LoginAuthPayload>>(
+      `${baseURL}/oth-path`,
+      body,
+      { timeout: API_TIMEOUT, headers }
+    );
+    const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
+    const payload: LoginAuthPayload =
+      typeof data === 'object' && data !== null ? data : { token: data };
+    const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
+    if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
+      const tokenFromHeader = authHeader.slice(7).trim();
+      if (tokenFromHeader) {
+        payload.accessToken = tokenFromHeader;
+        payload.access_token = tokenFromHeader;
+        payload.token = tokenFromHeader;
+      }
+    }
+    if (__DEV__) {
+      const hasToken =
+        !!(payload.accessToken ?? payload.access_token ?? payload.token);
+      console.log('[authApi] social-login 응답:', { status: res.status, hasData: !!data, hasToken });
+    }
+    return payload;
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.error('[authApi] social-login 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+    throw normalizeError(error);
+  }
+}
+
 function getTokenFromPayload(payload: LoginAuthPayload): string | null {
   let raw = payload.accessToken ?? payload.access_token ?? payload.token;
   if (raw && typeof raw === 'string') return raw;
