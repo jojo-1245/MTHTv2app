@@ -418,8 +418,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_94bdf5 =
       v_5f1e0e && v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
-          parseInt(v_2f03bc.dialCode, 10) ||
-          null
+        parseInt(v_2f03bc.dialCode, 10) ||
+        null
         : null;
 
     if (!v_8f37ac) {
@@ -455,18 +455,15 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       email: v_8f37ac,
       password: v_adc076,
       name: v_affc3e,
+
       ...(v_c01add || !v_088b9e
-        ? { mobile: null, mobile_code: null }
-        : {
-            mobile: `${v_4d1e97.startsWith('+') ? v_4d1e97 : `+${v_4d1e97}`}${v_088b9e}`,
-            mobile_code: v_6c3a47 ?? undefined,
-          }),
+        ? { mobile: null }
+        : { mobile: v_088b9e }),
       gender: v_7ebe28(),
       age_range: v_a02735(v_f83808),
       country: v_a4d981,
-      country_code: v_a4d981,
-      region_id: v_94bdf5,
-      os_type: v_91bb22.getOSCode(),
+      region_id: v_94bdf5 ?? 0,
+      os_type: v_91bb22.getOSCode(), 
       language: v_9c213b.language?.startsWith('ko') ? 'ko' : v_9c213b.language?.startsWith('id') ? 'id' : 'en',
       ...(v_9bf12c.trim() && { referral_code: v_9bf12c.trim() }),
     };
@@ -486,17 +483,15 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
       });
     } catch (v_5e9bfe) {
-      if (__DEV__) {
-        const v_2ebd05 = v_5e9bfe as { response?: { status?: number; data?: unknown }; message?: string };
-        console.log('[회원가입] 에러:', {
-          message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
-          responseStatus: v_2ebd05.response?.status,
-          responseData: v_2ebd05.response?.data,
-          fullError: v_5e9bfe,
-        });
+      let v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('signup.error_unknown');
+
+      if (v_a8cd21.toLowerCase().includes('validation') || v_a8cd21.toLowerCase().includes('failed')) {
+
+        if (v_a8cd21 === 'Validation failed' || v_a8cd21 === '요청 중 오류가 발생했습니다.') {
+          v_a8cd21 = v_8d41d7('signup.error_validation', '입력 정보를 확인해주세요.');
+        }
       }
-      let v_a8cd21 =
-        v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('signup.error_unknown');
+
       if (
         !v_a8cd21 ||
         v_a8cd21.toLowerCase().includes('unexpected error') ||
@@ -504,6 +499,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       ) {
         v_a8cd21 = v_8d41d7('signup.error_unknown');
       }
+
       v_889fad(v_8d41d7('signup.error_title'), v_a8cd21);
     } finally {
       v_e33ec0(false);
@@ -554,6 +550,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 value={v_adc076}
                 onChangeText={v_57c91b}
                 editable={!v_88dca2}
+                autoCapitalize="none"
               />
               {v_e8fd53 ? (
                 <Text style={v_d81136.errorText}>{v_e8fd53}</Text>
@@ -570,6 +567,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 value={v_0b3ebe}
                 onChangeText={v_dd9cbd}
                 editable={!v_88dca2}
+                autoCapitalize="none"
               />
               {v_9523d2 && (
                 <Text style={v_d81136.errorText}>{v_9523d2}</Text>
@@ -738,38 +736,38 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               />
             </View>
             <View style={v_d81136.modalListWrapper}>
-            <FlatList
-              data={v_daa71c}
-              keyExtractor={(v_8c0b26, v_a56041) =>
-                `country-${v_8c0b26.iso2}-${v_8c0b26.dialCode}-${v_a56041}`
-              }
-              renderItem={({ item: v_8c0b26 }) => (
-                <TouchableOpacity
-                  style={v_d81136.modalRow}
-                  onPress={() => v_de5bf5(v_8c0b26)}
-                  activeOpacity={0.7}
-                >
-                  <Text style={v_d81136.modalRowFlag}>{v_8c0b26.flagEmoji}</Text>
-                  <Text style={v_d81136.modalRowText}>
-                    {v_773f4d(v_8c0b26)}
-                  </Text>
-                  {(v_459d5e?.iso2 === v_8c0b26.iso2 &&
-                    v_459d5e?.dialCode === v_8c0b26.dialCode) ? (
-                    <Feather name="check" size={18} color={v_1bfbd0.text} />
-                  ) : null}
-                </TouchableOpacity>
-              )}
-              contentContainerStyle={v_d81136.modalListContent}
-              showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled"
-              ListEmptyComponent={
-                <View style={v_d81136.modalEmptyState}>
-                  <Text style={v_d81136.modalEmptyText}>
-                    {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
-                  </Text>
-                </View>
-              }
-            />
+              <FlatList
+                data={v_daa71c}
+                keyExtractor={(v_8c0b26, v_a56041) =>
+                  `country-${v_8c0b26.iso2}-${v_8c0b26.dialCode}-${v_a56041}`
+                }
+                renderItem={({ item: v_8c0b26 }) => (
+                  <TouchableOpacity
+                    style={v_d81136.modalRow}
+                    onPress={() => v_de5bf5(v_8c0b26)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={v_d81136.modalRowFlag}>{v_8c0b26.flagEmoji}</Text>
+                    <Text style={v_d81136.modalRowText}>
+                      {v_773f4d(v_8c0b26)}
+                    </Text>
+                    {(v_459d5e?.iso2 === v_8c0b26.iso2 &&
+                      v_459d5e?.dialCode === v_8c0b26.dialCode) ? (
+                      <Feather name="check" size={18} color={v_1bfbd0.text} />
+                    ) : null}
+                  </TouchableOpacity>
+                )}
+                contentContainerStyle={v_d81136.modalListContent}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                ListEmptyComponent={
+                  <View style={v_d81136.modalEmptyState}>
+                    <Text style={v_d81136.modalEmptyText}>
+                      {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
+                    </Text>
+                  </View>
+                }
+              />
             </View>
           </View>
         </View>
@@ -825,38 +823,38 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               </View>
             ) : (
               <View style={v_d81136.modalListWrapper}>
-              <FlatList
-                data={v_4e187d}
-                keyExtractor={(v_8c0b26, v_a56041) =>
-                  `${v_8c0b26.iso2}-${v_8c0b26.dialCode}-${v_8c0b26.countryCode}-${v_a56041}`
-                }
-                renderItem={({ item: v_8c0b26 }) => (
-                  <TouchableOpacity
-                    style={v_d81136.modalRow}
-                    onPress={() => v_477add(v_8c0b26)}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={v_d81136.modalRowFlag}>{v_8c0b26.flagEmoji}</Text>
-                    <Text style={v_d81136.modalRowText}>
-                      {v_ba4a54(v_8c0b26)}
-                    </Text>
-                    {(v_2f03bc?.iso2 === v_8c0b26.iso2 &&
-                      v_2f03bc?.dialCode === v_8c0b26.dialCode) ? (
-                      <Feather name="check" size={18} color={v_1bfbd0.text} />
-                    ) : null}
-                  </TouchableOpacity>
-                )}
-                contentContainerStyle={v_d81136.modalListContent}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-                ListEmptyComponent={
-                  <View style={v_d81136.modalEmptyState}>
-                    <Text style={v_d81136.modalEmptyText}>
-                      {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
-                    </Text>
-                  </View>
-                }
-              />
+                <FlatList
+                  data={v_4e187d}
+                  keyExtractor={(v_8c0b26, v_a56041) =>
+                    `${v_8c0b26.iso2}-${v_8c0b26.dialCode}-${v_8c0b26.countryCode}-${v_a56041}`
+                  }
+                  renderItem={({ item: v_8c0b26 }) => (
+                    <TouchableOpacity
+                      style={v_d81136.modalRow}
+                      onPress={() => v_477add(v_8c0b26)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={v_d81136.modalRowFlag}>{v_8c0b26.flagEmoji}</Text>
+                      <Text style={v_d81136.modalRowText}>
+                        {v_ba4a54(v_8c0b26)}
+                      </Text>
+                      {(v_2f03bc?.iso2 === v_8c0b26.iso2 &&
+                        v_2f03bc?.dialCode === v_8c0b26.dialCode) ? (
+                        <Feather name="check" size={18} color={v_1bfbd0.text} />
+                      ) : null}
+                    </TouchableOpacity>
+                  )}
+                  contentContainerStyle={v_d81136.modalListContent}
+                  showsVerticalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
+                  ListEmptyComponent={
+                    <View style={v_d81136.modalEmptyState}>
+                      <Text style={v_d81136.modalEmptyText}>
+                        {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
+                      </Text>
+                    </View>
+                  }
+                />
               </View>
             )}
           </View>

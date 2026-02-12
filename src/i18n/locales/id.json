@@ -366,6 +366,7 @@
         "success_title": "Pendaftaran Selesai",
         "success_message": "Silakan lanjutkan dengan verifikasi email.",
         "error_title": "Pendaftaran Gagal",
+        "error_validation": "Silakan periksa informasi yang Anda masukkan.",
         "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
     },
     "profile": {

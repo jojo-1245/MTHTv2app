@@ -367,6 +367,7 @@
         "success_title": "Sign Up Complete",
         "success_message": "Please proceed with email verification.",
         "error_title": "Sign Up Failed",
+        "error_validation": "Please check your input information.",
         "error_unknown": "An unknown error occurred during sign up."
     },
     "profile": {
