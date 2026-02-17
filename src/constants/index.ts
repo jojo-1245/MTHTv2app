@@ -260,6 +260,7 @@ export const v_a61db3 = {
 
 export const v_624bd2 = {
   authToken: 'metahint/authToken',
+  refreshToken: 'metahint/refreshToken',
   memberInfo: 'metahint/member',
   isLoggedIn: 'metahint/isLoggedIn',
   savedEmail: 'metahint/savedEmail',

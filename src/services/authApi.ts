@@ -248,6 +248,27 @@ export async function persistAuthSession(
       });
     }
   }
+
+  const refreshToken = payload.refreshToken ?? payload.refresh_token;
+  if (refreshToken && typeof refreshToken === 'string') {
+    await AsyncStorage.setItem(STORAGE_KEYS.refreshToken, refreshToken);
+    if (__DEV__) {
+      console.log('[authApi] persistAuthSession: Refresh Token 저장 완료');
+    }
+  } else {
+
+    const tokens = (payload as Record<string, unknown>).tokens;
+    if (tokens && typeof tokens === 'object' && tokens !== null) {
+      const tokensObj = tokens as Record<string, unknown>;
+      const rt = tokensObj.refreshToken ?? tokensObj.refresh_token;
+      if (rt && typeof rt === 'string') {
+        await AsyncStorage.setItem(STORAGE_KEYS.refreshToken, rt);
+        if (__DEV__) {
+          console.log('[authApi] persistAuthSession: tokens 객체에서 Refresh Token 저장 완료');
+        }
+      }
+    }
+  }
   const userPayload = payload.user ?? (payload as Record<string, unknown>).member;
   if (userPayload !== undefined && userPayload !== null) {
     await AsyncStorage.setItem(
@@ -284,6 +305,115 @@ export interface MeProfile {
   referral_code?: string;
   tier?: 'silver' | 'gold' | string;
   [key: string]: unknown;
+}
+
+export async function refreshAccessToken(): Promise<LoginAuthPayload> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  let refreshToken = await AsyncStorage.getItem(STORAGE_KEYS.refreshToken);
+  if (!refreshToken) {
+
+    const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
+    if (memberJson) {
+      try {
+        const member = JSON.parse(memberJson) as Record<string, unknown>;
+        const rt = member?.refreshToken ?? member?.refresh_token;
+        if (typeof rt === 'string') {
+          refreshToken = rt;
+        }
+      } catch {
+
+      }
+    }
+  }
+
+  if (!refreshToken) {
+    throw new Error('Refresh Token이 없습니다. 다시 로그인해주세요.');
+  }
+
+  if (__DEV__) {
+    console.log('[authApi] refreshAccessToken 요청 시작');
+  }
+
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    const res = await axios.post<ApiResponse<LoginAuthPayload>>(
+      `${baseURL}/oth-path`,
+      { refreshToken },
+      { timeout: API_TIMEOUT, headers }
+    );
+
+    const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
+    let payload: LoginAuthPayload = {};
+
+    if (data && typeof data === 'object' && data !== null) {
+      const dataObj = data as Record<string, unknown>;
+
+      if (dataObj.tokens && typeof dataObj.tokens === 'object' && dataObj.tokens !== null) {
+        const tokens = dataObj.tokens as Record<string, unknown>;
+        const accessToken = tokens.accessToken || tokens.access_token || tokens.token;
+        if (typeof accessToken === 'string') {
+          payload.accessToken = accessToken;
+          payload.access_token = accessToken;
+          payload.token = accessToken;
+        }
+        const newRefreshToken = tokens.refreshToken || tokens.refresh_token;
+        if (typeof newRefreshToken === 'string') {
+          payload.refreshToken = newRefreshToken;
+          payload.refresh_token = newRefreshToken;
+        }
+        payload.tokens = dataObj.tokens;
+      }
+
+      if (!payload.accessToken) {
+        const directToken = dataObj.accessToken ?? dataObj.access_token ?? dataObj.token;
+        if (typeof directToken === 'string') {
+          payload.accessToken = directToken;
+          payload.access_token = directToken;
+          payload.token = directToken;
+        }
+      }
+    }
+
+    const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
+    if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
+      const tokenFromHeader = authHeader.slice(7).trim();
+      if (tokenFromHeader) {
+        payload.accessToken = tokenFromHeader;
+        payload.access_token = tokenFromHeader;
+        payload.token = tokenFromHeader;
+      }
+    }
+
+    const newToken = getTokenFromPayload(payload);
+    if (newToken) {
+      await AsyncStorage.setItem(STORAGE_KEYS.authToken, newToken);
+    }
+
+    const newRefreshToken = payload.refreshToken ?? payload.refresh_token;
+    if (newRefreshToken && typeof newRefreshToken === 'string') {
+      await AsyncStorage.setItem(STORAGE_KEYS.refreshToken, newRefreshToken);
+    }
+
+    if (__DEV__) {
+      console.log('[authApi] refreshAccessToken 성공');
+    }
+
+    return payload;
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.error('[authApi] refreshAccessToken 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+    throw normalizeError(error);
+  }
 }
 
 export async function getMe(): Promise<MeProfile> {
@@ -367,6 +497,48 @@ export async function getMe(): Promise<MeProfile> {
     if (typeof data === 'object' && data !== null) return data as MeProfile;
     return { email: String(data) };
   } catch (error) {
+
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (__DEV__) {
+        console.log('[authApi] getMe 401 에러 감지. 토큰 갱신 시도...');
+      }
+
+      try {
+
+        await refreshAccessToken();
+
+        if (__DEV__) {
+          console.log('[authApi] 토큰 갱신 성공. getMe 재요청...');
+        }
+
+        const newToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+        if (!newToken) {
+          throw new Error('토큰 갱신 후 새 토큰을 찾을 수 없습니다.');
+        }
+
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${newToken}`,
+        };
+        const res = await axios.get<ApiResponse<MeProfile>>(`${baseURL}/oth-path`, {
+          timeout: API_TIMEOUT,
+          headers,
+        });
+        const data = res.data?.data ?? (res.data as unknown as MeProfile);
+        if (__DEV__) {
+          console.log('[authApi] getMe 재요청 응답:', { status: res.status, hasData: !!data });
+        }
+        if (typeof data === 'object' && data !== null) return data as MeProfile;
+        return { email: String(data) };
+      } catch (refreshError) {
+        if (__DEV__) {
+          console.error('[authApi] 토큰 갱신 실패:', refreshError);
+        }
+
+        throw normalizeError(error);
+      }
+    }
+
     if (__DEV__ && axios.isAxiosError(error)) {
       console.error('[authApi] getMe 에러:', {
         status: error.response?.status,
@@ -458,6 +630,7 @@ export async function updateProfile(payload: UpdateProfilePayload): Promise<MePr
 export async function clearAuthSession(): Promise<void> {
   await AsyncStorage.multiRemove([
     STORAGE_KEYS.authToken,
+    STORAGE_KEYS.refreshToken,
     STORAGE_KEYS.memberInfo,
     STORAGE_KEYS.isLoggedIn,
   ]);
