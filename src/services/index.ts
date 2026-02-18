@@ -27,5 +27,5 @@ export type {
 export { getHealthRecords, saveHealthRecord, getHealthRecordById, compareHealthRecords } from './healthApi';
 export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, CompareHealthRecordsPayload, CompareHealthRecordsResponse } from './healthApi';
 
-export { saveSkinRecord, getSkinRecords, getSkinRecordById } from './skinApi';
-export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse } from './skinApi';
+export { saveSkinRecord, getSkinRecords, getSkinRecordById, compareSkinRecords } from './skinApi';
+export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';

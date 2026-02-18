@@ -238,7 +238,7 @@ interface SkinRecordsViewProps {
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
 }
 
-const v_852b5b = (item: v_b57732, v_8d41d7): SkinRecord => {
+export const v_852b5b = (item: v_b57732, v_8d41d7): SkinRecord => {
 
   let v_e521b9 = {};
   if (v_8c0b26.analysis_result) {

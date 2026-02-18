@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_df9f57 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_df9f57, v_c4deb2 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -8,6 +8,8 @@ import {
   v_700696,
   v_aa7413,
   v_09d0e5,
+  v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
@@ -18,6 +20,9 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04, v_53f592 } from '../../constants';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_cb37be } from './components/SkinRecordsView';
+import { v_852b5b } from './components/SkinRecordsView';
+import { v_3680d3, type v_b918db } from '../../services';
+import { v_998b9d } from '../../utils/authErrorHandler';
 
 const { width: v_0d9f50 } = v_700696.get('window');
 const v_47dd8d = Math.min(v_0d9f50 - v_9b1a04.large * 4, 300);
@@ -190,8 +195,8 @@ function v_60fa3c({
       </View>
       <Text style={v_fbfcbd.dateLabel}>
         {v_8d41d7('skin_comparison.analysis_dates', {
-          dateA: v_1a2523.date.replace(/-/g, '.'),
-          dateB: v_fe1802.date.replace(/-/g, '.'),
+          dateA: `${v_1a2523.date.replace(/-/g, '.')} ${v_22e3c0(v_1a2523.date, v_1a2523.time)}`,
+          dateB: `${v_fe1802.date.replace(/-/g, '.')} ${v_22e3c0(v_fe1802.date, v_fe1802.time)}`,
         })}
       </Text>
     </View>
@@ -219,6 +224,7 @@ function v_5db904({
   dateStrB: v_8f59fa,
   selectedKeys: v_122c3a,
   backgroundColor: v_f7b9fb,
+  comparisonData: v_b34779,
 }: {
   recordA: v_cb37be;
   recordB: v_cb37be;
@@ -226,6 +232,7 @@ function v_5db904({
   dateStrB: string;
   selectedKeys: string[];
   backgroundColor?: string;
+  comparisonData?: v_b918db['comparison'];
 }) {
   const { t: v_8d41d7 } = v_772971();
   const v_e60572 = (v_b24339, v_0debf4) =>
@@ -251,7 +258,8 @@ function v_5db904({
         const v_6682ac = v_854a88(v_fe1802, v_b24339);
         const v_468f95 = v_1a2523.items.find((v_ebec57) => v_ebec57.key === v_b24339 || v_62eb5a(v_ebec57.key) === v_b24339);
         const v_2869c1 = v_468f95 ? v_e60572(v_468f95.key, v_468f95.label) : v_8d41d7(`skin.concerns.${v_62eb5a(v_b24339)}`) || v_b24339;
-        const v_a41a1b = v_edcbf2 - v_6682ac;
+
+        const v_a41a1b = v_b34779?.analysis_changes?.[v_b24339]?.ui_score?.diff ?? (v_edcbf2 - v_6682ac);
         return (
           <View key={v_b24339} style={v_86ef3a.dataRow}>
             <Text style={v_86ef3a.cellLabel}>
@@ -381,10 +389,80 @@ const v_e186fe = v_472849.create({
 export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Props) {
   const { t: v_8d41d7 } = v_772971();
   const { userName: v_f08a5e } = v_c7daf6.params;
-  const [v_1a2523, v_fe1802] = v_df9f57(
-    () => v_ef54d6(v_c7daf6.params.recordA, v_c7daf6.params.recordB),
-    [v_c7daf6.params.recordA, v_c7daf6.params.recordB]
-  );
+
+  const [v_dcc13b, v_1a48f5] = v_5ab095<v_cb37be | null>(null);
+  const [v_7f4b4c, v_4d426d] = v_5ab095<v_cb37be | null>(null);
+  const [v_b34779, v_8c8090] = v_5ab095<v_b918db['comparison'] | null>(null);
+  const [v_cd31a8, v_deef62] = v_5ab095(true);
+  const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
+
+  v_c4deb2(() => {
+    const v_4cdaab = async () => {
+      try {
+        v_deef62(true);
+        v_885e0e(null);
+
+        const v_6e9c44 = parseInt(v_c7daf6.params.recordA.id, 10);
+        const v_57c916 = parseInt(v_c7daf6.params.recordB.id, 10);
+
+        if (isNaN(v_6e9c44) || isNaN(v_57c916)) {
+          throw new Error('유효하지 않은 기록 ID입니다.');
+        }
+
+        if (__DEV__) {
+          console.log('[SkinComparisonScreen] 비교 API 호출:', {
+            recordIds: [v_6e9c44, v_57c916],
+          });
+        }
+
+        const v_3393e3 = await v_3680d3([v_6e9c44, v_57c916]);
+
+        if (__DEV__) {
+          console.log('[SkinComparisonScreen] 비교 API 응답:', {
+            recordsCount: v_3393e3.records.length,
+            hasComparison: !!v_3393e3.comparison,
+            comparisonKeys: v_3393e3.comparison?.analysis_changes ? Object.keys(v_3393e3.comparison.analysis_changes) : [],
+          });
+        }
+
+        const v_dc0b95 = v_852b5b(v_3393e3.records[0], v_8d41d7);
+        const v_40a830 = v_852b5b(v_3393e3.records[1], v_8d41d7);
+
+        v_1a48f5(v_dc0b95);
+        v_4d426d(v_40a830);
+        v_8c8090(v_3393e3.comparison);
+      } catch (v_5e9bfe) {
+        console.error('[SkinComparisonScreen] 비교 데이터 로드 실패:', v_5e9bfe);
+        v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('비교 데이터를 불러오는데 실패했습니다.'));
+
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
+
+        v_03e392.alert(
+          '오류',
+          v_5e9bfe instanceof Error ? v_5e9bfe.message : '비교 데이터를 불러오는데 실패했습니다.',
+          [
+            {
+              text: '확인',
+              onPress: () => v_c65f5d.goBack(),
+            },
+          ]
+        );
+      } finally {
+        v_deef62(false);
+      }
+    };
+
+    v_4cdaab();
+  }, [v_c7daf6.params.recordA.id, v_c7daf6.params.recordB.id, v_c65f5d, v_8d41d7]);
+
+  const [v_1a2523, v_fe1802] = v_df9f57(() => {
+    const v_103ac1 = v_dcc13b || v_c7daf6.params.recordA;
+    const v_3dbc0d = v_7f4b4c || v_c7daf6.params.recordB;
+    return v_ef54d6(v_103ac1, v_3dbc0d);
+  }, [v_dcc13b, v_7f4b4c, v_c7daf6.params.recordA, v_c7daf6.params.recordB]);
+
   const [v_e7ae15, v_20745f] = v_5ab095(false);
   const [v_474c16, v_41fe7e] = v_5ab095(false);
   const [v_782929, v_3cc752] = v_5ab095<Set<string>>(
@@ -418,7 +496,48 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
   );
 
   const v_9f6fdd = (v_8dffde, v_f985e6) => v_22e3c0(v_8dffde, v_f985e6);
-  const v_db73eb = v_1a2523.overallScore - v_fe1802.overallScore;
+
+  const v_db73eb = v_b34779?.overall_score_changes?.diff ?? (v_1a2523.overallScore - v_fe1802.overallScore);
+
+  if (v_cd31a8) {
+    return (
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
+        <Header
+          variant="healthAnalysis"
+          title={v_8d41d7('skin_comparison.title')}
+          showBackButton
+          onBackPress={() => v_c65f5d.goBack()}
+        />
+        <View style={v_d81136.loadingContainer}>
+          <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+          <Text style={v_d81136.loadingText}>비교 데이터를 불러오는 중...</Text>
+        </View>
+      </SafeView>
+    );
+  }
+
+  if (v_95616f) {
+    return (
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
+        <Header
+          variant="healthAnalysis"
+          title={v_8d41d7('skin_comparison.title')}
+          showBackButton
+          onBackPress={() => v_c65f5d.goBack()}
+        />
+        <View style={v_d81136.errorContainer}>
+          <Ionicons name="alert-circle-outline" size={48} color={v_1bfbd0.error} />
+          <Text style={v_d81136.errorText}>{v_95616f.message}</Text>
+          <TouchableOpacity
+            style={v_d81136.retryButton}
+            onPress={() => v_c65f5d.goBack()}
+          >
+            <Text style={v_d81136.retryButtonText}>확인</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeView>
+    );
+  }
 
   return (
     <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -428,16 +547,13 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
         rightAccessory={
-          <View style={v_d81136.headerRightRow}>
-            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
-            <TouchableOpacity
-              style={v_d81136.headerItemSelectBtn}
-              onPress={() => v_41fe7e(true)}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={v_d81136.headerItemSelectBtn}
+            onPress={() => v_41fe7e(true)}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
+          </TouchableOpacity>
         }
       />
       <SafeScrollView
@@ -445,7 +561,10 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         showsVerticalScrollIndicator={false}
       >
         {}
-        <Text style={v_d81136.sectionTitle}>{v_8d41d7('skin_comparison.compare_analysis')}</Text>
+        <View style={v_d81136.sectionTitleRow}>
+          <Text style={v_d81136.sectionTitle}>{v_8d41d7('skin_comparison.compare_analysis')}</Text>
+          <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+        </View>
         <SkinRadarChart recordA={v_1a2523} recordB={v_fe1802} selectedKeys={v_831a4c} />
 
         {}
@@ -457,6 +576,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           dateStrB={v_c1c940(v_fe1802.date)}
           selectedKeys={v_831a4c}
           backgroundColor={v_1bfbd0.white}
+          comparisonData={v_b34779}
         />
 
         {}
@@ -658,6 +778,44 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 }
 
 const v_d81136 = v_472849.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  errorText: {
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.large,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.error,
+    textAlign: 'center',
+  },
+  retryButton: {
+    paddingVertical: v_9b1a04.small + 4,
+    paddingHorizontal: v_9b1a04.large,
+    backgroundColor: v_1bfbd0.primary,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#fff',
+  },
   screen: { flex: 1, },
   headerRightRow: {
     flexDirection: 'row',
@@ -671,6 +829,14 @@ const v_d81136 = v_472849.create({
     marginRight: v_9b1a04.small,
   },
   container: { paddingBottom: v_9b1a04.xlarge * 2, backgroundColor: v_1bfbd0.background },
+  sectionTitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: v_9b1a04.large,
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
   sectionTitle: {
     fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,

@@ -442,3 +442,164 @@ export async function v_095212(v_fbf3b0): Promise<SkinRecordItem> {
     throw v_1bbaa4(v_5e9bfe);
   }
 }
+
+export interface CompareSkinRecordsPayload {
+  record_ids: number[];
+}
+
+export interface CompareSkinRecordsResponse {
+  records: SkinRecordItem[];
+  comparison: {
+    overall_score_changes?: {
+      from: number;
+      to: number;
+      diff: number;
+    };
+    skin_age_changes?: {
+      from: number;
+      to: number;
+      diff: number;
+    };
+    analysis_changes?: Record<string, {
+      ui_score?: {
+        from: number;
+        to: number;
+        diff: number;
+      };
+      raw_score?: {
+        from: number;
+        to: number;
+        diff: number;
+      };
+    }>;
+  };
+}
+
+export async function v_3680d3(v_9dd532): Promise<CompareSkinRecordsResponse> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  if (!Array.isArray(v_9dd532) || v_9dd532.length < 2) {
+    throw new Error('비교하려면 최소 2개의 기록이 필요합니다.');
+  }
+
+  if (__DEV__) {
+    console.log('[skinApi] compareSkinRecords: 토큰 읽기 시작...');
+  }
+
+  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (__DEV__) {
+    console.log('[skinApi] AsyncStorage에서 authToken 읽기:', {
+      found: !!v_21cc31,
+      length: v_21cc31 ? v_21cc31.length : 0,
+      preview: v_21cc31 ? `${v_21cc31.substring(0, 20)}...` : null,
+    });
+  }
+
+  if (!v_21cc31) {
+    const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
+    if (__DEV__) {
+      console.log('[skinApi] memberInfo에서 토큰 찾기 시도:', {
+        hasMemberInfo: !!v_0e3b5e,
+      });
+    }
+    if (v_0e3b5e) {
+      try {
+        const v_660822 = JSON.parse(v_0e3b5e) as Record<string, unknown>;
+        const v_8d41d7 = v_660822?.accessToken ?? v_660822?.access_token ?? v_660822?.token;
+        if (typeof v_8d41d7 === 'string') {
+          v_21cc31 = v_8d41d7;
+          if (__DEV__) {
+            console.log('[skinApi] memberInfo에서 토큰 찾음:', {
+              length: v_21cc31.length,
+              preview: `${v_21cc31.substring(0, 20)}...`,
+            });
+          }
+        }
+      } catch (v_5e9bfe) {
+        if (__DEV__) {
+          console.error('[skinApi] memberInfo 파싱 에러:', v_5e9bfe);
+        }
+      }
+    }
+  }
+
+  if (!v_21cc31) {
+    if (__DEV__) {
+      const v_e66bb4 = await v_e84827.getAllKeys();
+      console.warn('[skinApi] compareSkinRecords: 저장된 토큰 없음. 로그인 응답 형식 확인 필요.', {
+        allStorageKeys: v_e66bb4,
+        hasAuthTokenKey: v_e66bb4.includes(v_624bd2.authToken),
+        hasMemberInfoKey: v_e66bb4.includes(v_624bd2.memberInfo),
+        hasIsLoggedInKey: v_e66bb4.includes(v_624bd2.isLoggedIn),
+      });
+    }
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  if (__DEV__) {
+    console.log('[skinApi] 토큰 확인 완료, API 요청 진행');
+  }
+
+  try {
+    const v_3f4675 = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${v_21cc31}`,
+    };
+
+    const v_931bf0 = {
+      record_ids: v_9dd532,
+    };
+
+    const v_f71b56 = `${v_fed274}/oth-path`;
+    if (__DEV__) {
+      console.log('[skinApi] compareSkinRecords 요청:', {
+        url: v_f71b56,
+        payload: v_931bf0,
+      });
+    }
+
+    const v_8f00b9 = await v_b5030f.post<ApiResponse<CompareSkinRecordsResponse>>(v_f71b56, v_931bf0, {
+      timeout: v_8a74cb,
+      headers: v_3f4675,
+    });
+
+    if (__DEV__) {
+      console.log('[skinApi] compareSkinRecords 원본 응답:', {
+        status: v_8f00b9.status,
+        data: JSON.stringify(v_8f00b9.data, null, 2),
+      });
+    }
+
+    const v_9390e8 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as CompareSkinRecordsResponse);
+
+    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.records)) {
+      throw new Error('피부 기록 비교 응답 형식이 올바르지 않습니다.');
+    }
+
+    if (__DEV__) {
+      console.log('[skinApi] compareSkinRecords 파싱된 데이터:', {
+        recordsCount: v_9390e8.records.length,
+        hasComparison: !!v_9390e8.comparison,
+        comparisonKeys: v_9390e8.comparison?.analysis_changes ? Object.keys(v_9390e8.comparison.analysis_changes) : [],
+      });
+    }
+
+    return v_9390e8;
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+      console.error('[skinApi] compareSkinRecords 에러:', {
+        status: v_5e9bfe.response?.status,
+        data: v_5e9bfe.response?.data,
+        message: v_5e9bfe.message,
+      });
+    }
+
+    if (v_b5030f.isAxiosError(v_5e9bfe) && v_5e9bfe.response?.status === 401) {
+      throw new Error('로그인이 필요합니다.');
+    }
+
+    throw v_1bbaa4(v_5e9bfe);
+  }
+}
