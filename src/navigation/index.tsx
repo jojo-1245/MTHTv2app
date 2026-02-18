@@ -136,6 +136,7 @@ export type RootStackParamList = {
   } | undefined;
   AddSubAccount: {
     showEmailSearch?: boolean; 
+    subAccountId?: string; 
   } | undefined;
 };
 

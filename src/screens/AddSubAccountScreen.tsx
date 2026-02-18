@@ -31,6 +31,7 @@ import {
     v_766523,
     type v_19205c,
 } from '../services';
+import { v_2282da } from '../hooks/useAccountList';
 import { v_998b9d } from '../utils/authErrorHandler';
 import type { v_8ad91b } from '../navigation';
 
@@ -84,6 +85,8 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
     const [v_a72c3f, v_f01884] = v_5ab095(v_c7daf6.params?.showEmailSearch ?? false);
     const [v_a404bd, v_92e3ba] = v_5ab095('');
 
+    const v_438d96 = v_c7daf6.params?.subAccountId;
+
     v_c4deb2(() => {
         v_1f9bc9();
     }, []);
@@ -103,7 +106,9 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
             v_f01884(v_b70b2b);
 
             if (v_c7daf6.params?.showEmailSearch) {
-                v_c65f5d.setParams({ showEmailSearch: undefined });
+                setTimeout(() => {
+                    v_c65f5d.setParams({ showEmailSearch: undefined });
+                }, 0);
             }
 
             const v_27e0a4 = async () => {
@@ -327,7 +332,16 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                 return;
             }
 
-            await v_38a48e(v_7b9eeb.email, v_849cde, v_1d33dc);
+            let v_cab9cb = undefined;
+            if (v_438d96) {
+                const v_b4d1d1 = v_2282da(v_438d96);
+                v_cab9cb = Number(v_b4d1d1);
+                if (isNaN(v_cab9cb)) {
+                    v_cab9cb = undefined;
+                }
+            }
+
+            await v_38a48e(v_7b9eeb.email, v_849cde, v_1d33dc, v_cab9cb);
 
             if (v_7b9eeb?.name) {
                 v_8d29b6(v_7b9eeb.name);

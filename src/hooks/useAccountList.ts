@@ -260,23 +260,12 @@ export const v_9e8766 = () => {
     v_358be6();
   }, [v_358be6]);
 
-  const v_42b67a = v_de06a3(async (v_2453ad) => {
+  const v_42b67a = v_de06a3((v_2453ad) => {
 
-    try {
-      const v_727031 = await v_7ef860();
-      const v_a42a91 = v_727031.business === 1 || v_727031.business === true;
-
-      if (v_a42a91) {
-        v_c65f5d.navigate('AddSubAccount', { showEmailSearch: true });
-      } else {
-
-        v_c65f5d.navigate('AddSubAccount');
-      }
-    } catch (v_5e9bfe) {
-      console.error('[useAccountList] 사용자 정보 확인 실패:', v_5e9bfe);
-
-      v_c65f5d.navigate('AddSubAccount');
-    }
+    v_c65f5d.navigate('AddSubAccount', { 
+      showEmailSearch: true,
+      subAccountId: v_2453ad, 
+    });
   }, [v_c65f5d]);
 
   return {

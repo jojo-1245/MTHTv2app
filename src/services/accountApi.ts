@@ -296,7 +296,8 @@ export interface AddSubAccountPayload {
 export async function v_38a48e(
   v_e0c7e8,
   v_8e7cda,
-  v_d39e78 = 'family'
+  v_d39e78 = 'family',
+  v_ee2acd
 ): Promise<SubAccountItem> {
   const v_c9c489 = v_e4a763();
   const v_fed274 = v_c9c489.GATEWAY;
@@ -322,6 +323,10 @@ export async function v_38a48e(
     otp: v_8e7cda,
     relationship: v_d39e78,
   };
+
+  if (v_ee2acd !== undefined && v_ee2acd !== null) {
+    v_931bf0.sub_account_id = v_ee2acd;
+  }
 
   if (__DEV__) {
     console.log('[accountApi] linkFamilyAccount 요청:', {
