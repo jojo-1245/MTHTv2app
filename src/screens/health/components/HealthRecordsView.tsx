@@ -15,7 +15,7 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b } from '../../../components';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
-import { v_777b12, type v_218d40 } from '../../../services';
+import { v_777b12, v_d531ea, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
@@ -280,6 +280,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   const [v_16e1dd, v_3e1334] = v_5ab095<string | null>(null);
   const [v_37dcee, v_10eb9c] = v_5ab095(v_488860);
   const [v_b66218, v_ab9961] = v_5ab095(0);
+  const [v_a4994e, v_699388] = v_5ab095<HealthRecord | null>(null);
+  const [v_e74174, v_8984bb] = v_5ab095(false);
 
   const [v_34779a, v_f1bcfc] = v_5ab095(false);
   const [v_71ebe4, v_0f550d] = v_5ab095<[HealthRecord | null, HealthRecord | null]>([null, null]);
@@ -451,8 +453,9 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   };
 
   const v_c3c410 = v_1835e1 ? (v_f7f9e2[v_1835e1] || []) : [];
-  const v_8cc501 =
-    v_c3c410[v_b66218] ?? v_c3c410[0] ?? null;
+
+  const v_884a36 = v_c3c410[v_b66218] ?? v_c3c410[0] ?? null;
+  const v_8cc501 = v_a4994e ?? v_884a36;
   const v_b277c8 = v_c3c410.length > 1;
   const v_a144ca = v_b66218 > 0;
   const v_4a3fe8 = v_b66218 < v_c3c410.length - 1;
@@ -468,6 +471,50 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   v_c4deb2(() => {
     if (v_8cc501) v_3e1334(null);
   }, [v_8cc501?.id]);
+
+  v_c4deb2(() => {
+    const v_a715fa = async () => {
+      if (!v_b23082 || !v_884a36) {
+        v_699388(null);
+        return;
+      }
+
+      v_8984bb(true);
+      try {
+        const v_fbf3b0 = parseInt(v_884a36.id, 10);
+        if (isNaN(v_fbf3b0)) {
+          console.warn('[HealthRecordsView] 유효하지 않은 기록 ID:', v_884a36.id);
+          v_8984bb(false);
+          return;
+        }
+
+        if (__DEV__) {
+          console.log('[HealthRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
+        }
+
+        const v_61f930 = await v_d531ea(v_fbf3b0);
+        const v_3a28a5 = v_38756f(v_61f930);
+
+        if (__DEV__) {
+          console.log('[HealthRecordsView] 기록 상세 데이터 로드 성공:', {
+            recordId: v_fbf3b0,
+            hasVitalSigns: !!v_61f930.vital_signs,
+            vitalSignsKeys: v_61f930.vital_signs ? Object.keys(v_61f930.vital_signs) : [],
+          });
+        }
+
+        v_699388(v_3a28a5);
+      } catch (v_5e9bfe) {
+        console.error('[HealthRecordsView] 기록 상세 데이터 로드 실패:', v_5e9bfe);
+
+        v_699388(null);
+      } finally {
+        v_8984bb(false);
+      }
+    };
+
+    v_a715fa();
+  }, [v_b23082, v_884a36?.id]);
 
   const v_16897e = (v_8dffde, v_f985e6) => {
     const [v_64877a, v_35f85c, v_d5dda0] = v_8dffde.split('-');
@@ -819,7 +866,12 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           }}
         >
           <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
-            {v_8cc501 && (
+            {v_e74174 ? (
+              <View style={v_d81136.loadingContainer}>
+                <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+                <Text style={v_d81136.loadingText}>데이터를 불러오는 중...</Text>
+              </View>
+            ) : v_8cc501 ? (
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
@@ -961,7 +1013,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                   <Text style={v_d81136.closeBtnText}>{v_8d41d7('health_records.close')}</Text>
                 </TouchableOpacity>
               </ScrollView>
-            )}
+            ) : null}
           </Pressable>
         </Pressable>
       </Modal>

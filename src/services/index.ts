@@ -24,5 +24,5 @@ export type {
   AddSubAccountPayload,
 } from './accountApi';
 
-export { getHealthRecords, saveHealthRecord } from './healthApi';
+export { getHealthRecords, saveHealthRecord, getHealthRecordById } from './healthApi';
 export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload } from './healthApi';
