@@ -41,7 +41,8 @@
     "account_selector": {
         "title": "계정 선택",
         "add_sub_account": "부계정 추가하기",
-        "delete": "삭제"
+        "delete": "삭제",
+        "link_email": "이메일 연결"
     },
     "add_user_modal": {
         "title": "사용자 추가",

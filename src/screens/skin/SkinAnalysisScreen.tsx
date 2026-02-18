@@ -282,6 +282,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         selectedAccountId: v_e7b2f2,
         setSelectedAccountId: v_1f1e88,
         handleDeleteAccount: v_5bc46a,
+        handleLinkEmail: v_42b67a,
         reloadAccounts: v_604e0f,
     } = v_9e8766();
 
@@ -1846,6 +1847,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         onSelectAccount={v_1f1e88}
                         onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
                         onDeleteAccount={v_5bc46a}
+                        onLinkEmail={v_42b67a}
                         disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
                     />
                 </View>

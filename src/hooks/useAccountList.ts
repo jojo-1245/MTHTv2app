@@ -165,6 +165,7 @@ export const v_9e8766 = () => {
             id: v_ee2acd,
             name: v_9f1d92.name,
             isCurrent: v_9f1d92.isCurrent || false,
+            linked_member_id: v_9f1d92.linked_member_id,
           });
         }
       });
@@ -259,6 +260,25 @@ export const v_9e8766 = () => {
     v_358be6();
   }, [v_358be6]);
 
+  const v_42b67a = v_de06a3(async (v_2453ad) => {
+
+    try {
+      const v_727031 = await v_7ef860();
+      const v_a42a91 = v_727031.business === 1 || v_727031.business === true;
+
+      if (v_a42a91) {
+        v_c65f5d.navigate('AddSubAccount', { showEmailSearch: true });
+      } else {
+
+        v_c65f5d.navigate('AddSubAccount');
+      }
+    } catch (v_5e9bfe) {
+      console.error('[useAccountList] 사용자 정보 확인 실패:', v_5e9bfe);
+
+      v_c65f5d.navigate('AddSubAccount');
+    }
+  }, [v_c65f5d]);
+
   return {
     accounts: v_c86f08,
     selectedAccountId: v_e7b2f2,
@@ -266,6 +286,7 @@ export const v_9e8766 = () => {
     isLoading: v_cd31a8,
     handleDeleteAccount: v_5bc46a,
     handleAddUser: v_20289f,
+    handleLinkEmail: v_42b67a,
     reloadAccounts: v_358be6,
   };
 };

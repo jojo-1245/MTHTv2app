@@ -19,6 +19,7 @@ export interface AccountItem {
   id: string;
   name: string;
   isCurrent?: boolean;
+  linked_member_id?: number | null; 
 }
 
 export interface AccountSelectorProps {
@@ -28,6 +29,7 @@ export interface AccountSelectorProps {
   onSelectAccount: (accountId: string) => void;
   onAddSubAccount?: () => void;
   onDeleteAccount?: (accountId: string) => void;
+  onLinkEmail?: (accountId: string) => void; 
 
   disabled?: boolean;
 
@@ -40,6 +42,7 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
   onSelectAccount: v_92fed4,
   onAddSubAccount: v_ea2e32,
   onDeleteAccount: v_6162cd,
+  onLinkEmail: v_20eb4f,
   disabled: v_4a6533 = false,
   autoLoad: v_e22d35 = true,
 }) => {
@@ -230,6 +233,21 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
                   </TouchableOpacity>
                   {v_0651a9 === v_b4542a.id && (
                     <View style={v_d81136.dropdownMenu}>
+                      {v_b4542a.linked_member_id === null && v_20eb4f && (
+                        <TouchableOpacity
+                          style={v_d81136.dropdownItem}
+                          onPress={() => {
+                            v_20eb4f?.(v_b4542a.id);
+                            v_34cfea(null);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          <Feather name="mail" size={18} color={v_1bfbd0.primary} />
+                          <Text style={v_d81136.dropdownItemText}>
+                            {v_8d41d7('account_selector.link_email')}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
                       <TouchableOpacity
                         style={v_d81136.dropdownItem}
                         onPress={() => {
@@ -362,6 +380,11 @@ const v_d81136 = v_472849.create({
     gap: 10,
     paddingVertical: 10,
     paddingHorizontal: 14,
+  },
+  dropdownItemText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
   },
   dropdownItemTextDelete: {
     fontSize: v_ef658a.medium,

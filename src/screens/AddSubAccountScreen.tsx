@@ -40,7 +40,7 @@ type Step = 'email' | 'otp' | 'nickname' | 'nonMember';
 
 type Props = v_432191<v_8ad91b, 'AddSubAccount'>;
 
-const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
     const v_033e14 = v_e0068c();
     const v_e99f51 = v_e662ae<v_122070>(null);
@@ -81,7 +81,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         return v_25b0f8;
     }, [v_e71371]);
 
-    const [v_a72c3f, v_f01884] = v_5ab095(false);
+    const [v_a72c3f, v_f01884] = v_5ab095(v_c7daf6.params?.showEmailSearch ?? false);
     const [v_a404bd, v_92e3ba] = v_5ab095('');
 
     v_c4deb2(() => {
@@ -90,6 +90,21 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     v_cf763b(
         v_de06a3(() => {
+
+            const v_b70b2b = v_c7daf6.params?.showEmailSearch ?? false;
+
+            v_fd7d1f('email');
+            v_fedf34('');
+            v_ff2199([]);
+            v_99e77d(null);
+            v_9c3167('');
+            v_8d29b6('');
+            v_e37907(false);
+            v_f01884(v_b70b2b);
+
+            if (v_c7daf6.params?.showEmailSearch) {
+                v_c65f5d.setParams({ showEmailSearch: undefined });
+            }
 
             const v_27e0a4 = async () => {
                 try {
@@ -112,7 +127,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 }
             };
             v_27e0a4();
-        }, [])
+        }, [v_c7daf6.params?.showEmailSearch, v_c65f5d])
     );
 
     const v_1f9bc9 = async () => {

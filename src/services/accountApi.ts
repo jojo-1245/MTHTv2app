@@ -17,6 +17,7 @@ export interface SubAccountItem {
   name: string;
   isCurrent?: boolean;
   email?: string; 
+  linked_member_id?: number | null; 
 }
 
 export interface SubAccountListResponse {
