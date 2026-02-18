@@ -34,7 +34,7 @@ const v_37c282 = v_0d9f50 - 80;
 const v_0abe94 = 12;
 const v_48a60c = Math.floor((v_0d9f50 - 24) / 2.5); 
 import { v_a0daa8 } from '../../navigation';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d } from '../../components';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
@@ -281,11 +281,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         selectedAccountId: v_e7b2f2,
         setSelectedAccountId: v_1f1e88,
         handleDeleteAccount: v_5bc46a,
-        handleAddUser: v_20289f,
         reloadAccounts: v_604e0f,
     } = v_9e8766();
-
-    const [v_f4c7be, v_d5a103] = v_5ab095(false);
 
     v_cf763b(
         v_de06a3(() => {
@@ -1713,16 +1710,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         accounts={v_c86f08}
                         selectedAccountId={v_e7b2f2}
                         onSelectAccount={v_1f1e88}
-                        onAddSubAccount={() => v_d5a103(true)}
+                        onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
                         onDeleteAccount={v_5bc46a}
                         disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
                     />
                 </View>
-                <AddUserModal
-                    visible={v_f4c7be}
-                    onClose={() => v_d5a103(false)}
-                    onAdd={v_20289f}
-                />
                 {v_ac1d22 === 'records' ? (
                     <SafeScrollView
                         contentContainerStyle={v_d81136.recordsContent}
