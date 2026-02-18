@@ -37,6 +37,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7 } from '../context';
+import { v_4ebe12, v_52c734 } from '../services';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -80,8 +81,33 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const [v_9cb8cb] = v_5ab095(true);
-  const [v_39cb7a] = v_5ab095<number | null>(8);
-  const [v_9ab1d9] = v_5ab095<number | null>(65);
+  const [v_39cb7a, v_ecd01c] = v_5ab095<number | null>(null);
+  const [v_9ab1d9, v_6bf58d] = v_5ab095<number | null>(null);
+  const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
+  const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
+
+  v_c4deb2(() => {
+    const v_56263a = async () => {
+      try {
+
+        const v_3722b7 = await v_4ebe12();
+        if (v_3722b7) {
+          v_ecd01c(v_3722b7.health_index);
+          v_435f99(v_3722b7.record_date);
+        }
+
+        const v_51e81e = await v_52c734();
+        if (v_51e81e) {
+          v_6bf58d(v_51e81e.overall_score);
+          v_07829a(v_51e81e.record_date);
+        }
+      } catch (v_5e9bfe) {
+        console.error('[MetaHomeScreen] 최신 점수 로드 실패:', v_5e9bfe);
+      }
+    };
+
+    v_56263a();
+  }, []);
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([true, true, true, false, false, false, false]); 
   const v_05cf57 = v_79dc58.filter(Boolean).length;
@@ -330,7 +356,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Text style={v_d81136.metricTitle}>{v_8d41d7('home.health_index')}</Text>
                 </View>
 
-                <Text style={v_d81136.metricDate}>{v_39cb7a != null ? '2026.01.30' : v_8d41d7('home.before_measurement')}</Text>
+                <Text style={v_d81136.metricDate}>
+                  {v_39cb7a != null && v_05a030
+                    ? v_05a030.replace(/-/g, '.')
+                    : v_8d41d7('home.before_measurement')}
+                </Text>
                 <View style={v_d81136.metricScoreWrap}>
                   <View style={v_d81136.metricScoreGroup}>
                     <Text style={v_d81136.metricScore}>{v_39cb7a != null ? v_39cb7a : '--'}</Text>
@@ -351,7 +381,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   <Droplet size={24} color="#38BDF8" />
                   <Text style={v_d81136.metricTitle}>{v_8d41d7('home.skin_score')}</Text>
                 </View>
-                <Text style={v_d81136.metricDate}>{v_9ab1d9 != null ? '2026.01.30' : v_8d41d7('home.before_measurement')}</Text>
+                <Text style={v_d81136.metricDate}>
+                  {v_9ab1d9 != null && v_32c7b6
+                    ? v_32c7b6.replace(/-/g, '.')
+                    : v_8d41d7('home.before_measurement')}
+                </Text>
                 <View style={v_d81136.metricScoreWrap}>
                   <View style={v_d81136.metricScoreGroup}>
                     <Text style={v_d81136.metricScore}>{v_9ab1d9 != null ? v_9ab1d9 : '--'}</Text>

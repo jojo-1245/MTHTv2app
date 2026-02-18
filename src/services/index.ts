@@ -24,8 +24,8 @@ export type {
   AddSubAccountPayload,
 } from './accountApi';
 
-export { getHealthRecords, saveHealthRecord, getHealthRecordById, compareHealthRecords } from './healthApi';
+export { getHealthRecords, saveHealthRecord, getHealthRecordById, getLatestHealthRecord, compareHealthRecords } from './healthApi';
 export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, CompareHealthRecordsPayload, CompareHealthRecordsResponse } from './healthApi';
 
-export { saveSkinRecord, getSkinRecords, getSkinRecordById, compareSkinRecords } from './skinApi';
+export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords } from './skinApi';
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';

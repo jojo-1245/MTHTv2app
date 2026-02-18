@@ -320,6 +320,10 @@ export interface SkinRecordDetailResponse {
   record: SkinRecordItem;
 }
 
+export interface LatestSkinRecordResponse {
+  record: SkinRecordItem;
+}
+
 export async function v_095212(v_fbf3b0): Promise<SkinRecordItem> {
   const v_c9c489 = v_e4a763();
   const v_fed274 = v_c9c489.GATEWAY;
@@ -473,6 +477,79 @@ export interface CompareSkinRecordsResponse {
       };
     }>;
   };
+}
+
+export async function v_52c734(): Promise<SkinRecordItem | null> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
+    if (v_0e3b5e) {
+      try {
+        const v_660822 = JSON.parse(v_0e3b5e) as Record<string, unknown>;
+        const v_8d41d7 = v_660822?.accessToken ?? v_660822?.access_token ?? v_660822?.token;
+        if (typeof v_8d41d7 === 'string') v_21cc31 = v_8d41d7;
+      } catch {
+
+      }
+    }
+  }
+  if (!v_21cc31) {
+    if (__DEV__) {
+      console.warn('[skinApi] getLatestSkinRecord: 저장된 토큰 없음. 로그인 필요.');
+    }
+    return null;
+  }
+
+  try {
+    const v_3f4675 = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${v_21cc31}`,
+    };
+
+    const v_f71b56 = `${v_fed274}/oth-path`;
+    if (__DEV__) {
+      console.log('[skinApi] getLatestSkinRecord 요청:', { url: v_f71b56 });
+    }
+
+    const v_8f00b9 = await v_b5030f.get<ApiResponse<LatestSkinRecordResponse>>(v_f71b56, {
+      timeout: v_8a74cb,
+      headers: v_3f4675,
+    });
+
+    const v_f637a4 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as LatestSkinRecordResponse);
+    const v_cbbd71 = v_f637a4?.record;
+
+    if (__DEV__) {
+      console.log('[skinApi] getLatestSkinRecord 응답:', {
+        status: v_8f00b9.status,
+        hasRecord: !!v_cbbd71,
+        overall_score: v_cbbd71?.overall_score,
+      });
+    }
+
+    return v_cbbd71 || null;
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+
+      if (v_5e9bfe.response?.status === 404) {
+        if (__DEV__) {
+          console.log('[skinApi] getLatestSkinRecord: 기록 없음');
+        }
+        return null;
+      }
+      console.error('[skinApi] getLatestSkinRecord 에러:', {
+        status: v_5e9bfe.response?.status,
+        data: v_5e9bfe.response?.data,
+        message: v_5e9bfe.message,
+      });
+    }
+
+    return null;
+  }
 }
 
 export async function v_3680d3(v_9dd532): Promise<CompareSkinRecordsResponse> {

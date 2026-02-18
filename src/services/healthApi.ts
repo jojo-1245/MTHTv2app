@@ -38,6 +38,10 @@ export interface HealthRecordDetailResponse {
   record: HealthRecordItem;
 }
 
+export interface LatestHealthRecordResponse {
+  record: HealthRecordItem;
+}
+
 export interface SaveHealthRecordPayload {
   member_id?: number; 
   sub_account_id?: number; 
@@ -352,6 +356,79 @@ export async function v_d531ea(v_fbf3b0): Promise<HealthRecordItem> {
     }
 
     throw v_1bbaa4(v_5e9bfe);
+  }
+}
+
+export async function v_4ebe12(): Promise<HealthRecordItem | null> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
+    if (v_0e3b5e) {
+      try {
+        const v_660822 = JSON.parse(v_0e3b5e) as Record<string, unknown>;
+        const v_8d41d7 = v_660822?.accessToken ?? v_660822?.access_token ?? v_660822?.token;
+        if (typeof v_8d41d7 === 'string') v_21cc31 = v_8d41d7;
+      } catch {
+
+      }
+    }
+  }
+  if (!v_21cc31) {
+    if (__DEV__) {
+      console.warn('[healthApi] getLatestHealthRecord: 저장된 토큰 없음. 로그인 필요.');
+    }
+    return null;
+  }
+
+  try {
+    const v_3f4675 = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${v_21cc31}`,
+    };
+
+    const v_f71b56 = `${v_fed274}/oth-path`;
+    if (__DEV__) {
+      console.log('[healthApi] getLatestHealthRecord 요청:', { url: v_f71b56 });
+    }
+
+    const v_8f00b9 = await v_b5030f.get<ApiResponse<LatestHealthRecordResponse>>(v_f71b56, {
+      timeout: v_8a74cb,
+      headers: v_3f4675,
+    });
+
+    const v_f637a4 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as LatestHealthRecordResponse);
+    const v_cbbd71 = v_f637a4?.record;
+
+    if (__DEV__) {
+      console.log('[healthApi] getLatestHealthRecord 응답:', {
+        status: v_8f00b9.status,
+        hasRecord: !!v_cbbd71,
+        health_index: v_cbbd71?.health_index,
+      });
+    }
+
+    return v_cbbd71 || null;
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+
+      if (v_5e9bfe.response?.status === 404) {
+        if (__DEV__) {
+          console.log('[healthApi] getLatestHealthRecord: 기록 없음');
+        }
+        return null;
+      }
+      console.error('[healthApi] getLatestHealthRecord 에러:', {
+        status: v_5e9bfe.response?.status,
+        data: v_5e9bfe.response?.data,
+        message: v_5e9bfe.message,
+      });
+    }
+
+    return null;
   }
 }
 
