@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_df9f57 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_df9f57, v_c4deb2 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -8,6 +8,7 @@ import {
   v_aa7413,
   v_09d0e5,
   v_700696,
+  v_39a996,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
@@ -15,6 +16,9 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b } from '../../../components';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04, v_53f592 } from '../../../constants';
+import { v_81fcbc, v_095212, type v_b57732 } from '../../../services';
+import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_998b9d } from '../../../utils/authErrorHandler';
 
 const { width: v_0d9f50 } = v_700696.get('window');
 const v_14a295 = 4;
@@ -228,13 +232,71 @@ const v_637b1c = ['일', '월', '화', '수', '목', '금', '토'];
 
 interface SkinRecordsViewProps {
   onCompare?: (records: [SkinRecord, SkinRecord]) => void;
+
+  selectedAccountId?: string;
+
+  accounts?: Array<{ id: string; isCurrent?: boolean }>;
 }
 
-export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: v_bda358 }) => {
+const v_852b5b = (item: v_b57732, v_8d41d7): SkinRecord => {
+
+  let v_e521b9 = {};
+  if (v_8c0b26.analysis_result) {
+    if (typeof v_8c0b26.analysis_result === 'string') {
+      try {
+        v_e521b9 = JSON.parse(v_8c0b26.analysis_result);
+      } catch (v_9e86fd) {
+        console.warn('[SkinRecordsView] analysis_result 파싱 실패:', v_9e86fd);
+      }
+    } else {
+      v_e521b9 = v_8c0b26.analysis_result;
+    }
+  }
+
+  const v_4622b9 = [];
+  Object.keys(v_e521b9).forEach((v_b24339) => {
+    const v_43c42e = v_e521b9[v_b24339];
+    if (v_43c42e && typeof v_43c42e.ui_score === 'number') {
+      const v_73543d = v_62eb5a(v_b24339);
+      const v_2869c1 = v_8d41d7(`skin.concerns.${v_73543d}`) || v_b24339;
+      v_4622b9.push({
+        key: v_b24339,
+        label: v_2869c1,
+        score: v_43c42e.ui_score,
+      });
+    }
+  });
+
+  v_4622b9.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
+
+  const v_96fff1 = v_4622b9.slice(-3).map((v_8c0b26) => v_8c0b26.key);
+
+  const v_261f9c = v_8c0b26.grade
+    ? v_8c0b26.grade.toLowerCase().replace(' ', '_')
+    : v_7b207e(v_8c0b26.overall_score);
+
+  return {
+    id: String(v_8c0b26.id),
+    date: v_8c0b26.record_date,
+    time: v_8c0b26.record_time,
+    overallScore: v_8c0b26.overall_score,
+    skinAge: v_8c0b26.skin_age,
+    gradeKey: v_261f9c,
+    items: v_4622b9,
+    cautionKeys: v_96fff1,
+  };
+};
+
+export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
+  onCompare: v_bda358,
+  selectedAccountId: v_e7b2f2,
+  accounts: v_c86f08,
+}) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
+  const v_c65f5d = v_ada615();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('calendar');
-  const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date(2026, 0, 1));
+  const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
   const [v_1835e1, v_f04d19] = v_5ab095<string | null>(null);
   const [v_b23082, v_725ee9] = v_5ab095(false);
   const [v_37dcee, v_10eb9c] = v_5ab095(v_488860);
@@ -246,9 +308,72 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
   const [v_71ebe4, v_0f550d] = v_5ab095<[SkinRecord | null, SkinRecord | null]>([null, null]);
   const [v_4dd592, v_b173ec] = v_5ab095<string | null>(null);
 
+  const [v_678155, v_9ed182] = v_5ab095<SkinRecord[]>([]);
+  const [v_cd31a8, v_deef62] = v_5ab095(false);
+  const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
+
+  const [v_a4994e, v_699388] = v_5ab095<SkinRecord | null>(null);
+  const [v_e74174, v_8984bb] = v_5ab095(false);
+
+  v_c4deb2(() => {
+    const v_efc1dd = async () => {
+      v_deef62(true);
+      v_885e0e(null);
+      try {
+
+        const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
+        const v_083682 = v_0c2f9b?.isCurrent === true;
+
+        console.log('[SkinRecordsView] 피부 기록 로드 시작...', {
+          selectedAccountId: v_e7b2f2,
+          selectedAccount: v_0c2f9b ? JSON.stringify(v_0c2f9b, null, 2) : null,
+          isMyAccount: v_083682,
+          accountsCount: v_c86f08?.length || 0,
+        });
+
+        const v_ee2acd = v_083682
+          ? undefined
+          : v_e7b2f2 && v_e7b2f2.startsWith('sub-')
+            ? v_e7b2f2.replace('sub-', '')
+            : v_e7b2f2;
+        console.log('[SkinRecordsView] API 호출 파라미터:', {
+          subAccountId: v_ee2acd,
+          isMyAccount: v_083682,
+          willSendSubAccountId: !!v_ee2acd,
+        });
+
+        const v_1f4ef0 = await v_81fcbc(v_ee2acd);
+
+        console.log('[SkinRecordsView] 피부 기록 로드 성공:', {
+          count: v_1f4ef0.length,
+          records: JSON.stringify(v_1f4ef0, null, 2),
+        });
+
+        const v_e21297 = v_1f4ef0.map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7));
+        v_9ed182(v_e21297);
+      } catch (v_5e9bfe) {
+        console.error('[SkinRecordsView] 피부 기록 로드 실패:', {
+          error: v_5e9bfe,
+          errorMessage: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+        });
+
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
+
+        v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('피부 기록을 불러오는데 실패했습니다.'));
+        v_9ed182([]); 
+      } finally {
+        v_deef62(false);
+      }
+    };
+
+    v_efc1dd();
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7]);
+
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
-    v_612065.forEach((v_cb35cb) => {
+    v_678155.forEach((v_cb35cb) => {
       if (!v_8dcb51[v_cb35cb.date]) v_8dcb51[v_cb35cb.date] = [];
       v_8dcb51[v_cb35cb.date].push(v_cb35cb);
     });
@@ -256,16 +381,16 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
       v_8dcb51[v_d5dda0].sort((v_779914, v_148ff6) => v_779914.time.localeCompare(v_148ff6.time));
     });
     return v_8dcb51;
-  }, []);
+  }, [v_678155]);
 
-  const v_384480 = v_df9f57(() => new Set(v_612065.map((v_cb35cb) => v_cb35cb.date)), []);
+  const v_384480 = v_df9f57(() => new Set(v_678155.map((v_cb35cb) => v_cb35cb.date)), [v_678155]);
 
   const v_00a76c = v_df9f57(
-    () => v_612065.slice(0, v_37dcee),
-    [v_37dcee]
+    () => v_678155.slice(0, v_37dcee),
+    [v_678155, v_37dcee]
   );
 
-  const v_cff7c3 = v_37dcee < v_612065.length;
+  const v_cff7c3 = v_37dcee < v_678155.length;
 
   const v_a787ee = v_df9f57(() => {
     const v_0eaaff = v_0ab6f2.getFullYear();
@@ -317,7 +442,9 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
   };
 
   const v_c3c410 = v_1835e1 ? (v_f7f9e2[v_1835e1] || []) : [];
-  const v_8cc501 = v_c3c410[v_b66218] ?? v_c3c410[0] ?? null;
+  const v_884a36 = v_c3c410[v_b66218] ?? v_c3c410[0] ?? null;
+
+  const v_8cc501 = v_a4994e ?? v_884a36;
   const v_b277c8 = v_c3c410.length > 1;
   const v_a144ca = v_b66218 > 0;
   const v_4a3fe8 = v_b66218 < v_c3c410.length - 1;
@@ -329,6 +456,50 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
   const v_f83132 = () => {
     if (v_4a3fe8) v_ab9961((v_ebec57) => v_ebec57 + 1);
   };
+
+  v_c4deb2(() => {
+    const v_a715fa = async () => {
+      if (!v_b23082 || !v_884a36) {
+        v_699388(null);
+        return;
+      }
+
+      v_8984bb(true);
+      try {
+        const v_fbf3b0 = parseInt(v_884a36.id, 10);
+        if (isNaN(v_fbf3b0)) {
+          console.warn('[SkinRecordsView] 유효하지 않은 기록 ID:', v_884a36.id);
+          v_8984bb(false);
+          return;
+        }
+
+        if (__DEV__) {
+          console.log('[SkinRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
+        }
+
+        const v_61f930 = await v_095212(v_fbf3b0);
+        const v_3a28a5 = v_852b5b(v_61f930, v_8d41d7);
+
+        if (__DEV__) {
+          console.log('[SkinRecordsView] 기록 상세 데이터 로드 성공:', {
+            recordId: v_fbf3b0,
+            hasAnalysisResult: !!v_61f930.analysis_result,
+            analysisResultKeys: v_61f930.analysis_result ? Object.keys(v_61f930.analysis_result) : [],
+          });
+        }
+
+        v_699388(v_3a28a5);
+      } catch (v_5e9bfe) {
+        console.error('[SkinRecordsView] 기록 상세 데이터 로드 실패:', v_5e9bfe);
+
+        v_699388(null);
+      } finally {
+        v_8984bb(false);
+      }
+    };
+
+    v_a715fa();
+  }, [v_b23082, v_884a36?.id, v_8d41d7]);
 
   const v_a75897 = v_71ebe4.filter(Boolean).length;
   const v_8c38ef = v_a75897 === 2;
@@ -452,7 +623,31 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
         />
       )}
 
-      {v_0af1e7 === 'calendar' ? (
+      {v_cd31a8 ? (
+        <View style={v_d81136.loadingContainer}>
+          <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+          <Text style={v_d81136.loadingText}>{v_8d41d7('skin_records.loading') || '기록을 불러오는 중...'}</Text>
+        </View>
+      ) : v_95616f ? (
+        <View style={v_d81136.errorContainer}>
+          <Ionicons name="alert-circle-outline" size={48} color={v_1bfbd0.error} />
+          <Text style={v_d81136.errorText}>{v_95616f.message}</Text>
+          <TouchableOpacity
+            style={v_d81136.retryButton}
+            onPress={() => {
+              v_885e0e(null);
+
+            }}
+          >
+            <Text style={v_d81136.retryButtonText}>{v_8d41d7('common.retry') || '다시 시도'}</Text>
+          </TouchableOpacity>
+        </View>
+      ) : v_678155.length === 0 ? (
+        <View style={v_d81136.emptyContainer}>
+          <Ionicons name="calendar-outline" size={48} color={v_1bfbd0.secondaryText} />
+          <Text style={v_d81136.emptyText}>{v_8d41d7('skin_records.no_records') || '기록이 없습니다.'}</Text>
+        </View>
+      ) : v_0af1e7 === 'calendar' ? (
         <>
           <View style={v_d81136.calendarCard}>
             <View style={v_d81136.calendarHeader}>
@@ -554,7 +749,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
             );
           })}
           {v_cff7c3 && (
-            <TouchableOpacity style={v_d81136.loadMoreBtn} onPress={() => v_10eb9c((v_e2a85c) => Math.min(v_e2a85c + v_488860, v_612065.length))}>
+            <TouchableOpacity style={v_d81136.loadMoreBtn} onPress={() => v_10eb9c((v_e2a85c) => Math.min(v_e2a85c + v_488860, v_678155.length))}>
               <Text style={v_d81136.loadMoreText}>{v_8d41d7('skin_records.load_more')}</Text>
             </TouchableOpacity>
           )}
@@ -579,7 +774,12 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
           }}
         >
           <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
-            {v_8cc501 && (
+            {v_e74174 ? (
+              <View style={v_d81136.loadingContainer}>
+                <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+                <Text style={v_d81136.loadingText}>데이터를 불러오는 중...</Text>
+              </View>
+            ) : v_8cc501 ? (
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[v_d81136.modalScrollContent, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}
@@ -706,7 +906,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
                   <Text style={v_d81136.closeBtnText}>{v_8d41d7('skin_records.close')}</Text>
                 </TouchableOpacity>
               </ScrollView>
-            )}
+            ) : null}
           </Pressable>
         </Pressable>
       </Modal>
@@ -754,6 +954,56 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({ onCompare: 
 
 const v_d81136 = v_472849.create({
   container: { flex: 1, paddingHorizontal: v_9b1a04.large, paddingTop: v_9b1a04.medium, backgroundColor: v_1bfbd0.background },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  errorText: {
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.large,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.error,
+    textAlign: 'center',
+  },
+  retryButton: {
+    paddingVertical: v_9b1a04.small + 4,
+    paddingHorizontal: v_9b1a04.large,
+    backgroundColor: v_1bfbd0.primary,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#fff',
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  emptyText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
   viewModeRow: { flexDirection: 'row', gap: 8, marginBottom: v_9b1a04.medium, justifyContent: 'center' },
   viewModeBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 10, paddingHorizontal: 16, borderRadius: 10, backgroundColor: '#fff', borderWidth: 1, borderColor: v_1bfbd0.border },
   viewModeBtnActive: { backgroundColor: '#000', borderColor: '#000' },
