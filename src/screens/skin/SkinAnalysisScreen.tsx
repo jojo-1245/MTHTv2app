@@ -45,8 +45,9 @@ import {
     type v_ee7be6,
     type v_38cf4d,
 } from '../../services/skinAnalysis';
-import { v_9e8766 } from '../../hooks';
+import { v_9e8766, v_2282da } from '../../hooks';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_79be38 } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -318,12 +319,145 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const [v_c813f5, v_0d73a9] = v_5ab095<{ image: any; name: string } | null>(null);
 
+    const v_02a5a0 = v_e662ae(false);
+    const v_f013b2 = v_e662ae<string | null>(null);
+
     v_c4deb2(() => {
         if (v_bf6a8c) {
             v_6f6f79(v_3e09cd);
             v_639227('result');
         }
     }, [v_bf6a8c]);
+
+    v_c4deb2(() => {
+        const v_329ab2 = async () => {
+            if (!v_e521b9 || !v_e521b9.result?.results?.output) {
+                return;
+            }
+
+            const v_3a7b16 = v_e521b9.timestamp;
+            if (v_02a5a0.current && v_f013b2.current === v_3a7b16) {
+                if (__DEV__) {
+                    console.log('[SkinAnalysisScreen] 이미 저장된 결과입니다. 건너뜁니다.');
+                }
+                return;
+            }
+
+            try {
+                const v_579c77 = v_058956();
+                if (!v_579c77) {
+                    console.warn('[SkinAnalysisScreen] 결과 파싱 실패. 저장을 건너뜁니다.');
+                    return;
+                }
+
+                const { overallScore: v_adfd7c, concernScores: v_17b30f } = v_579c77;
+
+                const v_5c2f9f = new Date();
+                const v_067e65 = `${v_5c2f9f.getFullYear()}-${String(v_5c2f9f.getMonth() + 1).padStart(2, '0')}-${String(v_5c2f9f.getDate()).padStart(2, '0')}`;
+                const v_dcf6a6 = `${String(v_5c2f9f.getHours()).padStart(2, '0')}:${String(v_5c2f9f.getMinutes()).padStart(2, '0')}`;
+
+                const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+                const v_083682 = v_0c2f9b?.isCurrent === true;
+                const v_f6ed03 = v_2282da(v_e7b2f2);
+                const v_ee2acd = v_083682 ? undefined : (v_f6ed03 && v_f6ed03 !== '1' && v_f6ed03 !== 'me' ? Number(v_f6ed03) : undefined);
+
+                const v_1c8db4 = {};
+                v_e521b9.result.results.output.forEach((v_8c0b26) => {
+                    if (v_8c0b26.type && v_8c0b26.type !== 'all' && v_8c0b26.type !== 'resize_image' && v_8c0b26.ui_score !== undefined) {
+
+                        const v_d2cbce = v_8c0b26.raw_score !== undefined 
+                            ? v_8c0b26.raw_score 
+                            : (100 - v_8c0b26.ui_score) / 100; 
+
+                        v_1c8db4[v_8c0b26.type] = {
+                            ui_score: v_8c0b26.ui_score,
+                            raw_score: v_d2cbce,
+                            ...(v_8c0b26.mask_urls?.[0] && { mask_url: v_8c0b26.mask_urls[0] }),
+                        };
+                    }
+                });
+
+                if (__DEV__) {
+                    console.log('[SkinAnalysisScreen] analysis_result 구성 완료:', {
+                        itemCount: Object.keys(v_1c8db4).length,
+                        items: Object.keys(v_1c8db4),
+                        sampleItem: Object.keys(v_1c8db4).length > 0 
+                            ? { 
+                                type: Object.keys(v_1c8db4)[0], 
+                                data: v_1c8db4[Object.keys(v_1c8db4)[0]] 
+                            } 
+                            : null,
+                        fullData: JSON.stringify(v_1c8db4, null, 2),
+                    });
+                }
+
+                const v_9cd2f2 = (v_740dd8): string => {
+                    if (v_740dd8 >= 95) return 'Excellent';
+                    if (v_740dd8 >= 90) return 'Great';
+                    if (v_740dd8 >= 85) return 'Good';
+                    if (v_740dd8 >= 80) return 'Normal';
+                    if (v_740dd8 >= 70) return 'Caution';
+                    if (v_740dd8 >= 60) return 'Needs Care';
+                    return 'Intensive Care';
+                };
+
+                const v_e491e1 = Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
+
+                const v_60e8e0 = {
+                    record_date: v_067e65,
+                    record_time: v_dcf6a6,
+                    overall_score: v_adfd7c,
+                    skin_age: v_e491e1,
+                    grade: v_9cd2f2(v_adfd7c),
+                    analysis_result: v_1c8db4,
+                    ...(v_ee2acd && { sub_account_id: v_ee2acd }),
+                    metadata: {
+                        device: 'YouCam API',
+                        timestamp: v_e521b9.timestamp,
+                        mode: v_e521b9.mode,
+                        task_id: v_e521b9.taskId,
+                    },
+                };
+
+                if (__DEV__) {
+                    console.log('[SkinAnalysisScreen] 피부 분석 결과 저장 시작:', {
+                        recordDate: v_067e65,
+                        recordTime: v_dcf6a6,
+                        overallScore: v_adfd7c,
+                        skinAge: v_e491e1,
+                        grade: v_9cd2f2(v_adfd7c),
+                        subAccountId: v_ee2acd,
+                        isMyAccount: v_083682,
+                        analysisResultCount: Object.keys(v_1c8db4).length,
+                        payload: {
+                            ...v_60e8e0,
+                            analysis_result: '[...]',
+                        },
+                    });
+                }
+
+                const v_23eae7 = await v_79be38(v_60e8e0);
+
+                v_02a5a0.current = true;
+                v_f013b2.current = v_3a7b16;
+
+                if (__DEV__) {
+                    console.log('[SkinAnalysisScreen] 피부 분석 결과 저장 성공:', {
+                        success: v_23eae7.success,
+                        message: v_23eae7.message,
+                        record_id: v_23eae7.record_id,
+                    });
+                }
+            } catch (v_5e9bfe) {
+                console.error('[SkinAnalysisScreen] 피부 분석 결과 저장 실패:', v_5e9bfe);
+
+            }
+        };
+
+        if (v_e521b9 && v_91943c === 'result') {
+            v_329ab2();
+        }
+    }, [v_e521b9, v_91943c, v_c86f08, v_e7b2f2, v_058956]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         let v_52f726;
@@ -1722,6 +1856,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         showBottomBackground={false}
                     >
                         <SkinRecordsView
+                            selectedAccountId={v_e7b2f2}
+                            accounts={v_c86f08}
                             onCompare={(v_678155) => {
                                 const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                                 v_c65f5d.navigate('SkinComparison', {
