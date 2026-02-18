@@ -29,7 +29,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d4f1cc } from 'mbgbsytfgyr';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v_ee2389, v_1c1837 } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v_1c1837 } from '../../components';
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
@@ -219,9 +219,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     setSelectedAccountId: v_1f1e88,
     handleDeleteAccount: v_5bc46a,
     handleAddUser: v_20289f,
+    reloadAccounts: v_604e0f,
   } = v_9e8766();
-
-  const [v_f4c7be, v_d5a103] = v_5ab095(false);
 
   const v_bc50c7 = v_34ffee();
   const v_288ac3 = v_96a72c();
@@ -239,6 +238,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
 
   const v_a3ff5a = v_e662ae<v_6edea3 | undefined>(undefined);
+
+  const v_18f59d = v_e662ae<boolean>(false);
 
   const [v_2f3ab2, v_ad3226] = v_5ab095<string>('');
   const [v_a5d6d1, v_e3a875] = v_5ab095<'male' | 'female' | null>(null);
@@ -1147,9 +1148,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             numberValue: typeof v_cabbe9 === 'number' ? v_cabbe9 : undefined,
           });
 
+          const v_d308b5 = (v_43c42e as any).status;
+
           v_9f8792[v_3b27d9] = {
             value: v_43c42e.value,
             confidence: v_cabbe9 ? (typeof v_cabbe9 === 'object' ? v_cabbe9 : { level: v_cabbe9 }) : undefined,
+            ...(v_d308b5 && { status: v_d308b5 }),
           };
           v_ad9b8f.push(v_3b27d9);
         } else {
@@ -1228,6 +1232,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         userName: v_0c2f9b?.name,
         accounts: v_c86f08,
         selectedAccountId: v_e7b2f2,
+        userInfo: {
+          age: v_2f3ab2 || undefined,
+          gender: v_a5d6d1 || undefined,
+          weight: v_ebc748 || undefined,
+          height: v_5b20cf || undefined,
+          smokingStatus: v_8f47c9 || undefined,
+          bloodPressureStatus: v_6b257a || undefined,
+        },
       });
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
@@ -1301,6 +1313,19 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('화면 포커스됨');
       v_4c31ba.current = true;
 
+      v_604e0f();
+
+      if (v_c7daf6.params?.resetToIntro && !v_18f59d.current) {
+        console.log('resetToIntro 파라미터 감지 - intro로 리셋');
+        v_639227('intro');
+        v_18f59d.current = true;
+
+        v_c65f5d.setParams({ resetToIntro: undefined });
+      } else if (!v_c7daf6.params?.resetToIntro) {
+
+        v_18f59d.current = false;
+      }
+
       return () => {
         console.log('화면 언포커스됨, 세션 종료');
         v_4c31ba.current = false;
@@ -1316,7 +1341,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_b0aeaf(false);
         v_49296b(false);
       };
-    }, [v_98caa0])
+    }, [v_98caa0, v_c7daf6.params?.resetToIntro, v_c65f5d])
   );
 
   const v_49b151 = v_e662ae(v_bb3644);
@@ -1434,16 +1459,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             accounts={v_c86f08}
             selectedAccountId={v_e7b2f2}
             onSelectAccount={v_1f1e88}
-            onAddSubAccount={() => v_d5a103(true)}
+            onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
             onDeleteAccount={v_5bc46a}
             disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
           />
         </View>
-        <AddUserModal
-          visible={v_f4c7be}
-          onClose={() => v_d5a103(false)}
-          onAdd={v_20289f}
-        />
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}

@@ -35,6 +35,7 @@ import { v_852e99, v_8b28f5 } from '../screens/skin';
 import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
 import v_7f9fad from '../screens/AnalysisScreen';
 import { v_02d653 } from '../screens/chat';
+import v_67f088 from '../screens/AddSubAccountScreen';
 
 export type RootStackParamList = {
   Intro: undefined;
@@ -107,13 +108,21 @@ export type RootStackParamList = {
     userName?: string;
   };
   Analysis: undefined;
-  HealthAnalysis: { initialTab?: 'measure' | 'records' } | undefined;
+  HealthAnalysis: { initialTab?: 'measure' | 'records'; resetToIntro?: boolean } | undefined;
   HealthAnalysisResult: {
     results: Record<string, { value: any; confidence?: any }>;
     timestamp: string;
     userName?: string;
     accounts?: Array<{ id: string; name: string; isCurrent?: boolean }>;
     selectedAccountId?: string;
+    userInfo?: {
+      age?: string;
+      gender?: 'male' | 'female' | null;
+      weight?: string;
+      height?: string;
+      smokingStatus?: 'smoker' | 'non_smoker' | 'unspecified' | null;
+      bloodPressureStatus?: 'normal' | 'low' | 'high' | null;
+    };
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
@@ -125,6 +134,7 @@ export type RootStackParamList = {
     initialSearchText?: string;
     initialHealthInfo?: { id: string; name: string } | null;
   } | undefined;
+  AddSubAccount: undefined;
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();
@@ -179,6 +189,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="HealthComparison" component={v_71e66c} />
         <Stack.Screen name="HealthConnection" component={v_1b8038} />
         <Stack.Screen name="Chat" component={v_02d653} />
+        <Stack.Screen name="AddSubAccount" component={v_67f088} />
       </Stack.Navigator>
     </NavigationContainer>
   );

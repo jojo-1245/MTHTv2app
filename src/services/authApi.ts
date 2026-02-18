@@ -304,6 +304,7 @@ export interface MeProfile {
   lastname?: string;
   referral_code?: string;
   tier?: 'silver' | 'gold' | string;
+  business?: number | boolean; 
   [key: string]: unknown;
 }
 
