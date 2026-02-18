@@ -18,6 +18,7 @@ import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 import { v_777b12, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 
 export interface MeasurementItem {
   key: string;
@@ -263,8 +264,8 @@ interface HealthRecordsViewProps {
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
 }
 
-export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({ 
-  onStartComparativeAnalysis: v_edd5a4, 
+export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
+  onStartComparativeAnalysis: v_edd5a4,
   onCompare: v_bda358,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
@@ -290,12 +291,37 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
 
   const v_38756f = (item: v_218d40): HealthRecord => {
+
+    const v_b9fc6f = {};
+
+    if (v_8c0b26.vital_signs) {
+      Object.entries(v_8c0b26.vital_signs).forEach(([v_823608, v_9390e8]) => {
+        if (v_9390e8 && v_823608) {
+
+          let v_72b4e2 = v_9390e8.value;
+          if (v_823608 === 'blood_pressure' && typeof v_9390e8.value === 'object' && !Array.isArray(v_9390e8.value)) {
+            const v_25a9c7 = v_9390e8.value as any;
+            if (v_25a9c7.systolic !== undefined && v_25a9c7.diastolic !== undefined) {
+              v_72b4e2 = `${v_25a9c7.systolic || 'N/A'}/${v_25a9c7.diastolic || 'N/A'}`;
+            }
+          }
+
+          const v_d308b5 = v_9390e8.status === 'risk' ? 'risk' : 'normal';
+
+          v_b9fc6f[v_823608] = {
+            value: v_72b4e2,
+            status: v_d308b5 as 'normal' | 'risk',
+          };
+        }
+      });
+    }
+
     return {
       id: String(v_8c0b26.id),
       date: v_8c0b26.record_date,
       time: v_8c0b26.record_time,
       healthIndex: v_8c0b26.health_index,
-      items: v_ee03c5(), 
+      items: v_ee03c5(v_b9fc6f), 
     };
   };
 
@@ -315,7 +341,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           accountsCount: v_c86f08?.length || 0,
         });
 
-        const v_ee2acd = v_083682 ? undefined : v_e7b2f2;
+        const v_ee2acd = v_083682
+          ? undefined
+          : v_e7b2f2 && v_e7b2f2.startsWith('sub-')
+            ? v_e7b2f2.replace('sub-', '')
+            : v_e7b2f2;
         console.log('[HealthRecordsView] API 호출 파라미터:', {
           subAccountId: v_ee2acd,
           isMyAccount: v_083682,
@@ -725,41 +755,41 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
             </View>
           ) : (
             v_00a76c.map((v_cbbd71) => {
-            const v_d308b5 = v_54e295(v_cbbd71.healthIndex);
-            const v_599a41 = v_34779a && v_a8e397(v_cbbd71);
-            return (
-              <TouchableOpacity
-                key={v_cbbd71.id}
-                style={[v_d81136.listItem, v_599a41 && v_d81136.listItemSelected]}
-                onPress={() => v_5b20f5(v_cbbd71)}
-              >
-                <View style={v_d81136.listItemLeft}>
-                  <Text style={v_d81136.listItemDate}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
-                  <Text style={v_d81136.listItemTime}>{v_e5585e(v_cbbd71.time)}</Text>
-                </View>
-                <View style={v_d81136.listItemRight}>
-                  <Text style={v_d81136.listItemValue}>{v_cbbd71.healthIndex}</Text>
-                  <View
-                    style={[
-                      v_d81136.listItemBadge,
-                      v_d308b5 === 'high' && v_d81136.listItemBadgeHigh,
-                      v_d308b5 === 'normal' && v_d81136.listItemBadgeNormal,
-                      v_d308b5 === 'low' && v_d81136.listItemBadgeLow,
-                    ]}
-                  >
-                    <Text
+              const v_d308b5 = v_54e295(v_cbbd71.healthIndex);
+              const v_599a41 = v_34779a && v_a8e397(v_cbbd71);
+              return (
+                <TouchableOpacity
+                  key={v_cbbd71.id}
+                  style={[v_d81136.listItem, v_599a41 && v_d81136.listItemSelected]}
+                  onPress={() => v_5b20f5(v_cbbd71)}
+                >
+                  <View style={v_d81136.listItemLeft}>
+                    <Text style={v_d81136.listItemDate}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
+                    <Text style={v_d81136.listItemTime}>{v_e5585e(v_cbbd71.time)}</Text>
+                  </View>
+                  <View style={v_d81136.listItemRight}>
+                    <Text style={v_d81136.listItemValue}>{v_cbbd71.healthIndex}</Text>
+                    <View
                       style={[
-                        v_d81136.listItemBadgeText,
-                        v_d308b5 === 'high' && v_d81136.listItemBadgeTextLight,
+                        v_d81136.listItemBadge,
+                        v_d308b5 === 'high' && v_d81136.listItemBadgeHigh,
+                        v_d308b5 === 'normal' && v_d81136.listItemBadgeNormal,
+                        v_d308b5 === 'low' && v_d81136.listItemBadgeLow,
                       ]}
                     >
-                      {v_8d41d7(`health_records.list_status_${v_d308b5}`)}
-                    </Text>
+                      <Text
+                        style={[
+                          v_d81136.listItemBadgeText,
+                          v_d308b5 === 'high' && v_d81136.listItemBadgeTextLight,
+                        ]}
+                      >
+                        {v_8d41d7(`health_records.list_status_${v_d308b5}`)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })
+                </TouchableOpacity>
+              );
+            })
           )}
           {!v_cd31a8 && !v_95616f && v_678155.length > v_488860 && v_cff7c3 && (
             <TouchableOpacity style={v_d81136.loadMoreBtn} onPress={v_f660ef}>

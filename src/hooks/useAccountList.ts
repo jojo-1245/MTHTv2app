@@ -1,11 +1,19 @@
 import { v_5ab095, v_c4deb2, v_de06a3 } from 'bapkr';
+import { v_03e392 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
-import { v_766523, v_7ef860, type v_abf760 } from '../services';
+import { v_766523, v_7ef860, v_6a59bc, type v_abf760 } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_624bd2 } from '../constants';
 import type { v_70edf1 } from '../components/AccountSelector';
+
+export function v_2282da(v_2453ad): string {
+  if (v_2453ad.startsWith('sub-')) {
+    return v_2453ad.replace('sub-', '');
+  }
+  return v_2453ad;
+}
 
 export const v_9e8766 = () => {
   const { t: v_8d41d7 } = v_772971();
@@ -118,6 +126,8 @@ export const v_9e8766 = () => {
         console.log('[useAccountList] 부계정 리스트 로드 성공:', {
           count: v_28724c.length,
           accounts: JSON.stringify(v_28724c, null, 2),
+          myAccountId: v_a63cee?.id,
+          myAccountIdType: typeof v_a63cee?.id,
         });
       } catch (v_5e9bfe) {
         console.error('[useAccountList] 부계정 리스트 로드 실패:', {
@@ -136,14 +146,33 @@ export const v_9e8766 = () => {
         v_f0f175.push(v_a63cee);
       }
 
+      const v_a1e4c6 = v_a63cee?.id ? String(v_a63cee.id) : null;
       v_28724c.forEach((v_9f1d92) => {
-        if (v_9f1d92.id !== v_a63cee?.id) {
+        const v_25f3ab = String(v_9f1d92.id || '');
+
+        if (v_9f1d92.isCurrent === true && v_25f3ab === v_a1e4c6) {
+
+          console.log('[useAccountList] 로그인한 사용자 자신 필터링 (부계정 리스트에 포함됨):', {
+            accId: v_25f3ab,
+            myAccountId: v_a1e4c6,
+            accName: v_9f1d92.name,
+            accIsCurrent: v_9f1d92.isCurrent,
+          });
+        } else {
+
+          const v_ee2acd = `sub-${v_25f3ab}`;
           v_f0f175.push({
-            id: v_9f1d92.id,
+            id: v_ee2acd,
             name: v_9f1d92.name,
             isCurrent: v_9f1d92.isCurrent || false,
           });
         }
+      });
+
+      console.log('[useAccountList] 최종 계정 리스트:', {
+        totalCount: v_f0f175.length,
+        myAccountId: v_a1e4c6,
+        accounts: v_f0f175.map(v_9f1d92 => ({ id: v_9f1d92.id, name: v_9f1d92.name, isCurrent: v_9f1d92.isCurrent })),
       });
 
       if (v_f0f175.length > 0) {
@@ -171,22 +200,64 @@ export const v_9e8766 = () => {
     v_358be6();
   }, []); 
 
-  const v_5bc46a = v_de06a3((v_2453ad) => {
-    v_d690d0((v_ba2215) => {
-      const v_a448ad = v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad);
+  const v_5bc46a = v_de06a3(async (v_2453ad) => {
 
-      if (v_a448ad.length > 0) {
-        v_1f1e88(v_a448ad[0].id);
-      }
-      return v_a448ad;
-    });
-  }, []);
+    const v_2ac81e = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
+    if (v_2ac81e?.isCurrent) {
+      v_03e392.alert('알림', '현재 계정은 삭제할 수 없습니다.');
+      return;
+    }
 
-  const v_20289f = v_de06a3((v_af419b) => {
-    const v_ceee18 = String(Date.now());
-    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
-    v_1f1e88(v_ceee18);
-  }, []);
+    v_03e392.alert(
+      '부계정 삭제',
+      `${v_2ac81e?.name || '이 부계정'}을(를) 정말 삭제하시겠습니까?`,
+      [
+        {
+          text: '취소',
+          style: 'cancel',
+        },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+
+              const v_f6ed03 = v_2282da(v_2453ad);
+              await v_6a59bc(v_f6ed03);
+
+              v_d690d0((v_ba2215) => {
+                const v_a448ad = v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad);
+
+                if (v_a448ad.length > 0) {
+                  v_1f1e88(v_a448ad[0].id);
+                }
+                return v_a448ad;
+              });
+
+              await v_358be6();
+
+              v_03e392.alert('성공', '부계정이 삭제되었습니다.');
+            } catch (v_5e9bfe) {
+              console.error('[useAccountList] 부계정 삭제 실패:', v_5e9bfe);
+              if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+                return;
+              }
+              v_03e392.alert(
+                '오류',
+                v_5e9bfe instanceof Error ? v_5e9bfe.message : '부계정 삭제에 실패했습니다.'
+              );
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  }, [v_c86f08, v_c65f5d, v_358be6]);
+
+  const v_20289f = v_de06a3(() => {
+
+    v_358be6();
+  }, [v_358be6]);
 
   return {
     accounts: v_c86f08,

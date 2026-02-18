@@ -17,7 +17,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d } from '../../components';
 import { v_047250 } from './components';
 import type { v_5d13be } from './components/HealthRecordsView';
 import type { v_8ad91b } from '../../navigation';
@@ -30,6 +30,7 @@ import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
+import { v_207199 } from '../../services';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -614,7 +615,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544 } = v_c7daf6.params;
+  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
 
@@ -623,17 +624,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   ];
   const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
   const [v_e7b2f2, v_1f1e88] = v_5ab095(v_565544 || '1');
-  const [v_f4c7be, v_d5a103] = v_5ab095(false);
 
   const v_5bc46a = (v_2453ad) => {
     v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
     v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
-  };
-
-  const v_20289f = (v_af419b) => {
-    const v_ceee18 = String(Date.now());
-    v_d690d0((v_ba2215) => [...v_ba2215, { id: v_ceee18, name: `사용자 ${v_af419b.slice(-2)}`, isCurrent: false }]);
-    v_1f1e88(v_ceee18);
   };
 
   const [v_571c37, v_e78f19] = v_5ab095<Record<number, boolean>>({});
@@ -1128,6 +1122,202 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     () => v_2586c7(v_df7b8f(v_e3e816.WELLNESS_LEVEL)),
     [v_a7f568],
   );
+
+  const v_02a5a0 = v_e662ae<boolean>(false);
+  const v_f013b2 = v_e662ae<string | null>(null);
+
+  v_a3453e.useEffect(() => {
+    const v_329ab2 = async () => {
+      if (!v_a7f568 || Object.keys(v_a7f568).length === 0) {
+        return;
+      }
+
+      if (v_02a5a0.current && v_f013b2.current === v_42044e) {
+        if (__DEV__) {
+          console.log('[HealthAnalysisResultScreen] 이미 저장된 측정 결과 - 중복 저장 방지:', {
+            timestamp: v_42044e,
+            savedTimestamp: v_f013b2.current,
+          });
+        }
+        return;
+      }
+
+      try {
+
+        const v_80d73f = new Date(v_42044e);
+
+        const v_0eaaff = v_80d73f.getFullYear();
+        const v_033a94 = String(v_80d73f.getMonth() + 1).padStart(2, '0');
+        const v_087ffc = String(v_80d73f.getDate()).padStart(2, '0');
+        const v_067e65 = `${v_0eaaff}-${v_033a94}-${v_087ffc}`;
+
+        const v_12ebc1 = String(v_80d73f.getHours()).padStart(2, '0');
+        const v_ef3543 = String(v_80d73f.getMinutes()).padStart(2, '0');
+        const v_dcf6a6 = `${v_12ebc1}:${v_ef3543}`;
+
+        const v_1689c5 = v_2586c7(v_df7b8f(v_e3e816.WELLNESS_INDEX));
+        const v_e93dff = v_1689c5 !== null ? v_1689c5 : 0;
+
+        const v_477184 = (v_a56041): string => {
+          if (v_a56041 >= 7) return 'good';
+          if (v_a56041 >= 4) return 'normal';
+          return 'bad';
+        };
+        const v_30ddf9 = v_477184(v_e93dff);
+
+        const v_0946e7 = {};
+
+        const v_13d5ab = (v_653390): string => {
+          const v_f2dfb8 = {
+            [v_e3e816.PULSE_RATE]: 'pulse_rate',
+            [v_e3e816.RESPIRATION_RATE]: 'respiration_rate',
+            [v_e3e816.OXYGEN_SATURATION]: 'oxygen_saturation',
+            [v_e3e816.BLOOD_PRESSURE]: 'blood_pressure',
+            [v_e3e816.SDNN]: 'sdnn',
+            [v_e3e816.RMSSD]: 'rmssd',
+            [v_e3e816.MEAN_RRI]: 'mean_rri',
+            [v_e3e816.SD1]: 'sd1',
+            [v_e3e816.SD2]: 'sd2',
+            [v_e3e816.SNS_ZONE]: 'sns_zone',
+            [v_e3e816.SNS_INDEX]: 'sns_index',
+            [v_e3e816.STRESS_LEVEL]: 'stress_level',
+            [v_e3e816.STRESS_INDEX]: 'stress_index',
+            [v_e3e816.NORMALIZED_STRESS_INDEX]: 'normalized_stress_index',
+            [v_e3e816.PNS_ZONE]: 'pns_zone',
+            [v_e3e816.PNS_INDEX]: 'pns_index',
+            [v_e3e816.PRQ]: 'prq',
+            [v_e3e816.HEMOGLOBIN]: 'hemoglobin',
+            [v_e3e816.HEMOGLOBIN_A1C]: 'hemoglobin_a1c',
+            [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: 'high_hemoglobin_a1c_risk',
+            [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: 'high_blood_pressure_risk',
+            [v_e3e816.ASCVD_RISK]: 'ascvd_risk',
+            [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: 'high_fasting_glucose_risk',
+            [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: 'high_total_cholesterol_risk',
+            [v_e3e816.LOW_HEMOGLOBIN_RISK]: 'low_hemoglobin_risk',
+            [v_e3e816.HEART_AGE]: 'heart_age',
+            [v_e3e816.CARDIAC_WORKLOAD]: 'cardiac_workload',
+            [v_e3e816.PULSE_PRESSURE]: 'pulse_pressure',
+            [v_e3e816.MEAN_ARTERIAL_PRESSURE]: 'mean_arterial_pressure',
+            [v_e3e816.LFHF]: 'lfhf',
+            [v_e3e816.ASCVD_RISK_LEVEL]: 'ascvd_risk_level',
+            [v_e3e816.BODY_TENSION_SCORE]: 'body_tension_score',
+            [v_e3e816.WELLNESS_INDEX]: 'wellness_index',
+            [v_e3e816.WELLNESS_LEVEL]: 'wellness_level',
+          };
+
+          if (!v_f2dfb8[v_653390]) {
+
+            return `unknown_${v_653390}`;
+          }
+          return v_f2dfb8[v_653390];
+        };
+
+        Object.entries(v_a7f568).forEach(([v_3b27d9, v_9390e8]) => {
+          const v_653390 = Number(v_3b27d9);
+          const v_3b402b = (v_9390e8 as any).value;
+
+          if (v_3b402b !== null && v_3b402b !== undefined) {
+
+            const v_823608 = v_13d5ab(v_653390);
+
+            let v_d308b5 = (v_9390e8 as any).status;
+            if (!v_d308b5) {
+
+              const v_c4180e = v_0aaeba(v_653390, v_3b402b);
+
+              v_d308b5 = v_c4180e === '위험' ? 'risk' : (v_c4180e === '정상' ? 'normal' : undefined);
+            } else if (v_d308b5 === '정상' || v_d308b5 === '위험') {
+
+              v_d308b5 = v_d308b5 === '위험' ? 'risk' : 'normal';
+            }
+
+            v_0946e7[v_823608] = {
+              value: v_3b402b,
+              ...(v_d308b5 && { status: v_d308b5 }),
+              ...((v_9390e8 as any).confidence && { confidence: (v_9390e8 as any).confidence }),
+            };
+          }
+        });
+
+        const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+        const v_083682 = v_0c2f9b?.isCurrent === true;
+
+        const v_f6ed03 = v_e7b2f2 && v_e7b2f2.startsWith('sub-')
+          ? v_e7b2f2.replace('sub-', '')
+          : v_e7b2f2;
+        const v_ee2acd = v_083682 ? undefined : (v_f6ed03 && v_f6ed03 !== '1' && v_f6ed03 !== 'me' ? Number(v_f6ed03) : undefined);
+
+        const v_60e8e0 = {
+          record_date: v_067e65, 
+          record_time: v_dcf6a6, 
+          health_index: v_e93dff,
+          health_level: v_30ddf9,
+          vital_signs: v_0946e7,
+          ...(v_ee2acd && { sub_account_id: v_ee2acd }),
+          metadata: {
+            device: 'FzljtiliSignal SDK',
+            timestamp: v_42044e,
+
+            ...(v_bb789b && {
+              user_info: {
+                ...(v_bb789b.age && { age: v_bb789b.age }),
+                ...(v_bb789b.gender && { gender: v_bb789b.gender }),
+                ...(v_bb789b.weight && { weight: v_bb789b.weight }),
+                ...(v_bb789b.height && { height: v_bb789b.height }),
+                ...(v_bb789b.smokingStatus && { smoking_status: v_bb789b.smokingStatus }),
+                ...(v_bb789b.bloodPressureStatus && { blood_pressure_status: v_bb789b.bloodPressureStatus }),
+              },
+            }),
+          },
+        };
+
+        if (__DEV__) {
+          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 시작:', {
+            recordDate: v_067e65,
+            recordTime: v_dcf6a6,
+            healthIndex: v_e93dff,
+            healthLevel: v_30ddf9,
+            subAccountId: v_ee2acd,
+            isMyAccount: v_083682,
+            vitalSignsCount: Object.keys(v_0946e7).length,
+            payload: {
+              ...v_60e8e0,
+              vital_signs: '[...]', 
+            },
+          });
+          console.log('[HealthAnalysisResultScreen] vital_signs 전체 데이터:', JSON.stringify(v_0946e7, null, 2));
+        }
+
+        const v_23eae7 = await v_207199(v_60e8e0);
+
+        v_02a5a0.current = true;
+        v_f013b2.current = v_42044e;
+
+        if (__DEV__) {
+          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 성공 - 응답 정보:', {
+            savedRecord: JSON.stringify(v_23eae7, null, 2),
+            id: v_23eae7.id,
+            record_date: v_23eae7.record_date,
+            record_time: v_23eae7.record_time,
+            health_index: v_23eae7.health_index,
+            health_level: v_23eae7.health_level,
+            created_at: v_23eae7.created_at,
+          });
+        }
+      } catch (v_5e9bfe) {
+        console.error('[HealthAnalysisResultScreen] 건강 측정 저장 실패:', {
+          error: v_5e9bfe,
+          errorMessage: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+          stack: v_5e9bfe instanceof Error ? v_5e9bfe.stack : undefined,
+        });
+
+      }
+    };
+
+    v_329ab2();
+
+  }, [v_42044e]); 
+
   const v_afc36a = v_df9f57(() => {
     if (v_6f0881 === 'wellnessIndex') {
       return v_8d41d7('health_analysis.result.wellness_score_help_text');
@@ -1923,18 +2113,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               accounts={v_c86f08}
               selectedAccountId={v_e7b2f2}
               onSelectAccount={v_1f1e88}
-              onAddSubAccount={() => v_d5a103(true)}
+              onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
               onDeleteAccount={v_5bc46a}
             />
           ) : (
             <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
           )}
         </View>
-        <AddUserModal
-          visible={v_f4c7be}
-          onClose={() => v_d5a103(false)}
-          onAdd={v_20289f}
-        />
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}
@@ -2820,6 +3005,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
                       v_c65f5d.navigate('HealthAnalysis', {
                         initialTab: 'measure',
+                        resetToIntro: true, 
                       });
                     }}
                   />

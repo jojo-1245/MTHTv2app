@@ -8,8 +8,21 @@ export {
 } from './authApi';
 export type { LoginAuthPayload, MeProfile, UpdateProfilePayload } from './authApi';
 
-export { getSubAccountList } from './accountApi';
-export type { SubAccountItem, SubAccountListResponse } from './accountApi';
+export {
+  getSubAccountList,
+  searchMember,
+  addSubAccount,
+  deleteSubAccount,
+  requestFamilyOtp,
+  linkFamilyAccount,
+} from './accountApi';
+export type {
+  SubAccountItem,
+  SubAccountListResponse,
+  MemberSearchResult,
+  MemberSearchResponse,
+  AddSubAccountPayload,
+} from './accountApi';
 
-export { getHealthRecords } from './healthApi';
-export type { HealthRecordItem, HealthRecordsResponse } from './healthApi';
+export { getHealthRecords, saveHealthRecord } from './healthApi';
+export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload } from './healthApi';

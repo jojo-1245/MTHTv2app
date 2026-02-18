@@ -46,6 +46,7 @@ import {
     type v_38cf4d,
 } from '../../services/skinAnalysis';
 import { v_9e8766 } from '../../hooks';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -281,9 +282,16 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         setSelectedAccountId: v_1f1e88,
         handleDeleteAccount: v_5bc46a,
         handleAddUser: v_20289f,
+        reloadAccounts: v_604e0f,
     } = v_9e8766();
 
     const [v_f4c7be, v_d5a103] = v_5ab095(false);
+
+    v_cf763b(
+        v_de06a3(() => {
+            v_604e0f();
+        }, [v_604e0f])
+    );
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
 

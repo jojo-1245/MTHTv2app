@@ -40,6 +40,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
+  const v_e71371 = v_727031?.business === 1 || v_727031?.business === true;
 
   const v_63c23a = async () => {
     v_34a50a(true);
@@ -218,7 +219,14 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.profileCard}>
             <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
             <View style={v_d81136.profileInfo}>
-              <Text style={v_d81136.name}>{v_8a1355}</Text>
+              <View style={v_d81136.nameRow}>
+                <Text style={v_d81136.name}>{v_8a1355}</Text>
+                {v_e71371 && (
+                  <View style={v_d81136.businessBadge}>
+                    <Text style={v_d81136.businessBadgeText}>비즈니스</Text>
+                  </View>
+                )}
+              </View>
               <Text style={v_d81136.email}>{v_b43178}</Text>
             </View>
             <TouchableOpacity
@@ -416,11 +424,28 @@ const v_d81136 = v_472849.create({
   profileInfo: {
     flex: 1,
   },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 2,
+  },
   name: {
     fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
-    marginBottom: 2,
+  },
+  businessBadge: {
+    backgroundColor: '#3B82F6',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  businessBadgeText: {
+    fontSize: 11,
+    fontFamily: v_843035.bold,
+    color: '#FFFFFF',
   },
   email: {
     fontSize: v_ef658a.small,

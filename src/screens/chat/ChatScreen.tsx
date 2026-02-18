@@ -22,12 +22,13 @@ import { v_c940dd, v_b6b6d9, v_2af98c } from 'wjvlskvsbzsrojdbjsl';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_729608, v_556baf, v_5deec6, v_1c1837, v_d3705d, v_ee2389 } from '../../components';
+import { v_729608, v_556baf, v_5deec6, v_1c1837, v_d3705d } from '../../components';
 import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_9e8766 } from '../../hooks';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -139,9 +140,15 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     setSelectedAccountId: v_1f1e88,
     handleDeleteAccount: v_5bc46a,
     handleAddUser: v_20289f,
+    reloadAccounts: v_604e0f,
   } = v_9e8766();
 
-  const [v_f4c7be, v_d5a103] = v_5ab095(false);
+  v_cf763b(
+    v_de06a3(() => {
+      v_604e0f();
+    }, [v_604e0f])
+  );
+
   const [v_7e4acc, v_de86c2] = v_5ab095(0);
   const [v_8b20f6, v_d60b8e] = v_5ab095<{
     [messageId: string]: { selectedIds: string[]; otherValues: string[]; showOtherInput: boolean; otherInputText: string };
@@ -1057,7 +1064,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 accounts={v_c86f08}
                 selectedAccountId={v_e7b2f2}
                 onSelectAccount={v_07b9b4}
-                onAddSubAccount={() => v_d5a103(true)}
+                onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
                 onDeleteAccount={v_5bc46a}
               />
             </View>
@@ -1095,11 +1102,6 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
           </View>
         </KeyboardAvoidingView>
 
-        <AddUserModal
-          visible={v_f4c7be}
-          onClose={() => v_d5a103(false)}
-          onAdd={v_20289f}
-        />
       </SafeView>
 
       <SidebarMenu
