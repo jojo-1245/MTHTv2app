@@ -255,6 +255,41 @@ const v_488860 = 5;
 
 const v_637b1c = ['일', '월', '화', '수', '목', '금', '토'];
 
+export const v_38756f = (item: v_218d40): HealthRecord => {
+
+  const v_b9fc6f = {};
+
+  if (v_8c0b26.vital_signs) {
+    Object.entries(v_8c0b26.vital_signs).forEach(([v_823608, v_9390e8]) => {
+      if (v_9390e8 && v_823608) {
+
+        let v_72b4e2 = v_9390e8.value;
+        if (v_823608 === 'blood_pressure' && typeof v_9390e8.value === 'object' && !Array.isArray(v_9390e8.value)) {
+          const v_25a9c7 = v_9390e8.value as any;
+          if (v_25a9c7.systolic !== undefined && v_25a9c7.diastolic !== undefined) {
+            v_72b4e2 = `${v_25a9c7.systolic || 'N/A'}/${v_25a9c7.diastolic || 'N/A'}`;
+          }
+        }
+
+        const v_d308b5 = v_9390e8.status === 'risk' ? 'risk' : 'normal';
+
+        v_b9fc6f[v_823608] = {
+          value: v_72b4e2,
+          status: v_d308b5 as 'normal' | 'risk',
+        };
+      }
+    });
+  }
+
+  return {
+    id: String(v_8c0b26.id),
+    date: v_8c0b26.record_date,
+    time: v_8c0b26.record_time,
+    healthIndex: v_8c0b26.health_index,
+    items: v_ee03c5(v_b9fc6f), 
+  };
+};
+
 interface HealthRecordsViewProps {
   onStartComparativeAnalysis?: () => void;
   onCompare?: (records: [HealthRecord, HealthRecord]) => void;
@@ -291,41 +326,6 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   const [v_678155, v_9ed182] = v_5ab095<HealthRecord[]>([]);
   const [v_cd31a8, v_deef62] = v_5ab095(false);
   const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
-
-  const v_38756f = (item: v_218d40): HealthRecord => {
-
-    const v_b9fc6f = {};
-
-    if (v_8c0b26.vital_signs) {
-      Object.entries(v_8c0b26.vital_signs).forEach(([v_823608, v_9390e8]) => {
-        if (v_9390e8 && v_823608) {
-
-          let v_72b4e2 = v_9390e8.value;
-          if (v_823608 === 'blood_pressure' && typeof v_9390e8.value === 'object' && !Array.isArray(v_9390e8.value)) {
-            const v_25a9c7 = v_9390e8.value as any;
-            if (v_25a9c7.systolic !== undefined && v_25a9c7.diastolic !== undefined) {
-              v_72b4e2 = `${v_25a9c7.systolic || 'N/A'}/${v_25a9c7.diastolic || 'N/A'}`;
-            }
-          }
-
-          const v_d308b5 = v_9390e8.status === 'risk' ? 'risk' : 'normal';
-
-          v_b9fc6f[v_823608] = {
-            value: v_72b4e2,
-            status: v_d308b5 as 'normal' | 'risk',
-          };
-        }
-      });
-    }
-
-    return {
-      id: String(v_8c0b26.id),
-      date: v_8c0b26.record_date,
-      time: v_8c0b26.record_time,
-      healthIndex: v_8c0b26.health_index,
-      items: v_ee03c5(v_b9fc6f), 
-    };
-  };
 
   v_c4deb2(() => {
     const v_efc1dd = async () => {

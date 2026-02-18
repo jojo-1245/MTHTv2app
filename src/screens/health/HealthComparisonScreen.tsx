@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_df9f57 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_df9f57, v_c4deb2 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -7,6 +7,8 @@ import {
   v_aa7413,
   v_09d0e5,
   v_122070,
+  v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
@@ -17,7 +19,9 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../constants';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_5d13be, v_b703a5 } from './components/HealthRecordsView';
-import { v_bcb8af } from './components/HealthRecordsView';
+import { v_bcb8af, v_38756f } from './components/HealthRecordsView';
+import { v_a55499, type v_c052e5 } from '../../services';
+import { v_998b9d } from '../../utils/authErrorHandler';
 
 const v_bd24d7 = v_bcb8af.flatMap((v_fd5f43) => v_fd5f43.itemKeys);
 
@@ -176,6 +180,76 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     () => new Set(v_bd24d7)
   );
 
+  const [v_dcc13b, v_1a48f5] = v_5ab095<v_5d13be | null>(null);
+  const [v_7f4b4c, v_4d426d] = v_5ab095<v_5d13be | null>(null);
+  const [v_b34779, v_8c8090] = v_5ab095<v_c052e5['comparison'] | null>(null);
+  const [v_cd31a8, v_deef62] = v_5ab095(true);
+  const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
+
+  v_c4deb2(() => {
+    const v_4cdaab = async () => {
+      try {
+        v_deef62(true);
+        v_885e0e(null);
+
+        const v_6e9c44 = parseInt(v_1a2523.id, 10);
+        const v_57c916 = parseInt(v_fe1802.id, 10);
+
+        if (isNaN(v_6e9c44) || isNaN(v_57c916)) {
+          throw new Error('유효하지 않은 기록 ID입니다.');
+        }
+
+        if (__DEV__) {
+          console.log('[HealthComparisonScreen] 비교 API 호출:', {
+            recordIds: [v_6e9c44, v_57c916],
+          });
+        }
+
+        const v_3393e3 = await v_a55499([v_6e9c44, v_57c916]);
+
+        if (__DEV__) {
+          console.log('[HealthComparisonScreen] 비교 API 응답:', {
+            recordsCount: v_3393e3.records.length,
+            hasComparison: !!v_3393e3.comparison,
+            comparisonKeys: v_3393e3.comparison ? Object.keys(v_3393e3.comparison.vital_signs_changes) : [],
+          });
+        }
+
+        const v_dc0b95 = v_38756f(v_3393e3.records[0]);
+        const v_40a830 = v_38756f(v_3393e3.records[1]);
+
+        v_1a48f5(v_dc0b95);
+        v_4d426d(v_40a830);
+        v_8c8090(v_3393e3.comparison);
+      } catch (v_5e9bfe) {
+        console.error('[HealthComparisonScreen] 비교 데이터 로드 실패:', v_5e9bfe);
+        v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('비교 데이터를 불러오는데 실패했습니다.'));
+
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
+
+        v_03e392.alert(
+          '오류',
+          v_5e9bfe instanceof Error ? v_5e9bfe.message : '비교 데이터를 불러오는데 실패했습니다.',
+          [
+            {
+              text: '확인',
+              onPress: () => v_c65f5d.goBack(),
+            },
+          ]
+        );
+      } finally {
+        v_deef62(false);
+      }
+    };
+
+    v_4cdaab();
+  }, [v_1a2523.id, v_fe1802.id, v_c65f5d]);
+
+  const v_76e298 = v_dcc13b || v_1a2523;
+  const v_797415 = v_7f4b4c || v_fe1802;
+
   const v_0ab8c5 = (v_b24339) => {
     v_3cc752((v_ba2215) => {
       const v_a448ad = new Set(v_ba2215);
@@ -199,10 +273,10 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 
   const v_3f609a = v_df9f57(() => {
     const v_35f85c = {};
-    v_1a2523.items.forEach((v_8c0b26) => { v_35f85c[v_8c0b26.key] = v_8c0b26.labelKey; });
-    v_fe1802.items.forEach((v_8c0b26) => { v_35f85c[v_8c0b26.key] = v_8c0b26.labelKey; });
+    v_76e298.items.forEach((v_8c0b26) => { v_35f85c[v_8c0b26.key] = v_8c0b26.labelKey; });
+    v_797415.items.forEach((v_8c0b26) => { v_35f85c[v_8c0b26.key] = v_8c0b26.labelKey; });
     return v_35f85c;
-  }, [v_1a2523, v_fe1802]);
+  }, [v_76e298, v_797415]);
 
   const v_0da646 = (record: v_5d13be, v_b24339): v_b703a5 | undefined =>
     v_cbbd71.items.find((v_ebec57) => v_ebec57.key === v_b24339);
@@ -214,6 +288,41 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     return `${v_38e403 ? '오후' : '오전'} ${v_a7745c}:${v_43e24b}`;
   };
 
+  if (v_cd31a8) {
+    return (
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
+        <Header
+          variant="healthAnalysis"
+          title={v_8d41d7('health_records.compare_analysis_title')}
+          showBackButton
+          onBackPress={() => v_c65f5d.goBack()}
+        />
+        <View style={v_d81136.loadingContainer}>
+          <ActivityIndicator size="large" color={v_1bfbd0.buttonPrimary} />
+          <Text style={v_d81136.loadingText}>비교 데이터를 불러오는 중...</Text>
+        </View>
+      </SafeView>
+    );
+  }
+
+  if (v_95616f || !v_dcc13b || !v_7f4b4c) {
+    return (
+      <SafeView style={v_d81136.screen} showBottomBackground={false}>
+        <Header
+          variant="healthAnalysis"
+          title={v_8d41d7('health_records.compare_analysis_title')}
+          showBackButton
+          onBackPress={() => v_c65f5d.goBack()}
+        />
+        <View style={v_d81136.errorContainer}>
+          <Text style={v_d81136.errorText}>
+            {v_95616f?.message || '비교 데이터를 불러오는데 실패했습니다.'}
+          </Text>
+        </View>
+      </SafeView>
+    );
+  }
+
   return (
     <SafeView style={v_d81136.screen} showBottomBackground={false}>
       <Header
@@ -222,16 +331,13 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
         rightAccessory={
-          <View style={v_d81136.headerRightRow}>
-            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
-            <TouchableOpacity
-              style={v_d81136.headerItemSelectBtn}
-              onPress={() => v_41fe7e(true)}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={v_d81136.headerItemSelectBtn}
+            onPress={() => v_41fe7e(true)}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="checkbox" size={24} color={v_1bfbd0.buttonPrimary} />
+          </TouchableOpacity>
         }
       />
       <SafeScrollView
@@ -239,17 +345,20 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         showsVerticalScrollIndicator={false}
       >
         {}
-        <Text style={v_d81136.sectionTitle}>{v_8d41d7('health_records.health_index')}</Text>
+        <View style={v_d81136.sectionTitleRow}>
+          <Text style={v_d81136.sectionTitle}>{v_8d41d7('health_records.health_index')}</Text>
+          <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+        </View>
         <View style={v_d81136.healthIndexRow}>
           <HealthIndexGauge
-            score={v_1a2523.healthIndex}
-            date={v_c1c940(v_1a2523.date)}
-            time={v_22e3c0(v_1a2523.date, v_1a2523.time)}
+            score={v_76e298.healthIndex}
+            date={v_c1c940(v_76e298.date)}
+            time={v_22e3c0(v_76e298.date, v_76e298.time)}
           />
           <HealthIndexGauge
-            score={v_fe1802.healthIndex}
-            date={v_c1c940(v_fe1802.date)}
-            time={v_22e3c0(v_fe1802.date, v_fe1802.time)}
+            score={v_797415.healthIndex}
+            date={v_c1c940(v_797415.date)}
+            time={v_22e3c0(v_797415.date, v_797415.time)}
           />
         </View>
 
@@ -259,18 +368,24 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
             <View style={v_d81136.measureDateHeaderLabel} />
             <View style={v_d81136.measureColHeaderDateWrap}>
               <Text style={v_d81136.measureColHeader} numberOfLines={1}>
-                {v_c1c940(v_1a2523.date)}
+                {v_c1c940(v_76e298.date)}
+              </Text>
+              <Text style={v_d81136.measureColHeaderTime} numberOfLines={1}>
+                {v_22e3c0(v_76e298.date, v_76e298.time)}
               </Text>
             </View>
             <View style={v_d81136.measureColHeaderDateWrap}>
               <Text style={v_d81136.measureColHeader} numberOfLines={1}>
-                {v_c1c940(v_fe1802.date)}
+                {v_c1c940(v_797415.date)}
+              </Text>
+              <Text style={v_d81136.measureColHeaderTime} numberOfLines={1}>
+                {v_22e3c0(v_797415.date, v_797415.time)}
               </Text>
             </View>
           </View>
           {v_15f2ac.map((v_b4fa6c) => {
-            const v_b50afc = v_1a2523.items.filter((v_ebec57) => v_b4fa6c.itemKeys.includes(v_ebec57.key));
-            const v_1c5035 = v_fe1802.items.filter((v_ebec57) => v_b4fa6c.itemKeys.includes(v_ebec57.key));
+            const v_b50afc = v_76e298.items.filter((v_ebec57) => v_b4fa6c.itemKeys.includes(v_ebec57.key));
+            const v_1c5035 = v_797415.items.filter((v_ebec57) => v_b4fa6c.itemKeys.includes(v_ebec57.key));
             const v_e66bb4 = [...new Set([...v_b50afc.map((v_ebec57) => v_ebec57.key), ...v_1c5035.map((v_ebec57) => v_ebec57.key)])];
             if (v_e66bb4.length === 0) return null;
 
@@ -281,11 +396,48 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                   <Text style={v_d81136.measureSectionTitle}>{v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
                 </View>
                 {v_e66bb4.map((v_b24339) => {
-                  const v_468f95 = v_0da646(v_1a2523, v_b24339);
-                  const v_676a19 = v_0da646(v_fe1802, v_b24339);
+                  const v_468f95 = v_0da646(v_76e298, v_b24339);
+                  const v_676a19 = v_0da646(v_797415, v_b24339);
                   if (!v_468f95 && !v_676a19) return null;
                   const v_9eee7f = v_468f95 || v_676a19!;
                   const v_80cae9 = v_9eee7f.unit;
+
+                  const v_a4170c = v_b34779?.vital_signs_changes?.[v_b24339];
+                  let v_a41a1b = null;
+
+                  if (v_a4170c) {
+
+                    if ('diff' in v_a4170c) {
+                      v_a41a1b = v_a4170c.diff;
+                    } else if ('diastolic' in v_a4170c && 'systolic' in v_a4170c) {
+
+                      v_a41a1b = v_a4170c.systolic?.diff ?? null;
+                    }
+                  } else {
+
+                    const v_b63c54 = (item: v_b703a5 | undefined): number | null => {
+                      if (!v_8c0b26) return null;
+                      const v_a057b5 = v_8c0b26.value;
+                      if (typeof v_a057b5 === 'number') return v_a057b5;
+                      if (typeof v_a057b5 === 'string') {
+                        if (v_b24339 === 'blood_pressure' && v_a057b5.includes('/')) {
+                          const v_468545 = v_a057b5.split('/');
+                          const v_e7392b = parseFloat(v_468545[0]);
+                          return isNaN(v_e7392b) ? null : v_e7392b;
+                        }
+                        const v_0ad8c5 = parseFloat(v_a057b5);
+                        return isNaN(v_0ad8c5) ? null : v_0ad8c5;
+                      }
+                      return null;
+                    };
+
+                    const v_aed50b = v_b63c54(v_468f95);
+                    const v_45bb1e = v_b63c54(v_676a19);
+                    if (v_aed50b !== null && v_45bb1e !== null) {
+                      v_a41a1b = v_45bb1e - v_aed50b;
+                      if (Math.abs(v_a41a1b) < 0.1) v_a41a1b = 0;
+                    }
+                  }
 
                   return (
                     <View key={v_b24339} style={v_d81136.measureRow}>
@@ -303,7 +455,14 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                           </View>
                         </View>
                         <View style={v_d81136.measureValueCol}>
-                          <Text style={v_d81136.measureValue}>{v_676a19 ? String(v_676a19.value) : '-'}</Text>
+                          <View style={v_d81136.measureValueWithDiff}>
+                            <Text style={v_d81136.measureValue}>{v_676a19 ? String(v_676a19.value) : '-'}</Text>
+                            {v_a41a1b !== null && v_a41a1b !== 0 && (
+                              <Text style={[v_d81136.measureDiff, { color: v_a41a1b > 0 ? '#22C55E' : '#DC2626' }]}>
+                                {v_a41a1b > 0 ? '+' : ''}{v_a41a1b % 1 === 0 ? v_a41a1b.toString() : v_a41a1b.toFixed(1)}
+                              </Text>
+                            )}
+                          </View>
                           <View style={[v_d81136.measureBadge, v_676a19?.status === 'risk' ? v_d81136.measureBadgeRisk : v_d81136.measureBadgeNormal]}>
                             <Text style={v_d81136.measureBadgeText}>
                               {v_676a19 ? (v_676a19.status === 'risk' ? v_8d41d7('health_records.status_risk') : v_8d41d7('health_records.status_normal')) : '-'}
@@ -520,13 +679,18 @@ const v_d81136 = v_472849.create({
   container: {
     paddingBottom: v_9b1a04.xlarge * 2,
   },
+  sectionTitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: v_9b1a04.large,
+    marginTop: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
   sectionTitle: {
     fontSize: v_ef658a.large,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
-    marginHorizontal: v_9b1a04.large,
-    marginTop: v_9b1a04.medium,
-    marginBottom: v_9b1a04.small,
   },
   healthIndexRow: {
     flexDirection: 'row',
@@ -580,6 +744,12 @@ const v_d81136 = v_472849.create({
     color: v_1bfbd0.text,
     letterSpacing: -0.5,
   },
+  measureColHeaderTime: {
+    fontSize: 10,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    marginTop: 2,
+  },
   measureRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -610,10 +780,19 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     flex: 1,
   },
+  measureValueWithDiff: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
   measureValue: {
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
+  },
+  measureDiff: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
   },
   measureBadge: {
     marginTop: 4,

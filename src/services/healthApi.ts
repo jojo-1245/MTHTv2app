@@ -55,6 +55,29 @@ export interface SaveHealthRecordPayload {
   metadata?: Record<string, any>; 
 }
 
+export interface CompareHealthRecordsPayload {
+  record_ids: number[];
+}
+
+export interface CompareHealthRecordsResponse {
+  records: HealthRecordItem[];
+  comparison: {
+    health_index_changes: {
+      from: number;
+      to: number;
+      diff: number;
+    };
+    vital_signs_changes: Record<string, {
+      from: number;
+      to: number;
+      diff: number;
+    } | {
+      diastolic?: { from: number; to: number; diff: number };
+      systolic?: { from: number; to: number; diff: number };
+    }>;
+  };
+}
+
 function v_1bbaa4(v_5e9bfe): Error {
   if (v_b5030f.isAxiosError(v_5e9bfe)) {
     const v_8a7529 = v_5e9bfe.response?.data as ApiResponse<unknown> | undefined;
@@ -318,6 +341,97 @@ export async function v_d531ea(v_fbf3b0): Promise<HealthRecordItem> {
   } catch (v_5e9bfe) {
     if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
       console.error('[healthApi] getHealthRecordById 에러:', {
+        status: v_5e9bfe.response?.status,
+        data: v_5e9bfe.response?.data,
+        message: v_5e9bfe.message,
+      });
+    }
+
+    if (v_b5030f.isAxiosError(v_5e9bfe) && v_5e9bfe.response?.status === 401) {
+      throw new Error('로그인이 필요합니다.');
+    }
+
+    throw v_1bbaa4(v_5e9bfe);
+  }
+}
+
+export async function v_a55499(v_9dd532): Promise<CompareHealthRecordsResponse> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  if (!Array.isArray(v_9dd532) || v_9dd532.length < 2) {
+    throw new Error('비교하려면 최소 2개의 기록이 필요합니다.');
+  }
+
+  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
+    if (v_0e3b5e) {
+      try {
+        const v_660822 = JSON.parse(v_0e3b5e) as Record<string, unknown>;
+        const v_8d41d7 = v_660822?.accessToken ?? v_660822?.access_token ?? v_660822?.token;
+        if (typeof v_8d41d7 === 'string') v_21cc31 = v_8d41d7;
+      } catch {
+
+      }
+    }
+  }
+  if (!v_21cc31) {
+    if (__DEV__) {
+      console.warn('[healthApi] compareHealthRecords: 저장된 토큰 없음. 로그인 필요.');
+    }
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  try {
+    const v_3f4675 = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${v_21cc31}`,
+    };
+
+    const v_931bf0 = {
+      record_ids: v_9dd532,
+    };
+
+    const v_f71b56 = `${v_fed274}/oth-path`;
+    if (__DEV__) {
+      console.log('[healthApi] compareHealthRecords 요청:', {
+        url: v_f71b56,
+        payload: v_931bf0,
+      });
+    }
+
+    const v_8f00b9 = await v_b5030f.post<ApiResponse<CompareHealthRecordsResponse>>(v_f71b56, v_931bf0, {
+      timeout: v_8a74cb,
+      headers: v_3f4675,
+    });
+
+    if (__DEV__) {
+      console.log('[healthApi] compareHealthRecords 원본 응답:', {
+        status: v_8f00b9.status,
+        data: JSON.stringify(v_8f00b9.data, null, 2),
+      });
+    }
+
+    const v_9390e8 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as CompareHealthRecordsResponse);
+
+    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.records)) {
+      throw new Error('건강 기록 비교 응답 형식이 올바르지 않습니다.');
+    }
+
+    if (__DEV__) {
+      console.log('[healthApi] compareHealthRecords 파싱된 데이터:', {
+        recordsCount: v_9390e8.records.length,
+        hasComparison: !!v_9390e8.comparison,
+        comparisonKeys: v_9390e8.comparison ? Object.keys(v_9390e8.comparison) : [],
+      });
+    }
+
+    return v_9390e8;
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+      console.error('[healthApi] compareHealthRecords 에러:', {
         status: v_5e9bfe.response?.status,
         data: v_5e9bfe.response?.data,
         message: v_5e9bfe.message,
