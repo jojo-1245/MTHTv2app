@@ -134,7 +134,9 @@ export type RootStackParamList = {
     initialSearchText?: string;
     initialHealthInfo?: { id: string; name: string } | null;
   } | undefined;
-  AddSubAccount: undefined;
+  AddSubAccount: {
+    showEmailSearch?: boolean; 
+  } | undefined;
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();

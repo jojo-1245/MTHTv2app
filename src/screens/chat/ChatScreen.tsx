@@ -140,6 +140,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     setSelectedAccountId: v_1f1e88,
     handleDeleteAccount: v_5bc46a,
     handleAddUser: v_20289f,
+    handleLinkEmail: v_42b67a,
     reloadAccounts: v_604e0f,
   } = v_9e8766();
 
@@ -1066,6 +1067,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 onSelectAccount={v_07b9b4}
                 onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
                 onDeleteAccount={v_5bc46a}
+                onLinkEmail={v_42b67a}
               />
             </View>
 

@@ -630,6 +630,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     v_1f1e88((v_ba2215) => (v_ba2215 === v_2453ad ? '1' : v_ba2215));
   };
 
+  const v_42b67a = (v_2453ad) => {
+    v_c65f5d.navigate('AddSubAccount');
+  };
+
   const [v_571c37, v_e78f19] = v_5ab095<Record<number, boolean>>({});
 
   const [v_49e71a, v_f2b4a8] = v_5ab095<Record<number, boolean>>({});
@@ -2115,6 +2119,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               onSelectAccount={v_1f1e88}
               onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
               onDeleteAccount={v_5bc46a}
+              onLinkEmail={v_42b67a}
             />
           ) : (
             <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
