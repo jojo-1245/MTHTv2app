@@ -222,6 +222,8 @@ function v_5db904({
   recordB: v_fe1802,
   dateStrA: v_335f4f,
   dateStrB: v_8f59fa,
+  timeStrA: v_57299c,
+  timeStrB: v_67c50b,
   selectedKeys: v_122c3a,
   backgroundColor: v_f7b9fb,
   comparisonData: v_b34779,
@@ -230,6 +232,8 @@ function v_5db904({
   recordB: v_cb37be;
   dateStrA: string;
   dateStrB: string;
+  timeStrA?: string;
+  timeStrB?: string;
   selectedKeys: string[];
   backgroundColor?: string;
   comparisonData?: v_b918db['comparison'];
@@ -246,12 +250,26 @@ function v_5db904({
         <Text style={[v_86ef3a.cellLabel, v_86ef3a.headerCell]}>
           {v_8d41d7('skin_comparison.item')}
         </Text>
-        <Text style={[v_86ef3a.cellDate, v_86ef3a.headerCell]} numberOfLines={1}>
-          {v_335f4f}
-        </Text>
-        <Text style={[v_86ef3a.cellDate, v_86ef3a.headerCell]} numberOfLines={1}>
-          {v_8f59fa}
-        </Text>
+        <View style={v_86ef3a.cellDateContainer}>
+          <Text style={[v_86ef3a.cellDate, v_86ef3a.headerCell]} numberOfLines={1}>
+            {v_335f4f}
+          </Text>
+          {v_57299c && (
+            <Text style={v_86ef3a.cellTime} numberOfLines={1}>
+              {v_57299c}
+            </Text>
+          )}
+        </View>
+        <View style={v_86ef3a.cellDateContainer}>
+          <Text style={[v_86ef3a.cellDate, v_86ef3a.headerCell]} numberOfLines={1}>
+            {v_8f59fa}
+          </Text>
+          {v_67c50b && (
+            <Text style={v_86ef3a.cellTime} numberOfLines={1}>
+              {v_67c50b}
+            </Text>
+          )}
+        </View>
       </View>
       {v_e66bb4.map((v_b24339) => {
         const v_edcbf2 = v_854a88(v_1a2523, v_b24339);
@@ -317,12 +335,23 @@ const v_86ef3a = v_472849.create({
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
   },
-  cellDate: {
+  cellDateContainer: {
     width: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cellDate: {
     textAlign: 'center',
     fontSize: v_ef658a.small,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
+  },
+  cellTime: {
+    textAlign: 'center',
+    fontSize: 10,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    marginTop: 2,
   },
   cellScore: {
     width: 90,
@@ -574,6 +603,8 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           recordB={v_fe1802}
           dateStrA={v_c1c940(v_1a2523.date)}
           dateStrB={v_c1c940(v_fe1802.date)}
+          timeStrA={v_22e3c0(v_1a2523.date, v_1a2523.time)}
+          timeStrB={v_22e3c0(v_fe1802.date, v_fe1802.time)}
           selectedKeys={v_831a4c}
           backgroundColor={v_1bfbd0.white}
           comparisonData={v_b34779 ?? undefined}
