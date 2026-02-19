@@ -1597,72 +1597,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   fullWidth
                 />
 
-                {}
-                <TouchableOpacity
-                  style={v_d81136.devTestLink}
-                  onPress={() => {
+                {
 
-                    const v_2d2278 = {
-
-                      [v_e3e816.WELLNESS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                      [v_e3e816.WELLNESS_LEVEL]: { confidence: { level: 2 }, value: 4 },
-                      [v_e3e816.HEART_AGE]: { confidence: { level: 1 }, value: 35 },
-
-                      [v_e3e816.PULSE_RATE]: { confidence: { level: 2 }, value: 72 },
-                      [v_e3e816.RESPIRATION_RATE]: { confidence: { level: 2 }, value: 16 },
-                      [v_e3e816.OXYGEN_SATURATION]: { confidence: { level: 2 }, value: 98.5 },
-                      [v_e3e816.BLOOD_PRESSURE]: { confidence: { level: 1 }, value: { systolic: 120, diastolic: 80 } },
-
-                      [v_e3e816.STRESS_LEVEL]: { confidence: { level: 1 }, value: 3 },
-                      [v_e3e816.STRESS_INDEX]: { confidence: { level: 1 }, value: 706 },
-                      [v_e3e816.NORMALIZED_STRESS_INDEX]: { confidence: { level: 1 }, value: 17 },
-
-                      [v_e3e816.RRI]: { confidence: { level: 1 }, value: [] }, 
-                      [v_e3e816.MEAN_RRI]: { confidence: { level: 1 }, value: 850 },
-                      [v_e3e816.SDNN]: { confidence: { level: 1 }, value: 45.2 },
-                      [v_e3e816.RMSSD]: { confidence: { level: 1 }, value: 32.5 },
-                      [v_e3e816.SD1]: { confidence: { level: 1 }, value: 23.1 },
-                      [v_e3e816.SD2]: { confidence: { level: 1 }, value: 58.4 },
-                      [v_e3e816.PRQ]: { confidence: { level: 1 }, value: 1.8 },
-                      [v_e3e816.LFHF]: { confidence: { level: 1 }, value: 2.1 },
-
-                      [v_e3e816.PNS_INDEX]: { confidence: { level: 1 }, value: 84 },
-                      [v_e3e816.PNS_ZONE]: { confidence: { level: 1 }, value: 2 },
-                      [v_e3e816.SNS_INDEX]: { confidence: { level: 1 }, value: 25 },
-                      [v_e3e816.SNS_ZONE]: { confidence: { level: 1 }, value: 1 },
-
-                      [v_e3e816.HEMOGLOBIN]: { confidence: { level: 1 }, value: 14.5 },
-                      [v_e3e816.HEMOGLOBIN_A1C]: { confidence: { level: 1 }, value: 5.2 },
-
-                      [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: { confidence: undefined, value: 0 },
-                      [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: { confidence: undefined, value: 0 },
-                      [v_e3e816.LOW_HEMOGLOBIN_RISK]: { confidence: undefined, value: 0 },
-                      [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: { confidence: undefined, value: 1 },
-                      [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: { confidence: undefined, value: 0 },
-                      [v_e3e816.ASCVD_RISK]: { confidence: undefined, value: 0 },
-                      [v_e3e816.ASCVD_RISK_LEVEL]: { confidence: undefined, value: 2 },
-
-                      [v_e3e816.MEAN_ARTERIAL_PRESSURE]: { confidence: { level: 1 }, value: 93.3 },
-                      [v_e3e816.PULSE_PRESSURE]: { confidence: { level: 1 }, value: 40 },
-                      [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
-                      [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
-                    };
-                    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
-                    v_c65f5d.navigate('HealthAnalysisResult', {
-                      results: v_2d2278,
-                      timestamp: new Date().toISOString(),
-                      userName: v_0c2f9b?.name,
-                      accounts: v_c86f08,
-                      selectedAccountId: v_e7b2f2,
-                    });
-                  }}
-                  accessibilityRole="button"
-                  accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
-                  accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
-                >
-                  <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
-                </TouchableOpacity>
-
+}
               </View>
             </View>
           </SafeScrollView>

@@ -323,6 +323,33 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_02a5a0 = v_e662ae(false);
     const v_f013b2 = v_e662ae<string | null>(null);
 
+    const v_058956 = v_de06a3(() => {
+        if (!v_e521b9?.result?.results?.output) return null;
+
+        const v_9ef443 = v_e521b9.result.results.output;
+        let v_adfd7c = 0;
+        let v_c2741d = '';
+        const v_17b30f = [];
+
+        v_9ef443.forEach((v_8c0b26) => {
+            if (v_8c0b26.type === 'all' && v_8c0b26.score !== undefined) {
+                v_adfd7c = Math.round(v_8c0b26.score);
+            } else if (v_8c0b26.type === 'resize_image' && v_8c0b26.mask_urls?.[0]) {
+                v_c2741d = v_8c0b26.mask_urls[0];
+            } else if (v_8c0b26.ui_score !== undefined && v_8c0b26.type) {
+                v_17b30f.push({
+                    type: v_8c0b26.type,
+                    score: v_8c0b26.ui_score,
+                    label: v_9b034b(v_8c0b26.type, v_8d41d7),
+                });
+            }
+        });
+
+        v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
+
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
+    }, [v_e521b9, v_8d41d7]);
+
     v_c4deb2(() => {
         if (v_bf6a8c) {
             v_6f6f79(v_3e09cd);
@@ -366,8 +393,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_e521b9.result.results.output.forEach((v_8c0b26) => {
                     if (v_8c0b26.type && v_8c0b26.type !== 'all' && v_8c0b26.type !== 'resize_image' && v_8c0b26.ui_score !== undefined) {
 
-                        const v_d2cbce = v_8c0b26.raw_score !== undefined 
-                            ? v_8c0b26.raw_score 
+                        const v_d2cbce = v_8c0b26.raw_score !== undefined
+                            ? v_8c0b26.raw_score
                             : (100 - v_8c0b26.ui_score) / 100; 
 
                         v_1c8db4[v_8c0b26.type] = {
@@ -382,11 +409,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     console.log('[SkinAnalysisScreen] analysis_result 구성 완료:', {
                         itemCount: Object.keys(v_1c8db4).length,
                         items: Object.keys(v_1c8db4),
-                        sampleItem: Object.keys(v_1c8db4).length > 0 
-                            ? { 
-                                type: Object.keys(v_1c8db4)[0], 
-                                data: v_1c8db4[Object.keys(v_1c8db4)[0]] 
-                            } 
+                        sampleItem: Object.keys(v_1c8db4).length > 0
+                            ? {
+                                type: Object.keys(v_1c8db4)[0],
+                                data: v_1c8db4[Object.keys(v_1c8db4)[0]]
+                            }
                             : null,
                         fullData: JSON.stringify(v_1c8db4, null, 2),
                     });
@@ -1267,18 +1294,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     }
                 />
 
-                {}
-                <TouchableOpacity
-                    style={v_d81136.previewButton}
-                    onPress={() => {
-                        v_6f6f79(v_3e09cd);
-                        v_639227('result');
-                    }}
-                >
-                    <Ionicons name="eye-outline" size={16} color={v_1bfbd0.bluePrimary} />
-                    <Text style={v_d81136.previewButtonText}>{v_8d41d7('skin.capture.preview_mode')}</Text>
-                </TouchableOpacity>
+                {
 
+}
             </View>
         </>
     );
@@ -1406,33 +1424,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             </Text>
         </View>
     );
-
-    const v_058956 = v_de06a3(() => {
-        if (!v_e521b9?.result?.results?.output) return null;
-
-        const v_9ef443 = v_e521b9.result.results.output;
-        let v_adfd7c = 0;
-        let v_c2741d = '';
-        const v_17b30f = [];
-
-        v_9ef443.forEach((v_8c0b26) => {
-            if (v_8c0b26.type === 'all' && v_8c0b26.score !== undefined) {
-                v_adfd7c = Math.round(v_8c0b26.score);
-            } else if (v_8c0b26.type === 'resize_image' && v_8c0b26.mask_urls?.[0]) {
-                v_c2741d = v_8c0b26.mask_urls[0];
-            } else if (v_8c0b26.ui_score !== undefined && v_8c0b26.type) {
-                v_17b30f.push({
-                    type: v_8c0b26.type,
-                    score: v_8c0b26.ui_score,
-                    label: v_9b034b(v_8c0b26.type, v_8d41d7),
-                });
-            }
-        });
-
-        v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
-
-        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
-    }, [v_e521b9, v_8d41d7]);
 
     const v_4d19dd = (v_740dd8): string => {
         if (v_740dd8 >= 95) return v_8d41d7('skin.result.grade.excellent');

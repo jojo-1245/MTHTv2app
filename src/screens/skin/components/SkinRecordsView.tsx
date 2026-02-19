@@ -295,7 +295,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
   const v_c65f5d = v_ada615();
-  const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('calendar');
+  const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('list');
   const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
   const [v_1835e1, v_f04d19] = v_5ab095<string | null>(null);
   const [v_b23082, v_725ee9] = v_5ab095(false);
@@ -572,21 +572,21 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
       {}
       <View style={v_d81136.viewModeRow}>
         <TouchableOpacity
-          style={[v_d81136.viewModeBtn, v_0af1e7 === 'calendar' && v_d81136.viewModeBtnActive]}
-          onPress={() => v_9e8c08('calendar')}
-        >
-          <Ionicons name="calendar-outline" size={18} color={v_0af1e7 === 'calendar' ? '#fff' : v_1bfbd0.secondaryText} />
-          <Text style={[v_d81136.viewModeText, v_0af1e7 === 'calendar' && v_d81136.viewModeTextActive]}>
-            {v_8d41d7('skin_records.calendar')}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           style={[v_d81136.viewModeBtn, v_0af1e7 === 'list' && v_d81136.viewModeBtnActive]}
           onPress={() => v_9e8c08('list')}
         >
           <Ionicons name="list-outline" size={18} color={v_0af1e7 === 'list' ? '#fff' : v_1bfbd0.secondaryText} />
           <Text style={[v_d81136.viewModeText, v_0af1e7 === 'list' && v_d81136.viewModeTextActive]}>
             {v_8d41d7('skin_records.list')}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[v_d81136.viewModeBtn, v_0af1e7 === 'calendar' && v_d81136.viewModeBtnActive]}
+          onPress={() => v_9e8c08('calendar')}
+        >
+          <Ionicons name="calendar-outline" size={18} color={v_0af1e7 === 'calendar' ? '#fff' : v_1bfbd0.secondaryText} />
+          <Text style={[v_d81136.viewModeText, v_0af1e7 === 'calendar' && v_d81136.viewModeTextActive]}>
+            {v_8d41d7('skin_records.calendar')}
           </Text>
         </TouchableOpacity>
       </View>
