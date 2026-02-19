@@ -29,3 +29,6 @@ export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, 
 
 export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords } from './skinApi';
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';
+
+export { checkAttendance, getAttendanceStatus, getRewardsHistory, AlreadyCheckedInError } from './rewardsApi';
+export type { AttendanceRewardResponse, AttendanceStatusResponse, RewardHistoryItem, RewardHistoryResponse } from './rewardsApi';

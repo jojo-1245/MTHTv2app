@@ -242,6 +242,11 @@
         "ai_hinty_start": "Start AI Hinty →",
         "attendance_check": "Attendance Check",
         "attendance_check_complete": "Attendance Complete",
+        "attendance_checking": "Checking...",
+        "attendance_reward_received": "You received {{amount}} MTHT.",
+        "attendance_bonus_received": "You received {{amount}} MTHT as a {{days}}-day consecutive attendance bonus.",
+        "attendance_check_failed": "Failed to check attendance.",
+        "already_checked_today": "You have already checked in today.",
         "daily_attendance_coins": "Attend daily and get coins!",
         "consecutive_7days": "7 consecutive days in progress",
         "consecutive_prefix": "Consecutive ",
@@ -1627,7 +1632,22 @@
         "copy_success_title": "Copy Complete",
         "copy_success_message": "Transaction hash has been copied to clipboard.",
         "address_required_title": "Address Required",
-        "address_required_message": "Please enter the recipient address by scanning the barcode."
+        "address_required_message": "Please enter the recipient address by scanning the barcode.",
+        "reward_type": {
+            "attendance": "Attendance Check",
+            "health_analysis": "Health Analysis",
+            "skin_analysis": "Skin Analysis",
+            "steps": "Steps"
+        },
+        "reward_title": {
+            "attendance": "Daily Attendance Reward",
+            "health_analysis": "Health Analysis Completed",
+            "skin_analysis": "Skin Analysis Completed",
+            "steps": "Steps Reward"
+        },
+        "history_load_failed": "Failed to load reward history.",
+        "no_history": "No reward history.",
+        "load_more": "Load More"
     },
     "my_info_faq": {
         "title": "Frequently Asked Questions",
