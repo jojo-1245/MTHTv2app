@@ -14,7 +14,7 @@ import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
-import { v_dec439, v_f832ec } from 'zvyjokvuouwvifyzks';
+import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
@@ -36,11 +36,11 @@ const v_c19e2d = 10000;
 
 type Props = v_432191<v_8ad91b, 'MyInfoSettings'>;
 
-const PERMISSION_ITEMS: { type: v_9613bb; iconName: 'bell' | 'run' | 'camera' | 'image-multiple' }[] = [
+const PERMISSION_ITEMS: { type: v_9613bb; iconName: keyof typeof v_dec439.glyphMap }[] = [
   { type: 'notification', iconName: 'bell' },
-  { type: 'activity', iconName: 'run' },
+  { type: 'activity', iconName: 'activity' },
   { type: 'camera', iconName: 'camera' },
-  { type: 'media', iconName: 'image-multiple' },
+  { type: 'media', iconName: 'image' },
 ];
 
 const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
@@ -154,7 +154,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
               <View style={v_d81136.menuCard}>
                 <View style={v_d81136.menuItem}>
                   <View style={v_d81136.menuIconWrap}>
-                    <MaterialCommunityIcons name="bell" size={24} color={v_1bfbd0.text} />
+                    <Feather name="bell" size={24} color={v_1bfbd0.text} />
                   </View>
                   <View style={v_d81136.menuItemTextWrap}>
                     <Text style={v_d81136.menuItemText}>{v_8d41d7('home.step_notification_label')}</Text>
@@ -184,7 +184,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
                   activeOpacity={0.88}
                 >
                   <View style={v_d81136.menuIconWrap}>
-                    <MaterialCommunityIcons name={v_c288e9} size={24} color={v_1bfbd0.text} />
+                    <Feather name={v_c288e9} size={24} color={v_1bfbd0.text} />
                   </View>
                   <Text style={v_d81136.menuItemText}>{v_f27822(v_3b27d9)}</Text>
                   <View
@@ -218,7 +218,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
                 activeOpacity={0.88}
               >
                 <View style={v_d81136.menuIconWrap}>
-                  <MaterialCommunityIcons name="translate" size={24} color={v_1bfbd0.text} />
+                  <Feather name="globe" size={24} color={v_1bfbd0.text} />
                 </View>
                 <Text style={v_d81136.menuItemText}>{v_8d41d7('common.language')}</Text>
                 <Text style={v_d81136.menuItemMeta}>{v_697143}</Text>
@@ -230,7 +230,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
                 activeOpacity={0.88}
               >
                 <View style={v_d81136.menuIconWrap}>
-                  <MaterialCommunityIcons name="account-remove" size={24} color={v_1bfbd0.text} />
+                  <Feather name="user-x" size={24} color={v_1bfbd0.text} />
                 </View>
                 <Text style={v_d81136.menuItemText}>{v_8d41d7('common.close_membership')}</Text>
                 <Feather name="chevron-right" size={20} color="#9CA3AF" />

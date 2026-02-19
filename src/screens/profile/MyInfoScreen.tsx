@@ -221,7 +221,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <View style={v_d81136.profileInfo}>
               {v_e71371 && (
                 <View style={v_d81136.businessBadge}>
-                  <Text style={v_d81136.businessBadgeText}>비즈니스</Text>
+                  <Text style={v_d81136.businessBadgeText}>{v_8d41d7('profile.business')}</Text>
                 </View>
               )}
               <View style={v_d81136.nameRow}>
