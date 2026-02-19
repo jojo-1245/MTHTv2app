@@ -16,6 +16,7 @@ import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
+import * as v_fba5a0 from 'hfxxehldoiokdq';
 import v_5427ed from '../components/OtpInput';
 import v_cb41de from '../components/PrimaryButton';
 import v_8714fe from '../components/SecondaryButton';
@@ -721,18 +722,58 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
 
     const v_e26a6d = async () => {
         try {
+
+            if (!v_e0c7e8 || !v_0e461e(v_e0c7e8)) {
+                v_03e392.alert('알림', '올바른 이메일 주소를 입력해주세요.');
+                return;
+            }
+
             const v_727031 = await v_7ef860();
             const v_2fa46c = v_727031.referral_code;
-            if (v_2fa46c) {
-
-                const v_3f557d = `https://service-mh.example.invalid/referral/${v_2fa46c}`;
-                await v_f2c756.openURL(v_3f557d);
-            } else {
+            if (!v_2fa46c) {
                 v_03e392.alert('알림', '레퍼럴 코드가 없습니다.');
+                return;
+            }
+
+            const v_3f557d = `https://service-mh.example.invalid/referral/${v_2fa46c}`;
+
+            const v_1074b5 = encodeURIComponent('MetaHint 앱 다운로드 초대');
+            const v_8f4a40 = encodeURIComponent(
+                `안녕하세요,\n\n` +
+                `MetaHint 앱을 다운로드하고 함께 사용해보세요!\n\n` +
+                `레퍼럴 링크: ${v_3f557d}\n\n` +
+                `위 링크를 클릭하여 앱을 다운로드하실 수 있습니다.\n\n` +
+                `감사합니다.`
+            );
+
+            const v_5a4006 = `mailto:${v_e0c7e8.trim()}?subject=${v_1074b5}&body=${v_8f4a40}`;
+
+            const v_20e8d1 = await v_f2c756.canOpenURL(v_5a4006);
+            if (v_20e8d1) {
+                await v_f2c756.openURL(v_5a4006);
+            } else {
+                v_03e392.alert('알림', '메일 앱을 열 수 없습니다. 이메일 주소를 복사하시겠습니까?', [
+                    {
+                        text: '취소',
+                        style: 'cancel',
+                    },
+                    {
+                        text: '복사',
+                        onPress: async () => {
+                            try {
+                                await v_fba5a0.setStringAsync(v_3f557d);
+                                v_03e392.alert('성공', '레퍼럴 링크가 클립보드에 복사되었습니다.');
+                            } catch (v_5e9bfe) {
+                                console.error('[AddSubAccountScreen] 클립보드 복사 실패:', v_5e9bfe);
+                                v_03e392.alert('오류', '링크를 복사할 수 없습니다.');
+                            }
+                        },
+                    },
+                ]);
             }
         } catch (v_5e9bfe) {
-            console.error('[AddSubAccountScreen] 레퍼럴 링크 열기 실패:', v_5e9bfe);
-            v_03e392.alert('오류', '레퍼럴 링크를 열 수 없습니다.');
+            console.error('[AddSubAccountScreen] 레퍼럴 링크 메일 보내기 실패:', v_5e9bfe);
+            v_03e392.alert('오류', '메일을 보낼 수 없습니다.');
         }
     };
 
@@ -1053,35 +1094,37 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                     {!v_4568f9 && v_e0c7e8.length >= 2 && v_76148b.length === 0 && (
                         <View style={v_d81136.noResultsContainer}>
                             <Text style={v_d81136.noResultsText}>검색 결과가 없습니다.</Text>
-                            {v_e71371 && (
-                                <TouchableOpacity
-                                    style={[
-                                        v_d81136.referralLinkButton,
-                                        !v_0e461e(v_e0c7e8) && v_d81136.referralLinkButtonDisabled,
-                                    ]}
-                                    onPress={v_e26a6d}
-                                    disabled={!v_0e461e(v_e0c7e8)}
-                                    activeOpacity={v_0e461e(v_e0c7e8) ? 0.7 : 1}
-                                >
-                                    <Text
+                            <View style={v_d81136.noResultsButtonsContainer}>
+                                {v_e71371 && (
+                                    <TouchableOpacity
                                         style={[
-                                            v_d81136.referralLinkText,
-                                            !v_0e461e(v_e0c7e8) && v_d81136.referralLinkTextDisabled,
+                                            v_d81136.referralLinkButton,
+                                            !v_0e461e(v_e0c7e8) && v_d81136.referralLinkButtonDisabled,
                                         ]}
+                                        onPress={v_e26a6d}
+                                        disabled={!v_0e461e(v_e0c7e8)}
+                                        activeOpacity={v_0e461e(v_e0c7e8) ? 0.7 : 1}
                                     >
-                                        레퍼럴 링크 보내기
-                                    </Text>
+                                        <Text
+                                            style={[
+                                                v_d81136.referralLinkText,
+                                                !v_0e461e(v_e0c7e8) && v_d81136.referralLinkTextDisabled,
+                                            ]}
+                                        >
+                                            레퍼럴 링크 보내기
+                                        </Text>
+                                    </TouchableOpacity>
+                                )}
+                                <TouchableOpacity
+                                    style={v_d81136.retryButton}
+                                    onPress={() => {
+                                        v_fedf34('');
+                                        v_ff2199([]);
+                                    }}
+                                >
+                                    <Text style={v_d81136.retryButtonText}>재검색</Text>
                                 </TouchableOpacity>
-                            )}
-                            <TouchableOpacity
-                                style={v_d81136.retryButton}
-                                onPress={() => {
-                                    v_fedf34('');
-                                    v_ff2199([]);
-                                }}
-                            >
-                                <Text style={v_d81136.retryButtonText}>재검색</Text>
-                            </TouchableOpacity>
+                            </View>
                         </View>
                     )}
                 </>
@@ -1162,7 +1205,7 @@ const v_d81136 = v_472849.create({
         lineHeight: 22,
     },
     inputContainer: {
-        marginBottom: 20,
+        marginBottom: 0,
     },
     otpWrap: {
         marginBottom: 24,
@@ -1252,12 +1295,19 @@ const v_d81136 = v_472849.create({
         color: v_1bfbd0.secondaryText,
         marginBottom: 16,
     },
+    noResultsButtonsContainer: {
+        flexDirection: 'row',
+        gap: 6,
+        alignItems: 'flex-start',
+    },
     referralLinkButton: {
         paddingVertical: 12,
         paddingHorizontal: 20,
         backgroundColor: v_1bfbd0.primary,
         borderRadius: 8,
         marginBottom: 12,
+        borderWidth: 1,
+        borderColor: v_1bfbd0.border,
     },
     referralLinkButtonDisabled: {
         backgroundColor: v_1bfbd0.border,
