@@ -25,8 +25,6 @@ const v_401fcf = {
   WalletTransactionProgress: 'wallet',
   WalletTransactionResult: 'wallet',
   TransactionDetails: 'wallet',
-  PolygonHistory: 'wallet',
-  MetahintHistory: 'wallet',
   MyInfoEdit: 'myinfo',
   MyInfoEmailAuth: 'myinfo',
   MyInfoSettings: 'myinfo',

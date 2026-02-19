@@ -37,7 +37,8 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7 } from '../context';
-import { v_4ebe12, v_52c734 } from '../services';
+import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_d0556f } from '../services';
+import { v_998b9d } from '../utils/authErrorHandler';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -75,7 +76,7 @@ const v_684a52 = [
 
 const v_2eadfb = ['월', '화', '수', '목', '금', '토', '일'];
 
-const MetaHomeScreen: v_a3453e.FC<Props> = () => {
+const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const v_033e14 = v_e0068c();
@@ -85,6 +86,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_9ab1d9, v_6bf58d] = v_5ab095<number | null>(null);
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
+  const [v_1f7868, v_e3bbea] = v_5ab095(false);
 
   v_c4deb2(() => {
     const v_56263a = async () => {
@@ -110,17 +112,78 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
   }, []);
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([true, true, true, false, false, false, false]); 
-  const v_05cf57 = v_79dc58.filter(Boolean).length;
+  const [v_05cf57, v_0d7691] = v_5ab095(v_79dc58.filter(Boolean).length);
 
   const v_8aab53 = (new Date().getDay() + 6) % 7;
   const v_74891a = v_79dc58[v_8aab53];
 
-  const v_d0c5d7 = () => {
-    v_5b2bbb((v_ba2215) => {
-      const v_a448ad = [...v_ba2215];
-      v_a448ad[v_8aab53] = true;
-      return v_a448ad;
-    });
+  v_c4deb2(() => {
+    const v_4b6b19 = async () => {
+      try {
+        const v_d308b5 = await v_cbf5f1(v_c65f5d);
+        if (v_d308b5.checked_today) {
+
+          v_5b2bbb((v_ba2215) => {
+            const v_a448ad = [...v_ba2215];
+            v_a448ad[v_8aab53] = true;
+            return v_a448ad;
+          });
+        }
+        v_0d7691(v_d308b5.streak_days);
+      } catch (v_5e9bfe) {
+        console.error('[MetaHomeScreen] 출석 상태 로드 실패:', v_5e9bfe);
+
+      }
+    };
+
+    v_4b6b19();
+  }, [v_c65f5d, v_8aab53]);
+
+  const v_d0c5d7 = async () => {
+    if (v_74891a || v_1f7868) {
+      return;
+    }
+
+    v_e3bbea(true);
+    try {
+      const v_43c42e = await v_b008ca(v_c65f5d);
+
+      v_5b2bbb((v_ba2215) => {
+        const v_a448ad = [...v_ba2215];
+        v_a448ad[v_8aab53] = true;
+        return v_a448ad;
+      });
+      v_0d7691(v_43c42e.streak_days);
+
+      const v_59ccdc = v_43c42e.is_bonus
+        ? v_8d41d7('home.attendance_bonus_received', { amount: v_43c42e.reward_amount, days: v_43c42e.streak_days })
+        : v_8d41d7('home.attendance_reward_received', { amount: v_43c42e.reward_amount });
+
+      v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
+    } catch (v_5e9bfe) {
+      console.error('[MetaHomeScreen] 출석 체크 실패:', v_5e9bfe);
+
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+        return;
+      }
+
+      if (v_5e9bfe instanceof v_d0556f) {
+
+        v_5b2bbb((v_ba2215) => {
+          const v_a448ad = [...v_ba2215];
+          v_a448ad[v_8aab53] = true;
+          return v_a448ad;
+        });
+
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
+        return;
+      }
+
+      const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.attendance_check_failed');
+      v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
+    } finally {
+      v_e3bbea(false);
+    }
   };
 
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
@@ -504,11 +567,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = () => {
                   ))}
                 </View>
                 <GradientButton
-                  title={v_74891a ? v_8d41d7('home.attendance_check_complete') : v_8d41d7('home.attendance_check')}
+                  title={
+                    v_1f7868
+                      ? v_8d41d7('home.attendance_checking', '체크 중...')
+                      : v_74891a
+                        ? v_8d41d7('home.attendance_check_complete')
+                        : v_8d41d7('home.attendance_check')
+                  }
                   leftIcon={<Coins size={16} color="#FFFFFF" />}
-                  style={[v_d81136.attendanceBtn, v_74891a && v_d81136.attendanceBtnDisabled]}
+                  style={[v_d81136.attendanceBtn, (v_74891a || v_1f7868) && v_d81136.attendanceBtnDisabled]}
                   onPress={v_d0c5d7}
-                  disabled={v_74891a}
+                  disabled={v_74891a || v_1f7868}
                 />
                 <View style={v_d81136.attendanceBonusRow}>
                   <Coins size={14} color="#615FFF" />

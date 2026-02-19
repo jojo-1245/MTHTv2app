@@ -284,6 +284,11 @@
         "ai_hinty_start": "Mulai AI Hinty →",
         "attendance_check": "Cek Kehadiran",
         "attendance_check_complete": "Kehadiran Selesai",
+        "attendance_checking": "Memeriksa...",
+        "attendance_reward_received": "Anda menerima {{amount}} MTHT.",
+        "attendance_bonus_received": "Anda menerima {{amount}} MTHT sebagai bonus kehadiran {{days}} hari berturut-turut.",
+        "attendance_check_failed": "Gagal melakukan cek kehadiran.",
+        "already_checked_today": "Anda sudah melakukan cek kehadiran hari ini.",
         "daily_attendance_coins": "Hadir setiap hari dan dapatkan koin!",
         "consecutive_7days": "7 hari berturut-turut dalam progres",
         "consecutive_prefix": "Berturut-turut ",
@@ -1626,7 +1631,22 @@
         "copy_success_title": "Salin Selesai",
         "copy_success_message": "Hash transaksi telah disalin ke papan klip.",
         "address_required_title": "Alamat Diperlukan",
-        "address_required_message": "Silakan masukkan alamat penerima dengan memindai kode batang."
+        "address_required_message": "Silakan masukkan alamat penerima dengan memindai kode batang.",
+        "reward_type": {
+            "attendance": "Cek Kehadiran",
+            "health_analysis": "Analisis Kesehatan",
+            "skin_analysis": "Analisis Kulit",
+            "steps": "Langkah"
+        },
+        "reward_title": {
+            "attendance": "Hadiah Kehadiran Harian",
+            "health_analysis": "Analisis Kesehatan Selesai",
+            "skin_analysis": "Analisis Kulit Selesai",
+            "steps": "Hadiah Langkah"
+        },
+        "history_load_failed": "Gagal memuat riwayat hadiah.",
+        "no_history": "Tidak ada riwayat hadiah.",
+        "load_more": "Muat Lebih Banyak"
     },
     "my_info_faq": {
         "title": "Pertanyaan yang Sering Diajukan",

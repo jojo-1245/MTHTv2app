@@ -15,7 +15,6 @@ export { SkinAnalysisScreen } from './skin';
 export { HealthAnalysisScreen } from './health';
 export { ChatScreen } from './chat';
 export { WalletScreen } from './wallet/WalletScreen';
-export { WalletHistoryScreen } from './wallet/WalletHistoryScreen';
 export { WalletSendScreen } from './wallet/WalletSendScreen';
 export { WalletReceiveScreen } from './wallet/WalletReceiveScreen';
 export { WalletQrScanScreen } from './wallet/WalletQrScanScreen';

@@ -285,6 +285,11 @@
         "ai_hinty_start": "AI 힌티 시작하기 →",
         "attendance_check": "출석 체크",
         "attendance_check_complete": "출석체크완료",
+        "attendance_checking": "체크 중...",
+        "attendance_reward_received": "{{amount}} MTHT를 받았습니다.",
+        "attendance_bonus_received": "{{days}}일 연속 출석 보너스로 {{amount}} MTHT를 받았습니다.",
+        "attendance_check_failed": "출석 체크에 실패했습니다.",
+        "already_checked_today": "오늘은 이미 출석 체크하셨습니다.",
         "daily_attendance_coins": "매일 출석하고 코인 받기!",
         "consecutive_7days": "연속 출석 7일달성 중",
         "consecutive_prefix": "연속 출석 ",
@@ -1646,7 +1651,22 @@
         "copy_success_title": "복사 완료",
         "copy_success_message": "거래 해시가 클립보드에 복사되었습니다.",
         "address_required_title": "주소 필요",
-        "address_required_message": "바코드 스캔으로 수신자 주소를 입력해주세요."
+        "address_required_message": "바코드 스캔으로 수신자 주소를 입력해주세요.",
+        "reward_type": {
+            "attendance": "출석 체크",
+            "health_analysis": "건강 분석",
+            "skin_analysis": "피부 분석",
+            "steps": "걸음 수"
+        },
+        "reward_title": {
+            "attendance": "일일 출석 보상",
+            "health_analysis": "건강분석 완료",
+            "skin_analysis": "피부분석 완료",
+            "steps": "걸음 수 보상"
+        },
+        "history_load_failed": "보상 이력을 불러오는데 실패했습니다.",
+        "no_history": "보상 이력이 없습니다.",
+        "load_more": "더보기"
     },
     "my_info_faq": {
         "title": "자주 묻는 질문",
