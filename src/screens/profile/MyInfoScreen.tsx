@@ -219,13 +219,13 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.profileCard}>
             <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
             <View style={v_d81136.profileInfo}>
+              {v_e71371 && (
+                <View style={v_d81136.businessBadge}>
+                  <Text style={v_d81136.businessBadgeText}>비즈니스</Text>
+                </View>
+              )}
               <View style={v_d81136.nameRow}>
                 <Text style={v_d81136.name}>{v_8a1355}</Text>
-                {v_e71371 && (
-                  <View style={v_d81136.businessBadge}>
-                    <Text style={v_d81136.businessBadgeText}>비즈니스</Text>
-                  </View>
-                )}
               </View>
               <Text style={v_d81136.email}>{v_b43178}</Text>
             </View>
@@ -438,12 +438,13 @@ const v_d81136 = v_472849.create({
   },
   businessBadge: {
     backgroundColor: '#3B82F6',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
   },
   businessBadgeText: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: v_843035.bold,
     color: '#FFFFFF',
   },
