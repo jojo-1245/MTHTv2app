@@ -1049,4 +1049,30 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.bold,
     color: '#fff',
   },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+  },
+  loadingText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.secondaryText,
+  },
+  errorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.xlarge * 2,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  errorText: {
+    marginTop: v_9b1a04.medium,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.error,
+    textAlign: 'center',
+  },
 });

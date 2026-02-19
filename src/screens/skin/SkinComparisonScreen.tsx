@@ -576,7 +576,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           dateStrB={v_c1c940(v_fe1802.date)}
           selectedKeys={v_831a4c}
           backgroundColor={v_1bfbd0.white}
-          comparisonData={v_b34779}
+          comparisonData={v_b34779 ?? undefined}
         />
 
         {}
