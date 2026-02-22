@@ -203,23 +203,80 @@ export async function v_e8dda3(v_c65f5d): Promise<AttendanceStatusDetailResponse
   }
 }
 
+export interface StepsSyncStateResponse {
+  success: boolean;
+  data: {
+    state_idx: number[];
+  };
+  timestamp?: string;
+}
+
 export interface SyncStepsResponse {
   success: boolean;
   data: {
     message: string;
     total_steps: number;
+    goal_steps?: number;
+    steps_count?: number;
     new_rewards_count: number;
     total_reward_paid: number;
+    rewards_received?: Array<{ reward_index: number; steps: number }>;
+    state_idx: number[];
     policy_note: string;
   };
   timestamp?: string;
+}
+
+export async function v_6c47a7(v_067e65): Promise<number[]> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  const v_cd6a57 = { record_date: v_067e65 };
+  if (__DEV__) {
+    console.log('[rewardsApi] getStepsSyncState 요청:', JSON.stringify(v_cd6a57));
+  }
+
+  try {
+    const v_3393e3 = await v_b5030f.post<StepsSyncStateResponse>(
+      `${v_fed274}/oth-path`,
+      v_cd6a57,
+      {
+        timeout: v_8a74cb,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${v_21cc31}`,
+        },
+      }
+    );
+
+    if (__DEV__) {
+      console.log('[rewardsApi] getStepsSyncState 응답:', JSON.stringify(v_3393e3.data));
+    }
+
+    if (v_3393e3.data.success && v_3393e3.data.data?.state_idx) {
+      return v_3393e3.data.data.state_idx;
+    }
+    return [];
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+      console.log('[rewardsApi] getStepsSyncState 에러 응답:', v_5e9bfe.response?.status, JSON.stringify(v_5e9bfe.response?.data));
+    }
+    throw v_1bbaa4(v_5e9bfe);
+  }
 }
 
 export async function v_2ca7ff(
   v_067e65,
   v_be48b1,
   v_8b50b1,
-  v_c65f5d
+  v_c65f5d,
+  v_e86ad8
 ): Promise<SyncStepsResponse['data']> {
   const v_c9c489 = v_e4a763();
   const v_fed274 = v_c9c489.GATEWAY;
@@ -230,14 +287,29 @@ export async function v_2ca7ff(
     throw new Error('로그인이 필요합니다.');
   }
 
+  const v_4d33b2 =
+    v_e86ad8 !== undefined
+      ? {
+          record_date: v_067e65,
+          idx: v_e86ad8,
+          weight: 1,
+          total_steps: v_be48b1,
+          goal_steps: v_8b50b1,
+        }
+      : {
+          record_date: v_067e65,
+          total_steps: v_be48b1,
+          goal_steps: v_8b50b1,
+        };
+
+  if (__DEV__) {
+    console.log('[rewardsApi] syncSteps 요청 (보상 받기):', JSON.stringify(v_4d33b2));
+  }
+
   try {
     const v_3393e3 = await v_b5030f.post<SyncStepsResponse>(
       `${v_fed274}/oth-path`,
-      {
-        record_date: v_067e65,
-        total_steps: v_be48b1,
-        goal_steps: v_8b50b1,
-      },
+      v_4d33b2,
       {
         timeout: v_8a74cb,
         headers: {
@@ -247,12 +319,19 @@ export async function v_2ca7ff(
       }
     );
 
+    if (__DEV__) {
+      console.log('[rewardsApi] syncSteps 응답:', JSON.stringify(v_3393e3.data));
+    }
+
     if (v_3393e3.data.success && v_3393e3.data.data) {
       return v_3393e3.data.data;
     }
 
     throw new Error('걸음수 동기화에 실패했습니다.');
   } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+      console.log('[rewardsApi] syncSteps 에러 응답:', v_5e9bfe.response?.status, JSON.stringify(v_5e9bfe.response?.data));
+    }
     throw v_1bbaa4(v_5e9bfe);
   }
 }

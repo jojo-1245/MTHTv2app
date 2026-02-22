@@ -1,5 +1,5 @@
-import { v_5168ba } from 'ixigazcpvfldbecwtbvavtbi';
 import v_b5030f from 'imsks';
+import { v_2a53b4 } from '../navigation/rootNavigationRef';
 
 export function v_edfdf4(v_5e9bfe): boolean {
   if (v_b5030f.isAxiosError(v_5e9bfe)) {
@@ -25,16 +25,13 @@ export function v_edfdf4(v_5e9bfe): boolean {
 }
 
 export function v_998b9d(
-  navigation: v_5168ba<any> | { reset: (config: any) => void },
+  v_e7e852,
   v_5e9bfe
 ): boolean {
   if (v_edfdf4(v_5e9bfe)) {
     console.log('[authErrorHandler] 인증 에러 감지. 로그인 페이지로 이동...');
     try {
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'Login' }],
-      });
+      v_2a53b4();
       return true;
     } catch (v_f58bb7) {
       console.error('[authErrorHandler] 네비게이션 에러:', v_f58bb7);

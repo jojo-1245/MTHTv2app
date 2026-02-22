@@ -37,8 +37,9 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7 } from '../context';
-import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_2ca7ff, v_7740c3, v_d0556f } from '../services';
+import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
+import { v_312d93 } from '../utils/dateUtils';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -229,50 +230,23 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
-  const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
+
+  const [v_b1361b, v_04f4d8] = v_5ab095<number[]>([]);
   const [v_cd6f97, v_5ce610] = v_5ab095(false);
 
   v_c4deb2(() => {
-    const v_2748ee = async () => {
+    const v_0f9a7b = async () => {
       try {
-        const v_10740d = await v_7740c3(100, 0, v_c65f5d);
-
-        const v_a21ce3 = v_10740d.filter((v_8c0b26) => v_8c0b26.type === 'step_1k' || v_8c0b26.type === 'step_goal');
-
-        const v_227df7 = new Date().toISOString().split('T')[0]; 
-        const v_b02cd5 = v_a21ce3.filter((v_8c0b26) => {
-          const v_4d3d85 = v_8c0b26.created_at.split(' ')[0]; 
-          return v_4d3d85 === v_227df7;
-        });
-
-        const v_0a2cd1 = new Set<number>();
-        v_b02cd5.forEach((v_8c0b26) => {
-          if (v_8c0b26.type === 'step_1k') {
-
-            const v_1bb9de = v_8c0b26.description.match(/(\d+)\s*steps?/i);
-            if (v_1bb9de) {
-              const v_eb271c = parseInt(v_1bb9de[1], 10);
-
-              if (v_eb271c % v_2258bf === 0) {
-                v_0a2cd1.add(v_eb271c);
-              }
-            } else {
-
-              v_0a2cd1.add(1000);
-            }
-          } else if (v_8c0b26.type === 'step_goal') {
-            v_0a2cd1.add(v_011173);
-          }
-        });
-        v_4d9060(v_0a2cd1);
+        const v_227df7 = v_312d93(v_9c213b.language);
+        const v_5268c1 = await v_6c47a7(v_227df7);
+        v_04f4d8(Array.isArray(v_5268c1) ? v_5268c1 : []);
       } catch (v_5e9bfe) {
-        console.error('[MetaHomeScreen] 걸음수 보상 이력 로드 실패:', v_5e9bfe);
-
+        console.error('[MetaHomeScreen] 걸음수 보상 상태 로드 실패:', v_5e9bfe);
       }
     };
 
-    v_2748ee();
-  }, [v_c65f5d, v_011173]);
+    v_0f9a7b();
+  }, [v_9c213b.language]);
 
   const v_76f9c7 = Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
   const v_113ab0 = 120;
@@ -295,58 +269,38 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
 
-  const v_c907cb = async (v_c5110a) => {
-    if (v_cd6f97 || v_dc679a < v_c5110a || v_a741d8.has(v_c5110a)) {
+  const v_c907cb = async (v_af3e48) => {
+    const v_c5110a = v_76f9c7[v_af3e48];
+    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
       return;
     }
 
     v_5ce610(true);
     try {
+      const v_227df7 = v_312d93(v_9c213b.language);
+      if (__DEV__) {
+        console.log('[MetaHomeScreen] 걸음수 보상 받기 호출:', {
+          today: v_227df7,
+          buttonIndex: v_af3e48,
+          milestone: v_76f9c7[v_af3e48],
+          currentSteps: v_dc679a,
+          stepGoal: v_011173,
+          claimedStepIndices: v_b1361b,
+        });
+      }
 
-      const v_227df7 = new Date().toISOString().split('T')[0];
+      const v_f29bbd = v_dc679a * 1000;
+      const v_43c42e = await v_2ca7ff(v_227df7, v_f29bbd, v_011173, v_c65f5d, v_af3e48);
 
-      const v_43c42e = await v_2ca7ff(v_227df7, v_dc679a, v_011173, v_c65f5d);
-
-      v_4d9060((v_ba2215) => new Set(v_ba2215).add(v_c5110a));
+      if (Array.isArray(v_43c42e.state_idx)) {
+        v_04f4d8(v_43c42e.state_idx);
+      }
 
       const v_59ccdc = v_43c42e.new_rewards_count > 0
         ? `${v_8d41d7('common.success')}\n${v_8d41d7('home.step_reward_received', { count: v_43c42e.new_rewards_count, amount: v_43c42e.total_reward_paid })}`
         : v_8d41d7('home.step_sync_success');
 
       v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
-
-      try {
-        const v_10740d = await v_7740c3(100, 0, v_c65f5d);
-        const v_a21ce3 = v_10740d.filter((v_8c0b26) => v_8c0b26.type === 'step_1k' || v_8c0b26.type === 'step_goal');
-        const v_227df7 = new Date().toISOString().split('T')[0];
-        const v_b02cd5 = v_a21ce3.filter((v_8c0b26) => {
-          const v_4d3d85 = v_8c0b26.created_at.split(' ')[0];
-          return v_4d3d85 === v_227df7;
-        });
-
-        const v_0a2cd1 = new Set<number>();
-        v_b02cd5.forEach((v_8c0b26) => {
-          if (v_8c0b26.type === 'step_1k') {
-
-            const v_1bb9de = v_8c0b26.description.match(/(\d+)\s*steps?/i);
-            if (v_1bb9de) {
-              const v_eb271c = parseInt(v_1bb9de[1], 10);
-
-              if (v_eb271c % v_2258bf === 0) {
-                v_0a2cd1.add(v_eb271c);
-              }
-            } else {
-
-              v_0a2cd1.add(1000);
-            }
-          } else if (v_8c0b26.type === 'step_goal') {
-            v_0a2cd1.add(v_011173);
-          }
-        });
-        v_4d9060(v_0a2cd1);
-      } catch (v_6da899) {
-        console.error('[MetaHomeScreen] 보상 이력 재로드 실패:', v_6da899);
-      }
     } catch (v_5e9bfe) {
       console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', v_5e9bfe);
 
@@ -772,14 +726,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={v_d81136.stepMilestonesList}
                 >
-                  {v_76f9c7.map((v_c5110a) => {
+                  {v_76f9c7.map((v_c5110a, v_a56041) => {
                     const v_fa25a3 = v_dc679a >= v_c5110a;
-
-                    const v_ddef54 = v_c5110a === 1000
-                      ? v_a741d8.has(1000)
-                      : v_c5110a === v_011173
-                        ? v_a741d8.has(v_011173)
-                        : v_a741d8.has(v_c5110a);
+                    const v_ddef54 = v_b1361b.includes(v_a56041);
                     const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
                     const v_e0ed2f = !v_fa25a3;
                     return (
@@ -797,7 +746,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             v_ddef54 && v_d81136.stepMilestoneBtnClaimed,
                             v_e0ed2f && v_d81136.stepMilestoneBtnInactive,
                           ]}
-                          onPress={() => v_c907cb(v_c5110a)}
+                          onPress={() => v_c907cb(v_a56041)}
                           disabled={!v_26dce6 || v_cd6f97}
                           activeOpacity={0.8}
                         >

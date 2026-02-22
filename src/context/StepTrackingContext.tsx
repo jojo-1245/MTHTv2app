@@ -22,6 +22,7 @@ import {
   v_303ad0,
 } from '../services/permissionService';
 import { v_772971 } from 'jmpfvteuuztnp';
+import { v_312d93 } from '../utils/dateUtils';
 
 const v_8bf63f = 'metahint_step_notification_enabled';
 const v_c567d7 = 'metahint_step_count';
@@ -39,7 +40,7 @@ interface StepTrackingContextValue {
 const v_d978fd = v_af12cb<StepTrackingContextValue | undefined>(undefined);
 
 export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ children: v_21f619 }) => {
-  const { t: v_8d41d7 } = v_772971();
+  const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const [v_dc679a, v_4b95c4] = v_5ab095(0);
   const v_3e3188 = v_e662ae(0); 
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
@@ -60,9 +61,8 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   }, [v_8d41d7]);
 
   const v_c877df = v_de06a3(() => {
-    const v_227df7 = new Date();
-    return `${v_227df7.getFullYear()}-${String(v_227df7.getMonth() + 1).padStart(2, '0')}-${String(v_227df7.getDate()).padStart(2, '0')}`;
-  }, []);
+    return v_312d93(v_9c213b.language);
+  }, [v_9c213b.language]);
 
   const v_7f798a = v_de06a3(async (v_eb271c) => {
     try {
