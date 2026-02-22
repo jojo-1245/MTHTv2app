@@ -322,6 +322,9 @@
         "step_receive": "Terima",
         "step_filling": "Mengisi",
         "step_claimed": "Diterima",
+        "step_reward_received": "Menerima {{count}} hadiah. Total {{amount}} MTHT",
+        "step_sync_success": "Langkah berhasil disinkronkan.",
+        "step_reward_failed": "Gagal menerima hadiah langkah.",
         "steps_milestone": "{{count}} langkah",
         "step_tip": "Berjalan 10.000 langkah sehari membantu kesehatan kardiovaskular dan manajemen berat badan.",
         "step_count": "Jumlah Langkah",
@@ -1642,7 +1645,9 @@
             "attendance": "Hadiah Kehadiran Harian",
             "health_analysis": "Analisis Kesehatan Selesai",
             "skin_analysis": "Analisis Kulit Selesai",
-            "steps": "Hadiah Langkah"
+            "steps": "Hadiah Langkah",
+            "step_1k": "1.000 Langkah Tercapai",
+            "step_goal": "10.000 Langkah Tercapai"
         },
         "history_load_failed": "Gagal memuat riwayat hadiah.",
         "no_history": "Tidak ada riwayat hadiah.",

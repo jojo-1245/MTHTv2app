@@ -37,7 +37,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7 } from '../context';
-import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_d0556f } from '../services';
+import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_2ca7ff, v_7740c3, v_d0556f } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 
 const v_87993b = require('../../assets/images/logo_white.png');
@@ -56,7 +56,8 @@ const { width: v_0d9f50 } = v_700696.get('window');
 const v_66f2f8 = 12;
 const v_11fb5c = 16;
 const v_ff4e8b = 20;
-const v_006281 = 10;
+const v_006281 = 10; 
+
 const v_c19e2d = 100; 
 
 const v_55087c = 10; 
@@ -111,32 +112,57 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_56263a();
   }, []);
 
-  const [v_79dc58, v_5b2bbb] = v_5ab095([true, true, true, false, false, false, false]); 
-  const [v_05cf57, v_0d7691] = v_5ab095(v_79dc58.filter(Boolean).length);
+  const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
+  const [v_05cf57, v_0d7691] = v_5ab095(0);
+  const [v_f2fb87, v_c34f93] = v_5ab095(0);
+  const [v_b43899, v_468450] = v_5ab095(7);
 
   const v_8aab53 = (new Date().getDay() + 6) % 7;
   const v_74891a = v_79dc58[v_8aab53];
 
+  const v_ab4ad9 = (v_a86996): number => {
+    const v_8dffde = new Date(v_a86996);
+
+    return (v_8dffde.getDay() + 6) % 7;
+  };
+
   v_c4deb2(() => {
-    const v_4b6b19 = async () => {
+    const v_58b642 = async () => {
       try {
-        const v_d308b5 = await v_cbf5f1(v_c65f5d);
-        if (v_d308b5.checked_today) {
+        const v_3ea33e = await v_e8dda3(v_c65f5d);
 
-          v_5b2bbb((v_ba2215) => {
-            const v_a448ad = [...v_ba2215];
-            v_a448ad[v_8aab53] = true;
-            return v_a448ad;
-          });
-        }
-        v_0d7691(v_d308b5.streak_days);
+        const v_cf60ad = [false, false, false, false, false, false, false];
+        v_3ea33e.recent_status.forEach((v_8c0b26) => {
+          const v_62a264 = v_ab4ad9(v_8c0b26.date);
+          if (v_62a264 >= 0 && v_62a264 < 7) {
+            v_cf60ad[v_62a264] = v_8c0b26.attended;
+          }
+        });
+        v_5b2bbb(v_cf60ad);
+
+        v_0d7691(v_3ea33e.current_streak);
+        v_c34f93(v_3ea33e.week_attended);
+        v_468450(v_3ea33e.week_total);
       } catch (v_5e9bfe) {
-        console.error('[MetaHomeScreen] 출석 상태 로드 실패:', v_5e9bfe);
+        console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
 
+        try {
+          const v_d308b5 = await v_cbf5f1(v_c65f5d);
+          if (v_d308b5.checked_today) {
+            v_5b2bbb((v_ba2215) => {
+              const v_a448ad = [...v_ba2215];
+              v_a448ad[v_8aab53] = true;
+              return v_a448ad;
+            });
+          }
+          v_0d7691(v_d308b5.streak_days);
+        } catch (v_741f30) {
+          console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
+        }
       }
     };
 
-    v_4b6b19();
+    v_58b642();
   }, [v_c65f5d, v_8aab53]);
 
   const v_d0c5d7 = async () => {
@@ -148,12 +174,28 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
 
-      v_5b2bbb((v_ba2215) => {
-        const v_a448ad = [...v_ba2215];
-        v_a448ad[v_8aab53] = true;
-        return v_a448ad;
-      });
-      v_0d7691(v_43c42e.streak_days);
+      try {
+        const v_3ea33e = await v_e8dda3(v_c65f5d);
+        const v_cf60ad = [false, false, false, false, false, false, false];
+        v_3ea33e.recent_status.forEach((v_8c0b26) => {
+          const v_62a264 = v_ab4ad9(v_8c0b26.date);
+          if (v_62a264 >= 0 && v_62a264 < 7) {
+            v_cf60ad[v_62a264] = v_8c0b26.attended;
+          }
+        });
+        v_5b2bbb(v_cf60ad);
+        v_0d7691(v_3ea33e.current_streak);
+        v_c34f93(v_3ea33e.week_attended);
+        v_468450(v_3ea33e.week_total);
+      } catch (v_abd75f) {
+
+        v_5b2bbb((v_ba2215) => {
+          const v_a448ad = [...v_ba2215];
+          v_a448ad[v_8aab53] = true;
+          return v_a448ad;
+        });
+        v_0d7691(v_43c42e.streak_days);
+      }
 
       const v_59ccdc = v_43c42e.is_bonus
         ? v_8d41d7('home.attendance_bonus_received', { amount: v_43c42e.reward_amount, days: v_43c42e.streak_days })
@@ -188,6 +230,49 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
   const [v_a741d8, v_4d9060] = v_5ab095<Set<number>>(new Set());
+  const [v_cd6f97, v_5ce610] = v_5ab095(false);
+
+  v_c4deb2(() => {
+    const v_2748ee = async () => {
+      try {
+        const v_10740d = await v_7740c3(100, 0, v_c65f5d);
+
+        const v_a21ce3 = v_10740d.filter((v_8c0b26) => v_8c0b26.type === 'step_1k' || v_8c0b26.type === 'step_goal');
+
+        const v_227df7 = new Date().toISOString().split('T')[0]; 
+        const v_b02cd5 = v_a21ce3.filter((v_8c0b26) => {
+          const v_4d3d85 = v_8c0b26.created_at.split(' ')[0]; 
+          return v_4d3d85 === v_227df7;
+        });
+
+        const v_0a2cd1 = new Set<number>();
+        v_b02cd5.forEach((v_8c0b26) => {
+          if (v_8c0b26.type === 'step_1k') {
+
+            const v_1bb9de = v_8c0b26.description.match(/(\d+)\s*steps?/i);
+            if (v_1bb9de) {
+              const v_eb271c = parseInt(v_1bb9de[1], 10);
+
+              if (v_eb271c % v_2258bf === 0) {
+                v_0a2cd1.add(v_eb271c);
+              }
+            } else {
+
+              v_0a2cd1.add(1000);
+            }
+          } else if (v_8c0b26.type === 'step_goal') {
+            v_0a2cd1.add(v_011173);
+          }
+        });
+        v_4d9060(v_0a2cd1);
+      } catch (v_5e9bfe) {
+        console.error('[MetaHomeScreen] 걸음수 보상 이력 로드 실패:', v_5e9bfe);
+
+      }
+    };
+
+    v_2748ee();
+  }, [v_c65f5d, v_011173]);
 
   const v_76f9c7 = Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);
   const v_113ab0 = 120;
@@ -210,10 +295,69 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
 
-  const v_c907cb = (v_c5110a) => {
-    if (v_dc679a >= v_c5110a && !v_a741d8.has(v_c5110a)) {
+  const v_c907cb = async (v_c5110a) => {
+    if (v_cd6f97 || v_dc679a < v_c5110a || v_a741d8.has(v_c5110a)) {
+      return;
+    }
+
+    v_5ce610(true);
+    try {
+
+      const v_227df7 = new Date().toISOString().split('T')[0];
+
+      const v_43c42e = await v_2ca7ff(v_227df7, v_dc679a, v_011173, v_c65f5d);
+
       v_4d9060((v_ba2215) => new Set(v_ba2215).add(v_c5110a));
-      v_03e392.alert(v_8d41d7('common.success'), `+${v_7c2566} MTHT ${v_8d41d7('home.step_receive')}`);
+
+      const v_59ccdc = v_43c42e.new_rewards_count > 0
+        ? `${v_8d41d7('common.success')}\n${v_8d41d7('home.step_reward_received', { count: v_43c42e.new_rewards_count, amount: v_43c42e.total_reward_paid })}`
+        : v_8d41d7('home.step_sync_success');
+
+      v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
+
+      try {
+        const v_10740d = await v_7740c3(100, 0, v_c65f5d);
+        const v_a21ce3 = v_10740d.filter((v_8c0b26) => v_8c0b26.type === 'step_1k' || v_8c0b26.type === 'step_goal');
+        const v_227df7 = new Date().toISOString().split('T')[0];
+        const v_b02cd5 = v_a21ce3.filter((v_8c0b26) => {
+          const v_4d3d85 = v_8c0b26.created_at.split(' ')[0];
+          return v_4d3d85 === v_227df7;
+        });
+
+        const v_0a2cd1 = new Set<number>();
+        v_b02cd5.forEach((v_8c0b26) => {
+          if (v_8c0b26.type === 'step_1k') {
+
+            const v_1bb9de = v_8c0b26.description.match(/(\d+)\s*steps?/i);
+            if (v_1bb9de) {
+              const v_eb271c = parseInt(v_1bb9de[1], 10);
+
+              if (v_eb271c % v_2258bf === 0) {
+                v_0a2cd1.add(v_eb271c);
+              }
+            } else {
+
+              v_0a2cd1.add(1000);
+            }
+          } else if (v_8c0b26.type === 'step_goal') {
+            v_0a2cd1.add(v_011173);
+          }
+        });
+        v_4d9060(v_0a2cd1);
+      } catch (v_6da899) {
+        console.error('[MetaHomeScreen] 보상 이력 재로드 실패:', v_6da899);
+      }
+    } catch (v_5e9bfe) {
+      console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', v_5e9bfe);
+
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+        return;
+      }
+
+      const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.step_reward_failed');
+      v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
+    } finally {
+      v_5ce610(false);
     }
   };
 
@@ -550,7 +694,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <View style={v_d81136.weekStatus}>
                   <Text style={v_d81136.weekLabel}>{v_8d41d7('home.week_attendance_status')}</Text>
 
-                  <Text style={v_d81136.weekDays}>{v_8d41d7('home.days_format', { current: v_05cf57, total: 7 })}</Text>
+                  <Text style={v_d81136.weekDays}>{v_8d41d7('home.days_format', { current: v_f2fb87, total: v_b43899 })}</Text>
                 </View>
                 <View style={v_d81136.weekGrid}>
                   {v_2eadfb.map((v_087ffc, v_ebec57) => (
@@ -630,8 +774,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 >
                   {v_76f9c7.map((v_c5110a) => {
                     const v_fa25a3 = v_dc679a >= v_c5110a;
-                    const v_ddef54 = v_a741d8.has(v_c5110a);
-                    const v_26dce6 = v_fa25a3 && !v_ddef54;
+
+                    const v_ddef54 = v_c5110a === 1000
+                      ? v_a741d8.has(1000)
+                      : v_c5110a === v_011173
+                        ? v_a741d8.has(v_011173)
+                        : v_a741d8.has(v_c5110a);
+                    const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
                     const v_e0ed2f = !v_fa25a3;
                     return (
                       <View key={v_c5110a} style={[v_d81136.stepMilestoneCard, { width: v_113ab0 }]}>
@@ -649,7 +798,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             v_e0ed2f && v_d81136.stepMilestoneBtnInactive,
                           ]}
                           onPress={() => v_c907cb(v_c5110a)}
-                          disabled={!v_26dce6}
+                          disabled={!v_26dce6 || v_cd6f97}
                           activeOpacity={0.8}
                         >
                           {v_26dce6 ? (
