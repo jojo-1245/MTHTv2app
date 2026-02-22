@@ -311,6 +311,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   const [v_678155, v_9ed182] = v_5ab095<SkinRecord[]>([]);
   const [v_cd31a8, v_deef62] = v_5ab095(false);
   const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
+  const [v_32428f, v_f775f7] = v_5ab095(0);
 
   const [v_a4994e, v_699388] = v_5ab095<SkinRecord | null>(null);
   const [v_e74174, v_8984bb] = v_5ab095(false);
@@ -369,7 +370,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7]);
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -636,7 +637,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
             style={v_d81136.retryButton}
             onPress={() => {
               v_885e0e(null);
-
+              v_f775f7((v_3f4e2e) => v_3f4e2e + 1);
             }}
           >
             <Text style={v_d81136.retryButtonText}>{v_8d41d7('common.retry') || '다시 시도'}</Text>

@@ -1,5 +1,6 @@
 
 export * from './env';
+export * from './dateUtils';
 export * from './countryStateCityUtils';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 

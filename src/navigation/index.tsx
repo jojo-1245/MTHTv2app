@@ -1,6 +1,7 @@
 import v_a3453e from 'bapkr';
 import { v_ac28fd } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_709be7 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import { v_60875a } from './rootNavigationRef';
 import v_7af305 from '../screens/IntroScreen';
 import v_c316d8 from '../screens/HomeScreen';
 import v_7aeeb0 from '../screens/MetaHomeScreen';
@@ -129,7 +130,7 @@ const v_cb3606 = v_709be7<RootStackParamList>();
 
 export const AppNavigator: v_a3453e.FC = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={v_60875a}>
       <Stack.Navigator
         initialRouteName="Intro"
         screenOptions={{
