@@ -280,6 +280,9 @@
         "step_receive": "Receive",
         "step_filling": "Filling up",
         "step_claimed": "Received",
+        "step_reward_received": "Received {{count}} reward(s). Total {{amount}} MTHT",
+        "step_sync_success": "Steps synced successfully.",
+        "step_reward_failed": "Failed to receive step reward.",
         "steps_milestone": "{{count}} steps",
         "step_tip": "Walking 10,000 steps a day helps cardiovascular health and weight management.",
         "step_count": "Step Count",
@@ -1643,7 +1646,9 @@
             "attendance": "Daily Attendance Reward",
             "health_analysis": "Health Analysis Completed",
             "skin_analysis": "Skin Analysis Completed",
-            "steps": "Steps Reward"
+            "steps": "Steps Reward",
+            "step_1k": "1,000 Steps Achieved",
+            "step_goal": "10,000 Steps Achieved"
         },
         "history_load_failed": "Failed to load reward history.",
         "no_history": "No reward history.",

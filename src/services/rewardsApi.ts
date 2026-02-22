@@ -30,6 +30,25 @@ export interface AttendanceStatusResponse {
   };
 }
 
+export interface AttendanceStatusDetailResponse {
+  success: boolean;
+  data: {
+    recent_status: Array<{
+      date: string; 
+      attended: boolean;
+      streak_day: number;
+    }>;
+    current_streak: number;
+    is_consecutive: boolean;
+    week_attended: number;
+    week_total: number;
+    week_progress: string; 
+    week_start: string; 
+    week_end: string; 
+  };
+  timestamp?: string;
+}
+
 export interface RewardHistoryItem {
   id: number;
   member_id: number;
@@ -147,6 +166,92 @@ export async function v_cbf5f1(v_c65f5d): Promise<AttendanceStatusResponse['data
     }
 
     throw new Error('출석 상태 조회에 실패했습니다.');
+  } catch (v_5e9bfe) {
+    throw v_1bbaa4(v_5e9bfe);
+  }
+}
+
+export async function v_e8dda3(v_c65f5d): Promise<AttendanceStatusDetailResponse['data']> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  try {
+    const v_3393e3 = await v_b5030f.get<AttendanceStatusDetailResponse>(
+      `${v_fed274}/oth-path`,
+      {
+        timeout: v_8a74cb,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${v_21cc31}`,
+        },
+      }
+    );
+
+    if (v_3393e3.data.success && v_3393e3.data.data) {
+      return v_3393e3.data.data;
+    }
+
+    throw new Error('출석 상태 조회에 실패했습니다.');
+  } catch (v_5e9bfe) {
+    throw v_1bbaa4(v_5e9bfe);
+  }
+}
+
+export interface SyncStepsResponse {
+  success: boolean;
+  data: {
+    message: string;
+    total_steps: number;
+    new_rewards_count: number;
+    total_reward_paid: number;
+    policy_note: string;
+  };
+  timestamp?: string;
+}
+
+export async function v_2ca7ff(
+  v_067e65,
+  v_be48b1,
+  v_8b50b1,
+  v_c65f5d
+): Promise<SyncStepsResponse['data']> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  if (!v_21cc31) {
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  try {
+    const v_3393e3 = await v_b5030f.post<SyncStepsResponse>(
+      `${v_fed274}/oth-path`,
+      {
+        record_date: v_067e65,
+        total_steps: v_be48b1,
+        goal_steps: v_8b50b1,
+      },
+      {
+        timeout: v_8a74cb,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${v_21cc31}`,
+        },
+      }
+    );
+
+    if (v_3393e3.data.success && v_3393e3.data.data) {
+      return v_3393e3.data.data;
+    }
+
+    throw new Error('걸음수 동기화에 실패했습니다.');
   } catch (v_5e9bfe) {
     throw v_1bbaa4(v_5e9bfe);
   }
