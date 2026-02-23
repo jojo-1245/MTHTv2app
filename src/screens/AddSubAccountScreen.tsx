@@ -85,7 +85,9 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
         return v_25b0f8;
     }, [v_e71371, v_8d41d7]);
 
-    const [v_a72c3f, v_f01884] = v_5ab095(v_c7daf6.params?.showEmailSearch ?? false);
+    const [v_a72c3f, v_f01884] = v_5ab095(
+        (v_c7daf6.params?.showEmailSearch ?? false) || !!v_c7daf6.params?.subAccountId
+    );
     const [v_a404bd, v_92e3ba] = v_5ab095('');
 
     const v_438d96 = v_c7daf6.params?.subAccountId;
@@ -97,7 +99,8 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
     v_cf763b(
         v_de06a3(() => {
 
-            const v_b70b2b = v_c7daf6.params?.showEmailSearch ?? false;
+            const v_b70b2b =
+                (v_c7daf6.params?.showEmailSearch ?? false) || !!v_c7daf6.params?.subAccountId;
 
             v_fd7d1f('email');
             v_fedf34('');
