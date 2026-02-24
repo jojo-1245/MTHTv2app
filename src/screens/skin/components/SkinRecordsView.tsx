@@ -767,14 +767,15 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           v_b173ec(null);
         }}
       >
-        <Pressable
-          style={v_d81136.modalOverlay}
-          onPress={() => {
-            v_725ee9(false);
-            v_b173ec(null);
-          }}
-        >
-          <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
+        <View style={v_d81136.modalOverlay}>
+          <Pressable
+            style={v_d81136.modalOverlayDim}
+            onPress={() => {
+              v_725ee9(false);
+              v_b173ec(null);
+            }}
+          />
+          <View style={[v_d81136.modalContent, { paddingBottom: v_9b1a04.large + v_033e14.bottom }]}>
             {v_e74174 ? (
               <View style={v_d81136.loadingContainer}>
                 <ActivityIndicator size="large" color={v_1bfbd0.primary} />
@@ -783,7 +784,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
             ) : v_8cc501 ? (
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[v_d81136.modalScrollContent, { paddingBottom: v_033e14.bottom + v_9b1a04.medium }]}
+                contentContainerStyle={[v_d81136.modalScrollContent,]}
               >
                 {}
                 <View style={v_d81136.detailTimestampRow}>
@@ -908,8 +909,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                 </TouchableOpacity>
               </ScrollView>
             ) : null}
-          </Pressable>
-        </Pressable>
+          </View>
+        </View>
       </Modal>
 
       {}
@@ -1054,7 +1055,8 @@ const v_d81136 = v_472849.create({
   listItemBadgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.medium, color: '#D97706' },
   loadMoreBtn: { alignItems: 'center', justifyContent: 'center', paddingVertical: v_9b1a04.large, marginTop: v_9b1a04.small, borderWidth: 1, borderColor: v_1bfbd0.border, borderRadius: 12, backgroundColor: '#fff' },
   loadMoreText: { fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.bluePrimary },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
+  modalOverlay: { flex: 1, backgroundColor: 'transparent', justifyContent: 'flex-end' },
+  modalOverlayDim: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
   modalContent: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: v_9b1a04.large, maxHeight: '85%' },
   modalScrollContent: { paddingBottom: v_9b1a04.xlarge },
   detailTimestampRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: v_9b1a04.large },

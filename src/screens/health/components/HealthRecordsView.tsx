@@ -857,15 +857,16 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           v_b173ec(null);
         }}
       >
-        <Pressable
-          style={v_d81136.modalOverlay}
-          onPress={() => {
-            v_725ee9(false);
-            v_3e1334(null);
-            v_b173ec(null);
-          }}
-        >
-          <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
+        <View style={v_d81136.modalOverlay}>
+          <Pressable
+            style={v_d81136.modalOverlayDim}
+            onPress={() => {
+              v_725ee9(false);
+              v_3e1334(null);
+              v_b173ec(null);
+            }}
+          />
+          <View style={[v_d81136.modalContent, { paddingBottom: v_9b1a04.large + v_033e14.bottom }]}>
             {v_e74174 ? (
               <View style={v_d81136.loadingContainer}>
                 <ActivityIndicator size="large" color={v_1bfbd0.primary} />
@@ -876,7 +877,6 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
                   v_d81136.modalScrollContent,
-                  { paddingBottom: v_033e14.bottom + v_9b1a04.medium },
                 ]}
               >
                 {}
@@ -1014,8 +1014,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 </TouchableOpacity>
               </ScrollView>
             ) : null}
-          </Pressable>
-        </Pressable>
+          </View>
+        </View>
       </Modal>
     </View>
   );
@@ -1343,8 +1343,12 @@ const v_d81136 = v_472849.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'transparent',
     justifyContent: 'flex-end',
+  },
+  modalOverlayDim: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalContent: {
     backgroundColor: '#fff',
