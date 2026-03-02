@@ -119,6 +119,10 @@ export type RootStackParamList = {
   Chat: {
     initialSearchText?: string;
     initialHealthInfo?: { id: string; name: string } | null;
+
+    attachedHealthSummary?: string;
+
+    attachedSkinSummary?: string;
   } | undefined;
   AddSubAccount: {
     showEmailSearch?: boolean; 
