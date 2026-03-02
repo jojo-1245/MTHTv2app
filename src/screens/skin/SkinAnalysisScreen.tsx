@@ -350,6 +350,27 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
     }, [v_e521b9, v_8d41d7]);
 
+    const v_30222e = v_de06a3(() => {
+        const v_8decf8 = v_058956();
+        if (!v_8decf8 || !v_e521b9?.timestamp) {
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
+            return;
+        }
+        const v_d5dda0 = new Date(v_e521b9.timestamp);
+        const v_f8e6b9 = `${v_d5dda0.getFullYear()}.${String(v_d5dda0.getMonth() + 1).padStart(2, '0')}.${String(v_d5dda0.getDate()).padStart(2, '0')}`;
+        const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+        const v_a52412 = [
+            `측정일: ${v_f8e6b9}`,
+            `대상: ${v_0c2f9b.name}`,
+            `종합 점수: ${v_8decf8.overallScore}`,
+            ...v_8decf8.concernScores.map((v_3f4e2e) => `${v_3f4e2e.label}: ${v_3f4e2e.score}`),
+        ];
+        v_9b57fc('Chat', {
+            initialHealthInfo: { id: v_e7b2f2, name: v_0c2f9b.name },
+            attachedSkinSummary: v_a52412.join('\n'),
+        });
+    }, [v_e521b9, v_058956, v_c86f08, v_e7b2f2, v_9b57fc, v_8d41d7]);
+
     v_c4deb2(() => {
         if (v_bf6a8c) {
             v_6f6f79(v_3e09cd);
@@ -1804,13 +1825,26 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         }
                     }}
                     rightAccessory={
-                        <TouchableOpacity
-                            style={v_d81136.healthIconBtn}
-                            onPress={() => v_9b57fc('HealthAnalysis')}
-                            hitSlop={8}
-                        >
-                            <Heart size={22} color={v_1bfbd0.primary} />
-                        </TouchableOpacity>
+                        <View style={v_d81136.headerRightIcons}>
+                            {v_91943c === 'result' && (
+                                <TouchableOpacity
+                                    style={v_d81136.healthIconBtn}
+                                    onPress={v_30222e}
+                                    hitSlop={8}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={v_8d41d7('chat.include_in_chat')}
+                                >
+                                    <Ionicons name="chatbubble-ellipses-outline" size={22} color={v_1bfbd0.primary} />
+                                </TouchableOpacity>
+                            )}
+                            <TouchableOpacity
+                                style={v_d81136.healthIconBtn}
+                                onPress={() => v_9b57fc('HealthAnalysis')}
+                                hitSlop={8}
+                            >
+                                <Heart size={22} color={v_1bfbd0.primary} />
+                            </TouchableOpacity>
+                        </View>
                     }
                 />
                 <View style={v_d81136.tabBar}>
@@ -1960,6 +1994,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
 const v_d81136 = v_472849.create({
     screen: v_a61db3.screen,
+    headerRightIcons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
     healthIconBtn: {
         padding: 8,
     },
