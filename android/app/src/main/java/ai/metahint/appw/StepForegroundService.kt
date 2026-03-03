@@ -1,4 +1,4 @@
-package service-mh.example.invalid
+package ai.metahint.appw
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -25,8 +25,8 @@ class StepForegroundService : Service(), SensorEventListener {
     companion object {
         const val CHANNEL_ID = "step-tracking-silent"
         const val NOTIFICATION_ID = 1001
-        const val ACTION_UPDATE = "service-mh.example.invalid.UPDATE_STEPS"
-        const val ACTION_STOP = "service-mh.example.invalid.STOP"
+        const val ACTION_UPDATE = "ai.metahint.appw.UPDATE_STEPS"
+        const val ACTION_STOP = "ai.metahint.appw.STOP"
         const val EXTRA_STEPS = "steps"
         const val EXTRA_STEP_UNIT = "step_unit"
         const val PREFS_NAME = "metahint_step_prefs"

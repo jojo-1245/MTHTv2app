@@ -31,6 +31,8 @@ interface AppContextValue {
   resetSignupFormData: () => void;
   walletSendAddress: string;
   setWalletSendAddress: (address: string) => void;
+  walletSendAmount: string;
+  setWalletSendAmount: (amount: string) => void;
   openAddTokenDialog: () => void;
 }
 
@@ -59,6 +61,7 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
     regionIso2: v_2a5c62.iso2,
   });
   const [v_ee27aa, v_134f07] = v_5ab095<string>('');
+  const [v_e5d0e8, v_8f0018] = v_5ab095<string>('');
 
   const v_dd6143 = v_de06a3(() => {
 
@@ -136,6 +139,8 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
       resetSignupFormData: v_4df356,
       walletSendAddress: v_ee27aa,
       setWalletSendAddress: v_134f07,
+      walletSendAmount: v_e5d0e8,
+      setWalletSendAmount: v_8f0018,
       openAddTokenDialog: v_dd6143,
     }),
     [
@@ -144,6 +149,7 @@ export const AppProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }> = ({ chi
       v_479a37,
       v_8d7bc8,
       v_ee27aa,
+      v_e5d0e8,
       v_f693e7,
       v_2f2d51,
       v_a776b5,
@@ -165,3 +171,4 @@ export const v_700ef9 = (): AppContextValue => {
 
 export { StepTrackingProvider, useStepTracking } from './StepTrackingContext';
 
+export { WalletProvider, useWallet } from './WalletContext';

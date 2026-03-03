@@ -27,13 +27,13 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>service-mh.example.invalid</string>
+          <string>ai.metahint.appw</string>
         </array>
       </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>exp+metahint</string>
+          <string>exp+ai-metahint-appw</string>
         </array>
       </dict>
     </array>

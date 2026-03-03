@@ -32,3 +32,5 @@ export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, Ski
 
 export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, AlreadyCheckedInError } from './rewardsApi';
 export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStatusDetailResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse } from './rewardsApi';
+
+export * from './walletApi';

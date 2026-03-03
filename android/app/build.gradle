@@ -28,9 +28,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'service-mh.example.invalid'
+    namespace 'ai.metahint.appw'
     defaultConfig {
-        applicationId 'service-mh.example.invalid'
+        applicationId 'ai.metahint.appw'
         minSdkVersion 27
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
