@@ -1,4 +1,4 @@
-package service-mh.example.invalid
+package ai.metahint.appw
 
 import android.app.Application
 import android.content.res.Configuration

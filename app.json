@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MetaHint",
-    "slug": "metahint",
+    "slug": "ai-metahint-appw",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "service-mh.example.invalid",
+      "bundleIdentifier": "ai.metahint.appw",
       "icon": "./assets/images/appicon.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -26,7 +26,7 @@
     },
     "android": {
       "icon": "./assets/images/appicon.png",
-      "package": "service-mh.example.invalid",
+      "package": "ai.metahint.appw",
       "permissions": [
         "android.permission.ACTIVITY_RECOGNITION",
         "android.permission.FOREGROUND_SERVICE",

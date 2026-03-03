@@ -1,4 +1,4 @@
-package service-mh.example.invalid
+package ai.metahint.appw
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build
