@@ -34,3 +34,4 @@ export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getSte
 export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStatusDetailResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse } from './rewardsApi';
 
 export * from './walletApi';
+export * from './policiesApi';
