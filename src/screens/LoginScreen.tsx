@@ -28,6 +28,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import { v_67ec53, v_d41982, v_545a63 } from '../services';
+import { v_e4a763 } from '../utils/env';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
@@ -129,6 +130,19 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     };
 
     v_219084();
+  }, []);
+
+  v_c4deb2(() => {
+    try {
+      const v_c9c489 = v_e4a763();
+      v_4eac84.configure({
+        webClientId: v_c9c489.GOOGLE_WEB_CLIENT_ID ?? 'oth-client.googleusercontent.invalid',
+        iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID ?? 'oth-client.googleusercontent.invalid',
+        offlineAccess: true,
+      });
+    } catch (v_37eab7) {
+
+    }
   }, []);
 
   v_c4deb2(() => {
@@ -258,6 +272,10 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         routes: [{ name: 'MetaHome' }],
       });
     } catch (v_5e9bfe) {
+      const v_c99bd2 = v_5e9bfe && typeof v_5e9bfe === 'object' && 'code' in v_5e9bfe ? (v_5e9bfe as { code: string }).code : '';
+      if (v_c99bd2 === 'SIGN_IN_CANCELLED' || v_c99bd2 === '12501') {
+        return; 
+      }
       const v_4b5200 = v_8d41d7('login.error_unknown');
       const v_d6bda5 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_4b5200;
       v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);

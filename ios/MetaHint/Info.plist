@@ -36,6 +36,15 @@
           <string>exp+ai-metahint-appw</string>
         </array>
       </dict>
+      <!-- Google Sign-In (REVERSED_CLIENT_ID from GoogleService-Info.plist) -->
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.242440496858-ilmgkdrlvm4o954a3derbifu5hhrr6r4</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
