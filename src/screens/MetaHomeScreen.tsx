@@ -90,6 +90,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
 
+  const [v_780057, v_f23f5b] = v_5ab095(0);
+
   v_c4deb2(() => {
     const v_56263a = async () => {
       try {
@@ -522,7 +524,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </LinearGradient>
 
             {}
-            <View style={v_d81136.metricsRow}>
+            <View
+              style={[
+                v_d81136.metricsRow,
+                v_780057 > 0 && { transform: [{ translateY: -v_780057 }] },
+              ]}
+              onLayout={(v_9e86fd) => v_f23f5b(v_9e86fd.nativeEvent.layout.height)}
+            >
               <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_d85372} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Heart size={24} color="#EF4444" />
@@ -926,7 +934,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_ff4e8b,
     marginTop: -24,
     marginBottom: v_9b1a04.large,
-    transform: [{ translateY: -24 }],
+
   },
   metricCard: {
     backgroundColor: 'rgba(255,255,255,0.95)',
