@@ -36,7 +36,17 @@
         "hide": "Hide",
         "try_again": "Try Again",
         "currency_unit": "KRW",
-        "previous": "Previous"
+        "previous": "Previous",
+        "weekday_sun": "Sun",
+        "weekday_mon": "Mon",
+        "weekday_tue": "Tue",
+        "weekday_wed": "Wed",
+        "weekday_thu": "Thu",
+        "weekday_fri": "Fri",
+        "weekday_sat": "Sat",
+        "time_am": "AM",
+        "time_pm": "PM",
+        "year_month": "{{month}} {{year}}"
     },
     "account_selector": {
         "title": "Account Selection",

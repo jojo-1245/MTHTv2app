@@ -253,7 +253,7 @@ const v_16f99f = [
 const v_7199ce = [...v_70af8f, ...v_3fd22d, ...v_16f99f];
 const v_488860 = 5;
 
-const v_637b1c = ['일', '월', '화', '수', '목', '금', '토'];
+const v_173689 = ['weekday_sun', 'weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat'] as const;
 
 export const v_38756f = (item: v_218d40): HealthRecord => {
 
@@ -432,7 +432,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   };
 
   const v_2af54e = (v_d5dda0) => {
-    return `${v_d5dda0.getFullYear()}년 ${v_d5dda0.getMonth() + 1}월`;
+    return v_8d41d7('common.year_month', { year: v_d5dda0.getFullYear(), month: v_d5dda0.getMonth() + 1 });
   };
 
   const v_c9c711 = (v_087ffc) => {
@@ -521,14 +521,16 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     const v_38e403 = parseInt(v_f985e6.split(':')[0], 10) >= 12;
     const v_a7745c = parseInt(v_f985e6.split(':')[0], 10) % 12 || 12;
     const v_43e24b = v_f985e6.split(':')[1];
-    return `${v_64877a}.${v_35f85c}.${v_d5dda0} ${v_38e403 ? '오후' : '오전'} ${v_a7745c}:${v_43e24b}`;
+    const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+    return `${v_64877a}.${v_35f85c}.${v_d5dda0} ${v_591485} ${v_a7745c}:${v_43e24b}`;
   };
 
   const v_e5585e = (v_f985e6) => {
     const v_38e403 = parseInt(v_f985e6.split(':')[0], 10) >= 12;
     const v_a7745c = parseInt(v_f985e6.split(':')[0], 10) % 12 || 12;
     const v_43e24b = v_f985e6.split(':')[1];
-    return `${v_38e403 ? '오후' : '오전'} ${v_a7745c}:${v_43e24b}`;
+    const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+    return `${v_591485} ${v_a7745c}:${v_43e24b}`;
   };
 
   const v_54e295 = (v_a56041): 'high' | 'normal' | 'low' => {
@@ -680,9 +682,9 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
             </View>
 
             <View style={v_d81136.weekRow}>
-              {v_637b1c.map((v_087ffc) => (
-                <View key={v_087ffc} style={v_d81136.weekCell}>
-                  <Text style={v_d81136.weekRowText}>{v_087ffc}</Text>
+              {v_173689.map((v_b24339) => (
+                <View key={v_b24339} style={v_d81136.weekCell}>
+                  <Text style={v_d81136.weekRowText}>{v_8d41d7(`common.${v_b24339}`)}</Text>
                 </View>
               ))}
             </View>
