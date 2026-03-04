@@ -2744,6 +2744,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 )}
 
                 {}
+                {}
                 {v_e70158 && (
                   <Modal
                     visible={Boolean(v_e70158)}
@@ -2751,13 +2752,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     animationType="slide"
                     onRequestClose={() => v_19e3c6(null)}
                   >
-                    <Pressable
-                      style={v_d81136.allResultsModalOverlay}
-                      onPress={() => v_19e3c6(null)}
-                    >
+                    <View style={v_d81136.allResultsModalOverlay}>
                       <Pressable
+                        style={v_d81136.allResultsModalOverlayDim}
+                        onPress={() => v_19e3c6(null)}
+                      />
+                      <View
                         style={[v_d81136.allResultsModalContent, { paddingBottom: v_9b1a04.xlarge + v_033e14.bottom }]}
-                        onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}
                       >
                         <View style={v_d81136.allResultsModalHandle} />
                         <Text style={v_d81136.allResultsModalTitle}>
@@ -2834,8 +2835,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             })}
                           </View>
                         </ScrollView>
-                      </Pressable>
-                    </Pressable>
+                      </View>
+                    </View>
                   </Modal>
                 )}
 
@@ -3856,6 +3857,7 @@ const v_d81136 = v_472849.create({
     marginTop: v_9b1a04.medium,
     marginBottom: v_9b1a04.small,
     marginHorizontal: -v_9b1a04.large,
+    backgroundColor: 'transparent !important',
   },
 
   categoryTabContainer: {
@@ -3870,7 +3872,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_9b1a04.medium,
     paddingVertical: v_9b1a04.small,
     borderRadius: 20,
-    backgroundColor: v_1bfbd0.backgroundSecondary,
+    backgroundColor: v_1bfbd0.white,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
   },
@@ -4853,8 +4855,12 @@ const v_d81136 = v_472849.create({
   },
   allResultsModalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'transparent',
     justifyContent: 'flex-end',
+  },
+  allResultsModalOverlayDim: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   allResultsModalContent: {
     backgroundColor: v_1bfbd0.white,
