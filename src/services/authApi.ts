@@ -200,6 +200,12 @@ function getTokenFromPayload(payload: LoginAuthPayload): string | null {
     const d = data as Record<string, unknown>;
     raw = (d.accessToken ?? d.access_token ?? d.token) as string | undefined;
     if (typeof raw === 'string') return raw;
+    const innerTokens = d.tokens;
+    if (innerTokens && typeof innerTokens === 'object' && innerTokens !== null) {
+      const t = innerTokens as Record<string, unknown>;
+      raw = (t.accessToken ?? t.access_token ?? t.token ?? t.access) as string | undefined;
+      if (typeof raw === 'string') return raw;
+    }
   }
   const tokens = pl.tokens;
   if (tokens && typeof tokens === 'object' && tokens !== null) {

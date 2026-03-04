@@ -926,7 +926,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_ff4e8b,
     marginTop: -24,
     marginBottom: v_9b1a04.large,
-    transform: [{ translateY: '-100%' }],
+    transform: [{ translateY: -24 }],
   },
   metricCard: {
     backgroundColor: 'rgba(255,255,255,0.95)',

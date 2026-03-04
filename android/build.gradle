@@ -1,5 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+def forcedAbi = 'arm64-v8a'
+try {
+  def sp = gradle.startParameter
+  if (sp.projectProperties != null) {
+    sp.projectProperties['reactNativeArchitectures'] = forcedAbi
+  }
+} catch (Exception ignore) {
+}
+
 buildscript {
   repositories {
     google()

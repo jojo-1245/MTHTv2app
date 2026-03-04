@@ -59,17 +59,7 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-apple-authentication",
-      "@react-native-firebase/app",
-      "@react-native-firebase/messaging",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "useFrameworks": "static"
-          }
-        }
-      ]
+      "expo-apple-authentication"
     ]
   }
 }
