@@ -36,7 +36,17 @@
         "hide": "Sembunyikan",
         "try_again": "Coba Lagi",
         "currency_unit": "KRW",
-        "previous": "Sebelumnya"
+        "previous": "Sebelumnya",
+        "weekday_sun": "Min",
+        "weekday_mon": "Sen",
+        "weekday_tue": "Sel",
+        "weekday_wed": "Rab",
+        "weekday_thu": "Kam",
+        "weekday_fri": "Jum",
+        "weekday_sat": "Sab",
+        "time_am": "AM",
+        "time_pm": "PM",
+        "year_month": "{{month}} {{year}}"
     },
     "account_selector": {
         "title": "Pilihan Akun",
