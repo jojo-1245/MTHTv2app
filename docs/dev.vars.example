@@ -1,0 +1,11 @@
+# 로컬 개발 시 사용. 이 파일을 복사해 .dev.vars 로 저장한 뒤 값을 채우세요.
+# .dev.vars 는 git에 포함되지 않습니다.
+# ※ 백엔드(Cloudflare Workers 또는 Node) 프로젝트 루트에 두고 사용하세요.
+
+# 구글 소셜 로그인 (웹 클라이언트 ID) — 앱과 동일한 웹 클라이언트 ID 사용
+# Google Cloud Console > API 및 서비스 > 사용자 인증 정보 > 웹 애플리케이션 클라이언트 ID
+GOOGLE_CLIENT_ID=oth-client.googleusercontent.invalid
+
+# --- 프로덕션 (Cloudflare Workers) ---
+# Wrangler Secrets로 설정: wrangler secret put GOOGLE_CLIENT_ID
+# 입력 프롬프트에 위와 동일한 웹 클라이언트 ID 값을 붙여넣으면 됩니다.
