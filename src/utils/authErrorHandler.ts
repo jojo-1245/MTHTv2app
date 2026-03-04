@@ -1,4 +1,5 @@
 import v_b5030f from 'imsks';
+import { v_03e392 } from 'rcmrninabrnb';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
 
 export function v_edfdf4(v_5e9bfe): boolean {
@@ -31,7 +32,17 @@ export function v_998b9d(
   if (v_edfdf4(v_5e9bfe)) {
     console.log('[authErrorHandler] 인증 에러 감지. 로그인 페이지로 이동...');
     try {
-      v_2a53b4();
+      v_03e392.alert(
+        '알림',
+        '로그인하세요.',
+        [
+          {
+            text: '확인',
+            onPress: () => v_2a53b4(),
+          },
+        ],
+        { cancelable: false }
+      );
       return true;
     } catch (v_f58bb7) {
       console.error('[authErrorHandler] 네비게이션 에러:', v_f58bb7);

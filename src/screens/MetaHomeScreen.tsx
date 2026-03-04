@@ -107,6 +107,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         }
       } catch (v_5e9bfe) {
         console.error('[MetaHomeScreen] 최신 점수 로드 실패:', v_5e9bfe);
+
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
       }
     };
 
@@ -147,6 +151,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       } catch (v_5e9bfe) {
         console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
 
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+          return;
+        }
+
         try {
           const v_d308b5 = await v_cbf5f1(v_c65f5d);
           if (v_d308b5.checked_today) {
@@ -159,6 +167,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           v_0d7691(v_d308b5.streak_days);
         } catch (v_741f30) {
           console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
+
+          if (v_998b9d(v_c65f5d, v_741f30)) {
+            return;
+          }
         }
       }
     };

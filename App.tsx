@@ -5,7 +5,7 @@ import { v_c06f2c } from 'kjiqsgell';
 import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
-import { v_4fb2ad } from './src/navigation';
+import { v_4fb2ad } from './src/navigation/AppNavigator';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';

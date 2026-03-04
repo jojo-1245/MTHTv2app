@@ -1,0 +1,145 @@
+import v_a3453e from "bapkr";
+import { v_ac28fd } from "ixigazcpvfldbecwtbvavtbi";
+import { v_709be7 } from "xpfgrcdafpntkgxfmgxpxnedjkvmtc";
+import { v_60875a } from "./rootNavigationRef";
+import type { v_8ad91b } from "./index";
+
+import v_7af305 from "../screens/IntroScreen";
+import v_c316d8 from "../screens/HomeScreen";
+import v_7aeeb0 from "../screens/MetaHomeScreen";
+import v_f4f851 from "../screens/LoginScreen";
+import v_f40fc5 from "../screens/SignupScreen";
+import v_a82b55 from "../screens/EmailVerificationScreen";
+import v_040c8f from "../screens/ForgotPasswordScreen";
+import v_0d311d from "../screens/PasswordVerificationScreen";
+import v_db1cc4 from "../screens/ResetPasswordScreen";
+import v_873cfb from "../screens/PasswordChangedScreen";
+import v_c1e2b5 from "../screens/CountrySelectScreen";
+import { v_952e24 } from "../screens/wallet/WalletScreen";
+import { v_5b640b } from "../screens/wallet/WalletSendScreen";
+import { v_2ba37d } from "../screens/wallet/WalletQrScanScreen";
+import { v_31216c } from "../screens/wallet/WalletTransactionProgressScreen";
+import { v_1cd2a2 } from "../screens/wallet/WalletTransactionResultScreen";
+import { v_a023f9 } from "../screens/wallet/WalletReceiveScreen";
+import { v_e1bcc7 } from "../screens/wallet/WalletTokenDetailScreen";
+import { v_4ab181 } from "../screens/FontTestScreen";
+import v_03a231 from "../screens/profile/MyInfoScreen";
+import v_cdb169 from "../screens/profile/MyInfoEditScreen";
+import v_dec378 from "../screens/profile/MyInfoEmailAuthScreen";
+import v_4a40b2 from "../screens/profile/MyInfoSettingsScreen";
+import v_386af2 from "../screens/profile/MyInfoNotifyScreen";
+import v_41dfd5 from "../screens/profile/MyInfoClausesScreen";
+import v_5fdcb2 from "../screens/profile/ClauseDetailScreen";
+import v_9e06f6 from "../screens/profile/MyInfoCloseMembershipScreen";
+import v_083aa7 from "../screens/profile/MyInfoFaqScreen";
+import v_52f825 from "../screens/profile/ReferralShareScreen";
+import v_f97d8b from "../screens/profile/ProfitDistributionScreen";
+import { v_852e99, v_8b28f5 } from "../screens/skin";
+import {
+    v_daf220,
+    v_cb47c8,
+    v_71e66c,
+    v_1b8038,
+} from "../screens/health";
+import v_7f9fad from "../screens/AnalysisScreen";
+import { v_02d653 } from "../screens/chat";
+import v_67f088 from "../screens/AddSubAccountScreen";
+
+const v_cb3606 = v_709be7<v_8ad91b>();
+
+export const AppNavigator: v_a3453e.FC = () => {
+    return (
+        <NavigationContainer ref={v_60875a}>
+            <Stack.Navigator
+                initialRouteName="Intro"
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
+                <Stack.Screen name="Intro" component={v_7af305} />
+                <Stack.Screen name="Home" component={v_c316d8} />
+                <Stack.Screen name="MetaHome" component={v_7aeeb0} />
+                <Stack.Screen name="Login" component={v_f4f851} />
+                <Stack.Screen name="Signup" component={v_f40fc5} />
+                <Stack.Screen name="ForgotPassword" component={v_040c8f} />
+                <Stack.Screen
+                    name="PasswordVerification"
+                    component={v_0d311d}
+                />
+                <Stack.Screen name="ResetPassword" component={v_db1cc4} />
+                <Stack.Screen
+                    name="PasswordChanged"
+                    component={v_873cfb}
+                />
+                <Stack.Screen
+                    name="EmailVerification"
+                    component={v_a82b55}
+                />
+                <Stack.Screen name="CountrySelect" component={v_c1e2b5} />
+                <Stack.Screen name="Wallet" component={v_952e24} />
+                <Stack.Screen name="WalletSend" component={v_5b640b} />
+                <Stack.Screen name="WalletReceive" component={v_a023f9} />
+                <Stack.Screen name="WalletQrScan" component={v_2ba37d} />
+                <Stack.Screen
+                    name="WalletEstimate"
+                    component={v_31216c}
+                />
+                <Stack.Screen
+                    name="WalletTransactionProgress"
+                    component={v_31216c}
+                />
+                <Stack.Screen
+                    name="WalletTransactionResult"
+                    component={v_1cd2a2}
+                />
+                <Stack.Screen
+                    name="TransactionDetails"
+                    component={v_1cd2a2}
+                />
+                <Stack.Screen
+                    name="WalletTokenDetail"
+                    component={v_e1bcc7}
+                />
+                <Stack.Screen name="FontTest" component={v_4ab181} />
+                <Stack.Screen name="MyInfo" component={v_03a231} />
+                <Stack.Screen name="MyInfoEdit" component={v_cdb169} />
+                <Stack.Screen
+                    name="MyInfoEmailAuth"
+                    component={v_dec378}
+                />
+                <Stack.Screen name="MyInfoSettings" component={v_4a40b2} />
+                <Stack.Screen name="MyInfoNotify" component={v_386af2} />
+                <Stack.Screen name="MyInfoClauses" component={v_41dfd5} />
+                <Stack.Screen name="ClauseDetail" component={v_5fdcb2} />
+                <Stack.Screen
+                    name="MyInfoCloseMembership"
+                    component={v_9e06f6}
+                />
+                <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
+                <Stack.Screen name="ReferralShare" component={v_52f825} />
+                <Stack.Screen
+                    name="ProfitDistribution"
+                    component={v_f97d8b}
+                />
+                <Stack.Screen name="SkinAnalysis" component={v_852e99} />
+                <Stack.Screen name="SkinComparison" component={v_8b28f5} />
+                <Stack.Screen name="Analysis" component={v_7f9fad} />
+                <Stack.Screen name="HealthAnalysis" component={v_daf220} />
+                <Stack.Screen
+                    name="HealthAnalysisResult"
+                    component={v_cb47c8}
+                />
+                <Stack.Screen
+                    name="HealthComparison"
+                    component={v_71e66c}
+                />
+                <Stack.Screen
+                    name="HealthConnection"
+                    component={v_1b8038}
+                />
+                <Stack.Screen name="Chat" component={v_02d653} />
+                <Stack.Screen name="AddSubAccount" component={v_67f088} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+};
