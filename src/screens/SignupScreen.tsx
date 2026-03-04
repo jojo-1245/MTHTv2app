@@ -628,13 +628,16 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {}
             <View>
               <Text style={v_d81136.sectionLabel}>{v_8d41d7('signup.age_label')}</Text>
-              <View style={v_d81136.inlineOptions}>
+              <View style={[v_d81136.inlineOptions, v_d81136.ageOptionsRow]}>
                 {v_0c96f7.map((v_0bd920) => (
                   <OptionButton
                     key={v_0bd920}
                     label={v_0bd920 === 'select' ? v_8d41d7('signup.select') : v_0bd920}
                     selected={v_f83808 === v_0bd920}
                     onPress={() => v_64a312(v_0bd920)}
+                    flex={1}
+                    style={v_d81136.ageOptionButton}
+                    numberOfLines={1}
                   />
                 ))}
               </View>
@@ -889,6 +892,15 @@ const v_d81136 = v_472849.create({
   inlineOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  ageOptionsRow: {
+    flexWrap: 'nowrap',
+  },
+  ageOptionButton: {
+    minWidth: 0,
+    marginBottom: 0,
+    marginRight: 4,
+    paddingHorizontal: 4,
   },
   phonePrefix: {
     flexDirection: 'row',
