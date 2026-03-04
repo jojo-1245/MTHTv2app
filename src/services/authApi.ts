@@ -145,17 +145,19 @@ export async function socialLogin(params: {
 }): Promise<LoginAuthPayload> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
+  const path = env.AUTH_SOCIAL_LOGIN_PATH ?? '/oth-path';
+  const url = `${baseURL.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
   const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
   const body = { provider: params.provider, token: params.token };
   if (__DEV__) {
-    console.log('[authApi] social-login 요청:', { url: `${baseURL}/oth-path`, provider: params.provider });
+    console.log('[authApi] social-login 요청:', { url, provider: params.provider });
   }
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
     const res = await axios.post<ApiResponse<LoginAuthPayload>>(
-      `${baseURL}/oth-path`,
+      url,
       body,
       { timeout: API_TIMEOUT, headers }
     );
