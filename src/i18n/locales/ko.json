@@ -36,7 +36,17 @@
         "hide": "숨기기",
         "try_again": "재시도",
         "currency_unit": "원",
-        "previous": "이전"
+        "previous": "이전",
+        "weekday_sun": "일",
+        "weekday_mon": "월",
+        "weekday_tue": "화",
+        "weekday_wed": "수",
+        "weekday_thu": "목",
+        "weekday_fri": "금",
+        "weekday_sat": "토",
+        "time_am": "오전",
+        "time_pm": "오후",
+        "year_month": "{{year}}년 {{month}}월"
     },
     "account_selector": {
         "title": "계정 선택",

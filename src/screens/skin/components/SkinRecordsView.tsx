@@ -228,7 +228,8 @@ const v_16f99f = [
 
 const v_612065 = [...v_820b44, ...v_16f99f];
 const v_488860 = 5;
-const v_637b1c = ['일', '월', '화', '수', '목', '금', '토'];
+
+const v_173689 = ['weekday_sun', 'weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat'] as const;
 
 interface SkinRecordsViewProps {
   onCompare?: (records: [SkinRecord, SkinRecord]) => void;
@@ -406,7 +407,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     return v_6a53fd;
   }, [v_0ab6f2]);
 
-  const v_2af54e = (v_d5dda0) => `${v_d5dda0.getFullYear()}년 ${v_d5dda0.getMonth() + 1}월`;
+  const v_2af54e = (v_d5dda0) => v_8d41d7('common.year_month', { year: v_d5dda0.getFullYear(), month: v_d5dda0.getMonth() + 1 });
 
   const v_16897e = (v_8dffde, v_f985e6) => {
     const [v_64877a, v_35f85c, v_d5dda0] = v_8dffde.split('-');
@@ -414,7 +415,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     const v_38e403 = v_a7745c >= 12;
     const v_65a2cd = v_a7745c % 12 || 12;
     const v_43e24b = v_f985e6.split(':')[1];
-    return `${v_64877a}.${v_35f85c}.${v_d5dda0} ${v_38e403 ? '오후' : '오전'} ${v_65a2cd}:${v_43e24b}`;
+    const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+    return `${v_64877a}.${v_35f85c}.${v_d5dda0} ${v_591485} ${v_65a2cd}:${v_43e24b}`;
   };
 
   const v_e5585e = (v_f985e6) => {
@@ -422,7 +424,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     const v_38e403 = v_a7745c >= 12;
     const v_65a2cd = v_a7745c % 12 || 12;
     const v_43e24b = v_f985e6.split(':')[1];
-    return `${v_38e403 ? '오후' : '오전'} ${v_65a2cd}:${v_43e24b}`;
+    const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+    return `${v_591485} ${v_65a2cd}:${v_43e24b}`;
   };
 
   const v_c9c711 = (v_087ffc) => {
@@ -661,9 +664,9 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
               </TouchableOpacity>
             </View>
             <View style={v_d81136.weekRow}>
-              {v_637b1c.map((v_087ffc) => (
-                <View key={v_087ffc} style={v_d81136.weekCell}>
-                  <Text style={v_d81136.weekRowText}>{v_087ffc}</Text>
+              {v_173689.map((v_b24339) => (
+                <View key={v_b24339} style={v_d81136.weekCell}>
+                  <Text style={v_d81136.weekRowText}>{v_8d41d7(`common.${v_b24339}`)}</Text>
                 </View>
               ))}
             </View>
