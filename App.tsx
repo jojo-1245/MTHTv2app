@@ -5,6 +5,8 @@ import { v_c06f2c } from 'kjiqsgell';
 import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
+import v_02a5ed from 'svehvzqlbgtssigttkidbnoplikykbnc';
+import v_2dc4c2, { v_ad9c5b } from 'bsiaazmwsayjedvznfsir';
 import { v_4fb2ad } from './src/navigation/AppNavigator';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
@@ -18,6 +20,10 @@ const v_20ccc6 = {
   'Pretendard-Bold': require('./assets/fonts/Pretendard-Bold.otf'),
   'Pretendard-ExtraBold': require('./assets/fonts/Pretendard-ExtraBold.otf'),
 };
+
+v_02a5ed().setBackgroundMessageHandler(async v_7417a3 => {
+  console.log('[FCM Background] Message handled in the background!', v_7417a3);
+});
 
 let v_e0cae9 = false;
 type TextLikeComponent = typeof v_19b633 & {
@@ -51,6 +57,54 @@ const v_83baa4 = () => {
 export default function v_6540c3() {
   const [v_43f571, v_d39d7d] = v_c06f2c(v_20ccc6);
   const [v_4c1272, v_bf8912] = v_5ab095(false);
+
+  v_c4deb2(() => {
+    async function v_bdc742() {
+
+      const v_4dec7e = await v_02a5ed().requestPermission();
+      const v_d20c84 =
+        v_4dec7e === v_02a5ed.AuthorizationStatus.AUTHORIZED ||
+        v_4dec7e === v_02a5ed.AuthorizationStatus.PROVISIONAL;
+
+      if (v_d20c84) {
+        console.log('[FCM] Authorization status:', v_4dec7e);
+      }
+
+      try {
+        const v_21cc31 = await v_02a5ed().getToken();
+        console.log('[FCM] Device FCM Token:', v_21cc31);
+      } catch (v_5e9bfe) {
+        console.error('[FCM] Failed to get token:', v_5e9bfe);
+      }
+
+      await v_2dc4c2.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        importance: v_ad9c5b.HIGH,
+      });
+    }
+
+    v_bdc742();
+
+    const v_f3c3f1 = v_02a5ed().onMessage(async v_7417a3 => {
+      console.log('[FCM Foreground] Message arrived!', JSON.stringify(v_7417a3));
+
+      await v_2dc4c2.displayNotification({
+        title: v_7417a3.notification?.title ?? '새로운 알림',
+        body: v_7417a3.notification?.body ?? '',
+        data: v_7417a3.data,
+        android: {
+          channelId: 'default',
+          importance: v_ad9c5b.HIGH,
+          pressAction: {
+            id: 'default',
+          },
+        },
+      });
+    });
+
+    return v_f3c3f1;
+  }, []);
 
   v_c4deb2(() => {
     v_7c6176.preventAutoHideAsync().catch(() => null);
