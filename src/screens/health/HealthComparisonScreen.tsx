@@ -285,7 +285,8 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     const v_38e403 = parseInt(v_f985e6.split(':')[0], 10) >= 12;
     const v_a7745c = parseInt(v_f985e6.split(':')[0], 10) % 12 || 12;
     const v_43e24b = v_f985e6.split(':')[1];
-    return `${v_38e403 ? '오후' : '오전'} ${v_a7745c}:${v_43e24b}`;
+    const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+    return `${v_591485} ${v_a7745c}:${v_43e24b}`;
   };
 
   if (v_cd31a8) {
