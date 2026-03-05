@@ -57,7 +57,15 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-apple-authentication"
+      "expo-apple-authentication",
+      [
+        "@react-native-kakao/core",
+        {
+          "nativeAppKey": "oth-secret",
+          "android": { "authCodeHandlerActivity": true },
+          "ios": { "handleKakaoOpenUrl": true }
+        }
+      ]
     ]
   }
 }
