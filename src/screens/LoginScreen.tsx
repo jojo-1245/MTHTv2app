@@ -27,7 +27,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
-import { v_67ec53, v_d41982, v_545a63 } from '../services';
+import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
@@ -251,8 +251,12 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         return;
       }
       const v_b50834 = v_3393e3.data.idToken;
-      const v_931bf0 = await v_545a63({ provider: 'google', token: v_b50834 });
-      await v_d41982(v_931bf0, v_2129ec);
+      const v_43c42e = await v_545a63({ provider: 'google', token: v_b50834 });
+      if (v_2cd4e6(v_43c42e)) {
+        v_c65f5d.navigate('Signup', { email: v_43c42e.email, fromSocial: 'google' });
+        return;
+      }
+      await v_d41982(v_43c42e, v_2129ec);
       v_c65f5d.reset({
         index: 0,
         routes: [{ name: 'MetaHome' }],
@@ -284,8 +288,12 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         v_889fad(v_8d41d7('login.error_failed'), v_8d41d7('login.error_unknown'));
         return;
       }
-      const v_931bf0 = await v_545a63({ provider: 'apple', token: v_21cc31 });
-      await v_d41982(v_931bf0, v_2129ec);
+      const v_43c42e = await v_545a63({ provider: 'apple', token: v_21cc31 });
+      if (v_2cd4e6(v_43c42e)) {
+        v_c65f5d.navigate('Signup', { email: v_43c42e.email, fromSocial: 'apple' });
+        return;
+      }
+      await v_d41982(v_43c42e, v_2129ec);
       v_c65f5d.reset({
         index: 0,
         routes: [{ name: 'MetaHome' }],

@@ -39,7 +39,7 @@ type Props = v_432191<v_8ad91b, 'Signup'>;
 
 const v_64964e = /^(?=.*[a-zA-Z])(?=.*\d).{8,128}$/;
 
-const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const {
     selectedCountryDialCode: v_459d5e,
@@ -49,6 +49,9 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     signupFormData: v_8d7bc8,
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
+
+  const v_5739ac = v_c7daf6.params?.fromSocial;
+  const v_9607d3 = v_c7daf6.params?.email ?? '';
 
   const v_21bdd5 = v_df9f57(() => [
     { value: 'none' as const, label: v_8d41d7('signup.select') },
@@ -66,7 +69,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_c3eac4, v_bdc43c] =
     v_5ab095<'none' | 'male' | 'female'>('none');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
-  const [v_e0c7e8, v_fedf34] = v_5ab095('');
+  const [v_e0c7e8, v_fedf34] = v_5ab095(v_9607d3);
   const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
@@ -86,6 +89,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_0908db, v_1c41ce] = v_5ab095(false);
   const [v_3a64df, v_c73419] = v_5ab095(false);
   const [v_7962f1, v_6a0bf8] = v_5ab095('');
+
+  v_c4deb2(() => {
+    if (v_9607d3) v_fedf34(v_9607d3);
+  }, [v_9607d3]);
 
   const v_0e461e = (v_3b402b): boolean => {
     const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -472,6 +479,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     try {
       await v_35200c(v_931bf0);
       await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
+      if (v_5739ac) {
+        v_889fad(
+          v_8d41d7('signup.success_title'),
+          v_8d41d7('signup.success_message_social', '가입되었습니다. 소셜 로그인을 눌러 로그인하세요.'),
+          () => v_c65f5d.navigate('Login')
+        );
+        return;
+      }
       v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), async () => {
         try {
           await v_c1a440({ email: v_8f37ac, purpose: 'signup' });
@@ -535,7 +550,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 autoCapitalize="none"
                 value={v_e0c7e8}
                 onChangeText={v_a64837}
-                editable={!v_88dca2}
+                editable={!v_88dca2 && !v_5739ac}
               />
               {v_4e8e4d && (
                 <Text style={v_d81136.errorText}>{v_4e8e4d}</Text>

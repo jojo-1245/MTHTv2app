@@ -431,6 +431,7 @@
         "error_terms_message": "Silakan setujui Ketentuan Layanan.",
         "success_title": "Pendaftaran Selesai",
         "success_message": "Silakan lanjutkan dengan verifikasi email.",
+        "success_message_social": "Pendaftaran berhasil. Ketuk login sosial untuk masuk.",
         "error_title": "Pendaftaran Gagal",
         "error_validation": "Silakan periksa informasi yang Anda masukkan.",
         "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
