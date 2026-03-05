@@ -551,6 +551,7 @@
             "guide_4": "Hindari rambut menutupi wajah",
             "warning_no_face": "Wajah tidak terdeteksi. Silakan ambil foto lagi.",
             "warning_not_frontal": "Bukan foto dari depan. Silakan lihat ke depan dan ambil foto lagi.",
+            "verification_failed_retake": "Verifikasi wajah gagal. Silakan ambil foto lagi.",
             "btn_capture": "Silakan ambil foto",
             "btn_detect_need": "Deteksi wajah diperlukan",
             "btn_frontal_need": "Foto dari depan diperlukan",
