@@ -269,8 +269,10 @@ class v_3c3bb8 {
       }
 
       if (v_43c42e.task_status === 'error') {
+        const v_e2241d = v_43c42e.error_message || v_43c42e.error;
+        console.log('[YouCam API] task_status=error', { error_message: v_43c42e.error_message, error: v_43c42e.error });
         const v_4b5200 = v_8d41d7 ? v_8d41d7('skin_analysis.errors.analysis_error') : '분석 중 오류가 발생했습니다.';
-        throw new Error(v_43c42e.error_message || v_43c42e.error || v_4b5200);
+        throw new Error(v_e2241d || v_4b5200);
       }
 
       await new Promise((v_6f7712) => setTimeout(v_6f7712, v_134121));
