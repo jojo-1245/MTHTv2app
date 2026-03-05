@@ -171,11 +171,11 @@ export async function socialLogin(params: {
       body,
       { timeout: API_TIMEOUT, headers }
     );
-    const data = res.data?.data ?? (res.data as unknown as Record<string, unknown>);
-    if (data && typeof data === 'object' && data.needsSignup === true && typeof data.email === 'string') {
-      if (__DEV__) console.log('[authApi] social-login needsSignup:', { email: data.email });
-      return { needsSignup: true, email: data.email };
-    }
+    const raw = res.data as Record<string, unknown> | undefined;
+    const data = (raw?.data != null ? raw.data : raw) as Record<string, unknown> | null | undefined;
+    const needsSignupVal = data?.needsSignup ?? raw?.needsSignup;
+    const emailVal = data?.email ?? raw?.email;
+
     const payload: LoginAuthPayload =
       typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : { token: data };
     const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
@@ -187,11 +187,29 @@ export async function socialLogin(params: {
         payload.token = tokenFromHeader;
       }
     }
+    const hasToken = !!getTokenFromPayload(payload);
+    const hasMember = !!(payload as Record<string, unknown>).member;
+
     if (__DEV__) {
-      const hasToken =
-        !!(payload.accessToken ?? payload.access_token ?? payload.token);
-      console.log('[authApi] social-login 응답:', { status: res.status, hasData: !!data, hasToken });
+      console.log('[authApi] social-login 원본 응답:', {
+        hasData: !!data,
+        needsSignup: needsSignupVal,
+        email: emailVal,
+        keys: data ? Object.keys(data) : [],
+        hasToken,
+        hasMember,
+      });
     }
+
+    if (needsSignupVal === true && !hasToken) {
+      if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (needsSignup, 토큰 없음)', { email: emailVal });
+      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+    }
+    if (!hasToken) {
+      if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (토큰 없음)');
+      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+    }
+    if (__DEV__) console.log('[authApi] social-login → 로그인 처리', { hasToken, hasMember });
     return payload;
   } catch (error) {
     if (__DEV__ && axios.isAxiosError(error)) {
