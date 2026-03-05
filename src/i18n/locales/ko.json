@@ -561,6 +561,7 @@
             "warning_no_face": "얼굴이 인식되지 않았습니다. 다시 촬영해주세요.",
             "warning_not_frontal": "정면이 아닙니다. 정면을 바라보고 다시 촬영해주세요.",
             "warning_face_too_small": "얼굴이 너무 작습니다. 가이드에 맞게 가까이 촬영해주세요.",
+            "verification_failed_retake": "얼굴 검증에 실패했습니다. 다시 촬영해주세요.",
             "guide_no_face": "얼굴을 가이드에 맞춰주세요.",
             "guide_align": "가이드에 맞춰 얼굴 위치를 조정해주세요.",
             "guide_move_closer": "얼굴이 멀어요. 조금 더 가까이 와주세요.",
