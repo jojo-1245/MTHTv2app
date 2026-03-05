@@ -11,6 +11,7 @@
     "android:uninstall": "adb uninstall ai.metahint.appw",
     "android:clean": "node -e \"require('fs').rmSync('android/app/.cxx',{recursive:true,force:true}); require('fs').rmSync('android/build',{recursive:true,force:true}); require('fs').rmSync('android/.gradle',{recursive:true,force:true}); require('fs').rmSync('android/app/build',{recursive:true,force:true})\"",
     "android:keyhash": "node scripts/get-android-keyhash.js",
+    "naver:callback": "node scripts/naver-callback-server.js",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
@@ -48,6 +49,7 @@
     "expo-sharing": "~14.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
+    "expo-web-browser": "^55.0.9",
     "i18next": "^25.8.0",
     "lucide-react-native": "^0.563.0",
     "react": "19.1.0",
