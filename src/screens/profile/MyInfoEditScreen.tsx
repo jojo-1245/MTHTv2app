@@ -460,10 +460,14 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_d199d8 = v_c3eac4 === 'none' ? null : v_91bb22.getGenderCode(v_c3eac4);
     const v_78ba6e = v_f83808 === 'select' ? null : v_91bb22.getAgeCode(v_f83808);
 
-    const v_49ea09 =
+    const v_25660a =
       v_c01add || !v_088b9e
         ? null
-        : `${v_4d1e97.startsWith('+') ? v_4d1e97 : `+${v_4d1e97}`}${v_088b9e}`;
+        : (v_4d1e97.replace(/\D/g, '') || '') + v_088b9e;
+    const v_49ea09 =
+      v_25660a && v_25660a.replace(/\D/g, '').length >= 8
+        ? v_25660a.replace(/\D/g, '')
+        : null;
 
     v_e33ec0(true);
     try {

@@ -5,6 +5,7 @@ import { v_c06f2c } from 'kjiqsgell';
 import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
+import { v_a93182 } from 'yzktjwuapptubgpbxqqojdob';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
@@ -74,6 +75,9 @@ export default function v_6540c3() {
           iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID,
           webClientId: v_c9c489.GOOGLE_WEB_CLIENT_ID ?? v_c9c489.GOOGLE_ANDROID_CLIENT_ID,
         });
+      }
+      if (v_c9c489.KAKAO_NATIVE_APP_KEY) {
+        v_a93182(v_c9c489.KAKAO_NATIVE_APP_KEY);
       }
     } catch {
 

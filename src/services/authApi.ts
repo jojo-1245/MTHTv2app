@@ -150,7 +150,7 @@ export async function loginMember(params: {
 }
 
 export async function socialLogin(params: {
-  provider: 'google' | 'apple';
+  provider: 'google' | 'apple' | 'kakao';
   token: string;
 }): Promise<SocialLoginResult> {
   const env = getEnv();

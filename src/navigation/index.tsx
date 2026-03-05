@@ -42,7 +42,7 @@ export type RootStackParamList = {
   Home: undefined;
   MetaHome: undefined;
   Login: undefined;
-    Signup: { email?: string; fromSocial?: 'google' | 'apple' } | undefined;
+    Signup: { email?: string; fromSocial?: 'google' | 'apple' | 'kakao' } | undefined;
   ForgotPassword: undefined;
   PasswordVerification: undefined;
   ResetPassword: undefined;
