@@ -29,6 +29,9 @@ import { v_a0daa8 } from '../../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_9e8766 } from '../../hooks';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_e4a763 } from '../../utils/env';
+import { v_777b12 } from '../../services/healthApi';
+import { v_81fcbc } from '../../services/skinApi';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -552,37 +555,95 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     return v_d5dda0.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
-  const v_465869 = () => {
-    if (!v_a469c7.trim()) return;
+  const v_465869 = async () => {
+    const v_9b6134 = v_a469c7.trim();
+    if (!v_9b6134) return;
 
     const v_5c2f9f = Date.now();
-    const v_54d6ff = {
-      id: v_5c2f9f.toString(),
+    const v_b0cf4c = v_5c2f9f.toString();
+    const v_e629b5 = {
+      id: v_b0cf4c,
       type: 'user',
-      text: v_a469c7.trim(),
+      text: v_9b6134,
       createdAt: v_5c2f9f,
     };
 
-    v_41d55d(v_ba2215 => [...v_ba2215, v_54d6ff]);
+    v_41d55d(v_ba2215 => [...v_ba2215, v_e629b5]);
     v_f32824('');
 
     setTimeout(() => {
       v_e99f51.current?.scrollToEnd({ animated: true });
     }, 100);
 
+    const v_4e9c48 = (v_5c2f9f + 1).toString();
+    const v_4313ca = {
+      id: v_4e9c48,
+      type: 'ai',
+      text: '',
+      createdAt: v_5c2f9f + 1,
+      isLoading: true,
+    };
+    v_41d55d(v_ba2215 => [...v_ba2215, v_4313ca]);
     setTimeout(() => {
-      const v_37c94a = {
-        id: (Date.now() + 1).toString(),
-        type: 'ai',
-        text: v_8d41d7('chat.ai_preparing'),
-        createdAt: Date.now(),
-      };
-      v_41d55d(v_ba2215 => [...v_ba2215, v_37c94a]);
+      v_e99f51.current?.scrollToEnd({ animated: true });
+    }, 100);
 
-      setTimeout(() => {
-        v_e99f51.current?.scrollToEnd({ animated: true });
-      }, 100);
-    }, 1000);
+    try {
+      const v_c253c5 = v_e7b2f2 === '1' ? undefined : v_e7b2f2;
+      const v_5213e7 = v_777b12(v_c253c5).catch(() => []);
+      const v_ed4b7b = v_81fcbc(v_c253c5).catch(() => []);
+
+      const [v_77cfc3, v_d6b96e] = await Promise.all([v_5213e7, v_ed4b7b]);
+
+      const v_ec41ce = v_77cfc3.length > 0 ? v_77cfc3[0] : null;
+      const v_068098 = v_d6b96e.length > 0 ? v_d6b96e[0] : null;
+
+      const v_c9c489 = v_e4a763();
+      const v_fed274 = v_c9c489.GATEWAY;
+      if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다.');
+
+      const v_f71b56 = `${v_fed274}/oth-path`;
+
+      const v_6f3521 = new XMLHttpRequest();
+      v_6f3521.open('POST', v_f71b56, true);
+      v_6f3521.setRequestHeader('Content-Type', 'application/json');
+
+      let v_3e1c56 = 0;
+
+      v_6f3521.onreadystatechange = () => {
+        if (v_6f3521.readyState === XMLHttpRequest.LOADING || v_6f3521.readyState === XMLHttpRequest.DONE) {
+          const v_f48e68 = v_6f3521.responseText;
+          if (v_f48e68 && v_f48e68.length > 0) {
+            v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, text: v_f48e68, isLoading: false } : v_35f85c));
+
+            if (v_f48e68.length - v_3e1c56 > 20 || v_6f3521.readyState === XMLHttpRequest.DONE) {
+              v_3e1c56 = v_f48e68.length;
+              setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: false }), 50);
+            }
+          } else if (v_6f3521.readyState === XMLHttpRequest.DONE) {
+            v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, isLoading: false } : v_35f85c));
+          }
+        }
+      };
+
+      v_6f3521.onerror = () => {
+        v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, text: '네트워크 오류가 발생했습니다.', isLoading: false } : v_35f85c));
+      };
+
+      const v_931bf0 = {
+        query: v_9b6134,
+        stream: true,
+        jsonData: {
+          healthData: v_ec41ce,
+          skinData: v_068098
+        }
+      };
+
+      v_6f3521.send(JSON.stringify(v_931bf0));
+    } catch (v_49263d) {
+      console.error(v_49263d);
+      v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, text: 'API 호출 중 오류가 발생했습니다.', isLoading: false } : v_35f85c));
+    }
   };
 
   const v_4f73b9 = (v_01bee9) => {
@@ -1079,26 +1140,18 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                     {new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
                   </Text>
                   {}
-                  <TouchableOpacity
-                    style={v_d81136.startHealthButton}
-                    onPress={v_84bbe1}
-                    activeOpacity={0.8}
-                  >
-                    <View style={v_d81136.startHealthButtonBorder}>
-                      <LinearGradient
-                        colors={['#615FFF', '#AD46FF']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={v_d81136.startHealthButtonGradient}
-                      >
-                        <Stethoscope size={24} color="#FFFFFF" strokeWidth={2} />
-                        <View style={v_d81136.startHealthButtonTextWrap}>
-                          <Text style={v_d81136.startHealthButtonText}>{v_8d41d7('chat.start_health_checkup')}</Text>
-                          <Text style={v_d81136.startHealthButtonSub}>{v_8d41d7('chat.start_health_checkup_sub')}</Text>
-                        </View>
-                      </LinearGradient>
-                    </View>
-                  </TouchableOpacity>
+                  <View style={v_d81136.suggestionContainer}>
+                    <Text style={v_d81136.suggestionTitle}>
+                      {v_8d41d7('chat.can_ask_these') || '이러한 내용을 물어볼 수 있습니다'}
+                    </Text>
+                    <TouchableOpacity
+                      style={v_d81136.suggestionButton}
+                      onPress={() => v_f32824('너는 누구니?')}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={v_d81136.suggestionButtonText}>💬 너는 누구니?</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
@@ -1594,42 +1647,32 @@ const v_d81136 = v_472849.create({
     color: '#9CA3AF',
     marginTop: 6,
   },
-  startHealthButton: {
+  suggestionContainer: {
     marginTop: v_9b1a04.medium,
-    alignSelf: 'stretch',
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(124, 134, 255, 0.2)',
   },
-  startHealthButtonBorder: {
-    borderRadius: 14,
-    borderWidth: 1.108,
-    borderColor: 'rgba(124, 134, 255, 0.30)',
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.10,
-    shadowRadius: 6,
-    elevation: 4,
-  },
-  startHealthButtonGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    gap: 12,
-  },
-  startHealthButtonTextWrap: {
-    flex: 1,
-    flexShrink: 0,
-  },
-  startHealthButtonText: {
-    fontSize: v_ef658a.large,
-    fontFamily: v_843035.semibold,
-    color: '#FFFFFF',
-  },
-  startHealthButtonSub: {
+  suggestionTitle: {
     fontSize: v_ef658a.small,
+    color: '#6B7280',
+    marginBottom: 8,
     fontFamily: v_843035.regular,
-    color: 'rgba(255,255,255,0.9)',
-    marginTop: 4,
+  },
+  suggestionButton: {
+    backgroundColor: '#615FFF',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  suggestionButtonText: {
+    color: '#FFFFFF',
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
   },
 
   userMessageContainer: {
