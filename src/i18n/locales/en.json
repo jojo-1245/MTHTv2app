@@ -432,6 +432,7 @@
         "error_terms_message": "Please agree to the Terms of Service.",
         "success_title": "Sign Up Complete",
         "success_message": "Please proceed with email verification.",
+        "success_message_social": "You have signed up. Tap social login to sign in.",
         "error_title": "Sign Up Failed",
         "error_validation": "Please check your input information.",
         "error_unknown": "An unknown error occurred during sign up."

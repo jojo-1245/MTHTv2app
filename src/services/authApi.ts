@@ -21,6 +21,16 @@ export interface LoginAuthPayload {
   [key: string]: unknown;
 }
 
+export type SocialLoginResult =
+  | { needsSignup: true; email: string }
+  | LoginAuthPayload;
+
+export function isSocialLoginNeedsSignup(
+  r: SocialLoginResult
+): r is { needsSignup: true; email: string } {
+  return typeof r === 'object' && r !== null && (r as { needsSignup?: boolean }).needsSignup === true;
+}
+
 function normalizeError(error: unknown): Error {
   if (axios.isAxiosError(error)) {
     const apiResponse = error.response?.data as ApiResponse<unknown> | undefined;
@@ -142,26 +152,32 @@ export async function loginMember(params: {
 export async function socialLogin(params: {
   provider: 'google' | 'apple';
   token: string;
-}): Promise<LoginAuthPayload> {
+}): Promise<SocialLoginResult> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
+  const path = env.AUTH_SOCIAL_LOGIN_PATH ?? '/oth-path';
+  const url = `${baseURL.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
   const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
   const body = { provider: params.provider, token: params.token };
   if (__DEV__) {
-    console.log('[authApi] social-login 요청:', { url: `${baseURL}/oth-path`, provider: params.provider });
+    console.log('[authApi] social-login 요청:', { url, provider: params.provider });
   }
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
-    const res = await axios.post<ApiResponse<LoginAuthPayload>>(
-      `${baseURL}/oth-path`,
+    const res = await axios.post<ApiResponse<LoginAuthPayload & { needsSignup?: boolean; email?: string }>>(
+      url,
       body,
       { timeout: API_TIMEOUT, headers }
     );
-    const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
+    const data = res.data?.data ?? (res.data as unknown as Record<string, unknown>);
+    if (data && typeof data === 'object' && data.needsSignup === true && typeof data.email === 'string') {
+      if (__DEV__) console.log('[authApi] social-login needsSignup:', { email: data.email });
+      return { needsSignup: true, email: data.email };
+    }
     const payload: LoginAuthPayload =
-      typeof data === 'object' && data !== null ? data : { token: data };
+      typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : { token: data };
     const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
     if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
       const tokenFromHeader = authHeader.slice(7).trim();
