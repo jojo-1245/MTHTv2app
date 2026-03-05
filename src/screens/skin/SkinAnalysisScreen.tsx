@@ -62,7 +62,6 @@ interface FaceValidation {
 }
 
 const v_7cad20 = 1;
-
 const v_2a9f6c = 1;
 
 const v_a3d09d = 1.1;
@@ -310,6 +309,17 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_e521b9, v_6f6f79] = v_5ab095<any>(null);
     const [v_1744b9, v_5c59f6] = v_5ab095('');
 
+    type ApiFaceValidationStatus = 'idle' | 'checking' | 'ok' | 'face_out_of_bound' | 'error';
+    const [v_513ea3, v_28496d] = v_5ab095<ApiFaceValidationStatus>('idle');
+    const [v_3127fb, v_5ae4db] = v_5ab095<{
+        mode: AnalysisMode;
+        selectedConcerns: v_146928[];
+        taskId: string;
+        result: import('../../services/skinAnalysis').SkinAnalysisResult;
+        timestamp: string;
+    } | null>(null);
+    const v_deea43 = v_e662ae<string | null>(null);
+
     const [v_c5caed, v_e2f548] = v_5ab095(false);
 
     const [v_6e882f, v_6e04f8] = v_5ab095(0);
@@ -329,6 +339,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         const v_9ef443 = v_e521b9.result.results.output;
         let v_adfd7c = 0;
         let v_c2741d = '';
+        let v_d1402b = null;
         const v_17b30f = [];
 
         v_9ef443.forEach((v_8c0b26) => {
@@ -336,6 +347,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_adfd7c = Math.round(v_8c0b26.score);
             } else if (v_8c0b26.type === 'resize_image' && v_8c0b26.mask_urls?.[0]) {
                 v_c2741d = v_8c0b26.mask_urls[0];
+            } else if ((v_8c0b26.type === 'skin_age' || v_8c0b26.type === 'age' || v_8c0b26.type === 'apparent_age') && (v_8c0b26.score !== undefined || v_8c0b26.value !== undefined)) {
+                const v_2694bd = typeof v_8c0b26.score === 'number' ? v_8c0b26.score : Number(v_8c0b26.value);
+                if (Number.isFinite(v_2694bd)) v_d1402b = Math.round(v_2694bd);
             } else if (v_8c0b26.ui_score !== undefined && v_8c0b26.type) {
                 v_17b30f.push({
                     type: v_8c0b26.type,
@@ -347,7 +361,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
         v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
 
-        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
+        const v_e4ff65 = v_d1402b ?? Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
+
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 };
     }, [v_e521b9, v_8d41d7]);
 
     const v_30222e = v_de06a3(() => {
@@ -399,7 +415,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     return;
                 }
 
-                const { overallScore: v_adfd7c, concernScores: v_17b30f } = v_579c77;
+                const { overallScore: v_adfd7c, concernScores: v_17b30f, skinAge: v_e4ff65 } = v_579c77;
 
                 const v_5c2f9f = new Date();
                 const v_067e65 = `${v_5c2f9f.getFullYear()}-${String(v_5c2f9f.getMonth() + 1).padStart(2, '0')}-${String(v_5c2f9f.getDate()).padStart(2, '0')}`;
@@ -450,13 +466,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     return 'Intensive Care';
                 };
 
-                const v_e491e1 = Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
-
                 const v_60e8e0 = {
                     record_date: v_067e65,
                     record_time: v_dcf6a6,
                     overall_score: v_adfd7c,
-                    skin_age: v_e491e1,
+                    skin_age: v_e4ff65,
                     grade: v_9cd2f2(v_adfd7c),
                     analysis_result: v_1c8db4,
                     ...(v_ee2acd && { sub_account_id: v_ee2acd }),
@@ -473,7 +487,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         recordDate: v_067e65,
                         recordTime: v_dcf6a6,
                         overallScore: v_adfd7c,
-                        skinAge: v_e491e1,
+                        skinAge: v_e4ff65,
                         grade: v_9cd2f2(v_adfd7c),
                         subAccountId: v_ee2acd,
                         isMyAccount: v_083682,
@@ -711,6 +725,119 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
     }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7]);
 
+    const v_52866d = v_de06a3(async (v_ee89db) => {
+        if (!v_6bbbb9.hasApiKey()) {
+            console.log('[사진검증] API 키 없음 → 검증 실패');
+            v_28496d('error');
+            return;
+        }
+        console.log('[사진검증] 얼굴 위치 검증 시작 (API 호출)');
+        v_28496d('checking');
+        const v_34e5bb = 'sd';
+        const v_428915 = v_6c3b8b(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key) as v_146928[];
+        try {
+            const v_5dc227 = 1920;
+            const v_30be54 = await v_3c288d.manipulateAsync(
+                v_ee89db,
+                [{ resize: { width: v_5dc227 } }],
+                { compress: 0.9, format: v_3c288d.SaveFormat.JPEG },
+            );
+            const v_5b9682 = await v_f38d26.getInfoAsync(v_30be54.uri);
+            if (!v_5b9682.exists) {
+                console.log('[사진검증] 리사이즈 파일 없음 → 검증 실패');
+                v_28496d('error');
+                return;
+            }
+            const v_a7bd9e = `skin_precheck_${Date.now()}.jpg`;
+            const v_349aae = v_5b9682.size || 0;
+            console.log('[사진검증] createFile 호출...', { fileName: v_a7bd9e, fileSize: v_349aae });
+            const v_6535ab = await v_6bbbb9.createFile(v_a7bd9e, v_349aae, 'image/jpeg', v_8d41d7);
+            if (v_6535ab.data.files.length === 0) {
+                console.log('[사진검증] createFile 실패 (files 비어있음)');
+                v_28496d('error');
+                return;
+            }
+            const v_206b93 = v_6535ab.data.files[0];
+            const v_e8f579 = v_206b93.requests[0];
+            console.log('[사진검증] createFile OK file_id=', v_206b93.file_id, '→ 업로드');
+            const v_aea053 = await v_f38d26.uploadAsync(
+                v_e8f579.url,
+                v_30be54.uri,
+                {
+                    httpMethod: 'PUT',
+                    uploadType: v_f38d26.FileSystemUploadType.BINARY_CONTENT,
+                    headers: { 'Content-Type': 'image/jpeg' },
+                },
+            );
+            if (v_aea053.status < 200 || v_aea053.status >= 300) {
+                console.log('[사진검증] 업로드 실패 status=', v_aea053.status);
+                v_28496d('error');
+                return;
+            }
+            console.log('[사진검증] 업로드 OK → runSkinAnalysis');
+            const v_927f76 = await v_6bbbb9.runSkinAnalysis({
+                src_file_id: v_206b93.file_id,
+                dst_actions: v_428915,
+                miniserver_args: { enable_mask_overlay: false },
+                format: 'json',
+            });
+            const v_bd4ff3 = v_927f76.data.task_id;
+            console.log('[사진검증] runSkinAnalysis OK task_id=', v_bd4ff3, '→ 폴링');
+            const v_43c42e = await v_6bbbb9.pollSkinAnalysisResult(
+                v_bd4ff3,
+                60,
+                2000,
+                undefined,
+                v_8d41d7,
+            );
+            v_5ae4db({
+                mode: 'sd',
+                selectedConcerns: v_428915,
+                taskId: v_bd4ff3,
+                result: v_43c42e,
+                timestamp: new Date().toISOString(),
+            });
+            console.log('[사진검증] API 성공 → 얼굴 위치: 가이드 내, 결과 캐시 완료');
+            v_28496d('ok');
+        } catch (v_5e9bfe) {
+            const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe);
+            const v_98136a = v_5e9bfe as { response?: { status?: number; data?: unknown } };
+            const v_c998e3 = v_98136a?.response?.status;
+            const v_1b342d = v_98136a?.response?.data;
+            const v_a070fc = v_1b342d != null ? JSON.stringify(v_1b342d).slice(0, 600) : undefined;
+            console.log('[사진검증] catch 에러 message=', v_a8cd21);
+            console.log('[사진검증] catch 에러 axiosStatus=', v_c998e3, 'axiosData=', v_a070fc);
+            const v_e86d4e = typeof v_1b342d === 'object' && v_1b342d !== null ? (v_1b342d as { error?: string }).error ?? '' : '';
+            const v_6a8507 =
+                /face_out_of_bound|error_src_face_out_of_bound/i.test(v_a8cd21) ||
+                (typeof v_e86d4e === 'string' && /face_out_of_bound|error_src_face_out_of_bound/i.test(v_e86d4e));
+            if (v_6a8507) {
+                console.log('[사진검증] 판정: 얼굴 위치 가이드 밖');
+            } else {
+                console.log('[사진검증] 판정: 확인 실패 (error)');
+            }
+            v_28496d(v_6a8507 ? 'face_out_of_bound' : 'error');
+        }
+    }, [v_8d41d7]);
+
+    v_c4deb2(() => {
+        const v_330377 = v_91943c === 'capture' || v_91943c === 'settings';
+        if (
+            !v_330377 ||
+            !v_82f4af ||
+            !v_07cd8d?.hasFace ||
+            !v_07cd8d?.isFrontal ||
+            v_513ea3 !== 'idle' ||
+            v_deea43.current === v_82f4af ||
+            !v_6bbbb9.hasApiKey()
+        ) {
+            return;
+        }
+        v_deea43.current = v_82f4af;
+        console.log('[사진검증] 검증 화면 진입, 조건 충족 → preCheck API 호출', { currentStep: v_91943c });
+        v_52866d(v_82f4af);
+    }, [v_91943c, v_82f4af, v_07cd8d?.hasFace, v_07cd8d?.isFrontal, v_513ea3, v_52866d]);
+
     const v_2e22e6 = v_de06a3(async (v_04e790) => {
         try {
 
@@ -769,6 +896,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 const v_123bae = await v_c00289(v_8f957a.uri);
                 v_ff4473(v_123bae);
+                v_28496d('idle');
+                v_5ae4db(null);
+                v_deea43.current = null;
                 v_60b86c(v_8f957a.uri);
                 v_7db762(false);
 
@@ -876,6 +1006,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 console.log('[Camera] 크롭 이미지로 얼굴 인식 시작...');
                 const v_123bae = await v_c00289(v_8f957a.uri);
                 v_ff4473(v_123bae);
+                v_28496d('idle');
+                v_5ae4db(null);
+                v_deea43.current = null;
                 v_60b86c(v_8f957a.uri);
                 v_7db762(false);
 
@@ -938,23 +1071,40 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             return;
         }
 
-        if (!v_07cd8d?.isSizeOk) {
+        if (v_513ea3 === 'face_out_of_bound') {
             v_03e392.alert(
-                v_8d41d7('skin.capture.too_small'),
-                v_8d41d7('skin.capture.warning_face_too_small'),
+                v_8d41d7('skin.capture.face_verification'),
+                v_8d41d7('skin.capture.warning_face_out_of_bounds'),
                 [{ text: v_8d41d7('common.confirm') }]
             );
             return;
         }
 
-        const v_428915 = v_6c3b8b(v_8d41d7).map(v_3f4e2e => v_3f4e2e.key) as v_146928[];
-        v_34776f({ imageUri: v_82f4af, mode: 'sd', concerns: v_428915 });
-    }, [v_82f4af, v_07cd8d, v_8d41d7, v_34776f]);
+        if (v_513ea3 === 'ok' && v_3127fb) {
+            console.log('[사진검증] 다음 단계로: 캐시된 분석 결과 사용, 결과 화면 이동');
+            v_6f6f79(v_3127fb);
+            v_639227('result');
+            return;
+        }
+
+        if (v_513ea3 === 'checking') {
+            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.capture.face_position_checking'));
+            return;
+        }
+
+        if (v_513ea3 === 'error') {
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.capture.face_position_error'));
+            return;
+        }
+    }, [v_82f4af, v_07cd8d, v_513ea3, v_3127fb, v_8d41d7]);
 
     const v_a2f2ec = v_de06a3(() => {
         v_639227('capture');
         v_60b86c(null);
         v_ff4473(null);
+        v_28496d('idle');
+        v_5ae4db(null);
+        v_deea43.current = null;
         v_ee0f9a('hd');
         v_bfbe67(new Set());
         v_6f6f79(null);
@@ -1230,20 +1380,26 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                     <View style={v_d81136.validationItem}>
                         <View style={v_d81136.validationIcon}>
-                            {v_07cd8d.isSizeOk ? (
+                            {v_513ea3 === 'checking' ? (
+                                <ActivityIndicator size="small" color="#2196F3" />
+                            ) : v_513ea3 === 'ok' ? (
                                 <Ionicons name="checkmark-circle" size={24} color="#4CAF50" />
                             ) : (
-                                <Ionicons name="warning" size={24} color="#FF9800" />
+                                <Ionicons name="close-circle" size={24} color="#F44336" />
                             )}
                         </View>
-                        <Text style={v_d81136.validationLabel}>{v_8d41d7('skin.capture.face_size')}</Text>
+                        <Text style={v_d81136.validationLabel}>{v_8d41d7('skin.capture.face_verification')}</Text>
                         <Text style={[
                             v_d81136.validationStatus,
-                            { color: v_07cd8d.isSizeOk ? '#4CAF50' : '#FF9800' }
+                            {
+                                color: v_513ea3 === 'ok' ? '#4CAF50' : v_513ea3 === 'checking' ? '#2196F3' : '#F44336',
+                            }
                         ]}>
-                            {v_07cd8d.isSizeOk
-                                ? v_8d41d7('skin.capture.size_ok')
-                                : v_8d41d7('skin.capture.too_small')}
+                            {v_513ea3 === 'checking'
+                                ? v_8d41d7('skin.capture.face_position_checking')
+                                : v_513ea3 === 'ok'
+                                    ? v_8d41d7('skin.capture.verification_ok')
+                                    : v_8d41d7('skin.capture.verification_fail')}
                         </Text>
                     </View>
                 </View>
@@ -1264,7 +1420,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             </View>
 
             {}
-            {v_07cd8d && (!v_07cd8d.hasFace || !v_07cd8d.isFrontal || !v_07cd8d.isSizeOk) && (
+            {v_07cd8d && (!v_07cd8d.hasFace || !v_07cd8d.isFrontal || v_513ea3 === 'face_out_of_bound' || v_513ea3 === 'error') && (
                 <View style={v_d81136.validationWarning}>
                     <Ionicons name="warning" size={20} color="#F57C00" />
                     <Text style={v_d81136.validationWarningText}>
@@ -1272,7 +1428,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             ? v_8d41d7('skin.capture.warning_no_face')
                             : !v_07cd8d.isFrontal
                                 ? v_8d41d7('skin.capture.warning_not_frontal')
-                                : v_8d41d7('skin.capture.warning_face_too_small')}
+                                : v_513ea3 === 'face_out_of_bound'
+                                    ? v_8d41d7('skin.capture.warning_face_out_of_bounds')
+                                    : v_8d41d7('skin.capture.face_position_error')}
                     </Text>
                 </View>
             )}
@@ -1287,21 +1445,25 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 ? v_8d41d7('skin.capture.btn_detect_need')
                                 : !v_07cd8d?.isFrontal
                                     ? v_8d41d7('skin.capture.btn_frontal_need')
-                                    : v_8d41d7('skin.capture.btn_next')
+                                    : v_513ea3 === 'checking'
+                                        ? v_8d41d7('skin.capture.face_position_checking')
+                                        : v_513ea3 === 'face_out_of_bound' || v_513ea3 === 'error'
+                                            ? v_8d41d7('skin.capture.btn_bounds_need')
+                                            : v_8d41d7('skin.capture.btn_next')
                     }
                     onPress={v_fefb99}
                     disabled={
                         !v_82f4af ||
                         !v_07cd8d?.hasFace ||
                         !v_07cd8d?.isFrontal ||
-                        !v_07cd8d?.isSizeOk
+                        v_513ea3 !== 'ok'
                     }
                     fullWidth
                     style={
                         (!v_82f4af ||
                             !v_07cd8d?.hasFace ||
                             !v_07cd8d?.isFrontal ||
-                            !v_07cd8d?.isSizeOk)
+                            v_513ea3 !== 'ok')
                             ? v_d81136.primaryButtonDisabled
                             : undefined
                     }
@@ -1309,7 +1471,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         (!v_82f4af ||
                             !v_07cd8d?.hasFace ||
                             !v_07cd8d?.isFrontal ||
-                            !v_07cd8d?.isSizeOk)
+                            v_513ea3 !== 'ok')
                             ? v_d81136.primaryButtonDisabledText
                             : undefined
                     }
@@ -1473,7 +1635,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
         }
 
-        const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f } = v_579c77;
+        const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 } = v_579c77;
 
         const v_54d0c6 = v_adfd7c <= 33 ? '#DC2626' : v_adfd7c <= 66 ? '#FBBF24' : '#22C55E';
         const v_858eb9 = v_4d19dd(v_adfd7c);
@@ -1572,6 +1734,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         </View>
                         <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
                             {v_858eb9}
+                        </Text>
+                        <Text style={v_d81136.skinAgeText}>
+                            {v_8d41d7('skin_records.skin_age', { age: v_e4ff65 })}
                         </Text>
                     </View>
                 </View>
@@ -2629,6 +2794,12 @@ const v_d81136 = v_472849.create({
         fontSize: v_ef658a.small,
         fontFamily: v_843035.semibold,
         marginTop: v_9b1a04.small / 2,
+    },
+    skinAgeText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginTop: v_9b1a04.small,
     },
 
     resultSection: {
