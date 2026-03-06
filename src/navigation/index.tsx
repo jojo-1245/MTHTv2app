@@ -21,6 +21,7 @@ import { v_1cd2a2 } from '../screens/wallet/WalletTransactionResultScreen';
 import { v_a023f9 } from '../screens/wallet/WalletReceiveScreen';
 import { v_4ab181 } from '../screens/FontTestScreen';
 import v_03a231 from '../screens/profile/MyInfoScreen';
+import v_22c7ba from '../screens/profile/MyInfoViewScreen';
 import v_cdb169 from '../screens/profile/MyInfoEditScreen';
 import v_dec378 from '../screens/profile/MyInfoEmailAuthScreen';
 import v_4a40b2 from '../screens/profile/MyInfoSettingsScreen';
@@ -75,6 +76,7 @@ export type RootStackParamList = {
   TransactionDetails: undefined;
   FontTest: undefined;
   MyInfo: undefined;
+  MyInfoView: undefined;
   MyInfoEdit: undefined;
   MyInfoEmailAuth: undefined;
   MyInfoSettings: undefined;
@@ -162,6 +164,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="TransactionDetails" component={v_1cd2a2} />
         <Stack.Screen name="FontTest" component={v_4ab181} />
         <Stack.Screen name="MyInfo" component={v_03a231} />
+        <Stack.Screen name="MyInfoView" component={v_22c7ba} />
         <Stack.Screen name="MyInfoEdit" component={v_cdb169} />
         <Stack.Screen name="MyInfoEmailAuth" component={v_dec378} />
         <Stack.Screen name="MyInfoSettings" component={v_4a40b2} />
@@ -208,6 +211,7 @@ export const v_ce4741 = {
   transactionDetails: 'TransactionDetails',
   fontTest: 'FontTest',
   myInfo: 'MyInfo',
+  myInfoView: 'MyInfoView',
   myInfoEdit: 'MyInfoEdit',
   myInfoEmailAuth: 'MyInfoEmailAuth',
   myInfoSettings: 'MyInfoSettings',

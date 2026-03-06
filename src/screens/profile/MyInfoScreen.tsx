@@ -71,12 +71,12 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     purchasesCompleted: 15,
   };
 
-  const menuItems: Array<
+  const menuItems:   Array<
     | {
       id: string;
       title: string;
       description: string;
-      iconName: 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
+      iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
       route: keyof v_8ad91b;
       isLogout?: false;
     }
@@ -88,6 +88,13 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         description: v_8d41d7('profile.edit_my_info_desc'),
         iconName: 'edit-2' as const,
         route: 'MyInfoEmailAuth' as const,
+      },
+      {
+        id: 'view',
+        title: v_8d41d7('profile.view_my_info'),
+        description: v_8d41d7('profile.view_my_info_desc'),
+        iconName: 'eye' as const,
+        route: 'MyInfoView' as const,
       },
       {
         id: 'notify',

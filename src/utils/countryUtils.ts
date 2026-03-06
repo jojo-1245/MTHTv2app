@@ -142,13 +142,18 @@ export const v_5c7129 = async (
       ? v_f91692[v_65d6ba]
       : v_a4d981;
 
-  if (v_b35ebd) {
+  const v_502ef5 = [81];
+  const v_5cd549 = v_502ef5.includes(v_133414);
+
+  if (!v_5cd549 && v_b35ebd) {
     try {
       const v_866d77 = v_071875(v_b35ebd, v_133414);
-      if (v_866d77.length > 0) {
+      const v_093c9e = v_866d77.some(
+        (v_cb35cb) => v_cb35cb.iso2 !== 'global' && v_cb35cb.iso2 !== 'select'
+      );
+      if (v_866d77.length > 0 && v_093c9e) {
         return { regions: v_866d77, hasRegions: true };
       }
-      return { regions: [v_789afd], hasRegions: false };
     } catch (v_5e9bfe) {
       if (__DEV__) {
         console.warn('[countryUtils] 패키지 지역 목록 로드 실패, API fallback 시도:', v_5e9bfe);

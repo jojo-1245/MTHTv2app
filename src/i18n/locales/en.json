@@ -459,6 +459,8 @@
         "close_membership_description": "Leave MetaHint",
         "edit_my_info": "Edit My Info",
         "edit_my_info_desc": "Edit personal details",
+        "view_my_info": "View My Info",
+        "view_my_info_desc": "View saved profile",
         "settings": "Setting",
         "settings_desc": "Configuration",
         "notify": "Notify",
