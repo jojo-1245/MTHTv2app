@@ -255,13 +255,20 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     if (v_8c0b26.iso2 === 'select' || v_8c0b26.iso2 === 'global' || v_8c0b26.dialCode === '0') {
       return v_8c0b26.iso2 === 'global' ? (v_8d41d7('country_select.select_option') || '선택') : v_8c0b26.name;
     }
-    const v_c99bd2 = v_8c0b26.countryCode ?? v_159ceb;
-    const v_cde5e2 = v_c99bd2 ? v_9ad700.includes(v_c99bd2) : false;
-    const v_b5249e = v_cde5e2
-      ? `regions.${v_c99bd2}_${v_8c0b26.dialCode}`
-      : `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
-    const v_6dce25 = v_8d41d7(v_b5249e);
-    return v_6dce25 !== v_b5249e ? v_6dce25 : v_8c0b26.name;
+    const v_c99bd2 = v_159ceb || v_8c0b26.countryCode;
+    if (!v_c99bd2) return v_8c0b26.name ?? '';
+    const v_8f0b72 = /^\d+$/.test(String(v_8c0b26.dialCode).trim())
+      ? String(v_8c0b26.dialCode).trim()
+      : null;
+    const v_c62787 = v_8f0b72 && v_9ad700.includes(v_c99bd2);
+    if (v_c62787) {
+      const v_d8b7ca = `regions.${v_c99bd2}_${v_8f0b72}`;
+      const v_6dce25 = v_8d41d7(v_d8b7ca);
+      if (v_6dce25 !== v_d8b7ca) return v_6dce25;
+    }
+    const v_a1ac16 = `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
+    const v_6dce25 = v_8d41d7(v_a1ac16);
+    return v_6dce25 !== v_a1ac16 ? v_6dce25 : (v_8c0b26.name ?? '');
   };
 
   const v_56743f = (() => {
