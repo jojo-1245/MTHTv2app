@@ -1959,7 +1959,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }
 
   return (
-    <MainLayout activeKey="analysis">
+    <MainLayout activeKey="analysis" hideBottomNav={v_91943c === 'measurement'}>
       <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
         {v_629820()}
       </View>
