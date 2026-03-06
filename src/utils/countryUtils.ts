@@ -3,7 +3,7 @@ import type {
   v_c4dd46,
   v_7d842d,
 } from '../types';
-import { v_202d44 } from '../constants/countryDialCodes';
+import { v_202d44, v_1bd8ad } from '../constants/countryDialCodes';
 import { v_789afd } from '../constants/regions';
 import {
   v_e30d2f,
@@ -81,7 +81,7 @@ export const v_fb6ba6 = (
 
 export const v_151d5f = async (
   getCountries: () => Promise<v_c4dd46>,
-  fallback: v_da1883[] = v_202d44
+  fallback: v_da1883[] = v_1bd8ad
 ): Promise<v_da1883[]> => {
   try {
     const v_24a9a4 = v_e30d2f();

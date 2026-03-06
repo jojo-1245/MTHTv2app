@@ -116,11 +116,29 @@ export const v_071875 = (
   }
 };
 
-export const v_58c98d = (v_52c475): boolean => {
+export const v_56ad9c = (v_52c475): boolean => {
   try {
     const v_4cbaf4 = v_944e0c.getStatesOfCountry(v_52c475.toUpperCase());
     return v_4cbaf4.length > 0;
   } catch {
     return false;
   }
+};
+
+export const v_58c98d = (
+  v_a4d981,
+  v_52c475
+): boolean => {
+  if (v_52c475) {
+    return v_56ad9c(v_52c475);
+  }
+  const v_46b18e = {
+    82: 'kr',
+    81: 'jp',
+    86: 'cn',
+    1: 'us',
+    62: 'id',
+  };
+  const v_2afc27 = v_46b18e[v_a4d981];
+  return v_2afc27 ? v_56ad9c(v_2afc27) : false;
 };
