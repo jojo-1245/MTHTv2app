@@ -1,5 +1,13 @@
 import { v_da1883 } from '../types';
 
+export const ALLOWED_COUNTRIES: v_da1883[] = [
+  { iso2: 'kr', name: 'Korea', dialCode: '+82', flagEmoji: '🇰🇷', countryCode: 82 },
+  { iso2: 'us', name: 'United States', dialCode: '+1', flagEmoji: '🇺🇸', countryCode: 1 },
+  { iso2: 'jp', name: 'Japan', dialCode: '+81', flagEmoji: '🇯🇵', countryCode: 81 },
+  { iso2: 'cn', name: 'China', dialCode: '+86', flagEmoji: '🇨🇳', countryCode: 86 },
+  { iso2: 'id', name: 'Indonesia', dialCode: '+62', flagEmoji: '🇮🇩', countryCode: 62 },
+];
+
 export const COUNTRY_DIAL_CODES: v_da1883[] = [
   { iso2: 'kr', name: 'Korea', dialCode: '+82', flagEmoji: '🇰🇷', countryCode: 82 },
   { iso2: 'us', name: 'United States', dialCode: '+1', flagEmoji: '🇺🇸', countryCode: 1 },
@@ -39,6 +47,7 @@ export const COUNTRY_DIAL_CODES: v_da1883[] = [
   { iso2: 'qa', name: 'Qatar', dialCode: '+974', flagEmoji: '🇶🇦', countryCode: 974 },
   { iso2: 'tr', name: 'Turkey', dialCode: '+90', flagEmoji: '🇹🇷', countryCode: 90 },
   { iso2: 'il', name: 'Israel', dialCode: '+972', flagEmoji: '🇮🇱', countryCode: 972 },
+  { iso2: 'af', name: 'Afghanistan', dialCode: '+93', flagEmoji: '🇦🇫', countryCode: 93 },
   { iso2: 'pk', name: 'Pakistan', dialCode: '+92', flagEmoji: '🇵🇰', countryCode: 92 },
   { iso2: 'bd', name: 'Bangladesh', dialCode: '+880', flagEmoji: '🇧🇩', countryCode: 880 },
   { iso2: 'ir', name: 'Iran', dialCode: '+98', flagEmoji: '🇮🇷', countryCode: 98 },
