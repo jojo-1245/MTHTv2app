@@ -459,6 +459,8 @@
         "open_settings": "설정에서 변경",
         "edit_my_info": "내 정보 수정",
         "edit_my_info_desc": "개인 정보 수정",
+        "view_my_info": "정보 보기",
+        "view_my_info_desc": "저장된 내 정보 확인",
         "settings": "설정",
         "settings_desc": "환경 설정",
         "notify": "알림",
