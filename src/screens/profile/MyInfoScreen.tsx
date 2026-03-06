@@ -90,13 +90,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         route: 'MyInfoEmailAuth' as const,
       },
       {
-        id: 'view',
-        title: v_8d41d7('profile.view_my_info'),
-        description: v_8d41d7('profile.view_my_info_desc'),
-        iconName: 'eye' as const,
-        route: 'MyInfoView' as const,
-      },
-      {
         id: 'notify',
         title: v_8d41d7('profile.notify'),
         description: v_8d41d7('profile.notify_desc'),
