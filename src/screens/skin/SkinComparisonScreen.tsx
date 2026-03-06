@@ -52,12 +52,13 @@ type Props = v_432191<v_8ad91b, 'SkinComparison'>;
 
 const v_c1c940 = (v_8dffde) => v_8dffde.replace(/-/g, '.');
 
-const v_22e3c0 = (v_8dffde, v_f985e6) => {
+const v_22e3c0 = (v_8d41d7, v_8dffde, v_f985e6) => {
   const v_a7745c = parseInt(v_f985e6.split(':')[0], 10);
   const v_38e403 = v_a7745c >= 12;
   const v_65a2cd = v_a7745c % 12 || 12;
   const v_43e24b = v_f985e6.split(':')[1];
-  return `${v_38e403 ? '오후' : '오전'} ${v_65a2cd}:${v_43e24b}`;
+  const v_591485 = v_38e403 ? v_8d41d7('common.time_pm') : v_8d41d7('common.time_am');
+  return `${v_591485} ${v_65a2cd}:${v_43e24b}`;
 };
 
 const v_854a88 = (record: v_cb37be, v_240716): number => {
@@ -195,8 +196,8 @@ function v_60fa3c({
       </View>
       <Text style={v_fbfcbd.dateLabel}>
         {v_8d41d7('skin_comparison.analysis_dates', {
-          dateA: `${v_1a2523.date.replace(/-/g, '.')} ${v_22e3c0(v_1a2523.date, v_1a2523.time)}`,
-          dateB: `${v_fe1802.date.replace(/-/g, '.')} ${v_22e3c0(v_fe1802.date, v_fe1802.time)}`,
+          dateA: `${v_1a2523.date.replace(/-/g, '.')} ${v_22e3c0(v_8d41d7, v_1a2523.date, v_1a2523.time)}`,
+          dateB: `${v_fe1802.date.replace(/-/g, '.')} ${v_22e3c0(v_8d41d7, v_fe1802.date, v_fe1802.time)}`,
         })}
       </Text>
     </View>
@@ -524,7 +525,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     [v_782929]
   );
 
-  const v_9f6fdd = (v_8dffde, v_f985e6) => v_22e3c0(v_8dffde, v_f985e6);
+  const v_9f6fdd = (v_8dffde, v_f985e6) => v_22e3c0(v_8d41d7, v_8dffde, v_f985e6);
 
   const v_db73eb = v_b34779?.overall_score_changes?.diff ?? (v_1a2523.overallScore - v_fe1802.overallScore);
 
@@ -603,8 +604,8 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           recordB={v_fe1802}
           dateStrA={v_c1c940(v_1a2523.date)}
           dateStrB={v_c1c940(v_fe1802.date)}
-          timeStrA={v_22e3c0(v_1a2523.date, v_1a2523.time)}
-          timeStrB={v_22e3c0(v_fe1802.date, v_fe1802.time)}
+          timeStrA={v_22e3c0(v_8d41d7, v_1a2523.date, v_1a2523.time)}
+          timeStrB={v_22e3c0(v_8d41d7, v_fe1802.date, v_fe1802.time)}
           selectedKeys={v_831a4c}
           backgroundColor={v_1bfbd0.white}
           comparisonData={v_b34779 ?? undefined}

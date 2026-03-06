@@ -36,7 +36,17 @@
         "hide": "Hide",
         "try_again": "Try Again",
         "currency_unit": "KRW",
-        "previous": "Previous"
+        "previous": "Previous",
+        "weekday_sun": "Sun",
+        "weekday_mon": "Mon",
+        "weekday_tue": "Tue",
+        "weekday_wed": "Wed",
+        "weekday_thu": "Thu",
+        "weekday_fri": "Fri",
+        "weekday_sat": "Sat",
+        "time_am": "AM",
+        "time_pm": "PM",
+        "year_month": "{{month}} {{year}}"
     },
     "account_selector": {
         "title": "Account Selection",
@@ -545,6 +555,7 @@
             "guide_4": "Avoid hair covering the face",
             "warning_no_face": "Face not detected. Please capture again.",
             "warning_not_frontal": "Not a frontal shot. Please look ahead and capture again.",
+            "verification_failed_retake": "Face verification failed. Please capture again.",
             "btn_capture": "Please capture a photo",
             "btn_detect_need": "Face detection required",
             "btn_frontal_need": "Frontal shot required",

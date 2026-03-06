@@ -76,7 +76,7 @@ const v_684a52 = [
   { id: '3', title: 'Brightening Serum', subtitle: '칙칙한 피부', price: '1', rating: '4.0', reviews: 120, imageIndex: 2 },
 ];
 
-const v_2eadfb = ['월', '화', '수', '목', '금', '토', '일'];
+const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat', 'weekday_sun'] as const;
 
 const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
@@ -89,6 +89,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
+
+  const [v_780057, v_f23f5b] = v_5ab095(0);
 
   v_c4deb2(() => {
     const v_56263a = async () => {
@@ -522,7 +524,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </LinearGradient>
 
             {}
-            <View style={v_d81136.metricsRow}>
+            <View
+              style={[
+                v_d81136.metricsRow,
+                v_780057 > 0 && { transform: [{ translateY: -v_780057 }] },
+              ]}
+              onLayout={(v_9e86fd) => v_f23f5b(v_9e86fd.nativeEvent.layout.height)}
+            >
               <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_d85372} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Heart size={24} color="#EF4444" />
@@ -663,8 +671,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <Text style={v_d81136.weekDays}>{v_8d41d7('home.days_format', { current: v_f2fb87, total: v_b43899 })}</Text>
                 </View>
                 <View style={v_d81136.weekGrid}>
-                  {v_2eadfb.map((v_087ffc, v_ebec57) => (
-                    <View key={v_087ffc} style={v_d81136.weekDayCol}>
+                  {v_857bbc.map((v_b24339, v_ebec57) => (
+                    <View key={v_b24339} style={v_d81136.weekDayCol}>
                       <View style={[v_d81136.weekDayBox, { width: v_312c9c, height: v_312c9c }, v_79dc58[v_ebec57] ? v_d81136.weekDayDone : v_d81136.weekDayPending]}>
                         {v_79dc58[v_ebec57] ? (
                           <Check size={22} color="#FFFFFF" />
@@ -672,7 +680,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                           <Image source={v_def560} style={v_d81136.weekDayHintIcon} resizeMode="contain" />
                         )}
                       </View>
-                      <Text style={v_d81136.weekDayText}>{v_087ffc}</Text>
+                      <Text style={v_d81136.weekDayText}>{v_8d41d7(`common.${v_b24339}`)}</Text>
                     </View>
                   ))}
                 </View>
@@ -926,7 +934,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_ff4e8b,
     marginTop: -24,
     marginBottom: v_9b1a04.large,
-    transform: [{ translateY: -24 }],
+
   },
   metricCard: {
     backgroundColor: 'rgba(255,255,255,0.95)',
