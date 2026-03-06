@@ -331,11 +331,15 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         let v_c2741d = '';
         const v_17b30f = [];
 
+        let v_d1402b = null;
         v_9ef443.forEach((v_8c0b26) => {
             if (v_8c0b26.type === 'all' && v_8c0b26.score !== undefined) {
                 v_adfd7c = Math.round(v_8c0b26.score);
             } else if (v_8c0b26.type === 'resize_image' && v_8c0b26.mask_urls?.[0]) {
                 v_c2741d = v_8c0b26.mask_urls[0];
+            } else if ((v_8c0b26.type === 'skin_age' || v_8c0b26.type === 'age' || v_8c0b26.type === 'apparent_age') && (v_8c0b26.score !== undefined || v_8c0b26.value !== undefined)) {
+                const v_2694bd = typeof v_8c0b26.score === 'number' ? v_8c0b26.score : Number(v_8c0b26.value);
+                if (Number.isFinite(v_2694bd)) v_d1402b = Math.round(v_2694bd);
             } else if (v_8c0b26.ui_score !== undefined && v_8c0b26.type) {
                 v_17b30f.push({
                     type: v_8c0b26.type,
@@ -347,7 +351,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
         v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
 
-        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f };
+        const v_e4ff65 = v_d1402b ?? Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
+
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 };
     }, [v_e521b9, v_8d41d7]);
 
     const v_30222e = v_de06a3(() => {
@@ -399,7 +405,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     return;
                 }
 
-                const { overallScore: v_adfd7c, concernScores: v_17b30f } = v_579c77;
+                const { overallScore: v_adfd7c, concernScores: v_17b30f, skinAge: v_e4ff65 } = v_579c77;
 
                 const v_5c2f9f = new Date();
                 const v_067e65 = `${v_5c2f9f.getFullYear()}-${String(v_5c2f9f.getMonth() + 1).padStart(2, '0')}-${String(v_5c2f9f.getDate()).padStart(2, '0')}`;
@@ -450,13 +456,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     return 'Intensive Care';
                 };
 
-                const v_e491e1 = Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
-
                 const v_60e8e0 = {
                     record_date: v_067e65,
                     record_time: v_dcf6a6,
                     overall_score: v_adfd7c,
-                    skin_age: v_e491e1,
+                    skin_age: v_e4ff65,
                     grade: v_9cd2f2(v_adfd7c),
                     analysis_result: v_1c8db4,
                     ...(v_ee2acd && { sub_account_id: v_ee2acd }),
@@ -473,7 +477,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         recordDate: v_067e65,
                         recordTime: v_dcf6a6,
                         overallScore: v_adfd7c,
-                        skinAge: v_e491e1,
+                        skinAge: v_e4ff65,
                         grade: v_9cd2f2(v_adfd7c),
                         subAccountId: v_ee2acd,
                         isMyAccount: v_083682,
@@ -704,7 +708,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             console.error('피부 분석 오류:', v_5e9bfe);
             const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('skin.alerts.analysis_error');
             v_5c59f6(v_a8cd21);
-            v_03e392.alert(v_8d41d7('common.error'), v_a8cd21);
+            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.capture.verification_failed_retake'));
             v_639227('capture');
         } finally {
             v_0942aa(false);
@@ -1473,7 +1477,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
         }
 
-        const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f } = v_579c77;
+        const { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 } = v_579c77;
 
         const v_54d0c6 = v_adfd7c <= 33 ? '#DC2626' : v_adfd7c <= 66 ? '#FBBF24' : '#22C55E';
         const v_858eb9 = v_4d19dd(v_adfd7c);
@@ -1572,6 +1576,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         </View>
                         <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
                             {v_858eb9}
+                        </Text>
+                        <Text style={v_d81136.skinAgeText}>
+                            {v_8d41d7('skin_records.skin_age', { age: v_e4ff65 })}
                         </Text>
                     </View>
                 </View>
@@ -2629,6 +2636,12 @@ const v_d81136 = v_472849.create({
         fontSize: v_ef658a.small,
         fontFamily: v_843035.semibold,
         marginTop: v_9b1a04.small / 2,
+    },
+    skinAgeText: {
+        fontSize: v_ef658a.small,
+        fontFamily: v_843035.regular,
+        color: v_1bfbd0.secondaryText,
+        marginTop: v_9b1a04.small,
     },
 
     resultSection: {

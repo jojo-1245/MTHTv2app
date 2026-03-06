@@ -8,6 +8,8 @@ export interface OptionButtonProps {
   onPress?: () => void;
   flex?: number;
   style?: v_961e77<v_7e4944>;
+
+  numberOfLines?: number;
 }
 
 const OptionButton: v_a3453e.FC<OptionButtonProps> = ({
@@ -16,13 +18,16 @@ const OptionButton: v_a3453e.FC<OptionButtonProps> = ({
   onPress: v_719eed,
   flex: v_5c6564,
   style: v_7fa4e4,
+  numberOfLines: v_25883c,
 }) => {
   return (
     <Pressable
       style={[v_d81136.button, v_587413 && v_d81136.buttonSelected, v_5c6564 ? { flex: v_5c6564 } : null, v_7fa4e4]}
       onPress={v_719eed}
     >
-      <Text style={[v_d81136.label, v_587413 && v_d81136.labelSelected]}>{v_2869c1}</Text>
+      <Text style={[v_d81136.label, v_587413 && v_d81136.labelSelected]} numberOfLines={v_25883c}>
+        {v_2869c1}
+      </Text>
     </Pressable>
   );
 };

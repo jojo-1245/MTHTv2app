@@ -36,7 +36,17 @@
         "hide": "Sembunyikan",
         "try_again": "Coba Lagi",
         "currency_unit": "KRW",
-        "previous": "Sebelumnya"
+        "previous": "Sebelumnya",
+        "weekday_sun": "Min",
+        "weekday_mon": "Sen",
+        "weekday_tue": "Sel",
+        "weekday_wed": "Rab",
+        "weekday_thu": "Kam",
+        "weekday_fri": "Jum",
+        "weekday_sat": "Sab",
+        "time_am": "AM",
+        "time_pm": "PM",
+        "year_month": "{{month}} {{year}}"
     },
     "account_selector": {
         "title": "Pilihan Akun",
@@ -544,6 +554,7 @@
             "guide_4": "Hindari rambut menutupi wajah",
             "warning_no_face": "Wajah tidak terdeteksi. Silakan ambil foto lagi.",
             "warning_not_frontal": "Bukan foto dari depan. Silakan lihat ke depan dan ambil foto lagi.",
+            "verification_failed_retake": "Verifikasi wajah gagal. Silakan ambil foto lagi.",
             "btn_capture": "Silakan ambil foto",
             "btn_detect_need": "Deteksi wajah diperlukan",
             "btn_frontal_need": "Foto dari depan diperlukan",

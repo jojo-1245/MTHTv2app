@@ -311,7 +311,8 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
-    maxWidth: 80,
+    minWidth: 56,
+    maxWidth: 140,
   },
   modalOverlay: {
     flex: 1,
