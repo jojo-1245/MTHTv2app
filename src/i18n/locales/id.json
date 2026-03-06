@@ -431,6 +431,7 @@
         "error_terms_message": "Silakan setujui Ketentuan Layanan.",
         "success_title": "Pendaftaran Selesai",
         "success_message": "Silakan lanjutkan dengan verifikasi email.",
+        "success_message_social": "Pendaftaran berhasil. Ketuk login sosial untuk masuk.",
         "error_title": "Pendaftaran Gagal",
         "error_validation": "Silakan periksa informasi yang Anda masukkan.",
         "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
@@ -457,6 +458,8 @@
         "open_settings": "Ubah di pengaturan",
         "edit_my_info": "Ubah Info Saya",
         "edit_my_info_desc": "Ubah detail pribadi",
+        "view_my_info": "Lihat Info",
+        "view_my_info_desc": "Lihat profil tersimpan",
         "settings": "Pengaturan",
         "settings_desc": "Konfigurasi",
         "notify": "Pemberitahuan",

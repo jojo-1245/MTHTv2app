@@ -266,7 +266,7 @@ export const v_624bd2 = {
   savedEmail: 'metahint/savedEmail',
 } as const;
 
-export { COUNTRY_DIAL_CODES } from './countryDialCodes';
+export { COUNTRY_DIAL_CODES, ALLOWED_COUNTRIES } from './countryDialCodes';
 export {
   REGIONS_AS_COUNTRY_DIAL_CODES,
   GLOBAL_REGION,
