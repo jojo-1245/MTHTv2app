@@ -242,6 +242,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   const v_18f59d = v_e662ae<boolean>(false);
 
+  const v_1b6f43 = v_e662ae(v_c7daf6.params?.resetToIntro);
+  const v_94c936 = v_e662ae(v_c65f5d);
+  const v_648a40 = v_e662ae(v_604e0f);
+  v_1b6f43.current = v_c7daf6.params?.resetToIntro;
+  v_94c936.current = v_c65f5d;
+  v_648a40.current = v_604e0f;
+
   const [v_2f3ab2, v_ad3226] = v_5ab095<string>('');
   const [v_a5d6d1, v_e3a875] = v_5ab095<'male' | 'female' | null>(null);
   const [v_ebc748, v_7dad08] = v_5ab095<string>('');
@@ -1314,35 +1321,33 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('화면 포커스됨');
       v_4c31ba.current = true;
 
-      v_604e0f();
+      v_648a40.current();
 
-      if (v_c7daf6.params?.resetToIntro && !v_18f59d.current) {
+      const v_98b3fa = v_1b6f43.current;
+      const v_3c9f12 = v_94c936.current;
+      if (v_98b3fa && !v_18f59d.current) {
         console.log('resetToIntro 파라미터 감지 - intro로 리셋');
         v_639227('intro');
         v_18f59d.current = true;
-
-        v_c65f5d.setParams({ resetToIntro: undefined });
-      } else if (!v_c7daf6.params?.resetToIntro) {
-
+        v_3c9f12.setParams({ resetToIntro: undefined });
+      } else if (!v_98b3fa) {
         v_18f59d.current = false;
       }
 
       return () => {
         console.log('화면 언포커스됨, 세션 종료');
         v_4c31ba.current = false;
-
         if (v_a3ff5a.current) {
           v_98caa0();
           v_a3ff5a.current = undefined;
         }
-
         v_ce2e95.current = false;
         v_3be953.current = false;
         v_b1faa7.current = false;
         v_b0aeaf(false);
         v_49296b(false);
       };
-    }, [v_98caa0, v_c7daf6.params?.resetToIntro, v_c65f5d])
+    }, [v_98caa0])
   );
 
   const v_49b151 = v_e662ae(v_bb3644);
