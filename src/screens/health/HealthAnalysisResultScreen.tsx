@@ -2408,7 +2408,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               {}
               <View
                 ref={v_685d2a}
-                style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.white }]}
+                style={[v_d81136.sectionNavContainer, { backgroundColor: 'transparent' }]}
               >
                 <CategoryTabScroll
                   categories={v_8bc599}
