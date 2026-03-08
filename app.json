@@ -2,7 +2,7 @@
   "expo": {
     "name": "MetaHint",
     "slug": "metahint",
-    "scheme": "ai-metahint-appw",
+    "scheme": "ai.metahint.appw",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -49,17 +49,35 @@
         "android.permission.WRITE_EXTERNAL_STORAGE"
       ]
     },
-    "web": {
-      "bundler": "metro"
-    },
     "extra": {
       "eas": {
         "projectId": "b0a6287a-1e8b-41ef-8233-3e15da97212d"
       }
     },
     "plugins": [
+      "./plugins/withKakaoRepo.js",
       "expo-localization",
-      "expo-apple-authentication"
+      "expo-apple-authentication",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 27
+          }
+        }
+      ],
+      [
+        "@react-native-kakao/core",
+        {
+          "nativeAppKey": "oth-secret",
+          "android": {
+            "authCodeHandlerActivity": true
+          },
+          "ios": {
+            "handleKakaoOpenUrl": true
+          }
+        }
+      ]
     ]
   }
 }
