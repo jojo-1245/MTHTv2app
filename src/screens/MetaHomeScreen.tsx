@@ -44,6 +44,19 @@ import { v_312d93 } from '../utils/dateUtils';
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
 const v_450056 = require('../../assets/images/hinti_mouth.png'); 
+
+const v_35106c = v_a3453e.memo(({ isTalking: v_738ed0, style: v_7fa4e4 }: { isTalking: boolean; style: any }) => {
+  const [v_80f47a, v_59c1e9] = v_5ab095(false);
+  v_c4deb2(() => {
+    if (!v_738ed0) {
+      v_59c1e9(false);
+      return;
+    }
+    const v_ad1d65 = setInterval(() => v_59c1e9((v_ba2215) => !v_ba2215), 120);
+    return () => clearInterval(v_ad1d65);
+  }, [v_738ed0]);
+  return <Image source={v_80f47a ? v_450056 : v_103040} style={v_7fa4e4} resizeMode="contain" />;
+});
 const v_ca495a = require('../../assets/images/background_01.png'); 
 const v_2e47ea = require('../../assets/images/robot_face.png');
 const v_9c75ed = [
@@ -451,16 +464,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_35a29b = v_d6e359.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] });
   const v_a37637 = v_a2349e.multiply(v_4c3e9a, v_35a29b);
 
-  const [v_80f47a, v_59c1e9] = v_5ab095(false);
   const v_738ed0 = v_fb1b38 && v_4f4bca < v_d37c41.length;
-  v_c4deb2(() => {
-    if (!v_738ed0) {
-      v_59c1e9(false);
-      return;
-    }
-    const v_ad1d65 = setInterval(() => v_59c1e9((v_ba2215) => !v_ba2215), 120);
-    return () => clearInterval(v_ad1d65);
-  }, [v_738ed0]);
 
   return (
     <MainLayout activeKey="home">
@@ -513,11 +517,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Image source={v_ca495a} style={v_d81136.headerImageBg} resizeMode="cover" />
                 {v_2167f0 && (
                   <Animated.View style={[v_d81136.headerImageAnimated, { transform: [{ translateX: v_ed31f2 }, { scale: v_a37637 }] }]}>
-                    <Image
-                      source={v_80f47a ? v_450056 : v_103040}
-                      style={v_d81136.headerImage}
-                      resizeMode="contain"
-                    />
+                    <HintiMouth isTalking={v_738ed0} style={v_d81136.headerImage} />
                   </Animated.View>
                 )}
               </View>

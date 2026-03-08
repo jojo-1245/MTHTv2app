@@ -43,6 +43,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const [v_dc679a, v_4b95c4] = v_5ab095(0);
   const v_3e3188 = v_e662ae(0); 
+  const v_5948ce = v_e662ae(0); 
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
   const [v_264467, v_e882e2] = v_5ab095(false);
 
@@ -69,6 +70,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       const v_227df7 = v_c877df();
       await v_e84827.setItem(v_c567d7, v_eb271c.toString());
       await v_e84827.setItem(v_368d84, v_227df7);
+      v_5948ce.current = v_eb271c; 
     } catch (v_5e9bfe) {
       console.warn('걸음수 저장 실패:', v_5e9bfe);
     }
@@ -86,7 +88,9 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       }
 
       const v_635b76 = await v_e84827.getItem(v_c567d7);
-      return v_635b76 ? parseInt(v_635b76, 10) : 0;
+      const v_eb271c = v_635b76 ? parseInt(v_635b76, 10) : 0;
+      v_5948ce.current = v_eb271c; 
+      return v_eb271c;
     } catch (v_5e9bfe) {
       console.warn('걸음수 로드 실패:', v_5e9bfe);
       return 0;
@@ -243,61 +247,24 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
           try {
 
-            v_269481 = v_5dafcb.watchStepCount(async (v_43c42e) => {
-              if (v_41ed06) {
-                const v_81d1b5 = v_43c42e.steps;
+            v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
+              if (!v_41ed06) return;
 
-                const v_a6a5f1 = v_3e3188.current;
+              const v_81d1b5 = v_43c42e.steps;
+              const v_a6a5f1 = v_3e3188.current;
+              const v_fd45cb = v_5948ce.current;
 
-                const v_fd45cb = await v_e9771f();
+              let v_9c9484;
+              if (v_fd45cb === 0 && v_81d1b5 <= 1) {
 
-                v_f41071().then((v_dc359d) => {
-                  if (v_41ed06) {
+                v_9c9484 = 0;
+              } else {
+                v_9c9484 = Math.max(v_fd45cb, v_81d1b5, v_a6a5f1);
+              }
 
-                    let v_9c9484;
-                    if (v_fd45cb === 0 && v_81d1b5 <= 1 && v_dc359d <= 1) {
+              if (v_9c9484 > v_a6a5f1) {
+                v_4b95c4(v_9c9484);
 
-                      v_9c9484 = 0;
-                    } else {
-
-                      let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
-                      if (v_dc359d > 0) {
-                        v_5eb489.push(v_dc359d);
-                      }
-                      v_9c9484 = Math.max(...v_5eb489);
-                    }
-
-                    if (v_9c9484 >= v_a6a5f1 || (v_fd45cb === 0 && v_81d1b5 <= 1 && v_dc359d <= 1 && v_9c9484 === 0)) {
-                      v_4b95c4(v_9c9484);
-
-                      if (v_9c9484 > v_fd45cb) {
-                        v_7f798a(v_9c9484);
-                      }
-                    }
-                  }
-                }).catch(() => {
-
-                  if (v_41ed06) {
-                    const v_a6a5f1 = v_3e3188.current;
-
-                    let v_9c9484;
-                    if (v_fd45cb === 0 && v_81d1b5 <= 1) {
-
-                      v_9c9484 = 0;
-                    } else {
-
-                      let v_5eb489 = [v_fd45cb, v_81d1b5, v_a6a5f1];
-                      v_9c9484 = Math.max(...v_5eb489);
-                    }
-
-                    if (v_9c9484 >= v_a6a5f1 || (v_fd45cb === 0 && v_81d1b5 <= 1 && v_9c9484 === 0)) {
-                      v_4b95c4(v_9c9484);
-                      if (v_9c9484 > v_fd45cb) {
-                        v_7f798a(v_9c9484);
-                      }
-                    }
-                  }
-                });
               }
             });
 
