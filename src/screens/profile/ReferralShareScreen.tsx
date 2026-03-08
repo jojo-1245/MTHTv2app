@@ -1,4 +1,5 @@
 import v_a3453e, { v_5ab095 } from 'bapkr';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import {
     v_472849,
     v_19b633,
@@ -16,6 +17,9 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_556baf, v_1c1837, v_dd725b } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
+import { v_d844c3 } from '../../utils/deepLinkHandler';
+import { v_7ef860 } from '../../services';
+import { v_998b9d } from '../../utils/authErrorHandler';
 
 const v_be7143 = require('../../../assets/images/bg_gold.png');
 const v_581451 = require('../../../assets/images/bg_silver.png');
@@ -48,28 +52,50 @@ const v_d1ffaa = {
     },
 };
 
-const ReferralShareScreen: v_a3453e.FC<Props> = () => {
+const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const { t: v_8d41d7 } = v_772971();
     const { goBack: v_c7ac57 } = v_a0daa8();
 
-    const [v_7be0c6] = v_5ab095<GradeType>('gold'); 
+    const [v_7be0c6, v_2990f2] = v_5ab095<GradeType>('gold'); 
 
-    const v_92b6a6 = 'HTSTCAAFA6';
-    const v_3ed1e9 = '2023. 02. 02';
+    const [v_92b6a6, v_499d51] = v_5ab095<string>('로딩 중...');
+    const [v_3ed1e9, v_1f5980] = v_5ab095<string>('----. --. --');
+
+    v_cf763b(
+        v_a3453e.useCallback(() => {
+            const v_63c23a = async () => {
+                try {
+                    const v_9390e8 = await v_7ef860();
+                    v_499d51(v_9390e8.referral_code || '코드 없음');
+                    v_2990f2(v_9390e8.tier === 'gold' ? 'gold' : 'silver');
+
+                    if (v_9390e8.created_at) {
+                        const v_d5dda0 = new Date(String(v_9390e8.created_at));
+                        v_1f5980(`${v_d5dda0.getFullYear()}. ${(v_d5dda0.getMonth() + 1).toString().padStart(2, '0')}. ${v_d5dda0.getDate().toString().padStart(2, '0')}`);
+                    }
+                } catch (v_9e86fd) {
+                    v_998b9d(v_c65f5d, v_9e86fd);
+                }
+            };
+            v_63c23a();
+        }, [v_c65f5d])
+    );
 
     const v_f9dce7 = v_d1ffaa[v_7be0c6];
     const v_b32f09 = v_7be0c6 === 'gold' ? v_8d41d7('referral_share.grade_gold') : v_8d41d7('referral_share.grade_silver');
     const v_8faf23 = v_7be0c6 === 'gold' ? 'G' : 'S';
 
+    const v_3f557d = v_d844c3(v_92b6a6);
+
     const v_682edd = async () => {
-        await v_fba5a0.setStringAsync(v_92b6a6);
+        await v_fba5a0.setStringAsync(v_3f557d);
         v_03e392.alert(v_8d41d7('referral_share.copy_success_title'), v_8d41d7('referral_share.copy_success_message'));
     };
 
     const v_316053 = async () => {
         try {
             await v_5f4661.share({
-                message: v_8d41d7('referral_share.share_message', { code: v_92b6a6 }),
+                message: v_8d41d7('referral_share.share_message', { code: v_92b6a6, link: v_3f557d }),
                 title: v_8d41d7('referral_share.share_title'),
             });
         } catch (v_5e9bfe) {

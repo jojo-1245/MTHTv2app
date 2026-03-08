@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae } from 'bapkr';
+import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapkr';
 import {
   v_03e392,
   v_a2349e,
@@ -36,7 +36,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
-import { v_75c3c7 } from '../context';
+import { v_75c3c7, v_271901 } from '../context';
 import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_312d93 } from '../utils/dateUtils';
@@ -96,7 +96,29 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
+  const { balance: v_c88e9b, refreshWallet: v_e37b10 } = v_271901();
   const [v_9cb8cb] = v_5ab095(true);
+
+  v_c4deb2(() => {
+    v_e37b10();
+  }, [v_e37b10]);
+
+  const v_1fddaf = v_df9f57(() => {
+    if (!v_c88e9b) return '0.0';
+    const v_9f8406 = v_c88e9b.tokens?.find(
+      (v_8d41d7) => v_8d41d7.symbol === 'MTHT' || v_8d41d7.symbol === 'METAHINT'
+    );
+    if (v_9f8406 && v_9f8406.onchain_balance) {
+      const v_0ad8c5 = parseFloat(v_9f8406.onchain_balance);
+      if (isNaN(v_0ad8c5)) return '0.0';
+      const v_ccc3be = Math.floor(v_0ad8c5 * 10) / 10;
+      const v_bb258c = v_ccc3be.toFixed(1);
+      const v_468545 = v_bb258c.split('.');
+      v_468545[0] = v_468545[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return v_468545.join('.');
+    }
+    return '0.0';
+  }, [v_c88e9b]);
   const [v_39cb7a, v_ecd01c] = v_5ab095<number | null>(null);
   const [v_9ab1d9, v_6bf58d] = v_5ab095<number | null>(null);
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
@@ -500,7 +522,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.pointsPill]}>
                       <Coins size={20} color="#FFFFFF" />
-                      <Text style={v_d81136.pointsText}>1250</Text>
+                      <Text style={v_d81136.pointsText}>{v_1fddaf} MTHT</Text>
                     </View>
                   </TouchableOpacity>
                 </View>

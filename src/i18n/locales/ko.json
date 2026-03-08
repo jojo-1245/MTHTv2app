@@ -477,7 +477,7 @@
         "faq": "자주 묻는 질문",
         "faq_desc": "FAQ",
         "logout": "로그아웃",
-  "logout_confirm": "로그아웃 하시겠습니까?",
+        "logout_confirm": "로그아웃 하시겠습니까?",
         "loading": "프로필 불러오는 중...",
         "load_error": "프로필을 불러올 수 없습니다.",
         "nft_held": "보유중인 NFT",
@@ -1599,9 +1599,9 @@
         "copy_button": "코드복사",
         "copy_success_title": "복사 완료",
         "copy_success_message": "PIN 코드가 클립보드에 복사되었습니다.",
-        "kakao_share_button": "카카오톡 공유하기",
+        "kakao_share_button": "레퍼럴 공유하기",
         "share_error": "공유에 실패했습니다.",
-        "share_message": "HiNT 파트너가 되어보세요! 추천 코드: {{code}}",
+        "share_message": "HiNT 파트너가 되어보세요! 추천 코드: {{code}}\n{{link}}",
         "share_title": "HiNT 파트너 추천"
     },
     "my_info_email_auth": {
