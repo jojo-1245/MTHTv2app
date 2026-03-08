@@ -18,6 +18,7 @@ import {
   v_700696,
   v_bd64bf,
   v_da479e,
+  v_2d4718,
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_772971 } from 'jmpfvteuuztnp';
@@ -36,6 +37,8 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
 import { v_9e8766 } from '../../hooks';
+import { v_207199 } from '../../services';
+import type { v_9923f5 } from '../../services/healthApi';
 
 import {
   v_d55d6e,
@@ -385,6 +388,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_12abe8, v_8a8952] = v_5ab095<string | undefined>();
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
   const [v_68b162, v_128f31] = v_5ab095(false);
+
+  const [v_8140fa, v_72744e] = v_5ab095(false);
+
+  const [v_e5d3f2, v_00defd] = v_5ab095<'session' | 'saving' | null>(null);
 
   const v_b1faa7 = v_e662ae<boolean>(false);
 
@@ -1249,44 +1256,133 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
+      const v_42044e = new Date().toISOString();
+      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+      const v_f4ebd0 = {
+        age: v_2f3ab2 || undefined,
+        gender: v_a5d6d1 || undefined,
+        weight: v_ebc748 || undefined,
+        height: v_5b20cf || undefined,
+        smokingStatus: v_8f47c9 || undefined,
+        bloodPressureStatus: v_6b257a || undefined,
+      };
+
+      v_72744e(true);
+      v_00defd('session');
       (async () => {
         try {
+
           if (v_a3ff5a.current) {
             try {
+              console.log('[결과 화면 이동] 세션 중지 시작...');
               await v_a3ff5a.current.stop();
               console.log('[결과 화면 이동] 세션 중지 완료');
             } catch (v_9e86fd) {
               console.warn('[결과 화면 이동] 세션 중지 실패:', v_9e86fd);
             }
             await v_98caa0();
+            v_a3ff5a.current = undefined;
             console.log('[결과 화면 이동] 세션 종료 완료');
           }
-        } catch (v_9e86fd) {
-          console.error('[결과 화면 이동] 세션 정리 중 오류:', v_9e86fd);
-        }
+          v_b98ddb.current = false;
+          v_977633.current = 0;
+          v_1dd18f.current = true;
 
-        v_b98ddb.current = false;
-        v_977633.current = 0;
-        v_1dd18f.current = true; 
-        console.log('[결과 화면 이동] 3003 에러 관련 플래그 리셋 및 세션 종료 완료');
+          v_00defd('saving');
+          const v_e33e2a = (v_653390): string => {
+            const v_f2dfb8 = {
+              [v_e3e816.PULSE_RATE]: 'pulse_rate',
+              [v_e3e816.RESPIRATION_RATE]: 'respiration_rate',
+              [v_e3e816.OXYGEN_SATURATION]: 'oxygen_saturation',
+              [v_e3e816.BLOOD_PRESSURE]: 'blood_pressure',
+              [v_e3e816.SDNN]: 'sdnn', [v_e3e816.RMSSD]: 'rmssd', [v_e3e816.MEAN_RRI]: 'mean_rri',
+              [v_e3e816.SD1]: 'sd1', [v_e3e816.SD2]: 'sd2', [v_e3e816.SNS_ZONE]: 'sns_zone',
+              [v_e3e816.SNS_INDEX]: 'sns_index', [v_e3e816.STRESS_LEVEL]: 'stress_level',
+              [v_e3e816.STRESS_INDEX]: 'stress_index', [v_e3e816.NORMALIZED_STRESS_INDEX]: 'normalized_stress_index',
+              [v_e3e816.PNS_ZONE]: 'pns_zone', [v_e3e816.PNS_INDEX]: 'pns_index', [v_e3e816.PRQ]: 'prq',
+              [v_e3e816.HEMOGLOBIN]: 'hemoglobin', [v_e3e816.HEMOGLOBIN_A1C]: 'hemoglobin_a1c',
+              [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: 'high_hemoglobin_a1c_risk',
+              [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: 'high_blood_pressure_risk',
+              [v_e3e816.ASCVD_RISK]: 'ascvd_risk', [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: 'high_fasting_glucose_risk',
+              [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: 'high_total_cholesterol_risk',
+              [v_e3e816.LOW_HEMOGLOBIN_RISK]: 'low_hemoglobin_risk', [v_e3e816.HEART_AGE]: 'heart_age',
+              [v_e3e816.CARDIAC_WORKLOAD]: 'cardiac_workload', [v_e3e816.PULSE_PRESSURE]: 'pulse_pressure',
+              [v_e3e816.MEAN_ARTERIAL_PRESSURE]: 'mean_arterial_pressure', [v_e3e816.LFHF]: 'lfhf',
+              [v_e3e816.ASCVD_RISK_LEVEL]: 'ascvd_risk_level', [v_e3e816.BODY_TENSION_SCORE]: 'body_tension_score',
+              [v_e3e816.WELLNESS_INDEX]: 'wellness_index', [v_e3e816.WELLNESS_LEVEL]: 'wellness_level',
+            };
+            return v_f2dfb8[v_653390] ?? `unknown_${v_653390}`;
+          };
+          const v_2586c7 = (v_3b402b): number | null => {
+            const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+            if (isNaN(v_549ed3)) return null;
+            const v_75195c = v_549ed3 > 10 ? v_549ed3 / 10 : v_549ed3;
+            return Math.max(0, Math.min(10, Math.round(v_75195c)));
+          };
+          const v_4016c5 = v_9f8792[v_e3e816.WELLNESS_INDEX]?.value ?? v_9f8792[v_e3e816.WELLNESS_LEVEL]?.value;
+          const v_e93dff = v_2586c7(v_4016c5) ?? 0;
+          const v_30ddf9 = v_e93dff >= 7 ? 'good' : v_e93dff >= 4 ? 'normal' : 'bad';
+          const v_0946e7 = {};
+          Object.entries(v_9f8792).forEach(([v_3b27d9, v_9390e8]) => {
+            const v_653390 = Number(v_3b27d9);
+            const v_3b402b = (v_9390e8 as any).value;
+            if (v_3b402b === null || v_3b402b === undefined) return;
+            let v_d308b5 = (v_9390e8 as any).status;
+            if (v_d308b5 === '정상') v_d308b5 = 'normal';
+            else if (v_d308b5 === '위험') v_d308b5 = 'risk';
+            v_0946e7[v_e33e2a(v_653390)] = {
+              value: v_3b402b,
+              ...(v_d308b5 && { status: v_d308b5 }),
+              ...((v_9390e8 as any).confidence && { confidence: (v_9390e8 as any).confidence }),
+            };
+          });
+          const v_80d73f = new Date(v_42044e);
+          const v_067e65 = `${v_80d73f.getFullYear()}-${String(v_80d73f.getMonth() + 1).padStart(2, '0')}-${String(v_80d73f.getDate()).padStart(2, '0')}`;
+          const v_dcf6a6 = `${String(v_80d73f.getHours()).padStart(2, '0')}:${String(v_80d73f.getMinutes()).padStart(2, '0')}`;
+          const v_083682 = v_0c2f9b?.isCurrent === true;
+          const v_f6ed03 = v_e7b2f2?.startsWith('sub-') ? v_e7b2f2.replace('sub-', '') : v_e7b2f2;
+          const v_ee2acd = v_083682 ? undefined : (v_f6ed03 && v_f6ed03 !== '1' && v_f6ed03 !== 'me' ? Number(v_f6ed03) : undefined);
+          const savePayload: v_9923f5 = {
+            record_date: v_067e65,
+            record_time: v_dcf6a6,
+            health_index: v_e93dff,
+            health_level: v_30ddf9,
+            vital_signs: v_0946e7,
+            ...(v_ee2acd != null && { sub_account_id: v_ee2acd }),
+            metadata: {
+              device: 'FzljtiliSignal SDK',
+              timestamp: v_42044e,
+              ...(v_f4ebd0 && Object.keys(v_f4ebd0).some(v_0eb677 => (v_f4ebd0 as any)[v_0eb677]) && { user_info: v_f4ebd0 }),
+            },
+          };
+          try {
+            console.log('[결과 화면 이동] API 저장 시작...');
+            await v_207199(v_60e8e0);
+            console.log('[결과 화면 이동] API 저장 완료');
+          } catch (v_09112b) {
+            console.error('[결과 화면 이동] API 저장 실패:', v_09112b);
+          }
+
+          v_c65f5d.navigate('HealthAnalysisResult', {
+            results: v_9f8792,
+            timestamp: v_42044e,
+            userName: v_0c2f9b?.name,
+            accounts: v_c86f08,
+            selectedAccountId: v_e7b2f2,
+            userInfo: v_f4ebd0,
+            savedBeforeNavigate: true,
+          });
+        } catch (v_9e86fd) {
+          console.error('[결과 화면 이동] 오류:', v_9e86fd);
+        } finally {
+
+          v_2d4718.runAfterInteractions(() => {
+            v_00defd(null);
+            v_72744e(false);
+          });
+        }
       })();
 
-      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
-      v_c65f5d.navigate('HealthAnalysisResult', {
-        results: v_9f8792,
-        timestamp: new Date().toISOString(),
-        userName: v_0c2f9b?.name,
-        accounts: v_c86f08,
-        selectedAccountId: v_e7b2f2,
-        userInfo: {
-          age: v_2f3ab2 || undefined,
-          gender: v_a5d6d1 || undefined,
-          weight: v_ebc748 || undefined,
-          height: v_5b20cf || undefined,
-          smokingStatus: v_8f47c9 || undefined,
-          bloodPressureStatus: v_6b257a || undefined,
-        },
-      });
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
     }
@@ -1960,7 +2056,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             </View>
 
             {}
-            <View style={v_d81136.bottomContainer}>
+            <View
+              style={[
+                v_d81136.bottomContainer,
+                {
+                  paddingBottom:
+                    v_9b1a04.xlarge +
+                    (v_326be8.OS === 'ios'
+                      ? v_033e14.bottom
+                      : Math.max(v_262e99, v_033e14.bottom)),
+                },
+              ]}
+            >
               {}
               <View style={v_d81136.statusContainer}>
                 {v_109b56 ? (
@@ -1996,6 +2103,19 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
         </View>
       </SafeView>
+      {}
+      {v_8140fa && (
+        <View style={v_d81136.resultPreparingOverlay} pointerEvents="box-none">
+          <View style={v_d81136.resultPreparingBox}>
+            <ActivityIndicator size="large" color={v_1bfbd0.bluePrimary} />
+            <Text style={v_d81136.resultPreparingText}>
+              {v_e5d3f2 === 'session'
+                ? v_8d41d7('health_analysis.measurement.result_preparing_session')
+                : v_8d41d7('health_analysis.measurement.result_preparing')}
+            </Text>
+          </View>
+        </View>
+      )}
     </>
   );
 
@@ -2004,7 +2124,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }
 
   return (
-    <MainLayout activeKey="analysis">
+    <MainLayout activeKey="analysis" hideBottomNav={true}>
       <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
         {v_629820()}
       </View>
@@ -2515,6 +2635,26 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.small,
     borderRadius: 8,
+  },
+  resultPreparingOverlay: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 100,
+  },
+  resultPreparingBox: {
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: 16,
+    paddingVertical: v_9b1a04.xlarge,
+    paddingHorizontal: v_9b1a04.xlarge * 2,
+    alignItems: 'center',
+    gap: v_9b1a04.medium,
+  },
+  resultPreparingText: {
+    fontSize: 16,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
   },
 });
 

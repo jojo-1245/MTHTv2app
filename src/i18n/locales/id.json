@@ -1033,7 +1033,9 @@
             "button_start": "Mulai Pengukuran",
             "button_stop": "Hentikan Pengukuran",
             "button_waiting": "Menunggu...",
-            "back_button": "Kembali"
+            "back_button": "Kembali",
+            "result_preparing": "Menyimpan hasil...",
+            "result_preparing_session": "Membersihkan sesi..."
         },
         "result": {
             "detail_info": "Info Detail",

@@ -1050,7 +1050,9 @@
             "button_start": "측정 시작",
             "button_stop": "측정 중지",
             "button_waiting": "대기 중...",
-            "back_button": "뒤로 가기"
+            "back_button": "뒤로 가기",
+            "result_preparing": "결과 저장 중...",
+            "result_preparing_session": "세션 정리 중..."
         },
         "result": {
             "detail_info": "상세 정보",

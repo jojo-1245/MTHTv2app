@@ -1034,7 +1034,9 @@
             "button_start": "Start Measurement",
             "button_stop": "Stop Measurement",
             "button_waiting": "Waiting...",
-            "back_button": "Back"
+            "back_button": "Back",
+            "result_preparing": "Saving results...",
+            "result_preparing_session": "Cleaning up session..."
         },
         "result": {
             "detail_info": "Detail Info",
