@@ -170,7 +170,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           }));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => {
       v_2008a4 = true;
     };
@@ -237,8 +237,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             const v_487918 =
               !v_91f231 && /^\d+$/.test(v_dbd26e)
                 ? v_202d44.find(
-                    (v_3f4e2e) => v_3f4e2e.countryCode === parseInt(v_dbd26e, 10)
-                  )
+                  (v_3f4e2e) => v_3f4e2e.countryCode === parseInt(v_dbd26e, 10)
+                )
                 : null;
             const v_077269 = v_91f231 ?? v_487918 ?? null;
             if (v_077269) {
@@ -329,7 +329,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       }
                     }
                   })
-                  .catch(() => {});
+                  .catch(() => { });
               }
             }
           } else {
@@ -653,8 +653,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_94bdf5 =
       v_2937c0 && v_2937c0.dialCode !== '0'
         ? v_9553a4(v_2937c0.iso2) ||
-          parseInt(v_2937c0.dialCode, 10) ||
-          null
+        parseInt(v_2937c0.dialCode, 10) ||
+        null
         : null;
 
     if (v_adc076 && !v_857dfe(v_adc076)) {
