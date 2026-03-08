@@ -851,6 +851,7 @@
     },
     "health_analysis": {
         "result_title": "Hasil Analisis",
+        "result_loading": "Memuat hasil...",
         "default_user_name": "Saya",
         "measurement_complete": "Pengukuran Selesai",
         "measurement_date": "Tanggal Pengukuran",

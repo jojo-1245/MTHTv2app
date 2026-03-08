@@ -868,6 +868,7 @@
     },
     "health_analysis": {
         "result_title": "측정 결과",
+        "result_loading": "결과를 불러오는 중...",
         "default_user_name": "나",
         "measurement_complete": "측정 완료",
         "measurement_date": "측정일",
