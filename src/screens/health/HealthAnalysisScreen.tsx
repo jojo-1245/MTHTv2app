@@ -458,7 +458,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       await v_98caa0();
       v_a3ff5a.current = undefined;
 
-      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 1500));
+      const v_d5c272 = 2000;
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, v_d5c272));
     }
 
     await v_98caa0();
