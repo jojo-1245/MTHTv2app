@@ -9,16 +9,20 @@ import {
   v_79139e,
   v_326be8,
   v_03e392,
+  v_39a996,
 } from 'rcmrninabrnb';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
+import v_719e34 from 'pcgoftamvavhkhqudmtnjked';
+import { v_3aacaa } from '../../services/versionService';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
-import { v_729608, v_570c34, v_1c1837 } from '../../components';
+import { v_729608, v_570c34, v_1c1837, v_9cafa7 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
+import { v_96a538 } from '../../hooks/useVersionCheck';
 import {
   v_0c7e2f,
   v_381355,
@@ -46,6 +50,7 @@ const PERMISSION_ITEMS: { type: v_9613bb; iconName: keyof typeof v_dec439.glyphM
 const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
+  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538();
   const [v_106b0c, v_47daa9] = v_5ab095(false);
   const [v_264467, v_e882e2] = v_5ab095(false);
   const [v_94f165, v_f1704d] = v_5ab095(false);
@@ -55,6 +60,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     camera: false,
     media: false,
   });
+  const [v_211e13, v_fd59c5] = v_5ab095<string | null>(null);
 
   const v_d4d423 = [
     { code: 'ko', label: v_8d41d7('common.korean') },
@@ -91,6 +97,10 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     v_de06a3(() => {
       v_d5fcbb();
       v_432eab();
+
+      v_3aacaa().then((v_ab4c96) => {
+        if (v_ab4c96) v_fd59c5(v_ab4c96.version);
+      });
     }, [v_d5fcbb, v_432eab])
   );
 
@@ -237,7 +247,20 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
               </TouchableOpacity>
             </View>
           </View>
+
+          {}
+          <View style={v_d81136.versionContainer}>
+            <Text style={v_d81136.versionText}>
+              {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_719e34.getVersion()}
+            </Text>
+            {v_211e13 && (
+              <Text style={v_d81136.versionText}>
+                OTA Version: {v_211e13}
+              </Text>
+            )}
+          </View>
         </SafeScrollView>
+        <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
 
         <Modal
           visible={v_106b0c}
@@ -445,6 +468,18 @@ const v_d81136 = v_472849.create({
     fontSize: 16,
     fontFamily: v_843035.semibold,
     color: v_1bfbd0.secondaryText,
+  },
+  versionContainer: {
+    marginTop: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.large,
+    alignItems: 'center',
+    opacity: 0.5,
+  },
+  versionText: {
+    fontSize: 12,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    lineHeight: 18,
   },
 });
 

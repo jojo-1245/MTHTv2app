@@ -10,6 +10,9 @@ import { v_4fb2ad } from './src/navigation/AppNavigator';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';
+import { v_96a538 } from './src/hooks/useVersionCheck';
+import { v_bfe92f } from './src/hooks/useKeepalive';
+import { v_9cafa7, v_fba277 } from './src/components';
 import './src/i18n';
 
 const v_20ccc6 = {
@@ -52,6 +55,17 @@ const v_83baa4 = () => {
 export default function v_6540c3() {
   const [v_43f571, v_d39d7d] = v_c06f2c(v_20ccc6);
   const [v_4c1272, v_bf8912] = v_5ab095(false);
+
+  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
+    enabled: v_4c1272 && v_43f571,
+    onOtaProgress: (v_ba2265) => {
+      if (__DEV__) {
+        console.log(`[OTA] 다운로드 진행률: ${v_ba2265}%`);
+      }
+    },
+  });
+
+  const { notice: v_d48273, dismissNotice: v_2852e3 } = v_bfe92f(v_4c1272);
 
   v_c4deb2(() => {
 
@@ -113,18 +127,24 @@ export default function v_6540c3() {
   }
 
   return (
-    <SafeAreaProvider
-      initialMetrics={v_326be8.OS === 'android' ? v_a39049 : undefined}
-    >
-      <StatusBar style="dark" />
-      <AppProvider>
-        <WalletProvider>
-          <StepTrackingProvider>
-            <AppNavigator />
-          </StepTrackingProvider>
-        </WalletProvider>
-      </AppProvider>
-    </SafeAreaProvider>
+    <>
+      <SafeAreaProvider
+        initialMetrics={v_326be8.OS === 'android' ? v_a39049 : undefined}
+      >
+        <StatusBar style="dark" />
+        <AppProvider>
+          <WalletProvider>
+            <StepTrackingProvider>
+              <AppNavigator />
+            </StepTrackingProvider>
+          </WalletProvider>
+        </AppProvider>
+      </SafeAreaProvider>
+
+      <EmergencyNoticeModal notice={v_d48273} onDismiss={v_2852e3} />
+
+      {}
+      <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
+    </>
   );
 }
-

@@ -265,10 +265,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       {v_d11128 ? (
                         <ActivityIndicator size="small" color={v_1bfbd0.text} />
                       ) : (
-                        <Ionicons name="log-out-outline" size={24} />
+                        <Ionicons name="log-out-outline" size={24} color={v_1bfbd0.text} />
                       )}
                     </View>
-                    <Text style={v_d81136.menuItemTextLogout}>
+                    <Text style={[v_d81136.menuItemTextLogout, { color: v_1bfbd0.text }]}>
                       {v_d11128 ? v_8d41d7('profile.logging_out', '로그아웃 중...') : v_8c0b26.title}
                     </Text>
                   </>
