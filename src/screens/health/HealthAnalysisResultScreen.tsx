@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3, v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3, v_c4deb2, v_b4bb71 } from 'bapkr';
 import {
   v_700696,
   v_aa7413,
@@ -623,10 +623,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const [v_4529e6, v_ea984a] = v_5ab095(false);
   v_c4deb2(() => {
-    const v_d73bd6 = 500;
+    const v_d73bd6 = 1000; 
     const v_3894d5 = setTimeout(() => {
       v_2d4718.runAfterInteractions(() => {
-        v_ea984a(true);
+        v_b4bb71(() => {
+          v_ea984a(true);
+        });
       });
     }, v_d73bd6);
     return () => clearTimeout(v_3894d5);

@@ -389,6 +389,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
   const [v_68b162, v_128f31] = v_5ab095(false);
 
+  const [v_955bd3, v_b30457] = v_5ab095(false);
+
   const [v_8140fa, v_72744e] = v_5ab095(false);
 
   const [v_e5d3f2, v_00defd] = v_5ab095<'session' | 'saving' | null>(null);
@@ -475,8 +477,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_318478.current = false;
     v_b9ada4.current = false;
     v_49296b(false);
-    v_00defd(null);
-    v_72744e(false);
+
     v_b0aeaf(false);
     v_8a8952(undefined);
     v_f36dd5(undefined);
@@ -586,8 +587,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
       console.log('라이센스 키 확인:', v_651d83 ? `${v_651d83.substring(0, 10)}...` : '없음');
 
-      console.log('카메라 초기화 대기 중... (1.5초)');
-      await new Promise(v_6f7712 => setTimeout(v_6f7712, 1500));
+      console.log('카메라 초기화 대기 중... (1초)');
+      await new Promise(v_6f7712 => setTimeout(v_6f7712, 1000));
 
       const userInformation: v_bc6a30 = {};
       if (v_2f3ab2 && !isNaN(Number(v_2f3ab2))) {
@@ -731,6 +732,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_567414.current = false;
         v_e7c1c1.current = false;
         v_128f31(false);
+        v_b30457(true); 
 
         await v_a3ff5a.current?.start(v_8ea06a);
       } else if (
@@ -752,6 +754,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         sessionState: v_bc50c7,
         hasSession: !!v_a3ff5a.current,
       });
+
+      if (v_7a5fef === 6004) {
+        console.warn('[6004] 측정 시작 이미 진행 중 - 무시');
+        return;
+      }
 
       if (v_7a5fef && v_141cf8(v_7a5fef)) {
         return;
@@ -1025,6 +1032,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       v_f36dd5(v_f6dcea.value);
     }
   }, [v_f6dcea]);
+
+  v_c4deb2(() => {
+    if (v_bc50c7 === v_eb2401.READY) {
+      v_b30457(false);
+      return;
+    }
+    if (v_bc50c7 !== v_eb2401.STARTING && v_bc50c7 !== v_eb2401.PROCESSING) {
+      return;
+    }
+    const v_cb36b1 = setTimeout(() => v_b30457(false), 3000);
+    return () => clearTimeout(v_cb36b1);
+  }, [v_bc50c7]);
 
   v_c4deb2(() => {
     if (v_bc50c7 === v_eb2401.STARTING) {
@@ -1508,7 +1527,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
     console.log('카메라 마운트 완료, 세션 생성 예약');
 
-    const v_4b24d2 = 2000;
+    const v_4b24d2 = 1000;
     const v_cb36b1 = setTimeout(() => {
 
       if (
@@ -2087,7 +2106,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     v_109b56 ||
                     (v_bc50c7 !== v_eb2401.READY &&
                       v_bc50c7 !== v_eb2401.STARTING &&
-                      v_bc50c7 !== v_eb2401.PROCESSING)
+                      v_bc50c7 !== v_eb2401.PROCESSING) ||
+                    ((v_bc50c7 === v_eb2401.STARTING || v_bc50c7 === v_eb2401.PROCESSING) && v_955bd3)
                   }
                 />
               </View>
