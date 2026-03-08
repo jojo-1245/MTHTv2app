@@ -441,8 +441,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_94bdf5 =
       v_2f03bc && v_2f03bc.dialCode !== '0'
         ? v_9553a4(v_2f03bc.iso2) ||
-          parseInt(v_2f03bc.dialCode, 10) ||
-          null
+        parseInt(v_2f03bc.dialCode, 10) ||
+        null
         : null;
 
     if (v_adc076 && !v_857dfe(v_adc076)) {
@@ -463,7 +463,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_49ea09 =
       v_c01add || !v_088b9e
         ? null
-        : `${v_4d1e97.startsWith('+') ? v_4d1e97 : `+${v_4d1e97}`}${v_088b9e}`;
+        : v_088b9e;
 
     v_e33ec0(true);
     try {
