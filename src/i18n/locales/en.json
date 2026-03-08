@@ -959,7 +959,8 @@
             "error_7009": "Error code: 7009\n\nPossible causes:\n- License key issue\n- SDK initialization failed\n- Camera initialization issue\n\nPlease restart the app.",
             "error_unknown": "Error code: {{code}}\n\nAn error occurred. Please restart the app or try again later.",
             "license_key_warning": "Warning: FZLJTILI_LICENSE_KEY is not set.",
-            "license_key_not_set": "FzljtiliSignal license key is not set. Please check environment variables."
+            "license_key_not_set": "FzljtiliSignal license key is not set. Please check environment variables.",
+            "incomplete_measurement": "Some measurement results are missing. Please keep your face steady in front of the camera for about 60 seconds so all items are captured, then measure again."
         },
         "image_validity": {
             "device_orientation": "Device Orientation Error",

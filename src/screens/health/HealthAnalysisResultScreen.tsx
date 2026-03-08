@@ -1151,6 +1151,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         return;
       }
 
+      const v_ca2427 = v_a7f568[v_e3e816.WELLNESS_INDEX];
+      if (!v_ca2427 || (v_ca2427 as any).value == null) {
+        if (__DEV__) {
+          console.log('[HealthAnalysisResultScreen] 불완전한 결과 - API 저장 생략 (WELLNESS_INDEX 없음)');
+        }
+        return;
+      }
+
       if (v_02a5a0.current && v_f013b2.current === v_42044e) {
         if (__DEV__) {
           console.log('[HealthAnalysisResultScreen] 이미 저장된 측정 결과 - 중복 저장 방지:', {
@@ -2429,7 +2437,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               {}
               <View
                 ref={v_685d2a}
-                style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.white }]}
+                style={[v_d81136.sectionNavContainer, { backgroundColor: 'transparent' }]}
               >
                 <CategoryTabScroll
                   categories={v_8bc599}
