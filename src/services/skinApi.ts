@@ -452,7 +452,7 @@ export interface CompareSkinRecordsPayload {
 }
 
 export interface CompareSkinRecordsResponse {
-  records: SkinRecordItem[];
+  skin_datas: SkinRecordItem[];
   comparison: {
     overall_score_changes?: {
       from: number;
@@ -651,13 +651,13 @@ export async function v_3680d3(v_9dd532): Promise<CompareSkinRecordsResponse> {
 
     const v_9390e8 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as CompareSkinRecordsResponse);
 
-    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.records)) {
+    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.skin_datas)) {
       throw new Error('피부 기록 비교 응답 형식이 올바르지 않습니다.');
     }
 
     if (__DEV__) {
       console.log('[skinApi] compareSkinRecords 파싱된 데이터:', {
-        recordsCount: v_9390e8.records.length,
+        recordsCount: v_9390e8.skin_datas.length,
         hasComparison: !!v_9390e8.comparison,
         comparisonKeys: v_9390e8.comparison?.analysis_changes ? Object.keys(v_9390e8.comparison.analysis_changes) : [],
       });

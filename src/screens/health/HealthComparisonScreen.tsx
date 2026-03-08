@@ -211,14 +211,14 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 
         if (__DEV__) {
           console.log('[HealthComparisonScreen] 비교 API 응답:', {
-            recordsCount: v_3393e3.records.length,
+            recordsCount: v_3393e3.health_datas.length,
             hasComparison: !!v_3393e3.comparison,
             comparisonKeys: v_3393e3.comparison ? Object.keys(v_3393e3.comparison.vital_signs_changes) : [],
           });
         }
 
-        const v_dc0b95 = v_38756f(v_3393e3.records[0]);
-        const v_40a830 = v_38756f(v_3393e3.records[1]);
+        const v_dc0b95 = v_38756f(v_3393e3.health_datas[0]);
+        const v_40a830 = v_38756f(v_3393e3.health_datas[1]);
 
         v_1a48f5(v_dc0b95);
         v_4d426d(v_40a830);
