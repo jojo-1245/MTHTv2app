@@ -23,7 +23,17 @@ export type RootStackParamList = {
     }
     | undefined;
     Wallet: undefined;
-    WalletSend: undefined;
+    WalletSend: {
+        tokenData?: {
+            id: string;
+            title: string;
+            subtitle: string;
+            amount: string;
+            suffix?: string;
+            iconSource?: any;
+            contract_address?: string;
+        };
+    } | undefined;
     WalletReceive:
     | {
         title?: string;
@@ -33,7 +43,17 @@ export type RootStackParamList = {
     | undefined;
     WalletQrScan: undefined;
     WalletEstimate: undefined;
-    WalletTransactionProgress: undefined;
+    WalletTransactionProgress: {
+        tokenData?: {
+            id: string;
+            title: string;
+            subtitle: string;
+            amount: string;
+            suffix?: string;
+            iconSource?: any;
+            contract_address?: string;
+        };
+    } | undefined;
     WalletTransactionResult: undefined;
     TransactionDetails: undefined;
     WalletTokenDetail: {
@@ -141,7 +161,7 @@ export type RootStackParamList = {
     | undefined;
 };
 
-export const v_ce4741 = {
+export const ROUTES = {
     home: "Home",
     MetaHome: "MetaHome",
     main: "Home",
@@ -174,19 +194,19 @@ export const v_ce4741 = {
     myInfoFaq: "MyInfoFaq",
 } as const;
 
-import { v_ada615 } from "ixigazcpvfldbecwtbvavtbi";
-import type { v_390fcc } from "xpfgrcdafpntkgxfmgxpxnedjkvmtc";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export const v_a0daa8 = () => {
-    const v_c65f5d =
-        v_ada615<v_390fcc<RootStackParamList>>();
+export const useAppNavigation = () => {
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return {
-        navigate: v_c65f5d.navigate,
-        goBack: v_c65f5d.goBack,
-        reset: v_c65f5d.reset,
-        push: v_c65f5d.push,
-        pop: v_c65f5d.pop,
-        replace: v_c65f5d.replace,
+        navigate: navigation.navigate,
+        goBack: navigation.goBack,
+        reset: navigation.reset,
+        push: navigation.push,
+        pop: navigation.pop,
+        replace: navigation.replace,
     };
 };
