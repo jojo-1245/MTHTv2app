@@ -140,7 +140,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert('오류', '사용자 정보를 불러오는데 실패했습니다.');
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.load_user_info_failed'));
       v_0890f8();
     }
   };
@@ -194,7 +194,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
         if (v_998b9d(v_c65f5d, v_5e9bfe)) {
           return;
         }
-        v_03e392.alert('오류', '회원 검색에 실패했습니다.');
+        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.member_search_failed'));
       } finally {
         v_58158a(false);
       }
@@ -216,12 +216,12 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     const v_70217c = v_660822.email.toLowerCase().trim();
 
     if (v_1b4841.has(v_70217c)) {
-      v_03e392.alert('알림', '이미 연결된 계정입니다.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
       return;
     }
 
     if ((v_660822 as any).isLinked) {
-      v_03e392.alert('알림', '이미 연결된 계정입니다.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
       return;
     }
 
@@ -234,13 +234,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       await v_9112f4(v_660822.email);
       v_e37907(true);
       v_fd7d1f('otp');
-      v_03e392.alert('성공', '인증 코드가 이메일로 발송되었습니다.');
+      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.otp_sent'));
     } catch (v_5e9bfe) {
       console.error('[AddUserModal] OTP 발송 실패:', v_5e9bfe);
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert('오류', '인증 코드 발송에 실패했습니다.');
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.otp_send_failed'));
     } finally {
       v_34a50a(false);
     }
@@ -248,13 +248,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_7914f7 = () => {
     if (v_af419b.length !== v_28d629) {
-      v_03e392.alert('알림', '인증 코드를 모두 입력해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_enter_all'));
       return;
     }
 
     const v_849cde = v_af419b.replace(/\D/g, '').slice(0, v_28d629);
     if (v_849cde.length !== v_28d629) {
-      v_03e392.alert('알림', '올바른 인증 코드를 입력해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
       return;
     }
 
@@ -263,13 +263,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_0dbfdf = async () => {
     if (!v_7b9eeb || !v_ab0e46.trim() || v_af419b.length !== v_28d629) {
-      v_03e392.alert('알림', '모든 정보를 입력해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_all_info'));
       return;
     }
 
     const v_849cde = v_af419b.replace(/\D/g, '').slice(0, v_28d629);
     if (v_849cde.length !== v_28d629) {
-      v_03e392.alert('알림', '올바른 인증 코드를 입력해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
       return;
     }
 
@@ -285,7 +285,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       const v_e3c76c = v_7b9eeb.email.toLowerCase().trim();
       v_47501d((v_ba2215) => new Set(v_ba2215).add(v_e3c76c));
 
-      v_03e392.alert('성공', '부계정이 추가되었습니다.');
+      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
       v_b0e537();
       v_0890f8();
       v_41b56e();
@@ -295,7 +295,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
         return;
       }
 
-      let v_a8cd21 = '인증 코드가 올바르지 않습니다. 코드를 확인하거나 재전송 후 다시 시도해주세요.';
+      let v_a8cd21 = v_8d41d7('sub_account.otp_invalid');
       if (v_5e9bfe instanceof Error) {
         const v_1744b9 = v_5e9bfe.message;
 
@@ -310,7 +310,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           v_a8cd21 = v_1744b9;
         }
       }
-      v_03e392.alert('인증 실패', v_a8cd21);
+      v_03e392.alert(v_8d41d7('sub_account.otp_verification_failed'), v_a8cd21);
     } finally {
       v_34a50a(false);
     }
@@ -318,7 +318,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_6b4310 = async () => {
     if (!v_a404bd.trim()) {
-      v_03e392.alert('알림', '닉네임을 입력해주세요.');
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_nickname'));
       return;
     }
 
@@ -327,7 +327,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       await v_01afb4({
         name: v_a404bd.trim(),
       });
-      v_03e392.alert('성공', '부계정이 추가되었습니다.');
+      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
       v_b0e537();
       v_0890f8();
       v_41b56e();
@@ -336,7 +336,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert('오류', v_5e9bfe instanceof Error ? v_5e9bfe.message : '부계정 추가에 실패했습니다.');
+      v_03e392.alert(v_8d41d7('common.error'), v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('sub_account.add_failed'));
     } finally {
       v_34a50a(false);
     }
@@ -356,11 +356,11 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
         const v_3f557d = `https://service-mh.example.invalid/referral/${v_2fa46c}`;
         await v_f2c756.openURL(v_3f557d);
       } else {
-        v_03e392.alert('알림', '레퍼럴 코드가 없습니다.');
+        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.no_referral_code'));
       }
     } catch (v_5e9bfe) {
       console.error('[AddUserModal] 레퍼럴 링크 열기 실패:', v_5e9bfe);
-      v_03e392.alert('오류', '레퍼럴 링크를 열 수 없습니다.');
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.copy_failed'));
     }
   };
 
@@ -385,13 +385,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     if (v_729796 === 'email') {
       return (
         <>
-          <Text style={v_d81136.instruction}>이메일로 회원을 검색하세요</Text>
+          <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.search_by_email')}</Text>
           <TextField
             ref={v_2df89f}
-            label="이메일"
+            label={v_8d41d7('common.email')}
             value={v_e0c7e8}
             onChangeText={v_fedf34}
-            placeholder="이메일 입력"
+            placeholder={v_8d41d7('sub_account.enter_email')}
             keyboardType="email-address"
             autoCapitalize="none"
             containerStyle={v_d81136.inputContainer}
@@ -400,7 +400,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           {v_4568f9 && (
             <View style={v_d81136.searchingContainer}>
               <ActivityIndicator size="small" color={v_1bfbd0.primary} />
-              <Text style={v_d81136.searchingText}>검색 중...</Text>
+              <Text style={v_d81136.searchingText}>{v_8d41d7('sub_account.searching')}</Text>
             </View>
           )}
           {!v_4568f9 && v_76148b.length > 0 && (
@@ -449,7 +449,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
                         </View>
                         {v_cf8dea && (
                           <View style={v_d81136.linkedBadge}>
-                            <Text style={v_d81136.linkedBadgeText}>링크됨</Text>
+                            <Text style={v_d81136.linkedBadgeText}>{v_8d41d7('sub_account.linked')}</Text>
                           </View>
                         )}
                       </View>
@@ -461,7 +461,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           )}
           {!v_4568f9 && v_e0c7e8.length >= 2 && v_76148b.length === 0 && (
             <View style={v_d81136.noResultsContainer}>
-              <Text style={v_d81136.noResultsText}>검색 결과가 없습니다.</Text>
+              <Text style={v_d81136.noResultsText}>{v_8d41d7('sub_account.no_search_results')}</Text>
               {(() => {
 
                 if (__DEV__) {
@@ -499,7 +499,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
                           !v_0e461e(v_e0c7e8) && v_d81136.referralLinkTextDisabled,
                         ]}
                       >
-                        레퍼럴 링크 보내기
+                        {v_8d41d7('sub_account.send_referral_link')}
                       </Text>
                     </TouchableOpacity>
                   );
@@ -526,7 +526,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       return (
         <>
           <Text style={v_d81136.instruction}>
-            {v_7b9eeb?.email}로 발송된 인증 코드를 입력하세요
+            {v_8d41d7('sub_account.enter_otp', { email: v_7b9eeb?.email })}
           </Text>
           <View style={v_d81136.otpWrap}>
             <OtpInput
@@ -537,7 +537,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
             />
           </View>
           <PrimaryButton
-            title="다음"
+            title={v_8d41d7('common.next')}
             onPress={v_7914f7}
             disabled={v_af419b.length !== v_28d629 || v_683210}
             style={v_d81136.button}
@@ -549,16 +549,16 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     if (v_729796 === 'nickname') {
       return (
         <>
-          <Text style={v_d81136.instruction}>부계정 닉네임을 입력하세요</Text>
+          <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.enter_nickname')}</Text>
           <TextField
-            label="닉네임"
+            label={v_8d41d7('sub_account.nickname')}
             value={v_ab0e46}
             onChangeText={v_8d29b6}
-            placeholder="닉네임 입력"
+            placeholder={v_8d41d7('sub_account.enter_nickname_placeholder')}
             containerStyle={v_d81136.inputContainer}
           />
           <PrimaryButton
-            title="연결하기"
+            title={v_8d41d7('sub_account.link')}
             onPress={v_0dbfdf}
             disabled={!v_ab0e46.trim() || v_683210}
             style={v_d81136.button}
@@ -572,22 +572,22 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     if (v_729796 === 'nickname' && !v_a72c3f) {
       return (
         <>
-          <Text style={v_d81136.instruction}>부계정 닉네임을 입력하세요</Text>
+          <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.enter_nickname')}</Text>
           <TextField
-            label="닉네임"
+            label={v_8d41d7('sub_account.nickname')}
             value={v_a404bd}
             onChangeText={v_92e3ba}
-            placeholder="닉네임 입력"
+            placeholder={v_8d41d7('sub_account.enter_nickname_placeholder')}
             containerStyle={v_d81136.inputContainer}
           />
           <PrimaryButton
-            title="부계정 추가하기"
+            title={v_8d41d7('sub_account.add_sub_account')}
             onPress={v_6b4310}
             disabled={!v_a404bd.trim() || v_683210}
             style={v_d81136.button}
           />
           <SecondaryButton
-            title="이메일로 추가하기"
+            title={v_8d41d7('sub_account.add_by_email')}
             onPress={v_b3ff71}
             style={v_d81136.button}
           />
@@ -598,13 +598,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     if (v_729796 === 'email' || v_a72c3f) {
       return (
         <>
-          <Text style={v_d81136.instruction}>이메일로 회원을 검색하세요</Text>
+          <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.search_by_email')}</Text>
           <TextField
             ref={v_2df89f}
-            label="이메일"
+            label={v_8d41d7('common.email')}
             value={v_e0c7e8}
             onChangeText={v_fedf34}
-            placeholder="이메일 입력"
+            placeholder={v_8d41d7('sub_account.enter_email')}
             keyboardType="email-address"
             autoCapitalize="none"
             containerStyle={v_d81136.inputContainer}
@@ -613,7 +613,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           {v_4568f9 && (
             <View style={v_d81136.searchingContainer}>
               <ActivityIndicator size="small" color={v_1bfbd0.primary} />
-              <Text style={v_d81136.searchingText}>검색 중...</Text>
+              <Text style={v_d81136.searchingText}>{v_8d41d7('sub_account.searching')}</Text>
             </View>
           )}
           {!v_4568f9 && v_76148b.length > 0 && (
@@ -662,7 +662,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
                         </View>
                         {v_cf8dea && (
                           <View style={v_d81136.linkedBadge}>
-                            <Text style={v_d81136.linkedBadgeText}>링크됨</Text>
+                            <Text style={v_d81136.linkedBadgeText}>{v_8d41d7('sub_account.linked')}</Text>
                           </View>
                         )}
                       </View>
@@ -674,7 +674,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           )}
           {!v_4568f9 && v_e0c7e8.length >= 2 && v_76148b.length === 0 && (
             <View style={v_d81136.noResultsContainer}>
-              <Text style={v_d81136.noResultsText}>검색 결과가 없습니다.</Text>
+              <Text style={v_d81136.noResultsText}>{v_8d41d7('sub_account.no_search_results')}</Text>
               {(() => {
 
                 if (__DEV__) {
@@ -712,7 +712,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
                           !v_0e461e(v_e0c7e8) && v_d81136.referralLinkTextDisabled,
                         ]}
                       >
-                        레퍼럴 링크 보내기
+                        {v_8d41d7('sub_account.send_referral_link')}
                       </Text>
                     </TouchableOpacity>
                   );
@@ -736,7 +736,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
                   v_ff2199([]);
                 }}
               >
-                <Text style={v_d81136.retryButtonText}>재검색</Text>
+                <Text style={v_d81136.retryButtonText}>{v_8d41d7('sub_account.retry_search')}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -748,7 +748,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       return (
         <>
           <Text style={v_d81136.instruction}>
-            {v_7b9eeb?.email}로 발송된 인증 코드를 입력하세요
+            {v_8d41d7('sub_account.enter_otp', { email: v_7b9eeb?.email })}
           </Text>
           <View style={v_d81136.otpWrap}>
             <OtpInput
@@ -759,7 +759,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
             />
           </View>
           <PrimaryButton
-            title="다음"
+            title={v_8d41d7('common.next')}
             onPress={v_7914f7}
             disabled={v_af419b.length !== v_28d629 || v_683210}
             style={v_d81136.button}
@@ -771,16 +771,16 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     if (v_729796 === 'nickname' && v_a72c3f) {
       return (
         <>
-          <Text style={v_d81136.instruction}>부계정 닉네임을 입력하세요</Text>
+          <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.enter_nickname')}</Text>
           <TextField
-            label="닉네임"
+            label={v_8d41d7('sub_account.nickname')}
             value={v_ab0e46}
             onChangeText={v_8d29b6}
-            placeholder="닉네임 입력"
+            placeholder={v_8d41d7('sub_account.enter_nickname_placeholder')}
             containerStyle={v_d81136.inputContainer}
           />
           <PrimaryButton
-            title="연결하기"
+            title={v_8d41d7('sub_account.link')}
             onPress={v_0dbfdf}
             disabled={!v_ab0e46.trim() || v_683210}
             style={v_d81136.button}
@@ -816,13 +816,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
               keyboardDismissMode="interactive"
             >
               <View style={v_d81136.header}>
-                <Text style={v_d81136.title}>부계정 추가</Text>
+                <Text style={v_d81136.title}>{v_8d41d7('account_selector.add_sub_account')}</Text>
                 <TouchableOpacity
                   style={v_d81136.closeBtn}
                   onPress={v_7f2e65}
                   hitSlop={12}
                   accessibilityRole="button"
-                  accessibilityLabel="닫기"
+                  accessibilityLabel={v_8d41d7('common.close')}
                 >
                   <Feather name="x" size={24} color={v_1bfbd0.text} />
                 </TouchableOpacity>
@@ -839,7 +839,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
               {v_e71371 === null && (
                 <View style={v_d81136.loadingContainer}>
                   <ActivityIndicator size="small" color={v_1bfbd0.primary} />
-                  <Text style={v_d81136.loadingText}>로딩 중...</Text>
+                  <Text style={v_d81136.loadingText}>{v_8d41d7('profile.loading')}</Text>
                 </View>
               )}
             </ScrollView>
