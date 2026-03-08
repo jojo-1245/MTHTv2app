@@ -46,7 +46,10 @@
         "weekday_sat": "Sat",
         "time_am": "AM",
         "time_pm": "PM",
-        "year_month": "{{month}} {{year}}"
+        "year_month": "{{month}} {{year}}",
+        "or": "OR",
+        "coming_soon": "Coming Soon",
+        "coming_soon_message": "This feature will be available soon."
     },
     "account_selector": {
         "title": "Account Selection",
@@ -367,6 +370,20 @@
                 "question": "How to reduce pores",
                 "preview": "For pore management ....."
             }
+        },
+        "products": {
+            "p1": {
+                "title": "Sebum & Pore Control Serum",
+                "subtitle": "Combination skin & Oil-water balancing"
+            },
+            "p2": {
+                "title": "Hydro - Ceramide Serum",
+                "subtitle": "Dry skin & Intensive moisturizing"
+            },
+            "p3": {
+                "title": "Brightening Serum",
+                "subtitle": "Dull skin"
+            }
         }
     },
     "analysis": {
@@ -428,7 +445,11 @@
         "terms_agree": "I agree to the METAHiNT Terms of Service and Privacy Policy.",
         "submit": "Sign Up",
         "submitting": "Signing up...",
-        "password_rule": "8–128 characters, letters and numbers",
+        "password_rule": "8~128 characters, include letters and numbers",
+        "error_password_length_min": "Min 8 chars",
+        "error_password_length_max": "Max 128 chars",
+        "error_password_letter": "Letters",
+        "error_password_digit": "Numbers",
         "error_email_format": "Please enter a valid email format.",
         "error_password_requirement": "{{errors}} required.",
         "error_input": "Input Error",
@@ -1648,6 +1669,14 @@
         "guide_desc": "MetaHint uses the Polygon network. Safely transfer tokens using the Send/Receive function.",
         "copy_success_title": "Copy Complete",
         "copy_success_message": "Transaction hash has been copied to clipboard.",
+        "copy_address_success_message": "Wallet address has been copied to clipboard.",
+        "receive": {
+            "title": "Share Wallet Address",
+            "copy": "Copy",
+            "share": "Share",
+            "network": "Network",
+            "deposit_address": "Deposit Address"
+        },
         "address_required_title": "Address Required",
         "address_required_message": "Please enter the recipient address by scanning the barcode.",
         "reward_type": {

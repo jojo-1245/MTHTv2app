@@ -120,10 +120,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     if (!v_fd8548 || v_adc076.length === 0) return null;
     if (v_64964e.test(v_adc076)) return null;
     const v_9de4ac = [];
-    if (v_adc076.length < 8) v_9de4ac.push('8자 이상');
-    else if (v_adc076.length > 128) v_9de4ac.push('128자 이하');
-    if (!/[a-zA-Z]/.test(v_adc076)) v_9de4ac.push('영문');
-    if (!/\d/.test(v_adc076)) v_9de4ac.push('숫자');
+    if (v_adc076.length < 8) v_9de4ac.push(v_8d41d7('signup.error_password_length_min'));
+    else if (v_adc076.length > 128) v_9de4ac.push(v_8d41d7('signup.error_password_length_max'));
+    if (!/[a-zA-Z]/.test(v_adc076)) v_9de4ac.push(v_8d41d7('signup.error_password_letter'));
+    if (!/\d/.test(v_adc076)) v_9de4ac.push(v_8d41d7('signup.error_password_digit'));
     return v_9de4ac.length
       ? v_8d41d7('signup.error_password_requirement', { errors: v_9de4ac.join(', ') })
       : null;
@@ -218,7 +218,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const selectOptionCountry: v_da1883 = v_df9f57(
     () => ({
       iso2: 'select',
-      name: v_8d41d7('country_select.select_option') || '선택',
+      name: v_8d41d7('country_select.select_option'),
       dialCode: '0',
       flagEmoji: '🌐',
       countryCode: 0,
@@ -229,7 +229,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const selectOptionRegion: v_da1883 = v_df9f57(
     () => ({
       iso2: 'select',
-      name: v_8d41d7('country_select.select_option') || '선택',
+      name: v_8d41d7('country_select.select_option'),
       dialCode: '0',
       flagEmoji: '📍',
       countryCode: 0,
@@ -245,7 +245,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const v_773f4d = (item: v_da1883): string => {
     if (v_8c0b26.iso2 === 'select' || v_8c0b26.dialCode === '0') {
-      return v_8d41d7('country_select.select_option') || '선택';
+      return v_8d41d7('country_select.select_option');
     }
     const v_b24339 = `countries.${(v_8c0b26.iso2 ?? '').toUpperCase()}`;
     const v_6dce25 = v_8d41d7(v_b24339);
@@ -254,7 +254,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const v_ba4a54 = (item: v_da1883): string => {
     if (v_8c0b26.iso2 === 'select' || v_8c0b26.iso2 === 'global' || v_8c0b26.dialCode === '0') {
-      return v_8c0b26.iso2 === 'global' ? (v_8d41d7('country_select.select_option') || '선택') : v_8c0b26.name;
+      return v_8c0b26.iso2 === 'global' ? v_8d41d7('country_select.select_option') : v_8c0b26.name;
     }
     const v_c99bd2 = v_8c0b26.countryCode ?? v_159ceb;
     const v_cde5e2 = v_c99bd2 ? v_9ad700.includes(v_c99bd2) : false;
@@ -266,7 +266,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   };
 
   const v_56743f = (() => {
-    const v_ed2e96 = v_8d41d7('country_select.select_option') || '선택';
+    const v_ed2e96 = v_8d41d7('country_select.select_option');
     if (!v_5f1e0e) return v_ed2e96;
     if (!v_2f03bc || v_2f03bc.iso2 === 'select' || v_2f03bc.iso2 === 'global' || v_2f03bc.dialCode === '0') {
       return v_ed2e96;
@@ -280,7 +280,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     '';
 
   const v_4504d4 = (() => {
-    const v_ed2e96 = v_8d41d7('country_select.select_option') || '선택';
+    const v_ed2e96 = v_8d41d7('country_select.select_option');
     if (!v_459d5e) return v_ed2e96;
     if (v_459d5e.iso2 === 'select' || v_459d5e.iso2 === 'global' || v_459d5e.dialCode === '0') {
       return v_ed2e96;
@@ -597,7 +597,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                   disabled={v_88dca2}
                 >
                   {v_459d5e?.dialCode === '0' || v_459d5e?.iso2 === 'select' ? (
-                    <Text style={v_d81136.countryCode}>{v_8d41d7('country_select.select_option') || '선택'}</Text>
+                    <Text style={v_d81136.countryCode}>{v_8d41d7('country_select.select_option')}</Text>
                   ) : (
                     <>
                       <Text style={v_d81136.flagEmoji}>{v_1bf308}</Text>
@@ -724,7 +724,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
           <View style={v_d81136.modalContent}>
             <View style={v_d81136.modalHeader}>
               <Text style={v_d81136.modalTitle}>
-                {v_8d41d7('country_select.title_country') || '국가 선택'}
+                {v_8d41d7('country_select.title_country')}
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -741,7 +741,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 style={v_d81136.modalSearchInput}
                 value={v_bd30a1}
                 onChangeText={v_e03dd9}
-                placeholder={v_8d41d7('country_select.search_placeholder_country') || '국가 검색'}
+                placeholder={v_8d41d7('country_select.search_placeholder_country')}
                 placeholderTextColor={v_1bfbd0.secondaryText}
                 autoCorrect={false}
               />
@@ -774,7 +774,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 ListEmptyComponent={
                   <View style={v_d81136.modalEmptyState}>
                     <Text style={v_d81136.modalEmptyText}>
-                      {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
+                      {v_8d41d7('country_select.no_results')}
                     </Text>
                   </View>
                 }
@@ -806,7 +806,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
           <View style={v_d81136.modalContent}>
             <View style={v_d81136.modalHeader}>
               <Text style={v_d81136.modalTitle}>
-                {v_8d41d7('country_select.title_region') || '지역 선택'}
+                {v_8d41d7('country_select.title_region')}
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -823,7 +823,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 style={v_d81136.modalSearchInput}
                 value={v_7962f1}
                 onChangeText={v_6a0bf8}
-                placeholder={v_8d41d7('country_select.search_placeholder_region') || '지역 검색'}
+                placeholder={v_8d41d7('country_select.search_placeholder_region')}
                 placeholderTextColor={v_1bfbd0.secondaryText}
                 autoCorrect={false}
               />
@@ -861,7 +861,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                   ListEmptyComponent={
                     <View style={v_d81136.modalEmptyState}>
                       <Text style={v_d81136.modalEmptyText}>
-                        {v_8d41d7('country_select.no_results') || '검색 결과가 없습니다.'}
+                        {v_8d41d7('country_select.no_results')}
                       </Text>
                     </View>
                   }

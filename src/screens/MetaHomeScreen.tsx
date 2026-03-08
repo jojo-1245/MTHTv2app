@@ -83,17 +83,18 @@ const v_5f1613 = v_7c2566 * (v_c19e2d / v_2258bf);
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
-const v_684a52 = [
-  { id: '1', title: 'Sebum & Pore Control Serum', subtitle: '복합성 피부 & 유수분 밸런싱', price: '100', rating: '4.8', reviews: 324, imageIndex: 0 },
-  { id: '2', title: 'Hydro - Ceramide Serum', subtitle: '건성 피부 & 극강 보습', price: '100', rating: '4.8', reviews: 324, imageIndex: 1 },
-  { id: '3', title: 'Brightening Serum', subtitle: '칙칙한 피부', price: '1', rating: '4.0', reviews: 120, imageIndex: 2 },
-];
-
 const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat', 'weekday_sun'] as const;
 
 const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
+
+  const v_3a2785 = v_df9f57(() => [
+    { id: '1', title: v_8d41d7('home.products.p1.title'), subtitle: v_8d41d7('home.products.p1.subtitle'), price: '100', rating: '4.8', reviews: 324, imageIndex: 0 },
+    { id: '2', title: v_8d41d7('home.products.p2.title'), subtitle: v_8d41d7('home.products.p2.subtitle'), price: '100', rating: '4.8', reviews: 324, imageIndex: 1 },
+    { id: '3', title: v_8d41d7('home.products.p3.title'), subtitle: v_8d41d7('home.products.p3.subtitle'), price: '1', rating: '4.0', reviews: 120, imageIndex: 2 },
+  ], [v_8d41d7]);
+
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const { balance: v_c88e9b, refreshWallet: v_e37b10 } = v_271901();
@@ -847,7 +848,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               snapToInterval={v_3af450 + v_11fb5c}
               snapToAlignment="start"
             >
-              {v_684a52.map((v_e2a85c) => (
+              {v_3a2785.map((v_e2a85c) => (
                 <View key={v_e2a85c.id} style={[v_d81136.productCard, { width: v_3af450, marginRight: v_11fb5c }]}>
                   <View style={v_d81136.productImageBox}>
                     <Image source={v_9c75ed[v_e2a85c.imageIndex]} style={v_d81136.productImage} resizeMode="contain" />

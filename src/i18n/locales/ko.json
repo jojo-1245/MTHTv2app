@@ -46,7 +46,10 @@
         "weekday_sat": "토",
         "time_am": "오전",
         "time_pm": "오후",
-        "year_month": "{{year}}년 {{month}}월"
+        "year_month": "{{year}}년 {{month}}월",
+        "or": "또는",
+        "coming_soon": "준비 중",
+        "coming_soon_message": "이 기능은 곧 제공될 예정입니다."
     },
     "account_selector": {
         "title": "계정 선택",
@@ -367,6 +370,20 @@
                 "question": "모공 축소하는 방법",
                 "preview": "모공 관리를 위해서는 ....."
             }
+        },
+        "products": {
+            "p1": {
+                "title": "Sebum & Pore Control Serum",
+                "subtitle": "복합성 피부 & 유수분 밸런싱"
+            },
+            "p2": {
+                "title": "Hydro - Ceramide Serum",
+                "subtitle": "건성 피부 & 극강 보습"
+            },
+            "p3": {
+                "title": "Brightening Serum",
+                "subtitle": "칙칙한 피부"
+            }
         }
     },
     "analysis": {
@@ -429,6 +446,10 @@
         "submit": "가입하기",
         "submitting": "가입 중...",
         "password_rule": "8~128자, 영문+숫자 포함",
+        "error_password_length_min": "8자 이상",
+        "error_password_length_max": "128자 이하",
+        "error_password_letter": "영문",
+        "error_password_digit": "숫자",
         "error_email_format": "올바른 이메일 형식을 입력해주세요.",
         "error_password_requirement": "{{errors}}가 필요합니다.",
         "error_input": "입력 오류",
@@ -1667,6 +1688,14 @@
         "guide_desc": "MetaHint는 Polygon 네트워크를 사용합니다. Send/Receive 기능으로 안전하게 토큰을 전송하세요.",
         "copy_success_title": "복사 완료",
         "copy_success_message": "거래 해시가 클립보드에 복사되었습니다.",
+        "copy_address_success_message": "지갑 주소가 클립보드에 복사되었습니다.",
+        "receive": {
+            "title": "지갑 주소 공유",
+            "copy": "복사",
+            "share": "공유",
+            "network": "네트워크",
+            "deposit_address": "입금 주소"
+        },
         "address_required_title": "주소 필요",
         "address_required_message": "바코드 스캔으로 수신자 주소를 입력해주세요.",
         "reward_type": {

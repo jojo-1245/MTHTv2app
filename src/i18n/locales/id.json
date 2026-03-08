@@ -46,7 +46,10 @@
         "weekday_sat": "Sab",
         "time_am": "AM",
         "time_pm": "PM",
-        "year_month": "{{month}} {{year}}"
+        "year_month": "{{month}} {{year}}",
+        "or": "ATAU",
+        "coming_soon": "Segera Hadir",
+        "coming_soon_message": "Fitur ini akan segera tersedia."
     },
     "account_selector": {
         "title": "Pilihan Akun",
@@ -366,6 +369,20 @@
                 "question": "Bagaimana cara mengecilkan pori-pori",
                 "preview": "Untuk manajemen pori-pori ....."
             }
+        },
+        "products": {
+            "p1": {
+                "title": "Sebum & Pore Control Serum",
+                "subtitle": "Kulit kombinasi & Keseimbangan minyak-air"
+            },
+            "p2": {
+                "title": "Hydro - Ceramide Serum",
+                "subtitle": "Kulit kering & Pelembap intensif"
+            },
+            "p3": {
+                "title": "Brightening Serum",
+                "subtitle": "Kulit kusam"
+            }
         }
     },
     "analysis": {
@@ -427,7 +444,11 @@
         "terms_agree": "Saya setuju dengan Ketentuan Layanan dan Kebijakan Privasi METAHiNT.",
         "submit": "Daftar",
         "submitting": "Sedang mendaftar...",
-        "password_rule": "8–128 karakter, huruf dan angka",
+        "password_rule": "8~128 karakter, termasuk huruf dan angka",
+        "error_password_length_min": "Min 8 karakter",
+        "error_password_length_max": "Maks 128 karakter",
+        "error_password_letter": "Huruf",
+        "error_password_digit": "Angka",
         "error_email_format": "Silakan masukkan format email yang valid.",
         "error_password_requirement": "{{errors}} diperlukan.",
         "error_input": "Kesalahan Input",
@@ -1647,6 +1668,14 @@
         "guide_desc": "MetaHint menggunakan jaringan Polygon. Transfer token dengan aman menggunakan fitur Send/Receive.",
         "copy_success_title": "Salin Selesai",
         "copy_success_message": "Hash transaksi telah disalin ke papan klip.",
+        "copy_address_success_message": "Alamat dompet telah disalin ke papan klip.",
+        "receive": {
+            "title": "Bagikan Alamat Dompet",
+            "copy": "Salin",
+            "share": "Bagikan",
+            "network": "Jaringan",
+            "deposit_address": "Alamat Setoran"
+        },
         "address_required_title": "Alamat Diperlukan",
         "address_required_message": "Silakan masukkan alamat penerima dengan memindai kode batang.",
         "reward_type": {

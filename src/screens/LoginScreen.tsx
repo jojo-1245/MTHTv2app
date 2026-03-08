@@ -384,7 +384,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               <View style={v_d81136.socialLoginSection}>
                 <View style={v_d81136.socialDivider}>
                   <View style={v_d81136.dividerLine} />
-                  <Text style={v_d81136.dividerText}>또는</Text>
+                  <Text style={v_d81136.dividerText}>{v_8d41d7('common.or')}</Text>
                   <View style={v_d81136.dividerLine} />
                 </View>
 
