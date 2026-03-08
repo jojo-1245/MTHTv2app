@@ -78,11 +78,14 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
       }
 
       const v_4587b3 = v_719e34.getVersion();
+      const v_f229e4 = v_719e34.getBuildNumber();
       const v_81a27a = v_326be8.OS;
-      const v_f71b56 = `${v_cc9198}/oth-path?platform=${v_81a27a}&current_version=${v_4587b3}`;
+
+      const v_f71b56 = `${v_cc9198}/oth-path?platform=${v_81a27a}&current_version=${v_4587b3}&build_number=${v_f229e4}`;
 
       const v_f24d57 = await v_e84827.getItem(v_b4e268);
-console.log('[OTA] API 요청 전송:', v_f71b56);
+
+      console.log(`[OTA] API 요청 전송 (Version: ${v_4587b3}, Build: ${v_f229e4}):`, v_f71b56);
 const v_8f00b9 = await fetch(v_f71b56, {
   headers: { 
     'X-Client-Token': v_f68bbb,
