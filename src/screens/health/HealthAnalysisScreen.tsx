@@ -1042,7 +1042,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     if (v_bc50c7 !== v_eb2401.STARTING && v_bc50c7 !== v_eb2401.PROCESSING) {
       return;
     }
-    const v_cb36b1 = setTimeout(() => v_b30457(false), 3000);
+    const v_cb36b1 = setTimeout(() => v_b30457(false), 1000);
     return () => clearTimeout(v_cb36b1);
   }, [v_bc50c7]);
 
@@ -1968,6 +1968,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <View style={v_d81136.stepNextWrapper}>
                       <PrimaryButton
                         title={v_8d41d7('common.next')}
+                        disabled={
+                          (v_63ed0f === 0 && !v_a5d6d1) ||
+                          (v_63ed0f === 1 && (!v_2f3ab2?.trim() || !!v_78e93d)) ||
+                          (v_63ed0f === 2 && (!v_ebc748?.trim() || !!v_aa2d84)) ||
+                          (v_63ed0f === 3 && (!v_5b20cf?.trim() || !!v_c762f3)) ||
+                          (v_63ed0f === 4 && !v_8f47c9)
+                        }
                         onPress={() => {
                           if (v_63ed0f === 0 && !v_a5d6d1) return;
                           if (v_63ed0f === 1 && (!v_2f3ab2 || v_78e93d)) return;
@@ -2021,11 +2028,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title={v_8d41d7('health_analysis.measurement.screen_title')}
-          showBackButton
-          onBackPress={() => {
-
-            v_56ef46();
-          }}
         />
         {}
         <View style={v_d81136.cameraContainer} onLayout={v_0bafd1}>
@@ -2038,20 +2040,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
           <View style={v_d81136.cameraOverlay}>
             {}
-            <View style={v_d81136.cameraHeader}>
-              <TouchableOpacity
-                style={v_d81136.closeButton}
-                onPress={() => {
-
-                  v_56ef46();
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={v_8d41d7('health_analysis.measurement.back_button')}
-              >
-                <Ionicons name="close" size={28} color={v_1bfbd0.white} />
-              </TouchableOpacity>
-            </View>
-
+            <View style={v_d81136.cameraOverlaySpacer} />
             {}
             <View style={v_d81136.infoContainerOverlay}>
               {v_12abe8 && (
@@ -2512,18 +2501,8 @@ const v_d81136 = v_472849.create({
     ...v_472849.absoluteFillObject,
     justifyContent: 'space-between',
   },
-  cameraHeader: {
-    paddingTop: v_326be8.OS === 'ios' ? 50 : 20,
-    paddingHorizontal: v_9b1a04.large,
-    alignItems: 'flex-end',
-  },
-  closeButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
+  cameraOverlaySpacer: {
+    flex: 1,
   },
   bottomContainer: {
     paddingTop: v_9b1a04.large,

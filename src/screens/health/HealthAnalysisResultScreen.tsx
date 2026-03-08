@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3, v_c4deb2, v_b4bb71 } from 'bapkr';
+import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3 } from 'bapkr';
 import {
   v_700696,
   v_aa7413,
@@ -12,8 +12,6 @@ import {
   v_cf9c33,
   v_122070,
   v_a2349e,
-  v_39a996,
-  v_2d4718,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
@@ -620,19 +618,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
-
-  const [v_4529e6, v_ea984a] = v_5ab095(false);
-  v_c4deb2(() => {
-    const v_d73bd6 = 1000; 
-    const v_3894d5 = setTimeout(() => {
-      v_2d4718.runAfterInteractions(() => {
-        v_b4bb71(() => {
-          v_ea984a(true);
-        });
-      });
-    }, v_d73bd6);
-    return () => clearTimeout(v_3894d5);
-  }, []);
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -2163,14 +2148,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               }}
             />
           </SafeScrollView>
-        ) : !v_4529e6 ? (
-          <View style={v_d81136.skeletonContainer}>
-            <ActivityIndicator size="large" color={v_1bfbd0.primary} />
-            <Text style={v_d81136.skeletonHint}>{v_8d41d7('health_analysis.result_loading', '결과를 불러오는 중...')}</Text>
-            <View style={v_d81136.skeletonBox} />
-            <View style={[v_d81136.skeletonBox, v_d81136.skeletonBoxWide]} />
-            <View style={v_d81136.skeletonBox} />
-          </View>
         ) : (
           <>
             <SafeScrollView
@@ -5213,29 +5190,6 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
     lineHeight: 18,
-  },
-  skeletonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: v_9b1a04.xlarge * 2,
-    paddingHorizontal: v_9b1a04.large,
-  },
-  skeletonHint: {
-    marginTop: v_9b1a04.medium,
-    fontSize: 14,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.secondaryText,
-  },
-  skeletonBox: {
-    width: '100%',
-    height: 56,
-    backgroundColor: v_1bfbd0.background,
-    borderRadius: 12,
-    marginTop: v_9b1a04.medium,
-  },
-  skeletonBoxWide: {
-    height: 80,
   },
 });
 
