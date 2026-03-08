@@ -449,14 +449,14 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 
         if (__DEV__) {
           console.log('[SkinComparisonScreen] 비교 API 응답:', {
-            recordsCount: v_3393e3.records.length,
+            recordsCount: v_3393e3.skin_datas.length,
             hasComparison: !!v_3393e3.comparison,
             comparisonKeys: v_3393e3.comparison?.analysis_changes ? Object.keys(v_3393e3.comparison.analysis_changes) : [],
           });
         }
 
-        const v_dc0b95 = v_852b5b(v_3393e3.records[0], v_8d41d7);
-        const v_40a830 = v_852b5b(v_3393e3.records[1], v_8d41d7);
+        const v_dc0b95 = v_852b5b(v_3393e3.skin_datas[0], v_8d41d7);
+        const v_40a830 = v_852b5b(v_3393e3.skin_datas[1], v_8d41d7);
 
         v_1a48f5(v_dc0b95);
         v_4d426d(v_40a830);

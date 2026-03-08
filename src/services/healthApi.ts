@@ -64,7 +64,7 @@ export interface CompareHealthRecordsPayload {
 }
 
 export interface CompareHealthRecordsResponse {
-  records: HealthRecordItem[];
+  health_datas: HealthRecordItem[];
   comparison: {
     health_index_changes: {
       from: number;
@@ -493,13 +493,13 @@ export async function v_a55499(v_9dd532): Promise<CompareHealthRecordsResponse> 
 
     const v_9390e8 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as CompareHealthRecordsResponse);
 
-    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.records)) {
+    if (!v_9390e8 || typeof v_9390e8 !== 'object' || !Array.isArray(v_9390e8.health_datas)) {
       throw new Error('건강 기록 비교 응답 형식이 올바르지 않습니다.');
     }
 
     if (__DEV__) {
       console.log('[healthApi] compareHealthRecords 파싱된 데이터:', {
-        recordsCount: v_9390e8.records.length,
+        recordsCount: v_9390e8.health_datas.length,
         hasComparison: !!v_9390e8.comparison,
         comparisonKeys: v_9390e8.comparison ? Object.keys(v_9390e8.comparison) : [],
       });
