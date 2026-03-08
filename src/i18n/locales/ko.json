@@ -972,7 +972,8 @@
             "error_7009": "에러 코드: 7009\n\n가능한 원인:\n- 라이센스 키 문제\n- SDK 초기화 실패\n- 카메라 초기화 문제\n\n앱을 재시작해보세요.",
             "error_unknown": "에러 코드: {{code}}\n\n오류가 발생했습니다. 앱을 재시작하거나 잠시 후 다시 시도해주세요.",
             "license_key_warning": "경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.",
-            "license_key_not_set": "FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요."
+            "license_key_not_set": "FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요.",
+            "incomplete_measurement": "측정 결과가 일부 누락되었습니다. 전체 항목이 나올 때까지 약 60초 동안 얼굴을 카메라에 고정해 주시고, 다시 측정해 주세요."
         },
         "image_validity": {
             "device_orientation": "기기 방향 오류",
