@@ -1036,7 +1036,9 @@
             "button_waiting": "Menunggu...",
             "back_button": "Kembali",
             "result_preparing": "Menyimpan hasil...",
-            "result_preparing_session": "Membersihkan sesi..."
+            "result_preparing_session": "Membersihkan sesi...",
+            "result_missing_title": "Hasil Tidak Lengkap",
+            "result_missing_message": "Beberapa hasil pengukuran tidak lengkap. Ketuk OK untuk mengakhiri sesi dan kembali ke layar awal pengukuran."
         },
         "result": {
             "detail_info": "Info Detail",

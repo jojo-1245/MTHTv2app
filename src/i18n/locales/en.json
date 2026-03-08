@@ -1037,7 +1037,9 @@
             "button_waiting": "Waiting...",
             "back_button": "Back",
             "result_preparing": "Saving results...",
-            "result_preparing_session": "Cleaning up session..."
+            "result_preparing_session": "Cleaning up session...",
+            "result_missing_title": "Result Incomplete",
+            "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen."
         },
         "result": {
             "detail_info": "Detail Info",

@@ -1053,7 +1053,9 @@
             "button_waiting": "대기 중...",
             "back_button": "뒤로 가기",
             "result_preparing": "결과 저장 중...",
-            "result_preparing_session": "세션 정리 중..."
+            "result_preparing_session": "세션 정리 중...",
+            "result_missing_title": "결과 항목 누락",
+            "result_missing_message": "측정 결과 항목이 누락되었습니다. 확인을 누르면 세션을 종료하고 측정 첫 화면으로 이동합니다."
         },
         "result": {
             "detail_info": "상세 정보",
