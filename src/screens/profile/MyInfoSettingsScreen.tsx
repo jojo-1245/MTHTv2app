@@ -251,7 +251,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
           {}
           <View style={v_d81136.versionContainer}>
             <Text style={v_d81136.versionText}>
-              {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_719e34.getVersion()}
+              {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_719e34.getVersion()} ({v_719e34.getBuildNumber()})
             </Text>
             {v_211e13 && (
               <Text style={v_d81136.versionText}>

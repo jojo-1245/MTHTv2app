@@ -12,7 +12,8 @@ import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';
 import { v_96a538 } from './src/hooks/useVersionCheck';
 import { v_bfe92f } from './src/hooks/useKeepalive';
-import { v_9cafa7, v_fba277 } from './src/components';
+import { v_9cafa7, v_fba277, v_26d101 } from './src/components';
+import * as v_79a9df from './src/services/versionService';
 import './src/i18n';
 
 const v_20ccc6 = {
@@ -56,7 +57,12 @@ export default function v_6540c3() {
   const [v_43f571, v_d39d7d] = v_c06f2c(v_20ccc6);
   const [v_4c1272, v_bf8912] = v_5ab095(false);
 
-  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
+  const { 
+    isUpdating: v_24a76a, 
+    progress: v_a63fde, 
+    storeUpdateInfo: v_5ca890, 
+    dismissStoreUpdate: v_8f0153 
+  } = v_96a538({
     enabled: v_4c1272 && v_43f571,
     onOtaProgress: (v_ba2265) => {
       if (__DEV__) {
@@ -142,6 +148,20 @@ export default function v_6540c3() {
       </SafeAreaProvider>
 
       <EmergencyNoticeModal notice={v_d48273} onDismiss={v_2852e3} />
+
+      {}
+      <StoreUpdateModal
+        visible={!!v_5ca890}
+        title={v_5ca890?.title || ''}
+        content={v_5ca890?.content || ''}
+        isForce={v_5ca890?.isForce}
+        onConfirm={() => {
+          if (v_5ca890?.storeUrl) {
+            v_79a9df.openStore(v_5ca890.storeUrl);
+          }
+        }}
+        onCancel={v_8f0153}
+      />
 
       {}
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
