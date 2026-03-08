@@ -20,7 +20,7 @@ import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../constants';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_5d13be, v_b703a5 } from './components/HealthRecordsView';
 import { v_bcb8af, v_38756f } from './components/HealthRecordsView';
-import { v_a55499, type v_c052e5 } from '../../services';
+import { v_a55499, v_61fb31, type v_c052e5 } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
 const v_bd24d7 = v_bcb8af.flatMap((v_fd5f43) => v_fd5f43.itemKeys);
@@ -175,6 +175,8 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
   const { t: v_8d41d7 } = v_772971();
   const { recordA: v_1a2523, recordB: v_fe1802, userName: v_f08a5e } = v_c7daf6.params;
   const [v_e7ae15, v_20745f] = v_5ab095(false);
+  const [v_1286d2, v_1cdb0e] = v_5ab095(false);
+  const [v_43d0c0, v_74570e] = v_5ab095<string | null>(null);
   const [v_474c16, v_41fe7e] = v_5ab095(false);
   const [v_782929, v_3cc752] = v_5ab095<Set<string>>(
     () => new Set(v_bd24d7)
@@ -249,6 +251,28 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
 
   const v_76e298 = v_dcc13b || v_1a2523;
   const v_797415 = v_7f4b4c || v_fe1802;
+
+  const v_9de26b = async () => {
+    v_20745f(true);
+    if (v_43d0c0) {
+      return; 
+    }
+
+    v_1cdb0e(true);
+    try {
+      const v_6e9c44 = parseInt(v_1a2523.id, 10);
+      const v_57c916 = parseInt(v_fe1802.id, 10);
+
+      const v_43c42e = await v_61fb31([v_6e9c44, v_57c916]);
+      v_74570e(v_43c42e);
+    } catch (v_5e9bfe) {
+      console.error('[HealthComparisonScreen] AI 분석 실패:', v_5e9bfe);
+      v_03e392.alert('오류', 'AI 분석 결과를 불러오는데 실패했습니다.');
+      v_20745f(false);
+    } finally {
+      v_1cdb0e(false);
+    }
+  };
 
   const v_0ab8c5 = (v_b24339) => {
     v_3cc752((v_ba2215) => {
@@ -484,7 +508,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           {!v_e7ae15 ? (
             <TouchableOpacity
               style={v_d81136.aiStartCard}
-              onPress={() => v_20745f(true)}
+              onPress={v_9de26b}
               activeOpacity={0.9}
             >
               <ExpoLinearGradient
@@ -506,6 +530,13 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                 </View>
               </ExpoLinearGradient>
             </TouchableOpacity>
+          ) : v_1286d2 ? (
+            <View style={v_d81136.aiResultsContainer}>
+              <View style={v_d81136.aiLoadingContainer}>
+                <ActivityIndicator size="large" color="#7C6BFF" />
+                <Text style={v_d81136.aiLoadingText}>AI 힌티가 생각중입니다...</Text>
+              </View>
+            </View>
           ) : (
             <View style={v_d81136.aiResultsContainer}>
               <View style={v_d81136.aiResultsHeader}>
@@ -515,76 +546,23 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                 <Text style={v_d81136.aiResultsHeaderTitle}>{v_8d41d7('health_records.ai_comparison_title')}</Text>
               </View>
 
-              {}
-              <View style={v_d81136.aiResultCard}>
-                <View style={v_d81136.aiResultCardHeader}>
-                  <Ionicons name="bar-chart" size={18} color="#333" />
-                  <Text style={v_d81136.aiResultCardTitle}>{v_8d41d7('health_records.ai_trend_title')}</Text>
-                </View>
-                <Text style={v_d81136.aiResultCardContent}>
-                  {v_fe1802.healthIndex > v_1a2523.healthIndex
-                    ? v_8d41d7('health_records.ai_trend_content', { diff: v_fe1802.healthIndex - v_1a2523.healthIndex })
-                    : v_8d41d7('health_records.ai_trend_content_stable')}
-                </Text>
-              </View>
-
-              {}
-              <View style={v_d81136.aiResultCard}>
-                <View style={v_d81136.aiResultCardHeader}>
-                  <View style={v_d81136.aiResultCardIconSquare}>
-                    <Ionicons name="trending-up" size={14} color="#fff" />
+              {v_43d0c0 ? (
+                <View style={v_d81136.aiResultCard}>
+                  <View style={v_d81136.aiResultCardHeader}>
+                    <Ionicons name="document-text" size={18} color="#333" />
+                    <Text style={v_d81136.aiResultCardTitle}>AI 비교 분석 결과</Text>
                   </View>
-                  <Text style={v_d81136.aiResultCardTitle}>{v_8d41d7('health_records.ai_improvements')}</Text>
+                  <Text style={[v_d81136.aiResultCardContent, { lineHeight: 24 }]}>
+                    {v_43d0c0}
+                  </Text>
                 </View>
-                <View style={v_d81136.aiImprovedList}>
-                  <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />
-                  <Text style={v_d81136.aiImprovedItem}>{v_8d41d7('health_records.ai_improved_item1')}</Text>
+              ) : (
+                <View style={v_d81136.aiResultCard}>
+                  <Text style={v_d81136.aiResultCardContent}>
+                    분석 결과를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.
+                  </Text>
                 </View>
-                <View style={v_d81136.aiImprovedList}>
-                  <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />
-                  <Text style={v_d81136.aiImprovedItem}>{v_8d41d7('health_records.ai_improved_item2')}</Text>
-                </View>
-                <View style={v_d81136.aiImprovedList}>
-                  <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />
-                  <Text style={v_d81136.aiImprovedItem}>{v_8d41d7('health_records.ai_improved_item3')}</Text>
-                </View>
-              </View>
-
-              {}
-              <View style={v_d81136.aiResultCard}>
-                <View style={v_d81136.aiResultCardHeader}>
-                  <Ionicons name="warning" size={18} color="#333" />
-                  <Text style={v_d81136.aiResultCardTitle}>{v_8d41d7('health_records.ai_attention_items')}</Text>
-                </View>
-                <View style={v_d81136.aiAttentionRow}>
-                  <Ionicons name="warning" size={18} color="#FF9800" />
-                  <Text style={v_d81136.aiAttentionText}>{v_8d41d7('health_records.ai_attention_none')}</Text>
-                </View>
-              </View>
-
-              {}
-              <View style={v_d81136.aiResultCard}>
-                <View style={v_d81136.aiResultCardHeader}>
-                  <Ionicons name="bulb" size={18} color="#F5A623" />
-                  <Text style={v_d81136.aiResultCardTitle}>{v_8d41d7('health_records.ai_improvement_plan')}</Text>
-                </View>
-                <View style={v_d81136.aiPlanList}>
-                  <View style={v_d81136.aiPlanBullet} />
-                  <Text style={v_d81136.aiPlanItem}>{v_8d41d7('health_records.ai_improvement_plan_item1')}</Text>
-                </View>
-                <View style={v_d81136.aiPlanList}>
-                  <View style={v_d81136.aiPlanBullet} />
-                  <Text style={v_d81136.aiPlanItem}>{v_8d41d7('health_records.ai_improvement_plan_item2')}</Text>
-                </View>
-                <View style={v_d81136.aiPlanList}>
-                  <View style={v_d81136.aiPlanBullet} />
-                  <Text style={v_d81136.aiPlanItem}>{v_8d41d7('health_records.ai_improvement_plan_item3')}</Text>
-                </View>
-                <View style={v_d81136.aiPlanList}>
-                  <View style={v_d81136.aiPlanBullet} />
-                  <Text style={v_d81136.aiPlanItem}>{v_8d41d7('health_records.ai_improvement_plan_item4')}</Text>
-                </View>
-              </View>
+              )}
 
               {}
               <View style={v_d81136.aiResultCard}>
@@ -892,6 +870,17 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.xlarge,
     fontFamily: v_843035.bold,
     color: v_1bfbd0.text,
+  },
+  aiLoadingContainer: {
+    padding: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aiLoadingText: {
+    marginTop: 12,
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#7C6BFF',
   },
   aiResultCard: {
     backgroundColor: '#fff',
