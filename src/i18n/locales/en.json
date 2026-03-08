@@ -852,6 +852,7 @@
     },
     "health_analysis": {
         "result_title": "Analysis Result",
+        "result_loading": "Loading results...",
         "default_user_name": "Me",
         "measurement_complete": "Measurement Complete",
         "measurement_date": "Measurement Date",

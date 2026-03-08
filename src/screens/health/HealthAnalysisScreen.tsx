@@ -453,12 +453,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_98b3fa = v_de06a3(async () => {
     console.log('세션 초기화 후 intro로 이동');
     if (v_a3ff5a.current) {
-      try {
-        await v_a3ff5a.current.stop();
-        console.log('세션 중지 완료');
-      } catch (v_9e86fd) {
-        console.warn('세션 중지 실패:', v_9e86fd);
-      }
       await v_98caa0();
       v_a3ff5a.current = undefined;
 
@@ -481,6 +475,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_318478.current = false;
     v_b9ada4.current = false;
     v_49296b(false);
+    v_00defd(null);
+    v_72744e(false);
     v_b0aeaf(false);
     v_8a8952(undefined);
     v_f36dd5(undefined);
@@ -1273,13 +1269,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         try {
 
           if (v_a3ff5a.current) {
-            try {
-              console.log('[결과 화면 이동] 세션 중지 시작...');
-              await v_a3ff5a.current.stop();
-              console.log('[결과 화면 이동] 세션 중지 완료');
-            } catch (v_9e86fd) {
-              console.warn('[결과 화면 이동] 세션 중지 실패:', v_9e86fd);
-            }
+            console.log('[결과 화면 이동] 세션 종료 시작...');
             await v_98caa0();
             v_a3ff5a.current = undefined;
             console.log('[결과 화면 이동] 세션 종료 완료');
@@ -1409,6 +1399,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
     if (v_a3ff5a.current && v_bc50c7 === v_eb2401.READY) {
       console.log('✅ 세션이 READY 상태입니다. 카메라가 활성화되었습니다.');
+
+      v_49296b(false);
 
       if (v_c1affb.current > 0) {
         console.log('[3003 에러 처리] 세션 재생성 성공 - 재시도 횟수 리셋');
