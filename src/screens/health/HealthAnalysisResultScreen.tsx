@@ -615,7 +615,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b } = v_c7daf6.params;
+  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
 
@@ -1133,6 +1133,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   v_a3453e.useEffect(() => {
     const v_329ab2 = async () => {
       if (!v_a7f568 || Object.keys(v_a7f568).length === 0) {
+        return;
+      }
+      if (v_04b545) {
+        v_02a5a0.current = true;
+        v_f013b2.current = v_42044e;
         return;
       }
 
@@ -3428,7 +3433,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       <Modal
         visible={Boolean(v_6f0881)}
         transparent
-        animationType="fade"
+        animationType="none"
         onRequestClose={v_b4b49b}
       >
         <View style={v_d81136.wellnessModalOverlay}>
@@ -3550,7 +3555,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       <Modal
         visible={Boolean(v_1f3df1)}
         transparent
-        animationType="fade"
+        animationType="none"
         onRequestClose={() => v_017104(null)}
       >
         <Pressable
@@ -3590,7 +3595,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       <Modal
         visible={Boolean(v_0cc882)}
         transparent
-        animationType="fade"
+        animationType="none"
         onRequestClose={v_ade09d}
       >
         <View style={v_d81136.wellnessModalOverlay}>

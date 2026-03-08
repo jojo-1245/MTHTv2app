@@ -111,6 +111,8 @@ export type RootStackParamList = {
       smokingStatus?: 'smoker' | 'non_smoker' | 'unspecified' | null;
       bloodPressureStatus?: 'normal' | 'low' | 'high' | null;
     };
+
+    savedBeforeNavigate?: boolean;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
