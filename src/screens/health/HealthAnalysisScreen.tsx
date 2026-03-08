@@ -1272,6 +1272,53 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
+      const v_efc105 = v_9a1841
+        ? v_41d2ba.filter((v_3b27d9) => v_9a1841.licenseEnabled.isEnabled(v_3b27d9))
+        : [];
+      const v_c8def9 =
+        v_efc105.length > 0
+          ? v_6ab976.some((v_3b6321) => v_efc105.includes(v_3b6321))
+          : v_ad9b8f.length === 0;
+
+      if (v_c8def9) {
+        v_8978ad.current = v_d0a515;
+        v_03e392.alert(
+          v_8d41d7('health_analysis.measurement.result_missing_title'),
+          v_8d41d7('health_analysis.measurement.result_missing_message'),
+          [
+            {
+              text: v_8d41d7('common.confirm'),
+              onPress: () => {
+                v_72744e(true);
+                v_00defd('session');
+                (async () => {
+                  try {
+                    if (v_a3ff5a.current) {
+                      console.log('[결과 누락] 세션 종료 시작...');
+                      await v_98caa0();
+                      v_a3ff5a.current = undefined;
+                      console.log('[결과 누락] 세션 종료 완료');
+                    }
+                    v_b98ddb.current = false;
+                    v_977633.current = 0;
+                    v_1dd18f.current = true;
+                    v_639227('intro');
+                  } catch (v_9e86fd) {
+                    console.error('[결과 누락] 세션 종료 오류:', v_9e86fd);
+                  } finally {
+                    v_2d4718.runAfterInteractions(() => {
+                      v_00defd(null);
+                      v_72744e(false);
+                    });
+                  }
+                })();
+              },
+            },
+          ],
+        );
+        return;
+      }
+
       const v_42044e = new Date().toISOString();
       const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
       const v_f4ebd0 = {
@@ -1396,7 +1443,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
     }
-  }, [v_91943c, v_d0a515, v_c65f5d]);
+  }, [v_91943c, v_d0a515, v_c65f5d, v_8d41d7, v_9a1841, v_98caa0, v_639227]);
 
   v_c4deb2(() => {
     if (v_91943c === 'measurement') {
