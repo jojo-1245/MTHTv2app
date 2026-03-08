@@ -10,6 +10,9 @@ try {
 }
 
 buildscript {
+  ext {
+    minSdkVersion = 27
+  }
   repositories {
     google()
     mavenCentral()
@@ -27,6 +30,7 @@ allprojects {
   repositories {
     google()
     mavenCentral()
+    maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     maven { url 'https://www.jitpack.io' }
     maven {
       url "$rootDir/../node_modules/@notifee/react-native/android/libs"

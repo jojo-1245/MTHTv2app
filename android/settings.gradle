@@ -37,3 +37,4 @@ expoAutolinking.useExpoVersionCatalog()
 
 include ':app'
 includeBuild(expoAutolinking.reactNativeGradlePlugin)
+include ':fzljtilisignal-react-native-sdk:fzljtilisignal-sdk'
