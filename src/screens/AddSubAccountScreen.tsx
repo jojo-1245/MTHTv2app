@@ -740,7 +740,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                 return;
             }
 
-            const v_3f557d = `https://service-mh.example.invalid/referral/${v_2fa46c}`;
+            const v_3f557d = `https://oth-path-c38c36.example.invalid/pages/refer?reff=${encodeURIComponent(v_2fa46c)}`;
 
             const v_1074b5 = encodeURIComponent(v_8d41d7('sub_account.referral_email_subject'));
             const v_8f4a40 = encodeURIComponent(

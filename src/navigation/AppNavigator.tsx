@@ -1,8 +1,11 @@
-import v_a3453e from "bapkr";
+import v_a3453e, { v_c4deb2 } from "bapkr";
+import { v_f2c756 } from "rcmrninabrnb";
 import { v_ac28fd } from "ixigazcpvfldbecwtbvavtbi";
 import { v_709be7 } from "xpfgrcdafpntkgxfmgxpxnedjkvmtc";
 import { v_60875a } from "./rootNavigationRef";
 import type { v_8ad91b } from "./index";
+import { v_4b3c9f } from "../services";
+import { v_6f0675 } from "../utils/deepLinkHandler";
 
 import v_7af305 from "../screens/IntroScreen";
 import v_c316d8 from "../screens/HomeScreen";
@@ -47,7 +50,39 @@ import v_67f088 from "../screens/AddSubAccountScreen";
 
 const v_cb3606 = v_709be7<v_8ad91b>();
 
+async function v_8360c1(v_f71b56) {
+    const v_43c42e = v_6f0675(v_f71b56);
+    if (v_43c42e.type !== 'referral') return;
+
+    try {
+        await v_4b3c9f();
+    } catch {
+
+    }
+
+    if (v_60875a.isReady()) {
+        v_60875a.reset({
+            index: 0,
+            routes: [{ name: 'Signup', params: { referralCode: v_43c42e.code } }],
+        });
+    }
+}
+
 export const AppNavigator: v_a3453e.FC = () => {
+
+    v_c4deb2(() => {
+
+        v_f2c756.getInitialURL().then((v_f71b56) => {
+            if (v_f71b56) v_8360c1(v_f71b56);
+        });
+
+        const v_269481 = v_f2c756.addEventListener('url', ({ url: v_f71b56 }) => {
+            v_8360c1(v_f71b56);
+        });
+
+        return () => v_269481.remove();
+    }, []);
+
     return (
         <NavigationContainer ref={v_60875a}>
             <Stack.Navigator

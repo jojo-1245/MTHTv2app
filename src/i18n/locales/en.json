@@ -1584,7 +1584,7 @@
         "copy_success_message": "PIN code has been copied to clipboard.",
         "kakao_share_button": "Share via KakaoTalk",
         "share_error": "Failed to share.",
-        "share_message": "Become a HiNT Partner! Referral code: {{code}}",
+        "share_message": "Become a HiNT Partner! Referral code: {{code}}\n{{link}}",
         "share_title": "HiNT Partner Referral"
     },
     "my_info_email_auth": {

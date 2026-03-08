@@ -39,7 +39,7 @@ type Props = v_432191<v_8ad91b, 'Signup'>;
 
 const v_64964e = /^(?=.*[a-zA-Z])(?=.*\d).{8,128}$/;
 
-const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const {
     selectedCountryDialCode: v_459d5e,
@@ -72,6 +72,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_9bf12c, v_fb6bbb] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
+
+  v_c4deb2(() => {
+    const v_c99bd2 = v_c7daf6?.params?.referralCode;
+    if (v_c99bd2) {
+      v_fb6bbb(v_c99bd2);
+      v_735c4d(true);
+    }
+  }, [v_c7daf6?.params?.referralCode]);
 
   const [v_8b47e4, v_c9a6aa] = v_5ab095(false);
   const [v_fd8548, v_1cf99d] = v_5ab095(false);

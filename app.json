@@ -2,7 +2,7 @@
   "expo": {
     "name": "MetaHint",
     "slug": "metahint",
-    "scheme": "ai.metahint.appw",
+    "scheme": ["ai.metahint.appw", "metahintai"],
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -29,6 +29,18 @@
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
       "googleServicesFile": "./google-services.json",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "data": [
+            {
+              "scheme": "metahintai"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "permissions": [
         "android.permission.ACTIVITY_RECOGNITION",
         "android.permission.FOREGROUND_SERVICE",

@@ -1583,7 +1583,7 @@
         "copy_success_message": "Kode PIN telah disalin ke papan klip.",
         "kakao_share_button": "Bagikan via KakaoTalk",
         "share_error": "Gagal membagikan.",
-        "share_message": "Jadilah Mitra HiNT! Kode referral: {{code}}",
+        "share_message": "Jadilah Mitra HiNT! Kode referral: {{code}}\n{{link}}",
         "share_title": "Referral Mitra HiNT"
     },
     "my_info_email_auth": {
