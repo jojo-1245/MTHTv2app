@@ -634,21 +634,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     v_c65f5d.navigate('AddSubAccount');
   };
 
-  const v_30222e = v_de06a3(() => {
-    const v_d5dda0 = new Date(v_42044e);
-    const v_f8e6b9 = `${v_d5dda0.getFullYear()}.${String(v_d5dda0.getMonth() + 1).padStart(2, '0')}.${String(v_d5dda0.getDate()).padStart(2, '0')}`;
-    const v_9e8c70 = v_a7f568 ? Object.keys(v_a7f568).length : 0;
-    const v_b9f2b7 = [
-      `측정일: ${v_f8e6b9}`,
-      `대상: ${v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')}`,
-      `기록된 지표: ${v_9e8c70}개`,
-    ].join('\n');
-    v_9b57fc('Chat', {
-      initialHealthInfo: { id: v_e7b2f2, name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나') },
-      attachedHealthSummary: v_b9f2b7,
-    });
-  }, [v_42044e, v_f08a5e, v_a7f568, v_e7b2f2, v_9b57fc, v_8d41d7]);
-
   const [v_571c37, v_e78f19] = v_5ab095<Record<number, boolean>>({});
 
   const [v_49e71a, v_f2b4a8] = v_5ab095<Record<number, boolean>>({});
@@ -1148,14 +1133,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   v_a3453e.useEffect(() => {
     const v_329ab2 = async () => {
       if (!v_a7f568 || Object.keys(v_a7f568).length === 0) {
-        return;
-      }
-
-      const v_ca2427 = v_a7f568[v_e3e816.WELLNESS_INDEX];
-      if (!v_ca2427 || (v_ca2427 as any).value == null) {
-        if (__DEV__) {
-          console.log('[HealthAnalysisResultScreen] 불완전한 결과 - API 저장 생략 (WELLNESS_INDEX 없음)');
-        }
         return;
       }
 
@@ -2106,24 +2083,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               v_c65f5d.replace('HealthAnalysis');
             }}
             rightAccessory={
-              <View style={v_d81136.headerRightIcons}>
-                <TouchableOpacity
-                  style={v_d81136.skinIconBtn}
-                  onPress={v_30222e}
-                  hitSlop={8}
-                  accessibilityRole="button"
-                  accessibilityLabel={v_8d41d7('chat.include_in_chat')}
-                >
-                  <Ionicons name="chatbubble-ellipses-outline" size={22} color={v_1bfbd0.primary} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={v_d81136.skinIconBtn}
-                  onPress={() => v_9b57fc('SkinAnalysis')}
-                  hitSlop={8}
-                >
-                  <Droplet size={22} color={v_1bfbd0.primary} />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={v_d81136.skinIconBtn}
+                onPress={() => v_9b57fc('SkinAnalysis')}
+                hitSlop={8}
+              >
+                <Droplet size={22} color={v_1bfbd0.primary} />
+              </TouchableOpacity>
             }
           />
         </View>
@@ -2437,7 +2403,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               {}
               <View
                 ref={v_685d2a}
-                style={[v_d81136.sectionNavContainer, { backgroundColor: 'transparent' }]}
+                style={[v_d81136.sectionNavContainer, { backgroundColor: v_1bfbd0.white }]}
               >
                 <CategoryTabScroll
                   categories={v_8bc599}
@@ -3661,11 +3627,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
 const v_d81136 = v_472849.create({
   screen: v_a61db3.screen,
-  headerRightIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
   skinIconBtn: {
     padding: 8,
   },
