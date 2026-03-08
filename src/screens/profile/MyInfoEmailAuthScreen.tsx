@@ -27,10 +27,7 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
     v_7ef860()
       .then((v_727031) => {
         if (!v_2008a4 && v_727031?.email) {
-          const v_f4fb5e = v_727031.email.trim().toLowerCase();
-          v_7cfcb8(v_f4fb5e);
-          v_fedf34(v_f4fb5e);
-          v_2d6b5b(true);
+          v_7cfcb8(v_727031.email.trim().toLowerCase());
         }
       })
       .catch(() => {
