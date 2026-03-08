@@ -955,7 +955,8 @@
             "error_7009": "Kode kesalahan: 7009\n\nKemungkinan penyebab:\n- Masalah kunci lisensi\n- Inisialisasi SDK gagal\n- Masalah inisialisasi kamera\n\nSilakan mulai ulang aplikasi.",
             "error_unknown": "Kode kesalahan: {{code}}\n\nTerjadi kesalahan. Silakan mulai ulang aplikasi atau coba lagi nanti.",
             "license_key_warning": "Peringatan: FZLJTILI_LICENSE_KEY tidak diatur.",
-            "license_key_not_set": "Kunci lisensi FzljtiliSignal tidak diatur. Silakan periksa variabel lingkungan."
+            "license_key_not_set": "Kunci lisensi FzljtiliSignal tidak diatur. Silakan periksa variabel lingkungan.",
+            "incomplete_measurement": "Beberapa hasil pengukuran tidak lengkap. Mohon pertahankan wajah Anda di depan kamera sekitar 60 detik agar semua item terekam, lalu ukur lagi."
         },
         "image_validity": {
             "device_orientation": "Kesalahan Orientasi Perangkat",

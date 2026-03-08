@@ -242,13 +242,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   const v_18f59d = v_e662ae<boolean>(false);
 
-  const v_1b6f43 = v_e662ae(v_c7daf6.params?.resetToIntro);
-  const v_94c936 = v_e662ae(v_c65f5d);
-  const v_648a40 = v_e662ae(v_604e0f);
-  v_1b6f43.current = v_c7daf6.params?.resetToIntro;
-  v_94c936.current = v_c65f5d;
-  v_648a40.current = v_604e0f;
-
   const [v_2f3ab2, v_ad3226] = v_5ab095<string>('');
   const [v_a5d6d1, v_e3a875] = v_5ab095<'male' | 'female' | null>(null);
   const [v_ebc748, v_7dad08] = v_5ab095<string>('');
@@ -308,6 +301,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_87bfb1 = 6; 
 
   const [v_709c4b, v_808b03] = v_5ab095(0);
+
+  const [v_9f5856, v_9b5a5c] = v_5ab095(false);
 
   const v_458e9a = v_e662ae<v_122070>(null);
   const [v_83a47b, v_26808d] = v_5ab095(0);
@@ -692,6 +687,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_128f31(false);
 
         await v_a3ff5a.current?.start(v_8ea06a);
+
+        v_9b5a5c(true);
+        setTimeout(() => v_9b5a5c(false), 1000);
       } else if (
         v_bc50c7 === v_eb2401.STARTING ||
         v_bc50c7 === v_eb2401.PROCESSING
@@ -991,7 +989,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     }
   }, [v_bc50c7]);
 
+  const v_ca6079 = v_14a7eb?.imageValidity;
   v_c4deb2(() => {
+    if (v_91943c !== 'measurement') {
+      return;
+    }
     if (v_bc50c7 !== v_eb2401.PROCESSING) {
       v_8a8952(undefined);
 
@@ -1008,13 +1010,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       return;
     }
 
-    if (!v_14a7eb || v_14a7eb.imageValidity === v_2be213.VALID) {
+    if (v_ca6079 == null || v_ca6079 === v_2be213.VALID) {
       v_8a8952(undefined);
       return;
     }
 
     let v_bbcfff = '';
-    switch (v_14a7eb.imageValidity) {
+    switch (v_ca6079) {
       case v_2be213.INVALID_DEVICE_ORIENTATION:
         v_bbcfff = v_8d41d7('health_analysis.image_validity.device_orientation');
         break;
@@ -1033,7 +1035,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     }
     v_8a8952(v_bbcfff);
 
-  }, [v_14a7eb, v_bc50c7, v_8d41d7]);
+  }, [v_91943c, v_ca6079, v_bc50c7, v_8d41d7]);
 
   v_c4deb2(() => {
     let v_cb36b1;
@@ -1211,6 +1213,47 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
+      const v_efc105 = v_9a1841
+        ? v_41d2ba.filter(
+            (v_3b27d9) =>
+              v_9a1841!.licenseEnabled.isEnabled(v_3b27d9) &&
+              v_9a1841!.deviceEnabled.isEnabled(v_3b27d9) &&
+              v_9a1841!.measurementModeEnabled.isEnabled(v_3b27d9),
+          )
+        : v_41d2ba;
+      const v_d3d4b2 = v_efc105.filter((v_3b27d9) => v_9f8792[v_3b27d9] == null);
+      const v_5629af = v_d3d4b2.length === 0;
+      if (!v_5629af) {
+        console.log('[결과 화면 이동 방지] 측정 항목 누락 - 재측정 유도', {
+          expectedCount: v_efc105.length,
+          missingCount: v_d3d4b2.length,
+          missingTypes: v_d3d4b2.map((v_8d41d7) => v_a79016(v_8d41d7)),
+        });
+        v_8978ad.current = v_d0a515;
+        (async () => {
+          try {
+            if (v_a3ff5a.current) {
+              try {
+                await v_a3ff5a.current.stop();
+              } catch (v_9e86fd) {
+                console.warn('[재측정 유도] 세션 중지 실패:', v_9e86fd);
+              }
+              await v_98caa0();
+            }
+          } catch (v_9e86fd) {
+            console.error('[재측정 유도] 세션 정리 중 오류:', v_9e86fd);
+          }
+          v_b98ddb.current = false;
+          v_977633.current = 0;
+        })();
+        v_03e392.alert(
+          v_8d41d7('common.notification'),
+          v_8d41d7('health_analysis.errors.incomplete_measurement'),
+          [{ text: v_8d41d7('common.confirm'), onPress: () => v_98b3fa() }],
+        );
+        return;
+      }
+
       (async () => {
         try {
           if (v_a3ff5a.current) {
@@ -1252,11 +1295,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
     }
-  }, [v_91943c, v_d0a515, v_c65f5d]);
+  }, [v_91943c, v_d0a515, v_c65f5d, v_98b3fa, v_8d41d7]);
 
   v_c4deb2(() => {
     if (v_91943c === 'measurement') {
       v_567414.current = false;
+      v_9b5a5c(false);
     }
   }, [v_91943c]);
 
@@ -1321,33 +1365,35 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('화면 포커스됨');
       v_4c31ba.current = true;
 
-      v_648a40.current();
+      v_604e0f();
 
-      const v_98b3fa = v_1b6f43.current;
-      const v_3c9f12 = v_94c936.current;
-      if (v_98b3fa && !v_18f59d.current) {
+      if (v_c7daf6.params?.resetToIntro && !v_18f59d.current) {
         console.log('resetToIntro 파라미터 감지 - intro로 리셋');
         v_639227('intro');
         v_18f59d.current = true;
-        v_3c9f12.setParams({ resetToIntro: undefined });
-      } else if (!v_98b3fa) {
+
+        v_c65f5d.setParams({ resetToIntro: undefined });
+      } else if (!v_c7daf6.params?.resetToIntro) {
+
         v_18f59d.current = false;
       }
 
       return () => {
         console.log('화면 언포커스됨, 세션 종료');
         v_4c31ba.current = false;
+
         if (v_a3ff5a.current) {
           v_98caa0();
           v_a3ff5a.current = undefined;
         }
+
         v_ce2e95.current = false;
         v_3be953.current = false;
         v_b1faa7.current = false;
         v_b0aeaf(false);
         v_49296b(false);
       };
-    }, [v_98caa0])
+    }, [v_98caa0, v_c7daf6.params?.resetToIntro, v_c65f5d])
   );
 
   const v_49b151 = v_e662ae(v_bb3644);
@@ -1602,9 +1648,71 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   fullWidth
                 />
 
-                {
+                {}
+                <TouchableOpacity
+                  style={v_d81136.devTestLink}
+                  onPress={() => {
 
-}
+                    const v_2d2278 = {
+
+                      [v_e3e816.WELLNESS_INDEX]: { confidence: { level: 1 }, value: 84 },
+                      [v_e3e816.WELLNESS_LEVEL]: { confidence: { level: 2 }, value: 4 },
+                      [v_e3e816.HEART_AGE]: { confidence: { level: 1 }, value: 35 },
+
+                      [v_e3e816.PULSE_RATE]: { confidence: { level: 2 }, value: 72 },
+                      [v_e3e816.RESPIRATION_RATE]: { confidence: { level: 2 }, value: 16 },
+                      [v_e3e816.OXYGEN_SATURATION]: { confidence: { level: 2 }, value: 98.5 },
+                      [v_e3e816.BLOOD_PRESSURE]: { confidence: { level: 1 }, value: { systolic: 120, diastolic: 80 } },
+
+                      [v_e3e816.STRESS_LEVEL]: { confidence: { level: 1 }, value: 3 },
+                      [v_e3e816.STRESS_INDEX]: { confidence: { level: 1 }, value: 706 },
+                      [v_e3e816.NORMALIZED_STRESS_INDEX]: { confidence: { level: 1 }, value: 17 },
+
+                      [v_e3e816.RRI]: { confidence: { level: 1 }, value: [] }, 
+                      [v_e3e816.MEAN_RRI]: { confidence: { level: 1 }, value: 850 },
+                      [v_e3e816.SDNN]: { confidence: { level: 1 }, value: 45.2 },
+                      [v_e3e816.RMSSD]: { confidence: { level: 1 }, value: 32.5 },
+                      [v_e3e816.SD1]: { confidence: { level: 1 }, value: 23.1 },
+                      [v_e3e816.SD2]: { confidence: { level: 1 }, value: 58.4 },
+                      [v_e3e816.PRQ]: { confidence: { level: 1 }, value: 1.8 },
+                      [v_e3e816.LFHF]: { confidence: { level: 1 }, value: 2.1 },
+
+                      [v_e3e816.PNS_INDEX]: { confidence: { level: 1 }, value: 84 },
+                      [v_e3e816.PNS_ZONE]: { confidence: { level: 1 }, value: 2 },
+                      [v_e3e816.SNS_INDEX]: { confidence: { level: 1 }, value: 25 },
+                      [v_e3e816.SNS_ZONE]: { confidence: { level: 1 }, value: 1 },
+
+                      [v_e3e816.HEMOGLOBIN]: { confidence: { level: 1 }, value: 14.5 },
+                      [v_e3e816.HEMOGLOBIN_A1C]: { confidence: { level: 1 }, value: 5.2 },
+
+                      [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.LOW_HEMOGLOBIN_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: { confidence: undefined, value: 1 },
+                      [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.ASCVD_RISK]: { confidence: undefined, value: 0 },
+                      [v_e3e816.ASCVD_RISK_LEVEL]: { confidence: undefined, value: 2 },
+
+                      [v_e3e816.MEAN_ARTERIAL_PRESSURE]: { confidence: { level: 1 }, value: 93.3 },
+                      [v_e3e816.PULSE_PRESSURE]: { confidence: { level: 1 }, value: 40 },
+                      [v_e3e816.CARDIAC_WORKLOAD]: { confidence: { level: 1 }, value: 8640 },
+                      [v_e3e816.BODY_TENSION_SCORE]: { confidence: { level: 1 }, value: 2.944 },
+                    };
+                    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+                    v_c65f5d.navigate('HealthAnalysisResult', {
+                      results: v_2d2278,
+                      timestamp: new Date().toISOString(),
+                      userName: v_0c2f9b?.name,
+                      accounts: v_c86f08,
+                      selectedAccountId: v_e7b2f2,
+                    });
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={v_8d41d7('health_analysis.intro.dev_test_label')}
+                  accessibilityHint={v_8d41d7('health_analysis.intro.dev_test_hint')}
+                >
+                  <Text style={v_d81136.devTestLinkText}>{v_8d41d7('health_analysis.intro.dev_test_link')}</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </SafeScrollView>
@@ -1941,6 +2049,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   onPress={v_ac8071}
                   disabled={
                     v_109b56 ||
+                    v_9f5856 ||
                     (v_bc50c7 !== v_eb2401.READY &&
                       v_bc50c7 !== v_eb2401.STARTING &&
                       v_bc50c7 !== v_eb2401.PROCESSING)
@@ -1959,7 +2068,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }
 
   return (
-    <MainLayout activeKey="analysis" hideBottomNav={v_91943c === 'measurement'}>
+    <MainLayout activeKey="analysis" hideBottomNav>
       <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
         {v_629820()}
       </View>
