@@ -30,8 +30,9 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import { v_570c34, v_1c1837, v_dd725b, v_1a40c4 } from '../components';
+import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
+import { v_96a538 } from '../hooks/useVersionCheck';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
@@ -88,6 +89,12 @@ const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'w
 const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
+
+  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
+    onOtaProgress: (v_ba2265) => {
+      if (__DEV__) console.log(`[OTA] 메인화면 업데이트 다운로드: ${v_ba2265}%`);
+    },
+  });
 
   const v_3a2785 = v_df9f57(() => [
     { id: '1', title: v_8d41d7('home.products.p1.title'), subtitle: v_8d41d7('home.products.p1.subtitle'), price: '100', rating: '4.8', reviews: 324, imageIndex: 0 },
@@ -871,8 +878,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           </View>
 
         </SafeScrollView>
-      </SafeView >
-    </MainLayout >
+      </SafeView>
+      <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
+    </MainLayout>
   );
 };
 

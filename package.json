@@ -55,17 +55,23 @@
     "react-i18next": "^16.5.3",
     "react-native": "0.81.5",
     "react-native-compass-heading": "^2.0.2",
+    "react-native-device-info": "^15.0.2",
+    "react-native-fs": "^2.20.0",
     "react-native-image-viewing": "^0.2.2",
     "react-native-maps": "1.20.1",
     "react-native-navigation-bar-height": "^0.2.0",
     "react-native-qrcode-svg": "^6.3.21",
+    "react-native-restart": "^0.0.27",
     "react-native-safe-area-context": "^5.6.2",
     "react-native-screens": "~4.16.0",
     "react-native-svg": "15.12.1",
-    "react-native-web": "^0.21.0"
+    "react-native-web": "^0.21.0",
+    "react-native-zip-archive": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
+    "@react-native-community/cli": "latest",
+    "@react-native/metro-config": "^0.84.1",
     "@types/react": "~19.1.10",
     "babel-plugin-inline-dotenv": "^1.7.0",
     "typescript": "^5.7.2"

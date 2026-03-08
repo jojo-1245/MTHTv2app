@@ -1,4 +1,5 @@
 import axios from 'axios';
+import apiClient from './apiClient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getEnv } from '../utils/env';
 import { STORAGE_KEYS } from '../constants';
@@ -426,79 +427,11 @@ export async function refreshAccessToken(): Promise<LoginAuthPayload> {
 }
 
 export async function getMe(): Promise<MeProfile> {
-  const env = getEnv();
-  const baseURL = env.GATEWAY;
-  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
   if (__DEV__) {
-    console.log('[authApi] getMe: 토큰 읽기 시작...');
-  }
-
-  let token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
-  if (__DEV__) {
-    console.log('[authApi] AsyncStorage에서 authToken 읽기:', {
-      found: !!token,
-      length: token ? token.length : 0,
-      preview: token ? `${token.substring(0, 20)}...` : null,
-    });
-  }
-
-  if (!token) {
-    const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
-    if (__DEV__) {
-      console.log('[authApi] memberInfo에서 토큰 찾기 시도:', {
-        hasMemberInfo: !!memberJson,
-      });
-    }
-    if (memberJson) {
-      try {
-        const member = JSON.parse(memberJson) as Record<string, unknown>;
-        const t = member?.accessToken ?? member?.access_token ?? member?.token;
-        if (typeof t === 'string') {
-          token = t;
-          if (__DEV__) {
-            console.log('[authApi] memberInfo에서 토큰 찾음:', {
-              length: token.length,
-              preview: `${token.substring(0, 20)}...`,
-            });
-          }
-        }
-      } catch (error) {
-        if (__DEV__) {
-          console.error('[authApi] memberInfo 파싱 에러:', error);
-        }
-      }
-    }
-  }
-
-  if (!token) {
-
-    if (__DEV__) {
-      const allKeys = await AsyncStorage.getAllKeys();
-      console.warn('[authApi] getMe: 저장된 토큰 없음. 로그인 응답 형식 확인 필요.', {
-        allStorageKeys: allKeys,
-        hasAuthTokenKey: allKeys.includes(STORAGE_KEYS.authToken),
-        hasMemberInfoKey: allKeys.includes(STORAGE_KEYS.memberInfo),
-        hasIsLoggedInKey: allKeys.includes(STORAGE_KEYS.isLoggedIn),
-      });
-    }
-    throw new Error('로그인이 필요합니다.');
-  }
-
-  if (__DEV__) {
-    console.log('[authApi] 토큰 확인 완료, API 요청 진행');
-  }
-  if (__DEV__) {
-    console.log('[authApi] getMe 요청:', { url: `${baseURL}/oth-path` });
+    console.log('[authApi] getMe: apiClient 요청 진행');
   }
   try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const res = await axios.get<ApiResponse<MeProfile>>(`${baseURL}/oth-path`, {
-      timeout: API_TIMEOUT,
-      headers,
-    });
+    const res = await apiClient.get<ApiResponse<MeProfile>>('/oth-path');
     const data = res.data?.data ?? (res.data as unknown as MeProfile);
     if (__DEV__) {
       console.log('[authApi] getMe 응답:', { status: res.status, hasData: !!data });
@@ -506,48 +439,6 @@ export async function getMe(): Promise<MeProfile> {
     if (typeof data === 'object' && data !== null) return data as MeProfile;
     return { email: String(data) };
   } catch (error) {
-
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      if (__DEV__) {
-        console.log('[authApi] getMe 401 에러 감지. 토큰 갱신 시도...');
-      }
-
-      try {
-
-        await refreshAccessToken();
-
-        if (__DEV__) {
-          console.log('[authApi] 토큰 갱신 성공. getMe 재요청...');
-        }
-
-        const newToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
-        if (!newToken) {
-          throw new Error('토큰 갱신 후 새 토큰을 찾을 수 없습니다.');
-        }
-
-        const headers: Record<string, string> = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${newToken}`,
-        };
-        const res = await axios.get<ApiResponse<MeProfile>>(`${baseURL}/oth-path`, {
-          timeout: API_TIMEOUT,
-          headers,
-        });
-        const data = res.data?.data ?? (res.data as unknown as MeProfile);
-        if (__DEV__) {
-          console.log('[authApi] getMe 재요청 응답:', { status: res.status, hasData: !!data });
-        }
-        if (typeof data === 'object' && data !== null) return data as MeProfile;
-        return { email: String(data) };
-      } catch (refreshError) {
-        if (__DEV__) {
-          console.error('[authApi] 토큰 갱신 실패:', refreshError);
-        }
-
-        throw normalizeError(error);
-      }
-    }
-
     if (__DEV__ && axios.isAxiosError(error)) {
       console.error('[authApi] getMe 에러:', {
         status: error.response?.status,
@@ -573,29 +464,9 @@ export interface UpdateProfilePayload {
 
 export async function updateProfile(payload: UpdateProfilePayload): Promise<MeProfile> {
   const env = getEnv();
-  const baseURL = env.GATEWAY;
-  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
-  let token = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
-  if (!token) {
-    const memberJson = await AsyncStorage.getItem(STORAGE_KEYS.memberInfo);
-    if (memberJson) {
-      try {
-        const member = JSON.parse(memberJson) as Record<string, unknown>;
-        const t = member?.accessToken ?? member?.access_token ?? member?.token;
-        if (typeof t === 'string') token = t;
-      } catch {
 
-      }
-    }
-  }
-  if (!token) throw new Error('로그인이 필요합니다.');
+  const url = env.PROFILE_UPDATE_PATH ?? '/oth-path';
 
-  const profilePath = env.PROFILE_UPDATE_PATH ?? '/oth-path';
-  const url = `${baseURL}${profilePath.startsWith('/') ? profilePath : `/${profilePath}`}`;
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  };
   const body: Record<string, unknown> = {
     name: payload.name,
   };
@@ -612,10 +483,7 @@ export async function updateProfile(payload: UpdateProfilePayload): Promise<MePr
     console.log('[authApi] updateProfile 요청:', { url, method: 'PUT', body: { ...body, password: body.password ? '***' : undefined } });
   }
   try {
-    const res = await axios.put<ApiResponse<MeProfile>>(url, body, {
-      timeout: API_TIMEOUT,
-      headers,
-    });
+    const res = await apiClient.put<ApiResponse<MeProfile>>(url, body);
     const data = res.data?.data ?? (res.data as unknown as MeProfile);
     if (__DEV__) {
       console.log('[authApi] updateProfile 응답:', { status: res.status, hasData: !!data });

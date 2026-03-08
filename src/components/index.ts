@@ -67,6 +67,8 @@ export type { ExplorerBadgeProps } from './ExplorerBadge';
 
 export { default as SafeScrollView } from './SafeScrollView';
 export { default as SafeView } from './SafeView';
+export { UpdateOverlay } from './UpdateOverlay';
+export { EmergencyNoticeModal } from './EmergencyNoticeModal';
 
 export { default as SidebarMenu } from './SidebarMenu';
 export type { SidebarMenuProps, SidebarMenuItem } from './SidebarMenu';
