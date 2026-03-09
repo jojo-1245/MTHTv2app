@@ -3,6 +3,7 @@ import apiClient from './apiClient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getEnv } from '../utils/env';
 import { STORAGE_KEYS } from '../constants';
+import { setCachedToken, clearCachedToken } from '../utils/tokenCache';
 
 const API_TIMEOUT = 20000;
 
@@ -279,6 +280,7 @@ export async function persistAuthSession(
 
   if (token) {
     await AsyncStorage.setItem(STORAGE_KEYS.authToken, token);
+    setCachedToken(token); 
 
     const savedToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
     if (__DEV__) {
@@ -456,6 +458,7 @@ export async function refreshAccessToken(): Promise<LoginAuthPayload> {
     const newToken = getTokenFromPayload(payload);
     if (newToken) {
       await AsyncStorage.setItem(STORAGE_KEYS.authToken, newToken);
+      setCachedToken(newToken);
     }
 
     const newRefreshToken = payload.refreshToken ?? payload.refresh_token;
@@ -574,6 +577,7 @@ export async function sendVerification(email: string, purpose: string = 'export_
 }
 
 export async function clearAuthSession(): Promise<void> {
+  clearCachedToken(); 
   await AsyncStorage.multiRemove([
     STORAGE_KEYS.authToken,
     STORAGE_KEYS.refreshToken,

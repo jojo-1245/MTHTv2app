@@ -3,6 +3,7 @@ import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
+import { v_0b4eec, v_1cec06, v_8e9934 } from '../utils/tokenCache';
 
 const v_8a74cb = 20000;
 
@@ -23,7 +24,12 @@ v_9a8286.interceptors.request.use(
     }
 
     if (!v_74a79c.headers.Authorization) {
-      const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+
+      let v_21cc31 = v_0b4eec();
+      if (!v_21cc31) {
+        v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+        if (v_21cc31) v_1cec06(v_21cc31);
+      }
       if (v_21cc31) {
         v_74a79c.headers.Authorization = `Bearer ${v_21cc31}`;
       }
@@ -43,6 +49,7 @@ function v_ff5ed0(v_21cc31) {
 }
 
 async function v_df24f1() {
+  v_8e9934(); 
   await v_e84827.multiRemove([
     v_624bd2.authToken,
     v_624bd2.refreshToken,
@@ -107,6 +114,7 @@ v_9a8286.interceptors.response.use(
       if (!v_5451e8) throw new Error('no access token in refresh response');
 
       await v_e84827.setItem(v_624bd2.authToken, v_5451e8);
+      v_1cec06(v_5451e8); 
       if (v_ca30ed) {
         await v_e84827.setItem(v_624bd2.refreshToken, v_ca30ed);
       }
