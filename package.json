@@ -15,9 +15,9 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@expo-google-fonts/roboto": "^0.4.1",
+    "@expo-google-fonts/roboto": "^0.4.3",
     "@expo/metro-runtime": "~6.1.2",
-    "@expo/vector-icons": "^15.0.3",
+    "@expo/vector-icons": "^15.1.1",
     "@notifee/react-native": "^9.1.4",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-firebase/app": "^23.8.6",
@@ -51,7 +51,7 @@
     "expo-sharing": "~14.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
-    "expo-web-browser": "^55.0.9",
+    "expo-web-browser": "~15.0.10",
     "i18next": "^25.8.0",
     "lucide-react-native": "^0.563.0",
     "react": "19.1.0",
@@ -83,12 +83,19 @@
   "private": true,
   "expo": {
     "doctor": {
+      "appConfigFieldsNotSyncedCheck": {
+        "enabled": false
+      },
       "reactNativeDirectoryCheck": {
         "exclude": [
           "react-native-compass-heading",
           "fzljtilisignal-react-native-sdk",
           "expo-face-detector",
-          "react-native-navigation-bar-height"
+          "react-native-navigation-bar-height",
+          "react-native-fs",
+          "react-native-restart",
+          "react-native-zip-archive",
+          "@react-native-kakao/core"
         ]
       }
     }

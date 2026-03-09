@@ -144,41 +144,42 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     }
   }, [v_f74058]);
 
+  const v_c9b08f = 500;
   v_c4deb2(() => {
-    const v_5dedf9 = async () => {
-
-      if (v_326be8.OS === 'android') {
-        await v_157cb4();
-
-        const v_2fe247 = await v_5c2ccb();
-
-        if (v_2fe247 && v_0c7e2f()) {
-          const v_f8a973 = await v_e84827.getItem(v_8bf63f);
-
-          if (v_f8a973 === null) {
-            await v_e84827.setItem(v_8bf63f, 'true');
-            v_e882e2(true);
-
-            const v_59929c = v_f74058('home.step_unit', '걸음');
-            const v_43c42e = await v_381355(v_c19e2d, v_59929c);
-            if (!v_43c42e.success) {
-              v_e882e2(false);
-              await v_e84827.setItem(v_8bf63f, 'false');
+    const v_8d41d7 = setTimeout(() => {
+      const v_5dedf9 = async () => {
+        if (v_326be8.OS === 'android') {
+          await v_157cb4();
+          const v_2fe247 = await v_5c2ccb();
+          if (v_2fe247 && v_0c7e2f()) {
+            const v_f8a973 = await v_e84827.getItem(v_8bf63f);
+            if (v_f8a973 === null) {
+              await v_e84827.setItem(v_8bf63f, 'true');
+              v_e882e2(true);
+              const v_59929c = v_f74058('home.step_unit', '걸음');
+              const v_43c42e = await v_381355(v_c19e2d, v_59929c);
+              if (!v_43c42e.success) {
+                v_e882e2(false);
+                await v_e84827.setItem(v_8bf63f, 'false');
+              }
             }
           }
+        } else {
+          await v_157cb4();
         }
-      } else {
-
-        await v_157cb4();
-      }
-    };
-    v_5dedf9();
+      };
+      v_5dedf9();
+    }, v_c9b08f);
+    return () => clearTimeout(v_8d41d7);
   }, [v_f74058]);
 
   v_c4deb2(() => {
     let v_269481 = null;
     let v_41ed06 = true;
+    let v_cf4e0f = null;
+    const v_4cbfc6 = 600;
 
+    const v_cb36b1 = setTimeout(() => {
     const v_391ff4 = async () => {
       try {
 
@@ -354,35 +355,40 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       }
     };
 
-    const v_cb36b1 = setTimeout(() => {
-      v_391ff4();
-    }, 500);
+      v_cf4e0f = setTimeout(() => {
+        v_391ff4();
+      }, 500);
+    }, v_4cbfc6);
 
     return () => {
-      v_41ed06 = false;
       clearTimeout(v_cb36b1);
+      if (v_cf4e0f != null) clearTimeout(v_cf4e0f);
+      v_41ed06 = false;
       v_269481?.remove();
     };
   }, []); 
 
   v_c4deb2(() => {
-    const v_b7370f = async () => {
-      if (v_326be8.OS === 'android' && v_0c7e2f()) {
-        try {
-          await v_015a21();
-          console.log('[StepTracking] 이전 서비스 정리 완료');
-
-          await new Promise((v_6f7712) => setTimeout(v_6f7712, 200));
-        } catch (v_5e9bfe) {
-          console.warn('[StepTracking] 이전 서비스 정리 실패 (무시 가능):', v_5e9bfe);
+    const v_8d41d7 = setTimeout(() => {
+      const v_b7370f = async () => {
+        if (v_326be8.OS === 'android' && v_0c7e2f()) {
+          try {
+            await v_015a21();
+            console.log('[StepTracking] 이전 서비스 정리 완료');
+            await new Promise((v_6f7712) => setTimeout(v_6f7712, 200));
+          } catch (v_5e9bfe) {
+            console.warn('[StepTracking] 이전 서비스 정리 실패 (무시 가능):', v_5e9bfe);
+          }
         }
-      }
-    };
-    v_b7370f();
+      };
+      v_b7370f();
+    }, 400);
+    return () => clearTimeout(v_8d41d7);
   }, []);
 
   v_c4deb2(() => {
-    v_80e790();
+    const v_8d41d7 = setTimeout(() => v_80e790(), 700);
+    return () => clearTimeout(v_8d41d7);
   }, [v_80e790]);
 
   const v_5640a4 = v_de06a3(async () => {
@@ -467,12 +473,11 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       v_9c8eed,
       v_264467,
       v_f37ec2,
-    ],
+    ]
   );
 
   v_c4deb2(() => {
     return () => {
-
       if (v_326be8.OS === 'android' && v_0c7e2f()) {
         v_015a21().catch((v_5e9bfe) => {
           console.warn('[StepTracking] 언마운트 시 서비스 정리 실패:', v_5e9bfe);
@@ -481,7 +486,11 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     };
   }, []);
 
-  return <StepTrackingContext.Provider value={v_3b402b}>{v_21f619}</StepTrackingContext.Provider>;
+  return (
+    <StepTrackingContext.Provider value={v_3b402b}>
+      {v_21f619}
+    </StepTrackingContext.Provider>
+  );
 };
 
 export const v_75c3c7 = (): StepTrackingContextValue => {

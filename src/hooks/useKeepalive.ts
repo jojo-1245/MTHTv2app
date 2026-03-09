@@ -21,7 +21,7 @@ export function v_bfe92f(v_d20c84 = true) {
       return;
     }
 
-    v_4ae0bf();
+    const v_c76537 = setTimeout(v_4ae0bf, 3_000);
 
     v_3ac63b.current = setInterval(v_4ae0bf, v_a8e3e1);
 
@@ -36,6 +36,7 @@ export function v_bfe92f(v_d20c84 = true) {
     });
 
     return () => {
+      clearTimeout(v_c76537);
       if (v_3ac63b.current) clearInterval(v_3ac63b.current);
       v_269481.remove();
     };

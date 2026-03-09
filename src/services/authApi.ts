@@ -130,6 +130,8 @@ export async function loginMember(params: {
       const hasToken =
         !!(payload.accessToken ?? payload.access_token ?? payload.token);
       console.log('[authApi] login 파싱된 payload:', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
         hasToken,
         hasMember: !!payload.member || !!payload.user,
         tokenFromHeader: !!authHeader,
@@ -256,6 +258,8 @@ export async function persistAuthSession(
 ): Promise<void> {
   if (__DEV__) {
     console.log('[authApi] persistAuthSession 시작:', {
+      _ts: Date.now(),
+      _time: new Date().toISOString(),
       payloadKeys: payload ? Object.keys(payload) : [],
       hasAccessToken: !!(payload.accessToken || payload.access_token || payload.token),
       hasTokens: !!(payload as Record<string, unknown>).tokens,
@@ -265,6 +269,8 @@ export async function persistAuthSession(
   const token = getTokenFromPayload(payload);
   if (__DEV__) {
     console.log('[authApi] getTokenFromPayload 결과:', {
+      _ts: Date.now(),
+      _time: new Date().toISOString(),
       tokenFound: !!token,
       tokenLength: token ? token.length : 0,
       tokenPreview: token ? `${token.substring(0, 20)}...` : null,
@@ -277,6 +283,8 @@ export async function persistAuthSession(
     const savedToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
     if (__DEV__) {
       console.log('[authApi] persistAuthSession: 토큰 저장 완료', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
         saved: !!savedToken,
         savedLength: savedToken ? savedToken.length : 0,
       });
@@ -294,7 +302,10 @@ export async function persistAuthSession(
   if (refreshToken && typeof refreshToken === 'string') {
     await AsyncStorage.setItem(STORAGE_KEYS.refreshToken, refreshToken);
     if (__DEV__) {
-      console.log('[authApi] persistAuthSession: Refresh Token 저장 완료');
+      console.log('[authApi] persistAuthSession: Refresh Token 저장 완료', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
+      });
     }
   } else {
 
@@ -305,7 +316,10 @@ export async function persistAuthSession(
       if (rt && typeof rt === 'string') {
         await AsyncStorage.setItem(STORAGE_KEYS.refreshToken, rt);
         if (__DEV__) {
-          console.log('[authApi] persistAuthSession: tokens 객체에서 Refresh Token 저장 완료');
+          console.log('[authApi] persistAuthSession: tokens 객체에서 Refresh Token 저장 완료', {
+            _ts: Date.now(),
+            _time: new Date().toISOString(),
+          });
         }
       }
     }
@@ -321,18 +335,26 @@ export async function persistAuthSession(
   if (keepLoggedIn) {
     await AsyncStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
     if (__DEV__) {
-      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장');
+      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
+      });
     }
   } else {
 
     await AsyncStorage.removeItem(STORAGE_KEYS.isLoggedIn);
     if (__DEV__) {
-      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장 안 함');
+      console.log('[authApi] persistAuthSession: 로그인 상태 유지 저장 안 함', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
+      });
     }
   }
 
   if (__DEV__) {
     console.log('[authApi] persistAuthSession 완료', {
+      _ts: Date.now(),
+      _time: new Date().toISOString(),
       keepLoggedIn,
       isLoggedInSaved: keepLoggedIn,
     });
@@ -532,6 +554,21 @@ export async function updateProfile(payload: UpdateProfilePayload): Promise<MePr
         fullData: error.response?.data,
       });
     }
+    throw normalizeError(error);
+  }
+}
+
+export async function sendVerification(email: string, purpose: string = 'export_private_key'): Promise<{ success: boolean; message: string }> {
+  if (__DEV__) {
+    console.log('[authApi] sendVerification 요청:', { email, purpose });
+  }
+  try {
+    const res = await apiClient.post<ApiResponse<{ success: boolean; message: string }>>('/oth-path', {
+      email,
+      purpose,
+    });
+    return res.data?.data ?? (res.data as unknown as { success: boolean; message: string });
+  } catch (error) {
     throw normalizeError(error);
   }
 }

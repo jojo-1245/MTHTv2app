@@ -290,8 +290,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     v_cf763b(
         v_de06a3(() => {
             (async () => {
-                const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
-                if (!v_21cc31) {
+                const v_042a8b = await v_e84827.getItem(v_624bd2.isLoggedIn);
+                if (v_042a8b !== 'true') {
                     v_03e392.alert(
                         v_8d41d7('common.error'),
                         v_8d41d7('skin.login_required_message', '로그인 후 피부 분석을 이용해 주세요. 분석 결과 저장을 위해 로그인이 필요합니다.'),

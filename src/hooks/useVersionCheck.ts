@@ -112,9 +112,13 @@ export function v_96a538(v_b36f96 = {}) {
   v_c4deb2(() => {
     if (!v_d20c84) return;
 
+    let v_3894d5 = null;
+
     if (!v_da90dc.current) {
       v_da90dc.current = true;
-      v_405bdd();
+      v_3894d5 = setTimeout(() => {
+        v_405bdd();
+      }, 0);
     }
 
     const v_1ae212 = v_6b5698.addEventListener('change', (v_612414) => {
@@ -123,7 +127,10 @@ export function v_96a538(v_b36f96 = {}) {
       }
       v_94a194.current = v_612414;
     });
-    return () => v_1ae212.remove();
+    return () => {
+      if (v_3894d5 != null) clearTimeout(v_3894d5);
+      v_1ae212.remove();
+    };
   }, [v_405bdd, v_d20c84]);
 
   return { 

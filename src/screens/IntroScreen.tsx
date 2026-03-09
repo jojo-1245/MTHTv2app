@@ -37,7 +37,7 @@ const IntroScreen: v_a3453e.FC<Props> = () => {
 
         const v_cb36b1 = setTimeout(() => {
             v_d0a230();
-        }, 2000);
+        }, 300);
 
         return () => clearTimeout(v_cb36b1);
     }, [v_9b57fc]);
