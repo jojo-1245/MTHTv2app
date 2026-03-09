@@ -70,7 +70,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     purchasesCompleted: 15,
   };
 
-  const menuItems:   Array<
+  const menuItems: Array<
     | {
       id: string;
       title: string;
@@ -238,6 +238,22 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </TouchableOpacity>
           </View>
 
+          {}
+          <TouchableOpacity
+            style={v_d81136.nftInfoCard}
+            onPress={() => v_9b57fc('ProfitDistribution')}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel={v_8d41d7('profile.nft_held')}
+          >
+            <View style={v_d81136.nftInfoContent}>
+              <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
+              <Text style={v_d81136.nftInfoText}>
+                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>50{v_8d41d7('profile.nft_unit')}</Text>
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
+          </TouchableOpacity>
           {
 
 }

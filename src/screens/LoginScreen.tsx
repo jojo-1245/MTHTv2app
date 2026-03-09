@@ -32,6 +32,7 @@ import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import { v_e4a763 } from '../utils/env';
 import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
+import { v_faafee } from '../config/devSkipLogin';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
@@ -230,7 +231,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       v_c65f5d.reset({
         index: 0,
-        routes: [{ name: 'MetaHome' }],
+        routes: [{ name: __DEV__ ? v_faafee : 'MetaHome' }],
       });
     } catch (v_5e9bfe) {
       const v_4b5200 = v_8d41d7('login.error_unknown');
