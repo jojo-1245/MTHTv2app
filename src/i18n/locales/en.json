@@ -508,6 +508,7 @@
         "guide_item2": "5% of Product Sales Revenue"
     },
     "skin": {
+        "login_required_message": "Please log in to use skin analysis. Log in is required to save analysis results.",
         "products": {
             "product_1_description": "Dry Skin & Intensive Moisturizing",
             "product_2_description": "Oil-Water Balancing Serum for Combination Skin",
@@ -854,6 +855,7 @@
         "result_title": "Analysis Result",
         "result_loading": "Loading results...",
         "default_user_name": "Me",
+        "login_required_message": "Please log in to use health analysis. Log in is required to save measurement results.",
         "measurement_complete": "Measurement Complete",
         "measurement_date": "Measurement Date",
         "measurement_time": "Measurement Time",
