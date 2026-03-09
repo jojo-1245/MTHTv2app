@@ -228,6 +228,9 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
       await v_d41982(v_bd4b7d, v_2129ec);
 
+      if (__DEV__) {
+        console.log('[Perf] LoginScreen: navigation.reset(MetaHome) 호출 직전', { _ts: Date.now(), _time: new Date().toISOString() });
+      }
       v_c65f5d.reset({
         index: 0,
         routes: [{ name: 'MetaHome' }],

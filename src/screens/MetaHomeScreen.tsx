@@ -4,6 +4,7 @@ import {
   v_a2349e,
   v_1ed974,
   v_cdbae1,
+  v_2d4718,
   v_326be8,
   v_472849,
   v_19b633,
@@ -91,6 +92,14 @@ const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'w
 const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
+  const v_e2d13b = v_e662ae(false);
+
+  v_c4deb2(() => {
+    if (!v_e2d13b.current && __DEV__) {
+      v_e2d13b.current = true;
+      console.log('[Perf] MetaHomeScreen: 마운트(첫 렌더 커밋 후)', { _ts: Date.now(), _time: new Date().toISOString() });
+    }
+  }, []);
 
   const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
     onOtaProgress: (v_ba2265) => {
@@ -110,7 +119,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_9cb8cb] = v_5ab095(true);
 
   v_c4deb2(() => {
-    v_e37b10();
+    const v_8d41d7 = setTimeout(() => v_e37b10(), 200);
+    return () => clearTimeout(v_8d41d7);
   }, [v_e37b10]);
 
   const v_1fddaf = v_df9f57(() => {
@@ -139,35 +149,37 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_56263a = v_de06a3(async () => {
     try {
-      const v_3722b7 = await v_4ebe12();
-      if (v_3722b7) {
-        v_ecd01c(v_3722b7.health_index);
-        v_435f99(v_3722b7.record_date);
-      } else {
-        v_ecd01c(null);
-        v_435f99(null);
-      }
-
-      const v_51e81e = await v_52c734();
-      if (v_51e81e) {
-        v_6bf58d(v_51e81e.overall_score);
-        v_07829a(v_51e81e.record_date);
-      } else {
-        v_6bf58d(null);
-        v_07829a(null);
-      }
+      const [v_3722b7, v_51e81e] = await Promise.all([
+        v_4ebe12(),
+        v_52c734(),
+      ]);
+      v_2d4718.runAfterInteractions(() => {
+        if (v_3722b7) {
+          v_ecd01c(v_3722b7.health_index);
+          v_435f99(v_3722b7.record_date);
+        } else {
+          v_ecd01c(null);
+          v_435f99(null);
+        }
+        if (v_51e81e) {
+          v_6bf58d(v_51e81e.overall_score);
+          v_07829a(v_51e81e.record_date);
+        } else {
+          v_6bf58d(null);
+          v_07829a(null);
+        }
+      });
     } catch (v_5e9bfe) {
       console.error('[MetaHomeScreen] 최신 점수 로드 실패:', v_5e9bfe);
       if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
     }
   }, [v_c65f5d]);
 
-  v_c4deb2(() => {
-    v_56263a();
-  }, [v_56263a]);
-
   v_cf763b(
     v_de06a3(() => {
+      if (__DEV__) {
+        console.log('[Perf] MetaHomeScreen: useFocusEffect 콜백 시작 (loadLatestScores 직전)', { _ts: Date.now(), _time: new Date().toISOString() });
+      }
       v_56263a();
     }, [v_56263a])
   );
@@ -199,9 +211,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   v_c4deb2(() => {
-    const v_58b642 = async () => {
-      try {
-        const v_3ea33e = await v_e8dda3(v_c65f5d);
+    const v_8d41d7 = setTimeout(() => {
+      const v_58b642 = async () => {
+        try {
+          const v_3ea33e = await v_e8dda3(v_c65f5d);
 
         const v_cf60ad = [false, false, false, false, false, false, false];
         v_3ea33e.recent_status.forEach((v_8c0b26) => {
@@ -242,7 +255,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       }
     };
 
-    v_58b642();
+      v_58b642();
+    }, 250);
+    return () => clearTimeout(v_8d41d7);
   }, [v_c65f5d, v_8aab53]);
 
   const v_d0c5d7 = async () => {
@@ -314,17 +329,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_cd6f97, v_5ce610] = v_5ab095(false);
 
   v_c4deb2(() => {
-    const v_0f9a7b = async () => {
-      try {
-        const v_227df7 = v_312d93(v_9c213b.language);
-        const v_5268c1 = await v_6c47a7(v_227df7);
-        v_04f4d8(Array.isArray(v_5268c1) ? v_5268c1 : []);
-      } catch (v_5e9bfe) {
-        console.error('[MetaHomeScreen] 걸음수 보상 상태 로드 실패:', v_5e9bfe);
-      }
-    };
-
-    v_0f9a7b();
+    const v_8d41d7 = setTimeout(() => {
+      const v_0f9a7b = async () => {
+        try {
+          const v_227df7 = v_312d93(v_9c213b.language);
+          const v_5268c1 = await v_6c47a7(v_227df7);
+          v_04f4d8(Array.isArray(v_5268c1) ? v_5268c1 : []);
+        } catch (v_5e9bfe) {
+          console.error('[MetaHomeScreen] 걸음수 보상 상태 로드 실패:', v_5e9bfe);
+        }
+      };
+      v_0f9a7b();
+    }, 350);
+    return () => clearTimeout(v_8d41d7);
   }, [v_9c213b.language]);
 
   const v_76f9c7 = Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf);

@@ -15,6 +15,9 @@ const v_fe959d = `${v_c9171c}/${v_0b7c00}`;
 const v_9fcd9f = `${v_c9171c}/ota_meta.json`;
 const v_b4e268 = 'metahint_applied_ota_version';
 
+const v_a16596 = 'metahint_ota_last_check_ts';
+const v_9db3b9 = 10 * 1000; 
+
 export interface StoreUpdateInfo {
   update_available: boolean;
   force_update: boolean;
@@ -45,11 +48,21 @@ export interface OtaMeta {
 }
 
 export async function v_6ed90b(): Promise<VersionCheckResult | null> {
-  console.log('[OTA] checkVersions() 호출됨');
-
   if (v_a8789d) {
     console.log('[OTA] 이미 업데이트가 진행 중입니다. 체크를 건너뜁니다.');
     return null;
+  }
+
+  const v_7a19e4 = await v_e84827.getItem(v_a16596);
+  if (v_7a19e4) {
+    const v_e56026 = Date.now() - parseInt(v_7a19e4, 10);
+    if (v_e56026 < v_9db3b9) {
+      if (__DEV__) {
+        const v_9c6fac = Math.ceil((v_9db3b9 - v_e56026) / 1000);
+        console.log('[OTA] 쿨다운 중. 재호출 가능까지 약', v_9c6fac, '초 남음');
+      }
+      return null;
+    }
   }
 
   if (v_403825) {
@@ -59,7 +72,7 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
 
   v_403825 = (async () => {
     try {
-      console.log('[OTA] 새로운 버전 체크 프로세스 시작');
+      console.log('[OTA] 새로운 버전 체크 프로세스 시작', { _ts: Date.now(), _time: new Date().toISOString() });
       let v_c9c489;
       try {
         v_c9c489 = v_e4a763();
@@ -85,7 +98,7 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
 
       const v_f24d57 = await v_e84827.getItem(v_b4e268);
 
-      console.log(`[OTA] API 요청 전송 (Version: ${v_4587b3}, Build: ${v_f229e4}):`, v_f71b56);
+      console.log(`[OTA] API 요청 전송 (Version: ${v_4587b3}, Build: ${v_f229e4}):`, v_f71b56, { _ts: Date.now(), _time: new Date().toISOString() });
 const v_8f00b9 = await fetch(v_f71b56, {
   headers: { 
     'X-Client-Token': v_f68bbb,
@@ -93,11 +106,10 @@ const v_8f00b9 = await fetch(v_f71b56, {
   },
 });
 
-console.log('[OTA] 응답 수신 - Status:', v_8f00b9.status);
-console.log('[OTA] 응답 헤더:', JSON.stringify(v_8f00b9.headers, null, 2));
+console.log('[OTA] 응답 수신 - Status:', v_8f00b9.status, { _ts: Date.now(), _time: new Date().toISOString() });
 
 const v_bd947d = await v_8f00b9.text();
-console.log('[OTA] 원시 응답 내용:', v_bd947d);
+console.log('[OTA] 원시 응답 수신 완료', { _ts: Date.now(), _time: new Date().toISOString() });
 
 if (!v_8f00b9.ok) {
   throw new Error(`서버 응답 오류 (HTTP ${v_8f00b9.status}): ${v_bd947d.substring(0, 100)}`);
@@ -111,14 +123,13 @@ try {
   throw new Error('서버 응답이 올바른 JSON 형식이 아닙니다.');
 }
 
-      console.log('[OTA] 파싱된 JSON:', JSON.stringify(v_7ecfd1, null, 2));
-
       if (v_7ecfd1.success && v_7ecfd1.data) {
         const v_43c42e = v_7ecfd1.data as VersionCheckResult;
         if (v_43c42e.ota.latest_version && v_43c42e.ota.latest_version === v_f24d57) {
           console.log(`[OTA] ${v_43c42e.ota.latest_version} 버전은 이미 적용되어 있어 스킵합니다.`);
           v_43c42e.ota.update_available = false;
         }
+        await v_e84827.setItem(v_a16596, String(Date.now()));
         return v_43c42e;
       }
       return null;

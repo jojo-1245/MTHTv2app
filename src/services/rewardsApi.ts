@@ -239,7 +239,7 @@ export async function v_6c47a7(v_067e65): Promise<number[]> {
 
   const v_cd6a57 = { record_date: v_067e65 };
   if (__DEV__) {
-    console.log('[rewardsApi] getStepsSyncState 요청:', JSON.stringify(v_cd6a57));
+    console.log('[rewardsApi] getStepsSyncState 요청:', JSON.stringify(v_cd6a57), { _ts: Date.now(), _time: new Date().toISOString() });
   }
 
   try {
@@ -256,7 +256,7 @@ export async function v_6c47a7(v_067e65): Promise<number[]> {
     );
 
     if (__DEV__) {
-      console.log('[rewardsApi] getStepsSyncState 응답:', JSON.stringify(v_3393e3.data));
+      console.log('[rewardsApi] getStepsSyncState 응답:', JSON.stringify(v_3393e3.data), { _ts: Date.now(), _time: new Date().toISOString() });
     }
 
     if (v_3393e3.data.success && v_3393e3.data.data?.state_idx) {

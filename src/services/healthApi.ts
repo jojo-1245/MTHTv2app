@@ -5,6 +5,10 @@ import { v_624bd2 } from '../constants';
 
 const v_8a74cb = 20000;
 
+const v_48d821 = 'metahint_health_last_check_ts';
+const v_172e22 = 'metahint_health_last_record';
+const v_7a2425 = 10 * 1000;
+
 type ApiResponse<T> = {
   success?: boolean;
   data?: T;
@@ -384,6 +388,31 @@ export async function v_4ebe12(): Promise<HealthRecordItem | null> {
     return null;
   }
 
+  const v_7a19e4 = await v_e84827.getItem(v_48d821);
+  if (v_7a19e4) {
+    const v_e56026 = Date.now() - parseInt(v_7a19e4, 10);
+    if (v_e56026 < v_7a2425) {
+      const v_e2a6a6 = await v_e84827.getItem(v_172e22);
+      if (v_e2a6a6) {
+        try {
+          const v_cbbd71 = JSON.parse(v_e2a6a6) as HealthRecordItem;
+          if (__DEV__) {
+            const v_9c6fac = Math.ceil((v_7a2425 - v_e56026) / 1000);
+            console.log('[healthApi] getLatestHealthRecord 쿨다운 중. 캐시 반환. 재호출 가능까지 약', v_9c6fac, '초');
+          }
+          return v_cbbd71;
+        } catch {
+
+        }
+      }
+      if (__DEV__) {
+        const v_9c6fac = Math.ceil((v_7a2425 - v_e56026) / 1000);
+        console.log('[healthApi] getLatestHealthRecord 쿨다운 중. 재호출 가능까지 약', v_9c6fac, '초');
+      }
+      return null;
+    }
+  }
+
   try {
     const v_3f4675 = {
       'Content-Type': 'application/json',
@@ -392,7 +421,7 @@ export async function v_4ebe12(): Promise<HealthRecordItem | null> {
 
     const v_f71b56 = `${v_fed274}/oth-path`;
     if (__DEV__) {
-      console.log('[healthApi] getLatestHealthRecord 요청:', { url: v_f71b56 });
+      console.log('[healthApi] getLatestHealthRecord 요청:', { _ts: Date.now(), _time: new Date().toISOString(), url: v_f71b56 });
     }
 
     const v_8f00b9 = await v_b5030f.get<ApiResponse<LatestHealthRecordResponse>>(v_f71b56, {
@@ -405,13 +434,22 @@ export async function v_4ebe12(): Promise<HealthRecordItem | null> {
 
     if (__DEV__) {
       console.log('[healthApi] getLatestHealthRecord 응답:', {
+        _ts: Date.now(),
+        _time: new Date().toISOString(),
         status: v_8f00b9.status,
         hasRecord: !!v_cbbd71,
         health_index: v_cbbd71?.health_index,
       });
     }
 
-    return v_cbbd71 || null;
+    const v_43c42e = v_cbbd71 || null;
+    await v_e84827.setItem(v_48d821, String(Date.now()));
+    if (v_43c42e) {
+      await v_e84827.setItem(v_172e22, JSON.stringify(v_43c42e));
+    } else {
+      await v_e84827.removeItem(v_172e22);
+    }
+    return v_43c42e;
   } catch (v_5e9bfe) {
     if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
 
