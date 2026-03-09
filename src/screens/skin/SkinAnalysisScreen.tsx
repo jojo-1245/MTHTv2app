@@ -38,7 +38,8 @@ import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d } 
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d } from '../../constants';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d, v_624bd2 } from '../../constants';
 import {
     v_6bbbb9,
     type v_146928,
@@ -288,8 +289,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     v_cf763b(
         v_de06a3(() => {
+            (async () => {
+                const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+                if (!v_21cc31) {
+                    v_03e392.alert(
+                        v_8d41d7('common.error'),
+                        v_8d41d7('skin.login_required_message', '로그인 후 피부 분석을 이용해 주세요. 분석 결과 저장을 위해 로그인이 필요합니다.'),
+                        [{ text: v_8d41d7('common.confirm'), onPress: () => v_c65f5d.navigate('Login') }],
+                        { cancelable: false }
+                    );
+                    return;
+                }
+            })();
             v_604e0f();
-        }, [v_604e0f])
+        }, [v_604e0f, v_c65f5d, v_8d41d7])
     );
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');

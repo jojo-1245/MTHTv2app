@@ -25,6 +25,7 @@ const v_401fcf = {
   WalletTransactionProgress: 'wallet',
   WalletTransactionResult: 'wallet',
   TransactionDetails: 'wallet',
+  MyInfoView: 'myinfo',
   MyInfoEdit: 'myinfo',
   MyInfoEmailAuth: 'myinfo',
   MyInfoSettings: 'myinfo',
@@ -40,10 +41,12 @@ export interface MainLayoutProps {
   children: v_a3453e.ReactNode;
 
   activeKey?: string;
+
+  hideBottomNav?: boolean;
   style?: v_7e4944;
 }
 
-const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKey: v_1f1e84, style: v_7fa4e4 }) => {
+const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKey: v_1f1e84, hideBottomNav: v_438b9d = false, style: v_7fa4e4 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_c7daf6 = v_2d8264();
   const { navigate: v_9b57fc } = v_a0daa8();
@@ -67,11 +70,13 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKe
   return (
     <SafeView style={[v_d81136.container, v_7fa4e4]}>
       <View style={v_d81136.content}>{v_21f619}</View>
-      <BottomNavigationBar
-        items={v_fce460}
-        activeKey={v_76ceae}
-        onTabPress={v_c58a56}
-      />
+      {!v_438b9d && (
+        <BottomNavigationBar
+          items={v_fce460}
+          activeKey={v_76ceae}
+          onTabPress={v_c58a56}
+        />
+      )}
     </SafeView>
   );
 };

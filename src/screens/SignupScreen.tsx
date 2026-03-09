@@ -50,6 +50,9 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
 
+  const v_5739ac = v_c7daf6.params?.fromSocial;
+  const v_9607d3 = v_c7daf6.params?.email ?? '';
+
   const v_21bdd5 = v_df9f57(() => [
     { value: 'none' as const, label: v_8d41d7('signup.select') },
     { value: 'male' as const, label: v_8d41d7('common.male') },
@@ -66,7 +69,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const [v_c3eac4, v_bdc43c] =
     v_5ab095<'none' | 'male' | 'female'>('none');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
-  const [v_e0c7e8, v_fedf34] = v_5ab095('');
+  const [v_e0c7e8, v_fedf34] = v_5ab095(v_9607d3);
   const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
@@ -94,6 +97,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const [v_0908db, v_1c41ce] = v_5ab095(false);
   const [v_3a64df, v_c73419] = v_5ab095(false);
   const [v_7962f1, v_6a0bf8] = v_5ab095('');
+
+  v_c4deb2(() => {
+    if (v_9607d3) v_fedf34(v_9607d3);
+  }, [v_9607d3]);
 
   const v_0e461e = (v_3b402b): boolean => {
     const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -256,13 +263,20 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     if (v_8c0b26.iso2 === 'select' || v_8c0b26.iso2 === 'global' || v_8c0b26.dialCode === '0') {
       return v_8c0b26.iso2 === 'global' ? v_8d41d7('country_select.select_option') : v_8c0b26.name;
     }
-    const v_c99bd2 = v_8c0b26.countryCode ?? v_159ceb;
-    const v_cde5e2 = v_c99bd2 ? v_9ad700.includes(v_c99bd2) : false;
-    const v_b5249e = v_cde5e2
-      ? `regions.${v_c99bd2}_${v_8c0b26.dialCode}`
-      : `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
-    const v_6dce25 = v_8d41d7(v_b5249e);
-    return v_6dce25 !== v_b5249e ? v_6dce25 : v_8c0b26.name;
+    const v_c99bd2 = v_159ceb || v_8c0b26.countryCode;
+    if (!v_c99bd2) return v_8c0b26.name ?? '';
+    const v_8f0b72 = /^\d+$/.test(String(v_8c0b26.dialCode).trim())
+      ? String(v_8c0b26.dialCode).trim()
+      : null;
+    const v_c62787 = v_8f0b72 && v_9ad700.includes(v_c99bd2);
+    if (v_c62787) {
+      const v_d8b7ca = `regions.${v_c99bd2}_${v_8f0b72}`;
+      const v_6dce25 = v_8d41d7(v_d8b7ca);
+      if (v_6dce25 !== v_d8b7ca) return v_6dce25;
+    }
+    const v_a1ac16 = `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
+    const v_6dce25 = v_8d41d7(v_a1ac16);
+    return v_6dce25 !== v_a1ac16 ? v_6dce25 : (v_8c0b26.name ?? '');
   };
 
   const v_56743f = (() => {
@@ -480,6 +494,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     try {
       await v_35200c(v_931bf0);
       await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
+      if (v_5739ac) {
+        v_889fad(
+          v_8d41d7('signup.success_title'),
+          v_8d41d7('signup.success_message_social', '가입되었습니다. 소셜 로그인을 눌러 로그인하세요.'),
+          () => v_c65f5d.navigate('Login')
+        );
+        return;
+      }
       v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), async () => {
         try {
           await v_c1a440({ email: v_8f37ac, purpose: 'signup' });
@@ -543,7 +565,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 autoCapitalize="none"
                 value={v_e0c7e8}
                 onChangeText={v_a64837}
-                editable={!v_88dca2}
+                editable={!v_88dca2 && !v_5739ac}
               />
               {v_4e8e4d && (
                 <Text style={v_d81136.errorText}>{v_4e8e4d}</Text>

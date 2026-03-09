@@ -72,7 +72,7 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
         <Modal
             visible={v_cf55be}
             transparent
-            animationType="fade"
+            animationType="none"
             onRequestClose={v_0890f8}
         >
             <View style={v_d81136.wellnessModalOverlay}>

@@ -71,12 +71,12 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     purchasesCompleted: 15,
   };
 
-  const menuItems: Array<
+  const menuItems:   Array<
     | {
       id: string;
       title: string;
       description: string;
-      iconName: 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
+      iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
       route: keyof v_8ad91b;
       isLogout?: false;
     }

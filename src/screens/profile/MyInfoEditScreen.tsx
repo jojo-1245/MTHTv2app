@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
   v_9cabcb,
@@ -26,6 +26,7 @@ import {
 import { v_202d44 } from '../../constants/countryDialCodes';
 import {
   v_789afd,
+  v_6946fd,
   v_369014,
   v_52495e,
 } from '../../constants/regions';
@@ -47,7 +48,9 @@ import { v_700ef9 } from '../../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_5a0760, type v_2c95cc } from '../../services/authApi';
+import { v_11e39e, v_060564 } from '../../services/countryApi';
 import { v_91bb22 } from '../../services/signupApi';
+import { v_5c7129 } from '../../utils/countryUtils';
 import type { v_da1883 } from '../../types';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
@@ -95,8 +98,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
 
+  const v_96d0ea = v_19c5eb ?? v_459d5e;
+  const v_2937c0 = v_de106e ?? v_2f03bc;
   const v_590486 =
-    v_459d5e?.iso2?.toLowerCase() === 'kr';
+    v_96d0ea?.iso2?.toLowerCase() === 'kr';
 
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_1833e7, v_318f24] = v_5ab095('');
@@ -110,6 +115,19 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_bd30a1, v_e03dd9] = v_5ab095('');
   const [v_3a64df, v_c73419] = v_5ab095(false);
   const [v_7962f1, v_6a0bf8] = v_5ab095('');
+
+  const [v_717992, v_9d6aeb] = v_5ab095<number | null>(null);
+
+  const [v_d630a3, v_735bc0] = v_5ab095<number | null>(null);
+
+  const [v_565f82, v_a697f1] = v_5ab095<string | null>(null);
+
+  const [v_005add, v_825257] = v_5ab095<
+    Record<string, v_da1883[]>
+  >({});
+
+  const [v_19c5eb, v_16febe] = v_5ab095<v_da1883 | null>(null);
+  const [v_de106e, v_ce4a02] = v_5ab095<v_da1883 | null>(null);
 
   const [v_274f50, v_697ca3] = v_5ab095(false);
   const [v_6089b6, v_c7f76c] = v_5ab095(false);
@@ -128,6 +146,40 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   });
   const [v_3ee07c, v_3b5fd6] = v_5ab095(true);
 
+  const v_977f4f = v_19c5eb ?? v_459d5e;
+  v_c4deb2(() => {
+    const v_cc0c7d = v_977f4f?.iso2?.toLowerCase();
+    if (!v_cc0c7d || v_cc0c7d === 'select' || v_cc0c7d === 'kr') return;
+    if (v_005add[v_cc0c7d] !== undefined) return;
+    const v_a4d981 =
+      v_977f4f?.countryCode ??
+      v_f91692[v_cc0c7d];
+    if (!v_a4d981) return;
+    let v_2008a4 = false;
+    v_5c7129(
+      (v_c99bd2) => v_11e39e(v_c99bd2),
+      v_a4d981,
+      v_cc0c7d
+    )
+      .then((v_8f00b9) => {
+        if (v_2008a4) return;
+        if (v_8f00b9.hasRegions && v_8f00b9.regions.length > 0) {
+          v_825257((v_ba2215) => ({
+            ...v_ba2215,
+            [v_cc0c7d]: v_8f00b9.regions,
+          }));
+        }
+      })
+      .catch(() => { });
+    return () => {
+      v_2008a4 = true;
+    };
+  }, [
+    v_977f4f?.iso2,
+    v_977f4f?.countryCode,
+    v_005add,
+  ]);
+
   v_cf763b(
     v_a3453e.useCallback(() => {
       let v_2008a4 = false;
@@ -142,12 +194,6 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             [v_e2a85c.firstname, v_e2a85c.lastname].filter(Boolean).join(' ').trim() ||
             '';
           if (v_2d1621) v_318f24(v_2d1621);
-          const v_49ea09 = (v_e2a85c.mobile ?? v_e2a85c.phone) as string | undefined;
-          if (v_49ea09 && typeof v_49ea09 === 'string') {
-            const v_e6d4a6 = v_49ea09.replace(/\D/g, '');
-            v_fcce73(v_e6d4a6);
-            v_a776b5({ phone: v_e6d4a6 });
-          }
           const v_d199d8 = v_e2a85c.gender as number | undefined;
           if (v_d199d8 === 2110) v_bdc43c('male');
           else if (v_d199d8 === 2111) v_bdc43c('female');
@@ -163,21 +209,132 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           };
           if (v_2d2cbc != null && v_c3889d[v_2d2cbc]) v_64a312(v_c3889d[v_2d2cbc]);
           else v_64a312('select');
-          const v_dbd26e = ((v_e2a85c.country as string) ?? '').toLowerCase();
+          const v_e237cf = (v_fa53ec) => {
+            for (const v_0eb677 of v_fa53ec) {
+              const v_81e2ef = v_e2a85c[v_0eb677];
+              if (v_81e2ef !== undefined && v_81e2ef !== null && v_81e2ef !== '') return v_81e2ef;
+            }
+            const v_35f85c = v_e2a85c.member ?? v_e2a85c.user;
+            if (v_35f85c && typeof v_35f85c === 'object') {
+              const v_d4d4f6 = v_35f85c as Record<string, unknown>;
+              for (const v_0eb677 of v_fa53ec) {
+                const v_81e2ef = v_d4d4f6[v_0eb677];
+                if (v_81e2ef !== undefined && v_81e2ef !== null && v_81e2ef !== '') return v_81e2ef;
+              }
+            }
+            return undefined;
+          };
+
+          const v_2a1f1b =
+            Number(v_e237cf(['id', 'member_id', 'memberId', 'user_id', 'userId'])) || 0;
+          v_9d6aeb(v_2a1f1b > 0 ? v_2a1f1b : null);
+          const v_7e63cb = v_e237cf(['country', 'countrycode', 'country_code']) ?? '';
+          const v_dbd26e = typeof v_7e63cb === 'string' ? v_7e63cb.toLowerCase() : String(v_7e63cb);
           if (v_dbd26e) {
-            const v_b9bbbd = v_202d44.find(
+            const v_91f231 = v_202d44.find(
               (v_3f4e2e) => v_3f4e2e.iso2.toLowerCase() === v_dbd26e
             );
-            if (v_b9bbbd) v_f693e7(v_b9bbbd);
+            const v_487918 =
+              !v_91f231 && /^\d+$/.test(v_dbd26e)
+                ? v_202d44.find(
+                  (v_3f4e2e) => v_3f4e2e.countryCode === parseInt(v_dbd26e, 10)
+                )
+                : null;
+            const v_077269 = v_91f231 ?? v_487918 ?? null;
+            if (v_077269) {
+              v_f693e7(v_077269);
+              v_16febe(v_077269);
+            }
+            const v_49ea09 = (v_e2a85c.mobile ?? v_e2a85c.phone) as string | undefined;
+            if (v_49ea09 && typeof v_49ea09 === 'string') {
+              const v_e6d4a6 = v_49ea09.replace(/\D/g, '');
+              const v_7d8ea7 = (v_91f231 ?? v_487918)?.dialCode?.replace(/\D/g, '') ?? '';
+              const v_498a66 = v_7d8ea7 ? [v_7d8ea7] : ['82', '81', '86', '62', '1'];
+              let v_905b24 = v_e6d4a6;
+              for (const v_3f4e2e of v_498a66.sort((v_779914, v_148ff6) => v_148ff6.length - v_779914.length)) {
+                if (v_3f4e2e && v_e6d4a6.startsWith(v_3f4e2e) && v_e6d4a6.length > v_3f4e2e.length) {
+                  v_905b24 = v_e6d4a6.slice(v_3f4e2e.length);
+                  break;
+                }
+              }
+              v_fcce73(v_905b24);
+              v_a776b5({ phone: v_905b24 });
+            }
+          } else {
+            const v_49ea09 = (v_e2a85c.mobile ?? v_e2a85c.phone) as string | undefined;
+            if (v_49ea09 && typeof v_49ea09 === 'string') {
+              const v_e6d4a6 = v_49ea09.replace(/\D/g, '');
+              const v_99e9de = ['82', '81', '86', '62', '1'];
+              let v_905b24 = v_e6d4a6;
+              for (const v_3f4e2e of v_99e9de.sort((v_779914, v_148ff6) => v_148ff6.length - v_779914.length)) {
+                if (v_e6d4a6.startsWith(v_3f4e2e) && v_e6d4a6.length > v_3f4e2e.length) {
+                  v_905b24 = v_e6d4a6.slice(v_3f4e2e.length);
+                  break;
+                }
+              }
+              v_fcce73(v_905b24);
+              v_a776b5({ phone: v_905b24 });
+            }
           }
-          const v_94bdf5 = (v_e2a85c.region_id as number) ?? 0;
+
+          const v_94bdf5 = Number(v_e237cf(['region_id', 'regionId', 'region'])) || 0;
+          v_735bc0(v_94bdf5 > 0 && v_94bdf5 !== v_1f5cda ? v_94bdf5 : null);
+          v_a697f1(null);
+          if (__DEV__) {
+            const v_2d091d = (v_e2a85c.email as string | undefined) ?? '';
+            console.log('[MyInfoEdit] getMe 프로필:', {
+              email: typeof v_2d091d === 'string' ? v_2d091d : '',
+              memberId: v_2a1f1b > 0 ? v_2a1f1b : null,
+              region_id: v_94bdf5 || 0,
+              country: v_e237cf(['country', 'countrycode', 'country_code']) ?? '',
+            });
+          }
           if (v_94bdf5 > 0 && v_94bdf5 !== v_1f5cda) {
             const v_a6c30b = v_52495e.find(
               (v_cb35cb) => parseInt(v_cb35cb.dialCode, 10) === v_94bdf5
             );
-            if (v_a6c30b) v_2f2d51(v_a6c30b);
+            if (v_a6c30b) {
+              v_2f2d51(v_a6c30b);
+              v_ce4a02(v_a6c30b);
+            } else {
+              v_2f2d51(v_789afd);
+              v_ce4a02(v_789afd);
+
+              const v_6ef7b5 = (() => {
+                const v_479f05 = v_e237cf(['country', 'countrycode', 'country_code']) ?? '';
+                const v_6fc191 = typeof v_479f05 === 'string' ? v_479f05.toLowerCase() : String(v_479f05);
+                if (!v_6fc191) return null;
+                const v_830e79 = v_202d44.find((v_3f4e2e) => v_3f4e2e.iso2.toLowerCase() === v_6fc191);
+                if (v_830e79) return v_830e79;
+                if (/^\d+$/.test(v_6fc191))
+                  return v_202d44.find((v_3f4e2e) => v_3f4e2e.countryCode === parseInt(v_6fc191, 10)) ?? null;
+                return null;
+              })();
+              if (v_6ef7b5) {
+                v_5c7129(
+                  (v_c99bd2) => v_11e39e(v_c99bd2),
+                  v_6ef7b5.countryCode,
+                  v_6ef7b5.iso2
+                )
+                  .then((v_43c42e) => {
+                    if (v_2008a4) return;
+                    if (v_43c42e.hasRegions && v_43c42e.regions.length > 0) {
+                      const v_ea6dff = v_43c42e.regions.find(
+                        (v_cb35cb) => parseInt(v_cb35cb.dialCode, 10) === v_94bdf5
+                      );
+                      if (v_ea6dff) {
+                        v_2f2d51(v_ea6dff);
+                        v_ce4a02(v_ea6dff);
+                        v_a697f1(v_ea6dff.name || '');
+                      }
+                    }
+                  })
+                  .catch(() => { });
+              }
+            }
           } else {
             v_2f2d51(v_789afd);
+            v_ce4a02(null);
           }
         })
         .catch((v_5e9bfe) => {
@@ -249,27 +406,47 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   );
 
   const v_159ceb =
-    v_459d5e?.countryCode ??
-    (v_459d5e?.iso2
-      ? v_f91692[v_459d5e.iso2.toLowerCase()]
+    v_96d0ea?.countryCode ??
+    (v_96d0ea?.iso2
+      ? v_f91692[v_96d0ea.iso2.toLowerCase()]
       : 0);
 
   const v_ba4a54 = (item: v_da1883): string => {
     if (v_8c0b26.iso2 === 'select' || v_8c0b26.iso2 === 'global' || v_8c0b26.dialCode === '0') {
       return v_8c0b26.iso2 === 'global' ? (v_8d41d7('country_select.select_option') || '선택') : v_8c0b26.name;
     }
-    const v_c99bd2 = v_8c0b26.countryCode ?? v_159ceb;
-    const v_cde5e2 = v_c99bd2 ? v_9ad700.includes(v_c99bd2) : false;
-    const v_b5249e = v_cde5e2
-      ? `regions.${v_c99bd2}_${v_8c0b26.dialCode}`
-      : `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
-    const v_6dce25 = v_8d41d7(v_b5249e);
-    return v_6dce25 !== v_b5249e ? v_6dce25 : v_8c0b26.name;
+
+    const v_c99bd2 = v_159ceb || v_8c0b26.countryCode;
+    if (!v_c99bd2) return v_8c0b26.name ?? '';
+    const v_8f0b72 = /^\d+$/.test(String(v_8c0b26.dialCode).trim())
+      ? String(v_8c0b26.dialCode).trim()
+      : null;
+    const v_c62787 = v_8f0b72 && v_9ad700.includes(v_c99bd2);
+
+    if (v_c62787) {
+      const v_d8b7ca = `regions.${v_c99bd2}_${v_8f0b72}`;
+      const v_6dce25 = v_8d41d7(v_d8b7ca);
+      if (v_6dce25 !== v_d8b7ca) return v_6dce25;
+    }
+    const v_a1ac16 = `regions.${v_c99bd2}_${(v_8c0b26.name ?? '').replace(/\s+/g, '_').toLowerCase()}`;
+    const v_6dce25 = v_8d41d7(v_a1ac16);
+    return v_6dce25 !== v_a1ac16 ? v_6dce25 : (v_8c0b26.name ?? '');
   };
 
-  const v_963133 = v_df9f57(
-    () => v_369014(v_459d5e?.iso2),
-    [v_459d5e?.iso2]
+  const v_963133 = v_df9f57(() => {
+    const v_cc0c7d = v_96d0ea?.iso2?.toLowerCase();
+    if (v_cc0c7d && v_005add[v_cc0c7d]?.length > 0) {
+      return v_005add[v_cc0c7d];
+    }
+    return v_369014(v_96d0ea?.iso2);
+  }, [v_96d0ea?.iso2, v_005add]);
+
+  const v_7a534a = v_df9f57(
+    () =>
+      v_963133.some(
+        (v_cb35cb) => v_cb35cb.iso2 !== 'select' && v_cb35cb.iso2 !== 'global'
+      ),
+    [v_963133]
   );
 
   const v_904f1e = v_df9f57(
@@ -292,11 +469,19 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_56743f = (() => {
     const v_ed2e96 = v_8d41d7('country_select.select_option') || '선택';
-    if (!v_2f03bc) return v_ed2e96;
-    if (v_2f03bc.iso2 === 'select' || v_2f03bc.iso2 === 'global' || v_2f03bc.dialCode === '0') {
-      return v_ed2e96;
+
+    if (
+      v_2937c0 &&
+      v_2937c0.dialCode !== '0' &&
+      v_2937c0.iso2 !== 'select' &&
+      v_2937c0.iso2 !== 'global'
+    ) {
+      return v_ba4a54(v_2937c0);
     }
-    return v_ba4a54(v_2f03bc);
+
+    if (v_565f82) return v_565f82;
+    if (v_d630a3 != null && v_d630a3 > 0) return v_6946fd(v_d630a3);
+    return v_ed2e96;
   })();
 
   const v_cbf7db = () => {
@@ -307,8 +492,12 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_de5bf5 = (country: v_da1883) => {
     if (v_b9bbbd.iso2 === 'select' || v_b9bbbd.dialCode === '0') {
       v_f693e7(v_cff956);
+      v_16febe(v_cff956);
+      v_ce4a02(null);
     } else {
       v_f693e7(v_b9bbbd);
+      v_16febe(v_b9bbbd);
+      v_ce4a02(null);
     }
     v_a259be(false);
     v_e03dd9('');
@@ -322,8 +511,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_477add = (region: v_da1883) => {
     if (v_a6c30b.iso2 === 'select' || v_a6c30b.dialCode === '0') {
       v_2f2d51(v_24d92d);
+      v_ce4a02(v_24d92d);
     } else {
       v_2f2d51(v_a6c30b);
+      v_ce4a02(v_a6c30b);
     }
     v_c73419(false);
     v_6a0bf8('');
@@ -355,6 +546,27 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_9c3d15 = (v_3b402b) => v_3b402b.replace(/\D/g, '');
+
+  const v_28c267 = (v_e6d4a6, v_3f788c): string => {
+    if (!v_e6d4a6 || v_e6d4a6.length < 8) return v_e6d4a6;
+    const v_99e9de = v_3f788c
+      ? [v_3f788c.replace(/\D/g, '')]
+      : ['82', '81', '86', '62', '1', '7', '91', '44', '49', '33'];
+    const v_b16994 = [...new Set(v_99e9de)].filter(Boolean).sort((v_779914, v_148ff6) => v_148ff6.length - v_779914.length);
+    let v_905b24 = v_e6d4a6;
+    let v_40eb63 = true;
+    while (v_40eb63) {
+      v_40eb63 = false;
+      for (const v_c99bd2 of v_b16994) {
+        if (v_c99bd2 && v_905b24.startsWith(v_c99bd2) && v_905b24.length > v_c99bd2.length) {
+          v_905b24 = v_905b24.slice(v_c99bd2.length);
+          v_40eb63 = true;
+          break;
+        }
+      }
+    }
+    return v_905b24;
+  };
 
   const v_c5377e = (v_3b402b): string | null => {
     if (v_3b402b.length === 0) return null;
@@ -414,10 +626,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   };
 
-  const v_1bf308 = v_459d5e?.flagEmoji ?? '🌐';
-  const v_4d1e97 = v_459d5e?.dialCode ?? '+82';
+  const v_1bf308 = v_96d0ea?.flagEmoji ?? '🌐';
+  const v_4d1e97 = v_96d0ea?.dialCode ?? '+82';
   const v_c01add =
-    v_459d5e?.iso2 === 'select' || v_459d5e?.dialCode === '0';
+    v_96d0ea?.iso2 === 'select' || v_96d0ea?.dialCode === '0';
 
   const v_02f61c = async () => {
     const v_affc3e = v_1833e7.trim();
@@ -433,15 +645,15 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
-    if (v_590486 && !v_2f03bc) {
+    if (v_7a534a && (!v_2937c0 || v_2937c0.dialCode === '0' || v_2937c0.iso2 === 'select' || v_2937c0.iso2 === 'global')) {
       v_889fad(v_8d41d7('my_info_edit.errors.input_error'), v_8d41d7('my_info_edit.errors.region_required'));
       return;
     }
 
     const v_94bdf5 =
-      v_2f03bc && v_2f03bc.dialCode !== '0'
-        ? v_9553a4(v_2f03bc.iso2) ||
-        parseInt(v_2f03bc.dialCode, 10) ||
+      v_2937c0 && v_2937c0.dialCode !== '0'
+        ? v_9553a4(v_2937c0.iso2) ||
+        parseInt(v_2937c0.dialCode, 10) ||
         null
         : null;
 
@@ -455,29 +667,50 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
-    const v_a4d981 = v_c01add ? null : (v_459d5e?.iso2?.toUpperCase() ?? '');
+    const v_a4d981 = v_c01add ? null : (v_96d0ea?.iso2?.toUpperCase() ?? '');
     const v_6c3a47 = v_c01add ? null : (v_4d1e97.replace(/\+/g, '') || null);
     const v_d199d8 = v_c3eac4 === 'none' ? null : v_91bb22.getGenderCode(v_c3eac4);
     const v_78ba6e = v_f83808 === 'select' ? null : v_91bb22.getAgeCode(v_f83808);
 
-    const v_49ea09 =
-      v_c01add || !v_088b9e
+    const v_fef913 = v_4d1e97.replace(/\D/g, '') || '';
+    const v_cd6a90 = v_28c267(v_088b9e);
+    const v_25660a =
+      v_c01add || !v_cd6a90
         ? null
-        : v_088b9e;
+        : v_fef913 + v_cd6a90;
+    const v_49ea09 =
+      v_25660a && v_25660a.replace(/\D/g, '').length >= 8
+        ? v_25660a.replace(/\D/g, '')
+        : null;
+
+    const v_931bf0 = {
+      name: v_affc3e,
+      mobile: v_49ea09,
+      mobile_code: v_6c3a47,
+      country: v_a4d981,
+      country_code: v_a4d981,
+      region_id: v_94bdf5,
+      gender: v_d199d8,
+      age_range: v_78ba6e,
+      ...(v_adc076.trim() !== '' && { password: v_adc076.trim() }),
+    };
+    if (__DEV__) {
+      console.log('[MyInfoEdit] 저장 요청 payload:', JSON.stringify(v_931bf0, null, 2));
+    }
 
     v_e33ec0(true);
     try {
-      await v_5a0760({
-        name: v_affc3e,
-        mobile: v_49ea09,
-        mobile_code: v_6c3a47,
-        country: v_a4d981,
-        country_code: v_a4d981,
-        region_id: v_94bdf5,
-        gender: v_d199d8,
-        age_range: v_78ba6e,
-        ...(v_adc076.trim() !== '' && { password: v_adc076.trim() }),
-      });
+
+      if (!v_c01add && v_717992) {
+        await v_060564({
+          member: v_717992,
+          country: v_a4d981 ?? '',
+          region: v_94bdf5 ?? 0,
+          countrycode: v_4d1e97,
+          ...(v_6c3a47 ? { mobilecode: v_6c3a47 } : {}),
+        });
+      }
+      await v_5a0760(v_931bf0);
       v_889fad(v_8d41d7('common.success'), v_8d41d7('my_info_edit.errors.update_success'), () => {
         v_9b57fc('MyInfo');
       });
@@ -551,7 +784,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   onPress={v_cbf7db}
                   disabled={v_88dca2}
                 >
-                  {v_459d5e?.dialCode === '0' || v_459d5e?.iso2 === 'select' ? (
+                  {v_96d0ea?.dialCode === '0' || v_96d0ea?.iso2 === 'select' ? (
                     <Text style={v_d81136.countryCode}>{v_8d41d7('country_select.select_option') || '선택'}</Text>
                   ) : (
                     <>
@@ -568,9 +801,9 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               placeholder={v_8d41d7('my_info_edit.region_placeholder')}
               value={v_56743f}
               onPress={v_b36a76}
-              disabled={!v_590486 || v_88dca2}
+              disabled={!v_7a534a || v_88dca2}
             />
-            {!v_590486 ? (
+            {!v_7a534a && v_96d0ea?.iso2 !== 'select' ? (
               <Text style={v_d81136.regionHelper}>{v_8d41d7('my_info_edit.region_helper')}</Text>
             ) : null}
             <View>
@@ -715,8 +948,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     <Text style={v_d81136.modalRowText}>
                       {v_773f4d(v_8c0b26)}
                     </Text>
-                    {(v_459d5e?.iso2 === v_8c0b26.iso2 &&
-                      v_459d5e?.dialCode === v_8c0b26.dialCode) ? (
+                    {(v_96d0ea?.iso2 === v_8c0b26.iso2 &&
+                      v_96d0ea?.dialCode === v_8c0b26.dialCode) ? (
                       <Feather name="check" size={18} color={v_1bfbd0.text} />
                     ) : null}
                   </TouchableOpacity>
@@ -797,8 +1030,8 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     <Text style={v_d81136.modalRowText}>
                       {v_ba4a54(v_8c0b26)}
                     </Text>
-                    {(v_2f03bc?.iso2 === v_8c0b26.iso2 &&
-                      v_2f03bc?.dialCode === v_8c0b26.dialCode) ? (
+                    {(v_2937c0?.iso2 === v_8c0b26.iso2 &&
+                      v_2937c0?.dialCode === v_8c0b26.dialCode) ? (
                       <Feather name="check" size={18} color={v_1bfbd0.text} />
                     ) : null}
                   </TouchableOpacity>

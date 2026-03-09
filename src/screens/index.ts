@@ -21,6 +21,7 @@ export { WalletQrScanScreen } from './wallet/WalletQrScanScreen';
 export { WalletTransactionProgressScreen } from './wallet/WalletTransactionProgressScreen';
 export { WalletTransactionResultScreen } from './wallet/WalletTransactionResultScreen';
 export { default as MyInfoScreen } from './profile/MyInfoScreen';
+export { default as MyInfoViewScreen } from './profile/MyInfoViewScreen';
 export { default as MyInfoEditScreen } from './profile/MyInfoEditScreen';
 export { default as MyInfoEmailAuthScreen } from './profile/MyInfoEmailAuthScreen';
 export { default as MyInfoSettingsScreen } from './profile/MyInfoSettingsScreen';

@@ -13,10 +13,12 @@ import {
   v_f2c756,
   v_aa7413,
   v_e767d1,
+  v_0e1f26,
   v_122070,
   v_700696,
   v_bd64bf,
   v_da479e,
+  v_2d4718,
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_772971 } from 'jmpfvteuuztnp';
@@ -32,9 +34,11 @@ import { v_d4f1cc } from 'mbgbsytfgyr';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v_1c1837 } from '../../components';
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
-import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04 } from '../../constants';
+import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
 import { v_9e8766 } from '../../hooks';
+import { v_207199 } from '../../services';
+import type { v_9923f5 } from '../../services/healthApi';
 
 import {
   v_d55d6e,
@@ -207,6 +211,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_262e99 = v_c18c22(0);
   const v_ea7233 =
     v_326be8.OS === 'ios' ? v_033e14.bottom : Math.max(v_262e99, v_033e14.bottom);
+  const [v_ac3ab7, v_028502] = v_5ab095(false);
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
@@ -299,6 +304,49 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_d79387, v_d2b6af] = v_5ab095(false);
   const [v_63ed0f, v_6cd027] = v_5ab095(0);
   const v_87bfb1 = 6; 
+  const v_1efea8 = v_e662ae<v_9328cf | null>(null);
+
+  const [v_af8c44, v_a9ff2b] = v_5ab095(0);
+
+  v_c4deb2(() => {
+    if (!v_d79387) return;
+    const v_32f7b8 = v_700696.get('window');
+    console.log('[모달 위치] 처음 나옴', {
+      window: { width: v_32f7b8.width, height: v_32f7b8.height },
+      layout: v_1efea8.current,
+    });
+  }, [v_d79387]);
+
+  v_c4deb2(() => {
+    if (!v_d79387) {
+      v_028502(false);
+      return;
+    }
+    const v_ef3bab = v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const v_ffd7d0 = v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+    const v_53f5d7 = v_0e1f26.addListener(v_ef3bab, (v_9e86fd) => {
+      v_028502(true);
+      const v_32f7b8 = v_700696.get('window');
+      console.log('[모달 위치] 키보드 나옴', {
+        window: { width: v_32f7b8.width, height: v_32f7b8.height },
+        keyboardHeight: v_9e86fd?.endCoordinates?.height,
+        layout: v_1efea8.current,
+      });
+    });
+    const v_52528b = v_0e1f26.addListener(v_ffd7d0, () => {
+      v_028502(false);
+      v_a9ff2b((v_0eb677) => v_0eb677 + 1); 
+      const v_32f7b8 = v_700696.get('window');
+      console.log('[모달 위치] 키보드 사라짐', {
+        window: { width: v_32f7b8.width, height: v_32f7b8.height },
+        layout: v_1efea8.current,
+      });
+    });
+    return () => {
+      v_53f5d7.remove();
+      v_52528b.remove();
+    };
+  }, [v_d79387]);
 
   const [v_709c4b, v_808b03] = v_5ab095(0);
 
@@ -340,6 +388,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_12abe8, v_8a8952] = v_5ab095<string | undefined>();
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
   const [v_68b162, v_128f31] = v_5ab095(false);
+
+  const [v_955bd3, v_b30457] = v_5ab095(false);
+
+  const [v_2a37b1, v_979bbe] = v_5ab095(false);
+  const v_9d8f75 = v_e662ae(false);
+
+  const [v_8140fa, v_72744e] = v_5ab095(false);
+
+  const [v_e5d3f2, v_00defd] = v_5ab095<'session' | 'saving' | null>(null);
 
   const v_b1faa7 = v_e662ae<boolean>(false);
 
@@ -401,16 +458,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_98b3fa = v_de06a3(async () => {
     console.log('세션 초기화 후 intro로 이동');
     if (v_a3ff5a.current) {
-      try {
-        await v_a3ff5a.current.stop();
-        console.log('세션 중지 완료');
-      } catch (v_9e86fd) {
-        console.warn('세션 중지 실패:', v_9e86fd);
-      }
       await v_98caa0();
       v_a3ff5a.current = undefined;
 
-      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 1500));
+      const v_d5c272 = 2000;
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, v_d5c272));
     }
 
     await v_98caa0();
@@ -429,6 +481,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_318478.current = false;
     v_b9ada4.current = false;
     v_49296b(false);
+
     v_b0aeaf(false);
     v_8a8952(undefined);
     v_f36dd5(undefined);
@@ -538,8 +591,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
       console.log('라이센스 키 확인:', v_651d83 ? `${v_651d83.substring(0, 10)}...` : '없음');
 
-      console.log('카메라 초기화 대기 중... (1.5초)');
-      await new Promise(v_6f7712 => setTimeout(v_6f7712, 1500));
+      console.log('카메라 초기화 대기 중... (1초)');
+      await new Promise(v_6f7712 => setTimeout(v_6f7712, 1000));
 
       const userInformation: v_bc6a30 = {};
       if (v_2f3ab2 && !isNaN(Number(v_2f3ab2))) {
@@ -677,12 +730,19 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('health_analysis.errors.session_not_ready'));
           return;
         }
+
+        if (v_9d8f75.current) {
+          return;
+        }
+        v_9d8f75.current = true;
+        v_979bbe(true);
         console.log('측정 시작 요청, 세션 상태:', v_bc50c7);
 
         v_1dd18f.current = false;
         v_567414.current = false;
         v_e7c1c1.current = false;
         v_128f31(false);
+        v_b30457(true); 
 
         await v_a3ff5a.current?.start(v_8ea06a);
       } else if (
@@ -694,6 +754,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         await v_98b3fa();
       }
     } catch (v_9e86fd) {
+      v_9d8f75.current = false;
+      v_979bbe(false);
       const v_748547 = v_9e86fd as v_89d8fd;
       const v_7a5fef = v_748547?.code;
       console.error('측정 시작/중지 오류 상세:', {
@@ -704,6 +766,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         sessionState: v_bc50c7,
         hasSession: !!v_a3ff5a.current,
       });
+
+      if (v_7a5fef === 6004) {
+        console.warn('[6004] 측정 시작 이미 진행 중 - 무시');
+        return;
+      }
 
       if (v_7a5fef && v_141cf8(v_7a5fef)) {
         return;
@@ -979,6 +1046,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }, [v_f6dcea]);
 
   v_c4deb2(() => {
+    if (v_bc50c7 === v_eb2401.READY) {
+      v_b30457(false);
+      return;
+    }
+    if (v_bc50c7 !== v_eb2401.STARTING && v_bc50c7 !== v_eb2401.PROCESSING) {
+      return;
+    }
+    const v_cb36b1 = setTimeout(() => v_b30457(false), 1000);
+    return () => clearTimeout(v_cb36b1);
+  }, [v_bc50c7]);
+
+  v_c4deb2(() => {
     if (v_bc50c7 === v_eb2401.STARTING) {
       v_f36dd5(undefined);
     }
@@ -1204,54 +1283,202 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('전체 결과:', v_9f8792);
       console.log('============================');
 
+      const v_efc105 = v_9a1841
+        ? v_41d2ba.filter((v_3b27d9) => v_9a1841.licenseEnabled.isEnabled(v_3b27d9))
+        : [];
+      const v_c8def9 =
+        v_efc105.length > 0
+          ? v_6ab976.some((v_3b6321) => v_efc105.includes(v_3b6321))
+          : v_ad9b8f.length === 0;
+
+      if (v_c8def9) {
+        v_8978ad.current = v_d0a515;
+
+        v_72744e(true);
+        v_00defd('session');
+        v_03e392.alert(
+          v_8d41d7('health_analysis.measurement.result_missing_title'),
+          v_8d41d7('health_analysis.measurement.result_missing_message'),
+          [
+            {
+              text: v_8d41d7('common.confirm'),
+              onPress: () => {
+
+                setTimeout(() => {
+                  (async () => {
+                    try {
+                      if (v_a3ff5a.current) {
+                        console.log('[결과 누락] 세션 종료 시작...');
+                        await v_98caa0();
+                        v_a3ff5a.current = undefined;
+                        console.log('[결과 누락] 세션 종료 완료');
+                      }
+                      v_b98ddb.current = false;
+                      v_977633.current = 0;
+                      v_1dd18f.current = true;
+                      v_639227('intro');
+                    } catch (v_9e86fd) {
+                      console.error('[결과 누락] 세션 종료 오류:', v_9e86fd);
+                    } finally {
+                      v_2d4718.runAfterInteractions(() => {
+                        v_00defd(null);
+                        v_72744e(false);
+                      });
+                    }
+                  })();
+                }, 0);
+              },
+            },
+          ],
+        );
+        return;
+      }
+
+      const v_42044e = new Date().toISOString();
+      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+      const v_f4ebd0 = {
+        age: v_2f3ab2 || undefined,
+        gender: v_a5d6d1 || undefined,
+        weight: v_ebc748 || undefined,
+        height: v_5b20cf || undefined,
+        smokingStatus: v_8f47c9 || undefined,
+        bloodPressureStatus: v_6b257a || undefined,
+      };
+
+      v_72744e(true);
+      v_00defd('session');
       (async () => {
         try {
+
           if (v_a3ff5a.current) {
-            try {
-              await v_a3ff5a.current.stop();
-              console.log('[결과 화면 이동] 세션 중지 완료');
-            } catch (v_9e86fd) {
-              console.warn('[결과 화면 이동] 세션 중지 실패:', v_9e86fd);
-            }
+            console.log('[결과 화면 이동] 세션 종료 시작...');
             await v_98caa0();
+            v_a3ff5a.current = undefined;
             console.log('[결과 화면 이동] 세션 종료 완료');
           }
+          v_b98ddb.current = false;
+          v_977633.current = 0;
+          v_1dd18f.current = true;
+
+          v_00defd('saving');
+          const v_e33e2a = (v_653390): string => {
+            const v_f2dfb8 = {
+              [v_e3e816.PULSE_RATE]: 'pulse_rate',
+              [v_e3e816.RESPIRATION_RATE]: 'respiration_rate',
+              [v_e3e816.OXYGEN_SATURATION]: 'oxygen_saturation',
+              [v_e3e816.BLOOD_PRESSURE]: 'blood_pressure',
+              [v_e3e816.SDNN]: 'sdnn', [v_e3e816.RMSSD]: 'rmssd', [v_e3e816.MEAN_RRI]: 'mean_rri',
+              [v_e3e816.SD1]: 'sd1', [v_e3e816.SD2]: 'sd2', [v_e3e816.SNS_ZONE]: 'sns_zone',
+              [v_e3e816.SNS_INDEX]: 'sns_index', [v_e3e816.STRESS_LEVEL]: 'stress_level',
+              [v_e3e816.STRESS_INDEX]: 'stress_index', [v_e3e816.NORMALIZED_STRESS_INDEX]: 'normalized_stress_index',
+              [v_e3e816.PNS_ZONE]: 'pns_zone', [v_e3e816.PNS_INDEX]: 'pns_index', [v_e3e816.PRQ]: 'prq',
+              [v_e3e816.HEMOGLOBIN]: 'hemoglobin', [v_e3e816.HEMOGLOBIN_A1C]: 'hemoglobin_a1c',
+              [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: 'high_hemoglobin_a1c_risk',
+              [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: 'high_blood_pressure_risk',
+              [v_e3e816.ASCVD_RISK]: 'ascvd_risk', [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: 'high_fasting_glucose_risk',
+              [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: 'high_total_cholesterol_risk',
+              [v_e3e816.LOW_HEMOGLOBIN_RISK]: 'low_hemoglobin_risk', [v_e3e816.HEART_AGE]: 'heart_age',
+              [v_e3e816.CARDIAC_WORKLOAD]: 'cardiac_workload', [v_e3e816.PULSE_PRESSURE]: 'pulse_pressure',
+              [v_e3e816.MEAN_ARTERIAL_PRESSURE]: 'mean_arterial_pressure', [v_e3e816.LFHF]: 'lfhf',
+              [v_e3e816.ASCVD_RISK_LEVEL]: 'ascvd_risk_level', [v_e3e816.BODY_TENSION_SCORE]: 'body_tension_score',
+              [v_e3e816.WELLNESS_INDEX]: 'wellness_index', [v_e3e816.WELLNESS_LEVEL]: 'wellness_level',
+            };
+            return v_f2dfb8[v_653390] ?? `unknown_${v_653390}`;
+          };
+          const v_2586c7 = (v_3b402b): number | null => {
+            const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+            if (isNaN(v_549ed3)) return null;
+            const v_75195c = v_549ed3 > 10 ? v_549ed3 / 10 : v_549ed3;
+            return Math.max(0, Math.min(10, Math.round(v_75195c)));
+          };
+          const v_4016c5 = v_9f8792[v_e3e816.WELLNESS_INDEX]?.value ?? v_9f8792[v_e3e816.WELLNESS_LEVEL]?.value;
+          const v_e93dff = v_2586c7(v_4016c5) ?? 0;
+          const v_30ddf9 = v_e93dff >= 7 ? 'good' : v_e93dff >= 4 ? 'normal' : 'bad';
+          const v_0946e7 = {};
+          Object.entries(v_9f8792).forEach(([v_3b27d9, v_9390e8]) => {
+            const v_653390 = Number(v_3b27d9);
+            const v_3b402b = (v_9390e8 as any).value;
+            if (v_3b402b === null || v_3b402b === undefined) return;
+            let v_d308b5 = (v_9390e8 as any).status;
+            if (v_d308b5 === '정상') v_d308b5 = 'normal';
+            else if (v_d308b5 === '위험') v_d308b5 = 'risk';
+            v_0946e7[v_e33e2a(v_653390)] = {
+              value: v_3b402b,
+              ...(v_d308b5 && { status: v_d308b5 }),
+              ...((v_9390e8 as any).confidence && { confidence: (v_9390e8 as any).confidence }),
+            };
+          });
+          const v_80d73f = new Date(v_42044e);
+          const v_067e65 = `${v_80d73f.getFullYear()}-${String(v_80d73f.getMonth() + 1).padStart(2, '0')}-${String(v_80d73f.getDate()).padStart(2, '0')}`;
+          const v_dcf6a6 = `${String(v_80d73f.getHours()).padStart(2, '0')}:${String(v_80d73f.getMinutes()).padStart(2, '0')}`;
+          const v_083682 = v_0c2f9b?.isCurrent === true;
+          const v_f6ed03 = v_e7b2f2?.startsWith('sub-') ? v_e7b2f2.replace('sub-', '') : v_e7b2f2;
+          const v_ee2acd = v_083682 ? undefined : (v_f6ed03 && v_f6ed03 !== '1' && v_f6ed03 !== 'me' ? Number(v_f6ed03) : undefined);
+          const savePayload: v_9923f5 = {
+            record_date: v_067e65,
+            record_time: v_dcf6a6,
+            health_index: v_e93dff,
+            health_level: v_30ddf9,
+            vital_signs: v_0946e7,
+            ...(v_ee2acd != null && { sub_account_id: v_ee2acd }),
+            metadata: {
+              device: 'FzljtiliSignal SDK',
+              timestamp: v_42044e,
+              ...(v_f4ebd0 && Object.keys(v_f4ebd0).some(v_0eb677 => (v_f4ebd0 as any)[v_0eb677]) && { user_info: v_f4ebd0 }),
+            },
+          };
+          try {
+            console.log('[결과 화면 이동] API 저장 시작...');
+            await v_207199(v_60e8e0);
+            console.log('[결과 화면 이동] API 저장 완료');
+          } catch (v_09112b) {
+            console.error('[결과 화면 이동] API 저장 실패:', v_09112b);
+          }
+
+          v_c65f5d.navigate('HealthAnalysisResult', {
+            results: v_9f8792,
+            timestamp: v_42044e,
+            userName: v_0c2f9b?.name,
+            accounts: v_c86f08,
+            selectedAccountId: v_e7b2f2,
+            userInfo: v_f4ebd0,
+            savedBeforeNavigate: true,
+          });
         } catch (v_9e86fd) {
-          console.error('[결과 화면 이동] 세션 정리 중 오류:', v_9e86fd);
+          console.error('[결과 화면 이동] 오류:', v_9e86fd);
         }
 
-        v_b98ddb.current = false;
-        v_977633.current = 0;
-        v_1dd18f.current = true; 
-        console.log('[결과 화면 이동] 3003 에러 관련 플래그 리셋 및 세션 종료 완료');
       })();
 
-      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
-      v_c65f5d.navigate('HealthAnalysisResult', {
-        results: v_9f8792,
-        timestamp: new Date().toISOString(),
-        userName: v_0c2f9b?.name,
-        accounts: v_c86f08,
-        selectedAccountId: v_e7b2f2,
-        userInfo: {
-          age: v_2f3ab2 || undefined,
-          gender: v_a5d6d1 || undefined,
-          weight: v_ebc748 || undefined,
-          height: v_5b20cf || undefined,
-          smokingStatus: v_8f47c9 || undefined,
-          bloodPressureStatus: v_6b257a || undefined,
-        },
-      });
       v_8978ad.current = v_d0a515;
       v_567414.current = false;
     }
-  }, [v_91943c, v_d0a515, v_c65f5d]);
+  }, [v_91943c, v_d0a515, v_c65f5d, v_8d41d7, v_9a1841, v_98caa0, v_639227]);
+
+  const v_82b6fb = v_de06a3(() => {
+    v_919f8c.current = null;
+    v_c1affb.current = 0;
+    v_977633.current = 0;
+    v_b98ddb.current = false;
+    v_9d8f75.current = false;
+    v_318478.current = false;
+    v_1cbea0.current = false;
+    v_517d25.current = false;
+    v_1dd18f.current = false;
+    v_b9ada4.current = false;
+    v_e7c1c1.current = false;
+  }, []);
 
   v_c4deb2(() => {
     if (v_91943c === 'measurement') {
       v_567414.current = false;
+      v_82b6fb();
+      v_979bbe(false);
+    } else {
+      v_9d8f75.current = false;
+      v_979bbe(false);
     }
-  }, [v_91943c]);
+  }, [v_91943c, v_82b6fb]);
 
   v_c4deb2(() => {
     const v_7b6d17 = {
@@ -1269,26 +1496,30 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     if (v_a3ff5a.current && v_bc50c7 === v_eb2401.READY) {
       console.log('✅ 세션이 READY 상태입니다. 카메라가 활성화되었습니다.');
 
+      v_49296b(false);
+
       if (v_c1affb.current > 0) {
         console.log('[3003 에러 처리] 세션 재생성 성공 - 재시도 횟수 리셋');
         v_c1affb.current = 0;
       }
 
-      if (v_919f8c.current === v_eb2401.TERMINATED ||
-        v_919f8c.current === v_eb2401.INITIALIZING ||
-        v_919f8c.current === null) {
-        v_977633.current = Date.now() + 5000; 
+      if (v_919f8c.current === v_eb2401.TERMINATED && v_c1affb.current > 0) {
+        v_977633.current = Date.now() + 5000;
         console.log('[3003 에러 처리] 세션 재생성 완료 - 5초 동안 3003 에러 무시');
       }
-    } else if (v_a3ff5a.current && v_bc50c7 === v_eb2401.PROCESSING) {
+    } else if (v_a3ff5a.current && (v_bc50c7 === v_eb2401.STARTING || v_bc50c7 === v_eb2401.PROCESSING)) {
 
-      if (v_b98ddb.current) {
-        console.log('[3003 에러 처리] 측정 시작 성공 - 팝업 플래그 리셋');
-        v_b98ddb.current = false;
-      }
-      if (v_c1affb.current > 0) {
-        console.log('[3003 에러 처리] 측정 시작 성공 - 재시도 횟수 리셋');
-        v_c1affb.current = 0;
+      v_9d8f75.current = false;
+      v_979bbe(false);
+      if (v_bc50c7 === v_eb2401.PROCESSING) {
+        if (v_b98ddb.current) {
+          console.log('[3003 에러 처리] 측정 시작 성공 - 팝업 플래그 리셋');
+          v_b98ddb.current = false;
+        }
+        if (v_c1affb.current > 0) {
+          console.log('[3003 에러 처리] 측정 시작 성공 - 재시도 횟수 리셋');
+          v_c1affb.current = 0;
+        }
       }
     } else if (v_a3ff5a.current && v_bc50c7 === v_eb2401.TERMINATING) {
       console.warn('⚠️ 세션이 TERMINATING 상태입니다. 세션이 종료되고 있습니다.');
@@ -1314,6 +1545,22 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('화면 포커스됨');
       v_4c31ba.current = true;
 
+      (async () => {
+        const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+        if (!v_21cc31) {
+          v_03e392.alert(
+            v_8d41d7('common.error'),
+            v_8d41d7('health_analysis.login_required_message', '로그인 후 건강 분석을 이용해 주세요. 측정 결과 저장을 위해 로그인이 필요합니다.'),
+            [{ text: v_8d41d7('common.confirm'), onPress: () => v_c65f5d.navigate('Login') }],
+            { cancelable: false }
+          );
+          return;
+        }
+      })();
+
+      v_00defd(null);
+      v_72744e(false);
+
       v_604e0f();
 
       if (v_c7daf6.params?.resetToIntro && !v_18f59d.current) {
@@ -1328,7 +1575,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       }
 
       return () => {
-        console.log('화면 언포커스됨, 세션 종료');
+        console.log('화면 언포커스됨, 세션 종료 및 ref 정리');
         v_4c31ba.current = false;
 
         if (v_a3ff5a.current) {
@@ -1341,8 +1588,21 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_b1faa7.current = false;
         v_b0aeaf(false);
         v_49296b(false);
+
+        v_919f8c.current = null;
+        v_c1affb.current = 0;
+        v_977633.current = 0;
+        v_b98ddb.current = false;
+        v_9d8f75.current = false;
+        v_318478.current = false;
+        v_1cbea0.current = false;
+        v_517d25.current = false;
+        v_1dd18f.current = false;
+        v_b9ada4.current = false;
+        v_e7c1c1.current = false;
+        v_979bbe(false);
       };
-    }, [v_98caa0, v_c7daf6.params?.resetToIntro, v_c65f5d])
+    }, [v_98caa0, v_c7daf6.params?.resetToIntro, v_c65f5d, v_8d41d7])
   );
 
   const v_49b151 = v_e662ae(v_bb3644);
@@ -1375,7 +1635,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
     console.log('카메라 마운트 완료, 세션 생성 예약');
 
-    const v_4b24d2 = 2000;
+    const v_4b24d2 = 1000;
     const v_cb36b1 = setTimeout(() => {
 
       if (
@@ -1614,12 +1874,17 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         onRequestClose={() => v_d2b6af(false)}
       >
         <KeyboardAvoidingView
+          key={v_af8c44}
           behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
           style={v_d81136.stepModalKeyboardAvoid}
+          onLayout={(e: v_e99fe0) => {
+            v_1efea8.current = v_9e86fd.nativeEvent.layout;
+            console.log('[모달 위치] onLayout', v_9e86fd.nativeEvent.layout);
+          }}
         >
           <View style={v_d81136.stepModalOverlay}>
             <View style={v_d81136.stepModalSpacer} />
-            <View style={[v_d81136.stepModalContent, { paddingBottom: v_9b1a04.xlarge + v_ea7233 }]}>
+            <View style={[v_d81136.stepModalContent, { paddingBottom: v_9b1a04.xlarge + (v_ac3ab7 ? 0 : v_ea7233) }]}>
               {}
               <TouchableOpacity
                 style={v_d81136.stepModalCloseBtn}
@@ -1810,6 +2075,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <View style={v_d81136.stepNextWrapper}>
                       <PrimaryButton
                         title={v_8d41d7('common.next')}
+                        disabled={
+                          (v_63ed0f === 0 && !v_a5d6d1) ||
+                          (v_63ed0f === 1 && (!v_2f3ab2?.trim() || !!v_78e93d)) ||
+                          (v_63ed0f === 2 && (!v_ebc748?.trim() || !!v_aa2d84)) ||
+                          (v_63ed0f === 3 && (!v_5b20cf?.trim() || !!v_c762f3)) ||
+                          (v_63ed0f === 4 && !v_8f47c9)
+                        }
                         onPress={() => {
                           if (v_63ed0f === 0 && !v_a5d6d1) return;
                           if (v_63ed0f === 1 && (!v_2f3ab2 || v_78e93d)) return;
@@ -1863,11 +2135,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title={v_8d41d7('health_analysis.measurement.screen_title')}
-          showBackButton
-          onBackPress={() => {
-
-            v_56ef46();
-          }}
         />
         {}
         <View style={v_d81136.cameraContainer} onLayout={v_0bafd1}>
@@ -1880,20 +2147,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
           <View style={v_d81136.cameraOverlay}>
             {}
-            <View style={v_d81136.cameraHeader}>
-              <TouchableOpacity
-                style={v_d81136.closeButton}
-                onPress={() => {
-
-                  v_56ef46();
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={v_8d41d7('health_analysis.measurement.back_button')}
-              >
-                <Ionicons name="close" size={28} color={v_1bfbd0.white} />
-              </TouchableOpacity>
-            </View>
-
+            <View style={v_d81136.cameraOverlaySpacer} />
             {}
             <View style={v_d81136.infoContainerOverlay}>
               {v_12abe8 && (
@@ -1910,7 +2164,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             </View>
 
             {}
-            <View style={v_d81136.bottomContainer}>
+            <View
+              style={[
+                v_d81136.bottomContainer,
+                {
+                  paddingBottom:
+                    v_9b1a04.xlarge +
+                    (v_326be8.OS === 'ios'
+                      ? v_033e14.bottom
+                      : Math.max(v_262e99, v_033e14.bottom)),
+                },
+              ]}
+            >
               {}
               <View style={v_d81136.statusContainer}>
                 {v_109b56 ? (
@@ -1936,9 +2201,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   onPress={v_ac8071}
                   disabled={
                     v_109b56 ||
+                    (v_bc50c7 === v_eb2401.READY && v_2a37b1) ||
                     (v_bc50c7 !== v_eb2401.READY &&
                       v_bc50c7 !== v_eb2401.STARTING &&
-                      v_bc50c7 !== v_eb2401.PROCESSING)
+                      v_bc50c7 !== v_eb2401.PROCESSING) ||
+                    ((v_bc50c7 === v_eb2401.STARTING || v_bc50c7 === v_eb2401.PROCESSING) && v_955bd3)
                   }
                 />
               </View>
@@ -1946,6 +2213,19 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
         </View>
       </SafeView>
+      {}
+      {v_8140fa && (
+        <View style={v_d81136.resultPreparingOverlay} pointerEvents="auto">
+          <View style={v_d81136.resultPreparingBox}>
+            <ActivityIndicator size="large" color={v_1bfbd0.bluePrimary} />
+            <Text style={v_d81136.resultPreparingText}>
+              {v_e5d3f2 === 'session'
+                ? v_8d41d7('health_analysis.measurement.result_preparing_session')
+                : v_8d41d7('health_analysis.measurement.result_preparing')}
+            </Text>
+          </View>
+        </View>
+      )}
     </>
   );
 
@@ -1954,7 +2234,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }
 
   return (
-    <MainLayout activeKey="analysis">
+    <MainLayout activeKey="analysis" hideBottomNav={true}>
       <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
         {v_629820()}
       </View>
@@ -2329,18 +2609,8 @@ const v_d81136 = v_472849.create({
     ...v_472849.absoluteFillObject,
     justifyContent: 'space-between',
   },
-  cameraHeader: {
-    paddingTop: v_326be8.OS === 'ios' ? 50 : 20,
-    paddingHorizontal: v_9b1a04.large,
-    alignItems: 'flex-end',
-  },
-  closeButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
+  cameraOverlaySpacer: {
+    flex: 1,
   },
   bottomContainer: {
     paddingTop: v_9b1a04.large,
@@ -2465,6 +2735,26 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.small,
     borderRadius: 8,
+  },
+  resultPreparingOverlay: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 100,
+  },
+  resultPreparingBox: {
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: 16,
+    paddingVertical: v_9b1a04.xlarge,
+    paddingHorizontal: v_9b1a04.xlarge * 2,
+    alignItems: 'center',
+    gap: v_9b1a04.medium,
+  },
+  resultPreparingText: {
+    fontSize: 16,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.text,
   },
 });
 
