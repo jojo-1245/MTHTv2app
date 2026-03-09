@@ -281,12 +281,17 @@ export const v_38756f = (item: v_218d40): HealthRecord => {
     });
   }
 
+  const v_841117 = v_ee03c5(v_b9fc6f);
+  const v_4622b9 = Object.keys(v_b9fc6f).length > 0
+    ? v_841117.filter((v_ebec57) => v_b9fc6f[v_ebec57.key] != null)
+    : v_841117;
+
   return {
     id: String(v_8c0b26.id),
     date: v_8c0b26.record_date,
     time: v_8c0b26.record_time,
     healthIndex: v_8c0b26.health_index,
-    items: v_ee03c5(v_b9fc6f), 
+    items: v_4622b9,
   };
 };
 
