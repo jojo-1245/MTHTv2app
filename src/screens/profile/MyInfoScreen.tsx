@@ -37,7 +37,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
   const [v_d11128, v_36c42a] = v_5ab095(false);
-
   const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
   const v_e71371 = v_727031?.business === 1 || v_727031?.business === true;

@@ -88,14 +88,18 @@ export interface CompareHealthRecordsResponse {
 
 function v_1bbaa4(v_5e9bfe): Error {
   if (v_b5030f.isAxiosError(v_5e9bfe)) {
-    const v_8a7529 = v_5e9bfe.response?.data as ApiResponse<unknown> | undefined;
+    const v_9390e8 = v_5e9bfe.response?.data as Record<string, unknown> | undefined;
     const v_a8cd21 =
-      v_8a7529?.error?.message ||
+      (v_9390e8?.error as { message?: string } | undefined)?.message ||
+      (typeof v_9390e8?.message === 'string' ? v_9390e8.message : null) ||
       v_5e9bfe.response?.statusText ||
       v_5e9bfe.message ||
       '요청 중 오류가 발생했습니다.';
     if (v_5e9bfe.response?.status === 401) {
       return new Error('로그인이 필요합니다.');
+    }
+    if (v_5e9bfe.response?.status === 500 && __DEV__ && v_9390e8) {
+      console.warn('[healthApi] 500 응답 본문:', JSON.stringify(v_9390e8, null, 2));
     }
     return new Error(v_a8cd21);
   }

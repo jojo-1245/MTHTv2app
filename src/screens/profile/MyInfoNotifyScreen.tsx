@@ -12,14 +12,14 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_75de9d } from 'zqqvxke';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_0ae9ff, v_5a7212, v_7ebf51, v_56d16a, v_84fd28 } from 'wjvlskvsbzsrojdbjsl';
+import { v_dec439, v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_570c34, v_1c1837, v_729608 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
+import { v_880836, v_9803ea } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'MyInfoNotify'>;
 
@@ -32,11 +32,30 @@ export interface NotificationItem {
   unread?: boolean;
   requesterEmail?: string;
   requesterName?: string;
+
+  reward_amount?: number;
+}
+
+function v_a1b0ab(v_a86996): Date {
+  if (v_a86996 == null || v_a86996 === '') return new Date();
+  const v_fd5f43 = String(v_a86996).trim();
+  if (!v_fd5f43) return new Date();
+
+  if (v_fd5f43.endsWith('Z') || /[+-]\d{2}:?\d{2}$/.test(v_fd5f43)) return new Date(v_fd5f43);
+
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(v_fd5f43)) return new Date(v_fd5f43 + 'Z');
+
+  const v_205f1b = v_fd5f43.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?)/);
+  if (v_205f1b) return new Date(v_205f1b[1] + 'T' + v_205f1b[2] + 'Z');
+
+  const v_f4e98d = Number(v_fd5f43);
+  if (!Number.isNaN(v_f4e98d)) return new Date(v_f4e98d > 1e12 ? v_f4e98d : v_f4e98d * 1000);
+  return new Date(v_fd5f43);
 }
 
 const v_1108ee = (v_a86996, t: v_75de9d): string => {
   try {
-    const v_8dffde = new Date(v_a86996);
+    const v_8dffde = v_a1b0ab(v_a86996);
     const v_5c2f9f = new Date();
     const v_d52712 = v_5c2f9f.getTime() - v_8dffde.getTime();
     const v_56a749 = Math.floor(v_d52712 / 60000);
@@ -53,51 +72,6 @@ const v_1108ee = (v_a86996, t: v_75de9d): string => {
   }
 };
 
-const v_9c28a5 = (t: v_75de9d): NotificationItem[] => [
-  {
-    board: 1,
-    type: 9304,
-    title: v_8d41d7('my_info_notify.notify_health_request_title'),
-    description: v_8d41d7('my_info_notify.notify_health_request_desc', { name: v_8d41d7('my_info_notify.sample_requester_name') }),
-    datetime: new Date(Date.now() - 60000).toISOString(),
-    unread: true,
-    requesterEmail: 'oth-staff@example.invalid',
-    requesterName: v_8d41d7('my_info_notify.sample_requester_name'),
-  },
-  {
-    board: 2,
-    type: 9305,
-    title: v_8d41d7('my_info_notify.notify_daily_goal_title'),
-    description: v_8d41d7('my_info_notify.notify_daily_goal_desc'),
-    datetime: new Date(Date.now() - 3600000).toISOString(),
-    unread: true,
-  },
-  {
-    board: 3,
-    type: 9306,
-    title: v_8d41d7('my_info_notify.notify_skin_complete_title'),
-    description: v_8d41d7('my_info_notify.notify_skin_complete_desc'),
-    datetime: new Date(Date.now() - 10800000).toISOString(),
-    unread: false,
-  },
-  {
-    board: 4,
-    type: 9307,
-    title: v_8d41d7('my_info_notify.notify_health_complete_title'),
-    description: v_8d41d7('my_info_notify.notify_health_complete_desc'),
-    datetime: new Date(Date.now() - 14400000).toISOString(),
-    unread: false,
-  },
-  {
-    board: 5,
-    type: 9308,
-    title: v_8d41d7('my_info_notify.notify_new_product_title'),
-    description: v_8d41d7('my_info_notify.notify_new_product_desc'),
-    datetime: new Date(Date.now() - 86400000).toISOString(),
-    unread: false,
-  },
-];
-
 const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57 } = v_a0daa8();
@@ -108,10 +82,16 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
   const v_496106 = v_de06a3(async () => {
     v_34a50a(true);
-    v_0965ee(v_9c28a5(v_8d41d7));
+    try {
+      const { notifications: v_ef8ab1 } = await v_880836();
+      v_0965ee(v_ef8ab1);
+    } catch (v_9e86fd) {
+      if (__DEV__) console.warn('[MyInfoNotifyScreen] 알림 목록 로드 실패:', v_9e86fd);
+      v_0965ee([]);
+    }
     v_34a50a(false);
     v_575aad(false);
-  }, [v_8d41d7]);
+  }, []);
 
   v_c4deb2(() => {
     v_496106();
@@ -142,7 +122,8 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     );
   };
 
-  const v_406068 = (v_3b27d9) => {
+  const v_406068 = (v_71cf9b) => {
+    const v_3b27d9 = Number(v_71cf9b);
     switch (v_3b27d9) {
       case 9304:
         return { bg: '#E0E7FF', iconColor: '#615FFF' };
@@ -159,34 +140,56 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     }
   };
 
-  const v_c273da = (v_3b27d9) => {
-    const v_05b441 = 24;
+  const v_c273da = (v_71cf9b) => {
+    const v_3b27d9 = Number(v_71cf9b);
+    const v_05b441 = 22;
     const { iconColor: v_ef160b } = v_406068(v_3b27d9);
+    const v_7dab47 = { size: v_05b441, color: v_ef160b };
     switch (v_3b27d9) {
       case 9304:
-        return <Bell size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <Ionicons name="notifications-outline" {...v_7dab47} />;
       case 9305:
-        return <Trophy size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <Ionicons name="trophy-outline" {...v_7dab47} />;
       case 9306:
-        return <Droplet size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <Ionicons name="water-outline" {...v_7dab47} />;
       case 9307:
-        return <Heart size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <MaterialCommunityIcons name="heart-outline" size={v_05b441} color="#DB2777" />;
       case 9308:
-        return <Gift size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <Ionicons name="gift-outline" {...v_7dab47} />;
       default:
-        return <Bell size={v_05b441} color={v_ef160b} strokeWidth={2} />;
+        return <Ionicons name="notifications-outline" {...v_7dab47} />;
     }
   };
+
+  const v_b0f7df = v_de06a3(async (v_8c0b26) => {
+    if (!v_8c0b26.unread) return;
+
+    v_0965ee((v_ba2215) => v_ba2215.map((v_f4e98d) => (v_f4e98d.board === v_8c0b26.board ? { ...v_f4e98d, unread: false } : v_f4e98d)));
+    try {
+      await v_9803ea(v_8c0b26.board);
+    } catch (v_9e86fd) {
+      if (__DEV__) console.warn('[MyInfoNotifyScreen] 읽음 API 실패 (화면은 읽음 처리됨):', v_9e86fd);
+    }
+  }, []);
 
   const v_858a9b = (v_8c0b26) => {
     const { bg: v_6fe397 } = v_406068(v_8c0b26.type);
     return (
-      <View key={v_8c0b26.board} style={[v_d81136.card, v_8c0b26.unread ? v_d81136.cardUnread : v_d81136.cardRead]}>
+      <TouchableOpacity
+        key={v_8c0b26.board}
+        activeOpacity={0.85}
+        onPress={() => v_b0f7df(v_8c0b26)}
+        style={[v_d81136.card, v_8c0b26.unread ? v_d81136.cardUnread : v_d81136.cardRead]}
+      >
         {v_8c0b26.unread && <View style={v_d81136.unreadDot} />}
         <View style={[v_d81136.cardIconWrap, { backgroundColor: v_6fe397 }]}>{v_c273da(v_8c0b26.type)}</View>
         <View style={v_d81136.cardContent}>
           <Text style={v_d81136.cardTitle}>{v_8c0b26.title}</Text>
-          <Text style={v_d81136.cardDesc}>{v_8c0b26.description}</Text>
+          <Text style={v_d81136.cardDesc}>
+            {v_8c0b26.type === 9305 && v_8c0b26.reward_amount != null
+              ? v_8d41d7('my_info_notify.notify_daily_goal_desc_with_amount', { amount: v_8c0b26.reward_amount })
+              : v_8c0b26.description}
+          </Text>
           <Text style={v_d81136.cardTime}>{v_1108ee(v_8c0b26.datetime, v_8d41d7)}</Text>
           {v_8c0b26.type === 9304 && (
             <View style={v_d81136.actionRow}>
@@ -209,7 +212,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
             </View>
           )}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -238,7 +241,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
                 end={{ x: 1, y: 1 }}
                 style={v_d81136.headerIconWrap}
               >
-                <Bell size={24} color="#FFFFFF" strokeWidth={2} />
+                <Ionicons name="notifications-outline" size={24} color="#FFFFFF" />
               </LinearGradient>
             </View>
           }
