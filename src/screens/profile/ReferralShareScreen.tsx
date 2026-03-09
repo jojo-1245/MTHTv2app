@@ -88,7 +88,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_3f557d = v_d844c3(v_92b6a6);
 
     const v_682edd = async () => {
-        await v_fba5a0.setStringAsync(v_3f557d);
+        await v_fba5a0.setStringAsync(v_92b6a6);
         v_03e392.alert(v_8d41d7('referral_share.copy_success_title'), v_8d41d7('referral_share.copy_success_message'));
     };
 
