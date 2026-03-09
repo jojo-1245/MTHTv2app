@@ -15,6 +15,8 @@ export interface NotificationItem {
   unread?: boolean;
   requesterEmail?: string;
   requesterName?: string;
+
+  reward_amount?: number;
 }
 
 type ApiResponse<T> = {
@@ -34,6 +36,7 @@ interface RawNotification {
   unread?: boolean;
   requester_email?: string;
   requester_name?: string;
+  reward_amount?: number;
 }
 
 function v_15db9d(v_fd5f43): string {
@@ -65,6 +68,7 @@ function v_67d14c(v_479f05): NotificationItem {
     unread: v_479f05.unread !== false,
     requesterEmail: v_479f05.requester_email,
     requesterName: v_479f05.requester_name,
+    reward_amount: v_479f05.reward_amount != null ? Number(v_479f05.reward_amount) : undefined,
   };
 }
 
