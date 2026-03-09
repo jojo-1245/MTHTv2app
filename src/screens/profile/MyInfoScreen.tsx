@@ -18,7 +18,7 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
-import { v_7ef860, v_4b3c9f, v_52c734, type v_2c95cc } from '../../services';
+import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
@@ -37,8 +37,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
   const [v_d11128, v_36c42a] = v_5ab095(false);
-  const [v_d9166c, v_6e6445] = v_5ab095(false);
-
   const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
   const v_e71371 = v_727031?.business === 1 || v_727031?.business === true;
@@ -82,7 +80,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       isLogout?: false;
     }
     | { id: string; title: string; isLogout: true }
-    | { id: string; title: string; action: 'skin_api' }
   > = [
       {
         id: 'edit',
@@ -124,30 +121,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         title: v_8d41d7('profile.logout'),
         isLogout: true,
       },
-      {
-        id: 'skin_api',
-        title: v_8d41d7('profile.skin_api_btn', '피부 API 보내기'),
-        action: 'skin_api',
-      },
     ];
-
-  const v_8cc2b1 = async () => {
-    v_6e6445(true);
-    try {
-      const v_cbbd71 = await v_52c734();
-      v_03e392.alert(
-        v_8d41d7('profile.skin_api_btn', '피부 API'),
-        v_cbbd71
-          ? `피부점수: ${v_cbbd71.overall_score}, 날짜: ${v_cbbd71.record_date ?? '-'}`
-          : v_8d41d7('profile.api_no_data', '데이터 없음'),
-      );
-    } catch (v_9e86fd) {
-      const v_badeaf = v_9e86fd instanceof Error ? v_9e86fd.message : String(v_9e86fd);
-      v_03e392.alert(v_8d41d7('common.error'), v_badeaf);
-    } finally {
-      v_6e6445(false);
-    }
-  };
 
   const v_06b8a4 = async () => {
     v_03e392.alert(v_8d41d7('profile.logout'), v_8d41d7('profile.logout_confirm'), [
@@ -280,8 +254,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 onPress={
                   v_8c0b26.isLogout
                     ? v_06b8a4
-                    : 'action' in v_8c0b26 && v_8c0b26.action
-                    ? v_8cc2b1
                     : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
                 }
                 activeOpacity={0.88}
@@ -297,19 +269,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     </View>
                     <Text style={[v_d81136.menuItemTextLogout, { color: v_1bfbd0.text }]}>
                       {v_d11128 ? v_8d41d7('profile.logging_out', '로그아웃 중...') : v_8c0b26.title}
-                    </Text>
-                  </>
-                ) : 'action' in v_8c0b26 && v_8c0b26.action ? (
-                  <>
-                    <View style={v_d81136.menuIconWrap}>
-                      {v_d9166c ? (
-                        <ActivityIndicator size="small" color={v_1bfbd0.text} />
-                      ) : (
-                        <Ionicons name="water-outline" size={24} color={v_1bfbd0.text} />
-                      )}
-                    </View>
-                    <Text style={v_d81136.menuItemText}>
-                      {v_d9166c ? v_8d41d7('profile.api_loading', '요청 중...') : v_8c0b26.title}
                     </Text>
                   </>
                 ) : (
