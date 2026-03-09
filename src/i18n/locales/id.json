@@ -508,7 +508,10 @@
         "purchases_completed": "pembelian selesai",
         "business": "Bisnis",
         "app_version": "MetaHint Health v1.0.0",
-        "copyright": "© 2026 MetaHint. All rights reserved."
+        "copyright": "© 2026 MetaHint. All rights reserved.",
+        "pangle_rewarded_test": "Tes Video Berhadiah Pangle",
+        "pangle_rewarded_test_done": "Video berhadiah selesai (tes)",
+        "pangle_rewarded_test_failed": "Iklan gagal dimuat"
     },
     "profit_distribution": {
         "title": "Distribusi Keuntungan",

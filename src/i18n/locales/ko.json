@@ -519,7 +519,10 @@
         "health_api_save_success": "건강 기록이 저장되었습니다. 알림이 발송됩니다.",
         "skin_api_btn": "피부 API 보내기",
         "api_no_data": "데이터 없음",
-        "api_loading": "요청 중..."
+        "api_loading": "요청 중...",
+        "pangle_rewarded_test": "팽글 보상형 동영상 테스트",
+        "pangle_rewarded_test_done": "보상형 동영상 시청 완료 (테스트)",
+        "pangle_rewarded_test_failed": "광고 로드 실패"
     },
     "profit_distribution": {
         "title": "수익배분",

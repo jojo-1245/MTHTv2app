@@ -12,6 +12,7 @@ import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';
 import { v_96a538 } from './src/hooks/useVersionCheck';
+import { v_b357c3 } from './src/services/admob';
 import { v_bfe92f } from './src/hooks/useKeepalive';
 import { v_9cafa7, v_fba277, v_26d101 } from './src/components';
 import * as v_79a9df from './src/services/versionService';
@@ -112,6 +113,7 @@ export default function v_6540c3() {
       if (v_c9c489.KAKAO_NATIVE_APP_KEY) {
         v_a93182(v_c9c489.KAKAO_NATIVE_APP_KEY);
       }
+      v_b357c3();
     } catch {
 
     }
