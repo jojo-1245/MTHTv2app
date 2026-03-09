@@ -93,6 +93,12 @@ dependencies {
 
     implementation("com.facebook.react:react-android")
 
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
+
+    implementation 'com.pangle.global:ads-sdk:4.6.0.9'
+
+    implementation 'com.google.ads.mediation:pangle:5.5.0.4.0'
+
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
     def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";

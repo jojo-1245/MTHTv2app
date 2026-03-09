@@ -509,7 +509,10 @@
         "purchases_completed": "purchases completed",
         "business": "Business",
         "app_version": "MetaHint Health v1.0.0",
-        "copyright": "© 2026 MetaHint. All rights reserved."
+        "copyright": "© 2026 MetaHint. All rights reserved.",
+        "pangle_rewarded_test": "Pangle Rewarded Video Test",
+        "pangle_rewarded_test_done": "Rewarded video completed (test)",
+        "pangle_rewarded_test_failed": "Ad failed to load"
     },
     "profit_distribution": {
         "title": "Profit Distribution",
