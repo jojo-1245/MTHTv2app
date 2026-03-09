@@ -75,10 +75,10 @@ const v_11fb5c = 16;
 const v_ff4e8b = 20;
 const v_006281 = 10; 
 
-const v_c19e2d = 100; 
+const v_c19e2d = 10000; 
 
-const v_55087c = 10; 
-const v_a1871a = 100; 
+const v_55087c = 0.015; 
+const v_a1871a = 0.01; 
 
 const v_2258bf = 10; 
 const v_7c2566 = 10; 
@@ -568,7 +568,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.pointsPill]}>
                       <Coins size={20} color="#FFFFFF" />
-                      <Text style={v_d81136.pointsText}>{v_1fddaf} MTHT</Text>
+                      <Text style={v_d81136.pointsText}>{v_1fddaf}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
