@@ -37,6 +37,15 @@ allprojects {
     maven {
       url "$rootDir/../node_modules/@notifee/react-native/android/libs"
     }
+    maven { url "https://oth-pathclicksdk.github.io/oth-pathclick-sdk-android-maven/maven-repo" }
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/oth-pathclicksdk/Android-SDK/SDK")
+      credentials {
+        username = findProperty("pointclickGithubUsername") ?: "pointclicksdk"
+        password = findProperty("pointclickGithubToken") ?: ""
+      }
+    }
   }
 }
 
