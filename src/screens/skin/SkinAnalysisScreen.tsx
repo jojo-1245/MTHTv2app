@@ -48,7 +48,7 @@ import {
 } from '../../services/skinAnalysis';
 import { v_9e8766, v_2282da } from '../../hooks';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_79be38 } from '../../services';
+import { v_79be38, v_23b7ab, v_8c9ccd } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -300,12 +300,30 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     );
                     return;
                 }
+
+                try {
+                    const v_a209e0 = await v_23b7ab('skin_analysis');
+                    v_f193b7(v_a209e0.can_proceed);
+                    v_11f378(v_a209e0.fee_amount);
+                    if (!v_a209e0.can_proceed) {
+                        v_03e392.alert(
+                            '잔액 부족',
+                            `피부 분석에 ${v_a209e0.fee_amount} MTHT가 필요합니다.\n현재 잔액: ${v_a209e0.balance} MTHT`,
+                            [{ text: '확인', onPress: () => v_c65f5d.goBack() }]
+                        );
+                    }
+                } catch (v_9e86fd) {
+                    console.warn('[피부분석] preflight 실패:', v_9e86fd);
+                }
             })();
             v_604e0f();
         }, [v_604e0f, v_c65f5d, v_8d41d7])
     );
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
+
+    const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
+    const [v_399221, v_11f378] = v_5ab095<string>('0');
 
     const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
     const v_1a165b = v_e662ae<v_78ceb7>(null);
@@ -514,6 +532,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         record_id: v_23eae7.record_id,
                     });
                 }
+
+                if (v_23eae7?.record_id) {
+                    v_8c9ccd('skin_analysis', v_23eae7.record_id)
+                        .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
+                        .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
+                }
             } catch (v_5e9bfe) {
                 console.error('[SkinAnalysisScreen] 피부 분석 결과 저장 실패:', v_5e9bfe);
 
@@ -611,6 +635,15 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         const v_ee89db = v_b36f96?.imageUri ?? v_82f4af;
         const v_34e5bb = v_b36f96?.mode ?? v_52f1d1;
         const v_44eb1a = v_b36f96?.concerns ?? (Array.from(v_76def3) as v_146928[]);
+
+        if (!v_f91d86) {
+            v_03e392.alert(
+                '잔액 부족',
+                `피부 분석에 ${v_399221} MTHT가 필요합니다.`,
+                [{ text: '확인' }]
+            );
+            return;
+        }
 
         if (!v_ee89db) {
             v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_image_required'));

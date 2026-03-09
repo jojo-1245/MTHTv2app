@@ -220,7 +220,6 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
-    v_deef62(true);
     try {
       const v_bd4b7d = await v_67ec53({
         email: v_8f37ac,
@@ -228,6 +227,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
       await v_d41982(v_bd4b7d, v_2129ec);
 
+      alert('TODO: 로그인');
       if (__DEV__) {
         console.log('[Perf] LoginScreen: navigation.reset(MetaHome) 호출 직전', { _ts: Date.now(), _time: new Date().toISOString() });
       }
@@ -248,7 +248,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       }
       v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);
     } finally {
-      v_deef62(false);
+
     }
   };
 

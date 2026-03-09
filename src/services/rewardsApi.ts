@@ -1,5 +1,6 @@
 import v_b5030f from 'imsks';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 
@@ -111,7 +112,7 @@ export async function v_b008ca(v_c65f5d): Promise<AttendanceRewardResponse['data
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }
@@ -144,7 +145,7 @@ export async function v_cbf5f1(v_c65f5d): Promise<AttendanceStatusResponse['data
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }
@@ -176,7 +177,7 @@ export async function v_e8dda3(v_c65f5d): Promise<AttendanceStatusDetailResponse
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }
@@ -232,7 +233,7 @@ export async function v_6c47a7(v_067e65): Promise<number[]> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }
@@ -282,7 +283,7 @@ export async function v_2ca7ff(
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }
@@ -345,7 +346,7 @@ export async function v_7740c3(
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  const v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     throw new Error('로그인이 필요합니다.');
   }

@@ -37,7 +37,7 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
 import { v_573fcf } from '../../utils/env';
 import { v_9e8766 } from '../../hooks';
-import { v_207199 } from '../../services';
+import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
 
 import {
@@ -214,6 +214,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_ac3ab7, v_028502] = v_5ab095(false);
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
+  const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
+  const [v_399221, v_11f378] = v_5ab095<string>('0');
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
     v_c7daf6.params?.initialTab ?? 'measure'
   );
@@ -240,6 +242,22 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   v_c4deb2(() => {
     console.log('세션 상태:', v_bc50c7);
   }, [v_bc50c7]);
+
+  v_c4deb2(() => {
+    v_23b7ab('health_analysis')
+      .then((v_8f00b9) => {
+        v_f193b7(v_8f00b9.can_proceed);
+        v_11f378(v_8f00b9.fee_amount);
+        if (!v_8f00b9.can_proceed) {
+          v_03e392.alert(
+            '잔액 부족',
+            `건강 분석에 ${v_8f00b9.fee_amount} MTHT가 필요합니다.\n현재 잔액: ${v_8f00b9.balance} MTHT`,
+            [{ text: '확인', onPress: () => v_c65f5d.goBack() }]
+          );
+        }
+      })
+      .catch((v_9e86fd) => console.warn('[건강분석] preflight 실패:', v_9e86fd));
+  }, []);
 
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
 
@@ -739,6 +757,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_ac8071 = v_de06a3(async () => {
     try {
       if (v_bc50c7 === v_eb2401.READY) {
+
+        if (!v_f91d86) {
+          v_03e392.alert(
+            '잔액 부족',
+            `건강 분석에 ${v_399221} MTHT가 필요합니다.`,
+            [{ text: '확인' }]
+          );
+          return;
+        }
 
         if (!v_a3ff5a.current) {
           v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('health_analysis.errors.session_not_ready'));
@@ -1443,8 +1470,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           };
           try {
             console.log('[결과 화면 이동] API 저장 시작...');
-            await v_207199(v_60e8e0);
+            const v_23eae7 = await v_207199(v_60e8e0);
             console.log('[결과 화면 이동] API 저장 완료');
+
+            if (v_23eae7?.id) {
+              v_8c9ccd('health_analysis', v_23eae7.id)
+                .then((v_cb35cb) => console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash))
+                .catch((v_9e86fd) => console.error('[건강분석] 비용 차감 실패:', v_9e86fd));
+            }
           } catch (v_09112b) {
             console.error('[결과 화면 이동] API 저장 실패:', v_09112b);
           }

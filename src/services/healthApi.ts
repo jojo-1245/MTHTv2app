@@ -1,5 +1,6 @@
 import v_b5030f from 'imsks';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 
@@ -112,7 +113,7 @@ export async function v_777b12(v_ee2acd): Promise<HealthRecordItem[]> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -198,7 +199,7 @@ export async function v_207199(v_931bf0): Promise<HealthRecordItem> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -287,7 +288,7 @@ export async function v_d531ea(v_fbf3b0): Promise<HealthRecordItem> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -372,7 +373,7 @@ export async function v_4ebe12(): Promise<HealthRecordItem | null> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -483,7 +484,7 @@ export async function v_a55499(v_9dd532): Promise<CompareHealthRecordsResponse> 
     throw new Error('비교하려면 최소 2개의 기록이 필요합니다.');
   }
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -570,7 +571,7 @@ export async function v_61fb31(v_52e08b): Promise<string> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {

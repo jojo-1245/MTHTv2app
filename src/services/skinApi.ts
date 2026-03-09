@@ -1,5 +1,6 @@
 import v_b5030f from 'imsks';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 
@@ -85,7 +86,7 @@ export async function v_79be38(v_931bf0): Promise<SaveSkinRecordResponse> {
     console.log('[skinApi] saveSkinRecord: 토큰 읽기 시작...');
   }
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (__DEV__) {
     console.log('[skinApi] AsyncStorage에서 authToken 읽기:', {
       found: !!v_21cc31,
@@ -201,7 +202,7 @@ export async function v_81fcbc(v_ee2acd): Promise<SkinRecordItem[]> {
     console.log('[skinApi] getSkinRecords: 토큰 읽기 시작...');
   }
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (__DEV__) {
     console.log('[skinApi] AsyncStorage에서 authToken 읽기:', {
       found: !!v_21cc31,
@@ -333,7 +334,7 @@ export async function v_095212(v_fbf3b0): Promise<SkinRecordItem> {
     console.log('[skinApi] getSkinRecordById: 토큰 읽기 시작...');
   }
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (__DEV__) {
     console.log('[skinApi] AsyncStorage에서 authToken 읽기:', {
       found: !!v_21cc31,
@@ -484,7 +485,7 @@ export async function v_52c734(): Promise<SkinRecordItem | null> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
@@ -590,7 +591,7 @@ export async function v_3680d3(v_9dd532): Promise<CompareSkinRecordsResponse> {
     console.log('[skinApi] compareSkinRecords: 토큰 읽기 시작...');
   }
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (__DEV__) {
     console.log('[skinApi] AsyncStorage에서 authToken 읽기:', {
       found: !!v_21cc31,
@@ -711,7 +712,7 @@ export async function v_df51cf(v_52e08b): Promise<string> {
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
 
-  let v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
+  let v_21cc31 = await v_bcce6e();
   if (!v_21cc31) {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (v_0e3b5e) {
