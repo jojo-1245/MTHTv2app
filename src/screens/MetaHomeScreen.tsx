@@ -2,6 +2,7 @@ import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapk
 import {
   v_03e392,
   v_a2349e,
+  v_1ed974,
   v_cdbae1,
   v_326be8,
   v_472849,
@@ -169,6 +170,18 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_de06a3(() => {
       v_56263a();
     }, [v_56263a])
+  );
+
+  v_cf763b(
+    v_de06a3(() => {
+      if (v_326be8.OS !== 'android') return () => {};
+      const v_64ccfb = () => {
+        v_1ed974.exitApp();
+        return true;
+      };
+      const v_1ae212 = v_1ed974.addEventListener('hardwareBackPress', v_64ccfb);
+      return () => v_1ae212.remove();
+    }, [])
   );
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
