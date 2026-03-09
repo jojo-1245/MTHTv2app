@@ -99,6 +99,8 @@ dependencies {
 
     implementation 'com.google.ads.mediation:pangle:5.5.0.4.0'
 
+    implementation 'kr.co.pointclick.sdk.offerwall:pointclick-sdk-offerwall:1.1.06'
+
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
     def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";

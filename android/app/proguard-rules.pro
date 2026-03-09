@@ -11,4 +11,12 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 
+# PointClick Offerwall SDK
+-keep class kr.co.pointclick.sdk.offerwall.core.consts.** {*;}
+-keep interface kr.co.pointclick.sdk.offerwall.core.consts.** {*;}
+-keep class kr.co.pointclick.sdk.offerwall.core.models.** {*;}
+-keep interface kr.co.pointclick.sdk.offerwall.core.models.** {*;}
+-keep class kr.co.pointclick.sdk.offerwall.core.PointClickAd {*;}
+-keep class kr.co.pointclick.sdk.offerwall.core.events.PackageReceiver {*;}
+
 # Add any project specific keep options here:
