@@ -19,7 +19,9 @@ import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
+import { v_0e72e5 } from '../../services/pointClickOfferwall';
 import { v_998b9d } from '../../utils/authErrorHandler';
+import { v_e4a763 } from '../../utils/env';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -70,15 +72,17 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     purchasesCompleted: 15,
   };
 
-  const menuItems:   Array<
+  const menuItems: Array<
     | {
-      id: string;
-      title: string;
-      description: string;
-      iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings';
-      route: keyof v_8ad91b;
-      isLogout?: false;
-    }
+        id: string;
+        title: string;
+        description: string;
+        iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings' | 'gift';
+        route: keyof v_8ad91b;
+        isLogout?: false;
+        isOfferwall?: false;
+      }
+    | { id: string; title: string; iconName: 'gift'; isOfferwall: true }
     | { id: string; title: string; isLogout: true }
   > = [
       {
@@ -94,6 +98,12 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         description: v_8d41d7('profile.notify_desc'),
         iconName: 'bell' as const,
         route: 'MyInfoNotify' as const,
+      },
+      {
+        id: 'offerwall',
+        title: v_8d41d7('profile.offerwall'),
+        iconName: 'gift',
+        isOfferwall: true,
       },
       {
         id: 'faq',
@@ -122,6 +132,28 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         isLogout: true,
       },
     ];
+
+  const v_a2c2c9 = () => {
+    if (__DEV__) console.log('[Offerwall] handleOfferwall pressed');
+    const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
+    const v_b922bf = v_479f05?.trim();
+    const v_87a4e3 =
+      !v_b922bf ||
+      v_b922bf === '여기에_placement_UID_입력' ||
+      v_b922bf.toLowerCase().includes('placeholder') ||
+      v_b922bf.toLowerCase().includes('입력');
+    if (v_87a4e3) {
+      const v_58ca36 = !v_479f05
+        ? 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is not set in .env'
+        : 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is placeholder. Replace with the placement UID from PointClick.';
+      console.error('[Offerwall] Not configured:', v_58ca36, { raw: v_479f05 ?? '(empty)' });
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
+      return;
+    }
+    const v_021a29 = v_727031?.email?.trim() || 'guest';
+    const v_9f1622 = 'MetaHint';
+    v_0e72e5(v_b922bf, v_021a29, v_9f1622);
+  };
 
   const v_06b8a4 = async () => {
     v_03e392.alert(v_8d41d7('profile.logout'), v_8d41d7('profile.logout_confirm'), [
@@ -244,7 +276,11 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           {}
           <View style={v_d81136.menuCard}>
-            {v_0dea6d.map((v_8c0b26, v_a56041) => (
+            {v_0dea6d.map((v_8c0b26, v_a56041) => {
+              const v_44c68a = 'isLogout' in v_8c0b26 && v_8c0b26.isLogout === true;
+              const v_7e3a89 = 'isOfferwall' in v_8c0b26 && v_8c0b26.isOfferwall === true;
+              const v_c288e9 = 'iconName' in v_8c0b26 ? v_8c0b26.iconName : ('help-circle' as const);
+              return (
               <TouchableOpacity
                 key={v_8c0b26.id}
                 style={[
@@ -252,13 +288,16 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   v_a56041 < v_0dea6d.length - 1 && v_d81136.menuItemBorder,
                 ]}
                 onPress={
-                  v_8c0b26.isLogout
+                  v_44c68a
                     ? v_06b8a4
-                    : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
+                    : v_7e3a89
+                      ? v_a2c2c9
+                      : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
                 }
                 activeOpacity={0.88}
+                hitSlop={{ top: 8, bottom: 8, left: 0, right: 0 }}
               >
-                {v_8c0b26.isLogout ? (
+                {v_44c68a ? (
                   <>
                     <View style={v_d81136.menuIconWrap}>
                       {v_d11128 ? (
@@ -275,7 +314,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <>
                     <View style={v_d81136.menuIconWrap}>
                       <Feather
-                        name={v_8c0b26.iconName}
+                        name={v_c288e9}
                         size={24}
                         color={v_1bfbd0.text}
                       />
@@ -285,7 +324,8 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 )}
                 <Feather name="chevron-right" size={20} color="#9CA3AF" />
               </TouchableOpacity>
-            ))}
+              );
+            })}
           </View>
 
           {}

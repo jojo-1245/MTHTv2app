@@ -496,6 +496,8 @@
         "settings_desc": "Configuration",
         "notify": "Notify",
         "notify_desc": "Notification settings",
+        "offerwall": "Offerwall",
+        "offerwall_not_configured": "Offerwall is not configured.",
         "clause": "Clause",
         "clause_desc": "List of terms",
         "faq": "FAQ",
