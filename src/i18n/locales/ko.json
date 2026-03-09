@@ -496,6 +496,8 @@
         "settings_desc": "환경 설정",
         "notify": "알림",
         "notify_desc": "알림 설정",
+        "offerwall": "오퍼월 보기",
+        "offerwall_not_configured": "오퍼월이 설정되지 않았습니다.",
         "clause": "약관",
         "clause_desc": "약관 목록",
         "faq": "자주 묻는 질문",
