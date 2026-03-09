@@ -32,6 +32,8 @@ export interface NotificationItem {
   unread?: boolean;
   requesterEmail?: string;
   requesterName?: string;
+
+  reward_amount?: number;
 }
 
 function v_a1b0ab(v_a86996): Date {
@@ -183,7 +185,11 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
         <View style={[v_d81136.cardIconWrap, { backgroundColor: v_6fe397 }]}>{v_c273da(v_8c0b26.type)}</View>
         <View style={v_d81136.cardContent}>
           <Text style={v_d81136.cardTitle}>{v_8c0b26.title}</Text>
-          <Text style={v_d81136.cardDesc}>{v_8c0b26.description}</Text>
+          <Text style={v_d81136.cardDesc}>
+            {v_8c0b26.type === 9305 && v_8c0b26.reward_amount != null
+              ? v_8d41d7('my_info_notify.notify_daily_goal_desc_with_amount', { amount: v_8c0b26.reward_amount })
+              : v_8c0b26.description}
+          </Text>
           <Text style={v_d81136.cardTime}>{v_1108ee(v_8c0b26.datetime, v_8d41d7)}</Text>
           {v_8c0b26.type === 9304 && (
             <View style={v_d81136.actionRow}>
