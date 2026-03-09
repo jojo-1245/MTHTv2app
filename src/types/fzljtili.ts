@@ -19,6 +19,13 @@ export type UISessionState =
   | 'completed'
   | 'error';
 
+export interface UserInformation {
+  age?: number;
+  sex?: number;
+  weight?: number;
+  height?: number;
+}
+
 export interface FaceSessionConfig {
 
   measurementMode?: string;

@@ -59,7 +59,7 @@ import {
 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
-import type { v_bc6a30 } from 'uktxzkvkahagapxcbvlpltsizdeouzhnoqevkvrotincgxkosilmmfsdlgpjgtfezlmwfovgmx';
+import type { v_bc6a30 } from '../../types/fzljtili';
 
 enum SmokingStatus {
   UNSPECIFIED = 0,

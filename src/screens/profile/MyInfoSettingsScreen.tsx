@@ -16,7 +16,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import v_719e34 from 'pcgoftamvavhkhqudmtnjked';
+import { v_3d4e28, v_d752db } from '../../utils/appVersion';
 import { v_3aacaa } from '../../services/versionService';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837, v_9cafa7 } from '../../components';
@@ -251,7 +251,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
           {}
           <View style={v_d81136.versionContainer}>
             <Text style={v_d81136.versionText}>
-              {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_719e34.getVersion()} ({v_719e34.getBuildNumber()})
+              {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_3d4e28()} ({v_d752db()})
             </Text>
             {v_211e13 && (
               <Text style={v_d81136.versionText}>
