@@ -507,6 +507,7 @@
         "guide_item2": "5% dari Pendapatan Penjualan Produk"
     },
     "skin": {
+        "login_required_message": "Silakan masuk untuk menggunakan analisis kulit. Login diperlukan untuk menyimpan hasil analisis.",
         "products": {
             "product_1_description": "Kulit Kering & Pelembap Intensif",
             "product_2_description": "Serum Penyeimbang Minyak-Air untuk Kulit Kombinasi",
@@ -853,6 +854,7 @@
         "result_title": "Hasil Analisis",
         "result_loading": "Memuat hasil...",
         "default_user_name": "Saya",
+        "login_required_message": "Silakan masuk untuk menggunakan analisis kesehatan. Login diperlukan untuk menyimpan hasil pengukuran.",
         "measurement_complete": "Pengukuran Selesai",
         "measurement_date": "Tanggal Pengukuran",
         "measurement_time": "Waktu Pengukuran",

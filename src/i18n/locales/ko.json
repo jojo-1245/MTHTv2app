@@ -513,6 +513,7 @@
         "guide_item2": "제품 매출액의 5%"
     },
     "skin": {
+        "login_required_message": "로그인 후 피부 분석을 이용해 주세요. 분석 결과 저장을 위해 로그인이 필요합니다.",
         "products": {
             "product_1_description": "건성피부 & 극강보습",
             "product_2_description": "복합성 피부를 위한 유수분 밸런싱 세럼",
@@ -870,6 +871,7 @@
         "result_title": "측정 결과",
         "result_loading": "결과를 불러오는 중...",
         "default_user_name": "나",
+        "login_required_message": "로그인 후 건강 분석을 이용해 주세요. 측정 결과 저장을 위해 로그인이 필요합니다.",
         "measurement_complete": "측정 완료",
         "measurement_date": "측정일",
         "measurement_time": "측정 시간",
