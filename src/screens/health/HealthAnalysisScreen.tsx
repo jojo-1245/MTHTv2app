@@ -504,6 +504,20 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_639227('intro');
   }, [v_98caa0]);
 
+  const v_4a74db = v_de06a3(async () => {
+    if (v_a3ff5a.current) {
+      await v_98caa0();
+      v_a3ff5a.current = undefined;
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 500));
+    }
+    v_ce2e95.current = false;
+    v_3be953.current = false;
+    v_49296b(false);
+    v_b0aeaf(false);
+    v_808b03((v_0eb677) => v_0eb677 + 1);
+    v_639227('intro');
+  }, [v_98caa0]);
+
   const v_141cf8 = v_de06a3(
     (v_c99bd2): boolean => {
       if (!v_c99bd2) {
@@ -2135,6 +2149,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
         <Header
           title={v_8d41d7('health_analysis.measurement.screen_title')}
+          showCloseButton={
+            v_bc50c7 !== v_eb2401.STARTING && v_bc50c7 !== v_eb2401.PROCESSING
+          }
+          onClosePress={v_4a74db}
         />
         {}
         <View style={v_d81136.cameraContainer} onLayout={v_0bafd1}>
