@@ -1,4 +1,4 @@
-import v_a3453e, { v_df9f57, v_e662ae, v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_df9f57 } from 'bapkr';
 import {
     v_aa7413,
     v_472849,
@@ -8,7 +8,6 @@ import {
     v_cf9c33,
     v_122070,
     v_79139e,
-    v_a2349e,
 } from 'rcmrninabrnb';
 import { v_25515d, v_f832ec } from 'zvyjokvuouwvifyzks';
 import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
@@ -69,30 +68,14 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
     const v_e005eb = v_df9f57(() => v_84a924(), [v_9e9019, v_a7f568, v_8d41d7]);
     const v_4594bf = v_9e9019 !== null ? v_ec82c6[v_9e9019] : null;
 
-    const v_8abd76 = 150;
-    const v_df9f11 = v_e662ae(new v_a2349e.Value(0)).current;
-
-    v_c4deb2(() => {
-        if (v_cf55be) {
-            v_df9f11.setValue(0);
-            v_a2349e.timing(v_df9f11, { toValue: 1, duration: v_8abd76, useNativeDriver: true }).start();
-        }
-    }, [v_cf55be, v_df9f11]);
-
-    const v_7f2e65 = () => {
-        v_a2349e.timing(v_df9f11, { toValue: 0, duration: v_8abd76, useNativeDriver: true }).start(() => {
-            v_0890f8();
-        });
-    };
-
     return (
         <Modal
             visible={v_cf55be}
             transparent
             animationType="none"
-            onRequestClose={v_7f2e65}
+            onRequestClose={v_0890f8}
         >
-            <Animated.View style={[v_d81136.wellnessModalOverlay, { opacity: v_df9f11 }]}>
+            <View style={v_d81136.wellnessModalOverlay}>
                 <View style={v_d81136.wellnessModal}>
                     <View style={v_d81136.wellnessModalHeader}>
                         <Text style={v_d81136.wellnessModalTitle}>
@@ -101,7 +84,7 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                                 : v_4594bf?.title}
                         </Text>
                         <TouchableOpacity
-                            onPress={v_7f2e65}
+                            onPress={v_0890f8}
                             style={v_d81136.modalCloseButton}
                             accessibilityRole="button"
                             accessibilityLabel={v_8d41d7('common.close')}
@@ -967,7 +950,7 @@ const VitalSignInfoModal: v_a3453e.FC<VitalSignInfoModalProps> = ({
                         })()}
                     </ScrollView>
                 </View>
-            </Animated.View>
+            </View>
         </Modal>
     );
 };
