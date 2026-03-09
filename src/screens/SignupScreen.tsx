@@ -115,13 +115,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     return null;
   };
 
-  const v_8f5468 = (): string | null => {
-    if (!v_5996d6 || v_9bf12c.length === 0) return null;
-    if (!v_0e461e(v_9bf12c)) {
-      return v_8d41d7('signup.error_email_format');
-    }
-    return null;
-  };
+  const v_8f5468 = (): string | null => null;
 
   const v_1743a3 = (): string | null => {
     if (!v_fd8548 || v_adc076.length === 0) return null;
@@ -678,8 +672,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
               <TextField
                 label={v_8d41d7('signup.referral_label')}
                 placeholder={v_8d41d7('signup.referral_placeholder')}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                keyboardType="default"
+                autoCapitalize="characters"
                 value={v_9bf12c}
                 onChangeText={v_36c8eb}
                 editable={!v_88dca2}

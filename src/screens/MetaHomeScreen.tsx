@@ -2,6 +2,7 @@ import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapk
 import {
   v_03e392,
   v_a2349e,
+  v_1ed974,
   v_cdbae1,
   v_326be8,
   v_472849,
@@ -14,6 +15,7 @@ import {
   v_e45a99,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import {
   v_4b79e2,
   v_0ae9ff,
@@ -135,32 +137,52 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const [v_780057, v_f23f5b] = v_5ab095(0);
 
-  v_c4deb2(() => {
-    const v_56263a = async () => {
-      try {
-
-        const v_3722b7 = await v_4ebe12();
-        if (v_3722b7) {
-          v_ecd01c(v_3722b7.health_index);
-          v_435f99(v_3722b7.record_date);
-        }
-
-        const v_51e81e = await v_52c734();
-        if (v_51e81e) {
-          v_6bf58d(v_51e81e.overall_score);
-          v_07829a(v_51e81e.record_date);
-        }
-      } catch (v_5e9bfe) {
-        console.error('[MetaHomeScreen] 최신 점수 로드 실패:', v_5e9bfe);
-
-        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-          return;
-        }
+  const v_56263a = v_de06a3(async () => {
+    try {
+      const v_3722b7 = await v_4ebe12();
+      if (v_3722b7) {
+        v_ecd01c(v_3722b7.health_index);
+        v_435f99(v_3722b7.record_date);
+      } else {
+        v_ecd01c(null);
+        v_435f99(null);
       }
-    };
 
+      const v_51e81e = await v_52c734();
+      if (v_51e81e) {
+        v_6bf58d(v_51e81e.overall_score);
+        v_07829a(v_51e81e.record_date);
+      } else {
+        v_6bf58d(null);
+        v_07829a(null);
+      }
+    } catch (v_5e9bfe) {
+      console.error('[MetaHomeScreen] 최신 점수 로드 실패:', v_5e9bfe);
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
+    }
+  }, [v_c65f5d]);
+
+  v_c4deb2(() => {
     v_56263a();
-  }, []);
+  }, [v_56263a]);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_56263a();
+    }, [v_56263a])
+  );
+
+  v_cf763b(
+    v_de06a3(() => {
+      if (v_326be8.OS !== 'android') return () => {};
+      const v_64ccfb = () => {
+        v_1ed974.exitApp();
+        return true;
+      };
+      const v_1ae212 = v_1ed974.addEventListener('hardwareBackPress', v_64ccfb);
+      return () => v_1ae212.remove();
+    }, [])
+  );
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
   const [v_05cf57, v_0d7691] = v_5ab095(0);

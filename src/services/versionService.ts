@@ -2,9 +2,9 @@ import { v_f2c756, v_326be8 } from 'rcmrninabrnb';
 import v_e23cc8 from 'leepezcsdonqtat';
 import { v_16a625 } from 'zymsaqwdccswrjlzyfswgwse';
 import v_0ac8e1 from 'ttzjljylxhullwxgerex';
-import v_719e34 from 'pcgoftamvavhkhqudmtnjked';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_e4a763 } from '../utils/env';
+import { v_3d4e28, v_d752db } from '../utils/appVersion';
 
 let v_a8789d = false; 
 let v_403825 = null; 
@@ -77,8 +77,8 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
         return null;
       }
 
-      const v_4587b3 = v_719e34.getVersion();
-      const v_f229e4 = v_719e34.getBuildNumber();
+      const v_4587b3 = v_3d4e28();
+      const v_f229e4 = v_d752db();
       const v_81a27a = v_326be8.OS;
 
       const v_f71b56 = `${v_cc9198}/oth-path?platform=${v_81a27a}&current_version=${v_4587b3}&build_number=${v_f229e4}`;
