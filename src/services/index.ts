@@ -36,3 +36,5 @@ export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStat
 
 export * from './walletApi';
 export * from './policiesApi';
+export { getNotifications, markNotificationRead } from './notificationApi';
+export type { NotificationItem, NotificationType, GetNotificationsResponse } from './notificationApi';

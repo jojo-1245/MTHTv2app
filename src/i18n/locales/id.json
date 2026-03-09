@@ -508,7 +508,10 @@
         "purchases_completed": "pembelian selesai",
         "business": "Bisnis",
         "app_version": "MetaHint Health v1.0.0",
-        "copyright": "© 2026 MetaHint. All rights reserved."
+        "copyright": "© 2026 MetaHint. All rights reserved.",
+        "pangle_rewarded_test": "Tes Video Berhadiah Pangle",
+        "pangle_rewarded_test_done": "Video berhadiah selesai (tes)",
+        "pangle_rewarded_test_failed": "Iklan gagal dimuat"
     },
     "profit_distribution": {
         "title": "Distribusi Keuntungan",
@@ -1570,7 +1573,8 @@
         "notify_health_request_title": "Permintaan Info Kesehatan",
         "notify_health_request_desc": "oth-staff@example.invalid meminta untuk memuat info kesehatan {{name}}.",
         "notify_daily_goal_title": "Target Harian Tercapai!",
-        "notify_daily_goal_desc": "Anda telah mencapai target kesehatan hari ini. Anda mendapat 100 koin!",
+        "notify_daily_goal_desc": "Anda telah mencapai target kesehatan hari ini. Anda mendapat 10 koin!",
+        "notify_daily_goal_desc_with_amount": "Anda telah mencapai target kesehatan hari ini. Anda mendapat {{amount}} koin!",
         "notify_skin_complete_title": "Analisis Kulit Selesai",
         "notify_skin_complete_desc": "Hasil analisis kulit Anda siap. Lihat rekomendasi produk.",
         "notify_health_complete_title": "Analisis Kesehatan Selesai",

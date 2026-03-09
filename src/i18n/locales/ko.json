@@ -514,7 +514,15 @@
         "purchases_completed": "구매 완료",
         "business": "비즈니스",
         "app_version": "MetaHint Health v1.0.0",
-        "copyright": "© 2026 MetaHint. All rights reserved."
+        "copyright": "© 2026 MetaHint. All rights reserved.",
+        "health_api_btn": "건강 API 보내기",
+        "health_api_save_success": "건강 기록이 저장되었습니다. 알림이 발송됩니다.",
+        "skin_api_btn": "피부 API 보내기",
+        "api_no_data": "데이터 없음",
+        "api_loading": "요청 중...",
+        "pangle_rewarded_test": "팽글 보상형 동영상 테스트",
+        "pangle_rewarded_test_done": "보상형 동영상 시청 완료 (테스트)",
+        "pangle_rewarded_test_failed": "광고 로드 실패"
     },
     "profit_distribution": {
         "title": "수익배분",
@@ -1588,7 +1596,8 @@
         "notify_health_request_title": "건강정보 요청",
         "notify_health_request_desc": "oth-staff@example.invalid 님이 {{name}}님의 건강정보 불러오기를 요청하셨습니다.",
         "notify_daily_goal_title": "일일 목표 달성!",
-        "notify_daily_goal_desc": "오늘의 건강 관리 목표를 달성했습니다. 100 코인을 획득했어요!",
+        "notify_daily_goal_desc": "오늘의 건강 관리 목표를 달성했습니다. 10 코인을 획득했어요!",
+        "notify_daily_goal_desc_with_amount": "오늘의 건강 관리 목표를 달성했습니다. {{amount}} 코인을 획득했어요!",
         "notify_skin_complete_title": "피부 분석 완료",
         "notify_skin_complete_desc": "피부 분석 결과가 준비되었습니다. 맞춤 상품 추천을 확인해보세요.",
         "notify_health_complete_title": "건강 분석 완료",

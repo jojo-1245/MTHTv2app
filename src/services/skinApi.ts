@@ -520,14 +520,39 @@ export async function v_52c734(): Promise<SkinRecordItem | null> {
       headers: v_3f4675,
     });
 
-    const v_f637a4 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as LatestSkinRecordResponse);
-    const v_cbbd71 = v_f637a4?.record;
+    let v_479f05 = v_8f00b9.data?.data ?? v_8f00b9.data;
+    if (typeof v_479f05 === 'string') {
+      try {
+        v_479f05 = JSON.parse(v_479f05) as LatestSkinRecordResponse | SkinRecordItem;
+      } catch {
+        v_479f05 = null;
+      }
+    }
+    const v_cbbd71 = (() => {
+      if (!v_479f05 || typeof v_479f05 !== 'object') return null;
+      let v_cb35cb = (v_479f05 as LatestSkinRecordResponse).record;
+      if (typeof v_cb35cb === 'string') {
+        try {
+          v_cb35cb = JSON.parse(v_cb35cb) as SkinRecordItem;
+        } catch {
+          return null;
+        }
+      }
+      if (v_cb35cb && typeof v_cb35cb === 'object' && (v_cb35cb.overall_score !== undefined || (v_cb35cb as SkinRecordItem).record_date !== undefined)) {
+        return v_cb35cb as SkinRecordItem;
+      }
+      if (typeof (v_479f05 as SkinRecordItem).overall_score !== 'undefined' || typeof (v_479f05 as SkinRecordItem).record_date !== 'undefined') {
+        return v_479f05 as SkinRecordItem;
+      }
+      return null;
+    })();
 
     if (__DEV__) {
       console.log('[skinApi] getLatestSkinRecord 응답:', {
         status: v_8f00b9.status,
         hasRecord: !!v_cbbd71,
         overall_score: v_cbbd71?.overall_score,
+        rawKeys: v_479f05 && typeof v_479f05 === 'object' ? Object.keys(v_479f05) : [],
       });
     }
 

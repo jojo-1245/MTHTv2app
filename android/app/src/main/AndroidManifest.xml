@@ -24,6 +24,12 @@
     </intent>
   </queries>
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:allowBackup="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:enableOnBackInvokedCallback="false" android:requestLegacyExternalStorage="true">
+    <!-- AdMob App ID (대시보드 값으로 교체). tools:replace로 라이브러리 빈 값 덮어씀 -->
+    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713" tools:replace="android:value"/>
+    <!-- Pangle App ID (Metahint 대시보드 값으로 교체) -->
+    <meta-data android:name="pangle_app_id" android:value="여기에_Pangle_App_ID"/>
+    <!-- Pangle App Key (Metahint 대시보드 값으로 교체) -->
+    <meta-data android:name="pangle_app_key" android:value="여기에_Pangle_App_Key"/>
     <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>

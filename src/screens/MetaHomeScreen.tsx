@@ -41,7 +41,8 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
+import { v_8e174f } from '../services/admob';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_312d93 } from '../utils/dateUtils';
 
@@ -116,12 +117,28 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const { balance: v_c88e9b, refreshWallet: v_e37b10 } = v_271901();
-  const [v_9cb8cb] = v_5ab095(true);
+  const [v_b932f9, v_2cc80d] = v_5ab095(0);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => v_e37b10(), 200);
     return () => clearTimeout(v_8d41d7);
   }, [v_e37b10]);
+
+  const v_e4961f = v_de06a3(async () => {
+    try {
+      const { notifications: v_b9c00c } = await v_880836();
+      const v_a78249 = v_b9c00c.filter((v_f4e98d) => v_f4e98d.unread).length;
+      v_2cc80d(v_a78249);
+    } catch {
+      v_2cc80d(0);
+    }
+  }, []);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_e4961f();
+    }, [v_e4961f])
+  );
 
   const v_1fddaf = v_df9f57(() => {
     if (!v_c88e9b) return '0.0';
@@ -260,12 +277,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return () => clearTimeout(v_8d41d7);
   }, [v_c65f5d, v_8aab53]);
 
-  const v_d0c5d7 = async () => {
-    if (v_74891a || v_1f7868) {
-      return;
-    }
-
-    v_e3bbea(true);
+  const v_2f26f6 = async () => {
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
 
@@ -282,8 +294,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         v_0d7691(v_3ea33e.current_streak);
         v_c34f93(v_3ea33e.week_attended);
         v_468450(v_3ea33e.week_total);
-      } catch (v_abd75f) {
-
+      } catch {
         v_5b2bbb((v_ba2215) => {
           const v_a448ad = [...v_ba2215];
           v_a448ad[v_8aab53] = true;
@@ -295,32 +306,37 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_59ccdc = v_43c42e.is_bonus
         ? v_8d41d7('home.attendance_bonus_received', { amount: v_43c42e.reward_amount, days: v_43c42e.streak_days })
         : v_8d41d7('home.attendance_reward_received', { amount: v_43c42e.reward_amount });
-
       v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
       console.error('[MetaHomeScreen] 출석 체크 실패:', v_5e9bfe);
-
-      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-        return;
-      }
-
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
       if (v_5e9bfe instanceof v_d0556f) {
-
         v_5b2bbb((v_ba2215) => {
           const v_a448ad = [...v_ba2215];
           v_a448ad[v_8aab53] = true;
           return v_a448ad;
         });
-
         v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
         return;
       }
-
       const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.attendance_check_failed');
       v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
     } finally {
       v_e3bbea(false);
     }
+  };
+
+  const v_d0c5d7 = () => {
+    if (v_74891a || v_1f7868) return;
+    v_e3bbea(true);
+    v_8e174f(
+      () => v_2f26f6(),
+      () => v_e3bbea(false),
+      () => {
+        v_e3bbea(false);
+        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.attendance_check_failed'));
+      }
+    );
   };
 
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
@@ -364,6 +380,22 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_d85372 = () => v_9b57fc('HealthAnalysis', { initialTab: 'records' });
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
+
+  const v_2627c5 = (v_af3e48) => {
+    const v_c5110a = v_76f9c7[v_af3e48];
+    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
+      return;
+    }
+    v_5ce610(true);
+    v_8e174f(
+      () => v_c907cb(v_af3e48),
+      () => v_5ce610(false),
+      () => {
+        v_5ce610(false);
+        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
+      }
+    );
+  };
 
   const v_c907cb = async (v_af3e48) => {
     const v_c5110a = v_76f9c7[v_af3e48];
@@ -563,7 +595,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <TouchableOpacity onPress={() => v_9b57fc('MyInfoNotify')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.notifPill]}>
                       <Bell size={22} color="#FFFFFF" />
-                      {v_9cb8cb && <View style={v_d81136.notifBadge} />}
+                      {v_b932f9 > 0 && <View style={v_d81136.notifBadge} />}
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>
@@ -835,7 +867,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             v_ddef54 && v_d81136.stepMilestoneBtnClaimed,
                             v_e0ed2f && v_d81136.stepMilestoneBtnInactive,
                           ]}
-                          onPress={() => v_c907cb(v_a56041)}
+                          onPress={() => v_2627c5(v_a56041)}
                           disabled={!v_26dce6 || v_cd6f97}
                           activeOpacity={0.8}
                         >
