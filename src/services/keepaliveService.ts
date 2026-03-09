@@ -1,5 +1,3 @@
-import { v_326be8 } from 'rcmrninabrnb';
-import v_719e34 from 'pcgoftamvavhkhqudmtnjked';
 import { v_e4a763 } from '../utils/env';
 
 export type NoticePayload = {
