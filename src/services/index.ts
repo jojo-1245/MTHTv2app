@@ -5,8 +5,9 @@ export {
   getMe,
   updateProfile,
   clearAuthSession,
+  isSocialLoginNeedsSignup,
 } from './authApi';
-export type { LoginAuthPayload, MeProfile, UpdateProfilePayload } from './authApi';
+export type { LoginAuthPayload, MeProfile, UpdateProfilePayload, SocialLoginResult } from './authApi';
 
 export {
   getSubAccountList,

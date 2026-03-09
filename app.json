@@ -2,7 +2,10 @@
   "expo": {
     "name": "MetaHint",
     "slug": "metahint",
-    "scheme": ["ai.metahint.appw", "metahintai"],
+    "scheme": [
+      "ai.metahint.appw",
+      "metahintai"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -40,7 +43,10 @@
               "scheme": "metahintai"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "permissions": [

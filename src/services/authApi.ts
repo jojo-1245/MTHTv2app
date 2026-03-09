@@ -22,6 +22,16 @@ export interface LoginAuthPayload {
   [key: string]: unknown;
 }
 
+export type SocialLoginResult =
+  | { needsSignup: true; email: string }
+  | LoginAuthPayload;
+
+export function isSocialLoginNeedsSignup(
+  r: SocialLoginResult
+): r is { needsSignup: true; email: string } {
+  return typeof r === 'object' && r !== null && (r as { needsSignup?: boolean }).needsSignup === true;
+}
+
 function normalizeError(error: unknown): Error {
   if (axios.isAxiosError(error)) {
     const apiResponse = error.response?.data as ApiResponse<unknown> | undefined;
@@ -141,9 +151,9 @@ export async function loginMember(params: {
 }
 
 export async function socialLogin(params: {
-  provider: 'google' | 'apple';
+  provider: 'google' | 'apple' | 'kakao' | 'naver';
   token: string;
-}): Promise<LoginAuthPayload> {
+}): Promise<SocialLoginResult> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
   const path = env.AUTH_SOCIAL_LOGIN_PATH ?? '/oth-path';
@@ -157,14 +167,18 @@ export async function socialLogin(params: {
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
-    const res = await axios.post<ApiResponse<LoginAuthPayload>>(
+    const res = await axios.post<ApiResponse<LoginAuthPayload & { needsSignup?: boolean; email?: string }>>(
       url,
       body,
       { timeout: API_TIMEOUT, headers }
     );
-    const data = res.data?.data ?? (res.data as unknown as LoginAuthPayload);
+    const raw = res.data as Record<string, unknown> | undefined;
+    const data = (raw?.data != null ? raw.data : raw) as Record<string, unknown> | null | undefined;
+    const needsSignupVal = data?.needsSignup ?? raw?.needsSignup;
+    const emailVal = data?.email ?? raw?.email;
+
     const payload: LoginAuthPayload =
-      typeof data === 'object' && data !== null ? data : { token: data };
+      typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : { token: data };
     const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
     if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
       const tokenFromHeader = authHeader.slice(7).trim();
@@ -174,11 +188,29 @@ export async function socialLogin(params: {
         payload.token = tokenFromHeader;
       }
     }
+    const hasToken = !!getTokenFromPayload(payload);
+    const hasMember = !!(payload as Record<string, unknown>).member;
+
     if (__DEV__) {
-      const hasToken =
-        !!(payload.accessToken ?? payload.access_token ?? payload.token);
-      console.log('[authApi] social-login 응답:', { status: res.status, hasData: !!data, hasToken });
+      console.log('[authApi] social-login 원본 응답:', {
+        hasData: !!data,
+        needsSignup: needsSignupVal,
+        email: emailVal,
+        keys: data ? Object.keys(data) : [],
+        hasToken,
+        hasMember,
+      });
     }
+
+    if (needsSignupVal === true && !hasToken) {
+      if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (needsSignup, 토큰 없음)', { email: emailVal });
+      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+    }
+    if (!hasToken) {
+      if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (토큰 없음)');
+      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+    }
+    if (__DEV__) console.log('[authApi] social-login → 로그인 처리', { hasToken, hasMember });
     return payload;
   } catch (error) {
     if (__DEV__ && axios.isAxiosError(error)) {

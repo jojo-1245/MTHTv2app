@@ -463,6 +463,7 @@
         "error_terms_message": "Please agree to the Terms of Service.",
         "success_title": "Sign Up Complete",
         "success_message": "Please proceed with email verification.",
+        "success_message_social": "You have signed up. Tap social login to sign in.",
         "error_title": "Sign Up Failed",
         "error_validation": "Please check your input information.",
         "error_unknown": "An unknown error occurred during sign up."
@@ -489,6 +490,8 @@
         "close_membership_description": "Leave MetaHint",
         "edit_my_info": "Edit My Info",
         "edit_my_info_desc": "Edit personal details",
+        "view_my_info": "View My Info",
+        "view_my_info_desc": "View saved profile",
         "settings": "Setting",
         "settings_desc": "Configuration",
         "notify": "Notify",
@@ -526,6 +529,7 @@
         "guide_item2": "5% of Product Sales Revenue"
     },
     "skin": {
+        "login_required_message": "Please log in to use skin analysis. Log in is required to save analysis results.",
         "products": {
             "product_1_description": "Dry Skin & Intensive Moisturizing",
             "product_2_description": "Oil-Water Balancing Serum for Combination Skin",
@@ -870,7 +874,9 @@
     },
     "health_analysis": {
         "result_title": "Analysis Result",
+        "result_loading": "Loading results...",
         "default_user_name": "Me",
+        "login_required_message": "Please log in to use health analysis. Log in is required to save measurement results.",
         "measurement_complete": "Measurement Complete",
         "measurement_date": "Measurement Date",
         "measurement_time": "Measurement Time",
@@ -977,7 +983,8 @@
             "error_7009": "Error code: 7009\n\nPossible causes:\n- License key issue\n- SDK initialization failed\n- Camera initialization issue\n\nPlease restart the app.",
             "error_unknown": "Error code: {{code}}\n\nAn error occurred. Please restart the app or try again later.",
             "license_key_warning": "Warning: FZLJTILI_LICENSE_KEY is not set.",
-            "license_key_not_set": "FzljtiliSignal license key is not set. Please check environment variables."
+            "license_key_not_set": "FzljtiliSignal license key is not set. Please check environment variables.",
+            "incomplete_measurement": "Some measurement results are missing. Please keep your face steady in front of the camera for about 60 seconds so all items are captured, then measure again."
         },
         "image_validity": {
             "device_orientation": "Device Orientation Error",
@@ -1051,7 +1058,11 @@
             "button_start": "Start Measurement",
             "button_stop": "Stop Measurement",
             "button_waiting": "Waiting...",
-            "back_button": "Back"
+            "back_button": "Back",
+            "result_preparing": "Saving results...",
+            "result_preparing_session": "Cleaning up session...",
+            "result_missing_title": "Result Incomplete",
+            "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen."
         },
         "result": {
             "detail_info": "Detail Info",

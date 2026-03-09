@@ -263,3 +263,19 @@ export const v_bae0c0 = (
 
   return null;
 };
+
+export const v_2c02e8 = (
+  v_a4d981,
+  v_ad59cf
+): string | null => {
+  const v_3be8ba = v_f6a609[v_a4d981];
+  if (!v_3be8ba) {
+    return null;
+  }
+  for (const [v_638c4d, v_d8da2e] of Object.entries(v_3be8ba)) {
+    if (v_d8da2e === v_ad59cf) {
+      return v_638c4d;
+    }
+  }
+  return null;
+};

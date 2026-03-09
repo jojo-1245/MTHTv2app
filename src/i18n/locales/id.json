@@ -462,6 +462,7 @@
         "error_terms_message": "Silakan setujui Ketentuan Layanan.",
         "success_title": "Pendaftaran Selesai",
         "success_message": "Silakan lanjutkan dengan verifikasi email.",
+        "success_message_social": "Pendaftaran berhasil. Ketuk login sosial untuk masuk.",
         "error_title": "Pendaftaran Gagal",
         "error_validation": "Silakan periksa informasi yang Anda masukkan.",
         "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
@@ -488,6 +489,8 @@
         "open_settings": "Ubah di pengaturan",
         "edit_my_info": "Ubah Info Saya",
         "edit_my_info_desc": "Ubah detail pribadi",
+        "view_my_info": "Lihat Info",
+        "view_my_info_desc": "Lihat profil tersimpan",
         "settings": "Pengaturan",
         "settings_desc": "Konfigurasi",
         "notify": "Pemberitahuan",
@@ -525,6 +528,7 @@
         "guide_item2": "5% dari Pendapatan Penjualan Produk"
     },
     "skin": {
+        "login_required_message": "Silakan masuk untuk menggunakan analisis kulit. Login diperlukan untuk menyimpan hasil analisis.",
         "products": {
             "product_1_description": "Kulit Kering & Pelembap Intensif",
             "product_2_description": "Serum Penyeimbang Minyak-Air untuk Kulit Kombinasi",
@@ -869,7 +873,9 @@
     },
     "health_analysis": {
         "result_title": "Hasil Analisis",
+        "result_loading": "Memuat hasil...",
         "default_user_name": "Saya",
+        "login_required_message": "Silakan masuk untuk menggunakan analisis kesehatan. Login diperlukan untuk menyimpan hasil pengukuran.",
         "measurement_complete": "Pengukuran Selesai",
         "measurement_date": "Tanggal Pengukuran",
         "measurement_time": "Waktu Pengukuran",
@@ -976,7 +982,8 @@
             "error_7009": "Kode kesalahan: 7009\n\nKemungkinan penyebab:\n- Masalah kunci lisensi\n- Inisialisasi SDK gagal\n- Masalah inisialisasi kamera\n\nSilakan mulai ulang aplikasi.",
             "error_unknown": "Kode kesalahan: {{code}}\n\nTerjadi kesalahan. Silakan mulai ulang aplikasi atau coba lagi nanti.",
             "license_key_warning": "Peringatan: FZLJTILI_LICENSE_KEY tidak diatur.",
-            "license_key_not_set": "Kunci lisensi FzljtiliSignal tidak diatur. Silakan periksa variabel lingkungan."
+            "license_key_not_set": "Kunci lisensi FzljtiliSignal tidak diatur. Silakan periksa variabel lingkungan.",
+            "incomplete_measurement": "Beberapa hasil pengukuran tidak lengkap. Mohon pertahankan wajah Anda di depan kamera sekitar 60 detik agar semua item terekam, lalu ukur lagi."
         },
         "image_validity": {
             "device_orientation": "Kesalahan Orientasi Perangkat",
@@ -1050,7 +1057,11 @@
             "button_start": "Mulai Pengukuran",
             "button_stop": "Hentikan Pengukuran",
             "button_waiting": "Menunggu...",
-            "back_button": "Kembali"
+            "back_button": "Kembali",
+            "result_preparing": "Menyimpan hasil...",
+            "result_preparing_session": "Membersihkan sesi...",
+            "result_missing_title": "Hasil Tidak Lengkap",
+            "result_missing_message": "Beberapa hasil pengukuran tidak lengkap. Ketuk OK untuk mengakhiri sesi dan kembali ke layar awal pengukuran."
         },
         "result": {
             "detail_info": "Info Detail",

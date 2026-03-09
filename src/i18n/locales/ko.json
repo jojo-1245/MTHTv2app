@@ -463,6 +463,7 @@
         "error_terms_message": "서비스 이용 약관에 동의해주세요.",
         "success_title": "회원가입 완료",
         "success_message": "이메일 인증을 진행해주세요.",
+        "success_message_social": "가입되었습니다. 소셜 로그인을 눌러 로그인하세요.",
         "error_title": "회원가입 실패",
         "error_validation": "입력 정보를 확인해주세요.",
         "error_unknown": "회원가입 중 알 수 없는 오류가 발생했습니다."
@@ -489,6 +490,8 @@
         "open_settings": "설정에서 변경",
         "edit_my_info": "내 정보 수정",
         "edit_my_info_desc": "개인 정보 수정",
+        "view_my_info": "정보 보기",
+        "view_my_info_desc": "저장된 내 정보 확인",
         "settings": "설정",
         "settings_desc": "환경 설정",
         "notify": "알림",
@@ -531,6 +534,7 @@
         "guide_item2": "제품 매출액의 5%"
     },
     "skin": {
+        "login_required_message": "로그인 후 피부 분석을 이용해 주세요. 분석 결과 저장을 위해 로그인이 필요합니다.",
         "products": {
             "product_1_description": "건성피부 & 극강보습",
             "product_2_description": "복합성 피부를 위한 유수분 밸런싱 세럼",
@@ -886,7 +890,9 @@
     },
     "health_analysis": {
         "result_title": "측정 결과",
+        "result_loading": "결과를 불러오는 중...",
         "default_user_name": "나",
+        "login_required_message": "로그인 후 건강 분석을 이용해 주세요. 측정 결과 저장을 위해 로그인이 필요합니다.",
         "measurement_complete": "측정 완료",
         "measurement_date": "측정일",
         "measurement_time": "측정 시간",
@@ -993,7 +999,8 @@
             "error_7009": "에러 코드: 7009\n\n가능한 원인:\n- 라이센스 키 문제\n- SDK 초기화 실패\n- 카메라 초기화 문제\n\n앱을 재시작해보세요.",
             "error_unknown": "에러 코드: {{code}}\n\n오류가 발생했습니다. 앱을 재시작하거나 잠시 후 다시 시도해주세요.",
             "license_key_warning": "경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.",
-            "license_key_not_set": "FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요."
+            "license_key_not_set": "FzljtiliSignal 라이센스 키가 설정되지 않았습니다. 환경 변수를 확인해주세요.",
+            "incomplete_measurement": "측정 결과가 일부 누락되었습니다. 전체 항목이 나올 때까지 약 60초 동안 얼굴을 카메라에 고정해 주시고, 다시 측정해 주세요."
         },
         "image_validity": {
             "device_orientation": "기기 방향 오류",
@@ -1067,7 +1074,11 @@
             "button_start": "측정 시작",
             "button_stop": "측정 중지",
             "button_waiting": "대기 중...",
-            "back_button": "뒤로 가기"
+            "back_button": "뒤로 가기",
+            "result_preparing": "결과 저장 중...",
+            "result_preparing_session": "세션 정리 중...",
+            "result_missing_title": "결과 항목 누락",
+            "result_missing_message": "측정 결과 항목이 누락되었습니다. 확인을 누르면 세션을 종료하고 측정 첫 화면으로 이동합니다."
         },
         "result": {
             "detail_info": "상세 정보",
