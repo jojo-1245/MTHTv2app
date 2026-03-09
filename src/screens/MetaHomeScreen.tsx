@@ -40,7 +40,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_312d93 } from '../utils/dateUtils';
 
@@ -107,11 +107,27 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
   const { balance: v_c88e9b, refreshWallet: v_e37b10 } = v_271901();
-  const [v_9cb8cb] = v_5ab095(true);
+  const [v_b932f9, v_2cc80d] = v_5ab095(0);
 
   v_c4deb2(() => {
     v_e37b10();
   }, [v_e37b10]);
+
+  const v_e4961f = v_de06a3(async () => {
+    try {
+      const { notifications: v_b9c00c } = await v_880836();
+      const v_a78249 = v_b9c00c.filter((v_f4e98d) => v_f4e98d.unread).length;
+      v_2cc80d(v_a78249);
+    } catch {
+      v_2cc80d(0);
+    }
+  }, []);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_e4961f();
+    }, [v_e4961f])
+  );
 
   const v_1fddaf = v_df9f57(() => {
     if (!v_c88e9b) return '0.0';
@@ -546,7 +562,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <TouchableOpacity onPress={() => v_9b57fc('MyInfoNotify')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.notifPill]}>
                       <Bell size={22} color="#FFFFFF" />
-                      {v_9cb8cb && <View style={v_d81136.notifBadge} />}
+                      {v_b932f9 > 0 && <View style={v_d81136.notifBadge} />}
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>

@@ -514,7 +514,12 @@
         "purchases_completed": "구매 완료",
         "business": "비즈니스",
         "app_version": "MetaHint Health v1.0.0",
-        "copyright": "© 2026 MetaHint. All rights reserved."
+        "copyright": "© 2026 MetaHint. All rights reserved.",
+        "health_api_btn": "건강 API 보내기",
+        "health_api_save_success": "건강 기록이 저장되었습니다. 알림이 발송됩니다.",
+        "skin_api_btn": "피부 API 보내기",
+        "api_no_data": "데이터 없음",
+        "api_loading": "요청 중..."
     },
     "profit_distribution": {
         "title": "수익배분",
