@@ -42,9 +42,11 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f, v_7ef860 } from '../services';
 import { v_8e174f } from '../services/admob';
+import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
+import { v_e4a763 } from '../utils/env';
 import { v_312d93 } from '../utils/dateUtils';
 
 const v_87993b = require('../../assets/images/logo_white.png');
@@ -407,6 +409,23 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     return () => clearTimeout(v_8d41d7);
   }, [v_c65f5d, v_8aab53]);
 
+  const v_a2c2c9 = async () => {
+    const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
+    const v_b922bf = v_479f05?.trim();
+    if (!v_b922bf) {
+      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured'));
+      return;
+    }
+    let v_021a29 = 'guest';
+    try {
+      const v_727031 = await v_7ef860();
+      v_021a29 = v_727031?.id != null ? String(v_727031.id) : 'guest';
+    } catch (v_9e86fd) {
+      if (v_998b9d(v_c65f5d, v_9e86fd)) return;
+    }
+    v_0e72e5(v_b922bf, v_021a29, 'MetaHint');
+  };
+
   const v_2f26f6 = async () => {
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
@@ -750,6 +769,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 textStyle={v_d81136.aiHintyBtnText}
               />
             </LinearGradient>
+          </View>
+
+          {}
+          <View style={v_d81136.section}>
+            <GradientButton
+              title={v_8d41d7('profile.offerwall')}
+              leftIcon={<Coins size={16} color="#FFFFFF" />}
+              style={v_d81136.attendanceBtn}
+              onPress={v_a2c2c9}
+            />
           </View>
 
           {}
