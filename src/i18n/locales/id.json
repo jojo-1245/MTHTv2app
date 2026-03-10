@@ -1719,12 +1719,12 @@
     },
     "my_info_faq": {
         "title": "Pertanyaan yang Sering Diajukan",
-        "faq_1_question": "Pertanyaan yang Sering Diajukan 1",
-        "faq_1_answer": "Konten jawaban akan ditampilkan di sini.",
-        "faq_2_question": "Pertanyaan yang Sering Diajukan 2",
-        "faq_2_answer": "Konten jawaban akan ditampilkan di sini.",
-        "faq_3_question": "Pertanyaan yang Sering Diajukan 3",
-        "faq_3_answer": "Konten jawaban akan ditampilkan di sini."
+        "faq_1_question": "Bagaimana cara mengukur analisis kesehatan dan kulit dengan kamera lebih akurat?",
+        "faq_1_answer": "Untuk akurasi analisis AI yang lebih baik, perhatikan tiga hal berikut.\n1. Pencahayaan: Ambil foto di cahaya alami yang terang dan merata, hindari tempat gelap atau sinar matahari langsung yang keras.\n2. Jarak dan fokus: Sejajarkan area atau wajah dengan panduan di layar dan pegang ponsel tetap agar fokus tidak blur.\n3. Kebersihan: Untuk analisis kulit, ukur dengan wajah bersih (tanpa riasan) agar kondisi kulit terukur paling akurat.",
+        "faq_2_question": "Saya khawatir foto analisis kesehatan atau isi konsultasi saya bocor ke luar.",
+        "faq_2_answer": "Metahint mengutamakan privasi pengguna. Foto untuk analisis langsung diubah menjadi data numerik oleh AI, dan kami tidak menyimpan gambar asli di server secara default. Percakapan dengan AI juga dienkripsi dan hanya digunakan untuk memberikan panduan kesehatan yang dipersonalisasi untuk Anda.",
+        "faq_3_question": "Apakah layanan konsultasi AI dapat menggantikan diagnosis medis profesional?",
+        "faq_3_answer": "Konsultasi AI Metahint berperan sebagai 'asisten' yang memberikan tips manajemen kesehatan dan informasi terkait berdasarkan data analisis Anda. Jawaban AI didasarkan pada informasi kesehatan terbaru dan algoritma, namun bukan diagnosis atau resep medis. Jika Anda mencurigai penyakit atau membutuhkan perawatan yang tepat, kami merekomendasikan untuk berkonsultasi dengan tenaga kesehatan profesional."
     },
     "sidebar": {
         "close_menu": "Tutup Menu",

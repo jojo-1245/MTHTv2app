@@ -1720,12 +1720,12 @@
     },
     "my_info_faq": {
         "title": "Frequently Asked Questions",
-        "faq_1_question": "Frequently Asked Question 1",
-        "faq_1_answer": "Answer content will be displayed here.",
-        "faq_2_question": "Frequently Asked Question 2",
-        "faq_2_answer": "Answer content will be displayed here.",
-        "faq_3_question": "Frequently Asked Question 3",
-        "faq_3_answer": "Answer content will be displayed here."
+        "faq_1_question": "How can I get more accurate health and skin analysis with the camera?",
+        "faq_1_answer": "For better AI analysis accuracy, please check the following three points.\n1. Lighting: Shoot in bright, even natural light rather than in dim or harsh direct sunlight.\n2. Distance and focus: Align the affected area or face with the on-screen guide lines and keep your phone steady so the image stays in focus.\n3. Cleanliness: For skin analysis, measure with a clean face (no makeup) to get the most accurate reading of your skin condition.",
+        "faq_2_question": "I'm worried my health analysis photos or consultation content might be leaked.",
+        "faq_2_answer": "Metahint puts user privacy first. Photos taken for analysis are converted into numerical data immediately by the AI, and we do not store original images on the server by default. In addition, your conversations with the AI are encrypted and used only to provide you with personalized health guidance.",
+        "faq_3_question": "Can the AI consultation service replace professional medical diagnosis?",
+        "faq_3_answer": "Metahint's AI consultation acts as an 'assistant' that provides health management tips and related information based on your analysis data. AI responses are based on up-to-date health information and algorithms but are not medical diagnosis or prescription. If you suspect an illness or need proper care, we recommend visiting a healthcare provider for professional consultation."
     },
     "sidebar": {
         "close_menu": "Close Menu",
