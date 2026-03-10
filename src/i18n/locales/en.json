@@ -563,6 +563,7 @@
         "records_placeholder": "Skin analysis records will be displayed here.",
         "step_prefix": "STEP",
         "capture": {
+            "discount_notice": "2 coins → 1 coin discount",
             "title": "Face Capture",
             "subtitle": "Please capture your face from the front according to the guide.\nFace and shoulders should be visible together.",
             "placeholder_title": "Face Capture",
@@ -1002,6 +1003,7 @@
             "title": "Health Analysis",
             "screen_title": "Health Analysis",
             "intro_title": "Health Information Measurement",
+            "discount_notice": "4 coins → 2 coins discount",
             "intro_description": "Camera permission is required for measurement.\nAfter entering your basic information, you can measure. Once complete, you can view various health information such as pulse rate, blood pressure, and oxygen saturation, and receive a diagnosis from AI Hinty.",
             "flow_subtitle": "You can have a health check through the following steps",
             "flow_badge_step": "Step {{n}}",
