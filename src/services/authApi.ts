@@ -567,10 +567,16 @@ export async function sendVerification(email: string, purpose: string = 'export_
     console.log('[authApi] sendVerification 요청:', { email, purpose });
   }
   try {
-    const res = await apiClient.post<ApiResponse<{ success: boolean; message: string }>>('/oth-path', {
-      email,
-      purpose,
-    });
+
+    const baseURL = process.env.EXPO_PUBLIC_GATEWAY || 'https://oth-path-c38c36.example.invalid';
+    const storedToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (storedToken) headers['Authorization'] = `Bearer ${storedToken}`;
+    const res = await axios.post<ApiResponse<{ success: boolean; message: string }>>(
+      `${baseURL}/oth-path`,
+      { email, purpose },
+      { headers }
+    );
     return res.data?.data ?? (res.data as unknown as { success: boolean; message: string });
   } catch (error) {
     throw normalizeError(error);
