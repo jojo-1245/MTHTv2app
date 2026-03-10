@@ -150,9 +150,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
       return;
     }
-    const v_021a29 = v_727031?.email?.trim() || 'guest';
+
+    const v_43e90c = v_727031?.id != null ? String(v_727031.id) : 'guest';
     const v_9f1622 = 'MetaHint';
-    v_0e72e5(v_b922bf, v_021a29, v_9f1622);
+    v_0e72e5(v_b922bf, v_43e90c, v_9f1622);
   };
 
   const v_06b8a4 = async () => {
