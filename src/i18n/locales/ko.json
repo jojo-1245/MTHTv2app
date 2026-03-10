@@ -573,6 +573,7 @@
         "records_placeholder": "피부 분석 기록이 여기에 표시됩니다.",
         "step_prefix": "STEP",
         "capture": {
+            "discount_notice": "2코인에서 1코인으로 할인",
             "title": "얼굴 촬영",
             "subtitle": "가이드에 맞춰 정면 얼굴을 촬영해주세요.",
             "placeholder_title": "얼굴 사진 촬영",
@@ -1023,6 +1024,7 @@
             "title": "건강 분석",
             "screen_title": "건강분석",
             "intro_title": "건강 정보 측정",
+            "discount_notice": "4코인에서 2코인으로 할인",
             "intro_description": "측정을 위해서는 카메라 허용이 필요합니다.\n기본정보 입력 후 측정할 수 있고, 측정 완료 후에는 심박수, 혈압, 산소포화도 등 다양한 건강정보를 확인하고 AI힌티에게 진단 받을 수 있습니다.",
             "flow_subtitle": "다음과 같은 단계를 거쳐 건강검진을 할 수 있습니다",
             "flow_badge_step": "Step {{n}}",

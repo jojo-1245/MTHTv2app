@@ -562,6 +562,7 @@
         "records_placeholder": "Catatan analisis kulit akan ditampilkan di sini.",
         "step_prefix": "LANGKAH",
         "capture": {
+            "discount_notice": "2 koin → 1 koin diskon",
             "title": "Ambil Foto Wajah",
             "subtitle": "Ambil foto wajah dari depan sesuai panduan.\nWajah dan bahu harus terlihat bersamaan.",
             "placeholder_title": "Ambil Foto Wajah",
@@ -1001,6 +1002,7 @@
             "title": "Analisis Kesehatan",
             "screen_title": "Analisis Kesehatan",
             "intro_title": "Pengukuran Informasi Kesehatan",
+            "discount_notice": "4 koin → 2 koin diskon",
             "intro_description": "Izin kamera diperlukan untuk pengukuran.\nSetelah memasukkan informasi dasar, Anda dapat mengukur. Setelah selesai, Anda dapat melihat berbagai informasi kesehatan seperti denyut nadi, tekanan darah, dan saturasi oksigen, serta menerima diagnosis dari AI Hinty.",
             "flow_subtitle": "Anda dapat melakukan pemeriksaan kesehatan melalui langkah-langkah berikut",
             "flow_badge_step": "Step {{n}}",
