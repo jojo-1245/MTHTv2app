@@ -364,6 +364,7 @@ export async function persistAuthSession(
 }
 
 export interface MeProfile {
+  id?: number | string;
   email?: string;
   firstname?: string;
   lastname?: string;
