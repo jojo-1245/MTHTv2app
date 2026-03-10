@@ -6,7 +6,7 @@ import { v_1bfbd0, v_843035, v_9b1a04 } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
-import { v_f51778, v_d30c5f } from '../../services';
+import { v_f51778 } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'ClauseDetail'>;
 
@@ -21,17 +21,16 @@ const ClauseDetailScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const v_9f1622 = v_4898e2 === 'terms' ? v_8d41d7('my_info_clauses.terms_title') : v_8d41d7('my_info_clauses.privacy_title');
 
   v_c4deb2(() => {
+    if (v_4898e2 === 'privacy') {
+      v_598d8c(v_8d41d7('my_info_clauses.privacy_content'));
+      v_34a50a(false);
+      return;
+    }
     const v_16f577 = async () => {
       try {
         v_34a50a(true);
-        let v_8f00b9;
-        if (v_4898e2 === 'terms') {
-          v_8f00b9 = await v_f51778();
-        } else {
-          v_8f00b9 = await v_d30c5f();
-        }
-
-        if (v_8f00b9.success && v_8f00b9.data) {
+        const v_8f00b9 = await v_f51778();
+        if (v_8f00b9.success && v_8f00b9.data?.content) {
           v_598d8c(v_8f00b9.data.content);
         } else {
           v_598d8c(v_8d41d7('alert.default_title'));
@@ -43,7 +42,6 @@ const ClauseDetailScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         v_34a50a(false);
       }
     };
-
     v_16f577();
   }, [v_4898e2, v_8d41d7]);
 
