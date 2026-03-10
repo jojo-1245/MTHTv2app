@@ -1798,6 +1798,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           >
             <View style={v_d81136.introContainer}>
 
+              <Text style={v_d81136.introDiscountNotice}>{v_8d41d7('health_analysis.intro.discount_notice')}</Text>
               <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
               <Text style={v_d81136.flowSubtitle}>{v_8d41d7('health_analysis.intro.flow_subtitle')}</Text>
 
@@ -2370,6 +2371,14 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  introDiscountNotice: {
+    fontSize: 12,
+    fontFamily: v_843035.medium,
+    color: '#0D9488',
+    textAlign: 'center',
+    marginBottom: 10,
+    paddingHorizontal: v_9b1a04.medium,
   },
   introTitle: {
     fontSize: 28,

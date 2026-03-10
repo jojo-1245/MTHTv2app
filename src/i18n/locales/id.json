@@ -562,6 +562,7 @@
         "records_placeholder": "Catatan analisis kulit akan ditampilkan di sini.",
         "step_prefix": "LANGKAH",
         "capture": {
+            "discount_notice": "2 koin → 1 koin diskon",
             "title": "Ambil Foto Wajah",
             "subtitle": "Ambil foto wajah dari depan sesuai panduan.\nWajah dan bahu harus terlihat bersamaan.",
             "placeholder_title": "Ambil Foto Wajah",
@@ -1001,6 +1002,7 @@
             "title": "Analisis Kesehatan",
             "screen_title": "Analisis Kesehatan",
             "intro_title": "Pengukuran Informasi Kesehatan",
+            "discount_notice": "4 koin → 2 koin diskon",
             "intro_description": "Izin kamera diperlukan untuk pengukuran.\nSetelah memasukkan informasi dasar, Anda dapat mengukur. Setelah selesai, Anda dapat melihat berbagai informasi kesehatan seperti denyut nadi, tekanan darah, dan saturasi oksigen, serta menerima diagnosis dari AI Hinty.",
             "flow_subtitle": "Anda dapat melakukan pemeriksaan kesehatan melalui langkah-langkah berikut",
             "flow_badge_step": "Step {{n}}",
@@ -1658,7 +1660,9 @@
     "my_info_clauses": {
         "title": "Ketentuan",
         "terms_title": "Ketentuan Layanan",
-        "privacy_title": "Kebijakan Privasi"
+        "terms_content": "[Metahint] Persetujuan Pengumpulan dan Penggunaan Informasi Pribadi\n\n1. Tujuan Pengumpulan dan Penggunaan Informasi Pribadi Perusahaan menggunakan informasi pribadi yang dikumpulkan untuk tujuan berikut.\n* Penyediaan dan analisis layanan: analisis kesehatan dan kulit berbasis AI menggunakan kamera ponsel, pembuatan laporan hasil.\n* Konsultasi AI yang disesuaikan: layanan percakapan AI dan informasi kesehatan yang disesuaikan berdasarkan hasil analisis.\n* Layanan aset virtual: pembuatan dompet koin MTHT, manajemen aset, riwayat transaksi, dan dukungan transfer.\n* Pengelolaan anggota: verifikasi identitas, pencegahan penggunaan curang, konfirmasi pendaftaran, penanganan keluhan.\n* Pemasaran dan peningkatan layanan: pengembangan layanan baru, frekuensi akses, analisis statistik penggunaan layanan.\n\n2. Informasi Pribadi yang Dikumpulkan Perusahaan mengumpulkan informasi berikut untuk penyediaan layanan yang lancar.\n* Informasi akun (wajib): alamat email, kata sandi, nama panggilan, nomor ponsel.\n* Informasi analisis dan konsultasi (wajib): foto dan video dari kamera, konten percakapan AI, kata kunci pencarian.\n* Informasi dompet aset virtual (wajib): alamat dompet koin MTHT, catatan transaksi (TXID).\n* Informasi yang dihasilkan otomatis (opsional): log penggunaan layanan, log akses, cookie, alamat IP, informasi perangkat (model, versi OS).\n\n3. Pengumpulan dan Penggunaan Informasi Sensitif (Wajib) Metahint mengumpulkan informasi sensitif seperti data kesehatan dan kulit untuk menyediakan layanan analisis kesehatan dan kulit.\n* Item yang dikumpulkan: data tangkapan kamera dan hasil analisis kesehatan/kulit.\n* Tujuan: penyediaan panduan kesehatan dan konsultasi yang disesuaikan melalui analisis AI.\n* Masa penyimpanan: hingga penarikan keanggotaan atau hingga tujuan pengumpulan tercapai.\n\n4. Masa Penyimpanan dan Penggunaan Informasi Pribadi\n* Informasi pribadi pada prinsipnya dihapus segera saat penarikan keanggotaan.\n* Jika penyimpanan diwajibkan oleh hukum (mis. UU E-Commerce), perusahaan menyimpan informasi anggota untuk periode yang ditentukan hukum.\n* Blockchain: alamat dompet dan riwayat transaksi dapat tercatat permanen di jaringan dan tidak dapat dihapus.\n\n5. Hak Menolak Persetujuan dan Pemberitahuan Kekurangan\n* Anda berhak menolak persetujuan atas pengumpulan dan penggunaan informasi pribadi dan sensitif.\n* Namun, menolak persetujuan untuk item wajib dapat membatasi penggunaan fitur inti seperti analisis kesehatan/kulit, konsultasi AI, dan dompet koin.",
+        "privacy_title": "Kebijakan Privasi",
+        "privacy_content": "Kebijakan Privasi Metahint\n\nMetahint Global INC (\"Perusahaan\") menghargai informasi pribadi pengguna dan mematuhi hukum yang berlaku termasuk Undang-Undang Perlindungan Informasi Pribadi. Kebijakan ini menjelaskan informasi pribadi yang kami kumpulkan, cara kami menggunakannya, dan langkah-langkah perlindungan.\n\n1. Informasi Pribadi yang Kami Kumpulkan dan Cara Pengumpulan\nKami mengumpulkan informasi pribadi minimum untuk penyediaan layanan dan memperoleh persetujuan tersendiri untuk informasi sensitif (data kesehatan dan kulit).\n* Pendaftaran dan pengelolaan akun: alamat email, kata sandi, nama panggilan, nomor ponsel.\n* Layanan analisis kesehatan dan kulit (wajib): foto dan video dari kamera ponsel, hasil analisis (status kesehatan/kulit terkuantifikasi).\n* Layanan konsultasi AI: konten percakapan AI dan riwayat pencarian.\n* Layanan dompet aset virtual: alamat dompet koin MTHT, riwayat transaksi (Transaction ID).\n* Terkumpul otomatis: informasi perangkat (model, OS), alamat IP, log penggunaan layanan, cookie.\n\n2. Tujuan Pengolahan Informasi Pribadi\n* Penyediaan layanan: analisis kesehatan/kulit berbasis AI dan hasil menggunakan kamera.\n* Konsultasi AI yang disesuaikan: informasi kesehatan dan konsultasi berdasarkan data analisis.\n* Layanan keuangan: pembuatan dompet koin MTHT, manajemen aset, dukungan transfer/transaksi.\n* Pengelolaan pengguna: verifikasi identitas, respons pertanyaan pelanggan, pencegahan penipuan.\n\n3. Masa Penyimpanan dan Penggunaan\nKami menghapus informasi pribadi tanpa penundaan setelah tujuan tercapai. Pengecualian: saat penarikan diri; penyimpanan menurut hukum (mis. catatan transaksi aset virtual); catatan kontrak/penarikan penawaran 5 tahun, keluhan/sengketa konsumen 3 tahun, kunjungan layanan 3 bulan.\n\n4. Pengolahan Informasi Sensitif dan Persetujuan Terpisah\nMetahint mengolah informasi sensitif seperti data kesehatan dan kulit. Kami memperoleh persetujuan terpisah dan hanya menggunakan untuk tujuan analisis.\n\n5. Penyediaan ke Pihak Ketiga dan Alih Daya\nKami tidak memberikan informasi pribadi ke pihak ketiga tanpa persetujuan. Kami dapat mengalihdayakan ke (mis. AWS, Google Cloud, penyedia solusi AI) untuk analisis AI dan penyimpanan cloud.\n\n6. Prosedur dan Metode Penghancuran\nKami menghapus dengan aman setelah tujuan tercapai; file elektronik dihapus secara permanen, dokumen kertas dihancurkan atau dibakar.\n\n7. Hak Subjek Data dan Wali Hukum\nPengguna dapat mengakses, memperbaiki informasi, atau mencabut persetujuan melalui penarikan akun kapan saja.\n\n8. Tindakan Keamanan Informasi Pribadi\nKami menerapkan enkripsi (kata sandi, kunci pribadi dompet), SSL untuk transmisi, pembatasan akses dan pelatihan personel.\n\n9. Dompet Aset Virtual\nAlamat dompet MTHT dan riwayat transaksi mungkin tidak dapat dihapus sepenuhnya karena sifat blockchain. Pengguna bertanggung jawab atas kunci pribadi; kami tidak bertanggung jawab atas kehilangan karena kelalaian pengguna."
     },
     "wallet": {
         "title": "Dompet MetaHint",
@@ -1715,12 +1719,12 @@
     },
     "my_info_faq": {
         "title": "Pertanyaan yang Sering Diajukan",
-        "faq_1_question": "Pertanyaan yang Sering Diajukan 1",
-        "faq_1_answer": "Konten jawaban akan ditampilkan di sini.",
-        "faq_2_question": "Pertanyaan yang Sering Diajukan 2",
-        "faq_2_answer": "Konten jawaban akan ditampilkan di sini.",
-        "faq_3_question": "Pertanyaan yang Sering Diajukan 3",
-        "faq_3_answer": "Konten jawaban akan ditampilkan di sini."
+        "faq_1_question": "Bagaimana cara mengukur analisis kesehatan dan kulit dengan kamera lebih akurat?",
+        "faq_1_answer": "Untuk akurasi analisis AI yang lebih baik, perhatikan tiga hal berikut.\n1. Pencahayaan: Ambil foto di cahaya alami yang terang dan merata, hindari tempat gelap atau sinar matahari langsung yang keras.\n2. Jarak dan fokus: Sejajarkan area atau wajah dengan panduan di layar dan pegang ponsel tetap agar fokus tidak blur.\n3. Kebersihan: Untuk analisis kulit, ukur dengan wajah bersih (tanpa riasan) agar kondisi kulit terukur paling akurat.",
+        "faq_2_question": "Saya khawatir foto analisis kesehatan atau isi konsultasi saya bocor ke luar.",
+        "faq_2_answer": "Metahint mengutamakan privasi pengguna. Foto untuk analisis langsung diubah menjadi data numerik oleh AI, dan kami tidak menyimpan gambar asli di server secara default. Percakapan dengan AI juga dienkripsi dan hanya digunakan untuk memberikan panduan kesehatan yang dipersonalisasi untuk Anda.",
+        "faq_3_question": "Apakah layanan konsultasi AI dapat menggantikan diagnosis medis profesional?",
+        "faq_3_answer": "Konsultasi AI Metahint berperan sebagai 'asisten' yang memberikan tips manajemen kesehatan dan informasi terkait berdasarkan data analisis Anda. Jawaban AI didasarkan pada informasi kesehatan terbaru dan algoritma, namun bukan diagnosis atau resep medis. Jika Anda mencurigai penyakit atau membutuhkan perawatan yang tepat, kami merekomendasikan untuk berkonsultasi dengan tenaga kesehatan profesional."
     },
     "sidebar": {
         "close_menu": "Tutup Menu",

@@ -1166,6 +1166,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         <>
             {}
             <View style={v_d81136.infoSection}>
+                <Text style={v_d81136.discountNotice}>{v_8d41d7('skin.capture.discount_notice')}</Text>
                 <Text style={v_d81136.stepIndicator}>{v_8d41d7('skin.step_prefix')} 1</Text>
                 <Text style={v_d81136.title}>{v_8d41d7('skin.capture.title')}</Text>
                 <Text style={v_d81136.subtitle}>
@@ -2104,6 +2105,15 @@ const v_d81136 = v_472849.create({
     container: {
         ...v_a61db3.container,
         gap: v_9b1a04.medium,
+    },
+
+    discountNotice: {
+        fontSize: 12,
+        fontFamily: v_843035.medium,
+        color: '#0D9488',
+        textAlign: 'center',
+        marginBottom: 10,
+        paddingHorizontal: v_9b1a04.medium,
     },
 
     stepIndicator: {
