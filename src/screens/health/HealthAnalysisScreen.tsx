@@ -216,6 +216,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
   const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
   const [v_399221, v_11f378] = v_5ab095<string>('0');
+  const [v_fab460, v_c96363] = v_5ab095<string>('0');
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
     v_c7daf6.params?.initialTab ?? 'measure'
   );
@@ -248,13 +249,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       .then((v_8f00b9) => {
         v_f193b7(v_8f00b9.can_proceed);
         v_11f378(v_8f00b9.fee_amount);
-        if (!v_8f00b9.can_proceed) {
-          v_03e392.alert(
-            '잔액 부족',
-            `건강 분석에 ${v_8f00b9.fee_amount} MTHT가 필요합니다.\n현재 잔액: ${v_8f00b9.balance} MTHT`,
-            [{ text: '확인', onPress: () => v_c65f5d.goBack() }]
-          );
-        }
+        v_c96363(v_8f00b9.balance);
       })
       .catch((v_9e86fd) => console.warn('[건강분석] preflight 실패:', v_9e86fd));
   }, []);
@@ -759,9 +754,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       if (v_bc50c7 === v_eb2401.READY) {
 
         if (!v_f91d86) {
+          const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
           v_03e392.alert(
             '잔액 부족',
-            `건강 분석에 ${v_399221} MTHT가 필요합니다.`,
+            `건강 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
             [{ text: '확인' }]
           );
           return;
