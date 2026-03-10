@@ -81,9 +81,9 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
         return null;
       }
 
-      const v_a9653b = v_c9c489?.GATEWAY || '';
+      const v_a9653b = process.env.EXPO_PUBLIC_GATEWAY || v_c9c489?.GATEWAY || '';
       const v_cc9198 = v_a9653b.endsWith('/') ? v_a9653b.slice(0, -1) : v_a9653b;
-      const v_f68bbb = v_c9c489?.CLIENT_TOKEN || v_c9c489?.GATEWAY_AUTH_CODE;
+      const v_f68bbb = process.env.EXPO_PUBLIC_CLIENT_TOKEN || v_c9c489?.CLIENT_TOKEN || v_c9c489?.GATEWAY_AUTH_CODE;
 
       if (!v_cc9198) {
         console.warn('[OTA] GATEWAY 주소가 없습니다.');

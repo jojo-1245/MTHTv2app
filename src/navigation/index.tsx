@@ -18,6 +18,7 @@ import { v_5b640b } from '../screens/wallet/WalletSendScreen';
 import { v_2ba37d } from '../screens/wallet/WalletQrScanScreen';
 import { v_31216c } from '../screens/wallet/WalletTransactionProgressScreen';
 import { v_1cd2a2 } from '../screens/wallet/WalletTransactionResultScreen';
+import { v_e1bcc7 } from '../screens/wallet/WalletTokenDetailScreen';
 import { v_a023f9 } from '../screens/wallet/WalletReceiveScreen';
 import { v_4ab181 } from '../screens/FontTestScreen';
 import v_03a231 from '../screens/profile/MyInfoScreen';
@@ -74,6 +75,19 @@ export type RootStackParamList = {
   WalletTransactionProgress: undefined;
   WalletTransactionResult: undefined;
   TransactionDetails: undefined;
+  WalletTokenDetail: {
+    tokenData: {
+      id: string;
+      title: string;
+      subtitle?: string;
+      amount?: string;
+      suffix?: string;
+      iconSource?: any;
+      badgeLabel?: string;
+      fallbackLabel?: string;
+      fallbackColors?: string[];
+    };
+  };
   FontTest: undefined;
   MyInfo: undefined;
   MyInfoView: undefined;
@@ -162,6 +176,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="WalletTransactionProgress" component={v_31216c} />
         <Stack.Screen name="WalletTransactionResult" component={v_1cd2a2} />
         <Stack.Screen name="TransactionDetails" component={v_1cd2a2} />
+        <Stack.Screen name="WalletTokenDetail" component={v_e1bcc7} />
         <Stack.Screen name="FontTest" component={v_4ab181} />
         <Stack.Screen name="MyInfo" component={v_03a231} />
         <Stack.Screen name="MyInfoView" component={v_22c7ba} />
@@ -209,6 +224,7 @@ export const v_ce4741 = {
   walletTransactionProgress: 'WalletTransactionProgress',
   walletTransactionResult: 'WalletTransactionResult',
   transactionDetails: 'TransactionDetails',
+  walletTokenDetail: 'WalletTokenDetail',
   fontTest: 'FontTest',
   myInfo: 'MyInfo',
   myInfoView: 'MyInfoView',
