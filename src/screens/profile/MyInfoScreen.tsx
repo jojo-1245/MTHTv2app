@@ -19,7 +19,7 @@ import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
-import { v_0e72e5 } from '../../services/pointClickOfferwall';
+import { v_0e72e5, v_222d64 } from '../../services/pointClickOfferwall';
 import { v_998b9d } from '../../utils/authErrorHandler';
 import { v_e4a763 } from '../../utils/env';
 
@@ -74,14 +74,14 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const menuItems: Array<
     | {
-        id: string;
-        title: string;
-        description: string;
-        iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings' | 'gift';
-        route: keyof v_8ad91b;
-        isLogout?: false;
-        isOfferwall?: false;
-      }
+      id: string;
+      title: string;
+      description: string;
+      iconName: 'eye' | 'edit-2' | 'bell' | 'help-circle' | 'file-text' | 'settings' | 'gift';
+      route: keyof v_8ad91b;
+      isLogout?: false;
+      isOfferwall?: false;
+    }
     | { id: string; title: string; iconName: 'gift'; isOfferwall: true }
     | { id: string; title: string; isLogout: true }
   > = [
@@ -151,9 +151,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
-    const v_43e90c = v_727031?.id != null ? String(v_727031.id) : 'guest';
+    const v_d84161 = v_222d64(v_727031?.email + "," + v_727031?.id);
+
     const v_9f1622 = 'MetaHint';
-    v_0e72e5(v_b922bf, v_43e90c, v_9f1622);
+    v_0e72e5(v_b922bf, v_d84161, v_9f1622);
   };
 
   const v_06b8a4 = async () => {
@@ -282,49 +283,49 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               const v_7e3a89 = 'isOfferwall' in v_8c0b26 && v_8c0b26.isOfferwall === true;
               const v_c288e9 = 'iconName' in v_8c0b26 ? v_8c0b26.iconName : ('help-circle' as const);
               return (
-              <TouchableOpacity
-                key={v_8c0b26.id}
-                style={[
-                  v_d81136.menuItem,
-                  v_a56041 < v_0dea6d.length - 1 && v_d81136.menuItemBorder,
-                ]}
-                onPress={
-                  v_44c68a
-                    ? v_06b8a4
-                    : v_7e3a89
-                      ? v_a2c2c9
-                      : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
-                }
-                activeOpacity={0.88}
-                hitSlop={{ top: 8, bottom: 8, left: 0, right: 0 }}
-              >
-                {v_44c68a ? (
-                  <>
-                    <View style={v_d81136.menuIconWrap}>
-                      {v_d11128 ? (
-                        <ActivityIndicator size="small" color={v_1bfbd0.text} />
-                      ) : (
-                        <Ionicons name="log-out-outline" size={24} color={v_1bfbd0.text} />
-                      )}
-                    </View>
-                    <Text style={[v_d81136.menuItemTextLogout, { color: v_1bfbd0.text }]}>
-                      {v_d11128 ? v_8d41d7('profile.logging_out', '로그아웃 중...') : v_8c0b26.title}
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <View style={v_d81136.menuIconWrap}>
-                      <Feather
-                        name={v_c288e9}
-                        size={24}
-                        color={v_1bfbd0.text}
-                      />
-                    </View>
-                    <Text style={v_d81136.menuItemText}>{v_8c0b26.title}</Text>
-                  </>
-                )}
-                <Feather name="chevron-right" size={20} color="#9CA3AF" />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  key={v_8c0b26.id}
+                  style={[
+                    v_d81136.menuItem,
+                    v_a56041 < v_0dea6d.length - 1 && v_d81136.menuItemBorder,
+                  ]}
+                  onPress={
+                    v_44c68a
+                      ? v_06b8a4
+                      : v_7e3a89
+                        ? v_a2c2c9
+                        : () => v_9b57fc((v_8c0b26 as { route: keyof v_8ad91b }).route as any)
+                  }
+                  activeOpacity={0.88}
+                  hitSlop={{ top: 8, bottom: 8, left: 0, right: 0 }}
+                >
+                  {v_44c68a ? (
+                    <>
+                      <View style={v_d81136.menuIconWrap}>
+                        {v_d11128 ? (
+                          <ActivityIndicator size="small" color={v_1bfbd0.text} />
+                        ) : (
+                          <Ionicons name="log-out-outline" size={24} color={v_1bfbd0.text} />
+                        )}
+                      </View>
+                      <Text style={[v_d81136.menuItemTextLogout, { color: v_1bfbd0.text }]}>
+                        {v_d11128 ? v_8d41d7('profile.logging_out', '로그아웃 중...') : v_8c0b26.title}
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <View style={v_d81136.menuIconWrap}>
+                        <Feather
+                          name={v_c288e9}
+                          size={24}
+                          color={v_1bfbd0.text}
+                        />
+                      </View>
+                      <Text style={v_d81136.menuItemText}>{v_8c0b26.title}</Text>
+                    </>
+                  )}
+                  <Feather name="chevron-right" size={20} color="#9CA3AF" />
+                </TouchableOpacity>
               );
             })}
           </View>

@@ -5,7 +5,7 @@ import { v_326be8, v_80fa10 } from 'rcmrninabrnb';
 const v_1f9bb4 = 5;
 const v_4f8d3a = 64;
 
-function v_222d64(v_fba864): string {
+export function v_222d64(v_fba864): string {
   const v_7eac46 =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   const v_fbb6da = new TextEncoder().encode(v_fba864);
