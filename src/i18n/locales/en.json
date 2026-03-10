@@ -197,7 +197,8 @@
     "cancel": "Cancel",
     "compare_btn": "Compare",
     "select_time_for": "{{date}} - Select measurement time",
-    "item_detail_desc": "The {{label}} score is {{score}} points. It indicates your skin condition on a scale of 0-100."
+    "item_detail_desc": "The {{label}} score is {{score}} points. It indicates your skin condition on a scale of 0-100.",
+    "no_records": "No records."
   },
   "skin_comparison": {
     "title": "Comparison Analysis",
