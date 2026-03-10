@@ -335,7 +335,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   v_cf763b(
     v_de06a3(() => {
-      if (v_326be8.OS !== 'android') return () => {};
+      if (v_326be8.OS !== 'android') return () => { };
       const v_64ccfb = () => {
         v_1ed974.exitApp();
         return true;
@@ -365,44 +365,44 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         try {
           const v_3ea33e = await v_e8dda3(v_c65f5d);
 
-        const v_cf60ad = [false, false, false, false, false, false, false];
-        v_3ea33e.recent_status.forEach((v_8c0b26) => {
-          const v_62a264 = v_ab4ad9(v_8c0b26.date);
-          if (v_62a264 >= 0 && v_62a264 < 7) {
-            v_cf60ad[v_62a264] = v_8c0b26.attended;
-          }
-        });
-        v_5b2bbb(v_cf60ad);
+          const v_cf60ad = [false, false, false, false, false, false, false];
+          v_3ea33e.recent_status.forEach((v_8c0b26) => {
+            const v_62a264 = v_ab4ad9(v_8c0b26.date);
+            if (v_62a264 >= 0 && v_62a264 < 7) {
+              v_cf60ad[v_62a264] = v_8c0b26.attended;
+            }
+          });
+          v_5b2bbb(v_cf60ad);
 
-        v_0d7691(v_3ea33e.current_streak);
-        v_c34f93(v_3ea33e.week_attended);
-        v_468450(v_3ea33e.week_total);
-      } catch (v_5e9bfe) {
-        console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
+          v_0d7691(v_3ea33e.current_streak);
+          v_c34f93(v_3ea33e.week_attended);
+          v_468450(v_3ea33e.week_total);
+        } catch (v_5e9bfe) {
+          console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
 
-        if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-          return;
-        }
-
-        try {
-          const v_d308b5 = await v_cbf5f1(v_c65f5d);
-          if (v_d308b5.checked_today) {
-            v_5b2bbb((v_ba2215) => {
-              const v_a448ad = [...v_ba2215];
-              v_a448ad[v_8aab53] = true;
-              return v_a448ad;
-            });
-          }
-          v_0d7691(v_d308b5.streak_days);
-        } catch (v_741f30) {
-          console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
-
-          if (v_998b9d(v_c65f5d, v_741f30)) {
+          if (v_998b9d(v_c65f5d, v_5e9bfe)) {
             return;
           }
+
+          try {
+            const v_d308b5 = await v_cbf5f1(v_c65f5d);
+            if (v_d308b5.checked_today) {
+              v_5b2bbb((v_ba2215) => {
+                const v_a448ad = [...v_ba2215];
+                v_a448ad[v_8aab53] = true;
+                return v_a448ad;
+              });
+            }
+            v_0d7691(v_d308b5.streak_days);
+          } catch (v_741f30) {
+            console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
+
+            if (v_998b9d(v_c65f5d, v_741f30)) {
+              return;
+            }
+          }
         }
-      }
-    };
+      };
 
       v_58b642();
     }, 250);
@@ -754,13 +754,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={v_d81136.aiHintyTitle}>{v_8d41d7('home.ai_hinty_health_checkup')}</Text>
               </View>
               <Text style={v_d81136.aiHintyDesc}>{v_8d41d7('home.ai_hinty_health_desc')}</Text>
-              <View style={v_d81136.familySection}>
-                <Users size={20} color="#FFFFFF" />
-                <View style={v_d81136.familySectionInner}>
-                  <Text style={v_d81136.familyTitle}>{v_8d41d7('home.family_health_connect')}</Text>
-                  <Text style={v_d81136.familyDesc}>{v_8d41d7('home.family_health_desc')}</Text>
-                </View>
-              </View>
+              {
+
+}
               <Button
                 variant="filled"
                 title={v_8d41d7('home.ai_hinty_start')}
