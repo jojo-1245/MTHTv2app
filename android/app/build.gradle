@@ -66,6 +66,10 @@ android {
             def enableLegacyPackaging = findProperty('expo.useLegacyPackaging') ?: 'false'
             useLegacyPackaging enableLegacyPackaging.toBoolean()
         }
+
+        resources {
+            excludes += ['META-INF/services/org.xmlpull.v1.XmlPullParserFactory']
+        }
     }
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'

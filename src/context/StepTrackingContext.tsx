@@ -27,7 +27,7 @@ import { v_312d93 } from '../utils/dateUtils';
 const v_8bf63f = 'metahint_step_notification_enabled';
 const v_c567d7 = 'metahint_step_count';
 const v_368d84 = 'metahint_step_count_date';
-const v_c19e2d = 100; 
+const v_c19e2d = 10000;
 
 interface StepTrackingContextValue {
   currentSteps: number;
@@ -180,58 +180,30 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     const v_4cbfc6 = 600;
 
     const v_cb36b1 = setTimeout(() => {
-    const v_391ff4 = async () => {
-      try {
+      const v_391ff4 = async () => {
+        try {
 
-        let v_635b76 = await v_e9771f();
+          let v_635b76 = await v_e9771f();
 
-        const v_dc359d = await v_f41071();
+          const v_dc359d = await v_f41071();
 
-        const v_d94577 = await v_e84827.getItem(v_368d84);
-        const v_227df7 = v_c877df();
+          const v_d94577 = await v_e84827.getItem(v_368d84);
+          const v_227df7 = v_c877df();
 
-        if (v_d94577 !== v_227df7 && v_d94577 !== null && v_d94577 !== '') {
+          if (v_d94577 !== v_227df7 && v_d94577 !== null && v_d94577 !== '') {
 
-          await v_e84827.setItem(v_c567d7, '0');
-          await v_e84827.setItem(v_368d84, v_227df7);
-          v_635b76 = 0;
-        }
-
-        const v_02fdad = await v_303ad0();
-        if (!v_02fdad) {
-
-          const v_b6d66b = await v_157cb4();
-          if (!v_b6d66b && v_41ed06) {
-            v_64b293(false);
-            if (v_41ed06) {
-              const v_a6a5f1 = v_3e3188.current;
-              if (v_a6a5f1 > 0) {
-
-                if (v_635b76 > v_a6a5f1) {
-                  v_4b95c4(v_635b76);
-                }
-              } else {
-                v_4b95c4(v_635b76);
-              }
-            }
-            return;
+            await v_e84827.setItem(v_c567d7, '0');
+            await v_e84827.setItem(v_368d84, v_227df7);
+            v_635b76 = 0;
           }
-        }
 
-        const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
-        const v_37a1a7 = await v_5dafcb.isAvailableAsync();
-        if (!v_41ed06) return;
+          const v_02fdad = await v_303ad0();
+          if (!v_02fdad) {
 
-        v_64b293(v_37a1a7);
-
-        if (v_37a1a7) {
-
-          const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
-          if (v_d308b5 !== 'granted') {
-            const { status: v_ecf593 } = await v_5dafcb.requestPermissionsAsync();
-            if (v_ecf593 !== 'granted') {
+            const v_b6d66b = await v_157cb4();
+            if (!v_b6d66b && v_41ed06) {
+              v_64b293(false);
               if (v_41ed06) {
-                v_64b293(false);
                 const v_a6a5f1 = v_3e3188.current;
                 if (v_a6a5f1 > 0) {
 
@@ -246,55 +218,98 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
             }
           }
 
-          try {
+          const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+          const v_37a1a7 = await v_5dafcb.isAvailableAsync();
+          if (!v_41ed06) return;
 
-            v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
-              if (!v_41ed06) return;
+          v_64b293(v_37a1a7);
 
-              const v_81d1b5 = v_43c42e.steps;
-              const v_a6a5f1 = v_3e3188.current;
-              const v_fd45cb = v_5948ce.current;
+          if (v_37a1a7) {
 
-              let v_9c9484;
-              if (v_fd45cb === 0 && v_81d1b5 <= 1) {
+            const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
+            if (v_d308b5 !== 'granted') {
+              const { status: v_ecf593 } = await v_5dafcb.requestPermissionsAsync();
+              if (v_ecf593 !== 'granted') {
+                if (v_41ed06) {
+                  v_64b293(false);
+                  const v_a6a5f1 = v_3e3188.current;
+                  if (v_a6a5f1 > 0) {
 
-                v_9c9484 = 0;
-              } else {
-                v_9c9484 = Math.max(v_fd45cb, v_81d1b5, v_a6a5f1);
+                    if (v_635b76 > v_a6a5f1) {
+                      v_4b95c4(v_635b76);
+                    }
+                  } else {
+                    v_4b95c4(v_635b76);
+                  }
+                }
+                return;
               }
+            }
 
-              if (v_9c9484 > v_a6a5f1) {
-                v_4b95c4(v_9c9484);
+            try {
 
-              }
-            });
+              v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
+                if (!v_41ed06) return;
 
-            v_f41071().then((v_dc359d) => {
-              if (v_41ed06) {
+                const v_81d1b5 = v_43c42e.steps;
                 const v_a6a5f1 = v_3e3188.current;
+                const v_fd45cb = v_5948ce.current;
 
                 let v_9c9484;
-                if (v_635b76 === 0 && v_dc359d <= 1) {
+                if (v_fd45cb === 0 && v_81d1b5 <= 1) {
 
                   v_9c9484 = 0;
                 } else {
-
-                  let v_5eb489 = [v_635b76, v_a6a5f1];
-                  if (v_dc359d > 0) {
-                    v_5eb489.push(v_dc359d);
-                  }
-                  v_9c9484 = Math.max(...v_5eb489);
+                  v_9c9484 = Math.max(v_fd45cb, v_81d1b5, v_a6a5f1);
                 }
 
-                if (v_9c9484 >= v_a6a5f1 || (v_635b76 === 0 && v_dc359d <= 1 && v_9c9484 === 0)) {
+                if (v_9c9484 > v_a6a5f1) {
                   v_4b95c4(v_9c9484);
-                  if (v_9c9484 > v_635b76) {
-                    v_7f798a(v_9c9484);
+
+                }
+              });
+
+              v_f41071().then((v_dc359d) => {
+                if (v_41ed06) {
+                  const v_a6a5f1 = v_3e3188.current;
+
+                  let v_9c9484;
+                  if (v_635b76 === 0 && v_dc359d <= 1) {
+
+                    v_9c9484 = 0;
+                  } else {
+
+                    let v_5eb489 = [v_635b76, v_a6a5f1];
+                    if (v_dc359d > 0) {
+                      v_5eb489.push(v_dc359d);
+                    }
+                    v_9c9484 = Math.max(...v_5eb489);
+                  }
+
+                  if (v_9c9484 >= v_a6a5f1 || (v_635b76 === 0 && v_dc359d <= 1 && v_9c9484 === 0)) {
+                    v_4b95c4(v_9c9484);
+                    if (v_9c9484 > v_635b76) {
+                      v_7f798a(v_9c9484);
+                    }
                   }
                 }
-              }
-            }).catch(() => {
+              }).catch(() => {
 
+                if (v_41ed06) {
+                  const v_a6a5f1 = v_3e3188.current;
+                  if (v_a6a5f1 > 0) {
+
+                    if (v_635b76 > v_a6a5f1) {
+                      v_4b95c4(v_635b76);
+                    }
+                  } else {
+
+                    v_4b95c4(v_635b76);
+                  }
+                }
+              });
+            } catch (v_5e9bfe) {
+              console.warn('Pedometer watchStepCount error:', v_5e9bfe);
               if (v_41ed06) {
                 const v_a6a5f1 = v_3e3188.current;
                 if (v_a6a5f1 > 0) {
@@ -303,13 +318,12 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                     v_4b95c4(v_635b76);
                   }
                 } else {
-
                   v_4b95c4(v_635b76);
                 }
               }
-            });
-          } catch (v_5e9bfe) {
-            console.warn('Pedometer watchStepCount error:', v_5e9bfe);
+            }
+          } else {
+
             if (v_41ed06) {
               const v_a6a5f1 = v_3e3188.current;
               if (v_a6a5f1 > 0) {
@@ -322,9 +336,12 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
               }
             }
           }
-        } else {
-
+        } catch (v_5e9bfe) {
+          console.warn('Pedometer initialization error:', v_5e9bfe);
           if (v_41ed06) {
+            v_64b293(false);
+
+            const v_635b76 = await v_e9771f();
             const v_a6a5f1 = v_3e3188.current;
             if (v_a6a5f1 > 0) {
 
@@ -336,24 +353,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
             }
           }
         }
-      } catch (v_5e9bfe) {
-        console.warn('Pedometer initialization error:', v_5e9bfe);
-        if (v_41ed06) {
-          v_64b293(false);
-
-          const v_635b76 = await v_e9771f();
-          const v_a6a5f1 = v_3e3188.current;
-          if (v_a6a5f1 > 0) {
-
-            if (v_635b76 > v_a6a5f1) {
-              v_4b95c4(v_635b76);
-            }
-          } else {
-            v_4b95c4(v_635b76);
-          }
-        }
-      }
-    };
+      };
 
       v_cf4e0f = setTimeout(() => {
         v_391ff4();

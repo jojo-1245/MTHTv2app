@@ -19,4 +19,10 @@
 -keep class kr.co.pointclick.sdk.offerwall.core.PointClickAd {*;}
 -keep class kr.co.pointclick.sdk.offerwall.core.events.PackageReceiver {*;}
 
+# kxml2 / XmlPullParser R8 충돌 해결
+-dontwarn org.xmlpull.v1.**
+-dontwarn org.kxml2.**
+-keep class org.xmlpull.v1.** { *; }
+-keep class org.kxml2.** { *; }
+
 # Add any project specific keep options here:

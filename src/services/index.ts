@@ -31,8 +31,8 @@ export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, 
 export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords, analyzeSkinComparisonAi } from './skinApi';
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';
 
-export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, AlreadyCheckedInError } from './rewardsApi';
-export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStatusDetailResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse } from './rewardsApi';
+export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, getRewardConfig, AlreadyCheckedInError } from './rewardsApi';
+export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStatusDetailResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse, RewardConfig } from './rewardsApi';
 
 export * from './walletApi';
 
