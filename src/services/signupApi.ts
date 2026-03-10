@@ -138,7 +138,7 @@ function normalizeError(error: unknown): Error {
 
 export type SendVerificationPayload = {
   email: string;
-  purpose?: 'signup' | 'password_reset' | 'profile_change' | 'login';
+  purpose?: 'signup' | 'password_reset' | 'profile_change' | 'login' | 'export_private_key';
 };
 
 export async function sendVerification(payload: SendVerificationPayload): Promise<void> {

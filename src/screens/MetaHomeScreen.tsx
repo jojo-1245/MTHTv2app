@@ -42,7 +42,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_d0556f, v_7ef860 } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_7c14c7, v_d0556f, v_7ef860 } from '../services';
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
@@ -206,15 +206,12 @@ const v_11fb5c = 16;
 const v_ff4e8b = 20;
 const v_006281 = 10; 
 
-const v_c19e2d = 10000; 
-
 const v_55087c = 0.015; 
 const v_a1871a = 0.01; 
 
-const v_2258bf = 10; 
-const v_7c2566 = 10; 
-const v_5f1613 = v_7c2566 * (v_c19e2d / v_2258bf); 
-const v_234582 = 25; 
+const v_c19e2d = 10000;
+const v_2258bf = 1000;
+const v_234582 = 25;
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -492,6 +489,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const [v_b1361b, v_04f4d8] = v_5ab095<number[]>([]);
   const [v_cd6f97, v_5ce610] = v_5ab095(false);
+  const [v_0e0399, v_00e50d] = v_5ab095<number | null>(null);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => {
@@ -508,6 +506,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }, 350);
     return () => clearTimeout(v_8d41d7);
   }, [v_9c213b.language]);
+
+  v_c4deb2(() => {
+    v_7c14c7()
+      .then((v_01dcf5) => {
+        v_00e50d(v_01dcf5.step_reward_per1k);
+      })
+      .catch(() => { });
+  }, []);
 
   const v_616ba8 = v_df9f57(
     () => Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf),
@@ -573,9 +579,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           claimedStepIndices: v_b1361b,
         });
       }
-
-      const v_f29bbd = v_dc679a * 1000;
-      const v_43c42e = await v_2ca7ff(v_227df7, v_f29bbd, v_011173, v_c65f5d, v_af3e48);
+      const v_43c42e = await v_2ca7ff(v_227df7, v_dc679a, v_011173, v_c65f5d, v_af3e48);
 
       if (Array.isArray(v_43c42e.state_idx)) {
         v_04f4d8(v_43c42e.state_idx);
@@ -858,8 +862,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.today_step_goal')}</Text>
                     <Text style={v_d81136.challengeReward}>
                       {v_8d41d7('home.goal_reward_prefix')}
-                      <Text style={v_d81136.challengeRewardHighlight}>+{v_5f1613} MTHT</Text>
-                      {v_8d41d7('home.goal_reward_suffix')}
+                      <Text style={v_d81136.challengeRewardHighlight}>{v_8d41d7('home.goal_reward_suffix')}</Text>
                     </Text>
                   </View>
                   <View style={v_d81136.stepChallengeIcon}>
@@ -871,7 +874,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <Text style={v_d81136.stepsValue}>
                     <Text style={v_d81136.stepsValueCurrent}>{v_dc679a.toLocaleString()}</Text>
                     <Text style={v_d81136.stepsValueSlash}>/</Text>
-                    <Text style={v_d81136.stepsValueGoal}>{v_011173.toLocaleString()}</Text>
+                    <Text style={v_d81136.stepsValueGoal}>{v_c19e2d.toLocaleString()}</Text>
                     <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.steps_unit')}</Text>
                   </Text>
                 </View>
@@ -890,9 +893,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         <Text style={v_d81136.stepMilestoneLabelText}>
                           {v_8d41d7('home.steps_milestone', { count: v_c5110a })}
                         </Text>
-                        <Text style={v_d81136.stepMilestoneLabel}>
-                          +{v_7c2566}M
-                        </Text>
+                        {v_0e0399 != null && (
+                          <Text style={v_d81136.stepMilestoneLabel}>
+                            +{v_0e0399}M
+                          </Text>
+                        )}
                         <TouchableOpacity
                           style={[
                             v_d81136.stepMilestoneBtn,
@@ -1209,11 +1214,12 @@ const v_d81136 = v_472849.create({
   stepMilestoneCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    padding: 10,
+    padding: 7,
     borderWidth: 1,
     borderColor: '#EDE9FE',
     alignItems: 'center',
-    aspectRatio: 1.05,
+    justifyContent: 'center',
+    aspectRatio: 1.15,
     shadowColor: '#7C3AED',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -1224,7 +1230,7 @@ const v_d81136 = v_472849.create({
     fontSize: 14,
     fontFamily: v_843035.bold,
     color: '#4C1D95',
-    marginBottom: 8,
+    marginBottom: 5,
   },
   stepMilestoneLabelText: {
     fontSize: v_ef658a.small,

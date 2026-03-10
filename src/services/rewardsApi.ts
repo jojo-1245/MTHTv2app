@@ -388,3 +388,24 @@ export async function v_7740c3(
   }
 }
 
+export interface RewardConfig {
+  step_reward_per1k: number | null;
+  step_goal_reward: number | null;
+  step_goal: number;
+  step_milestone_interval: number;
+}
+
+export async function v_7c14c7(): Promise<RewardConfig> {
+  const v_21cc31 = await v_bcce6e();
+  const v_fed274 = v_e4a763().API_URL;
+  const v_3393e3 = await v_b5030f.get<ApiResponse<RewardConfig>>(
+    `${v_fed274}/oth-path`,
+    {
+      headers: { Authorization: `Bearer ${v_21cc31}` },
+      timeout: v_8a74cb,
+    }
+  );
+  const v_9390e8 = v_3393e3.data?.data;
+  if (!v_9390e8) throw new Error('Failed to get reward config');
+  return v_9390e8;
+}
