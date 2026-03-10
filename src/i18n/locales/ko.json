@@ -198,7 +198,8 @@
         "cancel": "취소",
         "compare_btn": "비교하기",
         "select_time_for": "{{date}} - 측정 시간 선택",
-        "item_detail_desc": "{{label}} 항목의 점수는 {{score}}점입니다. 100점 만점 기준으로 측정된 피부 상태를 나타냅니다."
+        "item_detail_desc": "{{label}} 항목의 점수는 {{score}}점입니다. 100점 만점 기준으로 측정된 피부 상태를 나타냅니다.",
+        "no_records": "기록이 없습니다."
     },
     "skin_comparison": {
         "title": "비교 분석",
