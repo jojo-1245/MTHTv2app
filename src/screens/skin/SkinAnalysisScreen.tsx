@@ -305,13 +305,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     const v_a209e0 = await v_23b7ab('skin_analysis');
                     v_f193b7(v_a209e0.can_proceed);
                     v_11f378(v_a209e0.fee_amount);
-                    if (!v_a209e0.can_proceed) {
-                        v_03e392.alert(
-                            '잔액 부족',
-                            `피부 분석에 ${v_a209e0.fee_amount} MTHT가 필요합니다.\n현재 잔액: ${v_a209e0.balance} MTHT`,
-                            [{ text: '확인', onPress: () => v_c65f5d.goBack() }]
-                        );
-                    }
+                    v_c96363(v_a209e0.balance);
                 } catch (v_9e86fd) {
                     console.warn('[피부분석] preflight 실패:', v_9e86fd);
                 }
@@ -324,6 +318,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
     const [v_399221, v_11f378] = v_5ab095<string>('0');
+    const [v_fab460, v_c96363] = v_5ab095<string>('0');
 
     const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
     const v_1a165b = v_e662ae<v_78ceb7>(null);
@@ -637,9 +632,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         const v_44eb1a = v_b36f96?.concerns ?? (Array.from(v_76def3) as v_146928[]);
 
         if (!v_f91d86) {
+            const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
             v_03e392.alert(
                 '잔액 부족',
-                `피부 분석에 ${v_399221} MTHT가 필요합니다.`,
+                `피부 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
                 [{ text: '확인' }]
             );
             return;
