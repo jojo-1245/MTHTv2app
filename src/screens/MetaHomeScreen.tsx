@@ -36,6 +36,7 @@ import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
+import { v_5ad1fd } from '../hooks';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
@@ -228,6 +229,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       console.log('[Perf] MetaHomeScreen: 마운트(첫 렌더 커밋 후)', { _ts: Date.now(), _time: new Date().toISOString() });
     }
   }, []);
+
+  v_5ad1fd();
 
   const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
     onOtaProgress: (v_ba2265) => {
