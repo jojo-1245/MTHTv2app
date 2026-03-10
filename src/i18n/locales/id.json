@@ -197,7 +197,8 @@
     "cancel": "Batal",
     "compare_btn": "Bandingkan",
     "select_time_for": "{{date}} - Pilih waktu pengukuran",
-    "item_detail_desc": "Skor {{label}} adalah {{score}} poin. Menunjukkan kondisi kulit Anda pada skala 0-100."
+    "item_detail_desc": "Skor {{label}} adalah {{score}} poin. Menunjukkan kondisi kulit Anda pada skala 0-100.",
+    "no_records": "Tidak ada catatan."
   },
   "skin_comparison": {
     "title": "Analisis Perbandingan",
