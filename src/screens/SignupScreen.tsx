@@ -3,6 +3,7 @@ import {
   v_39a996,
   v_9cabcb,
   v_aa7413,
+  v_122070,
   v_472849,
   v_19b633,
   v_79c4f2,
@@ -28,6 +29,7 @@ import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_35200c, v_c1a440, v_91bb22, type v_d4ca6e } from '../services/signupApi';
+import { v_f51778, v_d30c5f } from '../services/policiesApi';
 import { v_202d44 } from '../constants/countryDialCodes';
 import { v_9553a4, v_369014 } from '../constants/regions';
 import { v_5c7129, type v_107459, v_f91692 } from '../utils/countryUtils';
@@ -275,6 +277,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const v_56743f = (() => {
     const v_ed2e96 = v_8d41d7('country_select.select_option');
+
+    if (v_459d5e && v_459d5e.iso2 !== 'select' && v_459d5e.dialCode !== '0' && !v_5f1e0e) {
+      return v_8d41d7('signup.region_all', '전체');
+    }
     if (!v_5f1e0e) return v_ed2e96;
     if (!v_2f03bc || v_2f03bc.iso2 === 'select' || v_2f03bc.iso2 === 'global' || v_2f03bc.dialCode === '0') {
       return v_ed2e96;
@@ -308,6 +314,26 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
     title: '',
     message: '',
   });
+
+  const [v_a2d5c1, v_1cba09] = v_5ab095<{
+    visible: boolean;
+    title: string;
+    content: string;
+    loading: boolean;
+  }>({ visible: false, title: '', content: '', loading: false });
+
+  const v_92a0d8 = async (v_3b27d9) => {
+    const v_9f1622 = v_3b27d9 === 'terms'
+      ? v_8d41d7('signup.terms_of_service', '서비스 약관')
+      : v_8d41d7('signup.privacy_policy', '개인정보 보호정책');
+    v_1cba09({ visible: true, title: v_9f1622, content: '', loading: true });
+    try {
+      const v_8f00b9 = v_3b27d9 === 'terms' ? await v_f51778() : await v_d30c5f();
+      v_1cba09(v_ba2215 => ({ ...v_ba2215, content: v_8f00b9.data?.content ?? '', loading: false }));
+    } catch {
+      v_1cba09(v_ba2215 => ({ ...v_ba2215, content: v_8d41d7('signup.policy_load_error', '내용을 불러오지 못했습니다.'), loading: false }));
+    }
+  };
 
   const v_cbf7db = () => {
     if (v_88dca2) return;
@@ -561,9 +587,11 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 onChangeText={v_a64837}
                 editable={!v_88dca2 && !v_5739ac}
               />
-              {v_4e8e4d && (
+              {v_5739ac ? (
+                <Text style={v_d81136.hintText}>{v_8d41d7('signup.social_email_locked', '소셜 계정 이메일은 변경할 수 없습니다.')}</Text>
+              ) : v_4e8e4d ? (
                 <Text style={v_d81136.errorText}>{v_4e8e4d}</Text>
-              )}
+              ) : null}
             </View>
 
             {}
@@ -684,13 +712,26 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             </View>
 
             {}
-            <View style={v_d81136.checkboxWrapper}>
-              <FormCheckbox
-                label={v_8d41d7('signup.terms_agree')}
-                value={v_a6fcf8}
-                onChange={(v_3b402b) => !v_88dca2 && v_539b92(v_3b402b)}
-              />
-            </View>
+            <TouchableOpacity
+              style={v_d81136.termsRow}
+              onPress={() => !v_88dca2 && v_539b92(!v_a6fcf8)}
+              activeOpacity={0.7}
+            >
+              <View style={[v_d81136.termCheckbox, v_a6fcf8 && v_d81136.termCheckboxChecked]}>
+                {v_a6fcf8 && <Text style={v_d81136.termCheckboxMark}>✓</Text>}
+              </View>
+              <Text style={v_d81136.termsText}>
+                {'METAHiNT '}
+                <Text style={v_d81136.termsLink} onPress={(v_9e86fd) => { v_9e86fd.stopPropagation(); v_92a0d8('terms'); }}>
+                  {v_8d41d7('signup.terms_of_service', '서비스 약관')}
+                </Text>
+                {v_8d41d7('signup.terms_middle', ' 및 ')}
+                <Text style={v_d81136.termsLink} onPress={(v_9e86fd) => { v_9e86fd.stopPropagation(); v_92a0d8('privacy'); }}>
+                  {v_8d41d7('signup.privacy_policy', '개인정보 보호정책')}
+                </Text>
+                {v_8d41d7('signup.terms_suffix', '에 동의합니다.')}
+              </Text>
+            </TouchableOpacity>
 
             {}
             <View style={v_d81136.buttonWrapper}>
@@ -717,6 +758,42 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
         message={v_153a89.message}
         onConfirm={v_34f542}
       />
+
+      {}
+      <Modal
+        animationType="slide"
+        transparent
+        visible={v_a2d5c1.visible}
+        onRequestClose={() => v_1cba09(v_ba2215 => ({ ...v_ba2215, visible: false }))}
+      >
+        <View style={v_d81136.modalOverlay}>
+          <TouchableOpacity
+            style={v_d81136.modalBackdrop}
+            activeOpacity={1}
+            onPress={() => v_1cba09(v_ba2215 => ({ ...v_ba2215, visible: false }))}
+          />
+          <View style={v_d81136.policyModalContent}>
+            <View style={v_d81136.modalHeader}>
+              <Text style={v_d81136.modalTitle}>{v_a2d5c1.title}</Text>
+              <TouchableOpacity onPress={() => v_1cba09(v_ba2215 => ({ ...v_ba2215, visible: false }))}>
+                <Text style={v_d81136.modalCloseButton}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            {v_a2d5c1.loading ? (
+              <View style={v_d81136.modalLoadingContainer}>
+                <ActivityIndicator size="large" color={v_1bfbd0.primary} />
+              </View>
+            ) : (
+              <ScrollView
+                contentContainerStyle={{ padding: v_9b1a04.large, paddingBottom: v_9b1a04.large * 2 }}
+                showsVerticalScrollIndicator={true}
+              >
+                <Text style={v_d81136.policyContent}>{v_a2d5c1.content}</Text>
+              </ScrollView>
+            )}
+          </View>
+        </View>
+      </Modal>
 
       {}
       <Modal
@@ -1051,6 +1128,57 @@ const v_d81136 = v_472849.create({
     fontSize: 14,
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
+  },
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginTop: v_9b1a04.small,
+  },
+  termCheckbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1.5,
+    borderColor: v_1bfbd0.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+    flexShrink: 0,
+  },
+  termCheckboxChecked: {
+    backgroundColor: v_1bfbd0.buttonPrimary,
+    borderColor: v_1bfbd0.buttonPrimary,
+  },
+  termCheckboxMark: {
+    fontSize: 12,
+    color: '#fff',
+    fontFamily: v_843035.bold,
+  },
+  termsText: {
+    flex: 1,
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
+    lineHeight: 22,
+  },
+  termsLink: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: v_1bfbd0.buttonPrimary,
+    textDecorationLine: 'underline',
+  },
+  policyContent: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.text,
+    lineHeight: 22,
+  },
+  policyModalContent: {
+    backgroundColor: v_1bfbd0.background,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    height: '85%',
   },
 });
 
