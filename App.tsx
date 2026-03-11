@@ -103,12 +103,24 @@ export default function v_6540c3() {
       const v_c9c489 = v_e4a763();
 
       const v_3676d4 = v_c9c489.GOOGLE_WEB_CLIENT_ID;
+      console.log('[GoogleSignin] configure 값 확인:', {
+        platform: v_326be8.OS,
+        hasWebClientId: !!v_3676d4,
+        webClientIdPreview: v_3676d4 ? `${v_3676d4.slice(0, 20)}...` : '(없음)',
+        hasIosClientId: !!v_c9c489.GOOGLE_IOS_CLIENT_ID,
+        iosClientIdPreview: v_c9c489.GOOGLE_IOS_CLIENT_ID ? `${v_c9c489.GOOGLE_IOS_CLIENT_ID.slice(0, 20)}...` : '(없음)',
+        hasAndroidClientId: !!v_c9c489.GOOGLE_ANDROID_CLIENT_ID,
+        androidClientIdPreview: v_c9c489.GOOGLE_ANDROID_CLIENT_ID ? `${v_c9c489.GOOGLE_ANDROID_CLIENT_ID.slice(0, 20)}...` : '(없음)',
+      });
       if (v_3676d4 || v_c9c489.GOOGLE_IOS_CLIENT_ID) {
         v_4eac84.configure({
           iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID,
           webClientId: v_3676d4 ?? undefined,
           offlineAccess: true,
         });
+        if (__DEV__) console.log('[GoogleSignin] configure 완료');
+      } else {
+        if (__DEV__) console.warn('[GoogleSignin] configure 스킵: 클라이언트 ID 없음');
       }
       if (v_c9c489.KAKAO_NATIVE_APP_KEY) {
         v_a93182(v_c9c489.KAKAO_NATIVE_APP_KEY);

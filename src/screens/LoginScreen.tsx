@@ -352,36 +352,92 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_6dd38d = async () => {
+    if (__DEV__) console.log('[Google] ① 로그인 시작', { platform: v_326be8.OS });
     v_deef62(true);
     try {
+
       if (v_326be8.OS === 'android') {
+        if (__DEV__) console.log('[Google] ② Play Services 체크 시작');
         const v_a11c85 = await v_4eac84.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        if (__DEV__) console.log('[Google] ② Play Services 결과:', { hasPlayServices: v_a11c85 });
         if (!v_a11c85) {
+          if (__DEV__) console.warn('[Google] ② Play Services 없음 → 중단');
           v_889fad(v_8d41d7('common.error'), v_8d41d7('login.error_unknown'));
           return;
         }
       }
+
+      if (__DEV__) {
+        try {
+          const v_f73be6 = await v_4eac84.getCurrentUser();
+          console.log('[Google] ③ 현재 세션:', {
+            hasUser: !!v_f73be6,
+            email: v_f73be6?.user?.email ?? '(없음)',
+          });
+        } catch (v_9e86fd) {
+          console.log('[Google] ③ getCurrentUser 에러 (무시):', v_9e86fd);
+        }
+      }
+
+      if (__DEV__) console.log('[Google] ④ GoogleSignin.signIn() 호출');
       const v_3393e3 = await v_4eac84.signIn();
+      if (__DEV__) {
+        console.log('[Google] ④ signIn 응답:', {
+          type: v_3393e3.type,
+          hasData: !!v_3393e3.data,
+          hasIdToken: !!(v_3393e3 as { data?: { idToken?: string } }).data?.idToken,
+          idTokenLength: (v_3393e3 as { data?: { idToken?: string } }).data?.idToken?.length ?? 0,
+          email: (v_3393e3 as { data?: { user?: { email?: string } } }).data?.user?.email ?? '(없음)',
+          dataKeys: v_3393e3.data ? Object.keys(v_3393e3.data) : [],
+        });
+      }
+
       if (v_3393e3.type !== 'success' || !v_3393e3.data?.idToken) {
-        if (v_3393e3.type === 'cancelled') return;
+        if (v_3393e3.type === 'cancelled') {
+          if (__DEV__) console.log('[Google] ④ 사용자 취소');
+          return;
+        }
+        if (__DEV__) console.warn('[Google] ④ idToken 없음 또는 type 불일치 → 중단', { type: v_3393e3.type });
         v_889fad(v_8d41d7('common.error'), v_8d41d7('login.error_unknown'));
         return;
       }
+
       const v_b50834 = v_3393e3.data.idToken;
+      if (__DEV__) console.log('[Google] ⑤ socialLogin 호출', { tokenLength: v_b50834.length, tokenPreview: `${v_b50834.slice(0, 20)}...` });
+
       const v_43c42e = await v_545a63({ provider: 'google', token: v_b50834 });
+      if (__DEV__) {
+        console.log('[Google] ⑤ socialLogin 결과:', {
+          needsSignup: v_2cd4e6(v_43c42e),
+          resultKeys: Object.keys(v_43c42e),
+        });
+      }
+
       if (v_2cd4e6(v_43c42e)) {
+        if (__DEV__) console.log('[Google] ⑤ 회원가입 필요 → Signup 이동', { email: v_43c42e.email });
         v_c65f5d.navigate('Signup', { email: v_43c42e.email, fromSocial: 'google' });
         return;
       }
+
+      if (__DEV__) console.log('[Google] ⑥ persistAuthSession 호출');
       await v_d41982(v_43c42e, v_2129ec);
+      if (__DEV__) console.log('[Google] ⑦ 로그인 완료 → MetaHome 이동');
       v_c65f5d.reset({
         index: 0,
         routes: [{ name: 'MetaHome' }],
       });
     } catch (v_5e9bfe) {
       const v_c99bd2 = v_5e9bfe && typeof v_5e9bfe === 'object' && 'code' in v_5e9bfe ? (v_5e9bfe as { code: string }).code : '';
+      if (__DEV__) {
+        console.error('[Google] catch 에러:', {
+          code: v_c99bd2,
+          message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+          error: v_5e9bfe,
+        });
+      }
       if (v_c99bd2 === 'SIGN_IN_CANCELLED' || v_c99bd2 === '12501') {
-        return; 
+        if (__DEV__) console.log('[Google] 사용자 취소 코드 감지 → 조용히 종료');
+        return;
       }
       const v_badeaf = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
       const v_e629b5 = v_badeaf === 'Google 계정 이메일 공개 동의가 필요합니다.'
