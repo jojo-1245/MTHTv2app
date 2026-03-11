@@ -110,8 +110,8 @@ type Props = v_432191<v_8ad91b, 'Login'>;
 const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
 
-  const [v_e0c7e8, v_fedf34] = v_5ab095('test@example.com');
-  const [v_adc076, v_52b279] = v_5ab095('password123');
+  const [v_e0c7e8, v_fedf34] = v_5ab095('');
+  const [v_adc076, v_52b279] = v_5ab095('');
 
   const [v_2129ec, v_874dfe] = v_5ab095(true);
   const [v_cd31a8, v_deef62] = v_5ab095(false);

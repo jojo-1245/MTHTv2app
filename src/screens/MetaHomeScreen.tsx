@@ -454,7 +454,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         : v_8d41d7('home.attendance_reward_received', { amount: v_43c42e.reward_amount });
       v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
-      console.error('[MetaHomeScreen] 출석 체크 실패:', v_5e9bfe);
+      const v_377045 = (v_5e9bfe as any)?.isAxiosError ? v_5e9bfe as any : null;
+      console.error('[MetaHomeScreen] 출석 체크 실패:', {
+        message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+        status: v_377045?.response?.status,
+        data: v_377045?.response?.data,
+        url: v_377045?.config?.url,
+      });
       if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
       if (v_5e9bfe instanceof v_d0556f) {
         v_5b2bbb((v_ba2215) => {
@@ -591,7 +597,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
-      console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', v_5e9bfe);
+      const v_377045 = (v_5e9bfe as any)?.isAxiosError ? v_5e9bfe as any : null;
+      console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', {
+        message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+        status: v_377045?.response?.status,
+        data: v_377045?.response?.data,
+        url: v_377045?.config?.url,
+      });
 
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
