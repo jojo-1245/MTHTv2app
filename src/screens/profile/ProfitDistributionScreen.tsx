@@ -23,9 +23,9 @@ const ProfitDistributionScreen: v_a3453e.FC<Props> = () => {
     const v_033e14 = v_e0068c();
 
     const [v_b34df8, v_a5c91f] = v_5ab095(new Date(2026, 1, 1)); 
-    const v_f4ed1d = 50;
-    const v_636493 = 5000000;
-    const v_4548d8 = 50000000;
+    const v_f4ed1d = 4;
+    const v_636493 = 12000;
+    const v_4548d8 = 54000;
     const v_9b4e61 = v_636493 + v_4548d8;
     const v_dcd614 = new Date(2026, 2, 1); 
 
@@ -54,7 +54,7 @@ const ProfitDistributionScreen: v_a3453e.FC<Props> = () => {
             <View style={v_d81136.container}>
                 <Header
                     variant="analysis"
-                    title={v_8d41d7('profit_distribution.title')}
+                    title={v_8d41d7('profit_distribution.title') + ' 예시화면'}
                     leftAccessory={
                         <TouchableOpacity
                             onPress={() => v_9b57fc('MyInfo')}

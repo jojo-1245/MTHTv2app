@@ -282,35 +282,15 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <View style={v_d81136.nftInfoContent}>
               <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
               <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>50{v_8d41d7('profile.nft_unit')}</Text>
+                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>4{v_8d41d7('profile.nft_unit')}</Text>
               </Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
           </TouchableOpacity>
 
-          <View style={v_d81136.metricsRow}>
-            <View style={[v_d81136.metricCard, v_d81136.metricCardBlue]}>
-              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapBlue]}>
-                <Ionicons name="calendar-outline" size={20} color="#3B82F6" />
-              </View>
-              <Text style={v_d81136.metricValue}>{v_338926.consecutiveDays}</Text>
-              <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.consecutive_days')}</Text>
-            </View>
-            <View style={[v_d81136.metricCard, v_d81136.metricCardPink]}>
-              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapPink]}>
-                <Ionicons name="checkmark-circle-outline" size={20} color="#EC4899" />
-              </View>
-              <Text style={v_d81136.metricValue}>{v_338926.analysesCompleted}</Text>
-              <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.analyses_completed')}</Text>
-            </View>
-            <View style={[v_d81136.metricCard, v_d81136.metricCardYellow]}>
-              <View style={[v_d81136.metricIconWrap, v_d81136.metricIconWrapYellow]}>
-                <Ionicons name="bag-outline" size={20} color="#F59E0B" />
-              </View>
-              <Text style={v_d81136.metricValue}>{v_338926.purchasesCompleted}</Text>
-              <Text style={v_d81136.metricLabel}>{v_8d41d7('profile.purchases_completed')}</Text>
-            </View>
-          </View>
+          {
+
+}
 
           {}
           <View style={v_d81136.menuCard}>
