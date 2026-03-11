@@ -504,7 +504,7 @@
     "notify": "Pemberitahuan",
     "notify_desc": "Pengaturan pemberitahuan",
     "offerwall": "Tembok Penawaran",
-    "offerwall_not_configured": "Tembok penawaran belum dikonfigurasi.",
+    "offerwall_not_configured": "Offerwall sedang dalam persiapan.",
     "clause": "Klausul",
     "clause_desc": "Daftar ketentuan",
     "faq": "FAQ",
