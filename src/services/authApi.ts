@@ -534,7 +534,7 @@ export interface UpdateProfilePayload {
 export async function updateProfile(payload: UpdateProfilePayload): Promise<MeProfile> {
   const env = getEnv();
 
-  const url = env.PROFILE_UPDATE_PATH ?? '/oth-path';
+  const url = env.PROFILE_UPDATE_PATH || '/oth-path';
 
   const body: Record<string, unknown> = {
     name: payload.name,

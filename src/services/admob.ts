@@ -67,7 +67,13 @@ export function v_8e174f(
     v_978ef3();
     v_ee6aed();
     v_1bddc1();
-    v_4686f1?.(v_9e86fd as Error);
+    console.warn('[AdMob] 광고 로드/재생 실패 (임시: 광고 없이 보상 지급):', {
+      error: (v_9e86fd as any)?.message ?? String(v_9e86fd),
+      code: (v_9e86fd as any)?.code,
+      adUnitId: v_61418d,
+    });
+
+    v_6ae10d();
   });
 
   v_c59680.load();
