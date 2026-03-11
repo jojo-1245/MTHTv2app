@@ -272,6 +272,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </TouchableOpacity>
           </View>
 
+          {}
           <TouchableOpacity
             style={v_d81136.nftInfoCard}
             onPress={() => v_9b57fc('ProfitDistribution')}
