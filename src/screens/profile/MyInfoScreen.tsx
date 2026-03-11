@@ -279,7 +279,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             <View style={v_d81136.nftInfoContent}>
               <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
               <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>4{v_8d41d7('profile.nft_unit')}</Text>
+                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>0{v_8d41d7('profile.nft_unit')}</Text>
               </Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
