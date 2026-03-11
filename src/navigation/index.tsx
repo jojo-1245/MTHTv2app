@@ -62,7 +62,21 @@ export type RootStackParamList = {
   }
   | undefined;
   Wallet: undefined;
-  WalletSend: undefined;
+  WalletSend:
+  | {
+      tokenData: {
+        id: string;
+        title: string;
+        subtitle?: string;
+        amount?: string;
+        suffix?: string;
+        iconSource?: any;
+        badgeLabel?: string;
+        fallbackLabel?: string;
+        fallbackColors?: string[];
+      };
+    }
+  | undefined;
   WalletReceive:
   | {
     title?: string;
@@ -72,7 +86,21 @@ export type RootStackParamList = {
   | undefined;
   WalletQrScan: undefined;
   WalletEstimate: undefined;
-  WalletTransactionProgress: undefined;
+  WalletTransactionProgress:
+  | {
+      tokenData?: {
+        id: string;
+        title: string;
+        subtitle?: string;
+        amount?: string;
+        suffix?: string;
+        iconSource?: any;
+        badgeLabel?: string;
+        fallbackLabel?: string;
+        fallbackColors?: string[];
+      };
+    }
+  | undefined;
   WalletTransactionResult: undefined;
   TransactionDetails: undefined;
   WalletTokenDetail: {
