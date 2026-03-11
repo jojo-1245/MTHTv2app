@@ -159,7 +159,7 @@ export async function socialLogin(params: {
 }): Promise<SocialLoginResult> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
-  const path = env.AUTH_SOCIAL_LOGIN_PATH ?? '/oth-path';
+  const path = (env.AUTH_SOCIAL_LOGIN_PATH?.trim()) || '/oth-path';
   const url = `${baseURL.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
   const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
