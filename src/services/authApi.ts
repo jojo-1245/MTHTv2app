@@ -61,7 +61,7 @@ export async function loginMember(params: {
   }
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    if (oth-secret) headers['X-Client-Token'] = oth-secret;
     const res = await axios.post<ApiResponse<LoginAuthPayload>>(
       `${baseURL}/oth-path`,
       body,
@@ -165,11 +165,16 @@ export async function socialLogin(params: {
   if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
   const body = { provider: params.provider, token: params.token };
   if (__DEV__) {
-    console.log('[authApi] social-login 요청:', { url, provider: params.provider });
+    console.log('[authApi] social-login 요청:', {
+      url,
+      provider: params.provider,
+      hasClientToken: !!oth-secret,
+      oth-secretPreview: oth-secret ? `${oth-secret.slice(0, 8)}...` : '(none)',
+    });
   }
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    if (oth-secret) headers['X-Client-Token'] = oth-secret;
     const res = await axios.post<ApiResponse<LoginAuthPayload & { needsSignup?: boolean; email?: string }>>(
       url,
       body,
@@ -222,6 +227,12 @@ export async function socialLogin(params: {
         data: error.response?.data,
         message: error.message,
       });
+    }
+    if (axios.isAxiosError(error) && error.response?.status === 500) {
+      const msg = (error.response?.data as { error?: { message?: string } })?.error?.message ?? '';
+      if (msg.includes('Google sign-in is not configured') || msg.includes('not configured')) {
+        throw new Error('이 서버에는 Google 로그인이 설정되어 있지 않습니다. 본 서버 주소를 확인하거나 관리자에게 문의하세요.');
+      }
     }
     throw normalizeError(error);
   }
