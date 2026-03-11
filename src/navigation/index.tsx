@@ -127,6 +127,8 @@ export type RootStackParamList = {
     };
 
     savedBeforeNavigate?: boolean;
+
+    recordId?: number;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
