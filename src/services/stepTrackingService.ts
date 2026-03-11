@@ -127,7 +127,7 @@ export const v_381355 = async (
         smallIcon: 'ic_launcher',
         ongoing: true,
         asForegroundService: true,
-        style: { type: AndroidStyle.BIGTEXT, text: '0', title: v_59929c },
+        style: { type: v_125c1b, text: '0', title: v_59929c },
         pressAction: { id: 'default', launchActivity: 'default' },
       },
     });

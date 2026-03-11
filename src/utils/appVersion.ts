@@ -10,7 +10,7 @@ export function v_3d4e28(): string {
 }
 
 export function v_d752db(): string {
-  const v_74a79c = v_c9be60.expoConfig as Record<string, unknown> | undefined;
+  const v_74a79c = v_c9be60.expoConfig as unknown as Record<string, unknown> | undefined;
   if (!v_74a79c) return '1';
   if (v_326be8.OS === 'ios') {
     const v_f4e98d = (v_74a79c.ios as Record<string, unknown>)?.buildNumber;

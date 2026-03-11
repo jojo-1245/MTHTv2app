@@ -39,6 +39,7 @@ import { v_573fcf } from '../../utils/env';
 import { v_9e8766 } from '../../hooks';
 import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
+import { v_777b12 } from '../../services/healthApi';
 
 import {
   v_d55d6e,
@@ -1904,6 +1905,34 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 {
 
 }
+              {__DEV__ && (
+                <TouchableOpacity
+                  style={v_d81136.devDebugBtn}
+                  onPress={async () => {
+                    try {
+                      const v_678155 = await v_777b12();
+                      if (!v_678155 || v_678155.length === 0) {
+                        v_03e392.alert('알림', '저장된 건강 기록이 없습니다.');
+                        return;
+                      }
+                      const v_1300ee = v_678155[0];
+                      const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+                      v_c65f5d.navigate('HealthAnalysisResult', {
+                        results: v_1300ee.vital_signs ?? {},
+                        timestamp: `${v_1300ee.record_date}T${v_1300ee.record_time}:00`,
+                        userName: v_0c2f9b?.name,
+                        accounts: v_c86f08,
+                        selectedAccountId: v_e7b2f2,
+                        savedBeforeNavigate: true,
+                      });
+                    } catch (v_9e86fd) {
+                      v_03e392.alert('오류', String(v_9e86fd));
+                    }
+                  }}
+                >
+                  <Text style={v_d81136.devDebugBtnText}>🐛 마지막 건강 측정결과 보기 (DEV)</Text>
+                </TouchableOpacity>
+              )}
               </View>
             </View>
           </SafeScrollView>
@@ -2632,6 +2661,19 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
     textDecorationLine: 'underline',
+  },
+  devDebugBtn: {
+    alignSelf: 'center',
+    marginTop: v_9b1a04.medium,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    backgroundColor: '#FF6B00',
+    borderRadius: 8,
+  },
+  devDebugBtnText: {
+    color: '#FFF',
+    fontFamily: v_843035.medium,
+    fontSize: 13,
   },
   title: {
     fontSize: 24,
