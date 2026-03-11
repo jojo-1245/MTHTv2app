@@ -238,9 +238,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   });
 
   const v_3a2785 = v_df9f57(() => [
-    { id: '1', title: v_8d41d7('home.products.p1.title'), subtitle: v_8d41d7('home.products.p1.subtitle'), price: '100', rating: '4.8', reviews: 324, imageIndex: 0 },
-    { id: '2', title: v_8d41d7('home.products.p2.title'), subtitle: v_8d41d7('home.products.p2.subtitle'), price: '100', rating: '4.8', reviews: 324, imageIndex: 1 },
-    { id: '3', title: v_8d41d7('home.products.p3.title'), subtitle: v_8d41d7('home.products.p3.subtitle'), price: '1', rating: '4.0', reviews: 120, imageIndex: 2 },
+    { id: '1', title: v_8d41d7('home.products.p1.title'), subtitle: v_8d41d7('home.products.p1.subtitle'), price: '-', rating: '4.8', reviews: 324, imageIndex: 0 },
+    { id: '2', title: v_8d41d7('home.products.p2.title'), subtitle: v_8d41d7('home.products.p2.subtitle'), price: '-', rating: '4.8', reviews: 324, imageIndex: 1 },
+    { id: '3', title: v_8d41d7('home.products.p3.title'), subtitle: v_8d41d7('home.products.p3.subtitle'), price: '-', rating: '4.0', reviews: 120, imageIndex: 2 },
   ], [v_8d41d7]);
 
   const v_033e14 = v_e0068c();

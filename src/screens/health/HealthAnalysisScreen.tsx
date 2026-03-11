@@ -218,6 +218,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
   const [v_399221, v_11f378] = v_5ab095<string>('0');
   const [v_fab460, v_c96363] = v_5ab095<string>('0');
+  const [v_4452dd, v_78c750] = v_5ab095<boolean>(false);
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
     v_c7daf6.params?.initialTab ?? 'measure'
   );
@@ -250,7 +251,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       .then((v_8f00b9) => {
         v_f193b7(v_8f00b9.can_proceed);
         v_11f378(v_8f00b9.fee_amount);
-        v_c96363(v_8f00b9.balance);
+        v_c96363(v_8f00b9.balance ?? '0');
+        v_78c750(v_8f00b9.is_free_trial ?? false);
       })
       .catch((v_9e86fd) => console.warn('[건강분석] preflight 실패:', v_9e86fd));
   }, []);
@@ -1904,8 +1906,20 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               </View>
 
               <View style={v_d81136.introButtonContainer}>
+                {v_4452dd && (
+                  <View style={v_d81136.freeTrialBadge}>
+                    <Text style={v_d81136.freeTrialBadgeText}>🎁 무료 체험 가능</Text>
+                  </View>
+                )}
+                {!v_f91d86 && !v_4452dd && (
+                  <View style={v_d81136.insufficientBalanceNotice}>
+                    <Text style={v_d81136.insufficientBalanceText}>
+                      {`MTHT 잔액 부족 (필요: ${v_399221} MTHT)`}
+                    </Text>
+                  </View>
+                )}
                 <PrimaryButton
-                  title={v_8d41d7('health_analysis.intro.start_button')}
+                  title={v_4452dd ? '무료 체험 시작' : v_8d41d7('health_analysis.intro.start_button')}
                   onPress={async () => {
 
                     const v_b6d66b = await v_ec0597();
@@ -2427,6 +2441,36 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  freeTrialBadge: {
+    backgroundColor: '#ECFDF5',
+    borderWidth: 1,
+    borderColor: '#10B981',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  freeTrialBadgeText: {
+    fontSize: 13,
+    fontFamily: v_843035.semibold,
+    color: '#065F46',
+  },
+  insufficientBalanceNotice: {
+    backgroundColor: '#FEF2F2',
+    borderWidth: 1,
+    borderColor: '#FCA5A5',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    marginBottom: 10,
+  },
+  insufficientBalanceText: {
+    fontSize: 12,
+    fontFamily: v_843035.medium,
+    color: '#DC2626',
+    textAlign: 'center',
   },
   introDiscountNotice: {
     fontSize: 12,

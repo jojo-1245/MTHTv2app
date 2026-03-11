@@ -148,7 +148,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Hydro-Ceramide Serum',
         description: v_8d41d7('skin.products.product_1_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['moisture', 'hd_moisture'],
         image: require('../../../assets/images/product/yucod_01.png'),
@@ -158,7 +158,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Sebum & Pore Control Serum',
         description: v_8d41d7('skin.products.product_2_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['pore', 'oiliness', 'hd_pore', 'hd_oiliness'],
         image: require('../../../assets/images/product/yucod_02.png'),
@@ -168,7 +168,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Calming Relief Serum',
         description: v_8d41d7('skin.products.product_3_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['redness', 'acne', 'hd_redness', 'hd_acne'],
         image: require('../../../assets/images/product/yucod_03.png'),
@@ -178,7 +178,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Luminous Tone-Up Serum',
         description: v_8d41d7('skin.products.product_4_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['radiance', 'age_spot', 'hd_radiance', 'hd_age_spot'],
         image: require('../../../assets/images/product/yucod_04.png'),
@@ -188,7 +188,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Ageless Firming Serum',
         description: v_8d41d7('skin.products.product_5_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['wrinkle', 'firmness', 'hd_wrinkle', 'hd_firmness'],
         image: require('../../../assets/images/product/yucod_05.png'),
@@ -198,7 +198,7 @@ const v_01283e = (v_8d41d7): RecommendedProduct[] => [
         brand: 'YUCOD',
         name: 'Pore Refine & Lift Serum',
         description: v_8d41d7('skin.products.product_6_description'),
-        price: '100',
+        price: '-',
         currency: 'MTHT',
         targetConcerns: ['pore', 'firmness', 'hd_pore', 'hd_firmness', 'droopy_upper_eyelid', 'droopy_lower_eyelid', 'hd_droopy_upper_eyelid', 'hd_droopy_lower_eyelid'],
         image: require('../../../assets/images/product/yucod_06.png'),
@@ -306,7 +306,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     const v_a209e0 = await v_23b7ab('skin_analysis');
                     v_f193b7(v_a209e0.can_proceed);
                     v_11f378(v_a209e0.fee_amount);
-                    v_c96363(v_a209e0.balance);
+                    v_c96363(v_a209e0.balance ?? '0');
+                    v_78c750(v_a209e0.is_free_trial ?? false);
                 } catch (v_9e86fd) {
                     console.warn('[피부분석] preflight 실패:', v_9e86fd);
                 }
@@ -320,6 +321,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
     const [v_399221, v_11f378] = v_5ab095<string>('0');
     const [v_fab460, v_c96363] = v_5ab095<string>('0');
+    const [v_4452dd, v_78c750] = v_5ab095<boolean>(false);
 
     const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
     const v_1a165b = v_e662ae<v_78ceb7>(null);
@@ -1210,6 +1212,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             {}
             <View style={v_d81136.infoSection}>
                 <Text style={v_d81136.discountNotice}>{v_8d41d7('skin.capture.discount_notice')}</Text>
+                {v_4452dd && (
+                    <View style={v_d81136.freeTrialBadge}>
+                        <Text style={v_d81136.freeTrialBadgeText}>🎁 무료 체험 가능</Text>
+                    </View>
+                )}
+                {!v_f91d86 && !v_4452dd && (
+                    <View style={v_d81136.insufficientBalanceNotice}>
+                        <Text style={v_d81136.insufficientBalanceText}>
+                            {`MTHT 잔액 부족 (필요: ${v_399221} MTHT)`}
+                        </Text>
+                    </View>
+                )}
                 <Text style={v_d81136.stepIndicator}>{v_8d41d7('skin.step_prefix')} 1</Text>
                 <Text style={v_d81136.title}>{v_8d41d7('skin.capture.title')}</Text>
                 <Text style={v_d81136.subtitle}>
@@ -2147,6 +2161,37 @@ const v_d81136 = v_472849.create({
     container: {
         ...v_a61db3.container,
         gap: v_9b1a04.medium,
+    },
+
+    freeTrialBadge: {
+        backgroundColor: '#ECFDF5',
+        borderWidth: 1,
+        borderColor: '#10B981',
+        borderRadius: 20,
+        paddingHorizontal: 14,
+        paddingVertical: 6,
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
+    freeTrialBadgeText: {
+        fontSize: 13,
+        fontFamily: v_843035.semibold,
+        color: '#065F46',
+    },
+    insufficientBalanceNotice: {
+        backgroundColor: '#FEF2F2',
+        borderWidth: 1,
+        borderColor: '#FCA5A5',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        marginBottom: 10,
+    },
+    insufficientBalanceText: {
+        fontSize: 12,
+        fontFamily: v_843035.medium,
+        color: '#DC2626',
+        textAlign: 'center',
     },
 
     discountNotice: {

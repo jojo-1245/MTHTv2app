@@ -14,6 +14,9 @@ export interface CheckupPreflightResponse {
     balance: string;      
     can_proceed: boolean; 
     token_symbol: string; 
+    is_free_trial: boolean; 
+    trial_count?: number;   
+    used_count?: number;    
 }
 
 export interface CheckupPayFeeResponse {
