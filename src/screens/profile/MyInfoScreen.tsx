@@ -346,7 +346,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           {}
           <View style={v_d81136.footer}>
-            <Text style={v_d81136.footerText}>{`MetaHint Health v${v_c9be60.expoConfig?.version ?? '---'} (${v_c9be60.expoConfig?.ios?.buildNumber ?? v_c9be60.expoConfig?.android?.versionCode ?? '---'})`}</Text>
+            <Text style={v_d81136.footerText}>{`MetaHint Health v${v_c9be60.nativeAppVersion ?? v_c9be60.expoConfig?.version ?? '---'} (${v_c9be60.nativeBuildVersion ?? '---'})`}</Text>
             <Text style={v_d81136.footerText}>{v_8d41d7('profile.copyright')}</Text>
           </View>
         </SafeScrollView>
