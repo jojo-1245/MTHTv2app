@@ -41,7 +41,6 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_d11128, v_36c42a] = v_5ab095(false);
   const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
   const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
-  const v_e71371 = v_727031?.business === 1 || v_727031?.business === true;
 
   const v_63c23a = async () => {
     v_34a50a(true);
@@ -252,11 +251,9 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.profileCard}>
             <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
             <View style={v_d81136.profileInfo}>
-              {v_e71371 && (
-                <View style={v_d81136.businessBadge}>
-                  <Text style={v_d81136.businessBadgeText}>{v_8d41d7('profile.business')}</Text>
-                </View>
-              )}
+              {
+
+}
               <View style={v_d81136.nameRow}>
                 <Text style={v_d81136.name}>{v_8a1355}</Text>
               </View>

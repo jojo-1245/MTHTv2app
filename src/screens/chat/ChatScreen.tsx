@@ -598,6 +598,49 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       const v_ec41ce = v_77cfc3.length > 0 ? v_77cfc3[0] : null;
       const v_068098 = v_d6b96e.length > 0 ? v_d6b96e[0] : null;
 
+      let v_681458;
+      if (!v_ec41ce) {
+        v_681458 = '[건강 데이터 없음: 아직 건강 분석 기록이 없습니다.]';
+      } else {
+        const v_17319e = v_ec41ce.vital_signs
+          ? (typeof v_ec41ce.vital_signs === 'string' ? JSON.parse(v_ec41ce.vital_signs) : v_ec41ce.vital_signs)
+          : {};
+        const v_27ef41 = Object.entries(v_17319e).map(([v_b24339, v_a057b5]: [string, any]) => {
+          const v_81e2ef = v_a057b5?.value;
+          const v_ceb55a = v_a057b5?.unit ?? '';
+          if (v_81e2ef == null) return null;
+          if (typeof v_81e2ef === 'object') {
+            return `  - ${v_b24339}: ${JSON.stringify(v_81e2ef)} ${v_ceb55a}`.trim();
+          }
+          return `  - ${v_b24339}: ${v_81e2ef} ${v_ceb55a}`.trim();
+        }).filter(Boolean).join('\n');
+        v_681458 = `[건강 데이터]
+- 측정일: ${v_ec41ce.record_date ?? '알 수 없음'}
+- 건강지수: ${v_ec41ce.health_index ?? '데이터 없음'}
+- 건강 레벨: ${v_ec41ce.health_level ?? '데이터 없음'}${v_27ef41 ? `\n- 바이탈 사인:\n${v_27ef41}` : ''}`;
+      }
+
+      let v_0fa025;
+      if (!v_068098) {
+        v_0fa025 = '[피부 데이터 없음: 아직 피부 분석 기록이 없습니다.]';
+      } else {
+        const v_b95193 = v_068098.analysis_result
+          ? (typeof v_068098.analysis_result === 'string' ? JSON.parse(v_068098.analysis_result) : v_068098.analysis_result)
+          : {};
+        const v_69de92 = v_068098.caution_items
+          ? (typeof v_068098.caution_items === 'string' ? JSON.parse(v_068098.caution_items) : v_068098.caution_items)
+          : [];
+        const v_44f5a0 = Object.entries(v_b95193).map(([v_b24339, v_a057b5]: [string, any]) => {
+          const v_740dd8 = v_a057b5?.ui_score ?? v_a057b5?.raw_score;
+          return v_740dd8 != null ? `  - ${v_b24339}: ${v_740dd8}점` : null;
+        }).filter(Boolean).join('\n');
+        v_0fa025 = `[피부 데이터]
+- 측정일: ${v_068098.record_date ?? '알 수 없음'}
+- 종합 점수: ${v_068098.overall_score ?? '데이터 없음'}점
+- 피부 나이: ${v_068098.skin_age ?? '데이터 없음'}세
+- 등급: ${v_068098.grade ?? '데이터 없음'}${v_44f5a0 ? `\n- 세부 분석:\n${v_44f5a0}` : ''}${v_69de92.length > 0 ? `\n- 주의 항목: ${v_69de92.join(', ')}` : ''}`;
+      }
+
       const v_c9c489 = v_e4a763();
       const v_fed274 = v_c9c489.GATEWAY;
       if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다.');
@@ -634,8 +677,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         query: v_9b6134,
         stream: true,
         jsonData: {
-          healthData: v_ec41ce,
-          skinData: v_068098
+          healthData: v_681458,
+          skinData: v_0fa025,
         }
       };
 
@@ -1146,10 +1189,17 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                     </Text>
                     <TouchableOpacity
                       style={v_d81136.suggestionButton}
-                      onPress={() => v_f32824('너는 누구니?')}
+                      onPress={() => v_f32824('내 최근 건강정보 분석해줘')}
                       activeOpacity={0.8}
                     >
-                      <Text style={v_d81136.suggestionButtonText}>💬 너는 누구니?</Text>
+                      <Text style={v_d81136.suggestionButtonText}>🏥 내 최근 건강정보 분석해줘</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={v_d81136.suggestionButton}
+                      onPress={() => v_f32824('내 최근 피부정보 분석해줘')}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={v_d81136.suggestionButtonText}>✨ 내 최근 피부정보 분석해줘</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -1668,6 +1718,7 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: 12,
     borderRadius: 8,
     alignSelf: 'flex-start',
+    marginTop: 6,
   },
   suggestionButtonText: {
     color: '#FFFFFF',

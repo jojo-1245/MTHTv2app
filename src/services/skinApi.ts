@@ -33,6 +33,7 @@ export interface SaveSkinRecordPayload {
 export interface SaveSkinRecordResponse {
   success: boolean;
   message?: string;
+  id?: number;
   record_id?: number;
 }
 
@@ -163,19 +164,39 @@ export async function v_79be38(v_931bf0): Promise<SaveSkinRecordResponse> {
     });
 
     if (__DEV__) {
-      console.log('[skinApi] saveSkinRecord 응답:', {
+      console.log('[skinApi] saveSkinRecord 원본 응답:', {
         status: v_8f00b9.status,
+        dataType: typeof v_8f00b9.data,
         data: JSON.stringify(v_8f00b9.data, null, 2),
       });
     }
 
-    const v_f637a4 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as SaveSkinRecordResponse);
+    let v_dd6110 = v_8f00b9.data;
+    if (typeof v_dd6110 === 'string') {
+      try { v_dd6110 = JSON.parse(v_dd6110); } catch { }
+    }
+    const v_9390e8 = v_dd6110?.data ?? (v_dd6110 as unknown as SaveSkinRecordResponse);
+    const v_75d360 = typeof v_9390e8 === 'string'
+      ? (() => { try { return JSON.parse(v_9390e8); } catch { return {}; } })()
+      : v_9390e8;
 
-    if (!v_f637a4 || typeof v_f637a4 !== 'object') {
+    if (!v_75d360.id && v_75d360.record_id) {
+      v_75d360.id = v_75d360.record_id;
+    }
+
+    if (__DEV__) {
+      console.log('[skinApi] saveSkinRecord 파싱 결과:', {
+        id: v_75d360.id,
+        record_id: v_75d360.record_id,
+        success: v_75d360.success,
+      });
+    }
+
+    if (!v_75d360 || typeof v_75d360 !== 'object') {
       throw new Error('피부 분석 결과 저장 응답 형식이 올바르지 않습니다.');
     }
 
-    return v_f637a4;
+    return v_75d360 as SaveSkinRecordResponse;
   } catch (v_5e9bfe) {
     if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
       console.error('[skinApi] saveSkinRecord 에러:', {

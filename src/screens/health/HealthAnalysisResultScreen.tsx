@@ -2767,33 +2767,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     <View style={v_d81136.aiProductsCard}>
                       <View style={v_d81136.aiProductsHeader}>
                         <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('health_analysis.result.ai_recommended_products')}</Text>
-                        <Text style={v_d81136.aiProductsBadge}>{v_8d41d7('health_analysis.result.ai_custom_recommend')}</Text>
                       </View>
-                      <View style={v_d81136.aiProductList}>
-                        {[
-                          { icon: 'nutrition-outline', iconBg: ['#DCFCE7', '#22C55E'], titleKey: 'ai_product_omega3', descKey: 'ai_product_omega3_desc' },
-                          { icon: 'watch-outline', iconBg: ['#DBEAFE', '#3B82F6'], titleKey: 'ai_product_band', descKey: 'ai_product_band_desc' },
-                          { icon: 'body-outline', iconBg: ['#FCE7F3', '#EC4899'], titleKey: 'ai_product_meditation', descKey: 'ai_product_meditation_desc' },
-                        ].map((v_8c0b26, v_e86ad8) => (
-                          <View key={v_e86ad8} style={v_d81136.aiProductItem}>
-                            <View style={[v_d81136.aiProductIconWrap, { backgroundColor: '#FFFFFF' }]}>
-                              <Ionicons name={v_8c0b26.icon as any} size={28} color={v_8c0b26.iconBg[1]} />
-                            </View>
-                            <View style={v_d81136.aiProductContent}>
-                              <Text style={v_d81136.aiProductTitle}>{v_8d41d7(`health_analysis.result.${v_8c0b26.titleKey}`)}</Text>
-                              <Text style={v_d81136.aiProductDesc}>{v_8d41d7(`health_analysis.result.${v_8c0b26.descKey}`)}</Text>
-                              <View style={v_d81136.aiProductPoints}>
-                                <Coins size={14} color="#615FFF" />
-                                <Text style={v_d81136.aiProductPointsNumber}>100</Text>
-                                <Text style={v_d81136.aiProductPointsCurrency}>MTHT</Text>
-                              </View>
-                            </View>
-                          </View>
-                        ))}
+                      <View style={{ paddingVertical: 24, alignItems: 'center' }}>
+                        <Text style={{ fontSize: 14, color: '#9CA3AF' }}>현재 추천 제품 기획중입니다.</Text>
                       </View>
-                      <TouchableOpacity style={v_d81136.aiMoreButton}>
-                        <Text style={v_d81136.aiMoreButtonText}>{v_8d41d7('health_analysis.result.ai_more_btn')}</Text>
-                      </TouchableOpacity>
                     </View>
                   </>
                 )}

@@ -350,6 +350,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_02a5a0 = v_e662ae(false);
     const v_f013b2 = v_e662ae<string | null>(null);
 
+    const v_f4f730 = v_e662ae<number | null>(null);
+    const [v_4ae380, v_43dcda] = v_5ab095<number | null>(null);
+
+    const [v_e399bf, v_b11b33] = v_5ab095<string | null>(null);
+    const [v_85cf60, v_952b9d] = v_5ab095(false);
+
     const v_058956 = v_de06a3(() => {
         if (!v_e521b9?.result?.results?.output) return null;
 
@@ -529,9 +535,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     });
                 }
 
-                if (v_23eae7?.record_id) {
-                    savedRecordIdRef.current = v_23eae7.record_id;
-                    v_8c9ccd('skin_analysis', v_23eae7.record_id)
+                const v_0bce57 = (v_23eae7 as any)?.id ?? v_23eae7?.record_id;
+                if (v_0bce57) {
+                    v_f4f730.current = v_0bce57;
+                    v_43dcda(v_0bce57);
+                    if (__DEV__) {
+                        console.log('[피부분석] savedRecordId 설정:', v_0bce57);
+                    }
+                    v_8c9ccd('skin_analysis', v_0bce57)
                         .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
                         .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
                 }
@@ -545,6 +556,36 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_329ab2();
         }
     }, [v_e521b9, v_91943c, v_c86f08, v_e7b2f2, v_058956]);
+
+    v_a3453e.useEffect(() => {
+        if (__DEV__) {
+            console.log('[AI 피부분석 effect]', {
+                aiAnalysisStarted: v_09e9e3,
+                ollamaAnalysis: !!v_e399bf,
+                isOllamaLoading: v_85cf60,
+                savedRecordId: v_4ae380,
+                savedRecordIdRef: v_f4f730.current,
+            });
+        }
+        if (!v_09e9e3 || v_e399bf || v_85cf60) return;
+        const v_fbf3b0 = v_f4f730.current;
+        if (!v_fbf3b0) {
+            if (__DEV__) console.warn('[AI 피부분석] recordId 없음 - 저장 완료 대기 중');
+            return;
+        }
+        if (__DEV__) console.log('[AI 피부분석] Ollama 호출 시작, recordId:', v_fbf3b0);
+        v_952b9d(true);
+        v_b42e4a(v_fbf3b0)
+            .then((v_43c42e) => {
+                if (__DEV__) console.log('[AI 피부분석] 완료');
+                v_b11b33(v_43c42e);
+            })
+            .catch((v_9e86fd) => {
+                console.error('[AI 피부분석] 실패:', v_9e86fd);
+                v_b11b33('AI 분석 중 오류가 발생했습니다.');
+            })
+            .finally(() => v_952b9d(false));
+    }, [v_09e9e3, v_4ae380]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         let v_52f726;
@@ -1807,68 +1848,33 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 </View>
                                 <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('skin.result.ai_comprehensive_title')}</Text>
                             </View>
-                            <View style={v_d81136.aiAnalysisSubCard}>
-                                <View style={v_d81136.aiAnalysisSectionHeader}>
-                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
-                                        <Ionicons name="water-outline" size={18} color="#22C55E" />
-                                    </View>
-                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_skin_summary')}</Text>
+                            {v_85cf60 ? (
+                                <View style={{ padding: 20, alignItems: 'center' }}>
+                                    <ActivityIndicator size="large" color="#AD46FF" />
+                                    <Text style={[v_d81136.aiAnalysisSectionText, { marginTop: 12, textAlign: 'center' }]}>
+                                        AI가 피부 상태를 분석 중입니다...
+                                    </Text>
                                 </View>
-                                <Text style={v_d81136.aiAnalysisSectionText}>{v_8d41d7('skin.result.ai_skin_summary_sample')}</Text>
-                            </View>
-                            <View style={v_d81136.aiAnalysisSubCard}>
-                                <View style={v_d81136.aiAnalysisSectionHeader}>
-                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEF3C7' }]}>
-                                        <Ionicons name="bulb-outline" size={18} color="#F59E0B" />
-                                    </View>
-                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_improvement_points')}</Text>
+                            ) : v_e399bf ? (
+                                <View style={v_d81136.aiAnalysisSubCard}>
+                                    <Text style={v_d81136.aiAnalysisSectionText}>{v_e399bf}</Text>
                                 </View>
-                                <Text style={v_d81136.aiAnalysisSectionText}>• {v_8d41d7('skin.result.ai_improvement_sample_1')}</Text>
-                                <Text style={v_d81136.aiAnalysisSectionText}>• {v_8d41d7('skin.result.ai_improvement_sample_2')}</Text>
-                            </View>
-                            <View style={v_d81136.aiAnalysisSubCard}>
-                                <View style={v_d81136.aiAnalysisSectionHeader}>
-                                    <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#F3F4F6' }]}>
-                                        <Ionicons name="warning-outline" size={18} color="#374151" />
-                                    </View>
-                                    <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('skin.result.ai_precautions')}</Text>
+                            ) : (
+                                <View style={v_d81136.aiAnalysisSubCard}>
+                                    <Text style={[v_d81136.aiAnalysisSectionText, { color: '#9CA3AF' }]}>
+                                        AI 분석 결과를 불러오는 중입니다...
+                                    </Text>
                                 </View>
-                                <Text style={v_d81136.aiAnalysisSectionText}>{v_8d41d7('skin.result.ai_precautions_text')}</Text>
-                            </View>
+                            )}
                         </View>
                         {}
                         <View style={v_d81136.aiProductsCard}>
                             <View style={v_d81136.aiProductsHeader}>
                                 <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('skin.result.ai_recommended_products')}</Text>
-                                <Text style={v_d81136.aiProductsBadge}>{v_8d41d7('skin.result.ai_custom_recommend')}</Text>
                             </View>
-                            <View style={v_d81136.aiProductList}>
-                                {v_744c99(v_5f1433).slice(0, 3).map((v_01bee9) => (
-                                    <TouchableOpacity
-                                        key={v_01bee9.id}
-                                        style={v_d81136.aiProductItem}
-                                        onPress={() => v_4f73b9(v_01bee9)}
-                                        activeOpacity={0.8}
-                                    >
-                                        <View style={[v_d81136.aiProductIconWrap, { backgroundColor: '#FFFFFF' }]}>
-                                            <Image source={v_01bee9.image} style={v_d81136.aiProductImage} resizeMode="contain" />
-                                        </View>
-                                        <View style={v_d81136.aiProductContent}>
-                                            <Text style={v_d81136.aiProductBrand}>{v_01bee9.brand}</Text>
-                                            <Text style={v_d81136.aiProductTitle}>{v_01bee9.name}</Text>
-                                            <Text style={v_d81136.aiProductDesc} numberOfLines={2}>{v_01bee9.description}</Text>
-                                            <View style={v_d81136.aiProductPoints}>
-                                                <Coins size={14} color="#615FFF" />
-                                                <Text style={v_d81136.aiProductPointsNumber}>{v_01bee9.price}</Text>
-                                                <Text style={v_d81136.aiProductPointsCurrency}>{v_01bee9.currency}</Text>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                ))}
+                            <View style={{ paddingVertical: 24, alignItems: 'center' }}>
+                                <Text style={{ fontSize: 14, color: '#9CA3AF' }}>현재 추천 제품 기획중입니다.</Text>
                             </View>
-                            <TouchableOpacity style={v_d81136.aiMoreButton}>
-                                <Text style={v_d81136.aiMoreButtonText}>{v_8d41d7('skin.result.ai_more_btn')}</Text>
-                            </TouchableOpacity>
                         </View>
                     </>
                 )}

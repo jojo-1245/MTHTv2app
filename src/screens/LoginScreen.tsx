@@ -138,19 +138,6 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   }, []);
 
   v_c4deb2(() => {
-    try {
-      const v_c9c489 = v_e4a763();
-      v_4eac84.configure({
-        webClientId: v_c9c489.GOOGLE_WEB_CLIENT_ID ?? 'oth-client.googleusercontent.invalid',
-        iosClientId: v_c9c489.GOOGLE_IOS_CLIENT_ID ?? 'oth-client.googleusercontent.invalid',
-        offlineAccess: true,
-      });
-    } catch (v_37eab7) {
-
-    }
-  }, []);
-
-  v_c4deb2(() => {
     if (v_326be8.OS === 'android' && __DEV__) {
       v_33dda3().then((v_598405) => {
         if (v_598405) console.log('[Kakao] Android Key Hash (등록용):', v_598405);
@@ -396,9 +383,11 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       if (v_c99bd2 === 'SIGN_IN_CANCELLED' || v_c99bd2 === '12501') {
         return; 
       }
-      const v_4b5200 = v_8d41d7('login.error_unknown');
-      const v_d6bda5 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_4b5200;
-      v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);
+      const v_badeaf = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
+      const v_e629b5 = v_badeaf === 'Google 계정 이메일 공개 동의가 필요합니다.'
+        ? v_badeaf
+        : v_8d41d7('login.error_unknown');
+      v_889fad(v_8d41d7('login.error_failed'), v_e629b5);
     } finally {
       v_deef62(false);
     }
