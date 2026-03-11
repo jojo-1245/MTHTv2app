@@ -867,6 +867,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     console.log('[경고 발생]', { code: v_77ef6e, warning: v_288ac3 });
 
     if (v_77ef6e === 3500 || (v_77ef6e && v_77ef6e >= 3000 && v_77ef6e < 4000)) {
+
+      const v_18327e =
+        v_bc50c7 === v_eb2401.TERMINATING ||
+        v_bc50c7 === v_eb2401.TERMINATED;
+      if (v_18327e) {
+        console.log('[얼굴 인식 경고] 세션 종료 중 발생 - suppressNext3003 설정 스킵');
+        v_b1eca7.current = true;
+        return;
+      }
       console.log('[얼굴 인식 경고] 무시 - 측정 계속 진행');
 
       v_517d25.current = true;
@@ -1550,6 +1559,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     const v_07b251 = v_7b6d17[v_bc50c7 as v_eb2401] || `UNKNOWN(${v_bc50c7})`;
     console.log('세션 상태:', v_07b251, `(${v_bc50c7})`, '세션 존재:', !!v_a3ff5a.current);
 
+    if (v_919f8c.current === v_bc50c7) {
+      return;
+    }
+
     if (v_a3ff5a.current && v_bc50c7 === v_eb2401.READY) {
       console.log('✅ 세션이 READY 상태입니다. 카메라가 활성화되었습니다.');
 
@@ -1636,8 +1649,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_4c31ba.current = false;
 
         if (v_a3ff5a.current) {
+
           v_98caa0();
-          v_a3ff5a.current = undefined;
         }
 
         v_ce2e95.current = false;

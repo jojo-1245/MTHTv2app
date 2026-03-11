@@ -1,4 +1,4 @@
-import v_a3453e, { v_c4deb2 } from "bapkr";
+import v_a3453e, { v_de06a3, v_c4deb2 } from "bapkr";
 import { v_f2c756 } from "rcmrninabrnb";
 import { v_ac28fd } from "ixigazcpvfldbecwtbvavtbi";
 import { v_709be7 } from "xpfgrcdafpntkgxfmgxpxnedjkvmtc";
@@ -60,21 +60,27 @@ async function v_8360c1(v_f71b56) {
 
     }
 
-    if (v_60875a.isReady()) {
-        v_60875a.reset({
-            index: 0,
-            routes: [{ name: 'Signup', params: { referralCode: v_43c42e.code } }],
-        });
-    }
+    const v_268c38 = (v_45fe0c = 30) => {
+        if (v_60875a.isReady()) {
+            v_60875a.reset({
+                index: 0,
+                routes: [{ name: 'Signup', params: { referralCode: v_43c42e.code } }],
+            });
+        } else if (v_45fe0c > 0) {
+            setTimeout(() => v_268c38(v_45fe0c - 1), 100);
+        }
+    };
+    v_268c38();
 }
 
 export const AppNavigator: v_a3453e.FC = () => {
 
-    v_c4deb2(() => {
+    const v_ad5855 = v_de06a3(async () => {
+        const v_f71b56 = await v_f2c756.getInitialURL();
+        if (v_f71b56) await v_8360c1(v_f71b56);
+    }, []);
 
-        v_f2c756.getInitialURL().then((v_f71b56) => {
-            if (v_f71b56) v_8360c1(v_f71b56);
-        });
+    v_c4deb2(() => {
 
         const v_269481 = v_f2c756.addEventListener('url', ({ url: v_f71b56 }) => {
             v_8360c1(v_f71b56);
@@ -84,7 +90,7 @@ export const AppNavigator: v_a3453e.FC = () => {
     }, []);
 
     return (
-        <NavigationContainer ref={v_60875a}>
+        <NavigationContainer ref={v_60875a} onReady={v_ad5855}>
             <Stack.Navigator
                 initialRouteName="Intro"
                 screenOptions={{

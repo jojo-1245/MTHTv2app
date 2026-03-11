@@ -26,7 +26,14 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "건강 상태 분석을 위한 얼굴 측정에 사용됩니다",
-        "NSBluetoothAlwaysUsageDescription": "건강 측정 디바이스와 연결하기 위해 블루투스 접근이 필요합니다"
+        "NSBluetoothAlwaysUsageDescription": "건강 측정 디바이스와 연결하기 위해 블루투스 접근이 필요합니다",
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["ai.metahint.appw", "metahintai"],
+            "CFBundleURLName": "ai.metahint.appw"
+          }
+        ],
+        "LSApplicationQueriesSchemes": ["metahintai"]
       }
     },
     "android": {
