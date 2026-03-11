@@ -44,7 +44,7 @@ export type RootStackParamList = {
   Home: undefined;
   MetaHome: undefined;
   Login: undefined;
-  Signup: { referralCode?: string } | { email?: string; fromSocial?: 'google' | 'apple' | 'kakao' | 'naver' } | undefined;
+  Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'kakao' | 'naver' } | undefined;
   ForgotPassword: undefined;
   PasswordVerification: undefined;
   ResetPassword: undefined;
@@ -62,7 +62,7 @@ export type RootStackParamList = {
   }
   | undefined;
   Wallet: undefined;
-  WalletSend: undefined;
+  WalletSend: { tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] } } | undefined;
   WalletReceive:
   | {
     title?: string;
@@ -72,7 +72,7 @@ export type RootStackParamList = {
   | undefined;
   WalletQrScan: undefined;
   WalletEstimate: undefined;
-  WalletTransactionProgress: undefined;
+  WalletTransactionProgress: { tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] } } | undefined;
   WalletTransactionResult: undefined;
   TransactionDetails: undefined;
   WalletTokenDetail: {

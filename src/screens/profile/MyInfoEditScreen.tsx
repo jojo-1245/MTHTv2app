@@ -98,11 +98,6 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     updateSignupFormData: v_a776b5,
   } = v_700ef9();
 
-  const v_96d0ea = v_19c5eb ?? v_459d5e;
-  const v_2937c0 = v_de106e ?? v_2f03bc;
-  const v_590486 =
-    v_96d0ea?.iso2?.toLowerCase() === 'kr';
-
   const [v_e0c7e8, v_fedf34] = v_5ab095('');
   const [v_1833e7, v_318f24] = v_5ab095('');
   const [v_d74a81, v_fcce73] = v_5ab095('');
@@ -128,6 +123,10 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const [v_19c5eb, v_16febe] = v_5ab095<v_da1883 | null>(null);
   const [v_de106e, v_ce4a02] = v_5ab095<v_da1883 | null>(null);
+
+  const v_96d0ea = v_19c5eb ?? v_459d5e;
+  const v_2937c0 = v_de106e ?? v_2f03bc;
+  const v_d283ec = v_96d0ea?.iso2?.toLowerCase() === 'kr';
 
   const [v_274f50, v_697ca3] = v_5ab095(false);
   const [v_6089b6, v_c7f76c] = v_5ab095(false);

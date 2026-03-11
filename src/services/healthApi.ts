@@ -611,3 +611,49 @@ export async function v_61fb31(v_52e08b): Promise<string> {
     throw v_1bbaa4(v_5e9bfe);
   }
 }
+
+export async function v_5112eb(v_fbf3b0): Promise<string> {
+  const v_c9c489 = v_e4a763();
+  const v_fed274 = v_c9c489.GATEWAY;
+  if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+
+  let v_21cc31 = await v_bcce6e();
+  if (!v_21cc31) {
+    const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
+    if (v_0e3b5e) {
+      try {
+        const v_660822 = JSON.parse(v_0e3b5e) as Record<string, unknown>;
+        const v_8d41d7 = v_660822?.accessToken ?? v_660822?.access_token ?? v_660822?.token;
+        if (typeof v_8d41d7 === 'string') v_21cc31 = v_8d41d7;
+      } catch { }
+    }
+  }
+
+  try {
+    const v_3f4675 = {
+      'Content-Type': 'application/json',
+      ...(v_21cc31 ? { Authorization: `Bearer ${v_21cc31}` } : {}),
+    };
+
+    const v_f71b56 = `${v_fed274}/oth-path`;
+    if (__DEV__) {
+      console.log('[healthApi] analyzeHealthRecordAi 요청:', { url: v_f71b56, recordId: v_fbf3b0 });
+    }
+
+    const v_8f00b9 = await v_b5030f.post(v_f71b56, { record_id: v_fbf3b0 }, { timeout: 60000, headers: v_3f4675 });
+
+    const v_9390e8 = v_8f00b9.data?.data;
+    if (v_9390e8?.analysis) {
+      return v_9390e8.analysis;
+    }
+    throw new Error('AI 분석 결과를 찾을 수 없습니다.');
+  } catch (v_5e9bfe) {
+    if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
+      console.error('[healthApi] analyzeHealthRecordAi 에러:', {
+        status: v_5e9bfe.response?.status,
+        data: v_5e9bfe.response?.data,
+      });
+    }
+    throw v_1bbaa4(v_5e9bfe);
+  }
+}

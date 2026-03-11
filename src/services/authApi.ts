@@ -181,7 +181,7 @@ export async function socialLogin(params: {
     const emailVal = data?.email ?? raw?.email;
 
     const payload: LoginAuthPayload =
-      typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : { token: data };
+      typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : ({ token: data } as LoginAuthPayload);
     const authHeader = res.headers?.authorization ?? res.headers?.Authorization;
     if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
       const tokenFromHeader = authHeader.slice(7).trim();

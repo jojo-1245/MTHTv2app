@@ -25,10 +25,10 @@ export type {
   AddSubAccountPayload,
 } from './accountApi';
 
-export { getHealthRecords, saveHealthRecord, getHealthRecordById, getLatestHealthRecord, compareHealthRecords, analyzeHealthComparisonAi } from './healthApi';
+export { getHealthRecords, saveHealthRecord, getHealthRecordById, getLatestHealthRecord, compareHealthRecords, analyzeHealthComparisonAi, analyzeHealthRecordAi } from './healthApi';
 export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, CompareHealthRecordsPayload, CompareHealthRecordsResponse } from './healthApi';
 
-export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords, analyzeSkinComparisonAi } from './skinApi';
+export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords, analyzeSkinComparisonAi, analyzeSkinRecordAi } from './skinApi';
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';
 
 export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, getRewardConfig, AlreadyCheckedInError } from './rewardsApi';

@@ -2,6 +2,8 @@ import { v_5ab095, v_c4deb2, v_de06a3 } from 'bapkr';
 import { v_03e392 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
+import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import type { v_8ad91b } from '../navigation';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_766523, v_7ef860, v_6a59bc, type v_abf760 } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
@@ -17,7 +19,7 @@ export function v_2282da(v_2453ad): string {
 
 export const v_9e8766 = () => {
   const { t: v_8d41d7 } = v_772971();
-  const v_c65f5d = v_ada615();
+  const v_c65f5d = v_ada615<v_390fcc<v_8ad91b>>();
   const [v_c86f08, v_d690d0] = v_5ab095<v_70edf1[]>([]);
   const [v_e7b2f2, v_1f1e88] = v_5ab095<string>('');
   const [v_cd31a8, v_deef62] = v_5ab095(false);

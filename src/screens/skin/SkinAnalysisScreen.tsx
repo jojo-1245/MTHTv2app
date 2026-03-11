@@ -48,7 +48,8 @@ import {
 } from '../../services/skinAnalysis';
 import { v_9e8766, v_2282da } from '../../hooks';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_79be38, v_23b7ab, v_8c9ccd } from '../../services';
+import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
+import { v_81fcbc } from '../../services/skinApi';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -529,6 +530,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 }
 
                 if (v_23eae7?.record_id) {
+                    savedRecordIdRef.current = v_23eae7.record_id;
                     v_8c9ccd('skin_analysis', v_23eae7.record_id)
                         .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
                         .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
@@ -1362,9 +1364,43 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     }
                 />
 
-                {
-
-}
+                {__DEV__ && (
+                    <TouchableOpacity
+                        style={v_d81136.devDebugBtn}
+                        onPress={async () => {
+                            try {
+                                const v_678155 = await v_81fcbc();
+                                if (!v_678155 || v_678155.length === 0) {
+                                    v_03e392.alert('알림', '저장된 피부 기록이 없습니다.');
+                                    return;
+                                }
+                                const v_1300ee = v_678155[0];
+                                const v_d3c7f7 = v_1300ee.analysis_result;
+                                const v_8decf8 = typeof v_d3c7f7 === 'string'
+                                    ? JSON.parse(v_d3c7f7)
+                                    : (v_d3c7f7 ?? {});
+                                const v_9ef443 = Object.entries(v_8decf8).map(([v_3b27d9, v_a057b5]: [string, any]) => ({
+                                    type: v_3b27d9,
+                                    ui_score: v_a057b5.ui_score ?? v_a057b5.score ?? 0,
+                                    mask_urls: v_a057b5.mask_url ? [v_a057b5.mask_url] : [],
+                                }));
+                                v_9ef443.push({ type: 'all', score: v_1300ee.overall_score });
+                                v_6f6f79({
+                                    mode: 'sd',
+                                    selectedConcerns: Object.keys(v_8decf8),
+                                    taskId: 'debug_last_result',
+                                    result: { error: null, results: { output: v_9ef443 }, task_status: 'success' },
+                                    timestamp: v_1300ee.created_at ?? new Date().toISOString(),
+                                });
+                                v_639227('result');
+                            } catch (v_9e86fd) {
+                                v_03e392.alert('오류', String(v_9e86fd));
+                            }
+                        }}
+                    >
+                        <Text style={v_d81136.devDebugBtnText}>🐛 마지막 피부 측정결과 보기 (DEV)</Text>
+                    </TouchableOpacity>
+                )}
             </View>
         </>
     );
@@ -2549,6 +2585,19 @@ const v_d81136 = v_472849.create({
         fontSize: v_ef658a.small,
         fontFamily: v_843035.medium,
         color: v_1bfbd0.bluePrimary,
+    },
+    devDebugBtn: {
+        alignSelf: 'center',
+        marginTop: v_9b1a04.medium,
+        paddingVertical: 8,
+        paddingHorizontal: 20,
+        backgroundColor: '#FF6B00',
+        borderRadius: 8,
+    },
+    devDebugBtnText: {
+        color: '#FFF',
+        fontFamily: v_843035.medium,
+        fontSize: v_ef658a.small,
     },
 
     analyzingContainer: {

@@ -30,7 +30,7 @@ import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
-import { v_207199 } from '../../services';
+import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -663,6 +663,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const [v_7018dd, v_35a1d0] = v_5ab095(0);
 
   const [v_09e9e3, v_625d0a] = v_5ab095(false);
+  const [v_e399bf, v_b11b33] = v_5ab095<string | null>(null);
+  const [v_85cf60, v_952b9d] = v_5ab095(false);
+  const v_f4f730 = v_e662ae<number | null>(null);
 
   const v_61a127 = v_e662ae<v_122070>(null);
 
@@ -671,6 +674,18 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     v_61a127.current?.scrollTo({ x: 0, animated: true });
   }, [v_69ddfb]);
+
+  v_a3453e.useEffect(() => {
+    if (!v_09e9e3 || v_e399bf || v_85cf60) return;
+    const v_fbf3b0 = v_f4f730.current;
+    if (!v_fbf3b0) return;
+    v_952b9d(true);
+    v_5112eb(v_fbf3b0)
+      .then((v_43c42e) => v_b11b33(v_43c42e))
+      .catch((v_9e86fd) => console.warn('[건강분석] AI 분석 실패:', v_9e86fd))
+      .finally(() => v_952b9d(false));
+
+  }, [v_09e9e3]);
 
   const v_8bc599 = v_df9f57(() => [
     { id: 'vital-signs', label: v_8d41d7('health_analysis.result.category_vital_signs') },
@@ -1298,6 +1313,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         }
 
         const v_23eae7 = await v_207199(v_60e8e0);
+
+        v_f4f730.current = v_23eae7.id ?? null;
+
+        try {
+          await v_8c9ccd('health_analysis', v_23eae7.id);
+        } catch (v_892e09) {
+          console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
+        }
 
         v_02a5a0.current = true;
         v_f013b2.current = v_42044e;
@@ -2624,6 +2647,24 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
                       </View>
                       {}
+                      {v_85cf60 ? (
+                        <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
+                          <Ionicons name="sparkles" size={28} color="#AD46FF" />
+                          <Text style={[v_d81136.aiAnalysisSectionText, { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
+                        </View>
+                      ) : v_e399bf ? (
+                        <View style={v_d81136.aiAnalysisSubCard}>
+                          <View style={v_d81136.aiAnalysisSectionHeader}>
+                            <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
+                              <Ionicons name="sparkles" size={18} color="#AD46FF" />
+                            </View>
+                            <Text style={v_d81136.aiAnalysisSectionTitle}>AI 힌티 종합 분석</Text>
+                          </View>
+                          <Text style={v_d81136.aiAnalysisSectionText}>{v_e399bf}</Text>
+                        </View>
+                      ) : (
+                      <>
+                      {}
                       <View style={v_d81136.aiAnalysisSubCard}>
                         <View style={v_d81136.aiAnalysisSectionHeader}>
                           <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
@@ -2687,6 +2728,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <Text style={v_d81136.aiCheckupButtonText}>{v_8d41d7('health_analysis.result.ai_checkup_btn')}</Text>
                         </ExpoLinearGradient>
                       </TouchableOpacity>
+                      </>
+                      )}
                     </View>
                     <View style={v_d81136.aiProductsCard}>
                       <View style={v_d81136.aiProductsHeader}>

@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_472849, v_3094a2, v_7e4944 } from 'rcmrninabrnb';
+import { v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
 import { v_2d8264 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_556baf from './SafeView';
@@ -43,7 +43,7 @@ export interface MainLayoutProps {
   activeKey?: string;
 
   hideBottomNav?: boolean;
-  style?: v_7e4944;
+  style?: v_961e77<v_7e4944>;
 }
 
 const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKey: v_1f1e84, hideBottomNav: v_438b9d = false, style: v_7fa4e4 }) => {
@@ -63,12 +63,12 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKe
 
   const v_c58a56 = (item: v_7369b0) => {
     if (v_8c0b26.route && v_8c0b26.route !== v_c7daf6.name) {
-      v_9b57fc(v_8c0b26.route as keyof v_8ad91b);
+      v_9b57fc(v_8c0b26.route as any);
     }
   };
 
   return (
-    <SafeView style={[v_d81136.container, v_7fa4e4]}>
+    <SafeView style={v_472849.flatten([v_d81136.container, v_7fa4e4])}>
       <View style={v_d81136.content}>{v_21f619}</View>
       {!v_438b9d && (
         <BottomNavigationBar

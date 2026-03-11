@@ -24,6 +24,7 @@ export interface UserInformation {
   sex?: number;
   weight?: number;
   height?: number;
+  smokingStatus?: number;
 }
 
 export interface FaceSessionConfig {

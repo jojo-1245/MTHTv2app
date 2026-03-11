@@ -1,11 +1,12 @@
 import { v_c4deb2, v_e662ae, v_de06a3, v_5ab095 } from 'bapkr';
 import { v_03e392, v_6b5698 } from 'rcmrninabrnb';
 import * as v_79a9df from '../services/versionService';
+import type { v_3fe0d9 } from '../services/versionService';
 import { v_772971 } from 'jmpfvteuuztnp';
 
 interface Options {
 
-  onOptionalUpdate?: (type: 'store' | 'ota', info: VersionCheckResult) => void;
+  onOptionalUpdate?: (type: 'store' | 'ota', info: v_3fe0d9) => void;
 
   onOtaProgress?: (percent: number) => void;
 
@@ -29,7 +30,7 @@ export function v_96a538(v_b36f96 = {}) {
   } | null>(null);
 
   const v_690a8a = v_de06a3(async (
-    ota: v_79a9df.VersionCheckResult['ota'],
+    ota: v_79a9df.v_3fe0d9['ota'],
     v_e98228
   ) => {
     if (!v_cf418f.bundle_url || !v_cf418f.latest_version) return;
