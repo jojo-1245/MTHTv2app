@@ -248,7 +248,11 @@ export async function v_207199(v_931bf0): Promise<HealthRecordItem> {
       });
     }
 
-    const v_9390e8 = v_8f00b9.data?.data ?? (v_8f00b9.data as unknown as HealthRecordItem);
+    let v_dd6110 = v_8f00b9.data;
+    if (typeof v_dd6110 === 'string') {
+      try { v_dd6110 = JSON.parse(v_dd6110); } catch {  }
+    }
+    const v_9390e8 = v_dd6110?.data ?? (v_dd6110 as unknown as HealthRecordItem);
     if (__DEV__) {
       console.log('[healthApi] saveHealthRecord 파싱된 데이터:', {
         hasData: !!v_9390e8,
@@ -256,21 +260,28 @@ export async function v_207199(v_931bf0): Promise<HealthRecordItem> {
       });
     }
 
-    if (!v_9390e8 || typeof v_9390e8 !== 'object') {
+    if (!v_9390e8 || (typeof v_9390e8 !== 'object' && typeof v_9390e8 !== 'string')) {
       throw new Error('건강 기록 저장 응답 형식이 올바르지 않습니다.');
+    }
+
+    const v_75d360 = typeof v_9390e8 === 'string' ? (() => { try { return JSON.parse(v_9390e8); } catch { return {}; } })() : v_9390e8;
+
+    if (!v_75d360.id && v_75d360.record_id) {
+      v_75d360.id = v_75d360.record_id;
     }
 
     if (__DEV__) {
       console.log('[healthApi] saveHealthRecord 저장 성공:', {
-        id: (v_9390e8 as HealthRecordItem).id,
-        record_date: (v_9390e8 as HealthRecordItem).record_date,
-        record_time: (v_9390e8 as HealthRecordItem).record_time,
-        health_index: (v_9390e8 as HealthRecordItem).health_index,
-        health_level: (v_9390e8 as HealthRecordItem).health_level,
+        id: v_75d360.id,
+        record_id: v_75d360.record_id,
+        record_date: v_75d360.record_date,
+        record_time: v_75d360.record_time,
+        health_index: v_75d360.health_index,
+        health_level: v_75d360.health_level,
       });
     }
 
-    return v_9390e8 as HealthRecordItem;
+    return v_75d360 as HealthRecordItem;
   } catch (v_5e9bfe) {
     if (__DEV__ && v_b5030f.isAxiosError(v_5e9bfe)) {
       console.error('[healthApi] saveHealthRecord 에러:', {

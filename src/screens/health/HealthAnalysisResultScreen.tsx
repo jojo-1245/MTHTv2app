@@ -615,7 +615,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545 } = v_c7daf6.params;
+  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
 
@@ -666,6 +666,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const [v_e399bf, v_b11b33] = v_5ab095<string | null>(null);
   const [v_85cf60, v_952b9d] = v_5ab095(false);
   const v_f4f730 = v_e662ae<number | null>(null);
+  const [v_4ae380, v_43dcda] = v_5ab095<number | null>(null);
 
   const v_61a127 = v_e662ae<v_122070>(null);
 
@@ -676,16 +677,27 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }, [v_69ddfb]);
 
   v_a3453e.useEffect(() => {
+    console.log('[AI 분석 effect]', {
+      aiAnalysisStarted: v_09e9e3,
+      ollamaAnalysis: !!v_e399bf,
+      isOllamaLoading: v_85cf60,
+      savedRecordId: v_4ae380,
+      savedRecordIdRef: v_f4f730.current,
+    });
     if (!v_09e9e3 || v_e399bf || v_85cf60) return;
     const v_fbf3b0 = v_f4f730.current;
-    if (!v_fbf3b0) return;
+    if (!v_fbf3b0) {
+      console.warn('[AI 분석] recordId 없음 - AI 호출 스킵. savedRecordId state:', v_4ae380);
+      return;
+    }
+    console.log('[AI 분석] Ollama 호출 시작, recordId:', v_fbf3b0);
     v_952b9d(true);
     v_5112eb(v_fbf3b0)
       .then((v_43c42e) => v_b11b33(v_43c42e))
       .catch((v_9e86fd) => console.warn('[건강분석] AI 분석 실패:', v_9e86fd))
       .finally(() => v_952b9d(false));
 
-  }, [v_09e9e3]);
+  }, [v_09e9e3, v_4ae380]);
 
   const v_8bc599 = v_df9f57(() => [
     { id: 'vital-signs', label: v_8d41d7('health_analysis.result.category_vital_signs') },
@@ -1153,6 +1165,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       if (v_04b545) {
         v_02a5a0.current = true;
         v_f013b2.current = v_42044e;
+
+        if (v_ebdbf7) {
+          v_f4f730.current = v_ebdbf7;
+          v_43dcda(v_ebdbf7);
+          console.log('[AI 분석] savedBeforeNavigate - routeRecordId 설정:', v_ebdbf7);
+        } else {
+          console.warn('[AI 분석] savedBeforeNavigate=true 이지만 routeRecordId 없음 → AI 분석 불가');
+        }
         return;
       }
 
@@ -1314,10 +1334,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
         const v_23eae7 = await v_207199(v_60e8e0);
 
-        v_f4f730.current = v_23eae7.id ?? null;
+        const v_0bce57 = v_23eae7.id ?? (v_23eae7 as any).record_id ?? null;
+        v_f4f730.current = v_0bce57;
+        v_43dcda(v_0bce57);
 
         try {
-          await v_8c9ccd('health_analysis', v_23eae7.id);
+          if (v_0bce57) {
+            await v_8c9ccd('health_analysis', v_0bce57);
+          }
         } catch (v_892e09) {
           console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
         }
@@ -2645,6 +2669,15 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
                         </View>
                         <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
+                      </View>
+                      {}
+                      <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
+                        <Text style={{ fontSize: 11, color: '#9CA3AF' }}>
+                          측정 Record ID:{' '}
+                          <Text style={{ color: v_4ae380 ? '#6B7280' : '#EF4444', fontWeight: '600' }}>
+                            {v_4ae380 != null ? `#${v_4ae380}` : '없음'}
+                          </Text>
+                        </Text>
                       </View>
                       {}
                       {v_85cf60 ? (

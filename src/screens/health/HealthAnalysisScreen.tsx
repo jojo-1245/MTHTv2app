@@ -436,6 +436,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   const v_1dd18f = v_e662ae<boolean>(false);
 
+  const v_6fb542 = v_e662ae<boolean>(false);
+
   const v_567414 = v_e662ae<boolean>(false);
 
   const v_8978ad = v_e662ae<any>(null);
@@ -492,6 +494,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
     v_977633.current = Date.now() + 5000;
     v_1dd18f.current = false;
+    v_6fb542.current = false;
     v_318478.current = false;
     v_b9ada4.current = false;
     v_49296b(false);
@@ -1383,6 +1386,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         bloodPressureStatus: v_6b257a || undefined,
       };
 
+      if (v_6fb542.current) {
+        console.log('[결과 화면 이동] 이미 저장 진행 중 - 중복 실행 방지');
+        return;
+      }
+      v_6fb542.current = true;
+
       v_72744e(true);
       v_00defd('session');
       (async () => {
@@ -1465,13 +1474,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               ...(v_f4ebd0 && Object.keys(v_f4ebd0).some(v_0eb677 => (v_f4ebd0 as any)[v_0eb677]) && { user_info: v_f4ebd0 }),
             },
           };
+          let v_4ae380;
           try {
             console.log('[결과 화면 이동] API 저장 시작...');
             const v_23eae7 = await v_207199(v_60e8e0);
-            console.log('[결과 화면 이동] API 저장 완료');
+            v_4ae380 = v_23eae7?.id ?? (v_23eae7 as any)?.record_id;
+            console.log('[결과 화면 이동] API 저장 완료, recordId:', v_4ae380);
 
-            if (v_23eae7?.id) {
-              v_8c9ccd('health_analysis', v_23eae7.id)
+            if (v_4ae380) {
+              v_8c9ccd('health_analysis', v_4ae380)
                 .then((v_cb35cb) => console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash))
                 .catch((v_9e86fd) => console.error('[건강분석] 비용 차감 실패:', v_9e86fd));
             }
@@ -1479,6 +1490,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             console.error('[결과 화면 이동] API 저장 실패:', v_09112b);
           }
 
+          console.log('[결과 화면 이동] navigate, recordId:', v_4ae380);
           v_c65f5d.navigate('HealthAnalysisResult', {
             results: v_9f8792,
             timestamp: v_42044e,
@@ -1487,6 +1499,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             selectedAccountId: v_e7b2f2,
             userInfo: v_f4ebd0,
             savedBeforeNavigate: true,
+            recordId: v_4ae380,
           });
         } catch (v_9e86fd) {
           console.error('[결과 화면 이동] 오류:', v_9e86fd);
@@ -1924,6 +1937,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                         accounts: v_c86f08,
                         selectedAccountId: v_e7b2f2,
                         savedBeforeNavigate: true,
+                        recordId: v_1300ee.id,
                       });
                     } catch (v_9e86fd) {
                       v_03e392.alert('오류', String(v_9e86fd));
