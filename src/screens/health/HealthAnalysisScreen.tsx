@@ -69,20 +69,15 @@ enum SmokingStatus {
 }
 
 const v_fa53c9 = (): string => {
-  try {
-
-    return v_573fcf('FZLJTILI_LICENSE_KEY') || '';
-  } catch (v_5e9bfe) {
-
-    const v_651d83 =
-      process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
-      process.env.FZLJTILI_LICENSE_KEY ||
-      '';
-    if (!v_651d83) {
-      console.warn('경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.');
-    }
-    return v_651d83;
+  const v_651d83 =
+    process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
+    process.env.FZLJTILI_LICENSE_KEY ||
+    v_573fcf('FZLJTILI_LICENSE_KEY') ||
+    '';
+  if (!v_651d83) {
+    console.warn('경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.');
   }
+  return v_651d83;
 };
 
 const v_8ea06a = 60; 

@@ -19,17 +19,17 @@ import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
-import { v_0e72e5, v_222d64 } from '../../services/pointClickOfferwall';
+import { v_0e72e5 } from '../../services/pointClickOfferwall';
 import { v_998b9d } from '../../utils/authErrorHandler';
 import { v_e4a763 } from '../../utils/env';
 import v_c9be60 from 'qfrscldecidiqs';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
-const v_204782 = require('../../../assets/images/myinfo_gold.png');
-const v_46b407 = require('../../../assets/images/myinfo_silver.png');
+const v_08bdbd = require('../../../assets/images/myinfo_gold.png');
+const v_46de8e = require('../../../assets/images/myinfo_silver.png');
 
-type TierType = 'silver' | 'gold';
+type TierType = 'wm' | 'bm' | 'pm';
 
 const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
@@ -40,8 +40,9 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
   const [v_d11128, v_36c42a] = v_5ab095(false);
-  const v_ec980c = (v_727031?.tier === 'gold' ? 'gold' : 'silver') as TierType;
-  const tierImage: v_07a341 = v_ec980c === 'gold' ? v_204782 : v_46b407;
+  const v_8eff09 = v_727031?.tier?.toLowerCase();
+  const v_ec980c = v_8eff09 === 'pm' ? 'pm' : v_8eff09 === 'bm' ? 'bm' : 'wm';
+  const tierImage: v_07a341 = v_ec980c === 'pm' ? v_08bdbd : v_46de8e;
 
   const v_63c23a = async () => {
     v_34a50a(true);
@@ -151,7 +152,9 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
 
-    const v_d84161 = v_222d64(v_727031?.email + "," + v_727031?.id);
+    const v_d84161 = v_727031?.email && v_727031?.id != null
+      ? `${v_727031.email},${v_727031.id}`
+      : 'guest';
 
     const v_9f1622 = 'MetaHint';
     v_0e72e5(v_b922bf, v_d84161, v_9f1622);
@@ -250,7 +253,13 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         >
           {}
           <View style={v_d81136.profileCard}>
-            <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
+            {v_ec980c === 'wm' ? (
+              <View style={v_d81136.wmBadge}>
+                <Text style={v_d81136.wmBadgeText}>WM</Text>
+              </View>
+            ) : (
+              <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
+            )}
             <View style={v_d81136.profileInfo}>
               {
 
@@ -437,6 +446,24 @@ const v_d81136 = v_472849.create({
     height: 80,
     marginRight: 12,
     marginBottom: -12,
+  },
+  wmBadge: {
+    width: 80,
+    height: 80,
+    marginRight: 12,
+    marginBottom: -12,
+    borderRadius: 16,
+    backgroundColor: '#F3F4F6',
+    borderWidth: 2,
+    borderColor: '#D1D5DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wmBadgeText: {
+    fontSize: 18,
+    fontFamily: v_843035.bold,
+    color: '#9CA3AF',
+    letterSpacing: 1,
   },
   profileInfo: {
     flex: 1,
