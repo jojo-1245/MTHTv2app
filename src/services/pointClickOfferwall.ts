@@ -33,9 +33,7 @@ export function v_0e72e5(
   }
   const v_7ebb84 = v_80fa10.PointClickOfferwallModule;
   if (!v_7ebb84?.showOfferwall) {
-    if (__DEV__) {
-      console.warn('[PointClick] Native module not available');
-    }
+    console.error('[PointClick] Native module not available — PointClickOfferwallModule이 로드되지 않았습니다. 네이티브 빌드 확인 필요.');
     return;
   }
   const v_d8855b = v_222d64(v_021a29);

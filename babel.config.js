@@ -7,6 +7,7 @@ module.exports = function(api) {
         'inline-dotenv',
         {
           path: '.env',
+          systemvars: true,
         },
       ],
     ],
