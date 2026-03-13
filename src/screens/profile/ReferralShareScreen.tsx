@@ -21,34 +21,39 @@ import { v_d844c3 } from '../../utils/deepLinkHandler';
 import { v_7ef860 } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
-const v_be7143 = require('../../../assets/images/bg_gold.png');
-const v_581451 = require('../../../assets/images/bg_silver.png');
+const v_08df2d = require('../../../assets/images/bg_gold.png');
+const v_4032b9 = require('../../../assets/images/bg_silver.png');
+const v_40e165 = require('../../../assets/images/bg_silver.png');
 const v_96cb41 = require('../../../assets/images/metahint_symbol_white.png');
 
 type Props = v_432191<v_8ad91b, 'ReferralShare'>;
 
-type GradeType = 'gold' | 'silver';
+type GradeType = 'pm' | 'bm' | 'wm';
 
 const v_d1ffaa = {
-    gold: {
+    pm: {
         primary: '#D4A754',
         secondary: '#F5E6B8',
-        gradient: ['#E8C86B', '#D4A754', '#B8943F', '#D4A754'] as const,
-        cardGradient: ['#F5E6B8', '#D4A754', '#B8943F', '#C49B4A'] as const,
         text: '#8B6914',
         badge: '#D4A754',
         badgeText: '#8B6914',
         badgeBg: '#FFF8E7',
     },
-    silver: {
+    bm: {
         primary: '#A8A8A8',
         secondary: '#E8E8E8',
-        gradient: ['#D4D4D4', '#A8A8A8', '#8C8C8C', '#A8A8A8'] as const,
-        cardGradient: ['#E8E8E8', '#C4C4C4', '#A8A8A8', '#B8B8B8'] as const,
         text: '#5A5A5A',
         badge: '#A8A8A8',
         badgeText: '#5A5A5A',
         badgeBg: '#F5F5F5',
+    },
+    wm: {
+        primary: '#C0C0C0',
+        secondary: '#F0F0F0',
+        text: '#6B7280',
+        badge: '#E5E7EB',
+        badgeText: '#6B7280',
+        badgeBg: '#F9FAFB',
     },
 };
 
@@ -56,7 +61,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const { t: v_8d41d7 } = v_772971();
     const { goBack: v_c7ac57 } = v_a0daa8();
 
-    const [v_7be0c6, v_2990f2] = v_5ab095<GradeType>('gold'); 
+    const [v_7be0c6, v_2990f2] = v_5ab095<GradeType>('wm');
 
     const [v_92b6a6, v_499d51] = v_5ab095<string>('로딩 중...');
     const [v_3ed1e9, v_1f5980] = v_5ab095<string>('----. --. --');
@@ -67,7 +72,8 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 try {
                     const v_9390e8 = await v_7ef860();
                     v_499d51(v_9390e8.referral_code || '코드 없음');
-                    v_2990f2(v_9390e8.tier === 'gold' ? 'gold' : 'silver');
+                    const v_8d41d7 = v_9390e8.tier?.toLowerCase();
+                    v_2990f2(v_8d41d7 === 'pm' ? 'pm' : v_8d41d7 === 'bm' ? 'bm' : 'wm');
 
                     if (v_9390e8.created_at) {
                         const v_d5dda0 = new Date(String(v_9390e8.created_at));
@@ -82,8 +88,8 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     );
 
     const v_f9dce7 = v_d1ffaa[v_7be0c6];
-    const v_b32f09 = v_7be0c6 === 'gold' ? v_8d41d7('referral_share.grade_gold') : v_8d41d7('referral_share.grade_silver');
-    const v_8faf23 = v_7be0c6 === 'gold' ? 'G' : 'S';
+    const v_b32f09 = v_7be0c6 === 'pm' ? v_8d41d7('referral_share.grade_pm') : v_7be0c6 === 'bm' ? v_8d41d7('referral_share.grade_bm') : v_8d41d7('referral_share.grade_wm');
+    const v_8faf23 = v_7be0c6 === 'pm' ? 'P' : v_7be0c6 === 'bm' ? 'B' : 'W';
 
     const v_3f557d = v_d844c3(v_92b6a6);
 
@@ -136,7 +142,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     {}
                     <View style={v_d81136.cardContainer}>
                         <ImageBackground
-                            source={v_7be0c6 === 'gold' ? v_be7143 : v_581451}
+                            source={v_7be0c6 === 'pm' ? v_08df2d : v_7be0c6 === 'bm' ? v_4032b9 : v_40e165}
                             style={v_d81136.card}
                             imageStyle={v_d81136.cardImage}
                             resizeMode="cover"

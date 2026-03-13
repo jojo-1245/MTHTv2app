@@ -388,6 +388,31 @@ export async function v_7740c3(
   }
 }
 
+export interface MonthlyStepStatus {
+  year: number;
+  month: number;
+  days_achieved: number;
+  days_total: number;
+  bonus_amount: string;
+  is_completed: boolean;
+  bonus_paid: string | null;
+}
+
+export async function v_8c7f62(): Promise<MonthlyStepStatus> {
+  const v_21cc31 = await v_bcce6e();
+  const v_fed274 = v_e4a763().API_URL;
+  const v_3393e3 = await v_b5030f.get<ApiResponse<MonthlyStepStatus>>(
+    `${v_fed274}/oth-path`,
+    {
+      headers: { Authorization: `Bearer ${v_21cc31}` },
+      timeout: v_8a74cb,
+    }
+  );
+  const v_9390e8 = v_3393e3.data?.data;
+  if (!v_9390e8) throw new Error('Failed to get monthly step status');
+  return v_9390e8;
+}
+
 export interface RewardConfig {
   step_reward_per1k: number | null;
   step_goal_reward: number | null;
