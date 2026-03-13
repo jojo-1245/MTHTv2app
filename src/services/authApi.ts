@@ -380,7 +380,7 @@ export interface MeProfile {
   firstname?: string;
   lastname?: string;
   referral_code?: string;
-  tier?: 'silver' | 'gold' | string;
+  tier?: 'wm' | 'bm' | 'pm' | 'WM' | 'BM' | 'PM' | string;
   business?: number | boolean; 
   [key: string]: unknown;
 }
