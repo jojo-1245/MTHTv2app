@@ -11,16 +11,19 @@ import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import { v_729608, v_e2ca42, v_cb41de } from '../components';
 import type { v_8ad91b } from '../navigation';
 
+import { v_772971 } from 'jmpfvteuuztnp';
+
 type Props = v_432191<v_8ad91b, 'ResetPassword'>;
 
 const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
+  const { t: v_8d41d7 } = v_772971();
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
 
   return (
     <View style={v_d81136.screen}>
       <Header
-        title="Reset password"
+        title={v_8d41d7('reset_password.title')}
         subtitle=""
         showBackButton
         onBackPress={() => v_c65f5d.goBack()}
@@ -32,25 +35,25 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       >
         <View style={v_d81136.form}>
           <PasswordField
-            label="New password"
-            placeholder="must be 8 characters"
+            label={v_8d41d7('reset_password.new_pwd_label')}
+            placeholder={v_8d41d7('reset_password.new_pwd_placeholder')}
             value={v_adc076}
             onChangeText={v_52b279}
           />
           <PasswordField
-            label="Confirm new password"
-            placeholder="repeat password"
+            label={v_8d41d7('reset_password.confirm_pwd_label')}
+            placeholder={v_8d41d7('reset_password.confirm_pwd_placeholder')}
             value={v_0b3ebe}
             onChangeText={v_241a35}
           />
           <PrimaryButton
-            title="Reset password"
+            title={v_8d41d7('reset_password.btn_title')}
             onPress={() => v_c65f5d.navigate('PasswordChanged')}
           />
           <View style={v_d81136.footerRow}>
-            <Text style={v_d81136.footerText}>Already have an account? </Text>
+            <Text style={v_d81136.footerText}>{v_8d41d7('reset_password.footer_text')}</Text>
             <TouchableOpacity onPress={() => v_c65f5d.navigate('Login')}>
-              <Text style={v_d81136.footerLink}>Log in</Text>
+              <Text style={v_d81136.footerLink}>{v_8d41d7('common.login')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -62,7 +65,7 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
   },
   content: {
     flexGrow: 1,

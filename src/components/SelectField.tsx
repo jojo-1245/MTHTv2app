@@ -143,15 +143,16 @@ const v_d81136 = v_472849.create({
     justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     paddingHorizontal: v_9b1a04.medium,
-    height: 63,
+    minHeight: 64,
     borderRadius: 10,
   },
   valueText: {
     fontSize: 16,
     color: v_1bfbd0.text,
     fontFamily: v_843035.regular,
+    lineHeight: 24,
   },
   placeholderText: {
     color: v_1bfbd0.placeholder,
@@ -165,7 +166,7 @@ const v_d81136 = v_472849.create({
     ...v_472849.absoluteFillObject,
   },
   bottomSheet: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: v_9b1a04.large,

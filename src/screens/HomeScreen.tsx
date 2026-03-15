@@ -1,133 +1,153 @@
 import v_a3453e from 'bapkr';
 import {
+  v_700696,
   v_cf9c33,
   v_472849,
-  v_19b633,
   v_3094a2,
 } from 'rcmrninabrnb';
+import { v_b5df25 } from 'ernurodqvmtspux';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
-import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_1bfbd0, v_a61db3, v_ef658a, v_9b1a04 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
-import { v_cb41de, v_570c34, v_8714fe } from '../components';
-
-const v_186735 = require('../../assets/images/symbol.png');
-const v_b48f8e = require('../../assets/images/logo.png');
+import { v_772971 } from 'jmpfvteuuztnp';
+import { v_dd725b, v_570c34, v_556baf, v_8714fe } from '../components';
 
 type Props = v_432191<v_8ad91b, 'Home'>;
 
+const { height: v_28d8d8 } = v_700696.get('window');
+
+const v_186735 = require('../../assets/images/symbol.png');
+const v_16cea9 = require('../../assets/images/logo.png');
+
 const HomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
+  const { t: v_8d41d7 } = v_772971();
 
-  const v_1aabbb = (screen: keyof v_8ad91b) => {
-    v_9b57fc(v_53746a as any);
+  const v_ec4736 = () => {
+    v_9b57fc('Login');
   };
 
-  const v_3ffec5 = (v_4898e2) => {
-    v_9b57fc('ClauseDetail', { clauseType: v_4898e2 });
+  const v_c5a058 = () => {
+    v_9b57fc('Signup');
   };
+
+  const v_f36218 = 'feed';
+  const v_cdfaaa = 'https://example.com';
 
   return (
-    <View style={v_d81136.screen}>
+    <SafeView style={v_d81136.container}>
+      <StatusBar style="dark" />
+
+      <View style={v_d81136.logoContainer}>
+        <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
+        <Image source={v_16cea9} style={v_d81136.logo} resizeMode="contain" />
+      </View>
+
       <SafeScrollView
         contentContainerStyle={v_d81136.scrollContent}
-        bounces={false}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
+        showBottomBackground={false}
+        disableBottomPadding={true}
       >
-        <View style={v_d81136.container}>
-          <View style={v_d81136.heroSection}>
-            <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
-            <Image source={v_b48f8e} style={v_d81136.logotype} resizeMode="contain" />
-          </View>
+        {}
+        <View style={v_d81136.adContainer}>
+          {}
+          {
 
-          <View style={v_d81136.buttonGroup}>
-            <PrimaryButton title="로그인" onPress={() => v_1aabbb('Login')} />
-            <SecondaryButton
-              title="회원가입"
-              onPress={() => v_1aabbb('Signup')}
-            />
-          </View>
-
-          <View style={v_d81136.bottomSection}>
-            <Text style={v_d81136.infoText}>
-              이 앱에서 제공하는 기능과 정보 이용 방식에 대해 알아보려면
-            </Text>
-            <Text style={[v_d81136.infoText, v_d81136.infoSpacing]}>
-              아래의 <Text style={v_d81136.linkText} onPress={() => v_3ffec5('terms')}>이용약관</Text> 과{' '}
-              <Text style={v_d81136.linkText} onPress={() => v_3ffec5('privacy')}>개인정보 처리방침</Text>을 읽고 동의해주세요.
-            </Text>
-
-            <Text style={v_d81136.footerText}>Product by XRUN</Text>
+}
+          <View style={v_d81136.adPlaceholder}>
+            {}
           </View>
         </View>
       </SafeScrollView>
-    </View>
+
+      {}
+      <View style={v_d81136.buttonContainer}>
+        <GradientButton
+          title={v_8d41d7('common.login')}
+          onPress={v_ec4736}
+          fullWidth={true}
+          style={v_d81136.loginButton}
+        />
+        <SecondaryButton
+          title={v_8d41d7('common.signup')}
+          onPress={v_c5a058}
+          fullWidth={true}
+          style={v_d81136.loginButton}
+        />
+      </View>
+
+    </SafeView>
   );
 };
 
 const v_d81136 = v_472849.create({
-  screen: {
-    flex: 1,
-    backgroundColor: v_1bfbd0.background,
-
+  container: {
+    ...v_a61db3.container,
   },
   scrollContent: {
     flexGrow: 1,
-    alignItems: 'center',
-    paddingVertical: 48,
-    paddingHorizontal: v_9b1a04.large,
-  },
-  container: {
-    width: '100%',
-    maxWidth: 780,
-    flexGrow: 1,
-    alignSelf: 'center',
-  },
-  heroSection: {
-    flex: 1,
-    alignItems: 'center',
-    gap: v_9b1a04.large,
+    ...v_a61db3.scrollContent,
+    minHeight: '100%',
     justifyContent: 'center',
-    marginBottom: 48,
-    paddingTop: 32,
+    alignItems: 'center',
+  },
+  logoContainer: {
+    position: 'absolute',
+    top: v_28d8d8 * 0.3,
+    left: 0,
+    backgroundColor: 'white',
+    right: 0,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
   },
   symbol: {
     width: 120,
     height: 120,
   },
-  logotype: {
-    width: 180,
-    height: 48,
+  logo: {
+    width: 160,
+    height: 40,
   },
-  buttonGroup: {
+  adContainer: {
+    marginBottom: v_9b1a04.xlarge,
     width: '100%',
-    gap: v_9b1a04.medium,
-  },
-  bottomSection: {
-    width: '100%',
-    marginTop: v_9b1a04.large,
-    paddingBottom: 24,
+    aspectRatio: 3 / 4,
+    height: 'auto',
+    borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    overflow: 'hidden',
+    backgroundColor: '#cccccc',
+    position: 'relative',
   },
-  infoText: {
-    fontSize: 14,
-    fontFamily: v_843035.regular,
-    color: v_1bfbd0.secondaryText,
-    textAlign: 'center',
-    lineHeight: 20,
+  adWebView: {
+    width: '100%',
+    height: '100%',
   },
-  infoSpacing: {
-    marginTop: 8,
+  adPlaceholder: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff',
   },
-  linkText: {
-    fontFamily: v_843035.semibold,
-    color: v_1bfbd0.text,
+  buttonContainer: {
+    width: '100%',
+    marginTop: 'auto', 
+    gap: v_9b1a04.medium,
+    alignSelf: 'flex-end',
+    paddingHorizontal: v_9b1a04.large,
+    marginBottom: v_9b1a04.xlarge,
   },
-  footerText: {
-    fontSize: 13,
-    fontFamily: v_843035.medium,
-    color: v_1bfbd0.secondaryText,
-    marginTop: 24,
+  loginButton: {
+    marginBottom: 0,
+  },
+  taboolaContainer: {
+    borderWidth: 2,
+    borderColor: '#ededed',
   },
 });
 

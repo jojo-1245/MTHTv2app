@@ -6,6 +6,7 @@ import {
   v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 interface AlertModalProps {
@@ -18,11 +19,12 @@ interface AlertModalProps {
 
 export const AlertModal: v_a3453e.FC<AlertModalProps> = ({
   visible: v_cf55be,
-  title: v_9f1622 = '알림',
+  title: v_9f1622,
   message: v_a8cd21,
-  confirmLabel: v_449dca = '확인',
+  confirmLabel: v_449dca,
   onConfirm: v_e2be2d,
 }) => {
+  const { t: v_8d41d7 } = v_772971();
   return (
     <Modal
       visible={v_cf55be}
@@ -32,10 +34,10 @@ export const AlertModal: v_a3453e.FC<AlertModalProps> = ({
     >
       <View style={v_d81136.overlay}>
         <View style={v_d81136.container}>
-          <Text style={v_d81136.title}>{v_9f1622}</Text>
+          <Text style={v_d81136.title}>{v_9f1622 || v_8d41d7('alert.default_title')}</Text>
           <Text style={v_d81136.message}>{v_a8cd21}</Text>
           <TouchableOpacity style={v_d81136.button} onPress={v_e2be2d}>
-            <Text style={v_d81136.buttonText}>{v_449dca}</Text>
+            <Text style={v_d81136.buttonText}>{v_449dca || v_8d41d7('alert.confirm')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -54,7 +56,7 @@ const v_d81136 = v_472849.create({
   container: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
     padding: v_9b1a04.large,
   },
@@ -78,7 +80,7 @@ const v_d81136 = v_472849.create({
     borderRadius: 999,
   },
   buttonText: {
-    color: v_1bfbd0.background,
+    color: v_1bfbd0.white,
     fontFamily: v_843035.medium,
     fontSize: 14,
   },

@@ -19,6 +19,12 @@ interface SafeScrollViewProps extends v_72945f {
   backgroundColor?: string;
 
   autoAdjustKeyboardPadding?: boolean;
+
+  disableBottomPadding?: boolean;
+
+  showStatusBarBackground?: boolean;
+
+  statusBarBackgroundColor?: string;
 }
 
 const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
@@ -30,6 +36,9 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
   bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground || "#fafafa",
   backgroundColor: v_f7b9fb = v_963c2c.background || "#fafafa",
   autoAdjustKeyboardPadding: v_4d1023 = false,
+  disableBottomPadding: v_9f47ad = false,
+  showStatusBarBackground: v_036b39 = false,
+  statusBarBackgroundColor: v_e72fb6 = '#FFFFFF',
   ...v_b1927c
 }, v_6d4ed3) => {
   const v_033e14 = v_e0068c();
@@ -82,10 +91,25 @@ const v_91ca58 = v_680bcc<v_122070, SafeScrollViewProps>(({
       : Math.max(v_f9771e, v_033e14.bottom);
 
   const v_f41ebf = v_4d1023 ? v_7e4acc : 0;
-  const v_cebf7c = v_acf836 + v_86fc47 + v_f41ebf;
+
+  const v_cebf7c = v_9f47ad
+    ? v_86fc47 + v_f41ebf
+    : v_acf836 + v_86fc47 + v_f41ebf;
 
   return (
     <View style={[v_d81136.wrapper, { backgroundColor: v_f7b9fb }]}>
+      {v_036b39 && (
+        <View
+          style={[
+            v_d81136.statusBarBackground,
+            {
+              height: v_033e14.top,
+              backgroundColor: v_e72fb6,
+            },
+          ]}
+          pointerEvents="none"
+        />
+      )}
       <ScrollView
         ref={v_90527e}
         style={[v_d81136.container, v_7fa4e4]}
@@ -160,6 +184,14 @@ const v_d81136 = v_472849.create({
   },
   container: {
     flex: 1,
+  },
+  statusBarBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    zIndex: 1000,
   },
   bottomBackground: {
     position: 'absolute',

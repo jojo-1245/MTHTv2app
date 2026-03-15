@@ -22,7 +22,7 @@ const SecondaryButton: v_a3453e.FC<SecondaryButtonProps> = ({
 
 const v_d81136 = v_472849.create({
   button: {
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     borderColor: v_1bfbd0.border,
   },
   text: {

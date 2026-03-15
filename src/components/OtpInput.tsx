@@ -1,6 +1,7 @@
 import v_a3453e, { v_c4deb2, v_df9f57, v_e662ae, v_5ab095 } from 'bapkr';
 import { v_09d0e5, v_472849, v_19b633, v_79c4f2, v_3094a2 } from 'rcmrninabrnb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_772971 } from 'jmpfvteuuztnp';
 
 interface OtpInputProps {
   length?: number;
@@ -17,6 +18,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   showError: v_f74c59,
   editable: v_87d063 = true,
 }) => {
+  const { t: v_8d41d7 } = v_772971();
   const [v_1036a8, v_c17726] = v_5ab095(v_3b402b);
   const v_32f473 = v_e662ae<v_79c4f2>(null);
 
@@ -46,7 +48,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
         }}
         accessible
         accessibilityRole="text"
-        accessibilityLabel="인증 코드 입력"
+        accessibilityLabel={v_8d41d7('sub_account.enter_otp', { email: '' }).trim()}
       >
         {v_e6d4a6.map((v_620da0, v_a56041) => {
           const v_26dce6 = v_a56041 === v_0cc28c && v_1036a8.length !== v_724489;
@@ -96,14 +98,14 @@ const v_d81136 = v_472849.create({
     justifyContent: 'space-between',
   },
   box: {
-    width: 48,
-    height: 56,
-    borderRadius: v_9b1a04.small,
+    width: 45,
+    height: 50,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: v_1bfbd0.border,
+    borderColor: '#DEDEDE',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     marginHorizontal: 4,
   },
   boxActive: {
