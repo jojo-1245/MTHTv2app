@@ -23,26 +23,18 @@ import { v_729608, v_570c34, v_1c1837, v_9cafa7 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_96a538 } from '../../hooks/useVersionCheck';
-import {
-  v_0c7e2f,
-  v_381355,
-  v_015a21,
-  v_8348d9,
-} from '../../services/stepTrackingService';
+
 import {
   v_3e84df,
   v_5070da,
   type v_9613bb,
 } from '../../services/permissionService';
 
-const v_8bf63f = 'metahint_step_notification_enabled';
-const v_c19e2d = 10000;
-
 type Props = v_432191<v_8ad91b, 'MyInfoSettings'>;
 
 const PERMISSION_ITEMS: { type: v_9613bb; iconName: keyof typeof v_dec439.glyphMap }[] = [
   { type: 'notification', iconName: 'bell' },
-  { type: 'activity', iconName: 'activity' },
+
   { type: 'camera', iconName: 'camera' },
   { type: 'media', iconName: 'image' },
 ];
@@ -52,8 +44,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538();
   const [v_106b0c, v_47daa9] = v_5ab095(false);
-  const [v_264467, v_e882e2] = v_5ab095(false);
-  const [v_94f165, v_f1704d] = v_5ab095(false);
+
   const [v_ae6990, v_cd31e1] = v_5ab095<Record<v_9613bb, boolean>>({
     activity: false,
     notification: false,
@@ -88,49 +79,16 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     v_cd31e1(v_a448ad);
   }, []);
 
-  const v_d5fcbb = v_de06a3(async () => {
-    const v_81e2ef = await v_e84827.getItem(v_8bf63f);
-    v_e882e2(v_81e2ef === 'true');
-  }, []);
-
   v_cf763b(
     v_de06a3(() => {
-      v_d5fcbb();
+
       v_432eab();
 
       v_3aacaa().then((v_ab4c96) => {
         if (v_ab4c96) v_fd59c5(v_ab4c96.version);
       });
-    }, [v_d5fcbb, v_432eab])
+    }, [loadStepNotificationSetting, v_432eab])
   );
-
-  const v_16fedc = async (v_3b402b) => {
-    if (!v_0c7e2f()) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
-      return;
-    }
-    v_f1704d(true);
-    try {
-      if (v_3b402b) {
-        const v_43c42e = await v_381355(v_c19e2d, v_8d41d7('home.step_unit'));
-        if (v_43c42e.success) {
-          v_e882e2(true);
-          await v_e84827.setItem(v_8bf63f, 'true');
-          v_8348d9(0, v_c19e2d, v_8d41d7('home.step_unit'));
-        } else {
-          v_03e392.alert(v_8d41d7('common.error'), v_43c42e.error ?? v_8d41d7('home.step_notification_start_failed'));
-        }
-      } else {
-        await v_015a21();
-        v_e882e2(false);
-        await v_e84827.setItem(v_8bf63f, 'false');
-      }
-    } catch (v_9e86fd) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_notification_start_failed'));
-    } finally {
-      v_f1704d(false);
-    }
-  };
 
   const v_f60653 = async (type: v_9613bb) => {
     await v_5070da(v_3b27d9);
@@ -158,29 +116,9 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
         <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
         <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
           {}
-          {v_326be8.OS === 'android' && v_0c7e2f() && (
-            <View style={v_d81136.section}>
-              <Text style={v_d81136.sectionTitle}>{v_8d41d7('profile.notify')}</Text>
-              <View style={v_d81136.menuCard}>
-                <View style={v_d81136.menuItem}>
-                  <View style={v_d81136.menuIconWrap}>
-                    <Feather name="bell" size={24} color={v_1bfbd0.text} />
-                  </View>
-                  <View style={v_d81136.menuItemTextWrap}>
-                    <Text style={v_d81136.menuItemText}>{v_8d41d7('home.step_notification_label')}</Text>
-                    <Text style={v_d81136.menuItemDesc}>{v_8d41d7('profile.permission_notification_desc')}</Text>
-                  </View>
-                  <Switch
-                    value={v_264467}
-                    onValueChange={v_16fedc}
-                    disabled={v_94f165}
-                    trackColor={{ false: '#E5E7EB', true: '#C4B5FD' }}
-                    thumbColor={v_264467 ? '#7C3AED' : '#F3F4F6'}
-                  />
-                </View>
-              </View>
-            </View>
-          )}
+          {
+
+}
 
           {}
           <View style={v_d81136.section}>
