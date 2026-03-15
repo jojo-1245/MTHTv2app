@@ -128,11 +128,19 @@ v_9a8286.interceptors.response.use(
       v_4e962b.headers.Authorization = `Bearer ${v_5451e8}`;
       return v_9a8286(v_4e962b);
     } catch (v_2e7962) {
-      if (__DEV__) {
-        console.warn('[apiClient] 토큰 갱신 실패. 로그인 화면으로 이동.', v_2e7962);
-      }
       v_ff5ed0(null);
-      await v_df24f1();
+
+      const v_0f7db1 = v_2e7962?.response?.status;
+      if (v_0f7db1 === 401 || v_0f7db1 === 403) {
+        if (__DEV__) {
+          console.warn('[apiClient] 토큰 만료 확인. 세션 초기화 후 로그인 이동.');
+        }
+        await v_df24f1();
+      } else {
+        if (__DEV__) {
+          console.warn('[apiClient] 토큰 갱신 실패 (네트워크/서버 오류). 세션 유지.', v_2e7962?.message);
+        }
+      }
       return Promise.reject(v_2e7962);
     } finally {
       v_fce8ed = false;

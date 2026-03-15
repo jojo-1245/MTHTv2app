@@ -1,8 +1,9 @@
-import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_e662ae, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
   v_0e1f26,
   v_e767d1,
+  v_aa7413,
   v_326be8,
   v_472849,
   v_19b633,
@@ -30,6 +31,7 @@ import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import { v_e4a763 } from '../utils/env';
 import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
+import { v_9a8286 } from '../services/apiClient';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
@@ -120,6 +122,12 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     message: '',
   });
 
+  const [v_a0ad57, v_7984d2] = v_5ab095(false);
+  const [v_e2bd5a, v_889581] = v_5ab095('');
+  const [v_0b3ebe, v_241a35] = v_5ab095('');
+  const [v_44c732, v_db7885] = v_5ab095(false);
+  const v_c85cb5 = v_e662ae(false);
+
   v_c4deb2(() => {
     const v_219084 = async () => {
       try {
@@ -179,6 +187,29 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     });
   };
 
+  const v_d4705b = async () => {
+    if (v_e2bd5a.length < 8) {
+      v_889fad(v_8d41d7('common.error'), '비밀번호는 8자 이상이어야 합니다.');
+      return;
+    }
+    if (v_e2bd5a !== v_0b3ebe) {
+      v_889fad(v_8d41d7('common.error'), '비밀번호가 일치하지 않습니다.');
+      return;
+    }
+    v_db7885(true);
+    try {
+      await v_9a8286.post('/oth-path', { new_password: v_e2bd5a });
+      v_7984d2(false);
+      v_889581('');
+      v_241a35('');
+      v_c65f5d.reset({ index: 0, routes: [{ name: 'MetaHome' }] });
+    } catch {
+      v_889fad(v_8d41d7('common.error'), '비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      v_db7885(false);
+    }
+  };
+
   const v_ec4736 = async () => {
     const v_8f37ac = v_e0c7e8.trim().toLowerCase();
 
@@ -203,6 +234,13 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         password: v_adc076,
       });
       await v_d41982(v_bd4b7d, v_2129ec);
+
+      const v_b095d7 = (v_bd4b7d as any).member ?? (v_bd4b7d as any).user;
+      if (v_b095d7?.force_password_change) {
+        v_c85cb5.current = true;
+        v_7984d2(true);
+        return;
+      }
 
       if (__DEV__) {
         console.log('[Perf] LoginScreen: navigation.reset(MetaHome) 호출 직전', { _ts: Date.now(), _time: new Date().toISOString() });
@@ -543,6 +581,46 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         message={v_153a89.message}
         onConfirm={v_34f542}
       />
+
+      {}
+      <Modal
+        visible={v_a0ad57}
+        transparent
+        animationType="fade"
+        onRequestClose={() => {}}
+      >
+        <View style={v_d81136.modalOverlay}>
+          <View style={v_d81136.modalBox}>
+            <Text style={v_d81136.modalTitle}>비밀번호 변경 필요</Text>
+            <Text style={v_d81136.modalDesc}>
+              임시 비밀번호로 로그인되었습니다.{'\n'}새 비밀번호를 설정해주세요.
+            </Text>
+            <PasswordField
+              label="새 비밀번호"
+              value={v_e2bd5a}
+              onChangeText={v_889581}
+              placeholder="8자 이상 입력"
+            />
+            <View style={{ height: 12 }} />
+            <PasswordField
+              label="비밀번호 확인"
+              value={v_0b3ebe}
+              onChangeText={v_241a35}
+              placeholder="비밀번호 재입력"
+            />
+            <TouchableOpacity
+              style={[v_d81136.modalBtn, v_44c732 && { opacity: 0.6 }]}
+              onPress={v_d4705b}
+              disabled={v_44c732}
+            >
+              {v_44c732
+                ? <ActivityIndicator color={v_1bfbd0.white} />
+                : <Text style={v_d81136.modalBtnText}>변경 완료</Text>
+              }
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -554,6 +632,43 @@ const v_d81136 = v_472849.create({
   screen: {
     flex: 1,
     backgroundColor: v_1bfbd0.white,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  modalBox: {
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: 16,
+    padding: 24,
+    width: '100%',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: v_843035.bold,
+    color: '#111',
+    marginBottom: 8,
+  },
+  modalDesc: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 20,
+    lineHeight: 20,
+  },
+  modalBtn: {
+    marginTop: 20,
+    backgroundColor: '#1e3a5f',
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  modalBtnText: {
+    color: v_1bfbd0.white,
+    fontSize: 15,
+    fontFamily: v_843035.semibold,
   },
   flatHeader: {
     shadowOpacity: 0,
