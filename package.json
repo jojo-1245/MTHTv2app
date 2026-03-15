@@ -13,7 +13,11 @@
     "android:clean": "node -e \"require('fs').rmSync('android/app/.cxx',{recursive:true,force:true}); require('fs').rmSync('android/build',{recursive:true,force:true}); require('fs').rmSync('android/.gradle',{recursive:true,force:true}); require('fs').rmSync('android/app/build',{recursive:true,force:true})\"",
     "android:keyhash": "node scripts/get-android-keyhash.js",
     "naver:callback": "node scripts/naver-callback-server.js",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "build:dev": "set -a && source .env && set +a && eas build --local --profile development",
+    "build:preview": "set -a && source .env && set +a && eas build --local --profile preview",
+    "build:production": "set -a && source .env && set +a && eas build --local --profile production",
+    "build:store": "set -a && source .env && set +a && eas build --local --profile store"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.4.3",
@@ -24,8 +28,6 @@
     "@react-native-firebase/app": "^23.8.6",
     "@react-native-firebase/messaging": "^23.8.6",
     "@react-native-google-signin/google-signin": "^16.1.1",
-    "@react-native-kakao/core": "^2.4.4",
-    "@react-native-kakao/user": "^2.4.4",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@types/crypto-js": "^4.2.2",

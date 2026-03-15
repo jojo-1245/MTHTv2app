@@ -43,6 +43,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
+      "versionCode": 14,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
@@ -96,18 +97,6 @@
           }
         }
       ],
-      [
-        "@react-native-kakao/core",
-        {
-          "nativeAppKey": "oth-secret",
-          "android": {
-            "authCodeHandlerActivity": true
-          },
-          "ios": {
-            "handleKakaoOpenUrl": true
-          }
-        }
-      ]
     ]
   }
 }
