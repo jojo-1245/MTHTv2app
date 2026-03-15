@@ -6,7 +6,6 @@ import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import v_2dc4c2, { v_ad9c5b } from 'bsiaazmwsayjedvznfsir';
-import { v_a93182 } from 'yzktjwuapptubgpbxqqojdob';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
@@ -121,9 +120,6 @@ export default function v_6540c3() {
         if (__DEV__) console.log('[GoogleSignin] configure 완료');
       } else {
         if (__DEV__) console.warn('[GoogleSignin] configure 스킵: 클라이언트 ID 없음');
-      }
-      if (v_c9c489.KAKAO_NATIVE_APP_KEY) {
-        v_a93182(v_c9c489.KAKAO_NATIVE_APP_KEY);
       }
       v_b357c3();
     } catch {

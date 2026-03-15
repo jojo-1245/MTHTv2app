@@ -26,8 +26,6 @@ import v_f595b9, { v_003e74, v_bf60de, v_9aafc7, v_c9c101, v_cd1400, v_8959a6 } 
 import type { v_8ad91b } from '../navigation';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
-import { v_33dda3 } from 'yzktjwuapptubgpbxqqojdob';
-import { v_182fdb as v_ef7732 } from 'heszikizgyopbgafewhrmjxg';
 import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import { v_e4a763 } from '../utils/env';
@@ -138,14 +136,6 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   }, []);
 
   v_c4deb2(() => {
-    if (v_326be8.OS === 'android' && __DEV__) {
-      v_33dda3().then((v_598405) => {
-        if (v_598405) console.log('[Kakao] Android Key Hash (등록용):', v_598405);
-      });
-    }
-  }, []);
-
-  v_c4deb2(() => {
     const v_b55c88 = v_0e1f26.addListener(
       v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
       () => v_028502(true),
@@ -235,39 +225,6 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);
     } finally {
 
-    }
-  };
-
-  const v_2c36a1 = async () => {
-    if (__DEV__) console.log('[Kakao] 로그인 시도');
-    v_deef62(true);
-    try {
-
-      const v_a7ad02 = await v_ef7732();
-      const v_2ca7e0 = v_a7ad02?.accessToken;
-      if (__DEV__) console.log('[Kakao] 토큰 발급', { hasToken: !!v_2ca7e0, tokenLength: v_2ca7e0?.length });
-      if (!v_2ca7e0) {
-        v_889fad(v_8d41d7('common.error'), v_8d41d7('login.error_unknown'));
-        return;
-      }
-      const v_43c42e = await v_545a63({ provider: 'kakao', token: v_2ca7e0 });
-      if (__DEV__) console.log('[Kakao] social-login 결과', { needsSignup: v_2cd4e6(v_43c42e), email: v_43c42e.email });
-      if (v_2cd4e6(v_43c42e)) {
-        v_c65f5d.navigate('Signup', { email: v_43c42e.email, fromSocial: 'kakao' });
-        return;
-      }
-      await v_d41982(v_43c42e, v_2129ec);
-      if (__DEV__) console.log('[Kakao] 로그인 완료 → MetaHome');
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'MetaHome' }],
-      });
-    } catch (v_5e9bfe) {
-      if (__DEV__) console.log('[Kakao] 에러', v_5e9bfe instanceof Error ? v_5e9bfe.message : v_5e9bfe);
-      const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
-      v_889fad(v_8d41d7('login.error_failed'), v_a8cd21);
-    } finally {
-      v_deef62(false);
     }
   };
 

@@ -44,7 +44,7 @@ export type RootStackParamList = {
   Home: undefined;
   MetaHome: undefined;
   Login: undefined;
-  Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'kakao' | 'naver' } | undefined;
+  Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'naver' } | undefined;
   ForgotPassword: undefined;
   PasswordVerification: undefined;
   ResetPassword: undefined;
