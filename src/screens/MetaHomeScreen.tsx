@@ -41,8 +41,10 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
-import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_6c47a7, v_2ca7ff, v_7c14c7, v_8c7f62, v_d0556f, v_7ef860 } from '../services';
+import { v_271901 } from '../context';
+
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_d0556f, v_7ef860 } from '../services';
+
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
@@ -207,10 +209,6 @@ const v_ff4e8b = 20;
 const v_006281 = 10; 
 
 const v_55087c = 0.15; 
-
-const v_c19e2d = 10000;
-const v_2258bf = 1000;
-const v_234582 = 25;
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -496,54 +494,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     );
   };
 
-  const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
-
-  const [v_b1361b, v_04f4d8] = v_5ab095<number[]>([]);
-  const [v_cd6f97, v_5ce610] = v_5ab095(false);
-  const [v_0e0399, v_00e50d] = v_5ab095<number | null>(null);
-
-  v_c4deb2(() => {
-    const v_8d41d7 = setTimeout(() => {
-      const v_0f9a7b = async () => {
-        try {
-          const v_227df7 = v_312d93(v_9c213b.language);
-          const v_5268c1 = await v_6c47a7(v_227df7);
-          v_04f4d8(Array.isArray(v_5268c1) ? v_5268c1 : []);
-        } catch (v_5e9bfe) {
-          console.error('[MetaHomeScreen] 걸음수 보상 상태 로드 실패:', v_5e9bfe);
-        }
-      };
-      v_0f9a7b();
-    }, 350);
-    return () => clearTimeout(v_8d41d7);
-  }, [v_9c213b.language]);
-
-  v_c4deb2(() => {
-    v_7c14c7()
-      .then((v_01dcf5) => {
-        v_00e50d(v_01dcf5.step_reward_per1k);
-      })
-      .catch(() => { });
-  }, []);
-
-  v_c4deb2(() => {
-    v_8c7f62()
-      .then((v_d308b5) => v_c060b8(v_d308b5))
-      .catch(() => { });
-  }, []);
-
-  const v_616ba8 = v_df9f57(
-    () => Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf),
-    []
-  );
-
-  const v_81d478 = v_df9f57(
-    () => v_616ba8.slice(0, v_234582),
-    [v_616ba8]
-  );
-  const v_113ab0 = 120;
-  const v_006281 = 10;
-
   const v_30ddf9 = v_39cb7a != null ? v_b47b09(v_39cb7a) : null;
   const v_129031 = v_9ab1d9 != null ? v_57793c(v_9ab1d9) : null;
   const v_047e65 = v_30ddf9 ? v_8d41d7(`home.health_labels.${v_30ddf9}`) : '';
@@ -560,72 +510,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_d85372 = () => v_9b57fc('HealthAnalysis', { initialTab: 'records' });
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
-
-  const v_2627c5 = (v_af3e48) => {
-    const v_c5110a = v_616ba8[v_af3e48];
-    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
-      return;
-    }
-    v_5ce610(true);
-    v_8e174f(
-      () => v_c907cb(v_af3e48),
-      () => v_5ce610(false),
-      () => {
-        v_5ce610(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
-      }
-    );
-  };
-
-  const v_c907cb = async (v_af3e48) => {
-    const v_c5110a = v_616ba8[v_af3e48];
-    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
-      return;
-    }
-
-    v_5ce610(true);
-    try {
-      const v_227df7 = v_312d93(v_9c213b.language);
-      if (__DEV__) {
-        console.log('[MetaHomeScreen] 걸음수 보상 받기 호출:', {
-          today: v_227df7,
-          buttonIndex: v_af3e48,
-          milestone: v_616ba8[v_af3e48],
-          currentSteps: v_dc679a,
-          stepGoal: v_011173,
-          claimedStepIndices: v_b1361b,
-        });
-      }
-      const v_43c42e = await v_2ca7ff(v_227df7, v_dc679a, v_011173, v_c65f5d, v_af3e48);
-
-      if (Array.isArray(v_43c42e.state_idx)) {
-        v_04f4d8(v_43c42e.state_idx);
-      }
-
-      const v_59ccdc = v_43c42e.new_rewards_count > 0
-        ? `${v_8d41d7('common.success')}\n${v_8d41d7('home.step_reward_received', { count: v_43c42e.new_rewards_count, amount: v_43c42e.total_reward_paid })}`
-        : v_8d41d7('home.step_sync_success');
-
-      v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
-    } catch (v_5e9bfe) {
-      const v_377045 = (v_5e9bfe as any)?.isAxiosError ? v_5e9bfe as any : null;
-      console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', {
-        message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
-        status: v_377045?.response?.status,
-        data: v_377045?.response?.data,
-        url: v_377045?.config?.url,
-      });
-
-      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-        return;
-      }
-
-      const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.step_reward_failed');
-      v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
-    } finally {
-      v_5ce610(false);
-    }
-  };
 
   const v_6562a2 = v_df9f57(
     () => [v_8d41d7('home.greeting_1'), v_8d41d7('home.greeting_2'), v_8d41d7('home.greeting_3'), v_8d41d7('home.greeting_4'), v_8d41d7('home.greeting_5')],
@@ -871,151 +755,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           </View>
 
           {}
-          <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.health_challenge')}</Text>
-            <View style={v_d81136.challengeCardWrapper}>
-              <LinearGradient
-                colors={['#F5F3FF', '#EDE9FE', '#FDF4FF']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={v_d81136.challengeCard}
-              >
-                <View style={v_d81136.challengeHeader}>
-                  <View style={v_d81136.challengeHeaderText}>
-                    <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.today_step_goal')}</Text>
-                    <Text style={v_d81136.challengeReward}>
-                      {v_8d41d7('home.goal_reward_prefix')}
-                      <Text style={v_d81136.challengeRewardHighlight}>{v_8d41d7('home.goal_reward_suffix')}</Text>
-                    </Text>
-                  </View>
-                  <View style={v_d81136.stepChallengeIcon}>
-                    <Footprints size={22} color="#7C3AED" />
-                  </View>
-                </View>
-                <View style={v_d81136.stepsRow}>
-                  <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.today_steps')}</Text>
-                  <Text style={v_d81136.stepsValue}>
-                    <Text style={v_d81136.stepsValueCurrent}>{v_dc679a.toLocaleString()}</Text>
-                    <Text style={v_d81136.stepsValueSlash}>/</Text>
-                    <Text style={v_d81136.stepsValueGoal}>{v_c19e2d.toLocaleString()}</Text>
-                    <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.steps_unit')}</Text>
-                  </Text>
-                </View>
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={v_d81136.stepMilestonesList}
-                >
-                  {v_81d478.map((v_c5110a, v_a56041) => {
-                    const v_fa25a3 = v_dc679a >= v_c5110a;
-                    const v_ddef54 = v_b1361b.includes(v_a56041);
-                    const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
-                    const v_e0ed2f = !v_fa25a3;
-                    return (
-                      <View key={v_c5110a} style={[v_d81136.stepMilestoneCard, { width: v_113ab0 }]}>
-                        <Text style={v_d81136.stepMilestoneLabelText}>
-                          {v_8d41d7('home.steps_milestone', { count: v_c5110a })}
-                        </Text>
-                        {v_0e0399 != null && (
-                          <Text style={v_d81136.stepMilestoneLabel}>
-                            +{v_0e0399}M
-                          </Text>
-                        )}
-                        <TouchableOpacity
-                          style={[
-                            v_d81136.stepMilestoneBtn,
-                            v_26dce6 && v_d81136.stepMilestoneBtnActive,
-                            v_ddef54 && v_d81136.stepMilestoneBtnClaimed,
-                            v_e0ed2f && v_d81136.stepMilestoneBtnInactive,
-                          ]}
-                          onPress={() => v_2627c5(v_a56041)}
-                          disabled={!v_26dce6 || v_cd6f97}
-                          activeOpacity={0.8}
-                        >
-                          {v_26dce6 ? (
-                            <LinearGradient
-                              colors={['#7C3AED', '#A78BFA']}
-                              start={{ x: 0, y: 0 }}
-                              end={{ x: 1, y: 0 }}
-                              style={v_d81136.stepMilestoneBtnGradient}
-                            >
-                              <Coins size={14} color="#FFFFFF" />
-                              <Text style={v_d81136.stepMilestoneBtnTextActive}>
-                                {v_8d41d7('home.step_receive')}
-                              </Text>
-                            </LinearGradient>
-                          ) : (
-                            <View style={v_d81136.stepMilestoneBtnInner}>
-                              <Coins size={14} color={v_ddef54 ? '#A78BFA' : '#9CA3AF'} />
-                              <Text
-                                style={[
-                                  v_d81136.stepMilestoneBtnText,
-                                  v_ddef54 && v_d81136.stepMilestoneBtnTextClaimed,
-                                  v_e0ed2f && v_d81136.stepMilestoneBtnTextInactive,
-                                ]}
-                              >
-                                {v_ddef54 ? v_8d41d7('home.step_claimed') : v_8d41d7('home.step_receive')}
-                              </Text>
-                            </View>
-                          )}
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  })}
-                </ScrollView>
-                <View style={v_d81136.stepTip}>
-                  <Footprints size={16} color="#A78BFA" />
-                  <Text style={v_d81136.stepTipText}>{v_8d41d7('home.step_tip')}</Text>
-                </View>
-              </LinearGradient>
-            </View>
-          </View>
+          {
 
-          {}
-          <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.monthly_step_bonus_title', { defaultValue: '이달의 만보 도전' })}</Text>
-            <View style={v_d81136.challengeCardWrapper}>
-              <LinearGradient
-                colors={['#F0FDF4', '#DCFCE7', '#F0FDF4']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={v_d81136.challengeCard}
-              >
-                <View style={v_d81136.challengeHeader}>
-                  <View style={v_d81136.challengeHeaderText}>
-                    <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.monthly_step_bonus_desc', { defaultValue: '월간 만보 달성 보너스' })}</Text>
-                    <Text style={v_d81136.challengeReward}>
-                      {v_8d41d7('home.goal_reward_prefix')}
-                      <Text style={[v_d81136.challengeRewardHighlight, { color: '#16A34A' }]}>+{v_4ce971?.bonus_amount ?? '1.0'} MTHT</Text>
-                    </Text>
-                  </View>
-                  <View style={[v_d81136.stepChallengeIcon, { backgroundColor: '#DCFCE7' }]}>
-                    <CalendarCheck size={22} color="#16A34A" />
-                  </View>
-                </View>
-                <View style={v_d81136.stepsRow}>
-                  <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.monthly_days_achieved', { defaultValue: '이달 만보 달성일' })}</Text>
-                  <Text style={v_d81136.stepsValue}>
-                    <Text style={[v_d81136.stepsValueCurrent, { color: '#16A34A' }]}>{v_4ce971?.days_achieved ?? 0}</Text>
-                    <Text style={v_d81136.stepsValueSlash}>/</Text>
-                    <Text style={v_d81136.stepsValueGoal}>{v_4ce971?.days_total ?? 31}</Text>
-                    <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.days_unit', { defaultValue: '일' })}</Text>
-                  </Text>
-                </View>
-                {v_4ce971?.is_completed ? (
-                  <View style={[v_d81136.stepTip, { backgroundColor: '#DCFCE7', borderRadius: 8, padding: 8 }]}>
-                    <Check size={16} color="#16A34A" />
-                    <Text style={[v_d81136.stepTipText, { color: '#16A34A' }]}>{v_8d41d7('home.monthly_bonus_received', { defaultValue: '이달의 보너스를 받았어요!' })}</Text>
-                  </View>
-                ) : (
-                  <View style={v_d81136.stepTip}>
-                    <Footprints size={16} color="#86EFAC" />
-                    <Text style={v_d81136.stepTipText}>{v_8d41d7('home.monthly_bonus_warning', { defaultValue: '하루라도 빠지면 보너스를 받을 수 없어요.' })}</Text>
-                  </View>
-                )}
-              </LinearGradient>
-            </View>
-          </View>
+}
 
           {}
           <View style={v_d81136.section}>

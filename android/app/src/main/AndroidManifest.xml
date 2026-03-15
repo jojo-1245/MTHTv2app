@@ -7,10 +7,11 @@
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+  <!-- [만보계 비활성화] 살리려면 아래 주석을 해제하세요. -->
+  <!-- <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/> -->
+  <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH"/> -->
   <uses-permission android:name="android.permission.CAMERA"/>
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -39,7 +40,8 @@
     <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
-    <service android:name=".StepForegroundService" android:exported="false" android:foregroundServiceType="health"/>
+    <!-- [만보계 비활성화] StepForegroundService 비활성화 — 살리려면 아래 주석을 해제하세요. -->
+    <!-- <service android:name=".StepForegroundService" android:exported="false" android:foregroundServiceType="health"/> -->
     <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|locale|layoutDirection" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
