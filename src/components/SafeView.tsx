@@ -15,6 +15,10 @@ interface SafeViewProps {
     bottomBackgroundColor?: string;
 
     backgroundColor?: string;
+
+    showStatusBarBackground?: boolean;
+
+    statusBarBackgroundColor?: string;
 }
 
 const SafeView: v_a3453e.FC<SafeViewProps> = ({
@@ -24,6 +28,8 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
     showBottomBackground: v_bb8530 = true,
     bottomBackgroundColor: v_53b2af = v_963c2c.bottomBackground || "#fafafa",
     backgroundColor: v_f7b9fb = v_963c2c.background || "#fafafa",
+    showStatusBarBackground: v_036b39 = false,
+    statusBarBackgroundColor: v_e72fb6 = '#FFFFFF',
 }) => {
     const v_033e14 = v_e0068c();
 
@@ -39,6 +45,18 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
 
     return (
         <View style={[v_d81136.wrapper, v_7fa4e4]}>
+            {v_036b39 && (
+                <View
+                    style={[
+                        v_d81136.statusBarBackground,
+                        {
+                            height: v_033e14.top,
+                            backgroundColor: v_e72fb6,
+                        },
+                    ]}
+                    pointerEvents="none"
+                />
+            )}
             <View
                 style={[
                     v_d81136.container,
@@ -72,10 +90,20 @@ const v_d81136 = v_472849.create({
     wrapper: {
         flex: 1,
         position: 'relative',
+        overflow: 'visible',
     },
     container: {
         flex: 1,
         position: 'relative',
+        overflow: 'visible',
+    },
+    statusBarBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        zIndex: 1000,
     },
     bottomBackground: {
         position: 'absolute',

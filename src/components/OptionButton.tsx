@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_09d0e5, v_472849, v_19b633 } from 'rcmrninabrnb';
+import { v_09d0e5, v_961e77, v_472849, v_19b633, v_7e4944 } from 'rcmrninabrnb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 export interface OptionButtonProps {
@@ -7,6 +7,9 @@ export interface OptionButtonProps {
   selected?: boolean;
   onPress?: () => void;
   flex?: number;
+  style?: v_961e77<v_7e4944>;
+
+  numberOfLines?: number;
 }
 
 const OptionButton: v_a3453e.FC<OptionButtonProps> = ({
@@ -14,13 +17,17 @@ const OptionButton: v_a3453e.FC<OptionButtonProps> = ({
   selected: v_587413 = false,
   onPress: v_719eed,
   flex: v_5c6564,
+  style: v_7fa4e4,
+  numberOfLines: v_25883c,
 }) => {
   return (
     <Pressable
-      style={[v_d81136.button, v_587413 && v_d81136.buttonSelected, v_5c6564 ? { flex: v_5c6564 } : null]}
+      style={[v_d81136.button, v_587413 && v_d81136.buttonSelected, v_5c6564 ? { flex: v_5c6564 } : null, v_7fa4e4]}
       onPress={v_719eed}
     >
-      <Text style={[v_d81136.label, v_587413 && v_d81136.labelSelected]}>{v_2869c1}</Text>
+      <Text style={[v_d81136.label, v_587413 && v_d81136.labelSelected]} numberOfLines={v_25883c}>
+        {v_2869c1}
+      </Text>
     </Pressable>
   );
 };
@@ -32,10 +39,11 @@ const v_d81136 = v_472849.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: v_1bfbd0.border,
-    backgroundColor: v_1bfbd0.background,
+    backgroundColor: v_1bfbd0.white,
     marginRight: v_9b1a04.small,
     marginBottom: v_9b1a04.small,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonSelected: {
     borderColor: v_1bfbd0.text,

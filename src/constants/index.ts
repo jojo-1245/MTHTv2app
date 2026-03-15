@@ -4,7 +4,8 @@ export const v_1bfbd0 = {
   primary: '#343a5a',
   secondary: '#ffdc04',
   bluePrimary: '#3B72F2',
-  background: '#ffffff',
+  white: '#ffffff',
+  background: '#F9FAFB',
   backgroundSecondary: '#F8FAFC',
   lightBlue: '#F5F9FF',
   lightGray: '#fafafa',
@@ -12,24 +13,30 @@ export const v_1bfbd0 = {
   text: '#10192d',
   error: '#ff0000',
   success: '#00ff00',
-  buttonPrimary: '#3A3C79',
+  buttonPrimary: '#4F39F6',
   buttonSecondary: '#5e62ac',
   buttonTertiary: '#fafafa',
   headerText: '#10192d',
   headerIconBg: '#F8FAFC',
   border: '#d8dadc',
+  borderLight: '#eaeaea',
   placeholder: 'rgba(0, 0, 0, 0.5)',
   mutedText: '#3C3C43',
-  secondaryText: '#8e9bae',
+  secondaryText: '#666666',
   icon: '#000000',
   iconMuted: '#8E8E93',
   toggleTrackOff: '#dddddd',
   toggleTrackOn: '#000000',
+
+  scoreLevelHigh: '#16A34A',    
+  scoreLevelNormal: '#F97316',  
+  scoreLevelLow: '#DC2626',    
+
 };
 
 export const v_963c2c= {
   background: '#ffffff',
-  bottomBackground: '#fafafa',
+  bottomBackground: '#000000',
 }
 
 import { v_326be8 } from 'rcmrninabrnb';
@@ -47,33 +54,223 @@ export const v_228d55 = {
   extrabold: { fontFamily: v_843035.extrabold, letterSpacing: -0.5 },
 } as const;
 
+export const v_ef658a = {
+  small: 12,
+  medium: 14,
+  large: 16,
+  xlarge: 18,
+  title: 24,
+  input: 20,
+  validation: 11,
+} as const;
+
 export const v_9b1a04 = {
   small: 8,
+  xmedium: 12,
   medium: 16,
   large: 20,
   xlarge: 24,
+  dateInputVertical: 12,
+};
+
+export const v_34d45f = {
+  stepTextBottom: 32,
+  titleBottom: 16,
+  subtitleBottom: 48,
+  inputContainerBottom: 32,
+  validationTop: 8,
+  buttonContainerBottom: 32,
+  contentTop: 32,
+} as const;
+
+export const v_16b893 = {
+  1: '#DC2626',  
+  2: '#EF4444',  
+  3: '#F97316',  
+  4: '#FB923C',  
+  5: '#FBBF24',  
+  6: '#FCD34D',  
+  7: '#84CC16',  
+  8: '#22C55E',  
+  9: '#3B82F6',  
+  10: '#2563EB', 
+} as const;
+
+export const v_afa590 = (v_740dd8): keyof typeof v_16b893 => {
+  if (v_740dd8 >= 95) return 10;
+  if (v_740dd8 >= 90) return 9;
+  if (v_740dd8 >= 85) return 8;
+  if (v_740dd8 >= 80) return 7;
+  if (v_740dd8 >= 75) return 6;
+  if (v_740dd8 >= 70) return 5;
+  if (v_740dd8 >= 65) return 4;
+  if (v_740dd8 >= 60) return 3;
+  if (v_740dd8 >= 50) return 2;
+  return 1;
+};
+
+export const v_53f592 = (v_740dd8): string => {
+  const v_fbe91e = v_afa590(v_740dd8);
+  return v_16b893[v_fbe91e];
+};
+
+export const v_d8cb4d = {
+  excellent: {
+    color: v_16b893[10], 
+    borderColor: v_16b893[10],
+    backgroundColor: '#EFF6FF', 
+  },
+  good: {
+    color: v_16b893[8], 
+    borderColor: v_16b893[8],
+    backgroundColor: '#F0FDF4', 
+  },
+  normal: {
+    color: v_16b893[3], 
+    borderColor: v_16b893[3],
+    backgroundColor: '#FFFBEB', 
+  },
+  warning: {
+    color: v_16b893[2], 
+    borderColor: v_16b893[2],
+    backgroundColor: '#FEF2F2', 
+  },
+  danger: {
+    color: v_16b893[1], 
+    borderColor: v_16b893[1],
+    backgroundColor: '#FEF2F2', 
+  },
+} as const;
+
+export type ScoreLevelKey = 'high' | 'normal' | 'low';
+
+export const v_f54309 = {
+  high: { color: v_1bfbd0.scoreLevelHigh, bgColor: `${v_1bfbd0.scoreLevelHigh}20` },
+  normal: { color: v_1bfbd0.scoreLevelNormal, bgColor: `${v_1bfbd0.scoreLevelNormal}20` },
+  low: { color: v_1bfbd0.scoreLevelLow, bgColor: `${v_1bfbd0.scoreLevelLow}20` },
+};
+
+export const v_b47b09 = (v_740dd8): ScoreLevelKey => {
+  if (v_740dd8 >= 7) return 'high';
+  if (v_740dd8 >= 4) return 'normal';
+  return 'low';
+};
+
+export const v_57793c = (v_740dd8): ScoreLevelKey => {
+  if (v_740dd8 >= 80) return 'high';
+  if (v_740dd8 >= 60) return 'normal';
+  return 'low';
 };
 
 export const v_a61db3 = {
+  container: {
+    flex: 1,
+    width: '100%' as const,
+    maxWidth: 780,
+  },
   bottomSection: {
     marginTop: 'auto' as const,
-    maxWidth: 780,
     paddingTop: v_9b1a04.medium,
     marginBottom: v_9b1a04.large,
+  },
+
+  screen: {
+    flex: 1,
+    backgroundColor: v_1bfbd0.background,
+  },
+  content: {
+    flexGrow: 1,
+    paddingHorizontal: v_9b1a04.large,
+    paddingTop: 32,
+    backgroundColor: v_1bfbd0.background
+  },
+
+  stepText: {
+    fontSize: v_ef658a.xlarge,
+    fontFamily: v_843035.medium,
+    color: 'rgba(94, 98, 172, 0.18)',
+    textAlign: 'right' as const,
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 24,
+    fontFamily: v_843035.bold,
+    color: v_1bfbd0.text,
+    lineHeight: 32,
+    letterSpacing: -0.24,
+    textTransform: 'uppercase' as const,
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.semibold,
+    color: '#9B9B9B',
+    lineHeight: 24,
+    letterSpacing: -0.16,
+    marginBottom: 48,
+  },
+  inputText: {
+    fontSize: 20,
+    fontFamily: v_843035.medium,
+    lineHeight: 36,
+    letterSpacing: -0.2,
+  },
+  validationText: {
+    fontSize: 11,
+    fontFamily: v_843035.medium,
+    lineHeight: 16,
+    letterSpacing: -0.11,
+    marginTop: 8,
+  },
+
+  spacing: {
+    stepTextBottom: 32,
+    titleBottom: 16,
+    subtitleBottom: 48,
+    inputContainerBottom: 32,
+    validationTop: 8,
+    buttonContainerBottom: 32,
+    contentTop: 32,
+  },
+
+  inputWrapper: {
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  dateInputWrapper: {
+    paddingVertical: v_9b1a04.dateInputVertical,
+    minHeight: 56,
+    justifyContent: 'center' as const,
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  buttonContainer: {
+    marginTop: 'auto' as const,
+    paddingBottom: v_34d45f.buttonContainerBottom,
+  },
+  scrollContent: {
+    paddingHorizontal: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.xlarge,
+  },
+  contentContainer: {
+    paddingHorizontal: v_9b1a04.xlarge,
+    paddingVertical: v_9b1a04.xlarge,
   },
 };
 
 export const v_624bd2 = {
   authToken: 'metahint/authToken',
+  refreshToken: 'metahint/refreshToken',
   memberInfo: 'metahint/member',
   isLoggedIn: 'metahint/isLoggedIn',
   savedEmail: 'metahint/savedEmail',
 } as const;
 
-export { COUNTRY_DIAL_CODES } from './countryDialCodes';
+export { COUNTRY_DIAL_CODES, ALLOWED_COUNTRIES } from './countryDialCodes';
 export {
   REGIONS_AS_COUNTRY_DIAL_CODES,
   GLOBAL_REGION,
+  REGION_ID_SELECT,
   getRegionsByCountryIso2,
   getRegionIdByIso2,
   getIso2ByRegionId,

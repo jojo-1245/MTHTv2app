@@ -12,7 +12,12 @@ expo-env.d.ts
 # 시스템 자동추가 파일 (Mac OS)
 ._*
 .env
+credentials/
 
+
+*.apk
+*.aab
+*.ipa
 
 # Native
 .kotlin/
@@ -37,13 +42,27 @@ yarn-error.*
 
 # local env files
 .env*.local
+.dev.vars
 
 # typescript
 *.tsbuildinfo
 
 # generated native folders
-/ios
-/android
+# /ios 
+# /android
+build-1768732702801.apk.zip
+build-1768801826506.apk.zip
+build-1768801826506.aab.zip
+build-1768801826506.ipa.zip
+*.apk
+*.aab
+*.ipa
+*.zip
+*.apk.zip
+*.aab.zip
+*.ipa.zip
+*log.txt
+sdk_fix/
 
 # PR messages
 PR_MESSAGE_*.md
@@ -51,4 +70,4 @@ PR_MESSAGE.md
 
 # Plan files
 plan.md
-*.plan.md
+*.plan.mdeas.json
