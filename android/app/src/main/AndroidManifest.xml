@@ -54,6 +54,7 @@
         <data android:scheme="exp+ai-metahint-appw"/>
         <data android:scheme="ai-metahint-appw"/>
         <data android:scheme="exp+metahint"/>
+        <data android:scheme="metahintai"/>
       </intent-filter>
     </activity>
   </application>
