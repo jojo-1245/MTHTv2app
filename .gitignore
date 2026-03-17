@@ -74,3 +74,6 @@ PR_MESSAGE.md
 # Plan files
 plan.md
 *.plan.mdeas.json
+
+# 빌드 스위치 스크립트
+scripts/
