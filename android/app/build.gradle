@@ -28,10 +28,10 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'ai.metahint.appw'
+    namespace 'ai.metahin.appw'
     defaultConfig {
-        applicationId 'ai.metahint.appw'
-        minSdkVersion 27
+        applicationId 'ai.metahin.appw'
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 21
         versionName "4.0.0"
@@ -66,10 +66,6 @@ android {
             def enableLegacyPackaging = findProperty('expo.useLegacyPackaging') ?: 'false'
             useLegacyPackaging enableLegacyPackaging.toBoolean()
         }
-
-        resources {
-            excludes += ['META-INF/services/org.xmlpull.v1.XmlPullParserFactory']
-        }
     }
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
@@ -97,14 +93,6 @@ dependencies {
 
     implementation("com.facebook.react:react-android")
 
-    implementation 'com.google.android.gms:play-services-ads:23.6.0'
-
-    implementation 'com.pangle.global:ads-sdk:4.6.0.9'
-
-    implementation 'com.google.ads.mediation:pangle:5.5.0.4.0'
-
-    implementation 'kr.co.pointclick.sdk.offerwall:pointclick-sdk-offerwall:1.1.06'
-
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
     def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";
@@ -129,7 +117,5 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'com.google.gms.google-services'
