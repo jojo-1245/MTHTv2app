@@ -1,4 +1,4 @@
-package ai.metahint.appw
+package ai.metahin.appw
 
 import android.app.Application
 import android.content.res.Configuration
@@ -23,8 +23,7 @@ class MainApplication : Application(), ReactApplication {
       object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> =
             PackageList(this).packages.apply {
-              add(StepNotificationPackage())
-              add(PointClickOfferwallPackage())
+
             }
 
           override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
