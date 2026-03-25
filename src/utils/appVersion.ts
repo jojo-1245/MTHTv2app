@@ -7,5 +7,7 @@ export function v_3d4e28(): string {
 }
 
 export function v_d752db(): string {
-  return v_c9be60.nativeBuildVersion ?? '1';
+  return (v_c9be60.nativeBuildVersion
+    ?? String(v_c9be60.expoConfig?.android?.versionCode ?? ''))
+    || '1';
 }

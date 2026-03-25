@@ -13,7 +13,18 @@ const v_84d070 = 1;
 
 export type PermissionType = 'activity' | 'notification' | 'camera' | 'media';
 
-export const v_157cb4 = async (): Promise<boolean> => true;
+export const v_157cb4 = async (): Promise<boolean> => {
+  if (v_326be8.OS !== 'android') return true;
+  try {
+    const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+    const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
+    if (v_d308b5 === 'granted') return true;
+    const { status: v_309144 } = await v_5dafcb.requestPermissionsAsync();
+    return v_309144 === 'granted';
+  } catch {
+    return false;
+  }
+};
 
 export const v_5c2ccb = async (): Promise<boolean> => {
   if (v_326be8.OS !== 'android' || !v_2dc4c2) return true;
@@ -25,7 +36,16 @@ export const v_5c2ccb = async (): Promise<boolean> => {
   }
 };
 
-export const v_303ad0 = async (): Promise<boolean> => true;
+export const v_303ad0 = async (): Promise<boolean> => {
+  if (v_326be8.OS !== 'android') return true;
+  try {
+    const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+    const { status: v_d308b5 } = await v_5dafcb.getPermissionsAsync();
+    return v_d308b5 === 'granted';
+  } catch {
+    return false;
+  }
+};
 
 export const v_9249da = async (): Promise<boolean> => {
   if (v_326be8.OS !== 'android' || !v_2dc4c2) return true;
