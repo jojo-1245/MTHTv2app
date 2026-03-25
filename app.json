@@ -6,7 +6,7 @@
       "ai.metahint.appw",
       "metahintai"
     ],
-    "version": "4.0.0",
+    "version": "5.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
@@ -43,7 +43,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 21,
+      "versionCode": 31,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
@@ -97,6 +97,13 @@
           }
         }
       ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
+      ]
     ]
   }
 }
