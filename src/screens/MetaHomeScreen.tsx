@@ -33,7 +33,7 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7 } from '../components';
+import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
 import { v_5ad1fd } from '../hooks';
@@ -940,7 +940,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           {}
           <View style={v_d81136.section}>
-            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.monthly_step_bonus_title', { defaultValue: '이달의 만보 도전' })}</Text>
+            <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.monthly_step_bonus_title')}</Text>
             <View style={v_d81136.challengeCardWrapper}>
               <LinearGradient
                 colors={['#F0FDF4', '#DCFCE7', '#F0FDF4']}
@@ -950,7 +950,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               >
                 <View style={v_d81136.challengeHeader}>
                   <View style={v_d81136.challengeHeaderText}>
-                    <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.monthly_step_bonus_desc', { defaultValue: '월간 만보 달성 보너스' })}</Text>
+                    <Text style={v_d81136.challengeTitle}>{v_8d41d7('home.monthly_step_bonus_desc')}</Text>
                     <Text style={v_d81136.challengeReward}>
                       {v_8d41d7('home.goal_reward_prefix')}
                       <Text style={[v_d81136.challengeRewardHighlight, { color: '#16A34A' }]}>+{v_4ce971?.bonus_amount ?? '1.0'} MTHT</Text>
@@ -961,23 +961,23 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   </View>
                 </View>
                 <View style={v_d81136.stepsRow}>
-                  <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.monthly_days_achieved', { defaultValue: '이달 만보 달성일' })}</Text>
+                  <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.monthly_days_achieved')}</Text>
                   <Text style={v_d81136.stepsValue}>
                     <Text style={[v_d81136.stepsValueCurrent, { color: '#16A34A' }]}>{v_4ce971?.days_achieved ?? 0}</Text>
                     <Text style={v_d81136.stepsValueSlash}>/</Text>
                     <Text style={v_d81136.stepsValueGoal}>{v_4ce971?.days_total ?? 31}</Text>
-                    <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.days_unit', { defaultValue: '일' })}</Text>
+                    <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.days_unit')}</Text>
                   </Text>
                 </View>
                 {v_4ce971?.is_completed ? (
                   <View style={[v_d81136.stepTip, { backgroundColor: '#DCFCE7', borderRadius: 8, padding: 8 }]}>
                     <Check size={16} color="#16A34A" />
-                    <Text style={[v_d81136.stepTipText, { color: '#16A34A' }]}>{v_8d41d7('home.monthly_bonus_received', { defaultValue: '이달의 보너스를 받았어요!' })}</Text>
+                    <Text style={[v_d81136.stepTipText, { color: '#16A34A' }]}>{v_8d41d7('home.monthly_bonus_received')}</Text>
                   </View>
                 ) : (
                   <View style={v_d81136.stepTip}>
                     <Footprints size={16} color="#86EFAC" />
-                    <Text style={v_d81136.stepTipText}>{v_8d41d7('home.monthly_bonus_warning', { defaultValue: '하루라도 빠지면 보너스를 받을 수 없어요.' })}</Text>
+                    <Text style={v_d81136.stepTipText}>{v_8d41d7('home.monthly_bonus_warning')}</Text>
                   </View>
                 )}
               </LinearGradient>
@@ -1025,6 +1025,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         </SafeScrollView>
       </SafeView>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
+      <MedicalDisclaimerModal />
     </MainLayout>
   );
 };

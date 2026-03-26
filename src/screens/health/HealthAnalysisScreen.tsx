@@ -68,8 +68,10 @@ enum SmokingStatus {
   NON_SMOKER = 2,
 }
 
+import { v_2c13e7 } from '../../hooks/useSystemConfig';
 const v_fa53c9 = (): string => {
   const v_651d83 =
+    v_2c13e7('fzljtili_license_key') ||
     process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
     process.env.FZLJTILI_LICENSE_KEY ||
     v_573fcf('FZLJTILI_LICENSE_KEY') ||

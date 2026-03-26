@@ -113,7 +113,9 @@ class v_3c3bb8 {
   private getApiKey(): string {
     if (!this.isInitialized) {
 
+      const { getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
       this.apiKey =
+        v_2c13e7('youcam_api_key') ||
         process.env.EXPO_PUBLIC_YOUCAM_API_KEY ||
         process.env.YOUCAM_API_KEY ||
         '';
