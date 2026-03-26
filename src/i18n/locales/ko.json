@@ -1708,6 +1708,8 @@
     "wallet": {
         "title": "MetaHint 지갑",
         "subtitle": "코인 충전 및 관리",
+        "no_wallet_title": "지갑에 문제가 있습니다",
+        "no_wallet_message": "관리자에게 문의하세요.",
         "my_wallet": "My Wallet",
         "tab_balance": "잔액",
         "tab_deposit": "적립",

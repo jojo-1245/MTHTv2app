@@ -1682,6 +1682,8 @@
   "wallet": {
     "title": "Dompet MetaHint",
     "subtitle": "Isi Ulang dan Kelola Koin",
+    "no_wallet_title": "Ada masalah dengan dompet",
+    "no_wallet_message": "Silakan hubungi administrator.",
     "my_wallet": "Dompet Saya",
     "tab_balance": "Saldo",
     "tab_deposit": "Setoran",
