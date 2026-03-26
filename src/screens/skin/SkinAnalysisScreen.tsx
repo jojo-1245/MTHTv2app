@@ -1899,8 +1899,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 )}
 
                 {}
-                <View style={v_d81136.resultDisclaimer}>
-                    <Text style={v_d81136.resultDisclaimerText}>{v_8d41d7('skin.result.disclaimer')}</Text>
+                <View style={v_d81136.medicalDisclaimerCard}>
+                    <View style={v_d81136.medicalDisclaimerHeader}>
+                        <Ionicons name="medical-outline" size={18} color="#DC2626" />
+                        <Text style={v_d81136.medicalDisclaimerTitle}>{v_8d41d7('medical_disclaimer.title')}</Text>
+                    </View>
+                    <Text style={v_d81136.medicalDisclaimerText}>
+                        {v_8d41d7('medical_disclaimer.body_1')}
+                        <Text style={v_d81136.medicalDisclaimerHighlight}>{v_8d41d7('medical_disclaimer.highlight_1')}</Text>
+                        {v_8d41d7('medical_disclaimer.body_2')}
+                        {'\n\n'}
+                        {v_8d41d7('medical_disclaimer.body_3')}
+                        <Text style={v_d81136.medicalDisclaimerHighlight}>{v_8d41d7('medical_disclaimer.highlight_2')}</Text>
+                        {v_8d41d7('medical_disclaimer.body_4')}
+                    </Text>
                 </View>
 
                 {}
@@ -3188,6 +3200,36 @@ const v_d81136 = v_472849.create({
         color: '#856404',
         lineHeight: 20,
         textAlign: 'center',
+    },
+    medicalDisclaimerCard: {
+        marginTop: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
+        padding: v_9b1a04.medium,
+        backgroundColor: '#FEF2F2',
+        borderWidth: 1,
+        borderColor: '#FECACA',
+        borderRadius: 12,
+    },
+    medicalDisclaimerHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    medicalDisclaimerTitle: {
+        fontSize: 14,
+        fontFamily: v_843035.semibold,
+        color: '#DC2626',
+        marginLeft: 6,
+    },
+    medicalDisclaimerText: {
+        fontSize: 13,
+        fontFamily: v_843035.regular,
+        color: '#6B7280',
+        lineHeight: 20,
+    },
+    medicalDisclaimerHighlight: {
+        fontFamily: v_843035.semibold,
+        color: '#DC2626',
     },
     resultButtonSection: {
         marginTop: v_9b1a04.xlarge,
