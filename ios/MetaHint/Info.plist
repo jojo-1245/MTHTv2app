@@ -4,6 +4,8 @@
   <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
+    <key>CFBundleAllowMixedLocalizations</key>
+    <true/>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
@@ -19,7 +21,7 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>4.0.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -28,28 +30,30 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>ai.metahint.appw</string>
+          <string>metahintai</string>
         </array>
+        <key>CFBundleURLName</key>
+        <string>ai.metahint.appw</string>
       </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>exp+ai-metahint-appw</string>
+          <string>exp+metahint</string>
         </array>
-      </dict>
-      <!-- Google Sign-In (REVERSED_CLIENT_ID from GoogleService-Info.plist) -->
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.242440496858-ilmgkdrlvm4o954a3derbifu5hhrr6r4</string>
-        </array>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
       </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
+    <key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-3940256099942544~1458002511</string>
+    <key>GADDelayAppMeasurementInit</key>
+    <false/>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>metahintai</string>
+    </array>
     <key>LSMinimumSystemVersion</key>
     <string>12.0</string>
     <key>LSRequiresIPhoneOS</key>
@@ -61,8 +65,10 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>건강 측정 디바이스와 연결하기 위해 블루투스 접근이 필요합니다</string>
     <key>NSCameraUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your camera</string>
+    <string>건강 상태 분석을 위한 얼굴 측정에 사용됩니다</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your location</string>
     <key>NSLocationAlwaysUsageDescription</key>
@@ -72,7 +78,7 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSMotionUsageDescription</key>
-    <string>걸음 수를 측정하여 오늘의 걷기 챌린지에 활용합니다</string>
+    <string>Allow $(PRODUCT_NAME) to access your device motion</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to save photos</string>
     <key>NSPhotoLibraryUsageDescription</key>
@@ -106,5 +112,4 @@
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
   </dict>
-</plist>
 </plist>
