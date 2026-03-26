@@ -311,7 +311,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 } catch (v_9e86fd) {
                     console.warn('[피부분석] preflight 실패:', v_9e86fd);
                     v_f193b7(false);
-                    v_11f378('?');
+
+                    const v_c92b58 = v_9e86fd?.response?.data?.data?.fee_amount;
+                    v_11f378(v_c92b58 ?? '확인불가');
                     v_c96363('0');
                 }
             })();
