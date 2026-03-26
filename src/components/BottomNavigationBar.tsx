@@ -17,6 +17,7 @@ import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 const v_90fa17 = require('../../assets/images/robot_face.png');
+const v_87993b = require('../../assets/images/logo.png');
 
 export interface BottomNavigationItem {
   key: string;
@@ -82,10 +83,10 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
                   </View>
                 </View>
               ) : v_fe8fcb ? (
-                <Wallet
-                  size={22}
-                  color={v_26dce6 ? v_4c45ec : v_1bfbd0.secondaryText}
-                  strokeWidth={2}
+                <Image
+                  source={v_87993b}
+                  style={{ width: 22, height: 22, opacity: v_26dce6 ? 1 : 0.5 }}
+                  resizeMode="contain"
                 />
               ) : (
                 <Feather

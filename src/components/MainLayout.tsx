@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
+import { v_f2c756, v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
 import { v_2d8264 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_556baf from './SafeView';
@@ -7,6 +7,7 @@ import v_f4e704 from './BottomNavigationBar';
 import type { v_7369b0 } from './BottomNavigationBar';
 import { v_a0daa8 } from '../navigation';
 import type { v_8ad91b } from '../navigation';
+import { v_1f53bf } from '../hooks/useSystemConfig';
 
 const v_401fcf = {
   MetaHome: 'home',
@@ -50,18 +51,27 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKe
   const { t: v_8d41d7 } = v_772971();
   const v_c7daf6 = v_2d8264();
   const { navigate: v_9b57fc } = v_a0daa8();
+  const { walletTabUrl: v_a2243f } = v_1f53bf();
 
   const v_76ceae = v_1f1e84 ?? v_401fcf[v_c7daf6.name] ?? 'home';
+
+  const v_f86766 = v_a2243f ? 'MetaHint' : v_8d41d7('home.bottom_nav_wallet');
 
   const bottomNavItems: v_7369b0[] = [
     { key: 'home', label: v_8d41d7('home.bottom_nav_home'), icon: 'home', route: 'MetaHome' },
     { key: 'analysis', label: v_8d41d7('home.bottom_nav_analysis'), icon: 'activity', route: 'Analysis' },
     { key: 'aihinty', label: v_8d41d7('home.bottom_nav_ai_hinty'), icon: 'cpu', route: 'Chat' },
-    { key: 'wallet', label: v_8d41d7('home.bottom_nav_wallet'), icon: 'credit-card', route: 'Wallet' },
+    { key: 'wallet', label: v_f86766, icon: 'credit-card', route: 'Wallet' },
     { key: 'myinfo', label: v_8d41d7('home.bottom_nav_myinfo'), icon: 'user', route: 'MyInfo' },
   ];
 
   const v_c58a56 = (item: v_7369b0) => {
+    if (v_8c0b26.key === 'wallet' && v_a2243f) {
+      v_f2c756.openURL(v_a2243f).catch((v_9e86fd) =>
+        console.warn('[MainLayout] wallet_tab_url 열기 실패:', v_9e86fd)
+      );
+      return;
+    }
     if (v_8c0b26.route && v_8c0b26.route !== v_c7daf6.name) {
       v_9b57fc(v_8c0b26.route as any);
     }
