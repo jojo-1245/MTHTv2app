@@ -57,16 +57,16 @@ export function v_3b68d0() {
               <Text style={v_d81136.icon}>⚕️</Text>
             </View>
 
-            <Text style={v_d81136.title}>건강·피부 측정 안내</Text>
+            <Text style={v_d81136.title}>{v_8d41d7('medical_disclaimer.title')}</Text>
 
             <Text style={v_d81136.content}>
-              본 앱에서 제공하는 건강 측정 및 피부 분석 결과는{' '}
-              <Text style={v_d81136.bold}>일반적인 참고 정보</Text>일 뿐,
-              의학적 진단이나 처방을 대체할 수 없습니다.
+              {v_8d41d7('medical_disclaimer.body_1')}
+              <Text style={v_d81136.bold}>{v_8d41d7('medical_disclaimer.highlight_1')}</Text>
+              {v_8d41d7('medical_disclaimer.body_2')}
               {'\n\n'}
-              실제 질병의 진단, 치료 및 건강 관리에 대해서는{' '}
-              <Text style={v_d81136.bold}>반드시 전문의 또는 의사의 상담</Text>을
-              받으시기 바랍니다.
+              {v_8d41d7('medical_disclaimer.body_3')}
+              <Text style={v_d81136.bold}>{v_8d41d7('medical_disclaimer.highlight_2')}</Text>
+              {v_8d41d7('medical_disclaimer.body_4')}
             </Text>
 
             <TouchableOpacity
@@ -77,11 +77,11 @@ export function v_3b68d0() {
               <View style={[v_d81136.checkbox, v_18d4d5 && v_d81136.checkboxChecked]}>
                 {v_18d4d5 && <Text style={v_d81136.checkmark}>✓</Text>}
               </View>
-              <Text style={v_d81136.checkboxLabel}>1개월간 보지 않기</Text>
+              <Text style={v_d81136.checkboxLabel}>{v_8d41d7('medical_disclaimer.hide_for_month')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={v_d81136.button} onPress={v_e1f1e1} activeOpacity={0.8}>
-              <Text style={v_d81136.buttonText}>확인</Text>
+              <Text style={v_d81136.buttonText}>{v_8d41d7('medical_disclaimer.confirm')}</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -93,7 +93,7 @@ export function v_3b68d0() {
 const v_d81136 = v_472849.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -103,12 +103,17 @@ const v_d81136 = v_472849.create({
     paddingHorizontal: 24,
   },
   card: {
-    backgroundColor: '#1E1E2E',
+    backgroundColor: v_1bfbd0.white,
     borderRadius: 20,
     padding: 28,
     width: '100%',
     maxWidth: 360,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
   },
   iconRow: {
     marginBottom: 12,
@@ -120,14 +125,14 @@ const v_d81136 = v_472849.create({
     fontSize: 18,
     fontFamily: v_843035?.bold ?? undefined,
     fontWeight: '700',
-    color: v_1bfbd0.text ?? '#FFFFFF',
+    color: v_1bfbd0.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   content: {
     fontSize: 14,
     fontFamily: v_843035?.regular ?? undefined,
-    color: v_1bfbd0.secondaryText ?? '#B0B0C0',
+    color: v_1bfbd0.secondaryText,
     lineHeight: 22,
     textAlign: 'center',
     marginBottom: 20,
@@ -135,7 +140,7 @@ const v_d81136 = v_472849.create({
   bold: {
     fontFamily: v_843035?.bold ?? undefined,
     fontWeight: '700',
-    color: v_1bfbd0.primary ?? '#6C63FF',
+    color: v_1bfbd0.bluePrimary,
   },
   checkboxRow: {
     flexDirection: 'row',
@@ -148,14 +153,14 @@ const v_d81136 = v_472849.create({
     height: 22,
     borderRadius: 4,
     borderWidth: 1.5,
-    borderColor: v_1bfbd0.secondaryText ?? '#666',
+    borderColor: v_1bfbd0.border,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,
   },
   checkboxChecked: {
-    backgroundColor: v_1bfbd0.primary ?? '#6C63FF',
-    borderColor: v_1bfbd0.primary ?? '#6C63FF',
+    backgroundColor: v_1bfbd0.bluePrimary,
+    borderColor: v_1bfbd0.bluePrimary,
   },
   checkmark: {
     color: '#FFFFFF',
@@ -164,11 +169,11 @@ const v_d81136 = v_472849.create({
   },
   checkboxLabel: {
     fontSize: 13,
-    color: v_1bfbd0.secondaryText ?? '#B0B0C0',
+    color: v_1bfbd0.secondaryText,
     fontFamily: v_843035?.regular ?? undefined,
   },
   button: {
-    backgroundColor: v_1bfbd0.primary ?? '#6C63FF',
+    backgroundColor: v_1bfbd0.bluePrimary,
     borderRadius: 12,
     paddingVertical: 14,
     paddingHorizontal: 40,

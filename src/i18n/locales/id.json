@@ -341,6 +341,12 @@
     "step_reward_failed": "Gagal menerima hadiah langkah.",
     "steps_milestone": "{{count}} langkah",
     "step_tip": "Berjalan 10.000 langkah sehari membantu kesehatan kardiovaskular dan manajemen berat badan.",
+    "monthly_step_bonus_title": "Tantangan 10K Langkah Bulanan",
+    "monthly_step_bonus_desc": "Bonus Target Langkah Bulanan",
+    "monthly_days_achieved": "Hari tercapai bulan ini",
+    "monthly_bonus_received": "Anda menerima bonus bulan ini!",
+    "monthly_bonus_warning": "Melewatkan satu hari saja berarti tidak ada bonus.",
+    "days_unit": "hari",
     "step_count": "Jumlah Langkah",
     "step_unit": "langkah",
     "step_notification_label": "Tampilkan langkah di notifikasi",
@@ -1810,5 +1816,16 @@
   "alert": {
     "default_title": "Notifikasi",
     "confirm": "Konfirmasi"
+  },
+  "medical_disclaimer": {
+    "title": "Pemberitahuan Analisis Kesehatan & Kulit",
+    "body_1": "Hasil analisis kesehatan dan kulit yang disediakan oleh aplikasi ini ",
+    "highlight_1": "hanya untuk referensi umum",
+    "body_2": " dan tidak dapat menggantikan diagnosis atau resep medis.",
+    "body_3": "Untuk diagnosis, pengobatan, dan manajemen kesehatan yang sebenarnya, ",
+    "highlight_2": "silakan konsultasikan dengan profesional medis yang berkualifikasi",
+    "body_4": ".",
+    "hide_for_month": "Jangan tampilkan selama 1 bulan",
+    "confirm": "OK"
   }
 }
