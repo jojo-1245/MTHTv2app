@@ -10,14 +10,13 @@ import {
   v_7e4944,
 } from 'rcmrninabrnb';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
-import { v_f235de } from 'wjvlskvsbzsrojdbjsl';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 
 const v_90fa17 = require('../../assets/images/robot_face.png');
-const v_87993b = require('../../assets/images/logo.png');
+const v_96cb41 = require('../../assets/images/symbol.png');
 
 export interface BottomNavigationItem {
   key: string;
@@ -31,6 +30,8 @@ export interface BottomNavigationBarProps {
   activeKey?: string;
   onTabPress?: (item: BottomNavigationItem) => void;
   containerStyle?: v_961e77<v_7e4944>;
+
+  homepageMode?: boolean;
 }
 
 const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
@@ -38,6 +39,7 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
   activeKey: v_1f1e84,
   onTabPress: v_0c5f70,
   containerStyle: v_4affe9,
+  homepageMode: v_695971 = false,
 }) => {
   const v_033e14 = v_e0068c();
 
@@ -82,9 +84,9 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
                     <Image source={v_90fa17} style={v_d81136.aihintyRobotIcon} resizeMode="contain" />
                   </View>
                 </View>
-              ) : v_fe8fcb ? (
+              ) : v_fe8fcb && v_695971 ? (
                 <Image
-                  source={v_87993b}
+                  source={v_96cb41}
                   style={{ width: 22, height: 22, opacity: v_26dce6 ? 1 : 0.5 }}
                   resizeMode="contain"
                 />
