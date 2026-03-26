@@ -251,7 +251,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_c96363(v_8f00b9.balance ?? '0');
         v_78c750(v_8f00b9.is_free_trial ?? false);
       })
-      .catch((v_9e86fd) => console.warn('[건강분석] preflight 실패:', v_9e86fd));
+      .catch((v_9e86fd) => {
+        console.warn('[건강분석] preflight 실패:', v_9e86fd);
+        v_f193b7(false);
+        v_11f378('?');
+        v_c96363('0');
+      });
   }, []);
 
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
