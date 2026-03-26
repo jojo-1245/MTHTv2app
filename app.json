@@ -6,7 +6,7 @@
       "ai.metahint.appw",
       "metahintai"
     ],
-    "version": "5.0.0",
+    "version": "5.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
@@ -43,7 +43,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 31,
+      "versionCode": 33,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
