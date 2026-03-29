@@ -41,3 +41,5 @@ export type { CheckupPreflightResponse, CheckupPayFeeResponse } from './checkupA
 export * from './policiesApi';
 export { getNotifications, markNotificationRead } from './notificationApi';
 export type { NotificationItem, NotificationType, GetNotificationsResponse } from './notificationApi';
+export { getSystemConfig } from './systemApi';
+export type { SystemConfig } from './systemApi';

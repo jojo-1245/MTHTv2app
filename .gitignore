@@ -1,3 +1,6 @@
+# 민감 키 파일
+고팍스키세트.txt
+
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
@@ -71,3 +74,6 @@ PR_MESSAGE.md
 # Plan files
 plan.md
 *.plan.mdeas.json
+
+# 빌드 스위치 스크립트
+scripts/

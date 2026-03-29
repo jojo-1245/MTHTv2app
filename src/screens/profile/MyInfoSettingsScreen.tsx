@@ -36,7 +36,6 @@ import {
 } from '../../services/permissionService';
 
 const v_8bf63f = 'metahint_step_notification_enabled';
-const v_c19e2d = 10000;
 
 type Props = v_432191<v_8ad91b, 'MyInfoSettings'>;
 
@@ -104,6 +103,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
     }, [v_d5fcbb, v_432eab])
   );
 
+  const v_c19e2d = 10000;
   const v_16fedc = async (v_3b402b) => {
     if (!v_0c7e2f()) {
       v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
@@ -157,7 +157,6 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
       <View style={v_d81136.container}>
         <Header title={v_8d41d7('common.setting')} showBackButton onBackPress={v_c7ac57} />
         <SafeScrollView style={v_d81136.scrollView} contentContainerStyle={v_d81136.content} showBottomBackground={false} disableBottomPadding={true}>
-          {}
           {v_326be8.OS === 'android' && v_0c7e2f() && (
             <View style={v_d81136.section}>
               <Text style={v_d81136.sectionTitle}>{v_8d41d7('profile.notify')}</Text>

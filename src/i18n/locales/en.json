@@ -299,6 +299,12 @@
     "step_reward_failed": "Failed to receive step reward.",
     "steps_milestone": "{{count}} steps",
     "step_tip": "Walking 10,000 steps a day helps cardiovascular health and weight management.",
+    "monthly_step_bonus_title": "Monthly 10K Steps Challenge",
+    "monthly_step_bonus_desc": "Monthly Step Goal Bonus",
+    "monthly_days_achieved": "Days achieved this month",
+    "monthly_bonus_received": "You received this month's bonus!",
+    "monthly_bonus_warning": "Missing even one day means no bonus.",
+    "days_unit": "days",
     "step_count": "Step Count",
     "step_unit": "steps",
     "step_notification_label": "Show steps in notification",
@@ -1677,6 +1683,8 @@
   "wallet": {
     "title": "MetaHint Wallet",
     "subtitle": "Coin Recharge and Management",
+    "no_wallet_title": "Wallet issue detected",
+    "no_wallet_message": "Please contact the administrator.",
     "my_wallet": "My Wallet",
     "tab_balance": "Balance",
     "tab_deposit": "Deposit",
@@ -1811,5 +1819,16 @@
   "alert": {
     "default_title": "Notification",
     "confirm": "Confirm"
+  },
+  "medical_disclaimer": {
+    "title": "Health & Skin Analysis Notice",
+    "body_1": "The health and skin analysis results provided by this app are ",
+    "highlight_1": "for general reference only",
+    "body_2": " and cannot replace medical diagnosis or prescriptions.",
+    "body_3": "For actual diagnosis, treatment, and health management, ",
+    "highlight_2": "please consult a qualified medical professional",
+    "body_4": ".",
+    "hide_for_month": "Don't show for 1 month",
+    "confirm": "OK"
   }
 }

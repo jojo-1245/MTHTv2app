@@ -342,6 +342,12 @@
         "step_reward_failed": "걸음수 보상 받기에 실패했습니다.",
         "steps_milestone": "{{count}}걸음",
         "step_tip": "하루 10,000보를 걸으면 심혈관 건강과 체중 관리에 도움이 됩니다.",
+        "monthly_step_bonus_title": "이달의 만보 도전",
+        "monthly_step_bonus_desc": "월간 만보 달성 보너스",
+        "monthly_days_achieved": "이달 만보 달성일",
+        "monthly_bonus_received": "이달의 보너스를 받았어요!",
+        "monthly_bonus_warning": "하루라도 빠지면 보너스를 받을 수 없어요.",
+        "days_unit": "일",
         "step_count": "걸음 수",
         "step_unit": "걸음",
         "step_notification_label": "알림에 걸음 수 표시",
@@ -1702,6 +1708,8 @@
     "wallet": {
         "title": "MetaHint 지갑",
         "subtitle": "코인 충전 및 관리",
+        "no_wallet_title": "지갑에 문제가 있습니다",
+        "no_wallet_message": "관리자에게 문의하세요.",
         "my_wallet": "My Wallet",
         "tab_balance": "잔액",
         "tab_deposit": "적립",
@@ -2842,5 +2850,16 @@
         "91_uttar_pradesh": "우타르프라데시",
         "91_uttarakhand": "우타라칸드",
         "91_west_bengal": "서벵골"
+    },
+    "medical_disclaimer": {
+        "title": "건강·피부 측정 안내",
+        "body_1": "본 앱에서 제공하는 건강 측정 및 피부 분석 결과는 ",
+        "highlight_1": "일반적인 참고 정보",
+        "body_2": "일 뿐, 의학적 진단이나 처방을 대체할 수 없습니다.",
+        "body_3": "실제 질병의 진단, 치료 및 건강 관리에 대해서는 ",
+        "highlight_2": "반드시 전문의 또는 의사의 상담",
+        "body_4": "을 받으시기 바랍니다.",
+        "hide_for_month": "1개월간 보지 않기",
+        "confirm": "확인"
     }
 }
