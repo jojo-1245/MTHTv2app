@@ -51,23 +51,35 @@ import v_67f088 from "../screens/AddSubAccountScreen";
 const v_cb3606 = v_709be7<v_8ad91b>();
 
 async function v_8360c1(v_f71b56) {
+    console.log('[DeepLink] handleReferralDeepLink 호출, url=', v_f71b56);
     const v_43c42e = v_6f0675(v_f71b56);
-    if (v_43c42e.type !== 'referral') return;
+    console.log('[DeepLink] parseDeepLink 결과:', JSON.stringify(v_43c42e));
+    if (v_43c42e.type !== 'referral') {
+        console.log('[DeepLink] referral 타입 아님 — 처리 중단');
+        return;
+    }
 
     try {
+        console.log('[DeepLink] clearAuthSession 호출 시작');
         await v_4b3c9f();
-    } catch {
-
+        console.log('[DeepLink] clearAuthSession 완료');
+    } catch (v_9e86fd) {
+        console.warn('[DeepLink] clearAuthSession 실패 (무시):', v_9e86fd);
     }
 
     const v_268c38 = (v_45fe0c = 30) => {
-        if (v_60875a.isReady()) {
+        const v_b1717e = v_60875a.isReady();
+        console.log(`[DeepLink] tryNavigate — isReady=${v_b1717e}, 남은 시도=${v_45fe0c}`);
+        if (v_b1717e) {
+            console.log('[DeepLink] reset → Signup, referralCode=', v_43c42e.code);
             v_60875a.reset({
                 index: 0,
                 routes: [{ name: 'Signup', params: { referralCode: v_43c42e.code } }],
             });
         } else if (v_45fe0c > 0) {
             setTimeout(() => v_268c38(v_45fe0c - 1), 100);
+        } else {
+            console.error('[DeepLink] tryNavigate 실패 — navigation 준비 타임아웃');
         }
     };
     v_268c38();
@@ -76,13 +88,21 @@ async function v_8360c1(v_f71b56) {
 export const AppNavigator: v_a3453e.FC = () => {
 
     const v_ad5855 = v_de06a3(async () => {
+        console.log('[DeepLink] onReady 진입 — getInitialURL 호출');
         const v_f71b56 = await v_f2c756.getInitialURL();
-        if (v_f71b56) await v_8360c1(v_f71b56);
+        console.log('[DeepLink] getInitialURL 결과:', v_f71b56);
+        if (v_f71b56) {
+            await v_8360c1(v_f71b56);
+        } else {
+            console.log('[DeepLink] initialURL 없음 — 딥링크 없이 정상 시작');
+        }
     }, []);
 
     v_c4deb2(() => {
 
+        console.log('[DeepLink] Linking 이벤트 리스너 등록');
         const v_269481 = v_f2c756.addEventListener('url', ({ url: v_f71b56 }) => {
+            console.log('[DeepLink] url 이벤트 수신:', v_f71b56);
             v_8360c1(v_f71b56);
         });
 

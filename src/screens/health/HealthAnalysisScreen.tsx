@@ -68,8 +68,10 @@ enum SmokingStatus {
   NON_SMOKER = 2,
 }
 
+import { v_2c13e7 } from '../../hooks/useSystemConfig';
 const v_fa53c9 = (): string => {
   const v_651d83 =
+    v_2c13e7('fzljtili_license_key') ||
     process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
     process.env.FZLJTILI_LICENSE_KEY ||
     v_573fcf('FZLJTILI_LICENSE_KEY') ||
@@ -249,7 +251,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_c96363(v_8f00b9.balance ?? '0');
         v_78c750(v_8f00b9.is_free_trial ?? false);
       })
-      .catch((v_9e86fd) => console.warn('[건강분석] preflight 실패:', v_9e86fd));
+      .catch((v_9e86fd) => {
+        console.warn('[건강분석] preflight 실패:', v_9e86fd);
+        v_f193b7(false);
+        const v_c92b58 = v_9e86fd?.response?.data?.data?.fee_amount;
+        v_11f378(v_c92b58 ?? '확인불가');
+        v_c96363('0');
+      });
   }, []);
 
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();

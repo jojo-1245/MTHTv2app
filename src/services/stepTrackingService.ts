@@ -85,7 +85,6 @@ export const v_381355 = async (
 
   try {
     await v_015a21();
-
     await new Promise((v_6f7712) => setTimeout(v_6f7712, 100));
   } catch (v_5e9bfe) {
     console.warn('[StepTracking] 이전 서비스 정리 실패 (무시 가능):', v_5e9bfe);

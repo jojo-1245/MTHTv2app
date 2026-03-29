@@ -28,6 +28,7 @@ type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
 const v_08bdbd = require('../../../assets/images/myinfo_gold.png');
 const v_46de8e = require('../../../assets/images/myinfo_silver.png');
+const v_5732e6 = require('../../../assets/images/myinfo_white.png');
 
 type TierType = 'wm' | 'bm' | 'pm';
 
@@ -42,7 +43,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_d11128, v_36c42a] = v_5ab095(false);
   const v_8eff09 = v_727031?.tier?.toLowerCase();
   const v_ec980c = v_8eff09 === 'pm' ? 'pm' : v_8eff09 === 'bm' ? 'bm' : 'wm';
-  const tierImage: v_07a341 = v_ec980c === 'pm' ? v_08bdbd : v_46de8e;
+  const tierImage: v_07a341 = v_ec980c === 'pm' ? v_08bdbd : v_ec980c === 'bm' ? v_46de8e : v_5732e6;
 
   const v_63c23a = async () => {
     v_34a50a(true);
@@ -253,13 +254,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         >
           {}
           <View style={v_d81136.profileCard}>
-            {v_ec980c === 'wm' ? (
-              <View style={v_d81136.wmBadge}>
-                <Text style={v_d81136.wmBadgeText}>WM</Text>
-              </View>
-            ) : (
-              <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
-            )}
+            <Image source={v_48803b} style={v_d81136.tierBadge} resizeMode="contain" />
             <View style={v_d81136.profileInfo}>
               {
 
