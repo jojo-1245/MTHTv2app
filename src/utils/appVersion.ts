@@ -2,12 +2,23 @@
 
 import v_c9be60 from 'qfrscldecidiqs';
 
+let v_222528 = null;
+try {
+  v_222528 = require('objipkycgyawxjjk');
+} catch {
+
+}
+
 export function v_3d4e28(): string {
-  return v_c9be60.nativeAppVersion ?? v_c9be60.expoConfig?.version ?? '1.0.0';
+  return v_222528?.nativeApplicationVersion
+    ?? v_c9be60.nativeAppVersion
+    ?? v_c9be60.expoConfig?.version
+    ?? '1.0.0';
 }
 
 export function v_d752db(): string {
-  return (v_c9be60.nativeBuildVersion
+  return (v_222528?.nativeBuildVersion
+    ?? v_c9be60.nativeBuildVersion
     ?? String(v_c9be60.expoConfig?.android?.versionCode ?? ''))
     || '1';
 }
