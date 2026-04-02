@@ -126,8 +126,14 @@ try {
       if (v_7ecfd1.success && v_7ecfd1.data) {
         const v_43c42e = v_7ecfd1.data as VersionCheckResult;
         if (v_43c42e.ota.latest_version && v_43c42e.ota.latest_version === v_f24d57) {
-          console.log(`[OTA] ${v_43c42e.ota.latest_version} 버전은 이미 적용되어 있어 스킵합니다.`);
-          v_43c42e.ota.update_available = false;
+
+          if (v_4587b3 === v_43c42e.ota.latest_version) {
+            console.log(`[OTA] ${v_43c42e.ota.latest_version} 버전은 이미 적용되어 있어 스킵합니다.`);
+            v_43c42e.ota.update_available = false;
+          } else {
+            console.log(`[OTA] ${v_43c42e.ota.latest_version} 적용 기록 있지만 현재 버전(${v_4587b3})과 불일치 → 재다운로드`);
+            await v_e84827.removeItem(v_b4e268);
+          }
         }
         await v_e84827.setItem(v_a16596, String(Date.now()));
         return v_43c42e;
