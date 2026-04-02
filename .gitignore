@@ -77,3 +77,4 @@ plan.md
 
 # 빌드 스위치 스크립트
 scripts/
+.envrc

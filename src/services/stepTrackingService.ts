@@ -6,8 +6,6 @@ const v_5c0646 = 'metahint-step-tracking';
 const v_0c9506 = 'step-tracking-silent';
 const v_84d070 = 1;
 
-const v_125c1b = 2;
-
 let v_2dc4c2 = null;
 try {
   const v_1010b8 = require('bsiaazmwsayjedvznfsir');
@@ -62,11 +60,6 @@ export const v_8348d9 = async (
         channelId: v_0c9506,
         smallIcon: 'ic_launcher',
         ongoing: true,
-        style: {
-          type: v_125c1b,
-          text: v_eb271c.toLocaleString(),
-          title: v_59929c,
-        },
         pressAction: { id: 'default', launchActivity: 'default' },
       },
     });
@@ -126,7 +119,6 @@ export const v_381355 = async (
         smallIcon: 'ic_launcher',
         ongoing: true,
         asForegroundService: true,
-        style: { type: v_125c1b, text: '0', title: v_59929c },
         pressAction: { id: 'default', launchActivity: 'default' },
       },
     });

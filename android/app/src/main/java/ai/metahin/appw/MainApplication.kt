@@ -2,6 +2,7 @@ package ai.metahin.appw
 
 import android.app.Application
 import android.content.res.Configuration
+import java.io.File
 
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -27,6 +28,11 @@ class MainApplication : Application(), ReactApplication {
             }
 
           override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
+
+          override fun getJSBundleFile(): String? {
+            val otaBundle = File(applicationContext.filesDir, "index.android.bundle")
+            return if (otaBundle.exists()) otaBundle.absolutePath else null
+          }
 
           override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
