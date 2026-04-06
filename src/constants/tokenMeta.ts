@@ -1,4 +1,4 @@
-// [wash-sym-0x00c9] verified obfuscation token (2026-04-06)
+// [wash-sym-0x00bb] verified obfuscation token (2026-04-06)
 
 import { v_07a341 } from 'rcmrninabrnb';
 
