@@ -1637,9 +1637,15 @@
     "copy_success_title": "Disalin",
     "copy_success_message": "Kode PIN telah disalin ke papan klip.",
     "kakao_share_button": "Bagikan via KakaoTalk",
+    "my_referrals_button": "Lihat Referral Saya",
     "share_error": "Gagal membagikan.",
     "share_message": "Jadilah Mitra HiNT! Kode referral: {{code}}\n{{link}}",
     "share_title": "Referral Mitra HiNT"
+  },
+  "my_referrals": {
+    "title": "Referral Saya",
+    "total_count": "Total {{count}}",
+    "empty": "Belum ada yang menggunakan kode referral Anda."
   },
   "my_info_email_auth": {
     "title": "Verifikasi Identitas",
