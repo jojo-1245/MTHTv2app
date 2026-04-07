@@ -28,12 +28,12 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'ai.metahin.appw'
+    namespace 'ai.metahint.appw'
     defaultConfig {
-        applicationId 'ai.metahin.appw'
+        applicationId 'ai.metahint.appw'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 43
+        versionCode 44
         versionName "5.0.3"
 
         buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
