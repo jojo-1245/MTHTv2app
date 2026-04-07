@@ -1,4 +1,4 @@
-package ai.metahin.appw
+package ai.metahint.appw
 
 import android.app.Application
 import android.content.res.Configuration
