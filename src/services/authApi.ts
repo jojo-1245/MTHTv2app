@@ -519,6 +519,30 @@ export async function getMe(): Promise<MeProfile> {
   }
 }
 
+export interface MyReferralItem {
+  id: number;
+  email: string;
+  name: string;
+  tier?: string | null;
+  created_at?: string | null;
+}
+
+export interface MyReferralsResponse {
+  member_id: number;
+  referrals: MyReferralItem[];
+  total: number;
+}
+
+export async function getMyReferrals(): Promise<MyReferralsResponse> {
+  try {
+    const res = await apiClient.get<ApiResponse<MyReferralsResponse>>('/oth-path');
+    const data = res.data?.data ?? (res.data as unknown as MyReferralsResponse);
+    return data;
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
 export interface UpdateProfilePayload {
   name: string;
   mobile?: string | null;

@@ -36,6 +36,7 @@ import v_5fdcb2 from "../screens/profile/ClauseDetailScreen";
 import v_9e06f6 from "../screens/profile/MyInfoCloseMembershipScreen";
 import v_083aa7 from "../screens/profile/MyInfoFaqScreen";
 import v_52f825 from "../screens/profile/ReferralShareScreen";
+import v_b2608d from "../screens/profile/MyReferralsScreen";
 import v_f97d8b from "../screens/profile/ProfitDistributionScreen";
 import { v_852e99, v_8b28f5 } from "../screens/skin";
 import {
@@ -178,6 +179,7 @@ export const AppNavigator: v_a3453e.FC = () => {
                 />
                 <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
                 <Stack.Screen name="ReferralShare" component={v_52f825} />
+                <Stack.Screen name="MyReferrals" component={v_b2608d} />
                 <Stack.Screen
                     name="ProfitDistribution"
                     component={v_f97d8b}
