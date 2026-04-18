@@ -43,7 +43,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 43,
+      "versionCode": 52,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
