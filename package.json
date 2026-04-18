@@ -101,7 +101,8 @@
           "react-native-fs",
           "react-native-restart",
           "react-native-zip-archive",
-          "@react-native-kakao/core"
+          "@react-native-kakao/core",
+          "@notifee/react-native"
         ]
       }
     }
