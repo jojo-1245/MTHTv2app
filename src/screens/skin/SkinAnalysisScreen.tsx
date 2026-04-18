@@ -823,19 +823,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     );
                     return;
                 }
-            } else {
-                const { status: v_d308b5 } = await v_d05ab5.requestMediaLibraryPermissionsAsync();
-                if (v_d308b5 !== 'granted') {
-                    v_03e392.alert(
-                        v_8d41d7('skin.alerts.permission_required'),
-                        v_8d41d7('skin.alerts.gallery_permission_required'),
-                        [
-                            { text: v_8d41d7('common.cancel'), onPress: () => v_c7ac57() },
-                            { text: v_8d41d7('skin.alerts.open_settings'), onPress: () => v_f2c756.openSettings() },
-                        ]
-                    );
-                    return;
-                }
             }
 
             const v_43c42e = v_04e790 === 'camera'
