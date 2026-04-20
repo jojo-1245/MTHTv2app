@@ -743,36 +743,21 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     { typeNum: v_e3e816.OXYGEN_SATURATION },
 
-    {
-      typeNum: v_e3e816.SDNN,
-      label: v_8d41d7('health_analysis.result.hrv_variability'),
-      detailTypes: [
-        v_e3e816.RMSSD,
-        v_e3e816.MEAN_RRI,
-        v_e3e816.SD1,
-        v_e3e816.SD2,
-      ],
-    },
+    { typeNum: v_e3e816.SDNN, label: v_8d41d7('health_analysis.result.hrv_variability') },
+    { typeNum: v_e3e816.RMSSD },
+    { typeNum: v_e3e816.MEAN_RRI },
+    { typeNum: v_e3e816.SD1 },
+    { typeNum: v_e3e816.SD2 },
 
-    {
-      typeNum: v_e3e816.SNS_ZONE,
-      label: v_8d41d7('health_analysis.result.stress_response'),
-      detailTypes: [v_e3e816.SNS_INDEX],
-    },
+    { typeNum: v_e3e816.SNS_ZONE, label: v_8d41d7('health_analysis.result.stress_response') },
+    { typeNum: v_e3e816.SNS_INDEX },
 
-    {
-      typeNum: v_e3e816.STRESS_LEVEL,
-      detailTypes: [
-        v_e3e816.STRESS_INDEX,
-        v_e3e816.NORMALIZED_STRESS_INDEX,
-      ],
-    },
+    { typeNum: v_e3e816.STRESS_LEVEL },
+    { typeNum: v_e3e816.STRESS_INDEX },
+    { typeNum: v_e3e816.NORMALIZED_STRESS_INDEX },
 
-    {
-      typeNum: v_e3e816.PNS_ZONE,
-      label: v_8d41d7('health_analysis.result.recovery_ability'),
-      detailTypes: [v_e3e816.PNS_INDEX],
-    },
+    { typeNum: v_e3e816.PNS_ZONE, label: v_8d41d7('health_analysis.result.recovery_ability') },
+    { typeNum: v_e3e816.PNS_INDEX },
 
     { typeNum: v_e3e816.PRQ },
 

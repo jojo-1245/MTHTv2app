@@ -92,10 +92,10 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
 
 export const v_bcb8af = [
   { sectionKey: 'section_vital_signs', itemKeys: ['blood_pressure', 'pulse_rate', 'respiration_rate', 'oxygen_saturation'] },
-  { sectionKey: 'section_hrv', itemKeys: ['sdnn'] },
-  { sectionKey: 'section_stress_response', itemKeys: ['sns_zone'] },
-  { sectionKey: 'section_stress', itemKeys: ['stress_level'] },
-  { sectionKey: 'section_recovery', itemKeys: ['pns_zone'] },
+  { sectionKey: 'section_hrv', itemKeys: ['sdnn', 'rmssd', 'mean_rri', 'sd1', 'sd2'] },
+  { sectionKey: 'section_stress_response', itemKeys: ['sns_zone', 'sns_index'] },
+  { sectionKey: 'section_stress', itemKeys: ['stress_level', 'stress_index', 'normalized_stress_index'] },
+  { sectionKey: 'section_recovery', itemKeys: ['pns_zone', 'pns_index'] },
   { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure'] },
   { sectionKey: 'section_blood_tests', itemKeys: ['hemoglobin', 'hemoglobin_a1c'] },
   { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'heart_age'] },
