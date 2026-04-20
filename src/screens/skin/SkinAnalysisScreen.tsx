@@ -701,6 +701,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             return;
         }
 
+        await v_6bbbb9.ensureApiKey();
         if (!v_6bbbb9.hasApiKey()) {
             v_03e392.alert(
                 v_8d41d7('common.error'),

@@ -35,7 +35,6 @@ import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
-import { v_573fcf } from '../../utils/env';
 import { v_9e8766 } from '../../hooks';
 import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
@@ -68,16 +67,12 @@ enum SmokingStatus {
   NON_SMOKER = 2,
 }
 
-import { v_2c13e7 } from '../../hooks/useSystemConfig';
-const v_fa53c9 = (): string => {
-  const v_651d83 =
-    v_2c13e7('fzljtili_license_key') ||
-    process.env.EXPO_PUBLIC_FZLJTILI_LICENSE_KEY ||
-    process.env.FZLJTILI_LICENSE_KEY ||
-    v_573fcf('FZLJTILI_LICENSE_KEY') ||
-    '';
+import { v_6daddc, v_2c13e7 } from '../../hooks/useSystemConfig';
+const v_fa53c9 = async (): Promise<string> => {
+  await v_6daddc();
+  const v_651d83 = v_2c13e7('fzljtili_license_key');
   if (!v_651d83) {
-    console.warn('경고: FZLJTILI_LICENSE_KEY가 설정되지 않았습니다.');
+    console.warn('경고: 서버 config에 fzljtili_license_key가 비어있습니다.');
   }
   return v_651d83;
 };
@@ -620,7 +615,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     try {
       console.log('세션 생성 시작...');
 
-      const v_651d83 = v_fa53c9();
+      const v_651d83 = await v_fa53c9();
       if (!v_651d83) {
         throw new Error(v_8d41d7('health_analysis.errors.license_key_not_set'));
       }
