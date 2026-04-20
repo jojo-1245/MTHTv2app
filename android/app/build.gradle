@@ -89,9 +89,24 @@ android {
     }
 }
 
+repositories {
+
+    maven { url "https://artifact.bytedance.com/repository/pangle" }
+
+    maven { url "https://oth-pathclicksdk.github.io/oth-pathclick-sdk-android-maven/maven-repo" }
+}
+
 dependencies {
 
     implementation("com.facebook.react:react-android")
+
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
+
+    implementation 'com.pangle.global:ads-sdk:4.6.0.9'
+
+    implementation 'com.google.ads.mediation:pangle:5.5.0.4.0'
+
+    implementation 'kr.co.pointclick.sdk.offerwall:pointclick-sdk-offerwall:1.1.06'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
