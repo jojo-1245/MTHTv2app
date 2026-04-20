@@ -10,6 +10,7 @@ import {
   v_39a996,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
+import v_f10f2a from 'zqqvxke';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b } from '../../../components';
@@ -266,6 +267,15 @@ const v_488860 = 5;
 
 const v_173689 = ['weekday_sun', 'weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat'] as const;
 
+const v_0ecf1d = new Set<string>([
+  'ascvd_risk_level',
+  'high_hemoglobin_a1c_risk',
+  'high_blood_pressure_risk',
+  'high_total_cholesterol_risk',
+  'high_fasting_glucose_risk',
+  'low_hemoglobin_risk',
+]);
+
 const v_ad7730 = (v_823608, v_3b402b): string | number => {
   if (v_3b402b === null || v_3b402b === undefined) return '';
 
@@ -279,6 +289,15 @@ const v_ad7730 = (v_823608, v_3b402b): string | number => {
     return typeof v_3b402b === 'string' ? v_3b402b : String(v_3b402b);
   }
 
+  if (v_0ecf1d.has(v_823608)) {
+    const v_f4e98d = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+    if (!isNaN(v_f4e98d)) {
+      if (v_f4e98d === 0) return v_f10f2a.t('health_analysis.result.risk_level_unknown');
+      if (v_f4e98d === 1) return v_f10f2a.t('health_analysis.result.risk_level_low');
+      if (v_f4e98d === 2) return v_f10f2a.t('health_analysis.result.risk_level_moderate');
+      if (v_f4e98d === 3) return v_f10f2a.t('health_analysis.result.risk_level_high');
+    }
+  }
   if (typeof v_3b402b === 'number') {
 
     if (v_823608 === 'pulse_rate' || v_823608 === 'heart_age') {
