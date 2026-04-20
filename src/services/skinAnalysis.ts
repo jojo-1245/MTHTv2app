@@ -104,23 +104,17 @@ export interface SkinAnalysisStatusResponse {
 
 class v_3c3bb8 {
   private apiKey: string = '';
-  private isInitialized: boolean = false;
-
-  constructor() {
-
-  }
 
   private getApiKey(): string {
-    if (!this.isInitialized) {
+    const { getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
+    this.apiKey = v_2c13e7('youcam_api_key') || '';
+    return this.apiKey;
+  }
 
-      const { getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
-      this.apiKey =
-        v_2c13e7('youcam_api_key') ||
-        process.env.EXPO_PUBLIC_YOUCAM_API_KEY ||
-        process.env.YOUCAM_API_KEY ||
-        '';
-      this.isInitialized = true;
-    }
+  async ensureApiKey(): Promise<string> {
+    const { ensureSystemConfig: v_6daddc, getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
+    await v_6daddc();
+    this.apiKey = v_2c13e7('youcam_api_key') || '';
     return this.apiKey;
   }
 
