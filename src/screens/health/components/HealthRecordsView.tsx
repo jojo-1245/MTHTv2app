@@ -18,7 +18,7 @@ import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 import { v_777b12, v_d531ea, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_d28324 } from '../vitalSignStatus';
+import { v_d28324, v_7374eb } from '../vitalSignStatus';
 
 export interface MeasurementItem {
   key: string;
@@ -306,17 +306,18 @@ export const v_38756f = (item: v_218d40): HealthRecord => {
 
   if (v_8c0b26.vital_signs) {
     Object.entries(v_8c0b26.vital_signs).forEach(([v_823608, v_9390e8]) => {
-      if (v_9390e8 && v_823608) {
+      if (!v_9390e8 || !v_823608) return;
 
-        const v_72b4e2 = v_ad7730(v_823608, v_9390e8.value);
+      if (!v_7374eb(v_823608, v_9390e8.value)) return;
 
-        const v_d308b5 = v_d28324(v_9390e8.status) ? 'risk' : 'normal';
+      const v_72b4e2 = v_ad7730(v_823608, v_9390e8.value);
 
-        v_b9fc6f[v_823608] = {
-          value: v_72b4e2,
-          status: v_d308b5 as 'normal' | 'risk',
-        };
-      }
+      const v_d308b5 = v_d28324(v_9390e8.status) ? 'risk' : 'normal';
+
+      v_b9fc6f[v_823608] = {
+        value: v_72b4e2,
+        status: v_d308b5 as 'normal' | 'risk',
+      };
     });
   }
 
