@@ -1,4 +1,4 @@
-package ai.metahin.appw
+package ai.metahint.appw
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

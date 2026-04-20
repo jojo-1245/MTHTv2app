@@ -1,4 +1,4 @@
-package ai.metahin.appw
+package ai.metahint.appw
 
 import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
