@@ -2476,6 +2476,38 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 )}
 
                 {}
+                {v_2e670e.length > 0 && (
+                  <View style={v_d81136.aiCategorizedSummaryCard}>
+                    <Text style={v_d81136.aiCategorizedSummaryTitle}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
+                    {v_2e670e.map((v_b4fa6c) => (
+                      <View key={v_b4fa6c.categoryId} style={v_d81136.aiCategorizedSection}>
+                        <View style={v_d81136.aiCategorizedSectionHeader}>
+                          <View style={v_d81136.aiCategorizedSectionBar} />
+                          <Text style={v_d81136.aiCategorizedSectionTitle}>{v_b4fa6c.categoryLabel}</Text>
+                        </View>
+                        <View style={v_d81136.aiCategorizedItemList}>
+                          {v_b4fa6c.items.map((v_8c0b26) => (
+                            <View key={v_8c0b26.typeNum} style={v_d81136.aiCategorizedItem}>
+                              <Text style={v_d81136.aiCategorizedItemName}>{v_8c0b26.name}</Text>
+                              <View style={v_d81136.aiCategorizedItemRight}>
+                                <Text style={v_d81136.aiCategorizedItemValue}>{v_8c0b26.valueText}</Text>
+                                {v_8c0b26.status && (
+                                  <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
+                                    <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
+                                      {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal')}
+                                    </Text>
+                                  </View>
+                                )}
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                )}
+
+                {}
                 {!v_09e9e3 ? (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -2503,37 +2535,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </TouchableOpacity>
                 ) : (
                   <>
-                    {}
-                    {v_2e670e.length > 0 && (
-                      <View style={v_d81136.aiCategorizedSummaryCard}>
-                        <Text style={v_d81136.aiCategorizedSummaryTitle}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
-                        {v_2e670e.map((v_b4fa6c) => (
-                          <View key={v_b4fa6c.categoryId} style={v_d81136.aiCategorizedSection}>
-                            <View style={v_d81136.aiCategorizedSectionHeader}>
-                              <View style={v_d81136.aiCategorizedSectionBar} />
-                              <Text style={v_d81136.aiCategorizedSectionTitle}>{v_b4fa6c.categoryLabel}</Text>
-                            </View>
-                            <View style={v_d81136.aiCategorizedItemList}>
-                              {v_b4fa6c.items.map((v_8c0b26) => (
-                                <View key={v_8c0b26.typeNum} style={v_d81136.aiCategorizedItem}>
-                                  <Text style={v_d81136.aiCategorizedItemName}>{v_8c0b26.name}</Text>
-                                  <View style={v_d81136.aiCategorizedItemRight}>
-                                    <Text style={v_d81136.aiCategorizedItemValue}>{v_8c0b26.valueText}</Text>
-                                    {v_8c0b26.status && (
-                                      <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
-                                        <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
-                                          {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal')}
-                                        </Text>
-                                      </View>
-                                    )}
-                                  </View>
-                                </View>
-                              ))}
-                            </View>
-                          </View>
-                        ))}
-                      </View>
-                    )}
                     <View style={v_d81136.aiAnalysisCard}>
                       <View style={v_d81136.aiAnalysisCardHeader}>
                         <View style={v_d81136.aiAnalysisCardIcon}>
