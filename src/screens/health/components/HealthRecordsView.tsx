@@ -39,38 +39,49 @@ export interface HealthRecord {
 
 const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
   const v_694b25 = [
+
     { key: 'blood_pressure', labelKey: 'blood_pressure', value: '120/80', status: 'normal', unit: 'mmHg', descKey: 'blood_pressure_desc' },
+
     { key: 'pulse_rate', labelKey: 'pulse_rate', value: 72, status: 'normal', unit: 'bpm', descKey: 'pulse_rate_desc' },
+
     { key: 'respiration_rate', labelKey: 'respiration_rate', value: 16, status: 'normal', unit: '회/분', descKey: 'respiration_rate_desc' },
+
     { key: 'oxygen_saturation', labelKey: 'oxygen_saturation', value: 98, status: 'normal', unit: '%', descKey: 'oxygen_saturation_desc' },
+
     { key: 'sdnn', labelKey: 'sdnn_friendly', value: 68, status: 'normal', unit: 'ms', descKey: 'sdnn_desc' },
     { key: 'rmssd', labelKey: 'rmssd_friendly', value: 32.5, status: 'normal', unit: 'ms', descKey: 'rmssd_desc' },
     { key: 'mean_rri', labelKey: 'mean_rri_friendly', value: 850, status: 'normal', unit: 'ms', descKey: 'mean_rri_desc' },
     { key: 'sd1', labelKey: 'sd1_friendly', value: 23.1, status: 'normal', unit: 'ms', descKey: 'sd1_desc' },
     { key: 'sd2', labelKey: 'sd2_friendly', value: 58.4, status: 'normal', unit: 'ms', descKey: 'sd2_desc' },
-    { key: 'sns_zone', labelKey: 'sns_zone_friendly', value: '낮음', status: 'risk', descKey: 'sns_zone_desc' },
+
+    { key: 'sns_zone', labelKey: 'sns_zone_friendly', value: '낮음', status: 'normal', descKey: 'sns_zone_desc' },
     { key: 'sns_index', labelKey: 'sns_index_friendly', value: 25, status: 'normal', descKey: 'sns_index_desc' },
-    { key: 'stress_level', labelKey: 'stress_level', value: '낮음', status: 'risk', descKey: 'stress_level_desc' },
+
+    { key: 'stress_level', labelKey: 'stress_level', value: '낮음', status: 'normal', descKey: 'stress_level_desc' },
     { key: 'stress_index', labelKey: 'stress_index', value: 706, status: 'normal', descKey: 'stress_index_desc' },
     { key: 'normalized_stress_index', labelKey: 'normalized_stress_index', value: 17, status: 'normal', descKey: 'normalized_stress_index_desc' },
+
     { key: 'pns_zone', labelKey: 'pns_zone_friendly', value: 85, status: 'normal', descKey: 'pns_zone_desc' },
     { key: 'pns_index', labelKey: 'pns_index_friendly', value: 84, status: 'normal', descKey: 'pns_index_desc' },
+
     { key: 'prq', labelKey: 'prq', value: 78, status: 'normal', descKey: 'prq_desc' },
+
     { key: 'hemoglobin', labelKey: 'hemoglobin', value: 14.5, status: 'normal', unit: 'g/dL', descKey: 'hemoglobin_desc' },
+
     { key: 'hemoglobin_a1c', labelKey: 'hemoglobin_a1c', value: 5.4, status: 'normal', unit: '%', descKey: 'hemoglobin_a1c_desc' },
+
     { key: 'high_hemoglobin_a1c_risk', labelKey: 'high_hemoglobin_a1c_risk', value: '낮음', status: 'normal', descKey: 'high_hemoglobin_a1c_risk_desc' },
     { key: 'high_blood_pressure_risk', labelKey: 'high_blood_pressure_risk', value: '낮음', status: 'normal', descKey: 'high_blood_pressure_risk_desc' },
     { key: 'ascvd_risk', labelKey: 'ascvd_risk', value: '낮음', status: 'normal', descKey: 'ascvd_risk_desc' },
     { key: 'high_fasting_glucose_risk', labelKey: 'high_fasting_glucose_risk', value: '낮음', status: 'normal', descKey: 'high_fasting_glucose_risk_desc' },
     { key: 'high_total_cholesterol_risk', labelKey: 'high_total_cholesterol_risk', value: '낮음', status: 'normal', descKey: 'high_total_cholesterol_risk_desc' },
     { key: 'low_hemoglobin_risk', labelKey: 'low_hemoglobin_risk', value: '낮음', status: 'normal', descKey: 'low_hemoglobin_risk_desc' },
+
     { key: 'heart_age', labelKey: 'heart_age', value: 35, status: 'normal', unit: '세', descKey: 'heart_age_desc' },
+
     { key: 'cardiac_workload', labelKey: 'cardiac_workload', value: 8640, status: 'normal', descKey: 'cardiac_workload_desc' },
     { key: 'pulse_pressure', labelKey: 'pulse_pressure', value: 40, status: 'normal', unit: 'mmHg', descKey: 'pulse_pressure_desc' },
     { key: 'mean_arterial_pressure', labelKey: 'mean_arterial_pressure', value: 93, status: 'normal', unit: 'mmHg', descKey: 'mean_arterial_pressure_desc' },
-    { key: 'lfhf', labelKey: 'lfhf_friendly', value: 2.1, status: 'normal', descKey: 'lfhf_desc' },
-    { key: 'ascvd_risk_level', labelKey: 'ascvd_risk_level', value: '보통', status: 'normal', descKey: 'ascvd_risk_level_desc' },
-    { key: 'body_tension_score', labelKey: 'body_tension_score', value: 2.9, status: 'normal', descKey: 'body_tension_score_desc' },
   ];
   if (Object.keys(v_11ea7b).length === 0) return v_694b25;
   return v_694b25.map((v_8c0b26) => {
@@ -85,9 +96,9 @@ export const v_bcb8af = [
   { sectionKey: 'section_stress_response', itemKeys: ['sns_zone', 'sns_index'] },
   { sectionKey: 'section_stress', itemKeys: ['stress_level', 'stress_index', 'normalized_stress_index'] },
   { sectionKey: 'section_recovery', itemKeys: ['pns_zone', 'pns_index'] },
-  { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure', 'lfhf', 'body_tension_score'] },
+  { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure'] },
   { sectionKey: 'section_blood_tests', itemKeys: ['hemoglobin', 'hemoglobin_a1c'] },
-  { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'ascvd_risk_level', 'heart_age'] },
+  { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'heart_age'] },
 ];
 
 const v_70af8f = [
