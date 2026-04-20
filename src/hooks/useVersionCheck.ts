@@ -48,7 +48,7 @@ export function v_96a538(v_b36f96 = {}) {
       });
 
       await v_79a9df.saveOtaMeta(v_cf418f.latest_version, v_cf418f.bundle_checksum ?? '');
-      await v_79a9df.markVersionAsApplied(v_cf418f.latest_version);
+      await v_79a9df.markVersionAsApplied(v_cf418f.latest_version, v_cf418f.latest_build);
 
       v_79a9df.applyBundle();
     } catch (v_9e86fd) {
