@@ -30,6 +30,7 @@ export interface OtaUpdateInfo {
   update_available: boolean;
   force_update: boolean;
   latest_version: string | null;
+  latest_build: number | null;
   bundle_url: string | null;
   bundle_checksum: string | null;
   bundle_size: number | null;
@@ -125,14 +126,12 @@ try {
 
       if (v_7ecfd1.success && v_7ecfd1.data) {
         const v_43c42e = v_7ecfd1.data as VersionCheckResult;
-        if (v_43c42e.ota.latest_version && v_43c42e.ota.latest_version === v_f24d57) {
 
-          if (v_4587b3 === v_43c42e.ota.latest_version) {
-            console.log(`[OTA] ${v_43c42e.ota.latest_version} 버전은 이미 적용되어 있어 스킵합니다.`);
+        if (v_43c42e.ota.latest_version) {
+          const v_739210 = `${v_43c42e.ota.latest_version}:${v_43c42e.ota.latest_build ?? 0}`;
+          if (v_739210 === v_f24d57) {
+            console.log(`[OTA] ${v_739210} 이미 적용됨. 스킵합니다.`);
             v_43c42e.ota.update_available = false;
-          } else {
-            console.log(`[OTA] ${v_43c42e.ota.latest_version} 적용 기록 있지만 현재 버전(${v_4587b3})과 불일치 → 재다운로드`);
-            await v_e84827.removeItem(v_b4e268);
           }
         }
         await v_e84827.setItem(v_a16596, String(Date.now()));
@@ -213,8 +212,8 @@ export function v_c5b1b9(v_231e09) {
   v_a8789d = v_231e09;
 }
 
-export async function v_ffd24b(v_0e1851) {
-  await v_e84827.setItem(v_b4e268, v_0e1851);
+export async function v_ffd24b(v_0e1851, v_807c28) {
+  await v_e84827.setItem(v_b4e268, `${v_0e1851}:${v_807c28 ?? 0}`);
 }
 
 export async function v_4503ee(v_b71a74): Promise<void> {
