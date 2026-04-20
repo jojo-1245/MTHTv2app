@@ -22,7 +22,7 @@ import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
 import { v_0e72e5 } from '../../services/pointClickOfferwall';
 import { v_998b9d } from '../../utils/authErrorHandler';
 import { v_e4a763 } from '../../utils/env';
-import v_c9be60 from 'qfrscldecidiqs';
+import { v_3d4e28, v_d752db } from '../../utils/appVersion';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -350,7 +350,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           {}
           <View style={v_d81136.footer}>
-            <Text style={v_d81136.footerText}>{`MetaHint Health v${v_c9be60.nativeAppVersion ?? v_c9be60.expoConfig?.version ?? '---'} (${v_c9be60.nativeBuildVersion ?? '---'})`}</Text>
+            <Text style={v_d81136.footerText}>{`MetaHint Health v${v_3d4e28()} (${v_d752db()})`}</Text>
             <Text style={v_d81136.footerText}>{v_8d41d7('profile.copyright')}</Text>
           </View>
         </SafeScrollView>

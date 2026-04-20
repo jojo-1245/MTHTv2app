@@ -42,7 +42,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860 } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
@@ -429,8 +429,18 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_2f26f6 = async () => {
+    const v_537e97 = v_3e3188.current;
+    v_f42779('attendance_api_before', { steps: v_537e97, claimed_step_indices: v_b1361b });
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
+      v_f42779('attendance_api_after', {
+        steps_before: v_537e97,
+        steps_after: v_3e3188.current,
+        steps_delta: v_3e3188.current - v_537e97,
+        streak_days: v_43c42e.streak_days,
+        is_bonus: v_43c42e.is_bonus,
+        reward_amount: v_43c42e.reward_amount,
+      });
 
       try {
         const v_3ea33e = await v_e8dda3(v_c65f5d);
@@ -485,6 +495,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_d0c5d7 = () => {
     if (v_74891a || v_1f7868) return;
+    v_f42779('attendance_press', {
+      steps: v_3e3188.current,
+      step_goal: v_011173,
+      is_checked_today: v_74891a,
+      consecutive_days: v_05cf57,
+    });
     v_e3bbea(true);
     v_8e174f(
       () => v_2f26f6(),
@@ -496,6 +512,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     );
   };
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
+  const v_3e3188 = v_e662ae(0);
+  v_c4deb2(() => { v_3e3188.current = v_dc679a; }, [v_dc679a]);
   const [v_b1361b, v_04f4d8] = v_5ab095<number[]>([]);
   const [v_cd6f97, v_5ce610] = v_5ab095(false);
   const [v_0e0399, v_00e50d] = v_5ab095<number | null>(null);
@@ -546,6 +564,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_c907cb = async (v_af3e48) => {
     const v_c5110a = v_616ba8[v_af3e48];
+    v_f42779('step_reward_press', {
+      button_index: v_af3e48,
+      milestone: v_c5110a,
+      steps: v_3e3188.current,
+      step_goal: v_011173,
+      claimed_step_indices: v_b1361b,
+    });
     if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
       return;
     }
@@ -563,7 +588,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           claimedStepIndices: v_b1361b,
         });
       }
+      const v_6f5bdd = v_3e3188.current;
       const v_43c42e = await v_2ca7ff(v_227df7, v_dc679a, v_011173, v_c65f5d, v_af3e48);
+      v_f42779('step_reward_after_sync', {
+        button_index: v_af3e48,
+        milestone: v_c5110a,
+        steps_before: v_6f5bdd,
+        steps_after: v_3e3188.current,
+        steps_delta: v_3e3188.current - v_6f5bdd,
+        new_rewards_count: v_43c42e.new_rewards_count,
+        total_reward_paid: v_43c42e.total_reward_paid,
+      });
 
       if (Array.isArray(v_43c42e.state_idx)) {
         v_04f4d8(v_43c42e.state_idx);
