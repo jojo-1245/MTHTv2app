@@ -1681,6 +1681,24 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }, [v_a7f568, v_8d41d7, v_08e501]);
 
   const v_2e670e = v_df9f57(() => {
+
+    const v_4c8b36 = {
+      [v_e3e816.SDNN]: 'health_analysis.vitals.sdnn_friendly',
+      [v_e3e816.RMSSD]: 'health_analysis.vitals.rmssd_friendly',
+      [v_e3e816.MEAN_RRI]: 'health_analysis.vitals.mean_rri_friendly',
+      [v_e3e816.SD1]: 'health_analysis.vitals.sd1_friendly',
+      [v_e3e816.SD2]: 'health_analysis.vitals.sd2_friendly',
+      [v_e3e816.SNS_ZONE]: 'health_analysis.vitals.sns_zone_friendly',
+      [v_e3e816.SNS_INDEX]: 'health_analysis.vitals.sns_index_friendly',
+      [v_e3e816.PNS_ZONE]: 'health_analysis.vitals.pns_zone_friendly',
+      [v_e3e816.PNS_INDEX]: 'health_analysis.vitals.pns_index_friendly',
+    };
+    const v_421c89 = (v_653390): string => {
+      const v_12f017 = v_4c8b36[v_653390];
+      if (v_12f017) return v_8d41d7(v_12f017);
+      return v_50f905(v_653390, v_8d41d7);
+    };
+
     type Section = { key: string; titleKey: string; types: number[] };
     const v_946c09 = [
       {
@@ -1774,7 +1792,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         const v_d308b5 = v_0aaeba(v_653390, v_3b402b);
         v_4622b9.push({
           typeNum: v_653390,
-          name: v_50f905(v_653390, v_8d41d7),
+          name: v_421c89(v_653390),
           valueText: v_a6fe82(v_3b402b, v_653390, v_8d41d7),
           status: v_d308b5,
         });
@@ -1788,6 +1806,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       }
     }
     return v_8d4337;
+
   }, [v_a7f568, v_930bc7, v_ed9d34, v_8d41d7]);
 
   const v_a61ee3 = 184;
