@@ -141,3 +141,18 @@ export function v_d28324(v_479f05): boolean {
   }
   return false;
 }
+
+export function v_7374eb(v_823608, v_3b402b): boolean {
+
+  if (v_823608.startsWith('unknown_')) return false;
+
+  if (v_3b402b === null || v_3b402b === undefined) return false;
+
+  if (Array.isArray(v_3b402b)) return false;
+
+  if (typeof v_3b402b === 'object') return true;
+
+  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
+  if (!isNaN(v_549ed3) && v_549ed3 === -1) return false;
+  return true;
+}

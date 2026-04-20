@@ -31,7 +31,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
-import { v_a6cea6, v_4e7146, type v_71beaa } from './vitalSignStatus';
+import { v_a6cea6, v_4e7146, v_7374eb, type v_71beaa } from './vitalSignStatus';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -812,7 +812,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_4622b9.filter(v_8c0b26 => {
       if (v_930bc7.has(v_8c0b26.typeNum)) return false;
       const v_3b402b = v_a7f568?.[v_8c0b26.typeNum]?.value;
-      if (v_3b402b === undefined) return false;
+      if (v_3b402b === undefined || v_3b402b === null) return false;
+
+      if (Array.isArray(v_3b402b)) return false;
+
+      if (typeof v_3b402b === 'number' && v_3b402b === -1) return false;
+      if (typeof v_3b402b === 'string' && Number(v_3b402b) === -1) return false;
 
       if (v_ed9d34.includes(v_8c0b26.typeNum)) {
         const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -1225,6 +1230,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           if (v_3b402b !== null && v_3b402b !== undefined) {
 
             const v_823608 = v_13d5ab(v_653390);
+
+            if (!v_7374eb(v_823608, v_3b402b)) {
+              return;
+            }
 
             const v_d308b5 = v_4e7146(v_653390, v_3b402b, (v_9390e8 as any).status, (v_f4e98d) => v_a7f568?.[v_f4e98d]?.value);
 
