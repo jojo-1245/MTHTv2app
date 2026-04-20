@@ -12,3 +12,8 @@
 -keep class com.facebook.react.turbomodule.** { *; }
 
 # Add any project specific keep options here:
+
+# PointClick Offerwall SDK
+-keep class kr.co.pointclick.sdk.offerwall.core.consts.** {*;}
+-keep interface kr.co.pointclick.sdk.offerwall.core.** {*;}
+-keep class kr.co.pointclick.sdk.offerwall.core.** {*;}
