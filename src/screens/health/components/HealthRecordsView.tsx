@@ -92,10 +92,10 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
 
 export const v_bcb8af = [
   { sectionKey: 'section_vital_signs', itemKeys: ['blood_pressure', 'pulse_rate', 'respiration_rate', 'oxygen_saturation'] },
-  { sectionKey: 'section_hrv', itemKeys: ['sdnn', 'rmssd', 'mean_rri', 'sd1', 'sd2'] },
-  { sectionKey: 'section_stress_response', itemKeys: ['sns_zone', 'sns_index'] },
-  { sectionKey: 'section_stress', itemKeys: ['stress_level', 'stress_index', 'normalized_stress_index'] },
-  { sectionKey: 'section_recovery', itemKeys: ['pns_zone', 'pns_index'] },
+  { sectionKey: 'section_hrv', itemKeys: ['sdnn'] },
+  { sectionKey: 'section_stress_response', itemKeys: ['sns_zone'] },
+  { sectionKey: 'section_stress', itemKeys: ['stress_level'] },
+  { sectionKey: 'section_recovery', itemKeys: ['pns_zone'] },
   { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure'] },
   { sectionKey: 'section_blood_tests', itemKeys: ['hemoglobin', 'hemoglobin_a1c'] },
   { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'heart_age'] },
@@ -266,6 +266,40 @@ const v_488860 = 5;
 
 const v_173689 = ['weekday_sun', 'weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat'] as const;
 
+const v_ad7730 = (v_823608, v_3b402b): string | number => {
+  if (v_3b402b === null || v_3b402b === undefined) return '';
+
+  if (v_823608 === 'blood_pressure') {
+    if (typeof v_3b402b === 'object' && !Array.isArray(v_3b402b) && v_3b402b !== null) {
+      const v_25a9c7 = v_3b402b as { systolic?: unknown; diastolic?: unknown };
+      if (v_25a9c7.systolic !== undefined && v_25a9c7.diastolic !== undefined) {
+        return `${v_25a9c7.systolic || 'N/A'}/${v_25a9c7.diastolic || 'N/A'}`;
+      }
+    }
+    return typeof v_3b402b === 'string' ? v_3b402b : String(v_3b402b);
+  }
+
+  if (typeof v_3b402b === 'number') {
+
+    if (v_823608 === 'pulse_rate' || v_823608 === 'heart_age') {
+      return String(Math.round(v_3b402b));
+    }
+
+    if (v_823608 === 'ascvd_risk') {
+      return `${v_3b402b.toFixed(1)}%`;
+    }
+
+    return Number(v_3b402b.toFixed(1));
+  }
+
+  const v_f4e98d = Number(v_3b402b);
+  if (!isNaN(v_f4e98d)) {
+    if (v_823608 === 'pulse_rate' || v_823608 === 'heart_age') return String(Math.round(v_f4e98d));
+    return Number(v_f4e98d.toFixed(1));
+  }
+  return typeof v_3b402b === 'string' ? v_3b402b : String(v_3b402b);
+};
+
 export const v_38756f = (item: v_218d40): HealthRecord => {
 
   const v_b9fc6f = {};
@@ -274,13 +308,7 @@ export const v_38756f = (item: v_218d40): HealthRecord => {
     Object.entries(v_8c0b26.vital_signs).forEach(([v_823608, v_9390e8]) => {
       if (v_9390e8 && v_823608) {
 
-        let v_72b4e2 = v_9390e8.value;
-        if (v_823608 === 'blood_pressure' && typeof v_9390e8.value === 'object' && !Array.isArray(v_9390e8.value)) {
-          const v_25a9c7 = v_9390e8.value as any;
-          if (v_25a9c7.systolic !== undefined && v_25a9c7.diastolic !== undefined) {
-            v_72b4e2 = `${v_25a9c7.systolic || 'N/A'}/${v_25a9c7.diastolic || 'N/A'}`;
-          }
-        }
+        const v_72b4e2 = v_ad7730(v_823608, v_9390e8.value);
 
         const v_d308b5 = v_d28324(v_9390e8.status) ? 'risk' : 'normal';
 
