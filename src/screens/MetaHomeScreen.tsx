@@ -244,7 +244,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_033e14 = v_e0068c();
   const { width: v_06db8f } = v_e45a99();
-  const { balance: v_c88e9b, refreshWallet: v_e37b10 } = v_271901();
+  const { refreshWallet: v_e37b10 } = v_271901();
   const [v_b932f9, v_2cc80d] = v_5ab095(0);
 
   v_c4deb2(() => {
@@ -268,22 +268,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }, [v_e4961f])
   );
 
-  const v_1fddaf = v_df9f57(() => {
-    if (!v_c88e9b) return '0.0';
-    const v_9f8406 = v_c88e9b.tokens?.find(
-      (v_8d41d7) => v_8d41d7.symbol === 'MTHT' || v_8d41d7.symbol === 'METAHINT'
-    );
-    if (v_9f8406 && v_9f8406.onchain_balance) {
-      const v_0ad8c5 = parseFloat(v_9f8406.onchain_balance);
-      if (isNaN(v_0ad8c5)) return '0.0';
-      const v_ccc3be = Math.floor(v_0ad8c5 * 10) / 10;
-      const v_bb258c = v_ccc3be.toFixed(1);
-      const v_468545 = v_bb258c.split('.');
-      v_468545[0] = v_468545[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      return v_468545.join('.');
-    }
-    return '0.0';
-  }, [v_c88e9b]);
   const [v_39cb7a, v_ecd01c] = v_5ab095<number | null>(null);
   const [v_9ab1d9, v_6bf58d] = v_5ab095<number | null>(null);
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
@@ -663,12 +647,6 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     <View style={[v_d81136.headerIconPill, v_d81136.notifPill]}>
                       <Bell size={22} color="#FFFFFF" />
                       {v_b932f9 > 0 && <View style={v_d81136.notifBadge} />}
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => v_9b57fc('Wallet')} style={v_d81136.headerIconBtn} hitSlop={8}>
-                    <View style={[v_d81136.headerIconPill, v_d81136.pointsPill]}>
-                      <Coins size={20} color="#FFFFFF" />
-                      <Text style={v_d81136.pointsText}>{v_1fddaf}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -1120,7 +1098,6 @@ const v_d81136 = v_472849.create({
     elevation: 0,
   },
   notifPill: { width: 40, height: 40, position: 'relative' },
-  pointsPill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 4, minHeight: 40 },
   notifBadge: {
     position: 'absolute',
     top: 8,
@@ -1132,7 +1109,6 @@ const v_d81136 = v_472849.create({
     borderWidth: 1.5,
     borderColor: '#FFFFFF',
   },
-  pointsText: { fontSize: v_ef658a.medium, fontFamily: v_843035.bold, color: '#FFFFFF' },
   headerImageWrap: { width: '100%', alignItems: 'center', position: 'relative', overflow: 'visible' },
   headerImageBg: { position: 'absolute', top: 15, alignSelf: 'center', width: '90%', height: 200, objectFit: 'contain', },
   headerImageAnimated: { width: '100%', alignItems: 'center' },

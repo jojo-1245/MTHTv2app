@@ -60,6 +60,7 @@ import {
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_bc6a30 } from '../../types/fzljtili';
+import { v_4e7146, v_7374eb } from './vitalSignStatus';
 
 enum SmokingStatus {
   UNSPECIFIED = 0,
@@ -1455,10 +1456,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             const v_653390 = Number(v_3b27d9);
             const v_3b402b = (v_9390e8 as any).value;
             if (v_3b402b === null || v_3b402b === undefined) return;
-            let v_d308b5 = (v_9390e8 as any).status;
-            if (v_d308b5 === '정상') v_d308b5 = 'normal';
-            else if (v_d308b5 === '위험') v_d308b5 = 'risk';
-            v_0946e7[v_e33e2a(v_653390)] = {
+            const v_823608 = v_e33e2a(v_653390);
+
+            if (!v_7374eb(v_823608, v_3b402b)) return;
+
+            const v_d308b5 = v_4e7146(v_653390, v_3b402b, (v_9390e8 as any).status, (v_f4e98d) => v_9f8792[String(v_f4e98d)]?.value);
+            v_0946e7[v_823608] = {
               value: v_3b402b,
               ...(v_d308b5 && { status: v_d308b5 }),
               ...((v_9390e8 as any).confidence && { confidence: (v_9390e8 as any).confidence }),

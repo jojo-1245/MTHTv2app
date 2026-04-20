@@ -31,6 +31,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
+import { v_a6cea6, v_4e7146, v_7374eb, type v_71beaa } from './vitalSignStatus';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -217,8 +218,6 @@ function v_a3e57a({
   );
 }
 
-type GroupStatus = '정상' | '위험';
-
 interface GroupSectionItem {
   typeNum: number;
   label?: string;
@@ -363,28 +362,6 @@ const v_d4fb29 = {
 
 const v_2f5a10 = (v_3b27d9): RiskCriteria | { systolic: RiskCriteria; diastolic: RiskCriteria } | null => {
   return v_d4fb29[v_3b27d9] || null;
-};
-
-const v_399d2c = (v_3b402b): GroupStatus | null => {
-  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-  if (isNaN(v_549ed3)) {
-    return null;
-  }
-  return v_549ed3 >= 3 ? '위험' : '정상';
-};
-
-const v_005339 = (v_3b402b): GroupStatus | null => {
-  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-  if (isNaN(v_549ed3)) {
-    return null;
-  }
-
-  if (v_549ed3 === 0 || v_549ed3 === 1) {
-    return '정상'; 
-  } else if (v_549ed3 === 2 || v_549ed3 === 3) {
-    return '위험'; 
-  }
-  return null;
 };
 
 const v_2e7086 = (v_3b27d9, v_3b402b, v_8d41d7): string | null => {
@@ -766,36 +743,21 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     { typeNum: v_e3e816.OXYGEN_SATURATION },
 
-    {
-      typeNum: v_e3e816.SDNN,
-      label: v_8d41d7('health_analysis.result.hrv_variability'),
-      detailTypes: [
-        v_e3e816.RMSSD,
-        v_e3e816.MEAN_RRI,
-        v_e3e816.SD1,
-        v_e3e816.SD2,
-      ],
-    },
+    { typeNum: v_e3e816.SDNN, label: v_8d41d7('health_analysis.result.hrv_variability') },
+    { typeNum: v_e3e816.RMSSD },
+    { typeNum: v_e3e816.MEAN_RRI },
+    { typeNum: v_e3e816.SD1 },
+    { typeNum: v_e3e816.SD2 },
 
-    {
-      typeNum: v_e3e816.SNS_ZONE,
-      label: v_8d41d7('health_analysis.result.stress_response'),
-      detailTypes: [v_e3e816.SNS_INDEX],
-    },
+    { typeNum: v_e3e816.SNS_ZONE, label: v_8d41d7('health_analysis.result.stress_response') },
+    { typeNum: v_e3e816.SNS_INDEX },
 
-    {
-      typeNum: v_e3e816.STRESS_LEVEL,
-      detailTypes: [
-        v_e3e816.STRESS_INDEX,
-        v_e3e816.NORMALIZED_STRESS_INDEX,
-      ],
-    },
+    { typeNum: v_e3e816.STRESS_LEVEL },
+    { typeNum: v_e3e816.STRESS_INDEX },
+    { typeNum: v_e3e816.NORMALIZED_STRESS_INDEX },
 
-    {
-      typeNum: v_e3e816.PNS_ZONE,
-      label: v_8d41d7('health_analysis.result.recovery_ability'),
-      detailTypes: [v_e3e816.PNS_INDEX],
-    },
+    { typeNum: v_e3e816.PNS_ZONE, label: v_8d41d7('health_analysis.result.recovery_ability') },
+    { typeNum: v_e3e816.PNS_INDEX },
 
     { typeNum: v_e3e816.PRQ },
 
@@ -850,7 +812,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_4622b9.filter(v_8c0b26 => {
       if (v_930bc7.has(v_8c0b26.typeNum)) return false;
       const v_3b402b = v_a7f568?.[v_8c0b26.typeNum]?.value;
-      if (v_3b402b === undefined) return false;
+      if (v_3b402b === undefined || v_3b402b === null) return false;
+
+      if (Array.isArray(v_3b402b)) return false;
+
+      if (typeof v_3b402b === 'number' && v_3b402b === -1) return false;
+      if (typeof v_3b402b === 'string' && Number(v_3b402b) === -1) return false;
 
       if (v_ed9d34.includes(v_8c0b26.typeNum)) {
         const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -1264,16 +1231,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
             const v_823608 = v_13d5ab(v_653390);
 
-            let v_d308b5 = (v_9390e8 as any).status;
-            if (!v_d308b5) {
-
-              const v_c4180e = v_0aaeba(v_653390, v_3b402b);
-
-              v_d308b5 = v_c4180e === '위험' ? 'risk' : (v_c4180e === '정상' ? 'normal' : undefined);
-            } else if (v_d308b5 === '정상' || v_d308b5 === '위험') {
-
-              v_d308b5 = v_d308b5 === '위험' ? 'risk' : 'normal';
+            if (!v_7374eb(v_823608, v_3b402b)) {
+              return;
             }
+
+            const v_d308b5 = v_4e7146(v_653390, v_3b402b, (v_9390e8 as any).status, (v_f4e98d) => v_a7f568?.[v_f4e98d]?.value);
 
             v_0946e7[v_823608] = {
               value: v_3b402b,
@@ -1579,101 +1541,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_a52412.filter((v_e6293e) => !v_e6293e.includes('N/A')).join('\n');
   };
 
-  const v_0aaeba = (v_653390, v_3b402b): GroupStatus | null => {
-    if (v_653390 === v_e3e816.STRESS_LEVEL) {
-      return v_399d2c(v_3b402b);
-    }
+  const v_0aaeba = (v_653390, v_3b402b): v_71beaa | null =>
+    v_a6cea6(v_653390, v_3b402b, v_df7b8f);
 
-    if (v_653390 === v_e3e816.BLOOD_PRESSURE) {
-      const v_5d0a1b = v_3b402b as any;
-      if (typeof v_5d0a1b === 'object' && v_5d0a1b !== null && !Array.isArray(v_5d0a1b)) {
-        const v_e7392b = typeof v_5d0a1b.systolic === 'number' ? v_5d0a1b.systolic : Number(v_5d0a1b.systolic);
-        const v_8cfeff = typeof v_5d0a1b.diastolic === 'number' ? v_5d0a1b.diastolic : Number(v_5d0a1b.diastolic);
-
-        if (!isNaN(v_e7392b) && !isNaN(v_8cfeff)) {
-
-          return (v_e7392b >= 140 || v_8cfeff >= 95) ? '위험' : '정상';
-        }
-      }
-
-      return v_005339(v_df7b8f(v_e3e816.HIGH_BLOOD_PRESSURE_RISK));
-    }
-    if (v_653390 === v_e3e816.HIGH_BLOOD_PRESSURE_RISK) {
-      return v_005339(v_3b402b);
-    }
-
-    if (v_653390 === v_e3e816.PULSE_RATE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 60 && v_549ed3 <= 100) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.RESPIRATION_RATE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 12 && v_549ed3 <= 20) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.PRQ) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 4 && v_549ed3 <= 5) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.SDNN) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 50) ? '정상' : '위험';
-      }
-      return null;
-    }
-    const v_f4d1c2 = [
-      v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
-      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
-      v_e3e816.ASCVD_RISK,
-      v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
-      v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
-      v_e3e816.LOW_HEMOGLOBIN_RISK,
-    ];
-    if (v_f4d1c2.includes(v_653390)) {
-      return v_005339(v_3b402b);
-    }
-
-    if (v_653390 === v_e3e816.PNS_ZONE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        const v_b66476 = Math.round(v_549ed3);
-        if (v_b66476 === 0) return null; 
-        if (v_b66476 === 1) return '위험'; 
-        return '정상'; 
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.SNS_ZONE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        const v_b66476 = Math.round(v_549ed3);
-        if (v_b66476 === 0) return null; 
-        if (v_b66476 === 3) return '위험'; 
-        return '정상'; 
-      }
-      return null;
-    }
-    const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    if (!isNaN(v_549ed3)) {
-      return '정상';
-    }
-    return null;
-  };
-
-  const v_463ca2 = (v_d308b5) => {
+  const v_463ca2 = (status: v_71beaa | null) => {
     if (v_d308b5 === '위험') {
       return {
         text: v_d8cb4d.warning.color,
@@ -1810,17 +1681,109 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }, [v_a7f568, v_8d41d7, v_08e501]);
 
   const v_2e670e = v_df9f57(() => {
+
+    const v_4c8b36 = {
+      [v_e3e816.SDNN]: 'health_analysis.vitals.sdnn_friendly',
+      [v_e3e816.RMSSD]: 'health_analysis.vitals.rmssd_friendly',
+      [v_e3e816.MEAN_RRI]: 'health_analysis.vitals.mean_rri_friendly',
+      [v_e3e816.SD1]: 'health_analysis.vitals.sd1_friendly',
+      [v_e3e816.SD2]: 'health_analysis.vitals.sd2_friendly',
+      [v_e3e816.SNS_ZONE]: 'health_analysis.vitals.sns_zone_friendly',
+      [v_e3e816.SNS_INDEX]: 'health_analysis.vitals.sns_index_friendly',
+      [v_e3e816.PNS_ZONE]: 'health_analysis.vitals.pns_zone_friendly',
+      [v_e3e816.PNS_INDEX]: 'health_analysis.vitals.pns_index_friendly',
+    };
+    const v_421c89 = (v_653390): string => {
+      const v_12f017 = v_4c8b36[v_653390];
+      if (v_12f017) return v_8d41d7(v_12f017);
+      return v_50f905(v_653390, v_8d41d7);
+    };
+
+    type Section = { key: string; titleKey: string; types: number[] };
+    const v_946c09 = [
+      {
+        key: 'section_vital_signs',
+        titleKey: 'health_records.section_vital_signs',
+        types: [
+          v_e3e816.BLOOD_PRESSURE,
+          v_e3e816.PULSE_RATE,
+          v_e3e816.RESPIRATION_RATE,
+          v_e3e816.OXYGEN_SATURATION,
+        ],
+      },
+      {
+        key: 'section_hrv',
+        titleKey: 'health_records.section_hrv',
+        types: [
+          v_e3e816.SDNN,
+          v_e3e816.RMSSD,
+          v_e3e816.MEAN_RRI,
+          v_e3e816.SD1,
+          v_e3e816.SD2,
+        ],
+      },
+      {
+        key: 'section_stress_response',
+        titleKey: 'health_records.section_stress_response',
+        types: [v_e3e816.SNS_ZONE, v_e3e816.SNS_INDEX],
+      },
+      {
+        key: 'section_stress',
+        titleKey: 'health_records.section_stress',
+        types: [
+          v_e3e816.STRESS_LEVEL,
+          v_e3e816.STRESS_INDEX,
+          v_e3e816.NORMALIZED_STRESS_INDEX,
+        ],
+      },
+      {
+        key: 'section_recovery',
+        titleKey: 'health_records.section_recovery',
+        types: [v_e3e816.PNS_ZONE, v_e3e816.PNS_INDEX],
+      },
+      {
+        key: 'section_cardiovascular',
+        titleKey: 'health_records.section_cardiovascular',
+        types: [
+          v_e3e816.PRQ,
+          v_e3e816.CARDIAC_WORKLOAD,
+          v_e3e816.PULSE_PRESSURE,
+          v_e3e816.MEAN_ARTERIAL_PRESSURE,
+        ],
+      },
+      {
+        key: 'section_blood_tests',
+        titleKey: 'health_records.section_blood_tests',
+        types: [v_e3e816.HEMOGLOBIN, v_e3e816.HEMOGLOBIN_A1C],
+      },
+      {
+        key: 'section_risk_prediction',
+        titleKey: 'health_records.section_risk_prediction',
+        types: [
+          v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+          v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+          v_e3e816.ASCVD_RISK,
+          v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+          v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+          v_e3e816.LOW_HEMOGLOBIN_RISK,
+          v_e3e816.HEART_AGE,
+        ],
+      },
+    ];
+
     const v_110a8b = new Set<number>();
-    const categoryOrder: (keyof typeof v_153eb4)[] = ['vital-signs', 'stress-recovery', 'blood-tests', 'cardiovascular', 'respiratory', 'risks'];
     const v_8d4337 = [];
 
-    for (const v_757575 of v_7d78b3) {
-      const v_e03a6e = v_153eb4[v_757575] || [];
+    for (const v_b4fa6c of v_946c09) {
       const items: typeof v_8d4337[0]['items'] = [];
-      for (const v_653390 of v_e03a6e) {
+      for (const v_653390 of v_b4fa6c.types) {
         if (v_110a8b.has(v_653390) || v_930bc7.has(v_653390)) continue;
         const v_3b402b = v_a7f568?.[v_653390]?.value;
         if (v_3b402b === undefined || v_3b402b === null) continue;
+
+        if (Array.isArray(v_3b402b)) continue;
+        if (typeof v_3b402b === 'number' && v_3b402b === -1) continue;
+        if (typeof v_3b402b === 'string' && Number(v_3b402b) === -1) continue;
         if (v_ed9d34.includes(v_653390)) {
           const v_cb2c3a = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
           if (v_cb2c3a === 0) continue;
@@ -1829,22 +1792,22 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         const v_d308b5 = v_0aaeba(v_653390, v_3b402b);
         v_4622b9.push({
           typeNum: v_653390,
-          name: v_50f905(v_653390, v_8d41d7),
+          name: v_421c89(v_653390),
           valueText: v_a6fe82(v_3b402b, v_653390, v_8d41d7),
           status: v_d308b5,
         });
       }
       if (v_4622b9.length > 0) {
-        const v_9bf432 = v_8bc599.find((v_3f4e2e) => v_3f4e2e.id === v_757575);
         v_8d4337.push({
-          categoryId: v_757575,
-          categoryLabel: v_9bf432?.label || v_757575,
+          categoryId: v_b4fa6c.key,
+          categoryLabel: v_8d41d7(v_b4fa6c.titleKey),
           items: v_4622b9,
         });
       }
     }
     return v_8d4337;
-  }, [v_a7f568, v_8bc599, v_153eb4, v_930bc7, v_ed9d34, v_8d41d7]);
+
+  }, [v_a7f568, v_930bc7, v_ed9d34, v_8d41d7]);
 
   const v_a61ee3 = 184;
   const v_5675fb = 60;
@@ -1896,7 +1859,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_8d41d7('health_analysis.result.normal');
   };
 
-  const v_e4ae59 = (v_1833e7, v_d308b5, v_ba91d0, v_653390, v_3b402b) => {
+  const v_e4ae59 = (v_1833e7, status: v_71beaa | null, v_ba91d0, v_653390, v_3b402b) => {
 
     if (v_ba91d0 === 'respiratory') {
       if (v_d308b5 === '정상') {
@@ -2605,6 +2568,38 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 )}
 
                 {}
+                {v_2e670e.length > 0 && (
+                  <View style={v_d81136.aiCategorizedSummaryCard}>
+                    <Text style={v_d81136.aiCategorizedSummaryTitle}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
+                    {v_2e670e.map((v_b4fa6c) => (
+                      <View key={v_b4fa6c.categoryId} style={v_d81136.aiCategorizedSection}>
+                        <View style={v_d81136.aiCategorizedSectionHeader}>
+                          <View style={v_d81136.aiCategorizedSectionBar} />
+                          <Text style={v_d81136.aiCategorizedSectionTitle}>{v_b4fa6c.categoryLabel}</Text>
+                        </View>
+                        <View style={v_d81136.aiCategorizedItemList}>
+                          {v_b4fa6c.items.map((v_8c0b26) => (
+                            <View key={v_8c0b26.typeNum} style={v_d81136.aiCategorizedItem}>
+                              <Text style={v_d81136.aiCategorizedItemName}>{v_8c0b26.name}</Text>
+                              <View style={v_d81136.aiCategorizedItemRight}>
+                                <Text style={v_d81136.aiCategorizedItemValue}>{v_8c0b26.valueText}</Text>
+                                {v_8c0b26.status && (
+                                  <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
+                                    <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
+                                      {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal')}
+                                    </Text>
+                                  </View>
+                                )}
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                )}
+
+                {}
                 {!v_09e9e3 ? (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -2632,37 +2627,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </TouchableOpacity>
                 ) : (
                   <>
-                    {}
-                    {v_2e670e.length > 0 && (
-                      <View style={v_d81136.aiCategorizedSummaryCard}>
-                        <Text style={v_d81136.aiCategorizedSummaryTitle}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
-                        {v_2e670e.map((v_b4fa6c) => (
-                          <View key={v_b4fa6c.categoryId} style={v_d81136.aiCategorizedSection}>
-                            <View style={v_d81136.aiCategorizedSectionHeader}>
-                              <View style={v_d81136.aiCategorizedSectionBar} />
-                              <Text style={v_d81136.aiCategorizedSectionTitle}>{v_b4fa6c.categoryLabel}</Text>
-                            </View>
-                            <View style={v_d81136.aiCategorizedItemList}>
-                              {v_b4fa6c.items.map((v_8c0b26) => (
-                                <View key={v_8c0b26.typeNum} style={v_d81136.aiCategorizedItem}>
-                                  <Text style={v_d81136.aiCategorizedItemName}>{v_8c0b26.name}</Text>
-                                  <View style={v_d81136.aiCategorizedItemRight}>
-                                    <Text style={v_d81136.aiCategorizedItemValue}>{v_8c0b26.valueText}</Text>
-                                    {v_8c0b26.status && (
-                                      <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
-                                        <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
-                                          {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.ai_caution') : v_8d41d7('health_analysis.result.ai_normal')}
-                                        </Text>
-                                      </View>
-                                    )}
-                                  </View>
-                                </View>
-                              ))}
-                            </View>
-                          </View>
-                        ))}
-                      </View>
-                    )}
                     <View style={v_d81136.aiAnalysisCard}>
                       <View style={v_d81136.aiAnalysisCardHeader}>
                         <View style={v_d81136.aiAnalysisCardIcon}>
