@@ -89,9 +89,20 @@ android {
     }
 }
 
+repositories {
+
+    maven { url "https://oth-pathclicksdk.github.io/oth-pathclick-sdk-android-maven/maven-repo" }
+}
+
+configurations.all {
+    exclude group: 'com.android.support'
+}
+
 dependencies {
 
     implementation("com.facebook.react:react-android")
+
+    implementation 'kr.co.pointclick.sdk.offerwall:pointclick-sdk-offerwall:1.1.06'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
