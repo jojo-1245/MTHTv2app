@@ -1661,9 +1661,15 @@
         "copy_success_title": "복사 완료",
         "copy_success_message": "PIN 코드가 클립보드에 복사되었습니다.",
         "kakao_share_button": "레퍼럴 공유하기",
+        "my_referrals_button": "나의 추천 목록 보기",
         "share_error": "공유에 실패했습니다.",
         "share_message": "HiNT 파트너가 되어보세요! 추천 코드: {{code}}\n{{link}}",
         "share_title": "HiNT 파트너 추천"
+    },
+    "my_referrals": {
+        "title": "나의 추천 목록",
+        "total_count": "총 {{count}}명",
+        "empty": "아직 나를 추천한 사용자가 없습니다."
     },
     "my_info_email_auth": {
         "title": "본인 인증",

@@ -205,6 +205,39 @@ export async function verifyEmail(payload: VerifyEmailPayload): Promise<void> {
   }
 }
 
+export type ResetPasswordPayload = {
+  email: string;
+  code: string;
+  new_password: string;
+};
+
+export async function resetPassword(payload: ResetPasswordPayload): Promise<void> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  if (__DEV__) {
+    console.log('[signupApi] reset-password 요청:', { url: `${baseURL}/oth-path`, email: payload.email });
+  }
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, payload, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.log('[signupApi] reset-password 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+    throw normalizeError(error);
+  }
+}
+
 export async function signup(payload: SignupPayload): Promise<void> {
   const env = getEnv();
   const baseURL = env.GATEWAY;

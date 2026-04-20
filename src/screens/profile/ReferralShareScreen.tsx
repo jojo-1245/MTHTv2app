@@ -195,6 +195,17 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         title={v_8d41d7('referral_share.kakao_share_button')}
                         onPress={v_316053}
                     />
+
+                    {}
+                    <TouchableOpacity
+                        style={v_d81136.myReferralsButton}
+                        onPress={() => v_c65f5d.navigate('MyReferrals')}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={v_d81136.myReferralsButtonText}>
+                            {v_8d41d7('referral_share.my_referrals_button')}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </SafeView>
         </MainLayout>
@@ -347,6 +358,21 @@ const v_d81136 = v_472849.create({
     copyButtonText: {
         fontSize: v_ef658a.medium,
         fontFamily: v_843035.semibold,
+    },
+    myReferralsButton: {
+        marginTop: v_9b1a04.medium,
+        paddingVertical: v_9b1a04.medium,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        backgroundColor: '#FFFFFF',
+    },
+    myReferralsButtonText: {
+        fontSize: v_ef658a.medium,
+        fontFamily: v_843035.semibold,
+        color: v_1bfbd0.text,
     },
 });
 
