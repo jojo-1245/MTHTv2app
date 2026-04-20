@@ -31,6 +31,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
+import { v_a6cea6, v_4e7146, type v_71beaa } from './vitalSignStatus';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -217,8 +218,6 @@ function v_a3e57a({
   );
 }
 
-type GroupStatus = '정상' | '위험';
-
 interface GroupSectionItem {
   typeNum: number;
   label?: string;
@@ -363,28 +362,6 @@ const v_d4fb29 = {
 
 const v_2f5a10 = (v_3b27d9): RiskCriteria | { systolic: RiskCriteria; diastolic: RiskCriteria } | null => {
   return v_d4fb29[v_3b27d9] || null;
-};
-
-const v_399d2c = (v_3b402b): GroupStatus | null => {
-  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-  if (isNaN(v_549ed3)) {
-    return null;
-  }
-  return v_549ed3 >= 3 ? '위험' : '정상';
-};
-
-const v_005339 = (v_3b402b): GroupStatus | null => {
-  const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-  if (isNaN(v_549ed3)) {
-    return null;
-  }
-
-  if (v_549ed3 === 0 || v_549ed3 === 1) {
-    return '정상'; 
-  } else if (v_549ed3 === 2 || v_549ed3 === 3) {
-    return '위험'; 
-  }
-  return null;
 };
 
 const v_2e7086 = (v_3b27d9, v_3b402b, v_8d41d7): string | null => {
@@ -1264,16 +1241,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
             const v_823608 = v_13d5ab(v_653390);
 
-            let v_d308b5 = (v_9390e8 as any).status;
-            if (!v_d308b5) {
-
-              const v_c4180e = v_0aaeba(v_653390, v_3b402b);
-
-              v_d308b5 = v_c4180e === '위험' ? 'risk' : (v_c4180e === '정상' ? 'normal' : undefined);
-            } else if (v_d308b5 === '정상' || v_d308b5 === '위험') {
-
-              v_d308b5 = v_d308b5 === '위험' ? 'risk' : 'normal';
-            }
+            const v_d308b5 = v_4e7146(v_653390, v_3b402b, (v_9390e8 as any).status, (v_f4e98d) => v_a7f568?.[v_f4e98d]?.value);
 
             v_0946e7[v_823608] = {
               value: v_3b402b,
@@ -1579,101 +1547,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_a52412.filter((v_e6293e) => !v_e6293e.includes('N/A')).join('\n');
   };
 
-  const v_0aaeba = (v_653390, v_3b402b): GroupStatus | null => {
-    if (v_653390 === v_e3e816.STRESS_LEVEL) {
-      return v_399d2c(v_3b402b);
-    }
+  const v_0aaeba = (v_653390, v_3b402b): v_71beaa | null =>
+    v_a6cea6(v_653390, v_3b402b, v_df7b8f);
 
-    if (v_653390 === v_e3e816.BLOOD_PRESSURE) {
-      const v_5d0a1b = v_3b402b as any;
-      if (typeof v_5d0a1b === 'object' && v_5d0a1b !== null && !Array.isArray(v_5d0a1b)) {
-        const v_e7392b = typeof v_5d0a1b.systolic === 'number' ? v_5d0a1b.systolic : Number(v_5d0a1b.systolic);
-        const v_8cfeff = typeof v_5d0a1b.diastolic === 'number' ? v_5d0a1b.diastolic : Number(v_5d0a1b.diastolic);
-
-        if (!isNaN(v_e7392b) && !isNaN(v_8cfeff)) {
-
-          return (v_e7392b >= 140 || v_8cfeff >= 95) ? '위험' : '정상';
-        }
-      }
-
-      return v_005339(v_df7b8f(v_e3e816.HIGH_BLOOD_PRESSURE_RISK));
-    }
-    if (v_653390 === v_e3e816.HIGH_BLOOD_PRESSURE_RISK) {
-      return v_005339(v_3b402b);
-    }
-
-    if (v_653390 === v_e3e816.PULSE_RATE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 60 && v_549ed3 <= 100) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.RESPIRATION_RATE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 12 && v_549ed3 <= 20) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.PRQ) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 4 && v_549ed3 <= 5) ? '정상' : '위험';
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.SDNN) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        return (v_549ed3 >= 50) ? '정상' : '위험';
-      }
-      return null;
-    }
-    const v_f4d1c2 = [
-      v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
-      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
-      v_e3e816.ASCVD_RISK,
-      v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
-      v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
-      v_e3e816.LOW_HEMOGLOBIN_RISK,
-    ];
-    if (v_f4d1c2.includes(v_653390)) {
-      return v_005339(v_3b402b);
-    }
-
-    if (v_653390 === v_e3e816.PNS_ZONE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        const v_b66476 = Math.round(v_549ed3);
-        if (v_b66476 === 0) return null; 
-        if (v_b66476 === 1) return '위험'; 
-        return '정상'; 
-      }
-      return null;
-    }
-
-    if (v_653390 === v_e3e816.SNS_ZONE) {
-      const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-      if (!isNaN(v_549ed3)) {
-        const v_b66476 = Math.round(v_549ed3);
-        if (v_b66476 === 0) return null; 
-        if (v_b66476 === 3) return '위험'; 
-        return '정상'; 
-      }
-      return null;
-    }
-    const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    if (!isNaN(v_549ed3)) {
-      return '정상';
-    }
-    return null;
-  };
-
-  const v_463ca2 = (v_d308b5) => {
+  const v_463ca2 = (status: v_71beaa | null) => {
     if (v_d308b5 === '위험') {
       return {
         text: v_d8cb4d.warning.color,
@@ -1896,7 +1773,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     return v_8d41d7('health_analysis.result.normal');
   };
 
-  const v_e4ae59 = (v_1833e7, v_d308b5, v_ba91d0, v_653390, v_3b402b) => {
+  const v_e4ae59 = (v_1833e7, status: v_71beaa | null, v_ba91d0, v_653390, v_3b402b) => {
 
     if (v_ba91d0 === 'respiratory') {
       if (v_d308b5 === '정상') {
@@ -2651,7 +2528,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                     {v_8c0b26.status && (
                                       <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
                                         <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
-                                          {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.ai_caution') : v_8d41d7('health_analysis.result.ai_normal')}
+                                          {v_8c0b26.status === '위험' ? v_8d41d7('health_analysis.result.risk') : v_8d41d7('health_analysis.result.normal')}
                                         </Text>
                                       </View>
                                     )}
