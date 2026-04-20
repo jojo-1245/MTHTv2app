@@ -1681,17 +1681,91 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }, [v_a7f568, v_8d41d7, v_08e501]);
 
   const v_2e670e = v_df9f57(() => {
+    type Section = { key: string; titleKey: string; types: number[] };
+    const v_946c09 = [
+      {
+        key: 'section_vital_signs',
+        titleKey: 'health_records.section_vital_signs',
+        types: [
+          v_e3e816.BLOOD_PRESSURE,
+          v_e3e816.PULSE_RATE,
+          v_e3e816.RESPIRATION_RATE,
+          v_e3e816.OXYGEN_SATURATION,
+        ],
+      },
+      {
+        key: 'section_hrv',
+        titleKey: 'health_records.section_hrv',
+        types: [
+          v_e3e816.SDNN,
+          v_e3e816.RMSSD,
+          v_e3e816.MEAN_RRI,
+          v_e3e816.SD1,
+          v_e3e816.SD2,
+        ],
+      },
+      {
+        key: 'section_stress_response',
+        titleKey: 'health_records.section_stress_response',
+        types: [v_e3e816.SNS_ZONE, v_e3e816.SNS_INDEX],
+      },
+      {
+        key: 'section_stress',
+        titleKey: 'health_records.section_stress',
+        types: [
+          v_e3e816.STRESS_LEVEL,
+          v_e3e816.STRESS_INDEX,
+          v_e3e816.NORMALIZED_STRESS_INDEX,
+        ],
+      },
+      {
+        key: 'section_recovery',
+        titleKey: 'health_records.section_recovery',
+        types: [v_e3e816.PNS_ZONE, v_e3e816.PNS_INDEX],
+      },
+      {
+        key: 'section_cardiovascular',
+        titleKey: 'health_records.section_cardiovascular',
+        types: [
+          v_e3e816.PRQ,
+          v_e3e816.CARDIAC_WORKLOAD,
+          v_e3e816.PULSE_PRESSURE,
+          v_e3e816.MEAN_ARTERIAL_PRESSURE,
+        ],
+      },
+      {
+        key: 'section_blood_tests',
+        titleKey: 'health_records.section_blood_tests',
+        types: [v_e3e816.HEMOGLOBIN, v_e3e816.HEMOGLOBIN_A1C],
+      },
+      {
+        key: 'section_risk_prediction',
+        titleKey: 'health_records.section_risk_prediction',
+        types: [
+          v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+          v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+          v_e3e816.ASCVD_RISK,
+          v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+          v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+          v_e3e816.LOW_HEMOGLOBIN_RISK,
+          v_e3e816.HEART_AGE,
+        ],
+      },
+    ];
+
     const v_110a8b = new Set<number>();
-    const categoryOrder: (keyof typeof v_153eb4)[] = ['vital-signs', 'stress-recovery', 'blood-tests', 'cardiovascular', 'respiratory', 'risks'];
     const v_8d4337 = [];
 
-    for (const v_757575 of v_7d78b3) {
-      const v_e03a6e = v_153eb4[v_757575] || [];
+    for (const v_b4fa6c of v_946c09) {
       const items: typeof v_8d4337[0]['items'] = [];
-      for (const v_653390 of v_e03a6e) {
+      for (const v_653390 of v_b4fa6c.types) {
         if (v_110a8b.has(v_653390) || v_930bc7.has(v_653390)) continue;
         const v_3b402b = v_a7f568?.[v_653390]?.value;
         if (v_3b402b === undefined || v_3b402b === null) continue;
+
+        if (Array.isArray(v_3b402b)) continue;
+        if (typeof v_3b402b === 'number' && v_3b402b === -1) continue;
+        if (typeof v_3b402b === 'string' && Number(v_3b402b) === -1) continue;
         if (v_ed9d34.includes(v_653390)) {
           const v_cb2c3a = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
           if (v_cb2c3a === 0) continue;
@@ -1706,16 +1780,15 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         });
       }
       if (v_4622b9.length > 0) {
-        const v_9bf432 = v_8bc599.find((v_3f4e2e) => v_3f4e2e.id === v_757575);
         v_8d4337.push({
-          categoryId: v_757575,
-          categoryLabel: v_9bf432?.label || v_757575,
+          categoryId: v_b4fa6c.key,
+          categoryLabel: v_8d41d7(v_b4fa6c.titleKey),
           items: v_4622b9,
         });
       }
     }
     return v_8d4337;
-  }, [v_a7f568, v_8bc599, v_153eb4, v_930bc7, v_ed9d34, v_8d41d7]);
+  }, [v_a7f568, v_930bc7, v_ed9d34, v_8d41d7]);
 
   const v_a61ee3 = 184;
   const v_5675fb = 60;
