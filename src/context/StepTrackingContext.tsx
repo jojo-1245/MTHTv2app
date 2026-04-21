@@ -80,6 +80,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       if (v_d94577 === null || v_d94577 === '' || v_d94577 !== v_227df7) {
         await v_e84827.setItem(v_c567d7, '0');
         await v_e84827.setItem(v_368d84, v_227df7);
+        v_5948ce.current = 0;
         return 0;
       }
       const v_635b76 = await v_e84827.getItem(v_c567d7);
@@ -259,6 +260,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
             await v_e84827.setItem(v_c567d7, '0');
             await v_e84827.setItem(v_368d84, v_227df7);
             v_635b76 = 0;
+            v_5948ce.current = 0;
           }
 
           const v_02fdad = await v_303ad0();
@@ -387,6 +389,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
         } catch { }
         await v_e84827.setItem(v_c567d7, '0');
         await v_e84827.setItem(v_368d84, v_227df7);
+        v_5948ce.current = 0;
         v_4b95c4(0);
         v_3e3188.current = 0;
       }
