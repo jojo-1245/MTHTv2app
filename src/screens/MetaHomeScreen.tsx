@@ -412,6 +412,30 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_0e72e5(v_b922bf, v_021a29, 'MetaHint');
   };
 
+  const [v_db3505, v_0f71a0] = v_5ab095(false);
+  const v_be1253 = () => {
+    if (v_db3505) return;
+    v_0f71a0(true);
+    v_f42779('pangle_ad_manual_press', {});
+    v_8e174f(
+      () => {
+
+        v_03e392.alert(
+          v_8d41d7('common.done', '완료'),
+          v_8d41d7('home.pangle_ad_done', '광고 시청이 완료되었습니다.'),
+        );
+      },
+      () => v_0f71a0(false),
+      (v_49263d) => {
+        v_0f71a0(false);
+        v_03e392.alert(
+          v_8d41d7('common.error'),
+          (v_49263d?.message as string) || v_8d41d7('home.pangle_ad_failed', '광고 로드에 실패했습니다.'),
+        );
+      },
+    );
+  };
+
   const v_2f26f6 = async () => {
     const v_537e97 = v_3e3188.current;
     v_f42779('attendance_api_before', { steps: v_537e97, claimed_step_indices: v_b1361b });
@@ -781,6 +805,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               leftIcon={<Coins size={16} color="#FFFFFF" />}
               style={v_d81136.attendanceBtn}
               onPress={v_a2c2c9}
+            />
+            {}
+            <GradientButton
+              title={v_db3505
+                ? v_8d41d7('common.loading', '로딩 중...')
+                : v_8d41d7('home.pangle_ad_button', '광고 보기 (Pangle)')}
+              leftIcon={<Coins size={16} color="#FFFFFF" />}
+              style={[v_d81136.attendanceBtn, { marginTop: v_9b1a04.small }]}
+              onPress={v_be1253}
+              disabled={v_db3505}
             />
           </View>
 
