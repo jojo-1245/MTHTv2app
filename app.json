@@ -6,7 +6,7 @@
       "ai.metahint.appw",
       "metahintai"
     ],
-    "version": "5.0.3",
+    "version": "5.0.4",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
