@@ -51,8 +51,14 @@ yarn-error.*
 *.tsbuildinfo
 
 # generated native folders
-# /ios 
+# /ios
 # /android
+
+# OTA bundle artifacts
+ota-bundle/
+ota-bundle.zip
+bundle-android-*.zip
+
 build-1768732702801.apk.zip
 build-1768801826506.apk.zip
 build-1768801826506.aab.zip
