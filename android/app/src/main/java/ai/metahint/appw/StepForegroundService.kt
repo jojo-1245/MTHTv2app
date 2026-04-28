@@ -79,21 +79,28 @@ class StepForegroundService : Service(), SensorEventListener {
             ACTION_UPDATE -> {
                 val steps = intent.getIntExtra(EXTRA_STEPS, 0)
                 val unit = intent.getStringExtra(EXTRA_STEP_UNIT) ?: "걸음"
-                currentSteps = steps
-                lastStepCount = steps
 
-                if (hasCounterBaseline && lastStepCounterTotal > 0) {
+                if (steps > 0 || currentSteps == 0) {
+                    currentSteps = steps
+                    lastStepCount = steps
+                }
+
+                if (steps > 0 && hasCounterBaseline && lastStepCounterTotal > 0) {
                     stepOffset = lastStepCounterTotal - currentSteps
                 }
                 stepUnit = unit
-                startForeground(NOTIFICATION_ID, buildNotification(steps, unit))
+                startForeground(NOTIFICATION_ID, buildNotification(currentSteps, unit))
             }
             else -> {
                 val steps = intent?.getIntExtra(EXTRA_STEPS, 0) ?: 0
                 val unit = intent?.getStringExtra(EXTRA_STEP_UNIT) ?: "걸음"
-                currentSteps = steps
+
+                if (steps > 0 || currentSteps == 0) {
+                    currentSteps = steps
+                    lastStepCount = steps
+                }
                 stepUnit = unit
-                startForeground(NOTIFICATION_ID, buildNotification(steps, unit))
+                startForeground(NOTIFICATION_ID, buildNotification(currentSteps, unit))
                 startStepTracking()
             }
         }
