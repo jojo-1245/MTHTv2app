@@ -47,6 +47,10 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
+    <service
+      android:name=".StepForegroundService"
+      android:exported="false"
+      android:foregroundServiceType="health"/>
     <!-- Notifee 포그라운드 서비스 (걸음수 추적) -->
     <service
       android:name="app.notifee.core.ForegroundService"
