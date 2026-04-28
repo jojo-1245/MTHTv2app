@@ -389,6 +389,31 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     return () => { try { v_269481?.remove(); } catch {} };
   }, [v_5640a4, v_7f798a]);
 
+  v_c4deb2(() => {
+    if (v_326be8.OS !== 'android') return;
+    if (!v_264467 || !v_0c7e2f()) return;
+
+    let v_da0c31 = false;
+    const v_706c5a = 1500;
+    const v_cb36b1 = setInterval(async () => {
+      if (!v_6b5698 || v_6b5698.currentState !== 'active') return;
+      if (v_da0c31) return;
+      v_da0c31 = true;
+      try {
+        const v_71e9eb = await v_f41071();
+        if (v_71e9eb > v_3e3188.current) {
+          v_4b95c4(v_71e9eb);
+        }
+      } catch {
+
+      } finally {
+        v_da0c31 = false;
+      }
+    }, v_706c5a);
+
+    return () => clearInterval(v_cb36b1);
+  }, [v_264467]);
+
   const v_3b402b = v_df9f57(() => ({
     currentSteps: v_dc679a,
     stepGoal: v_c19e2d,
