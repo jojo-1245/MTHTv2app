@@ -95,80 +95,43 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
   v_c4deb2(() => { v_3e3188.current = v_dc679a; }, [v_dc679a]);
 
-  const v_ec633a = v_e662ae(0);
-  const v_b67a98 = v_e662ae(0);
-  const v_488630 = v_e662ae(0);
+  v_c4deb2(() => {
+    let v_41ed06 = true;
+    const v_e71c08 = async () => {
+      try {
+        const v_635b76 = await v_e9771f();
+        let v_fd7b23 = v_635b76;
 
-  const v_5a97a8 = v_e662ae(0);
-  const v_b9c73e = v_e662ae<ReturnType<typeof setTimeout> | null>(null);
-  const v_831777 = 5000;
+        try {
+          const v_dc359d = await v_f41071();
+          if (v_dc359d > v_fd7b23) {
+            v_fd7b23 = v_dc359d;
+          }
+        } catch {
+
+        }
+
+        if (!v_41ed06) return;
+        v_4b95c4((v_ba2215) => Math.max(v_ba2215, v_fd7b23));
+        if (v_fd7b23 > v_635b76) {
+          await v_7f798a(v_fd7b23);
+        }
+      } catch (v_5e9bfe) {
+        console.warn('[StepTracking] 즉시 하이드레이션 실패:', v_5e9bfe);
+      }
+    };
+
+    v_e71c08();
+    return () => {
+      v_41ed06 = false;
+    };
+  }, [v_e9771f, v_7f798a]);
 
   v_c4deb2(() => {
     if (!v_264467 || !v_0c7e2f()) return;
     const v_59929c = v_f74058('home.step_unit', '걸음');
-    const v_5c2f9f = Date.now();
-    const v_e56026 = v_5c2f9f - v_5a97a8.current;
-
-    const v_0100e1 = () => {
-      v_5a97a8.current = Date.now();
-      v_b67a98.current += 1;
-      v_8348d9(v_3e3188.current, v_c19e2d, v_59929c);
-    };
-
-    if (v_e56026 >= v_831777) {
-      if (v_b9c73e.current) {
-        clearTimeout(v_b9c73e.current);
-        v_b9c73e.current = null;
-      }
-      v_0100e1();
-    } else {
-
-      if (v_b9c73e.current) {
-        v_488630.current += 1;
-        return;
-      }
-      v_b9c73e.current = setTimeout(() => {
-        v_b9c73e.current = null;
-        v_0100e1();
-      }, v_831777 - v_e56026);
-    }
-
-    return () => {
-
-    };
+    v_8348d9(v_dc679a, v_c19e2d, v_59929c);
   }, [v_dc679a, v_264467, v_f74058]);
-
-  v_c4deb2(() => {
-    return () => {
-      if (v_b9c73e.current) {
-        clearTimeout(v_b9c73e.current);
-        v_b9c73e.current = null;
-      }
-    };
-  }, []);
-
-  v_c4deb2(() => {
-    const v_ad1d65 = setInterval(() => {
-      const v_7a5558 = v_ec633a.current;
-      const v_518c82 = v_b67a98.current;
-      const v_92c663 = v_488630.current;
-      if (v_7a5558 === 0 && v_518c82 === 0) return; 
-      try {
-        const { logToServer: v_f42779 } = require('../services/clientLog');
-        v_f42779('step_diag_minute', {
-          watch_callbacks: v_7a5558,
-          notif_calls: v_518c82,
-          notif_skipped: v_92c663,
-          current_steps: v_3e3188.current,
-          notif_enabled: v_264467,
-        });
-      } catch { }
-      v_ec633a.current = 0;
-      v_b67a98.current = 0;
-      v_488630.current = 0;
-    }, 60000);
-    return () => clearInterval(v_ad1d65);
-  }, [v_264467]);
 
   v_c4deb2(() => {
     if (v_dc679a === 0) return;
@@ -193,13 +156,17 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   const v_f37ec2 = v_de06a3(async (v_d20c84) => {
     v_e882e2(v_d20c84);
     await v_e84827.setItem(v_8bf63f, v_d20c84 ? 'true' : 'false');
-    if (v_d20c84 && v_0c7e2f()) {
+    if (!v_0c7e2f()) return;
+
+    if (v_d20c84) {
       const v_59929c = v_f74058('home.step_unit', '걸음');
       const v_43c42e = await v_381355(v_c19e2d, v_59929c);
       if (!v_43c42e.success) {
         v_e882e2(false);
         await v_e84827.setItem(v_8bf63f, 'false');
       }
+    } else {
+      await v_015a21();
     }
   }, [v_f74058]);
 
@@ -294,7 +261,6 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
             try {
               v_269481 = v_5dafcb.watchStepCount((v_43c42e) => {
                 if (!v_41ed06) return;
-                v_ec633a.current += 1;
                 const v_81d1b5 = v_43c42e.steps;
                 const v_a6a5f1 = v_3e3188.current;
                 const v_fd45cb = v_5948ce.current;
@@ -423,6 +389,31 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     return () => { try { v_269481?.remove(); } catch {} };
   }, [v_5640a4, v_7f798a]);
 
+  v_c4deb2(() => {
+    if (v_326be8.OS !== 'android') return;
+    if (!v_264467 || !v_0c7e2f()) return;
+
+    let v_da0c31 = false;
+    const v_706c5a = 1500;
+    const v_cb36b1 = setInterval(async () => {
+      if (!v_6b5698 || v_6b5698.currentState !== 'active') return;
+      if (v_da0c31) return;
+      v_da0c31 = true;
+      try {
+        const v_71e9eb = await v_f41071();
+        if (v_71e9eb > v_3e3188.current) {
+          v_4b95c4(v_71e9eb);
+        }
+      } catch {
+
+      } finally {
+        v_da0c31 = false;
+      }
+    }, v_706c5a);
+
+    return () => clearInterval(v_cb36b1);
+  }, [v_264467]);
+
   const v_3b402b = v_df9f57(() => ({
     currentSteps: v_dc679a,
     stepGoal: v_c19e2d,
@@ -430,14 +421,6 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     stepNotificationEnabled: v_264467,
     setStepNotificationEnabled: v_f37ec2,
   }), [v_dc679a, v_9c8eed, v_264467, v_f37ec2]);
-
-  v_c4deb2(() => {
-    return () => {
-      if (v_326be8.OS === 'android' && v_0c7e2f()) {
-        v_015a21().catch(() => {});
-      }
-    };
-  }, []);
 
   return (
     <StepTrackingContext.Provider value={v_3b402b}>
