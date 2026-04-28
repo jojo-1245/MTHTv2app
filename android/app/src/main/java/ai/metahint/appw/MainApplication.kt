@@ -26,6 +26,7 @@ class MainApplication : Application(), ReactApplication {
             PackageList(this).packages.apply {
 
               add(PointClickOfferwallPackage())
+              add(StepNotificationPackage())
             }
 
           override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
