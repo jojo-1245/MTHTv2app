@@ -538,7 +538,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_5ce610(true);
     v_8e174f(
       () => v_c907cb(v_af3e48),
-      () => v_5ce610(false),
+      () => { },
       () => {
         v_5ce610(false);
         v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
@@ -558,6 +558,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
       return;
     }
+
+    v_04f4d8((v_ba2215) =>
+      v_ba2215.includes(v_af3e48) ? v_ba2215 : [...v_ba2215, v_af3e48]
+    );
 
     v_5ce610(true);
     try {
@@ -584,8 +588,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         total_reward_paid: v_43c42e.total_reward_paid,
       });
 
-      if (Array.isArray(v_43c42e.state_idx)) {
+      if (Array.isArray(v_43c42e.state_idx) && v_43c42e.state_idx.length > 0) {
         v_04f4d8(v_43c42e.state_idx);
+      } else {
+        v_04f4d8((v_ba2215) =>
+          v_ba2215.includes(v_af3e48) ? v_ba2215 : [...v_ba2215, v_af3e48]
+        );
       }
 
       const v_59ccdc = v_43c42e.new_rewards_count > 0
@@ -594,6 +602,18 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
+
+      try {
+        const v_227df7 = v_312d93(v_9c213b.language);
+        const v_ab03ab = await v_6c47a7(v_227df7);
+        if (Array.isArray(v_ab03ab)) {
+          v_04f4d8(v_ab03ab);
+        } else {
+          v_04f4d8((v_ba2215) => v_ba2215.filter((v_e86ad8) => v_e86ad8 !== v_af3e48));
+        }
+      } catch {
+        v_04f4d8((v_ba2215) => v_ba2215.filter((v_e86ad8) => v_e86ad8 !== v_af3e48));
+      }
       const v_377045 = (v_5e9bfe as any)?.isAxiosError ? v_5e9bfe as any : null;
       console.error('[MetaHomeScreen] 걸음수 보상 받기 실패:', {
         message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
