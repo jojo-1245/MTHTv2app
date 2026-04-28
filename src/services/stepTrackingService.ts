@@ -28,7 +28,7 @@ const v_56f9c0 = async (): Promise<void> => {
   await v_2dc4c2.createChannel({
     id: v_0c9506,
     name: '걸음 추적',
-    importance: 4,
+    importance: 2,
     vibration: false,
   });
 };
