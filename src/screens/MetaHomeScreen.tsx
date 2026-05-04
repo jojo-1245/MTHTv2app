@@ -5,6 +5,7 @@ import {
   v_1ed974,
   v_cdbae1,
   v_2d4718,
+  v_aa7413,
   v_326be8,
   v_472849,
   v_19b633,
@@ -33,6 +34,7 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
+import { v_77b82e, v_627447 } from 'ngfuhpl';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
@@ -52,6 +54,7 @@ import { v_312d93 } from '../utils/dateUtils';
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
 const v_450056 = require('../../assets/images/hinti_mouth.png'); 
+const v_91edcb = require('../../assets/video/ad_metahint.mp4');
 
 const v_35106c = v_a3453e.memo(({ isTalking: v_738ed0, style: v_7fa4e4 }: { isTalking: boolean; style: any }) => {
   const [v_80f47a, v_59c1e9] = v_5ab095(false);
@@ -211,6 +214,7 @@ const v_55087c = 0.15;
 const v_c19e2d = 10000;
 const v_2258bf = 1000;
 const v_234582 = 25;
+const v_a32607 = __DEV__;
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -273,6 +277,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
+  const [v_677760, v_ed4dc5] = v_5ab095(false);
+  const v_6c1895 = v_e662ae<(() => void) | null>(null);
 
   const [v_780057, v_f23f5b] = v_5ab095(0);
 
@@ -326,6 +332,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   );
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
+  const [v_74891a, v_22e0b8] = v_5ab095(false);
   const [v_05cf57, v_0d7691] = v_5ab095(0);
   const [v_f2fb87, v_c34f93] = v_5ab095(0);
   const [v_b43899, v_468450] = v_5ab095(7);
@@ -337,12 +344,70 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   } | null>(null);
 
   const v_8aab53 = (new Date().getDay() + 6) % 7;
-  const v_74891a = v_79dc58[v_8aab53];
+  const v_40d471 = (): string => {
+    const v_5c2f9f = new Date();
+    const v_0eaaff = v_5c2f9f.getFullYear();
+    const v_033a94 = String(v_5c2f9f.getMonth() + 1).padStart(2, '0');
+    const v_087ffc = String(v_5c2f9f.getDate()).padStart(2, '0');
+    return `${v_0eaaff}-${v_033a94}-${v_087ffc}`;
+  };
+
+  const v_22b7f5 = (v_a86996): Date | null => {
+    const [v_e571b2, v_d244af, v_6e2800] = v_a86996.split('-');
+    const v_0eaaff = Number(v_e571b2);
+    const v_033a94 = Number(v_d244af);
+    const v_087ffc = Number(v_6e2800);
+    if (!Number.isFinite(v_0eaaff) || !Number.isFinite(v_033a94) || !Number.isFinite(v_087ffc)) {
+      return null;
+    }
+    return new Date(v_0eaaff, v_033a94 - 1, v_087ffc);
+  };
 
   const v_ab4ad9 = (v_a86996): number => {
-    const v_8dffde = new Date(v_a86996);
+    const v_8dffde = v_22b7f5(v_a86996);
+    if (!v_8dffde) {
+      return -1;
+    }
 
     return (v_8dffde.getDay() + 6) % 7;
+  };
+
+  const v_6b7b1c = (
+    v_212a26,
+    v_20d7b1,
+    v_e1493a
+  ) => {
+    const v_b9a9d3 = v_22b7f5(v_20d7b1);
+    const v_61d766 = v_22b7f5(v_e1493a);
+    if (!v_b9a9d3 || !v_61d766) {
+      return {
+        attendanceByWeekday: [false, false, false, false, false, false, false],
+        checkedToday: false,
+      };
+    }
+
+    const v_6557a7 = [false, false, false, false, false, false, false];
+    const v_3b28c6 = v_40d471();
+    let v_f07f45 = false;
+
+    v_212a26.forEach((v_8c0b26) => {
+      const v_4d3d85 = v_22b7f5(v_8c0b26.date);
+      if (!v_4d3d85) {
+        return;
+      }
+      if (v_4d3d85 < v_b9a9d3 || v_4d3d85 > v_61d766) {
+        return;
+      }
+      const v_62a264 = v_ab4ad9(v_8c0b26.date);
+      if (v_62a264 >= 0 && v_62a264 < 7 && v_8c0b26.attended) {
+        v_6557a7[v_62a264] = true;
+      }
+      if (v_8c0b26.date === v_3b28c6 && v_8c0b26.attended) {
+        v_f07f45 = true;
+      }
+    });
+
+    return { attendanceByWeekday: v_6557a7, checkedToday: v_f07f45 };
   };
 
   v_c4deb2(() => {
@@ -350,18 +415,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_58b642 = async () => {
         try {
           const v_3ea33e = await v_e8dda3(v_c65f5d);
-
-          const v_cf60ad = [false, false, false, false, false, false, false];
-          v_3ea33e.recent_status.forEach((v_8c0b26) => {
-            const v_62a264 = v_ab4ad9(v_8c0b26.date);
-            if (v_62a264 >= 0 && v_62a264 < 7) {
-              v_cf60ad[v_62a264] = v_8c0b26.attended;
-            }
-          });
-          v_5b2bbb(v_cf60ad);
+          const { attendanceByWeekday: v_6557a7, checkedToday: v_f07f45 } = v_6b7b1c(
+            v_3ea33e.recent_status,
+            v_3ea33e.week_start,
+            v_3ea33e.week_end
+          );
+          v_5b2bbb(v_6557a7);
+          v_22e0b8(v_f07f45);
 
           v_0d7691(v_3ea33e.current_streak);
-          v_c34f93(v_3ea33e.week_attended);
+          v_c34f93(v_6557a7.filter(Boolean).length);
           v_468450(v_3ea33e.week_total);
         } catch (v_5e9bfe) {
           console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
@@ -379,6 +442,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 return v_a448ad;
               });
             }
+            v_22e0b8(v_d308b5.checked_today);
             v_0d7691(v_d308b5.streak_days);
           } catch (v_741f30) {
             console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
@@ -428,16 +492,15 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       try {
         const v_3ea33e = await v_e8dda3(v_c65f5d);
-        const v_cf60ad = [false, false, false, false, false, false, false];
-        v_3ea33e.recent_status.forEach((v_8c0b26) => {
-          const v_62a264 = v_ab4ad9(v_8c0b26.date);
-          if (v_62a264 >= 0 && v_62a264 < 7) {
-            v_cf60ad[v_62a264] = v_8c0b26.attended;
-          }
-        });
-        v_5b2bbb(v_cf60ad);
+        const { attendanceByWeekday: v_6557a7, checkedToday: v_f07f45 } = v_6b7b1c(
+          v_3ea33e.recent_status,
+          v_3ea33e.week_start,
+          v_3ea33e.week_end
+        );
+        v_5b2bbb(v_6557a7);
+        v_22e0b8(v_f07f45);
         v_0d7691(v_3ea33e.current_streak);
-        v_c34f93(v_3ea33e.week_attended);
+        v_c34f93(v_6557a7.filter(Boolean).length);
         v_468450(v_3ea33e.week_total);
       } catch {
         v_5b2bbb((v_ba2215) => {
@@ -445,6 +508,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           v_a448ad[v_8aab53] = true;
           return v_a448ad;
         });
+        v_22e0b8(true);
         v_0d7691(v_43c42e.streak_days);
       }
 
@@ -467,6 +531,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           v_a448ad[v_8aab53] = true;
           return v_a448ad;
         });
+        v_22e0b8(true);
         v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
         return;
       }
@@ -476,6 +541,18 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_e3bbea(false);
     }
   };
+
+  const v_e71575 = v_de06a3((v_9397ad) => {
+    v_6c1895.current = v_9397ad;
+    v_ed4dc5(true);
+  }, []);
+
+  const v_984187 = v_de06a3(() => {
+    v_ed4dc5(false);
+    const v_9397ad = v_6c1895.current;
+    v_6c1895.current = null;
+    v_9397ad?.();
+  }, []);
 
   const v_d0c5d7 = () => {
     if (v_74891a || v_1f7868) return;
@@ -490,8 +567,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       () => v_2f26f6(),
       () => v_e3bbea(false),
       () => {
-        v_e3bbea(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.attendance_check_failed'));
+        v_e71575(() => {
+          void v_2f26f6();
+        });
       }
     );
   };
@@ -532,21 +610,23 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_2627c5 = (v_af3e48) => {
     const v_c5110a = v_616ba8[v_af3e48];
-    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
+    const v_bdb345 = v_c5110a != null && (v_a32607 || v_dc679a >= v_c5110a);
+    if (v_c5110a == null || v_cd6f97 || !v_bdb345 || v_b1361b.includes(v_af3e48)) {
       return;
     }
     v_5ce610(true);
     v_8e174f(
-      () => v_c907cb(v_af3e48),
+      () => v_c907cb(v_af3e48, true),
       () => v_5ce610(false),
       () => {
-        v_5ce610(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
+        v_e71575(() => {
+          void v_c907cb(v_af3e48, true);
+        });
       }
     );
   };
 
-  const v_c907cb = async (v_af3e48) => {
+  const v_c907cb = async (v_af3e48, v_b4dccf = false) => {
     const v_c5110a = v_616ba8[v_af3e48];
     v_f42779('step_reward_press', {
       button_index: v_af3e48,
@@ -555,7 +635,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       step_goal: v_011173,
       claimed_step_indices: v_b1361b,
     });
-    if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
+    const v_bdb345 = v_c5110a != null && (v_a32607 || v_dc679a >= v_c5110a);
+    if (v_c5110a == null || (!v_b4dccf && v_cd6f97) || !v_bdb345 || v_b1361b.includes(v_af3e48)) {
       return;
     }
 
@@ -887,7 +968,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   contentContainerStyle={v_d81136.stepMilestonesList}
                 >
                   {v_81d478.map((v_c5110a, v_a56041) => {
-                    const v_fa25a3 = v_dc679a >= v_c5110a;
+                    const v_fa25a3 = v_a32607 || v_dc679a >= v_c5110a;
                     const v_ddef54 = v_b1361b.includes(v_a56041);
                     const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
                     const v_e0ed2f = !v_fa25a3;
@@ -1039,6 +1120,26 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       </SafeView>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
       <MedicalDisclaimerModal />
+      <Modal transparent visible={v_677760} animationType="fade" onRequestClose={v_984187}>
+        <View style={v_d81136.fallbackAdOverlay}>
+          <View style={v_d81136.fallbackAdCard}>
+            <Text style={v_d81136.fallbackAdTitle}>대체 광고</Text>
+            <Video
+              source={v_91edcb}
+              style={v_d81136.fallbackAdVideo}
+              resizeMode={v_627447.COVER}
+              shouldPlay
+              isLooping
+              isMuted={false}
+              useNativeControls={false}
+            />
+            <Text style={v_d81136.fallbackAdBody}>광고 로드 실패로 대체 광고를 재생 중입니다.</Text>
+            <TouchableOpacity style={v_d81136.fallbackAdButton} onPress={v_984187}>
+              <Text style={v_d81136.fallbackAdButtonText}>광고 닫기 후 보상 받기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </MainLayout>
   );
 };
@@ -1362,6 +1463,52 @@ const v_d81136 = v_472849.create({
   productPriceText: { fontSize: 13, fontFamily: v_843035.bold, color: '#000000', letterSpacing: -0.5 },
   productRating: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   productRatingText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF' },
+  fallbackAdOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  fallbackAdCard: {
+    width: '100%',
+    maxWidth: 360,
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+  },
+  fallbackAdTitle: {
+    fontSize: 18,
+    fontFamily: v_843035.bold,
+    color: '#111827',
+    marginBottom: 8,
+  },
+  fallbackAdVideo: {
+    width: '100%',
+    height: 220,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: '#000000',
+    marginBottom: 12,
+  },
+  fallbackAdBody: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: '#4B5563',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  fallbackAdButton: {
+    borderRadius: 12,
+    backgroundColor: '#615FFF',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  fallbackAdButtonText: {
+    fontSize: 14,
+    fontFamily: v_843035.bold,
+    color: '#FFFFFF',
+  },
   scrollView: { flex: 1, backgroundColor: '#F9FAFB' },
   scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge, overflow: 'visible' },
 });
