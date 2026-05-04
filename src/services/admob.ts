@@ -10,8 +10,6 @@ import v_ebba42, {
 
 const v_7f529f = "982891864";
 
-const v_fb75f4 = true;
-
 let v_4b1843 = false;
 
 let readyRewarded: v_29536b | null = null;
@@ -27,9 +25,6 @@ function v_002b9d(): v_29536b {
 
 export function v_c9d613(): void {
   if (v_326be8.OS !== "android" || !v_4b1843) {
-    return;
-  }
-  if (__DEV__ && v_fb75f4) {
     return;
   }
   if (v_282148 != null || v_5495c4) {
@@ -97,11 +92,6 @@ export function v_8e174f(
 ): void {
   if (v_326be8.OS !== "android") {
     v_6ae10d();
-    return;
-  }
-  if (__DEV__ && v_fb75f4) {
-    const v_51488a = new Error("[AdMob] forced failure for dev toggle");
-    v_4686f1?.(v_51488a);
     return;
   }
 

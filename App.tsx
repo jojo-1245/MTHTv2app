@@ -6,7 +6,7 @@ import { v_b2c639, v_a39049 } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import v_2dc4c2, { v_ad9c5b } from 'bsiaazmwsayjedvznfsir';
-import { v_4fb2ad } from './src/navigation';
+import * as v_6136c8 from './src/navigation/AppNavigator';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';
@@ -55,6 +55,7 @@ const v_83baa4 = () => {
 };
 
 export default function v_6540c3() {
+  const v_4fb2ad = v_6136c8?.AppNavigator;
   const [v_43f571, v_d39d7d] = v_c06f2c(v_20ccc6);
   const [v_4c1272, v_bf8912] = v_5ab095(false);
 
@@ -155,7 +156,7 @@ export default function v_6540c3() {
         <AppProvider>
           <WalletProvider>
             <StepTrackingProvider>
-              <AppNavigator />
+              {v_4fb2ad ? <AppNavigator /> : null}
             </StepTrackingProvider>
           </WalletProvider>
         </AppProvider>

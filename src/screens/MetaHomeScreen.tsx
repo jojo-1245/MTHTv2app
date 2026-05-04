@@ -23,6 +23,7 @@ import {
   v_0ae9ff,
   v_1df8e7,
   v_3ebb07,
+  v_d55cb2,
   v_20f6a6,
   v_1a7837,
   v_7ebf51,
@@ -34,7 +35,6 @@ import {
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
-import { v_77b82e, v_627447 } from 'ngfuhpl';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
@@ -55,6 +55,18 @@ const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
 const v_450056 = require('../../assets/images/hinti_mouth.png'); 
 const v_91edcb = require('../../assets/video/ad_metahint.mp4');
+const v_bb4fc4 = 15;
+let v_cbfae0 = null;
+let v_055d0f = undefined;
+try {
+
+  const v_1a4b93 = require('ngfuhpl');
+  v_cbfae0 = v_1a4b93?.Video ?? null;
+  v_055d0f = v_1a4b93?.ResizeMode?.COVER;
+} catch {
+  v_cbfae0 = null;
+  v_055d0f = undefined;
+}
 
 const v_35106c = v_a3453e.memo(({ isTalking: v_738ed0, style: v_7fa4e4 }: { isTalking: boolean; style: any }) => {
   const [v_80f47a, v_59c1e9] = v_5ab095(false);
@@ -214,7 +226,8 @@ const v_55087c = 0.15;
 const v_c19e2d = 10000;
 const v_2258bf = 1000;
 const v_234582 = 25;
-const v_a32607 = __DEV__;
+
+const v_607105 = 'test@example.com';
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -266,21 +279,36 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   }, []);
 
-  v_cf763b(
-    v_de06a3(() => {
-      v_e4961f();
-    }, [v_e4961f])
-  );
-
   const [v_39cb7a, v_ecd01c] = v_5ab095<number | null>(null);
   const [v_9ab1d9, v_6bf58d] = v_5ab095<number | null>(null);
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
   const [v_677760, v_ed4dc5] = v_5ab095(false);
+  const [v_6e35e7, v_53384e] = v_5ab095(v_bb4fc4);
   const v_6c1895 = v_e662ae<(() => void) | null>(null);
 
   const [v_780057, v_f23f5b] = v_5ab095(0);
+  const [v_f4fb5e, v_d9bcc7] = v_5ab095<string | null>(null);
+
+  const v_783a42 = v_de06a3(async () => {
+    try {
+      const v_727031 = await v_7ef860();
+      const v_e0c7e8 = typeof v_727031?.email === 'string' ? v_727031.email.trim().toLowerCase() : null;
+      v_d9bcc7(v_e0c7e8);
+    } catch {
+      v_d9bcc7(null);
+    }
+  }, []);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_e4961f();
+      void v_783a42();
+    }, [v_e4961f, v_783a42])
+  );
+
+  const v_7c326c = v_f4fb5e === v_607105.toLowerCase();
 
   const v_56263a = v_de06a3(async () => {
     try {
@@ -548,11 +576,36 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   }, []);
 
   const v_984187 = v_de06a3(() => {
+    if (v_6e35e7 > 0) return;
     v_ed4dc5(false);
     const v_9397ad = v_6c1895.current;
     v_6c1895.current = null;
     v_9397ad?.();
-  }, []);
+  }, [v_6e35e7]);
+
+  const v_b9f1dd = v_de06a3(() => {
+    v_e71575(() => {
+
+    });
+  }, [v_e71575]);
+
+  v_c4deb2(() => {
+    if (!v_677760) {
+      v_53384e(v_bb4fc4);
+      return;
+    }
+    v_53384e(v_bb4fc4);
+    const v_cb36b1 = setInterval(() => {
+      v_53384e((v_ba2215) => {
+        if (v_ba2215 <= 1) {
+          clearInterval(v_cb36b1);
+          return 0;
+        }
+        return v_ba2215 - 1;
+      });
+    }, 1000);
+    return () => clearInterval(v_cb36b1);
+  }, [v_677760]);
 
   const v_d0c5d7 = () => {
     if (v_74891a || v_1f7868) return;
@@ -610,7 +663,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_2627c5 = (v_af3e48) => {
     const v_c5110a = v_616ba8[v_af3e48];
-    const v_bdb345 = v_c5110a != null && (v_a32607 || v_dc679a >= v_c5110a);
+    const v_bdb345 = v_c5110a != null && v_dc679a >= v_c5110a;
     if (v_c5110a == null || v_cd6f97 || !v_bdb345 || v_b1361b.includes(v_af3e48)) {
       return;
     }
@@ -635,7 +688,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       step_goal: v_011173,
       claimed_step_indices: v_b1361b,
     });
-    const v_bdb345 = v_c5110a != null && (v_a32607 || v_dc679a >= v_c5110a);
+    const v_bdb345 = v_c5110a != null && v_dc679a >= v_c5110a;
     if (v_c5110a == null || (!v_b4dccf && v_cd6f97) || !v_bdb345 || v_b1361b.includes(v_af3e48)) {
       return;
     }
@@ -962,13 +1015,22 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     <Text style={v_d81136.stepsValueUnit}> {v_8d41d7('home.steps_unit')}</Text>
                   </Text>
                 </View>
+                {v_7c326c ? (
+                  <TouchableOpacity
+                    style={v_d81136.metahintAdPreviewBtn}
+                    onPress={v_b9f1dd}
+                    activeOpacity={0.85}
+                  >
+                    <Text style={v_d81136.metahintAdPreviewBtnText}>메타힌트광고로받기</Text>
+                  </TouchableOpacity>
+                ) : null}
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={v_d81136.stepMilestonesList}
                 >
                   {v_81d478.map((v_c5110a, v_a56041) => {
-                    const v_fa25a3 = v_a32607 || v_dc679a >= v_c5110a;
+                    const v_fa25a3 = v_dc679a >= v_c5110a;
                     const v_ddef54 = v_b1361b.includes(v_a56041);
                     const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
                     const v_e0ed2f = !v_fa25a3;
@@ -1120,23 +1182,43 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       </SafeView>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
       <MedicalDisclaimerModal />
-      <Modal transparent visible={v_677760} animationType="fade" onRequestClose={v_984187}>
+      <Modal
+        transparent
+        visible={v_677760}
+        animationType="fade"
+        onRequestClose={() => {
+          if (v_6e35e7 <= 0) {
+            v_984187();
+          }
+        }}
+      >
         <View style={v_d81136.fallbackAdOverlay}>
+          <View style={v_d81136.fallbackAdHeader}>
+            <Text style={v_d81136.fallbackAdTitle}>광고</Text>
+            {v_6e35e7 > 0 ? (
+              <Text style={v_d81136.fallbackAdTimer}>{v_6e35e7}초 후 닫기 가능</Text>
+            ) : (
+              <TouchableOpacity style={v_d81136.fallbackAdCloseButton} onPress={v_984187}>
+                <X size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={v_d81136.fallbackAdCard}>
-            <Text style={v_d81136.fallbackAdTitle}>대체 광고</Text>
-            <Video
-              source={v_91edcb}
-              style={v_d81136.fallbackAdVideo}
-              resizeMode={v_627447.COVER}
-              shouldPlay
-              isLooping
-              isMuted={false}
-              useNativeControls={false}
-            />
-            <Text style={v_d81136.fallbackAdBody}>광고 로드 실패로 대체 광고를 재생 중입니다.</Text>
-            <TouchableOpacity style={v_d81136.fallbackAdButton} onPress={v_984187}>
-              <Text style={v_d81136.fallbackAdButtonText}>광고 닫기 후 보상 받기</Text>
-            </TouchableOpacity>
+            {v_cbfae0 ? (
+              <FallbackVideo
+                source={v_91edcb}
+                style={v_d81136.fallbackAdVideo}
+                resizeMode={v_055d0f}
+                shouldPlay
+                isLooping
+                isMuted={false}
+                useNativeControls={false}
+              />
+            ) : (
+              <View style={[v_d81136.fallbackAdVideo, v_d81136.fallbackAdVideoFallback]}>
+                <Text style={v_d81136.fallbackAdBody}>동영상 플레이어를 불러오지 못했습니다. 앱을 다시 빌드해 주세요.</Text>
+              </View>
+            )}
           </View>
         </View>
       </Modal>
@@ -1438,6 +1520,23 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.bold,
     color: '#FFFFFF',
   },
+  metahintAdPreviewBtn: {
+    marginTop: 12,
+    marginBottom: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    backgroundColor: 'rgba(124, 58, 237, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(124, 58, 237, 0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  metahintAdPreviewBtnText: {
+    fontSize: 14,
+    fontFamily: v_843035.semibold,
+    color: '#5B21B6',
+  },
   stepTip: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1465,31 +1564,56 @@ const v_d81136 = v_472849.create({
   productRatingText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF' },
   fallbackAdOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: '#000000',
+    justifyContent: 'space-between',
+    paddingTop: 56,
+    paddingBottom: 32,
+    paddingHorizontal: 16,
+  },
+  fallbackAdHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 24,
+    justifyContent: 'space-between',
   },
   fallbackAdCard: {
     width: '100%',
-    maxWidth: 360,
-    borderRadius: 16,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
+    flex: 1,
+    justifyContent: 'space-between',
   },
   fallbackAdTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: v_843035.bold,
-    color: '#111827',
-    marginBottom: 8,
+    color: '#FFFFFF',
+  },
+  fallbackAdTimer: {
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+    color: '#D1D5DB',
+  },
+  fallbackAdCloseButton: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.4)',
   },
   fallbackAdVideo: {
     width: '100%',
-    height: 220,
-    borderRadius: 12,
+    flex: 1,
+    borderRadius: 14,
     overflow: 'hidden',
     backgroundColor: '#000000',
-    marginBottom: 12,
+    marginTop: 12,
+    marginBottom: 20,
+  },
+  fallbackAdVideoFallback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F3F4F6',
+    paddingHorizontal: 16,
   },
   fallbackAdBody: {
     fontSize: 14,
@@ -1497,17 +1621,6 @@ const v_d81136 = v_472849.create({
     color: '#4B5563',
     lineHeight: 20,
     marginBottom: 12,
-  },
-  fallbackAdButton: {
-    borderRadius: 12,
-    backgroundColor: '#615FFF',
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  fallbackAdButtonText: {
-    fontSize: 14,
-    fontFamily: v_843035.bold,
-    color: '#FFFFFF',
   },
   scrollView: { flex: 1, backgroundColor: '#F9FAFB' },
   scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge, overflow: 'visible' },
