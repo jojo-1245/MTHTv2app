@@ -5,6 +5,7 @@ import {
   v_1ed974,
   v_cdbae1,
   v_2d4718,
+  v_aa7413,
   v_326be8,
   v_472849,
   v_19b633,
@@ -29,10 +30,13 @@ import {
   v_56d16a,
   v_3e7a50,
   v_2e2f88,
+  v_d55cb2,
 } from 'wjvlskvsbzsrojdbjsl';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
+import { v_77b82e, v_627447 } from 'ngfuhpl';
+import v_3c99b3 from 'ueysoktupxcqxuhchjnihxdcscsleco';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
@@ -212,6 +216,10 @@ const v_c19e2d = 10000;
 const v_2258bf = 1000;
 const v_234582 = 25;
 
+const v_bb4fc4 = 15;
+const v_607105 = 'test@example.com';
+const v_86081c = require('../../assets/video/ad_metahint.mp4');
+
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
 const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat', 'weekday_sun'] as const;
@@ -266,6 +274,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_de06a3(() => {
       v_e4961f();
     }, [v_e4961f])
+  );
+
+  const [v_ee7f4d, v_ed14a9] = v_5ab095<string | null>(null);
+  v_cf763b(
+    v_de06a3(() => {
+      v_7ef860()
+        .then((v_e2a85c) =>
+          v_ed14a9(typeof v_e2a85c.email === 'string' ? v_e2a85c.email.trim().toLowerCase() : null)
+        )
+        .catch(() => v_ed14a9(null));
+    }, [])
   );
 
   const [v_39cb7a, v_ecd01c] = v_5ab095<number | null>(null);
@@ -339,11 +358,31 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_8aab53 = (new Date().getDay() + 6) % 7;
   const v_74891a = v_79dc58[v_8aab53];
 
-  const v_ab4ad9 = (v_a86996): number => {
-    const v_8dffde = new Date(v_a86996);
+  const v_630dc8 = v_de06a3((v_212a26) => {
+    const v_96a68c = [false, false, false, false, false, false, false];
+    const v_5c2f9f = new Date();
+    const v_8b3e85 = new Date(v_5c2f9f);
+    const v_a35724 = (v_5c2f9f.getDay() + 6) % 7;
+    v_8b3e85.setDate(v_5c2f9f.getDate() - v_a35724);
+    v_8b3e85.setHours(0, 0, 0, 0);
+    const v_2ea695 = new Date(v_8b3e85);
+    v_2ea695.setDate(v_8b3e85.getDate() + 6);
+    v_2ea695.setHours(23, 59, 59, 999);
 
-    return (v_8dffde.getDay() + 6) % 7;
-  };
+    v_212a26.forEach((v_8c0b26) => {
+      const v_8decf8 = new Date(v_8c0b26.date);
+      if (Number.isNaN(v_8decf8.getTime())) {
+        return;
+      }
+      if (v_8decf8 < v_8b3e85 || v_8decf8 > v_2ea695) {
+        return;
+      }
+      const v_62a264 = (v_8decf8.getDay() + 6) % 7;
+      v_96a68c[v_62a264] = !!v_8c0b26.attended;
+    });
+
+    return v_96a68c;
+  }, []);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => {
@@ -351,14 +390,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         try {
           const v_3ea33e = await v_e8dda3(v_c65f5d);
 
-          const v_cf60ad = [false, false, false, false, false, false, false];
-          v_3ea33e.recent_status.forEach((v_8c0b26) => {
-            const v_62a264 = v_ab4ad9(v_8c0b26.date);
-            if (v_62a264 >= 0 && v_62a264 < 7) {
-              v_cf60ad[v_62a264] = v_8c0b26.attended;
-            }
-          });
-          v_5b2bbb(v_cf60ad);
+          v_5b2bbb(v_630dc8(v_3ea33e.recent_status));
 
           v_0d7691(v_3ea33e.current_streak);
           v_c34f93(v_3ea33e.week_attended);
@@ -393,7 +425,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_58b642();
     }, 250);
     return () => clearTimeout(v_8d41d7);
-  }, [v_c65f5d, v_8aab53]);
+  }, [v_630dc8, v_c65f5d, v_8aab53]);
 
   const v_a2c2c9 = async () => {
     const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
@@ -412,6 +444,65 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_0e72e5(v_b922bf, v_021a29, 'MetaHint');
   };
 
+  const [v_2738c5, v_78a45c] = v_5ab095(false);
+  const [v_ccb0c6, v_30c0cc] = v_5ab095(v_bb4fc4);
+  const [v_9fa1aa, v_208a30] = v_5ab095(false);
+  const v_d18d6c = v_e662ae<(() => void) | null>(null);
+  const v_621528 = v_e662ae<InstanceType<typeof v_77b82e> | null>(null);
+
+  const v_e71575 = v_de06a3((v_9397ad) => {
+    v_d18d6c.current = v_9397ad;
+    v_78a45c(true);
+  }, []);
+
+  const v_c01288 = v_de06a3(async () => {
+    try {
+      await v_621528.current?.unloadAsync();
+    } catch {
+
+    }
+    v_78a45c(false);
+    const v_16dbdb = v_d18d6c.current;
+    v_d18d6c.current = null;
+    v_16dbdb?.();
+  }, []);
+
+  v_c4deb2(() => {
+    if (!v_2738c5) return;
+    v_30c0cc(v_bb4fc4);
+    v_208a30(false);
+    const v_389afb = setInterval(() => {
+      v_30c0cc((v_ba2215) => {
+        if (v_ba2215 <= 1) {
+          v_208a30(true);
+          return 0;
+        }
+        return v_ba2215 - 1;
+      });
+    }, 1000);
+    return () => clearInterval(v_389afb);
+  }, [v_2738c5]);
+
+  v_c4deb2(() => {
+    if (!v_2738c5 || v_9fa1aa) {
+      return undefined;
+    }
+    const v_1ae212 = v_1ed974.addEventListener('hardwareBackPress', () => true);
+    return () => v_1ae212.remove();
+  }, [v_2738c5, v_9fa1aa]);
+
+  const v_1acd0c = v_de06a3(async () => {
+    const v_b6e533 = await v_3c99b3.fetch();
+    const v_9ec914 = !!v_b6e533.isConnected && v_b6e533.isInternetReachable !== false;
+    if (!v_9ec914) {
+      v_03e392.alert(
+        v_8d41d7('common.notification'),
+        '네트워크 연결 후 다시 시도해주세요.'
+      );
+    }
+    return v_9ec914;
+  }, [v_8d41d7]);
+
   const v_2f26f6 = async () => {
     const v_537e97 = v_3e3188.current;
     v_f42779('attendance_api_before', { steps: v_537e97, claimed_step_indices: v_b1361b });
@@ -428,14 +519,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       try {
         const v_3ea33e = await v_e8dda3(v_c65f5d);
-        const v_cf60ad = [false, false, false, false, false, false, false];
-        v_3ea33e.recent_status.forEach((v_8c0b26) => {
-          const v_62a264 = v_ab4ad9(v_8c0b26.date);
-          if (v_62a264 >= 0 && v_62a264 < 7) {
-            v_cf60ad[v_62a264] = v_8c0b26.attended;
-          }
-        });
-        v_5b2bbb(v_cf60ad);
+        v_5b2bbb(v_630dc8(v_3ea33e.recent_status));
         v_0d7691(v_3ea33e.current_streak);
         v_c34f93(v_3ea33e.week_attended);
         v_468450(v_3ea33e.week_total);
@@ -477,8 +561,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }
   };
 
-  const v_d0c5d7 = () => {
+  const v_d0c5d7 = async () => {
     if (v_74891a || v_1f7868) return;
+    if (!(await v_1acd0c())) return;
     v_f42779('attendance_press', {
       steps: v_3e3188.current,
       step_goal: v_011173,
@@ -490,8 +575,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       () => v_2f26f6(),
       () => v_e3bbea(false),
       () => {
-        v_e3bbea(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.attendance_check_failed'));
+        v_e71575(() => {
+          void v_2f26f6();
+        });
       }
     );
   };
@@ -530,18 +616,20 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
 
-  const v_2627c5 = (v_af3e48) => {
+  const v_2627c5 = async (v_af3e48) => {
     const v_c5110a = v_616ba8[v_af3e48];
     if (v_c5110a == null || v_cd6f97 || v_dc679a < v_c5110a || v_b1361b.includes(v_af3e48)) {
       return;
     }
+    if (!(await v_1acd0c())) return;
     v_5ce610(true);
     v_8e174f(
       () => v_c907cb(v_af3e48),
       () => { },
       () => {
-        v_5ce610(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
+        v_e71575(() => {
+          void v_c907cb(v_af3e48);
+        });
       }
     );
   };
@@ -963,6 +1051,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     );
                   })}
                 </ScrollView>
+                {v_ee7f4d === v_607105 && (
+                  <View style={v_d81136.metahintPreviewRow}>
+                    <TouchableOpacity
+                      style={v_d81136.metahintPreviewBtn}
+                      onPress={() => v_e71575(() => {})}
+                      activeOpacity={0.85}
+                    >
+                      <Text style={v_d81136.metahintPreviewBtnText}>메타힌트광고로받기</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
                 <View style={v_d81136.stepTip}>
                   <Footprints size={16} color="#A78BFA" />
                   <Text style={v_d81136.stepTipText}>{v_8d41d7('home.step_tip')}</Text>
@@ -1057,6 +1156,41 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
         </SafeScrollView>
       </SafeView>
+      <Modal
+        visible={v_2738c5}
+        animationType="fade"
+        presentationStyle="fullScreen"
+        statusBarTranslucent
+        onRequestClose={() => {
+          if (v_9fa1aa) {
+            void v_c01288();
+          }
+        }}
+      >
+        <View style={v_d81136.fallbackAdRoot}>
+          <Video
+            ref={v_621528}
+            source={v_86081c}
+            style={v_d81136.fallbackAdVideo}
+            resizeMode={v_627447.COVER}
+            shouldPlay
+            isLooping
+            useNativeControls={false}
+          />
+          {!v_9fa1aa && (
+            <Text style={v_d81136.fallbackAdTimerText}>{v_ccb0c6}</Text>
+          )}
+          {v_9fa1aa && (
+            <TouchableOpacity
+              style={[v_d81136.fallbackAdCloseBtn, { top: v_033e14.top + 8 }]}
+              onPress={() => void v_c01288()}
+              hitSlop={12}
+            >
+              <X size={28} color="#FFFFFF" />
+            </TouchableOpacity>
+          )}
+        </View>
+      </Modal>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
       <MedicalDisclaimerModal />
     </MainLayout>
@@ -1377,6 +1511,27 @@ const v_d81136 = v_472849.create({
     padding: v_9b1a04.small,
   },
   stepTipText: { fontSize: 12, fontFamily: v_843035.regular, color: '#6B7280', flex: 1 },
+  metahintPreviewRow: { marginTop: 12, alignItems: 'center' },
+  metahintPreviewBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#A78BFA',
+    backgroundColor: '#FAF5FF',
+  },
+  metahintPreviewBtnText: { fontSize: 13, fontFamily: v_843035.semibold, color: '#7C3AED' },
+  fallbackAdRoot: { flex: 1, backgroundColor: '#000000', justifyContent: 'center' },
+  fallbackAdVideo: { width: '100%', height: '100%' },
+  fallbackAdCloseBtn: { position: 'absolute', right: 16, padding: 8, zIndex: 2 },
+  fallbackAdTimerText: {
+    position: 'absolute',
+    bottom: 48,
+    alignSelf: 'center',
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 14,
+    fontFamily: v_843035.medium,
+  },
   coinHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: v_9b1a04.medium },
   viewAll: { fontSize: 14, fontFamily: v_843035.semibold, color: '#3B82F6' },
   productList: { paddingRight: v_ff4e8b },
