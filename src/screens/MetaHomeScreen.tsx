@@ -1,5 +1,6 @@
 import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapkr';
 import {
+  v_39a996,
   v_03e392,
   v_a2349e,
   v_1ed974,
@@ -45,6 +46,11 @@ import { v_75c3c7, v_271901 } from '../context';
 import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
+import {
+  v_36c98c,
+  v_7ef52a,
+  type v_98dabe,
+} from '../services/orderApi';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_e4a763 } from '../utils/env';
 import { v_312d93 } from '../utils/dateUtils';
@@ -246,6 +252,27 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { width: v_06db8f } = v_e45a99();
   const { refreshWallet: v_e37b10 } = v_271901();
   const [v_b932f9, v_2cc80d] = v_5ab095(0);
+
+  const [v_265b71, v_135745] = v_5ab095<v_98dabe[]>([]);
+  const [v_5a01a7, v_b68b0f] = v_5ab095(true);
+  v_c4deb2(() => {
+    let v_2008a4 = false;
+    v_b68b0f(true);
+    v_36c98c()
+      .then((v_ef8ab1) => {
+        if (v_2008a4) return;
+        v_135745(Array.isArray(v_ef8ab1) ? v_ef8ab1 : []);
+      })
+      .catch(() => {
+        if (!v_2008a4) v_135745([]);
+      })
+      .finally(() => {
+        if (!v_2008a4) v_b68b0f(false);
+      });
+    return () => {
+      v_2008a4 = true;
+    };
+  }, []);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => v_e37b10(), 200);
@@ -1018,6 +1045,76 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           </View>
 
           {}
+          {(v_5a01a7 || v_265b71.length > 0) && (
+            <View style={v_d81136.section}>
+              <View style={v_d81136.coinHeader}>
+                <Text style={v_d81136.sectionTitle}>추천상품</Text>
+              </View>
+              {v_5a01a7 ? (
+                <View style={{ paddingVertical: 24, alignItems: 'center' }}>
+                  <ActivityIndicator size="small" color={v_1bfbd0.primary} />
+                </View>
+              ) : (
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={v_d81136.productList}
+                  decelerationRate="fast"
+                  snapToInterval={v_3af450 + v_11fb5c}
+                  snapToAlignment="start"
+                >
+                  {v_265b71.map((v_e2a85c) => {
+                    const v_ee89db = v_7ef52a(v_e2a85c.image_url);
+                    return (
+                      <View
+                        key={`rec-${v_e2a85c.id}`}
+                        style={[
+                          v_d81136.productCard,
+                          { width: v_3af450, marginRight: v_11fb5c },
+                        ]}
+                      >
+                        <View style={v_d81136.productImageBox}>
+                          {v_ee89db ? (
+                            <Image
+                              source={{ uri: v_ee89db }}
+                              style={v_d81136.productImage}
+                              resizeMode="contain"
+                            />
+                          ) : (
+                            <View style={v_d81136.recImagePlaceholder}>
+                              <Text style={v_d81136.recImagePlaceholderText} numberOfLines={2}>
+                                {v_e2a85c.product_name}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                        <View style={v_d81136.productInfo}>
+                          <View style={v_d81136.recCategoryBadge}>
+                            <Text style={v_d81136.recCategoryBadgeText}>{v_e2a85c.category || '상품'}</Text>
+                          </View>
+                          <Text style={v_d81136.productTitle} numberOfLines={2}>{v_e2a85c.product_name}</Text>
+                          <Text style={v_d81136.recPriceText} numberOfLines={2}>
+                            {v_e2a85c.daily_price != null ? `1일 ${v_e2a85c.daily_price.toLocaleString()}원` : '1일 -'}
+                            {'\n'}
+                            {v_e2a85c.monthly_price != null ? `1개월 ${v_e2a85c.monthly_price.toLocaleString()}원` : '1개월 -'}
+                          </Text>
+                          <TouchableOpacity
+                            style={v_d81136.recOrderBtn}
+                            onPress={() => v_9b57fc('Order', { productId: v_e2a85c.id })}
+                            activeOpacity={0.85}
+                          >
+                            <Text style={v_d81136.recOrderBtnText}>주문하기</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              )}
+            </View>
+          )}
+
+          {}
           <View style={v_d81136.section}>
             <View style={v_d81136.coinHeader}>
               <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.coin_products')}</Text>
@@ -1390,6 +1487,47 @@ const v_d81136 = v_472849.create({
   productPriceText: { fontSize: 13, fontFamily: v_843035.bold, color: '#000000', letterSpacing: -0.5 },
   productRating: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   productRatingText: { fontSize: 12, fontFamily: v_843035.regular, color: '#9CA3AF' },
+
+  recImagePlaceholder: {
+    width: '100%',
+    height: 100,
+    backgroundColor: '#E5E7EB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  recImagePlaceholderText: {
+    fontSize: 12,
+    fontFamily: v_843035.medium,
+    color: '#6B7280',
+    textAlign: 'center',
+  },
+  recCategoryBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+    backgroundColor: '#EEF2FF',
+    marginBottom: 6,
+  },
+  recCategoryBadgeText: { fontSize: 11, fontFamily: v_843035.medium, color: '#4F46E5' },
+  recPriceText: {
+    fontSize: 12,
+    fontFamily: v_843035.semibold,
+    color: '#111827',
+    marginTop: 4,
+    marginBottom: 10,
+    lineHeight: 16,
+  },
+  recOrderBtn: {
+    backgroundColor: '#615FFF',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  recOrderBtnText: { color: '#FFFFFF', fontFamily: v_843035.semibold, fontSize: 13 },
   scrollView: { flex: 1, backgroundColor: '#F9FAFB' },
   scrollContent: { flexGrow: 1, paddingBottom: v_9b1a04.xlarge, overflow: 'visible' },
 });
