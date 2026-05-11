@@ -42,6 +42,7 @@ import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
 import v_7f9fad from '../screens/AnalysisScreen';
 import { v_02d653 } from '../screens/chat';
 import v_67f088 from '../screens/AddSubAccountScreen';
+import v_66dd56 from '../screens/order/OrderScreen';
 
 export type RootStackParamList = {
   Intro: undefined;
@@ -151,6 +152,7 @@ export type RootStackParamList = {
     showEmailSearch?: boolean;
     subAccountId?: string;
   } | undefined;
+  Order: { productId: number };
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();
@@ -263,6 +265,11 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="HealthConnection" component={v_1b8038} />
         <Stack.Screen name="Chat" component={v_02d653} />
         <Stack.Screen name="AddSubAccount" component={v_67f088} />
+        <Stack.Screen
+          name="Order"
+          component={v_66dd56}
+          options={{ headerShown: false, title: '주문하기' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
