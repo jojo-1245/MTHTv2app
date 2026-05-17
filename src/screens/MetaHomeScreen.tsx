@@ -2,6 +2,7 @@ import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapk
 import {
   v_03e392,
   v_a2349e,
+  v_6b5698,
   v_1ed974,
   v_cdbae1,
   v_2d4718,
@@ -22,6 +23,7 @@ import {
   v_0ae9ff,
   v_1df8e7,
   v_3ebb07,
+  v_2d13e9,
   v_20f6a6,
   v_1a7837,
   v_7ebf51,
@@ -47,7 +49,12 @@ import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_e4a763 } from '../utils/env';
-import { v_312d93 } from '../utils/dateUtils';
+import {
+  v_312d93,
+  v_f54afa,
+  v_5f89d6,
+  v_1e048d,
+} from '../utils/dateUtils';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -273,6 +280,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_05a030, v_435f99] = v_5ab095<string | null>(null);
   const [v_32c7b6, v_07829a] = v_5ab095<string | null>(null);
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
+  const [v_07cadc, v_56256f] = v_5ab095(false);
 
   const [v_780057, v_f23f5b] = v_5ab095(0);
 
@@ -326,6 +334,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   );
 
   const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
+  const [v_74891a, v_22e0b8] = v_5ab095(false);
   const [v_05cf57, v_0d7691] = v_5ab095(0);
   const [v_f2fb87, v_c34f93] = v_5ab095(0);
   const [v_b43899, v_468450] = v_5ab095(7);
@@ -336,64 +345,218 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     is_completed: boolean;
   } | null>(null);
 
-  const v_8aab53 = (new Date().getDay() + 6) % 7;
-  const v_74891a = v_79dc58[v_8aab53];
-
-  const v_ab4ad9 = (v_a86996): number => {
-    const v_8dffde = new Date(v_a86996);
-
-    return (v_8dffde.getDay() + 6) % 7;
-  };
+  const [v_08c4b0, v_899025] = v_5ab095(() => v_312d93(v_9c213b.language));
 
   v_c4deb2(() => {
-    const v_8d41d7 = setTimeout(() => {
-      const v_58b642 = async () => {
-        try {
-          const v_3ea33e = await v_e8dda3(v_c65f5d);
+    const v_57a13c = () => {
+      const v_a448ad = v_312d93(v_9c213b.language);
+      v_899025((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
+    };
+    const v_ca94a2 = setInterval(v_57a13c, 60_000);
+    const v_1ae212 = v_6b5698.addEventListener('change', (v_b6e533) => {
+      if (v_b6e533 === 'active') {
+        v_57a13c();
+      }
+    });
+    return () => {
+      clearInterval(v_ca94a2);
+      v_1ae212.remove();
+    };
+  }, [v_9c213b.language]);
 
-          const v_cf60ad = [false, false, false, false, false, false, false];
-          v_3ea33e.recent_status.forEach((v_8c0b26) => {
-            const v_62a264 = v_ab4ad9(v_8c0b26.date);
-            if (v_62a264 >= 0 && v_62a264 < 7) {
-              v_cf60ad[v_62a264] = v_8c0b26.attended;
-            }
+  v_cf763b(
+    v_de06a3(() => {
+      const v_a448ad = v_312d93(v_9c213b.language);
+      v_899025((v_ba2215) => {
+        if (v_ba2215 !== v_a448ad) {
+          console.log('[MetaHomeScreen][Attendance] calendarDay 변경 → 출석 상태 조회 useEffect 재실행 예정', {
+            prev: v_ba2215,
+            next: v_a448ad,
           });
-          v_5b2bbb(v_cf60ad);
-
-          v_0d7691(v_3ea33e.current_streak);
-          v_c34f93(v_3ea33e.week_attended);
-          v_468450(v_3ea33e.week_total);
-        } catch (v_5e9bfe) {
-          console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
-
-          if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-            return;
-          }
-
-          try {
-            const v_d308b5 = await v_cbf5f1(v_c65f5d);
-            if (v_d308b5.checked_today) {
-              v_5b2bbb((v_ba2215) => {
-                const v_a448ad = [...v_ba2215];
-                v_a448ad[v_8aab53] = true;
-                return v_a448ad;
-              });
-            }
-            v_0d7691(v_d308b5.streak_days);
-          } catch (v_741f30) {
-            console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
-
-            if (v_998b9d(v_c65f5d, v_741f30)) {
-              return;
-            }
-          }
         }
-      };
+        return v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215;
+      });
+      console.log('[MetaHomeScreen][Attendance] MetaHome 포커스', {
+        calendarDay: v_a448ad,
+        note: '같은 날짜로만 포커스 복귀 시 출석 API는 재호출되지 않음 (마운트·calendarDay 변경 시만)',
+      });
+    }, [v_9c213b.language])
+  );
 
+  const v_8aab53 = v_1e048d(v_08c4b0);
+
+  const v_5464bf = v_de06a3(
+    (
+      v_212a26,
+      v_e2e922,
+      v_77dc31
+    ) => {
+      const v_96a68c = [false, false, false, false, false, false, false];
+      const { weekStart: v_4d5f58, weekEnd: v_5457a3, usedApiWeek: v_07bbb6 } = v_5f89d6(
+        v_08c4b0,
+        v_e2e922,
+        v_77dc31
+      );
+      const v_1377ec = v_f54afa(v_4d5f58);
+      const v_c8d7cd = v_f54afa(v_5457a3);
+      if (!v_1377ec || !v_c8d7cd) {
+        const v_99f8e6 = v_212a26.find((v_8c0b26) => v_8c0b26.date.slice(0, 10) === v_08c4b0);
+        return {
+          weekDays: v_96a68c,
+          weekStart: v_4d5f58,
+          weekEnd: v_5457a3,
+          usedApiWeek: v_07bbb6,
+          checkedToday: !!v_99f8e6?.attended,
+          weekAttendedFromGrid: 0,
+        };
+      }
+
+      v_212a26.forEach((v_8c0b26) => {
+        const v_76f3cc = v_8c0b26.date.slice(0, 10);
+        const v_8decf8 = v_f54afa(v_76f3cc);
+        if (!v_8decf8) return;
+        if (v_8decf8 < v_1377ec || v_8decf8 > v_c8d7cd) return;
+        const v_e9c14e = Math.round(
+          (v_8decf8.getTime() - v_1377ec.getTime()) / (24 * 60 * 60 * 1000)
+        );
+        if (v_e9c14e >= 0 && v_e9c14e <= 6) {
+          v_96a68c[v_e9c14e] = !!v_8c0b26.attended;
+        }
+      });
+
+      const v_99f8e6 = v_212a26.find((v_8c0b26) => v_8c0b26.date.slice(0, 10) === v_08c4b0);
+      const v_f07f45 = !!v_99f8e6?.attended;
+
+      return {
+        weekDays: v_96a68c,
+        weekStart: v_4d5f58,
+        weekEnd: v_5457a3,
+        usedApiWeek: v_07bbb6,
+        checkedToday: v_f07f45,
+        weekAttendedFromGrid: v_96a68c.filter(Boolean).length,
+      };
+    },
+    [v_08c4b0]
+  );
+
+  const v_295d4d = v_de06a3(
+    (statusDetail: Awaited<ReturnType<typeof v_e8dda3>>) => {
+      const v_f15433 = v_5464bf(
+        v_3ea33e.recent_status,
+        v_3ea33e.week_start,
+        v_3ea33e.week_end
+      );
+
+      if (!v_f15433.usedApiWeek && v_3ea33e.week_start && v_3ea33e.week_end) {
+        console.warn('[MetaHomeScreen][Attendance] API 주간 범위가 오늘과 불일치 → 클라이언트 이번 주 사용', {
+          calendarDay: v_08c4b0,
+          apiWeekStart: v_3ea33e.week_start,
+          apiWeekEnd: v_3ea33e.week_end,
+          clientWeekStart: v_f15433.weekStart,
+          clientWeekEnd: v_f15433.weekEnd,
+        });
+      }
+
+      v_5b2bbb(v_f15433.weekDays);
+      v_22e0b8(v_f15433.checkedToday);
+      v_0d7691(v_3ea33e.current_streak);
+      v_c34f93(v_f15433.usedApiWeek ? v_3ea33e.week_attended : v_f15433.weekAttendedFromGrid);
+      v_468450(v_3ea33e.week_total);
+      return v_f15433;
+    },
+    [v_08c4b0, v_5464bf]
+  );
+
+  const v_58b642 = v_de06a3(async () => {
+    const v_0173b3 = Date.now();
+    console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 API 호출', {
+      method: 'GET',
+      path: '/oth-path',
+      calendarDay: v_08c4b0,
+    });
+    try {
+      const v_3ea33e = await v_e8dda3(v_c65f5d);
+      const v_f15433 = v_295d4d(v_3ea33e);
+      console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 성공', {
+        durationMs: Date.now() - v_0173b3,
+        calendarDay: v_08c4b0,
+        weekStart: v_f15433.weekStart,
+        weekEnd: v_f15433.weekEnd,
+        usedApiWeek: v_f15433.usedApiWeek,
+        current_streak: v_3ea33e.current_streak,
+        week_attended: v_f15433.usedApiWeek ? v_3ea33e.week_attended : v_f15433.weekAttendedFromGrid,
+        week_total: v_3ea33e.week_total,
+        todayAttended: v_f15433.checkedToday,
+        recent_status_count: v_3ea33e.recent_status?.length ?? 0,
+      });
+    } catch (v_5e9bfe) {
+      console.error('[MetaHomeScreen][Attendance] 출석 상태 조회 실패 (주간)', v_5e9bfe);
+
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+        return;
+      }
+
+      console.log('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 API 호출', {
+        method: 'GET',
+        path: '/oth-path',
+      });
+      try {
+        const v_d308b5 = await v_cbf5f1(v_c65f5d);
+        v_5b2bbb([false, false, false, false, false, false, false]);
+        if (v_d308b5.checked_today) {
+          v_5b2bbb((v_ba2215) => {
+            const v_a448ad = [...v_ba2215];
+            v_a448ad[v_8aab53] = true;
+            return v_a448ad;
+          });
+        }
+        v_22e0b8(v_d308b5.checked_today);
+        v_0d7691(v_d308b5.streak_days);
+        console.log('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 성공', {
+          durationMs: Date.now() - v_0173b3,
+          checked_today: v_d308b5.checked_today,
+          streak_days: v_d308b5.streak_days,
+        });
+      } catch (v_741f30) {
+        console.error('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 실패', v_741f30);
+        if (v_998b9d(v_c65f5d, v_741f30)) {
+          return;
+        }
+      }
+    }
+  }, [v_295d4d, v_08c4b0, v_c65f5d, v_8aab53]);
+
+  v_c4deb2(() => {
+    v_5b2bbb([false, false, false, false, false, false, false]);
+    v_22e0b8(false);
+    v_c34f93(0);
+
+    console.log('[MetaHomeScreen][Attendance] 메인 진입·날짜 변경 → 출석 상태 조회 예약 (250ms 후)', {
+      calendarDay: v_08c4b0,
+      todayWeekdayIndex: v_8aab53,
+      api: 'GET /oth-path',
+      notCalled: 'POST /oth-path (출석 체크는 버튼+광고 시에만)',
+    });
+    const v_8d41d7 = setTimeout(() => {
       v_58b642();
     }, 250);
-    return () => clearTimeout(v_8d41d7);
-  }, [v_c65f5d, v_8aab53]);
+    return () => {
+      clearTimeout(v_8d41d7);
+      console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 예약 취소 (화면 이탈·의존성 재실행)', { calendarDay: v_08c4b0 });
+    };
+  }, [v_08c4b0, v_58b642, v_8aab53]);
+
+  const v_357e61 = v_de06a3(async () => {
+    if (v_07cadc || v_1f7868) return;
+    v_56256f(true);
+    try {
+      const v_a448ad = v_312d93(v_9c213b.language);
+      v_899025((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
+      await v_58b642();
+    } finally {
+      v_56256f(false);
+    }
+  }, [v_9c213b.language, v_1f7868, v_07cadc, v_58b642]);
 
   const v_a2c2c9 = async () => {
     const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
@@ -414,6 +577,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_2f26f6 = async () => {
     const v_537e97 = v_3e3188.current;
+    console.log('[MetaHomeScreen][Attendance] 출석 체크 API 호출 (버튼+광고 후)', {
+      method: 'POST',
+      path: '/oth-path',
+    });
     v_f42779('attendance_api_before', { steps: v_537e97, claimed_step_indices: v_b1361b });
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
@@ -428,23 +595,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       try {
         const v_3ea33e = await v_e8dda3(v_c65f5d);
-        const v_cf60ad = [false, false, false, false, false, false, false];
-        v_3ea33e.recent_status.forEach((v_8c0b26) => {
-          const v_62a264 = v_ab4ad9(v_8c0b26.date);
-          if (v_62a264 >= 0 && v_62a264 < 7) {
-            v_cf60ad[v_62a264] = v_8c0b26.attended;
-          }
-        });
-        v_5b2bbb(v_cf60ad);
-        v_0d7691(v_3ea33e.current_streak);
-        v_c34f93(v_3ea33e.week_attended);
-        v_468450(v_3ea33e.week_total);
+        v_295d4d(v_3ea33e);
       } catch {
         v_5b2bbb((v_ba2215) => {
-          const v_a448ad = [...v_ba2215];
+          const v_a448ad = [false, false, false, false, false, false, false];
           v_a448ad[v_8aab53] = true;
           return v_a448ad;
         });
+        v_22e0b8(true);
         v_0d7691(v_43c42e.streak_days);
       }
 
@@ -467,6 +625,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           v_a448ad[v_8aab53] = true;
           return v_a448ad;
         });
+        v_22e0b8(true);
         v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
         return;
       }
@@ -506,9 +665,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_6c47a7(v_227df7).then(v_5268c1 => {
       if (Array.isArray(v_5268c1)) v_04f4d8(v_5268c1);
     }).catch(() => {});
-  }, [v_9c213b.language]);
+  }, [v_08c4b0, v_9c213b.language]);
   v_c4deb2(() => { v_7c14c7().then(v_01dcf5 => v_00e50d(v_01dcf5.step_reward_per1k)).catch(() => {}); }, []);
-  v_c4deb2(() => { v_8c7f62().then(v_d308b5 => v_c060b8(v_d308b5)).catch(() => {}); }, []);
+  v_c4deb2(() => {
+    v_8c7f62().then((v_d308b5) => v_c060b8(v_d308b5)).catch(() => {});
+  }, [v_08c4b0]);
   const v_616ba8 = v_df9f57(() => Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf), []);
   const v_81d478 = v_df9f57(() => v_616ba8.slice(0, v_234582), [v_616ba8]);
   const v_113ab0 = 120;
@@ -822,9 +983,16 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       {v_8d41d7('home.attendance_reward_suffix')}
                     </Text>
                   </View>
-                  <View style={v_d81136.calendarIcon}>
-                    <CalendarCheck size={22} color="#615FFF" />
-                  </View>
+                  <TouchableOpacity
+                    style={[v_d81136.calendarIcon, v_07cadc && v_d81136.calendarIconDisabled]}
+                    onPress={v_357e61}
+                    disabled={v_07cadc || v_1f7868}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7('home.attendance_refresh', '출석 상태 새로고침')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <RefreshCw size={22} color="#615FFF" />
+                  </TouchableOpacity>
                 </View>
                 <View style={v_d81136.weekStatus}>
                   <Text style={v_d81136.weekLabel}>{v_8d41d7('home.week_attendance_status')}</Text>
@@ -1226,6 +1394,7 @@ const v_d81136 = v_472849.create({
   attendanceSub: { fontSize: 14, fontFamily: v_843035.regular, color: v_1bfbd0.text },
   attendanceSubHighlight: { fontFamily: v_843035.bold, color: '#615FFF' },
   calendarIcon: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#E0E7FF', alignItems: 'center', justifyContent: 'center' },
+  calendarIconDisabled: { opacity: 0.5 },
   weekStatus: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
   weekLabel: { fontSize: 13, fontFamily: v_843035.regular, color: '#6B7280' },
   weekDays: { fontSize: 13, fontFamily: v_843035.semibold, color: '#615FFF' },
