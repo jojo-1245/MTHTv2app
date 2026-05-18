@@ -4,6 +4,7 @@ import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
 import { v_0b4eec, v_1cec06, v_8e9934 } from '../utils/tokenCache';
+import { v_42edc9 } from '../utils/dateUtils';
 
 const v_8a74cb = 20000;
 
@@ -34,6 +35,8 @@ v_9a8286.interceptors.request.use(
         v_74a79c.headers.Authorization = `Bearer ${v_21cc31}`;
       }
     }
+
+    v_74a79c.headers['X-Timezone'] = v_42edc9();
 
     return v_74a79c;
   },

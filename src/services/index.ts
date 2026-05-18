@@ -33,7 +33,7 @@ export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord,
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';
 
 export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, getRewardConfig, getMonthlyStepStatus, AlreadyCheckedInError } from './rewardsApi';
-export type { AttendanceRewardResponse, AttendanceStatusResponse, AttendanceStatusDetailResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse, RewardConfig, MonthlyStepStatus } from './rewardsApi';
+export type { AttendanceRewardResponse, AttendanceCheckData, AttendanceStatusDetailResponse, AttendanceMonthStatusResponse, StepsSyncStateResponse, SyncStepsResponse, RewardHistoryItem, RewardHistoryResponse, RewardTransferStatus, GetRewardsHistoryParams, RewardsHistoryResult, RewardConfig, MonthlyStepStatus } from './rewardsApi';
 
 export * from './walletApi';
 
