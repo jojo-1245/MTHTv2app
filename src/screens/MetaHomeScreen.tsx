@@ -1,7 +1,9 @@
 import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapkr';
 import {
+  v_39a996,
   v_03e392,
   v_a2349e,
+  v_6b5698,
   v_1ed974,
   v_cdbae1,
   v_2d4718,
@@ -13,6 +15,7 @@ import {
   v_cf9c33,
   v_700696,
   v_122070,
+  v_79139e,
   v_e45a99,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
@@ -22,6 +25,7 @@ import {
   v_0ae9ff,
   v_1df8e7,
   v_3ebb07,
+  v_2d13e9,
   v_20f6a6,
   v_1a7837,
   v_7ebf51,
@@ -41,13 +45,21 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
+import { v_0c7e2f } from '../services/stepTrackingService';
+import type { v_2d8e3c } from '../services';
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_e4a763 } from '../utils/env';
-import { v_312d93 } from '../utils/dateUtils';
+import {
+  v_7446c0,
+  v_312d93,
+  v_27d54c,
+  v_3cb9d7,
+} from '../utils/dateUtils';
 
 const v_87993b = require('../../assets/images/logo_white.png');
 const v_103040 = require('../../assets/images/hinti_01.png');   
@@ -211,6 +223,7 @@ const v_55087c = 0.15;
 const v_c19e2d = 10000;
 const v_2258bf = 1000;
 const v_234582 = 25;
+const v_8bf63f = 'metahint_step_notification_enabled';
 
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
@@ -325,10 +338,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }, [])
   );
 
-  const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]); 
+  const [v_79dc58, v_5b2bbb] = v_5ab095([false, false, false, false, false, false, false]);
+  const [v_74891a, v_22e0b8] = v_5ab095(false);
+  const [v_07cadc, v_56256f] = v_5ab095(false);
   const [v_05cf57, v_0d7691] = v_5ab095(0);
   const [v_f2fb87, v_c34f93] = v_5ab095(0);
   const [v_b43899, v_468450] = v_5ab095(7);
+  const [v_08c4b0, v_899025] = v_5ab095(() => v_7446c0());
   const [v_4ce971, v_c060b8] = v_5ab095<{
     days_achieved: number;
     days_total: number;
@@ -336,64 +352,97 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     is_completed: boolean;
   } | null>(null);
 
-  const v_8aab53 = (new Date().getDay() + 6) % 7;
-  const v_74891a = v_79dc58[v_8aab53];
+  const v_736fbd = v_de06a3(
+    (statusDetail: v_2d8e3c['data']) => {
+      const v_96a68c = v_3cb9d7(
+        v_3ea33e.recent_status,
+        v_3ea33e.week_start
+      );
+      const v_412aab = v_7446c0();
+      const v_f07f45 = v_3ea33e.recent_status.some(
+        (v_8c0b26) => v_8c0b26.date.slice(0, 10) === v_412aab && v_8c0b26.attended
+      );
 
-  const v_ab4ad9 = (v_a86996): number => {
-    const v_8dffde = new Date(v_a86996);
+      v_5b2bbb(v_96a68c);
+      v_22e0b8(v_f07f45);
+      v_0d7691(v_3ea33e.current_streak);
+      v_c34f93(v_3ea33e.week_attended);
+      v_468450(v_3ea33e.week_total);
 
-    return (v_8dffde.getDay() + 6) % 7;
-  };
+      if (__DEV__) {
+        console.log('[MetaHomeScreen][Attendance] 주간 UI 반영', {
+          timezone: v_3ea33e.timezone,
+          week_start: v_3ea33e.week_start,
+          week_end: v_3ea33e.week_end,
+          calendarDay: v_412aab,
+          checkedToday: v_f07f45,
+          week_attended: v_3ea33e.week_attended,
+        });
+      }
+    },
+    []
+  );
+
+  const v_36dcae = v_de06a3(async () => {
+    const v_3ea33e = await v_e8dda3(v_c65f5d);
+    v_736fbd(v_3ea33e);
+  }, [v_736fbd, v_c65f5d]);
+
+  v_c4deb2(() => {
+    const v_5e459f = () => {
+      const v_a448ad = v_7446c0();
+      v_899025((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
+    };
+    const v_ca94a2 = setInterval(v_5e459f, 60_000);
+    const v_1ae212 = v_6b5698.addEventListener('change', (v_b6e533) => {
+      if (v_b6e533 === 'active') {
+        v_5e459f();
+        v_36dcae().catch((v_5e9bfe) => {
+          if (__DEV__) {
+            console.warn('[MetaHomeScreen][Attendance] 포그라운드 재조회 실패', v_5e9bfe);
+          }
+        });
+      }
+    });
+    return () => {
+      clearInterval(v_ca94a2);
+      v_1ae212.remove();
+    };
+  }, [v_36dcae]);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => {
-      const v_58b642 = async () => {
-        try {
-          const v_3ea33e = await v_e8dda3(v_c65f5d);
-
-          const v_cf60ad = [false, false, false, false, false, false, false];
-          v_3ea33e.recent_status.forEach((v_8c0b26) => {
-            const v_62a264 = v_ab4ad9(v_8c0b26.date);
-            if (v_62a264 >= 0 && v_62a264 < 7) {
-              v_cf60ad[v_62a264] = v_8c0b26.attended;
-            }
-          });
-          v_5b2bbb(v_cf60ad);
-
-          v_0d7691(v_3ea33e.current_streak);
-          v_c34f93(v_3ea33e.week_attended);
-          v_468450(v_3ea33e.week_total);
-        } catch (v_5e9bfe) {
-          console.error('[MetaHomeScreen] 출석 상태 상세 로드 실패:', v_5e9bfe);
-
-          if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-            return;
-          }
-
-          try {
-            const v_d308b5 = await v_cbf5f1(v_c65f5d);
-            if (v_d308b5.checked_today) {
-              v_5b2bbb((v_ba2215) => {
-                const v_a448ad = [...v_ba2215];
-                v_a448ad[v_8aab53] = true;
-                return v_a448ad;
-              });
-            }
-            v_0d7691(v_d308b5.streak_days);
-          } catch (v_741f30) {
-            console.error('[MetaHomeScreen] 출석 상태 로드 실패 (폴백):', v_741f30);
-
-            if (v_998b9d(v_c65f5d, v_741f30)) {
-              return;
-            }
-          }
-        }
-      };
-
-      v_58b642();
+      v_36dcae().catch((v_5e9bfe) => {
+        console.error('[MetaHomeScreen] 출석 상태 로드 실패:', v_5e9bfe);
+        if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
+      });
     }, 250);
     return () => clearTimeout(v_8d41d7);
-  }, [v_c65f5d, v_8aab53]);
+  }, [v_08c4b0, v_c65f5d, v_36dcae]);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_899025((v_ba2215) => {
+        const v_a448ad = v_7446c0();
+        return v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215;
+      });
+      v_36dcae().catch(() => {});
+    }, [v_36dcae])
+  );
+
+  const v_357e61 = v_de06a3(async () => {
+    if (v_07cadc || v_1f7868) return;
+    v_56256f(true);
+    try {
+      v_899025(v_7446c0());
+      await v_36dcae();
+    } catch (v_5e9bfe) {
+      console.error('[MetaHomeScreen] 출석 새로고침 실패:', v_5e9bfe);
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
+    } finally {
+      v_56256f(false);
+    }
+  }, [v_1f7868, v_07cadc, v_c65f5d, v_36dcae]);
 
   const v_a2c2c9 = async () => {
     const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
@@ -427,24 +476,14 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
 
       try {
-        const v_3ea33e = await v_e8dda3(v_c65f5d);
-        const v_cf60ad = [false, false, false, false, false, false, false];
-        v_3ea33e.recent_status.forEach((v_8c0b26) => {
-          const v_62a264 = v_ab4ad9(v_8c0b26.date);
-          if (v_62a264 >= 0 && v_62a264 < 7) {
-            v_cf60ad[v_62a264] = v_8c0b26.attended;
-          }
-        });
-        v_5b2bbb(v_cf60ad);
-        v_0d7691(v_3ea33e.current_streak);
-        v_c34f93(v_3ea33e.week_attended);
-        v_468450(v_3ea33e.week_total);
+        await v_36dcae();
       } catch {
-        v_5b2bbb((v_ba2215) => {
-          const v_a448ad = [...v_ba2215];
-          v_a448ad[v_8aab53] = true;
-          return v_a448ad;
-        });
+        const v_4ec173 = (v_43c42e.check_date ?? v_7446c0()).slice(0, 10);
+        const v_20d7b1 = v_27d54c(v_4ec173);
+        v_5b2bbb(
+          v_3cb9d7([{ date: v_4ec173, attended: true }], v_20d7b1)
+        );
+        v_22e0b8(true);
         v_0d7691(v_43c42e.streak_days);
       }
 
@@ -462,11 +501,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
       if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
       if (v_5e9bfe instanceof v_d0556f) {
-        v_5b2bbb((v_ba2215) => {
-          const v_a448ad = [...v_ba2215];
-          v_a448ad[v_8aab53] = true;
-          return v_a448ad;
-        });
+        try {
+          await v_36dcae();
+        } catch {
+          v_22e0b8(true);
+        }
         v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
         return;
       }
@@ -496,6 +535,52 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     );
   };
   const { currentSteps: v_dc679a, stepGoal: v_011173, isPedometerAvailable: v_9c8eed, stepNotificationEnabled: v_264467, setStepNotificationEnabled: v_e882e2 } = v_75c3c7();
+  const [v_092595, v_61eda6] = v_5ab095(false);
+  const v_661d5c = v_326be8.OS === 'android' && v_0c7e2f();
+
+  v_cf763b(
+    v_de06a3(() => {
+      if (!v_661d5c) return;
+      let v_2008a4 = false;
+      (async () => {
+        const v_5885b8 = await v_e84827.getItem(v_8bf63f);
+        const v_d20c84 = v_5885b8 === 'true';
+        if (v_2008a4 || v_d20c84 === v_264467) return;
+        await v_e882e2(v_d20c84);
+      })();
+      return () => {
+        v_2008a4 = true;
+      };
+    }, [v_661d5c, v_264467, v_e882e2]),
+  );
+
+  const v_16fedc = v_de06a3(async (v_3b402b) => {
+    if (v_092595) return;
+    if (!v_0c7e2f()) {
+      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
+      return;
+    }
+    v_61eda6(true);
+    try {
+      await v_e882e2(v_3b402b);
+      if (v_3b402b) {
+        const v_5885b8 = await v_e84827.getItem(v_8bf63f);
+        if (v_5885b8 !== 'true') {
+          v_03e392.alert(
+            v_8d41d7('common.error'),
+            v_8d41d7('home.step_notification_start_failed'),
+            [
+              { text: v_8d41d7('common.cancel'), style: 'cancel' },
+              { text: v_8d41d7('common.setting'), onPress: () => v_9b57fc('MyInfoSettings') },
+            ],
+          );
+        }
+      }
+    } finally {
+      v_61eda6(false);
+    }
+  }, [v_092595, v_e882e2, v_8d41d7, v_9b57fc]);
+
   const v_3e3188 = v_e662ae(0);
   v_c4deb2(() => { v_3e3188.current = v_dc679a; }, [v_dc679a]);
   const [v_b1361b, v_04f4d8] = v_5ab095<number[]>([]);
@@ -823,7 +908,19 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     </Text>
                   </View>
                   <View style={v_d81136.calendarIcon}>
-                    <CalendarCheck size={22} color="#615FFF" />
+                    <TouchableOpacity
+                      onPress={v_357e61}
+                      disabled={v_07cadc || v_1f7868}
+                      accessibilityRole="button"
+                      accessibilityLabel={v_8d41d7('home.attendance_refresh', '출석 상태 새로고침')}
+                      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    >
+                      {v_07cadc ? (
+                        <ActivityIndicator size="small" color="#615FFF" />
+                      ) : (
+                        <RefreshCw size={22} color="#615FFF" />
+                      )}
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <View style={v_d81136.weekStatus}>
@@ -888,9 +985,36 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       <Text style={v_d81136.challengeRewardHighlight}>{v_8d41d7('home.goal_reward_suffix')}</Text>
                     </Text>
                   </View>
-                  <View style={v_d81136.stepChallengeIcon}>
-                    <Footprints size={22} color="#7C3AED" />
-                  </View>
+                  {v_661d5c && (
+                    <View style={v_d81136.stepNotificationControl}>
+                      <Text style={v_d81136.stepNotificationFeatureLabel} numberOfLines={2}>
+                        {v_8d41d7('home.step_notification_label')}
+                      </Text>
+                      <View style={v_d81136.stepNotificationSwitchRow}>
+                        <Text
+                          style={[
+                            v_d81136.stepNotificationStatusText,
+                            v_264467 && v_d81136.stepNotificationStatusOn,
+                          ]}
+                        >
+                          {v_264467
+                            ? v_8d41d7('home.step_notification_status_on')
+                            : v_8d41d7('home.step_notification_status_off')}
+                        </Text>
+                        {v_092595 ? (
+                          <ActivityIndicator size="small" color="#7C3AED" />
+                        ) : (
+                          <Switch
+                            value={v_264467}
+                            onValueChange={v_16fedc}
+                            trackColor={{ false: '#E5E7EB', true: '#C4B5FD' }}
+                            thumbColor={v_264467 ? '#7C3AED' : '#F3F4F6'}
+                            accessibilityLabel={v_8d41d7('home.step_notification_label')}
+                          />
+                        )}
+                      </View>
+                    </View>
+                  )}
                 </View>
                 <View style={v_d81136.stepsRow}>
                   <Text style={v_d81136.stepsLabel}>{v_8d41d7('home.today_steps')}</Text>
@@ -1270,6 +1394,32 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  stepNotificationControl: {
+    alignItems: 'flex-end',
+    maxWidth: 128,
+    marginLeft: 8,
+  },
+  stepNotificationFeatureLabel: {
+    fontSize: 10,
+    fontFamily: v_843035.regular,
+    color: '#9CA3AF',
+    textAlign: 'right',
+    marginBottom: 4,
+    lineHeight: 13,
+  },
+  stepNotificationSwitchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  stepNotificationStatusText: {
+    fontSize: 11,
+    fontFamily: v_843035.medium,
+    color: '#9CA3AF',
+  },
+  stepNotificationStatusOn: {
+    color: '#6D28D9',
   },
   challengeHeaderText: { flex: 1 },
   challengeTitle: { fontSize: 18, fontFamily: v_843035.bold, color: '#4C1D95', marginBottom: 4 },
