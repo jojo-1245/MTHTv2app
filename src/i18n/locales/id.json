@@ -352,6 +352,10 @@
     "step_notification_label": "Tampilkan langkah di notifikasi",
     "step_notification_unsupported": "Notifikasi langkah tidak didukung di perangkat ini.",
     "step_notification_start_failed": "Gagal memulai notifikasi pelacakan langkah.",
+    "step_notification_active": "Aktif",
+    "step_notification_tap_to_enable": "Ketuk untuk mengaktifkan",
+    "step_notification_status_on": "Aktif",
+    "step_notification_status_off": "Nonaktif",
     "coin_products": "Produk",
     "view_all": "Lihat Semua",
     "bottom_nav_home": "Beranda",
@@ -1735,6 +1739,13 @@
       "steps": "Hadiah Langkah",
       "step_1k": "1.000 Langkah Tercapai",
       "step_goal": "10.000 Langkah Tercapai"
+    },
+    "transfer_status": {
+      "pending": "Menunggu penyelesaian",
+      "queued": "Menunggu transfer",
+      "completed": "Dibayar",
+      "failed": "Pembayaran gagal",
+      "deposit_completed": "Selesai"
     },
     "history_load_failed": "Gagal memuat riwayat hadiah.",
     "no_history": "Tidak ada riwayat hadiah.",
