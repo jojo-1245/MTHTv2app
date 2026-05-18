@@ -1,4 +1,5 @@
-import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_de06a3 } from 'bapkr';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import {
   v_3094a2,
   v_19b633,
@@ -19,22 +20,9 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_570c34, v_1c1837, v_729608 } from '../../components';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
-import { v_880836, v_9803ea } from '../../services';
+import { v_880836, v_9803ea, type v_d9bc70 } from '../../services';
 
 type Props = v_432191<v_8ad91b, 'MyInfoNotify'>;
-
-export interface NotificationItem {
-  board: number;
-  type: 9304 | 9305 | 9306 | 9307 | 9308;
-  title: string;
-  description: string;
-  datetime: string;
-  unread?: boolean;
-  requesterEmail?: string;
-  requesterName?: string;
-
-  reward_amount?: number;
-}
 
 function v_a1b0ab(v_a86996): Date {
   if (v_a86996 == null || v_a86996 === '') return new Date();
@@ -76,7 +64,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57 } = v_a0daa8();
   const v_033e14 = v_e0068c();
-  const [v_b9c00c, v_0965ee] = v_5ab095<NotificationItem[]>([]);
+  const [v_b9c00c, v_0965ee] = v_5ab095<v_d9bc70[]>([]);
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_612e9f, v_575aad] = v_5ab095(false);
 
@@ -93,9 +81,11 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     v_575aad(false);
   }, []);
 
-  v_c4deb2(() => {
-    v_496106();
-  }, [v_496106]);
+  v_cf763b(
+    v_de06a3(() => {
+      v_496106();
+    }, [v_496106]),
+  );
 
   const v_d5345f = v_de06a3(() => {
     v_575aad(true);
@@ -104,7 +94,13 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
 
   const v_8a6db3 = v_b9c00c.filter((v_f4e98d) => v_f4e98d.unread).length;
 
-  const v_8b09cb = (v_10046b, v_47ef8d) => {
+  const v_62c79d = v_de06a3((v_5a90e9) => {
+    v_0965ee((v_ba2215) =>
+      v_ba2215.map((v_f4e98d) => (v_f4e98d.id === v_5a90e9 ? { ...v_f4e98d, unread: false } : v_f4e98d)),
+    );
+  }, []);
+
+  const v_8b09cb = (item: v_d9bc70, v_47ef8d) => {
     v_03e392.alert(
       v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow_title') : v_8d41d7('my_info_notify.health_request_reject_title'),
       v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow_message') : v_8d41d7('my_info_notify.health_request_reject_message'),
@@ -112,10 +108,16 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
         { text: v_8d41d7('common.cancel'), style: 'cancel' },
         {
           text: v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow') : v_8d41d7('my_info_notify.health_request_reject'),
-          onPress: () => {
+          onPress: async () => {
+            v_62c79d(v_8c0b26.id);
+            try {
+              await v_9803ea(v_8c0b26.id);
+            } catch (v_9e86fd) {
+              if (__DEV__) console.warn('[MyInfoNotifyScreen] 건강요청 읽음 처리 실패:', v_9e86fd);
+            }
             if (v_47ef8d) v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_allowed'));
             else v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_rejected'));
-            v_0965ee((v_ba2215) => v_ba2215.filter((v_f4e98d) => v_f4e98d.board !== v_10046b));
+            v_0965ee((v_ba2215) => v_ba2215.filter((v_f4e98d) => v_f4e98d.id !== v_8c0b26.id));
           },
         },
       ]
@@ -161,22 +163,21 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
     }
   };
 
-  const v_b0f7df = v_de06a3(async (v_8c0b26) => {
+  const v_b0f7df = v_de06a3(async (item: v_d9bc70) => {
     if (!v_8c0b26.unread) return;
-
-    v_0965ee((v_ba2215) => v_ba2215.map((v_f4e98d) => (v_f4e98d.board === v_8c0b26.board ? { ...v_f4e98d, unread: false } : v_f4e98d)));
+    v_62c79d(v_8c0b26.id);
     try {
-      await v_9803ea(v_8c0b26.board);
+      await v_9803ea(v_8c0b26.id);
     } catch (v_9e86fd) {
-      if (__DEV__) console.warn('[MyInfoNotifyScreen] 읽음 API 실패 (화면은 읽음 처리됨):', v_9e86fd);
+      if (__DEV__) console.warn('[MyInfoNotifyScreen] 읽음 처리 실패:', v_9e86fd);
     }
-  }, []);
+  }, [v_62c79d]);
 
-  const v_858a9b = (v_8c0b26) => {
+  const v_858a9b = (item: v_d9bc70) => {
     const { bg: v_6fe397 } = v_406068(v_8c0b26.type);
     return (
       <TouchableOpacity
-        key={v_8c0b26.board}
+        key={String(v_8c0b26.id)}
         activeOpacity={0.85}
         onPress={() => v_b0f7df(v_8c0b26)}
         style={[v_d81136.card, v_8c0b26.unread ? v_d81136.cardUnread : v_d81136.cardRead]}
@@ -195,7 +196,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
             <View style={v_d81136.actionRow}>
               <TouchableOpacity
                 style={v_d81136.btnAllow}
-                onPress={() => v_8b09cb(v_8c0b26.board, true)}
+                onPress={() => v_8b09cb(v_8c0b26, true)}
                 activeOpacity={0.85}
               >
                 <Ionicons name="checkmark" size={18} color="#FFFFFF" />
@@ -203,7 +204,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={v_d81136.btnReject}
-                onPress={() => v_8b09cb(v_8c0b26.board, false)}
+                onPress={() => v_8b09cb(v_8c0b26, false)}
                 activeOpacity={0.85}
               >
                 <Ionicons name="close" size={18} color="#6B7280" />
