@@ -1,5 +1,6 @@
 import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapkr';
 import {
+  v_39a996,
   v_03e392,
   v_a2349e,
   v_6b5698,
@@ -44,7 +45,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_cbf5f1, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
+import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
 import { v_8e174f } from '../services/admob';
 import { v_0e72e5 } from '../services/pointClickOfferwall';
 import { v_998b9d } from '../utils/authErrorHandler';
@@ -282,6 +283,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_1f7868, v_e3bbea] = v_5ab095(false);
   const [v_07cadc, v_56256f] = v_5ab095(false);
 
+  const v_cc934c = v_e662ae(false);
+
   const [v_780057, v_f23f5b] = v_5ab095(0);
 
   const v_56263a = v_de06a3(async () => {
@@ -346,6 +349,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   } | null>(null);
 
   const [v_08c4b0, v_899025] = v_5ab095(() => v_312d93(v_9c213b.language));
+
+  v_c4deb2(() => {
+    v_cc934c.current = false;
+  }, [v_08c4b0]);
 
   v_c4deb2(() => {
     const v_57a13c = () => {
@@ -439,8 +446,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     [v_08c4b0]
   );
 
-  const v_295d4d = v_de06a3(
-    (statusDetail: Awaited<ReturnType<typeof v_e8dda3>>) => {
+  const v_36dcae = v_de06a3(async () => {
+    const v_0173b3 = Date.now();
+    const v_8b8568 =
+      v_cc934c.current || v_74891a;
+    console.log('[MetaHomeScreen][Attendance] 출석 영역 다시 로딩', {
+      calendarDay: v_08c4b0,
+      preserveCheckedToday: v_8b8568,
+    });
+
+    try {
+      const v_3ea33e = await v_e8dda3(v_c65f5d);
       const v_f15433 = v_5464bf(
         v_3ea33e.recent_status,
         v_3ea33e.week_start,
@@ -448,103 +464,83 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       );
 
       if (!v_f15433.usedApiWeek && v_3ea33e.week_start && v_3ea33e.week_end) {
-        console.warn('[MetaHomeScreen][Attendance] API 주간 범위가 오늘과 불일치 → 클라이언트 이번 주 사용', {
+        console.warn('[MetaHomeScreen][Attendance] API 주간 범위가 오늘과 불일치 → 이번 주 기준으로 7칸 표시', {
           calendarDay: v_08c4b0,
           apiWeekStart: v_3ea33e.week_start,
           apiWeekEnd: v_3ea33e.week_end,
           clientWeekStart: v_f15433.weekStart,
           clientWeekEnd: v_f15433.weekEnd,
+          recentDates: v_3ea33e.recent_status.map((v_8c0b26) => v_8c0b26.date),
         });
       }
 
-      v_5b2bbb(v_f15433.weekDays);
-      v_22e0b8(v_f15433.checkedToday);
-      v_0d7691(v_3ea33e.current_streak);
-      v_c34f93(v_f15433.usedApiWeek ? v_3ea33e.week_attended : v_f15433.weekAttendedFromGrid);
-      v_468450(v_3ea33e.week_total);
-      return v_f15433;
-    },
-    [v_08c4b0, v_5464bf]
-  );
+      let v_f91018 = [...v_f15433.weekDays];
+      let v_f07f45 = v_f15433.checkedToday;
+      if (!v_f07f45 && v_8b8568) {
+        v_f91018[v_8aab53] = true;
+        v_f07f45 = true;
+        console.log('[MetaHomeScreen][Attendance] 주간 API에 오늘 미반영 → 앱 출석 완료 상태 유지', {
+          calendarDay: v_08c4b0,
+        });
+      }
+      if (v_f07f45) {
+        v_cc934c.current = true;
+      }
 
-  const v_58b642 = v_de06a3(async () => {
-    const v_0173b3 = Date.now();
-    console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 API 호출', {
-      method: 'GET',
-      path: '/oth-path',
-      calendarDay: v_08c4b0,
-    });
-    try {
-      const v_3ea33e = await v_e8dda3(v_c65f5d);
-      const v_f15433 = v_295d4d(v_3ea33e);
-      console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 성공', {
+      const v_81276f = v_f91018.filter(Boolean).length;
+      const v_5e0b52 = v_3ea33e.recent_status.some(
+        (v_8c0b26) => v_8c0b26.date.slice(0, 10) === v_08c4b0
+      );
+
+      v_5b2bbb(v_f91018);
+      v_22e0b8(v_f07f45);
+      v_0d7691(v_3ea33e.current_streak);
+      v_c34f93(
+        v_f15433.usedApiWeek && v_5e0b52 ? v_3ea33e.week_attended : v_81276f
+      );
+      v_468450(v_3ea33e.week_total);
+
+      console.log('[MetaHomeScreen][Attendance] 출석 영역 로딩 완료', {
         durationMs: Date.now() - v_0173b3,
         calendarDay: v_08c4b0,
         weekStart: v_f15433.weekStart,
         weekEnd: v_f15433.weekEnd,
-        usedApiWeek: v_f15433.usedApiWeek,
-        current_streak: v_3ea33e.current_streak,
-        week_attended: v_f15433.usedApiWeek ? v_3ea33e.week_attended : v_f15433.weekAttendedFromGrid,
-        week_total: v_3ea33e.week_total,
-        todayAttended: v_f15433.checkedToday,
+        checkedToday: v_f07f45,
+        weekAttended: v_81276f,
         recent_status_count: v_3ea33e.recent_status?.length ?? 0,
+        preservedToday: v_8b8568 && !v_f15433.checkedToday,
       });
     } catch (v_5e9bfe) {
-      console.error('[MetaHomeScreen][Attendance] 출석 상태 조회 실패 (주간)', v_5e9bfe);
+      console.error('[MetaHomeScreen][Attendance] 출석 영역 로딩 실패', v_5e9bfe);
+      if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
 
-      if (v_998b9d(v_c65f5d, v_5e9bfe)) {
-        return;
-      }
-
-      console.log('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 API 호출', {
-        method: 'GET',
-        path: '/oth-path',
-      });
-      try {
-        const v_d308b5 = await v_cbf5f1(v_c65f5d);
-        v_5b2bbb([false, false, false, false, false, false, false]);
-        if (v_d308b5.checked_today) {
-          v_5b2bbb((v_ba2215) => {
-            const v_a448ad = [...v_ba2215];
-            v_a448ad[v_8aab53] = true;
-            return v_a448ad;
-          });
-        }
-        v_22e0b8(v_d308b5.checked_today);
-        v_0d7691(v_d308b5.streak_days);
-        console.log('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 성공', {
-          durationMs: Date.now() - v_0173b3,
-          checked_today: v_d308b5.checked_today,
-          streak_days: v_d308b5.streak_days,
+      if (v_8b8568) {
+        v_5b2bbb((v_ba2215) => {
+          const v_a448ad = [...v_ba2215];
+          v_a448ad[v_8aab53] = true;
+          return v_a448ad;
         });
-      } catch (v_741f30) {
-        console.error('[MetaHomeScreen][Attendance] 폴백 출석 상태 조회 실패', v_741f30);
-        if (v_998b9d(v_c65f5d, v_741f30)) {
-          return;
-        }
+        v_22e0b8(true);
+        v_cc934c.current = true;
       }
     }
-  }, [v_295d4d, v_08c4b0, v_c65f5d, v_8aab53]);
+  }, [
+    v_08c4b0,
+    v_74891a,
+    v_5464bf,
+    v_c65f5d,
+    v_8aab53,
+  ]);
 
   v_c4deb2(() => {
-    v_5b2bbb([false, false, false, false, false, false, false]);
-    v_22e0b8(false);
-    v_c34f93(0);
-
-    console.log('[MetaHomeScreen][Attendance] 메인 진입·날짜 변경 → 출석 상태 조회 예약 (250ms 후)', {
+    console.log('[MetaHomeScreen][Attendance] 메인 진입·날짜 변경 → 출석 영역 로딩 예약 (250ms 후)', {
       calendarDay: v_08c4b0,
-      todayWeekdayIndex: v_8aab53,
-      api: 'GET /oth-path',
-      notCalled: 'POST /oth-path (출석 체크는 버튼+광고 시에만)',
     });
     const v_8d41d7 = setTimeout(() => {
-      v_58b642();
+      v_36dcae();
     }, 250);
-    return () => {
-      clearTimeout(v_8d41d7);
-      console.log('[MetaHomeScreen][Attendance] 출석 상태 조회 예약 취소 (화면 이탈·의존성 재실행)', { calendarDay: v_08c4b0 });
-    };
-  }, [v_08c4b0, v_58b642, v_8aab53]);
+    return () => clearTimeout(v_8d41d7);
+  }, [v_08c4b0, v_36dcae]);
 
   const v_357e61 = v_de06a3(async () => {
     if (v_07cadc || v_1f7868) return;
@@ -552,11 +548,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     try {
       const v_a448ad = v_312d93(v_9c213b.language);
       v_899025((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
-      await v_58b642();
+      await v_36dcae();
     } finally {
       v_56256f(false);
     }
-  }, [v_9c213b.language, v_1f7868, v_07cadc, v_58b642]);
+  }, [v_9c213b.language, v_1f7868, v_07cadc, v_36dcae]);
 
   const v_a2c2c9 = async () => {
     const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
@@ -584,6 +580,13 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_f42779('attendance_api_before', { steps: v_537e97, claimed_step_indices: v_b1361b });
     try {
       const v_43c42e = await v_b008ca(v_c65f5d);
+      v_cc934c.current = true;
+      v_22e0b8(true);
+      v_5b2bbb((v_ba2215) => {
+        const v_a448ad = [...v_ba2215];
+        v_a448ad[v_8aab53] = true;
+        return v_a448ad;
+      });
       v_f42779('attendance_api_after', {
         steps_before: v_537e97,
         steps_after: v_3e3188.current,
@@ -594,15 +597,9 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
 
       try {
-        const v_3ea33e = await v_e8dda3(v_c65f5d);
-        v_295d4d(v_3ea33e);
+        await v_36dcae();
       } catch {
-        v_5b2bbb((v_ba2215) => {
-          const v_a448ad = [false, false, false, false, false, false, false];
-          v_a448ad[v_8aab53] = true;
-          return v_a448ad;
-        });
-        v_22e0b8(true);
+        v_cc934c.current = true;
         v_0d7691(v_43c42e.streak_days);
       }
 
@@ -620,6 +617,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
       if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
       if (v_5e9bfe instanceof v_d0556f) {
+        v_cc934c.current = true;
         v_5b2bbb((v_ba2215) => {
           const v_a448ad = [...v_ba2215];
           v_a448ad[v_8aab53] = true;
@@ -991,7 +989,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     accessibilityLabel={v_8d41d7('home.attendance_refresh', '출석 상태 새로고침')}
                     hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                   >
-                    <RefreshCw size={22} color="#615FFF" />
+                    {v_07cadc ? (
+                      <ActivityIndicator size="small" color="#615FFF" />
+                    ) : (
+                      <RefreshCw size={22} color="#615FFF" />
+                    )}
                   </TouchableOpacity>
                 </View>
                 <View style={v_d81136.weekStatus}>
