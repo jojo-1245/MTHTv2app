@@ -109,3 +109,27 @@ export function v_1e048d(v_f8e6b9): number {
   if (!v_d5dda0) return (new Date().getDay() + 6) % 7;
   return (v_d5dda0.getDay() + 6) % 7;
 }
+
+export function v_bd8487(
+  v_96a68c,
+  v_20d7b1,
+  v_886f08
+): boolean[] {
+  const v_a448ad = [...v_96a68c];
+  const v_1377ec = v_f54afa(v_20d7b1);
+  if (!v_1377ec) return v_a448ad;
+
+  v_886f08.forEach((v_479f05) => {
+    const v_76f3cc = v_479f05.slice(0, 10);
+    const v_8decf8 = v_f54afa(v_76f3cc);
+    if (!v_8decf8) return;
+    const v_e9c14e = Math.round(
+      (v_8decf8.getTime() - v_1377ec.getTime()) / (24 * 60 * 60 * 1000)
+    );
+    if (v_e9c14e >= 0 && v_e9c14e <= 6) {
+      v_a448ad[v_e9c14e] = true;
+    }
+  });
+
+  return v_a448ad;
+}
