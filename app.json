@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ai.metahint.appw",
-      "buildNumber": "56",
+      "buildNumber": "57",
       "usesAppleSignIn": true,
       "icon": "./assets/images/appicon.png",
       "infoPlist": {
@@ -45,7 +45,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 56,
+      "versionCode": 57,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
