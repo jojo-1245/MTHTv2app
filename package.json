@@ -17,7 +17,9 @@
     "build:dev": "set -a && source .env && set +a && eas build --local --profile development",
     "build:preview": "set -a && source .env && set +a && eas build --local --profile preview",
     "build:production": "set -a && source .env && set +a && eas build --local --profile production",
-    "build:store": "set -a && source .env && set +a && eas build --local --profile store"
+    "build:store": "set -a && source .env && set +a && eas build --local --profile store",
+    "ios:extract-ipa": "./scripts/extract-ipa.sh",
+    "ios:extract-ipa:open": "./scripts/extract-ipa.sh --open"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.4.3",
