@@ -1,6 +1,39 @@
+import { v_326be8 } from 'rcmrninabrnb';
 import { v_e3e816 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
+import { v_e4a763 } from '../../utils/env';
+import { v_2c13e7 } from '../../hooks/useSystemConfig';
 
 export type GroupStatus = '정상' | '위험';
+
+export function v_9da885(v_653390): boolean {
+
+  const v_5a56c4 = 
+    v_2c13e7('ios_hide_sensitive_vitals') === 'true' || 
+    v_2c13e7('ios_hide_sensitive_vitals') === '1' ||
+    (typeof v_2c13e7('ios_hide_sensitive_vitals') === 'boolean' && v_2c13e7('ios_hide_sensitive_vitals'));
+
+  const v_cccdc1 = v_e4a763().IOS_HIDE_SENSITIVE_VITALS;
+
+  if (v_326be8.OS === 'ios' && (v_5a56c4 || v_cccdc1)) {
+    const v_40f40b = [
+      v_e3e816.BLOOD_PRESSURE,
+      v_e3e816.OXYGEN_SATURATION,
+      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+    ];
+
+    if (typeof v_653390 === 'number' && v_40f40b.includes(v_653390)) {
+      return true;
+    }
+
+    if (typeof v_653390 === 'string') {
+      const v_9cad89 = ['blood_pressure', 'oxygen_saturation', 'high_blood_pressure_risk'];
+      if (v_9cad89.includes(v_653390.toLowerCase())) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 export const v_399d2c = (v_3b402b): GroupStatus | null => {
   const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
@@ -143,6 +176,8 @@ export function v_d28324(v_479f05): boolean {
 }
 
 export function v_7374eb(v_823608, v_3b402b): boolean {
+
+  if (v_9da885(v_823608)) return false;
 
   if (v_823608.startsWith('unknown_')) return false;
 
