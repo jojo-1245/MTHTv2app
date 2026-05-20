@@ -55,7 +55,7 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKe
 
   const v_76ceae = v_1f1e84 ?? v_401fcf[v_c7daf6.name] ?? 'home';
 
-  const v_695971 = v_61bcc3 && !!v_a2243f;
+  const v_695971 = !!v_61bcc3;
   const v_f86766 = v_695971 ? 'MetaHint' : v_8d41d7('home.bottom_nav_wallet');
 
   const bottomNavItems: v_7369b0[] = [
@@ -68,9 +68,16 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({ children: v_21f619, activeKe
 
   const v_c58a56 = (item: v_7369b0) => {
     if (v_8c0b26.key === 'wallet' && v_695971) {
-      v_f2c756.openURL(v_a2243f).catch((v_9e86fd) =>
-        console.warn('[MainLayout] wallet_tab_url 열기 실패:', v_9e86fd)
-      );
+      if (v_a2243f) {
+        v_f2c756.openURL(v_a2243f).catch((v_9e86fd) =>
+          console.warn('[MainLayout] wallet_tab_url 열기 실패:', v_9e86fd)
+        );
+      } else {
+
+        v_f2c756.openURL('https://service-mh.example.invalid').catch((v_9e86fd) =>
+          console.warn('[MainLayout] 기본 URL 열기 실패:', v_9e86fd)
+        );
+      }
       return;
     }
     if (v_8c0b26.route && v_8c0b26.route !== v_c7daf6.name) {

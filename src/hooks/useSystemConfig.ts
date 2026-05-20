@@ -50,13 +50,40 @@ export function v_1f53bf() {
   return {
     config: v_74a79c,
     loading: v_683210,
-    walletTabHidden: v_74a79c?.wallet_tab_hidden ?? false,
-    walletTabUrl: v_74a79c?.wallet_tab_url ?? '',
+
+    walletTabHidden: Platform.select({
+      ios: v_74a79c?.ios_wallet_tab_hidden === true || v_74a79c?.ios_wallet_tab_hidden === '1' || v_74a79c?.wallet_tab_hidden === true,
+      android: v_74a79c?.android_wallet_tab_hidden === true || v_74a79c?.android_wallet_tab_hidden === '1' || v_74a79c?.wallet_tab_hidden === true,
+      default: v_74a79c?.wallet_tab_hidden === true,
+    }),
+    walletTabUrl: Platform.select({
+      ios: (v_74a79c?.ios_wallet_tab_url as string) || (v_74a79c?.wallet_tab_url as string) || '',
+      android: (v_74a79c?.android_wallet_tab_url as string) || (v_74a79c?.wallet_tab_url as string) || '',
+      default: (v_74a79c?.wallet_tab_url as string) || '',
+    }),
+
+    hideSensitiveVitals: Platform.select({
+      ios: v_74a79c?.ios_hide_sensitive_vitals === true || v_74a79c?.ios_hide_sensitive_vitals === '1',
+      android: v_74a79c?.android_hide_sensitive_vitals === true || v_74a79c?.android_hide_sensitive_vitals === '1',
+      default: false,
+    }),
     fzljtiliLicenseKey: (v_74a79c?.fzljtili_license_key as string) ?? '',
     youcamApiKey: (v_74a79c?.youcam_api_key as string) ?? '',
   };
 }
 
-export function v_2c13e7(v_b24339): string {
+export function v_2c13e7(v_b24339): any {
   return (v_340a92 as any)?.[v_b24339] ?? '';
+}
+
+export function v_99cc3c(v_6845e8): any {
+  if (!v_340a92) return '';
+
+  const v_3eeb88 = Platform.select({
+    ios: `ios_${v_6845e8}`,
+    android: `android_${v_6845e8}`,
+    default: v_6845e8,
+  });
+
+  return (v_340a92 as any)?.[v_3eeb88] ?? (v_340a92 as any)?.[v_6845e8] ?? '';
 }

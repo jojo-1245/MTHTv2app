@@ -2260,6 +2260,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           <View style={v_d81136.cameraPreviewWrapper} onLayout={v_1f2c01}>
             <CameraPreviewView style={v_d81136.cameraPreview} />
             {}
+            {(v_bc50c7 === v_eb2401.PROCESSING || v_bc50c7 === v_eb2401.STARTING) && (
+              <View style={v_d81136.recordingIndicator}>
+                <View style={v_d81136.recordingDot} />
+                <Text style={v_d81136.recordingText}>REC</Text>
+              </View>
+            )}
+            {}
             {v_14a7eb?.roi && v_bc50c7 === v_eb2401.PROCESSING && (
               <FaceDetectionBox previewSize={v_cc7953} roi={v_14a7eb.roi} imageWidth={v_14a7eb.imageWidth} imageHeight={v_14a7eb.imageHeight} />
             )}
@@ -2303,9 +2310,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 <Text style={v_d81136.statusText}>{v_7a93a3()}</Text>
               </View>
 
-              {
+              {}
+              <View style={v_d81136.medicalDisclaimerContainer}>
+                <Text style={v_d81136.medicalDisclaimerText}>
+                  {v_8d41d7('health_analysis.measurement.medical_disclaimer')}
+                </Text>
+              </View>
 
-}
               {}
               <View style={v_d81136.buttonContainer}>
                 <PrimaryButton
@@ -2925,6 +2936,41 @@ const v_d81136 = v_472849.create({
     fontSize: 16,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
+  },
+  recordingIndicator: {
+    position: 'absolute',
+    top: v_9b1a04.medium,
+    right: v_9b1a04.medium,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+    zIndex: 20,
+  },
+  recordingDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#EF4444',
+    marginRight: 6,
+  },
+  recordingText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontFamily: v_843035.bold,
+  },
+  medicalDisclaimerContainer: {
+    marginBottom: v_9b1a04.large,
+    paddingHorizontal: v_9b1a04.large,
+  },
+  medicalDisclaimerText: {
+    fontSize: 11,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+    lineHeight: 16,
   },
 });
 

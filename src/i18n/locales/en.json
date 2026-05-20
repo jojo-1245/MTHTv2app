@@ -749,6 +749,7 @@
     "btn_title": "Back to login"
   },
   "chat": {
+    "medical_disclaimer": "⚠️ [Medical Disclaimer]\nThis AI Hinty service is for general fitness and wellness purposes and is not a substitute for medical diagnosis, treatment, or prevention. Please refer to the following external resources for technology and evidence.\n\n• [Technology Principles](https://www.binah.ai/technology/)\n• [Accuracy Reports](https://www.binah.ai/research/)",
     "title": "AI Hinty",
     "subtitle": "AI Health Advisor",
     "placeholder": "Enter health-related questions...",
@@ -1084,7 +1085,8 @@
       "result_preparing": "Saving results...",
       "result_preparing_session": "Cleaning up session...",
       "result_missing_title": "Result Incomplete",
-      "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen."
+      "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen.",
+      "medical_disclaimer": "The measurement results are for reference only and not for medical use. Please consult a doctor if you have any health concerns."
     },
     "result": {
       "detail_info": "Detail Info",
