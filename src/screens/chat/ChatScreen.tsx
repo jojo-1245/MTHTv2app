@@ -793,6 +793,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
               ) : v_a8cd21.text ? (
                 <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text>
               ) : null}
+              {v_326be8.OS === 'ios' && !v_a8cd21.isLoading && v_a8cd21.text ? (
+                <Text style={v_d81136.aiDisclaimerFooter}>{v_8d41d7('chat.ai_msg_footer')}</Text>
+              ) : null}
               {v_a8cd21.questionnaire && (() => {
                 const v_0ba044 = v_a8cd21.questionnaire.completed;
                 const v_61e622 = v_a8cd21.questionnaire.completedResult;
@@ -1370,6 +1373,12 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.regular,
     color: '#374151',
     lineHeight: 22,
+  },
+  aiDisclaimerFooter: {
+    fontSize: 11,
+    color: '#9AA0A6',
+    marginTop: 6,
+    lineHeight: 15,
   },
   aiBubbleActionButton: {
     marginTop: v_9b1a04.medium,
