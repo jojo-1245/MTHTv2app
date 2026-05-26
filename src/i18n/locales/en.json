@@ -754,6 +754,7 @@
   },
   "chat": {
     "medical_disclaimer": "⚠️ [Medical Disclaimer]\nThis AI Hinty service is for general fitness and wellness purposes and is not a substitute for medical diagnosis, treatment, or prevention. Please refer to the following external resources for technology and evidence.\n\n• [Technology Principles](https://www.binah.ai/technology/)\n• [Accuracy Reports](https://www.binah.ai/research/)",
+    "ai_msg_footer": "For wellness reference only; not a medical diagnosis. Sources: measurement tech binah.ai · health info KDCA (kdca.go.kr).",
     "title": "AI Hinty",
     "subtitle": "AI Health Advisor",
     "placeholder": "Enter health-related questions...",
