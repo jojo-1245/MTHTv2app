@@ -581,16 +581,18 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   >
                     <GoogleIcon size={24} />
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[v_d81136.socialIconButton, v_d81136.appleButton]}
-                    onPress={v_ef4111}
-                    disabled={v_cd31a8}
-                    activeOpacity={0.85}
-                    accessibilityRole="button"
-                    accessibilityLabel={v_8d41d7('login.apple_login')}
-                  >
-                    <AppleIcon size={24} />
-                  </TouchableOpacity>
+                  {v_326be8.OS === 'ios' && (
+                    <TouchableOpacity
+                      style={[v_d81136.socialIconButton, v_d81136.appleButton]}
+                      onPress={v_ef4111}
+                      disabled={v_cd31a8}
+                      activeOpacity={0.85}
+                      accessibilityRole="button"
+                      accessibilityLabel={v_8d41d7('login.apple_login')}
+                    >
+                      <AppleIcon size={24} />
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
