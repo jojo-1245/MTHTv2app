@@ -1,15 +1,15 @@
 
 
-const LANGUAGE_TIMEZONE: Record<string, string> = {
+const v_e1310c = {
   ko: 'Asia/Seoul',
   id: 'Asia/Jakarta',
   en: '', 
 };
 
-export function getTimezoneForLanguage(language: string): string {
-  const code = (language || 'en').toLowerCase().split('-')[0];
-  const mapped = LANGUAGE_TIMEZONE[code];
-  if (mapped) return mapped;
+export function v_1d94cd(v_05bb19): string {
+  const v_c99bd2 = (v_05bb19 || 'en').toLowerCase().split('-')[0];
+  const v_f15433 = v_e1310c[v_c99bd2];
+  if (v_f15433) return v_f15433;
 
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
@@ -18,26 +18,26 @@ export function getTimezoneForLanguage(language: string): string {
   }
 }
 
-export function getTodayDateStringInTimezone(timeZone: string): string {
+export function v_f7fc49(v_ce0555): string {
   try {
-    const now = new Date();
-    const str = now.toLocaleDateString('en-CA', { timeZone }); 
-    return str;
+    const v_5c2f9f = new Date();
+    const v_fba864 = v_5c2f9f.toLocaleDateString('en-CA', { timeZone: v_ce0555 }); 
+    return v_fba864;
   } catch {
-    const d = new Date();
-    const y = d.getUTCFullYear();
-    const m = String(d.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(d.getUTCDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
+    const v_d5dda0 = new Date();
+    const v_64877a = v_d5dda0.getUTCFullYear();
+    const v_35f85c = String(v_d5dda0.getUTCMonth() + 1).padStart(2, '0');
+    const v_087ffc = String(v_d5dda0.getUTCDate()).padStart(2, '0');
+    return `${v_64877a}-${v_35f85c}-${v_087ffc}`;
   }
 }
 
-export function getTodayDateStringForLocale(language: string): string {
-  const timeZone = getTimezoneForLanguage(language);
-  return getTodayDateStringInTimezone(timeZone);
+export function v_312d93(v_05bb19): string {
+  const v_ce0555 = v_1d94cd(v_05bb19);
+  return v_f7fc49(v_ce0555);
 }
 
-export function getClientTimeZone(): string {
+export function v_42edc9(): string {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Seoul';
   } catch {
@@ -45,130 +45,126 @@ export function getClientTimeZone(): string {
   }
 }
 
-export function getTodayDateStringForClientTimeZone(): string {
-  return getTodayDateStringInTimezone(getClientTimeZone());
+export function v_7446c0(): string {
+  return v_f7fc49(v_42edc9());
 }
 
-export function parseCalendarDate(dateStr: string): Date | null {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr.trim());
-  if (!m) return null;
-  const y = Number(m[1]);
-  const mo = Number(m[2]);
-  const d = Number(m[3]);
-  if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
-  return new Date(y, mo - 1, d, 12, 0, 0, 0);
+export function v_f54afa(v_f8e6b9): Date | null {
+  const v_35f85c = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v_f8e6b9.trim());
+  if (!v_35f85c) return null;
+  const v_64877a = Number(v_35f85c[1]);
+  const v_c307e0 = Number(v_35f85c[2]);
+  const v_d5dda0 = Number(v_35f85c[3]);
+  if (v_c307e0 < 1 || v_c307e0 > 12 || v_d5dda0 < 1 || v_d5dda0 > 31) return null;
+  return new Date(v_64877a, v_c307e0 - 1, v_d5dda0, 12, 0, 0, 0);
 }
 
-export function formatCalendarDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
+export function v_d3b4cd(v_8dffde): string {
+  const v_64877a = v_8dffde.getFullYear();
+  const v_35f85c = String(v_8dffde.getMonth() + 1).padStart(2, '0');
+  const v_087ffc = String(v_8dffde.getDate()).padStart(2, '0');
+  return `${v_64877a}-${v_35f85c}-${v_087ffc}`;
 }
 
-export function getWeekdayIndexFromCalendarDate(dateStr: string): number {
-  const d = parseCalendarDate(dateStr);
-  if (!d) return (new Date().getDay() + 6) % 7;
-  return (d.getDay() + 6) % 7;
+export function v_1e048d(v_f8e6b9): number {
+  const v_d5dda0 = v_f54afa(v_f8e6b9);
+  if (!v_d5dda0) return (new Date().getDay() + 6) % 7;
+  return (v_d5dda0.getDay() + 6) % 7;
 }
 
-export function getMondayOfCalendarWeek(dateStr: string): string {
-  const d = parseCalendarDate(dateStr);
-  if (!d) return dateStr;
-  const daysFromMonday = (d.getDay() + 6) % 7;
-  const monday = new Date(d);
-  monday.setDate(d.getDate() - daysFromMonday);
-  return formatCalendarDate(monday);
+export function v_27d54c(v_f8e6b9): string {
+  const v_d5dda0 = v_f54afa(v_f8e6b9);
+  if (!v_d5dda0) return v_f8e6b9;
+  const v_a35724 = (v_d5dda0.getDay() + 6) % 7;
+  const v_6fe830 = new Date(v_d5dda0);
+  v_6fe830.setDate(v_d5dda0.getDate() - v_a35724);
+  return v_d3b4cd(v_6fe830);
 }
 
-export function addCalendarDays(dateStr: string, days: number): string {
-  const d = parseCalendarDate(dateStr);
-  if (!d) return dateStr;
-  d.setDate(d.getDate() + days);
-  return formatCalendarDate(d);
+export function v_91b7d4(v_f8e6b9, v_6a53fd): string {
+  const v_d5dda0 = v_f54afa(v_f8e6b9);
+  if (!v_d5dda0) return v_f8e6b9;
+  v_d5dda0.setDate(v_d5dda0.getDate() + v_6a53fd);
+  return v_d3b4cd(v_d5dda0);
 }
 
-export function isCalendarDateInRange(dateStr: string, weekStart: string, weekEnd: string): boolean {
-  const d = parseCalendarDate(dateStr);
-  const start = parseCalendarDate(weekStart);
-  const end = parseCalendarDate(weekEnd);
-  if (!d || !start || !end) return false;
-  return d >= start && d <= end;
+export function v_0c0824(v_f8e6b9, v_20d7b1, v_e1493a): boolean {
+  const v_d5dda0 = v_f54afa(v_f8e6b9);
+  const v_965edf = v_f54afa(v_20d7b1);
+  const v_3b508c = v_f54afa(v_e1493a);
+  if (!v_d5dda0 || !v_965edf || !v_3b508c) return false;
+  return v_d5dda0 >= v_965edf && v_d5dda0 <= v_3b508c;
 }
 
-export function getCalendarWeekRange(
-  dateStr: string,
-  weekStart?: string,
-  weekEnd?: string
+export function v_89c1c6(
+  v_f8e6b9,
+  v_20d7b1,
+  v_e1493a
 ): { weekStart: string; weekEnd: string } {
-  const start = weekStart ?? getMondayOfCalendarWeek(dateStr);
-  const end = weekEnd ?? addCalendarDays(start, 6);
-  return { weekStart: start, weekEnd: end };
+  const v_965edf = v_20d7b1 ?? v_27d54c(v_f8e6b9);
+  const v_3b508c = v_e1493a ?? v_91b7d4(v_965edf, 6);
+  return { weekStart: v_965edf, weekEnd: v_3b508c };
 }
 
-export function resolveCalendarWeekRange(
-  todayStr: string,
-  apiWeekStart?: string,
-  apiWeekEnd?: string
+export function v_5f89d6(
+  v_412aab,
+  v_e2e922,
+  v_77dc31
 ): { weekStart: string; weekEnd: string; usedApiWeek: boolean } {
-  const client = getCalendarWeekRange(todayStr);
+  const v_a492d4 = v_89c1c6(v_412aab);
   if (
-    apiWeekStart &&
-    apiWeekEnd &&
-    isCalendarDateInRange(todayStr, apiWeekStart, apiWeekEnd)
+    v_e2e922 &&
+    v_77dc31 &&
+    v_0c0824(v_412aab, v_e2e922, v_77dc31)
   ) {
-    return { weekStart: apiWeekStart, weekEnd: apiWeekEnd, usedApiWeek: true };
+    return { weekStart: v_e2e922, weekEnd: v_77dc31, usedApiWeek: true };
   }
-  return { weekStart: client.weekStart, weekEnd: client.weekEnd, usedApiWeek: false };
+  return { weekStart: v_a492d4.weekStart, weekEnd: v_a492d4.weekEnd, usedApiWeek: false };
 }
 
-export function getWeekdayIndexFromCalendarDate(dateStr: string): number {
-  const d = parseCalendarDate(dateStr);
-  if (!d) return (new Date().getDay() + 6) % 7;
-  return (d.getDay() + 6) % 7;
-}
-
-export function mergeCheckedDatesIntoWeek(
-  weekDays: boolean[],
-  weekStart: string,
-  checkedDates: string[]
+export function v_bd8487(
+  v_96a68c,
+  v_20d7b1,
+  v_886f08
 ): boolean[] {
-  const next = [...weekDays];
-  const startParsed = parseCalendarDate(weekStart);
-  if (!startParsed) return next;
+  const v_a448ad = [...v_96a68c];
+  const v_1377ec = v_f54afa(v_20d7b1);
+  if (!v_1377ec) return v_a448ad;
 
-  checkedDates.forEach((raw) => {
-    const dateKey = raw.slice(0, 10);
-  const y = monday.getFullYear();
-  const m = String(monday.getMonth() + 1).padStart(2, '0');
-  const day = String(monday.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
-export function mapRecentStatusToWeekGrid(
-  recentStatus: Array<{ date: string; attended: boolean }>,
-  weekStart: string
-): boolean[] {
-  const weekDays = [false, false, false, false, false, false, false];
-  const startParsed = parseCalendarDate(weekStart);
-  if (!startParsed) return weekDays;
-
-  recentStatus.forEach((item) => {
-    const dateKey = item.date.slice(0, 10);
-    const parsed = parseCalendarDate(dateKey);
-    if (!parsed) return;
-    const dayIndex = Math.round(
-      (parsed.getTime() - startParsed.getTime()) / (24 * 60 * 60 * 1000)
+  v_886f08.forEach((v_479f05) => {
+    const v_76f3cc = v_479f05.slice(0, 10);
+    const v_8decf8 = v_f54afa(v_76f3cc);
+    if (!v_8decf8) return;
+    const v_e9c14e = Math.round(
+      (v_8decf8.getTime() - v_1377ec.getTime()) / (24 * 60 * 60 * 1000)
     );
-    if (dayIndex >= 0 && dayIndex <= 6) {
-      next[dayIndex] = true;
+    if (v_e9c14e >= 0 && v_e9c14e <= 6) {
+      v_a448ad[v_e9c14e] = true;
     }
   });
 
-  return next;
-      weekDays[dayIndex] = !!item.attended;
+  return v_a448ad;
+}
+
+export function v_3cb9d7(
+  v_212a26,
+  v_20d7b1
+): boolean[] {
+  const v_96a68c = [false, false, false, false, false, false, false];
+  const v_1377ec = v_f54afa(v_20d7b1);
+  if (!v_1377ec) return v_96a68c;
+
+  v_212a26.forEach((v_8c0b26) => {
+    const v_76f3cc = v_8c0b26.date.slice(0, 10);
+    const v_8decf8 = v_f54afa(v_76f3cc);
+    if (!v_8decf8) return;
+    const v_e9c14e = Math.round(
+      (v_8decf8.getTime() - v_1377ec.getTime()) / (24 * 60 * 60 * 1000)
+    );
+    if (v_e9c14e >= 0 && v_e9c14e <= 6) {
+      v_96a68c[v_e9c14e] = !!v_8c0b26.attended;
     }
   });
 
-  return weekDays;
+  return v_96a68c;
 }

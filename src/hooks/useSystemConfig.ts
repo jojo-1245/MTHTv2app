@@ -1,4 +1,5 @@
 import { v_5ab095, v_c4deb2, v_e662ae } from 'bapkr';
+import { v_326be8 } from 'rcmrninabrnb';
 import { v_bd36d4, type v_eca0c9 } from '../services/systemApi';
 
 let cachedConfig: v_eca0c9 | null = null;
@@ -51,18 +52,18 @@ export function v_1f53bf() {
     config: v_74a79c,
     loading: v_683210,
 
-    walletTabHidden: Platform.select({
+    walletTabHidden: v_326be8.select({
       ios: v_74a79c?.ios_wallet_tab_hidden === true || v_74a79c?.ios_wallet_tab_hidden === '1' || v_74a79c?.wallet_tab_hidden === true,
       android: v_74a79c?.android_wallet_tab_hidden === true || v_74a79c?.android_wallet_tab_hidden === '1' || v_74a79c?.wallet_tab_hidden === true,
       default: v_74a79c?.wallet_tab_hidden === true,
     }),
-    walletTabUrl: Platform.select({
+    walletTabUrl: v_326be8.select({
       ios: (v_74a79c?.ios_wallet_tab_url as string) || (v_74a79c?.wallet_tab_url as string) || '',
       android: (v_74a79c?.android_wallet_tab_url as string) || (v_74a79c?.wallet_tab_url as string) || '',
       default: (v_74a79c?.wallet_tab_url as string) || '',
     }),
 
-    hideSensitiveVitals: Platform.select({
+    hideSensitiveVitals: v_326be8.select({
       ios: v_74a79c?.ios_hide_sensitive_vitals === true || v_74a79c?.ios_hide_sensitive_vitals === '1',
       android: v_74a79c?.android_hide_sensitive_vitals === true || v_74a79c?.android_hide_sensitive_vitals === '1',
       default: false,
@@ -79,7 +80,7 @@ export function v_2c13e7(v_b24339): any {
 export function v_99cc3c(v_6845e8): any {
   if (!v_340a92) return '';
 
-  const v_3eeb88 = Platform.select({
+  const v_3eeb88 = v_326be8.select({
     ios: `ios_${v_6845e8}`,
     android: `android_${v_6845e8}`,
     default: v_6845e8,
