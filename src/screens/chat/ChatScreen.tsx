@@ -176,6 +176,13 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_f08a5e = v_24baff.initialHealthInfo?.name ?? v_0c2f9b.name;
     const v_87cb2b = [];
 
+    v_87cb2b.push({
+      id: 'medical-disclaimer',
+      type: 'ai',
+      text: v_8d41d7('chat.medical_disclaimer'),
+      createdAt: Date.now() - 1000,
+    });
+
     if (v_24baff.attachedHealthSummary && v_24baff.attachedHealthSummary !== v_4c906f.current.health) {
       v_4c906f.current.health = v_24baff.attachedHealthSummary;
       const v_456484 = v_8d41d7('chat.attached_health_intro', { name: v_f08a5e });

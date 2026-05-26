@@ -81,6 +81,8 @@ PR_MESSAGE.md
 plan.md
 *.plan.mdeas.json
 
-# 빌드 스위치 스크립트
-scripts/
+# 빌드 스위치 스크립트 (디렉토리는 추적, 내부 파일만 ignore)
+scripts/*
+# 공용 빌드 도구는 추적 (openrsync 우회 IPA 추출 등)
+!scripts/extract-ipa.sh
 .envrc
