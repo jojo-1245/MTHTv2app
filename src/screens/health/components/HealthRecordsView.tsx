@@ -19,7 +19,7 @@ import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 import { v_777b12, v_d531ea, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_d28324, v_7374eb } from '../vitalSignStatus';
+import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
 
 export interface MeasurementItem {
   key: string;
@@ -83,7 +83,8 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
     { key: 'cardiac_workload', labelKey: 'cardiac_workload', value: 8640, status: 'normal', descKey: 'cardiac_workload_desc' },
     { key: 'pulse_pressure', labelKey: 'pulse_pressure', value: 40, status: 'normal', unit: 'mmHg', descKey: 'pulse_pressure_desc' },
     { key: 'mean_arterial_pressure', labelKey: 'mean_arterial_pressure', value: 93, status: 'normal', unit: 'mmHg', descKey: 'mean_arterial_pressure_desc' },
-  ];
+  ].filter(v_8c0b26 => !v_9da885(v_8c0b26.key));
+
   if (Object.keys(v_11ea7b).length === 0) return v_694b25;
   return v_694b25.map((v_8c0b26) => {
     const v_b6c474 = v_11ea7b[v_8c0b26.key];
@@ -100,7 +101,10 @@ export const v_bcb8af = [
   { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure'] },
   { sectionKey: 'section_blood_tests', itemKeys: ['hemoglobin', 'hemoglobin_a1c'] },
   { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'heart_age'] },
-];
+].map(v_b4fa6c => ({
+  ...v_b4fa6c,
+  itemKeys: v_b4fa6c.itemKeys.filter(v_b24339 => !v_9da885(v_b24339))
+})).filter(v_b4fa6c => v_b4fa6c.itemKeys.length > 0);
 
 const v_70af8f = [
   {
