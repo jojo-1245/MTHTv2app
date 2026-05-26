@@ -31,7 +31,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
-import { v_a6cea6, v_4e7146, v_7374eb, type v_71beaa } from './vitalSignStatus';
+import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, type v_71beaa } from './vitalSignStatus';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -685,106 +685,118 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     { id: 'risks', label: '미래위험도' },
   ], [v_8d41d7]);
 
-  const v_153eb4 = v_df9f57(() => ({
-    'vital-signs': [
-      v_e3e816.BLOOD_PRESSURE,
-      v_e3e816.PULSE_RATE,
-      v_e3e816.RESPIRATION_RATE,
-      v_e3e816.OXYGEN_SATURATION,
-      v_e3e816.CARDIAC_WORKLOAD,
-      v_e3e816.PULSE_PRESSURE,
-      v_e3e816.MEAN_ARTERIAL_PRESSURE,
-    ],
-    'risks': [
-      v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
-      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
-      v_e3e816.ASCVD_RISK,
-      v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
-      v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
-      v_e3e816.LOW_HEMOGLOBIN_RISK,
-      v_e3e816.HEART_AGE,
-    ],
-    'blood-tests': [
-      v_e3e816.HEMOGLOBIN,
-      v_e3e816.HEMOGLOBIN_A1C,
-    ],
-    'cardiovascular': [
-      v_e3e816.BLOOD_PRESSURE,
-      v_e3e816.PULSE_RATE,
-      v_e3e816.OXYGEN_SATURATION,
-      v_e3e816.SDNN,
-      v_e3e816.PRQ,
-      v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
-      v_e3e816.ASCVD_RISK,
-      v_e3e816.HEART_AGE,
-      v_e3e816.CARDIAC_WORKLOAD,
-      v_e3e816.PULSE_PRESSURE,
-      v_e3e816.MEAN_ARTERIAL_PRESSURE,
-    ],
-    'respiratory': [
-      v_e3e816.RESPIRATION_RATE,
-      v_e3e816.PRQ,
-    ],
-    'stress-recovery': [
-      v_e3e816.SDNN,
-      v_e3e816.SNS_ZONE,
-      v_e3e816.STRESS_LEVEL,
-      v_e3e816.PNS_ZONE,
-    ],
-  }), []);
+  const v_153eb4 = v_df9f57(() => {
+    const v_8dcb51 = {
+      'vital-signs': [
+        v_e3e816.BLOOD_PRESSURE,
+        v_e3e816.PULSE_RATE,
+        v_e3e816.RESPIRATION_RATE,
+        v_e3e816.OXYGEN_SATURATION,
+        v_e3e816.CARDIAC_WORKLOAD,
+        v_e3e816.PULSE_PRESSURE,
+        v_e3e816.MEAN_ARTERIAL_PRESSURE,
+      ],
+      'risks': [
+        v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+        v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+        v_e3e816.ASCVD_RISK,
+        v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+        v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+        v_e3e816.LOW_HEMOGLOBIN_RISK,
+        v_e3e816.HEART_AGE,
+      ],
+      'blood-tests': [
+        v_e3e816.HEMOGLOBIN,
+        v_e3e816.HEMOGLOBIN_A1C,
+      ],
+      'cardiovascular': [
+        v_e3e816.BLOOD_PRESSURE,
+        v_e3e816.PULSE_RATE,
+        v_e3e816.OXYGEN_SATURATION,
+        v_e3e816.SDNN,
+        v_e3e816.PRQ,
+        v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+        v_e3e816.ASCVD_RISK,
+        v_e3e816.HEART_AGE,
+        v_e3e816.CARDIAC_WORKLOAD,
+        v_e3e816.PULSE_PRESSURE,
+        v_e3e816.MEAN_ARTERIAL_PRESSURE,
+      ],
+      'respiratory': [
+        v_e3e816.RESPIRATION_RATE,
+        v_e3e816.PRQ,
+      ],
+      'stress-recovery': [
+        v_e3e816.SDNN,
+        v_e3e816.SNS_ZONE,
+        v_e3e816.STRESS_LEVEL,
+        v_e3e816.PNS_ZONE,
+      ],
+    };
 
-  const v_bc04a2 = v_df9f57(() => [
+    const v_a634cb = {};
+    Object.entries(v_8dcb51).forEach(([v_b24339, v_db0487]) => {
+      v_a634cb[v_b24339] = v_db0487.filter(v_3b27d9 => !v_9da885(v_3b27d9));
+    });
+    return v_a634cb;
+  }, []);
 
-    { typeNum: v_e3e816.BLOOD_PRESSURE },
+  const v_bc04a2 = v_df9f57(() => {
+    const v_4622b9 = [
 
-    { typeNum: v_e3e816.PULSE_RATE },
+      { typeNum: v_e3e816.BLOOD_PRESSURE },
 
-    { typeNum: v_e3e816.RESPIRATION_RATE },
+      { typeNum: v_e3e816.PULSE_RATE },
 
-    { typeNum: v_e3e816.OXYGEN_SATURATION },
+      { typeNum: v_e3e816.RESPIRATION_RATE },
 
-    { typeNum: v_e3e816.SDNN, label: v_8d41d7('health_analysis.result.hrv_variability') },
-    { typeNum: v_e3e816.RMSSD },
-    { typeNum: v_e3e816.MEAN_RRI },
-    { typeNum: v_e3e816.SD1 },
-    { typeNum: v_e3e816.SD2 },
+      { typeNum: v_e3e816.OXYGEN_SATURATION },
 
-    { typeNum: v_e3e816.SNS_ZONE, label: v_8d41d7('health_analysis.result.stress_response') },
-    { typeNum: v_e3e816.SNS_INDEX },
+      { typeNum: v_e3e816.SDNN, label: v_8d41d7('health_analysis.result.hrv_variability') },
+      { typeNum: v_e3e816.RMSSD },
+      { typeNum: v_e3e816.MEAN_RRI },
+      { typeNum: v_e3e816.SD1 },
+      { typeNum: v_e3e816.SD2 },
 
-    { typeNum: v_e3e816.STRESS_LEVEL },
-    { typeNum: v_e3e816.STRESS_INDEX },
-    { typeNum: v_e3e816.NORMALIZED_STRESS_INDEX },
+      { typeNum: v_e3e816.SNS_ZONE, label: v_8d41d7('health_analysis.result.stress_response') },
+      { typeNum: v_e3e816.SNS_INDEX },
 
-    { typeNum: v_e3e816.PNS_ZONE, label: v_8d41d7('health_analysis.result.recovery_ability') },
-    { typeNum: v_e3e816.PNS_INDEX },
+      { typeNum: v_e3e816.STRESS_LEVEL },
+      { typeNum: v_e3e816.STRESS_INDEX },
+      { typeNum: v_e3e816.NORMALIZED_STRESS_INDEX },
 
-    { typeNum: v_e3e816.PRQ },
+      { typeNum: v_e3e816.PNS_ZONE, label: v_8d41d7('health_analysis.result.recovery_ability') },
+      { typeNum: v_e3e816.PNS_INDEX },
 
-    { typeNum: v_e3e816.HEMOGLOBIN },
+      { typeNum: v_e3e816.PRQ },
 
-    { typeNum: v_e3e816.HEMOGLOBIN_A1C },
+      { typeNum: v_e3e816.HEMOGLOBIN },
 
-    { typeNum: v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK },
+      { typeNum: v_e3e816.HEMOGLOBIN_A1C },
 
-    { typeNum: v_e3e816.HIGH_BLOOD_PRESSURE_RISK },
+      { typeNum: v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK },
 
-    { typeNum: v_e3e816.ASCVD_RISK },
+      { typeNum: v_e3e816.HIGH_BLOOD_PRESSURE_RISK },
 
-    { typeNum: v_e3e816.HIGH_FASTING_GLUCOSE_RISK },
+      { typeNum: v_e3e816.ASCVD_RISK },
 
-    { typeNum: v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK },
+      { typeNum: v_e3e816.HIGH_FASTING_GLUCOSE_RISK },
 
-    { typeNum: v_e3e816.LOW_HEMOGLOBIN_RISK },
+      { typeNum: v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK },
 
-    { typeNum: v_e3e816.HEART_AGE },
+      { typeNum: v_e3e816.LOW_HEMOGLOBIN_RISK },
 
-    { typeNum: v_e3e816.CARDIAC_WORKLOAD },
+      { typeNum: v_e3e816.HEART_AGE },
 
-    { typeNum: v_e3e816.PULSE_PRESSURE },
+      { typeNum: v_e3e816.CARDIAC_WORKLOAD },
 
-    { typeNum: v_e3e816.MEAN_ARTERIAL_PRESSURE },
-  ], [v_8d41d7]);
+      { typeNum: v_e3e816.PULSE_PRESSURE },
+
+      { typeNum: v_e3e816.MEAN_ARTERIAL_PRESSURE },
+    ];
+
+    return v_4622b9.filter(v_8c0b26 => !v_9da885(v_8c0b26.typeNum));
+  }, [v_8d41d7]);
 
   const v_930bc7 = v_df9f57(() => new Set([
     v_e3e816.WELLNESS_INDEX,
@@ -1566,11 +1578,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     };
   };
 
-  const v_08e501 = new Set<number>([
-    v_e3e816.WELLNESS_LEVEL,
-    v_e3e816.HEART_AGE,
-    v_e3e816.WELLNESS_INDEX,
-  ]);
+  const v_08e501 = v_df9f57(() => {
+    const v_bb8024 = new Set<number>([
+      v_e3e816.WELLNESS_LEVEL,
+      v_e3e816.HEART_AGE,
+      v_e3e816.WELLNESS_INDEX,
+    ]);
+
+    if (v_9da885(v_e3e816.BLOOD_PRESSURE)) v_bb8024.add(v_e3e816.BLOOD_PRESSURE);
+    if (v_9da885(v_e3e816.OXYGEN_SATURATION)) v_bb8024.add(v_e3e816.OXYGEN_SATURATION);
+    if (v_9da885(v_e3e816.HIGH_BLOOD_PRESSURE_RISK)) v_bb8024.add(v_e3e816.HIGH_BLOOD_PRESSURE_RISK);
+
+    return v_bb8024;
+  }, []);
 
   const v_f36ab0 = v_df9f57(() => {
     if (v_224a01 > 0) {

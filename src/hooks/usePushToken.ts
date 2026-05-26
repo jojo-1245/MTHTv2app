@@ -114,28 +114,33 @@ export function v_5ad1fd() {
       }
     });
 
-    const v_54114c = v_02a5ed().onTokenRefresh(async (v_4094c3) => {
-      console.log('[PushToken] onTokenRefresh — 새 토큰 감지:', v_4094c3.slice(0, 20) + '...');
-      try {
-        const v_2ca7e0 = await v_8d45bc();
-        if (!v_2ca7e0) {
-          console.log('[PushToken] onTokenRefresh — accessToken 없음, 스킵');
-          return;
+    let v_54114c = null;
+    try {
+      v_54114c = v_02a5ed().onTokenRefresh(async (v_4094c3) => {
+        console.log('[PushToken] onTokenRefresh — 새 토큰 감지:', v_4094c3.slice(0, 20) + '...');
+        try {
+          const v_2ca7e0 = await v_8d45bc();
+          if (!v_2ca7e0) {
+            console.log('[PushToken] onTokenRefresh — accessToken 없음, 스킵');
+            return;
+          }
+          await v_cec605(v_2ca7e0, {
+            token: v_4094c3,
+            platform: v_326be8.OS as 'android' | 'ios',
+          });
+          await v_e84827.setItem(v_86ffc4, String(Date.now()));
+          console.log('[PushToken] ✅ onTokenRefresh 서버 등록 완료');
+        } catch (v_9e86fd) {
+          console.warn('[PushToken] ❌ onTokenRefresh 등록 실패:', v_9e86fd);
         }
-        await v_cec605(v_2ca7e0, {
-          token: v_4094c3,
-          platform: v_326be8.OS as 'android' | 'ios',
-        });
-        await v_e84827.setItem(v_86ffc4, String(Date.now()));
-        console.log('[PushToken] ✅ onTokenRefresh 서버 등록 완료');
-      } catch (v_9e86fd) {
-        console.warn('[PushToken] ❌ onTokenRefresh 등록 실패:', v_9e86fd);
-      }
-    });
+      });
+    } catch (v_9e86fd) {
+      console.warn('[PushToken] ⚠ onTokenRefresh 리스너 등록 실패 (Firebase 미초기화 가능):', v_9e86fd);
+    }
 
     return () => {
       v_269481.remove();
-      v_54114c();
+      v_54114c?.();
     };
   }, []);
 
