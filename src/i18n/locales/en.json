@@ -310,6 +310,10 @@
     "step_notification_label": "Show steps in notification",
     "step_notification_unsupported": "Step notification is not supported on this device.",
     "step_notification_start_failed": "Failed to start step tracking notification.",
+    "step_notification_active": "Active",
+    "step_notification_tap_to_enable": "Tap to enable",
+    "step_notification_status_on": "On",
+    "step_notification_status_off": "Off",
     "coin_products": "Products",
     "view_all": "View All",
     "bottom_nav_home": "Home",
@@ -1738,6 +1742,13 @@
       "steps": "Steps Reward",
       "step_1k": "1,000 Steps Achieved",
       "step_goal": "10,000 Steps Achieved"
+    },
+    "transfer_status": {
+      "pending": "Pending settlement",
+      "queued": "Queued for transfer",
+      "completed": "Paid",
+      "failed": "Payment failed",
+      "deposit_completed": "Settled"
     },
     "history_load_failed": "Failed to load reward history.",
     "no_history": "No reward history.",

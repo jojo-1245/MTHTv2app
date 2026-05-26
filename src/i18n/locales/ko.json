@@ -353,6 +353,10 @@
         "step_notification_label": "알림에 걸음 수 표시",
         "step_notification_unsupported": "이 기기에서는 알림에 걸음 수 표시를 지원하지 않습니다.",
         "step_notification_start_failed": "걸음 추적 알림을 시작할 수 없습니다.",
+        "step_notification_active": "활성화 중",
+        "step_notification_tap_to_enable": "탭하여 활성화",
+        "step_notification_status_on": "활성화",
+        "step_notification_status_off": "비활성화",
         "coin_products": "추천 상품",
         "view_all": "전체보기",
         "bottom_nav_home": "홈",
@@ -1763,6 +1767,13 @@
             "steps": "걸음 수 보상",
             "step_1k": "천걸음 달성",
             "step_goal": "만걸음 달성"
+        },
+        "transfer_status": {
+            "pending": "정산 대기",
+            "queued": "전송 대기",
+            "completed": "지급 완료",
+            "failed": "지급 실패",
+            "deposit_completed": "정산 완료"
         },
         "history_load_failed": "보상 이력을 불러오는데 실패했습니다.",
         "no_history": "보상 이력이 없습니다.",

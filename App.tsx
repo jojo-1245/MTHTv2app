@@ -100,6 +100,9 @@ export default function v_6540c3() {
     if (!v_4c1272) return;
     try {
       const v_c9c489 = v_e4a763();
+      if (__DEV__) {
+        console.log('[Env] 서버 게이트웨이:', v_c9c489.GATEWAY, '| API_URL:', v_c9c489.API_URL);
+      }
 
       const v_3676d4 = v_c9c489.GOOGLE_WEB_CLIENT_ID;
       console.log('[GoogleSignin] configure 값 확인:', {
