@@ -1,9 +1,15 @@
-import { v_5ab095, v_c4deb2, v_e662ae } from 'bapkr';
+import { v_5ab095, v_c4deb2 } from 'bapkr';
 import { v_326be8 } from 'rcmrninabrnb';
 import { v_bd36d4, type v_eca0c9 } from '../services/systemApi';
 
 let cachedConfig: v_eca0c9 | null = null;
 let inflight: Promise<v_eca0c9> | null = null;
+
+type ConfigListener = (c: v_eca0c9 | null) => void;
+const v_f2812c = new Set<ConfigListener>();
+function v_e6bbf4() {
+  for (const v_1614db of v_f2812c) v_1614db(v_340a92);
+}
 
 const v_d66c57 = [0, 500, 1500, 3000];
 
@@ -14,6 +20,7 @@ async function v_3fe399(): Promise<v_eca0c9> {
     try {
       const v_9390e8 = await v_bd36d4();
       v_340a92 = v_9390e8;
+      v_e6bbf4();
       return v_9390e8;
     } catch (v_9e86fd) {
       v_7b2f0c = v_9e86fd;
@@ -42,16 +49,28 @@ export async function v_bb8240(): Promise<v_eca0c9> {
 export function v_1f53bf() {
   const [v_74a79c, v_f816d2] = v_5ab095<v_eca0c9 | null>(v_340a92);
   const [v_683210, v_34a50a] = v_5ab095(v_340a92 === null);
-  const v_cee2c7 = v_e662ae(v_340a92 !== null);
 
   v_c4deb2(() => {
-    if (v_cee2c7.current) return;
-    v_cee2c7.current = true;
+    let v_2a15fd = true;
+
+    const v_8b0dd9 = (v_3f4e2e) => {
+      if (v_2a15fd) v_f816d2(v_3f4e2e);
+    };
+    v_f2812c.add(v_8b0dd9);
 
     v_6daddc()
-      .then((v_9390e8) => v_f816d2(v_9390e8))
+      .then((v_9390e8) => {
+        if (v_2a15fd) v_f816d2(v_9390e8);
+      })
       .catch((v_9e86fd) => console.warn('[useSystemConfig] 설정 조회 최종 실패:', v_9e86fd))
-      .finally(() => v_34a50a(false));
+      .finally(() => {
+        if (v_2a15fd) v_34a50a(false);
+      });
+
+    return () => {
+      v_2a15fd = false;
+      v_f2812c.delete(v_8b0dd9);
+    };
   }, []);
 
   return {
