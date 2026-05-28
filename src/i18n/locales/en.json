@@ -247,6 +247,7 @@
     "comprehensive_health_check": "Comprehensive Health Check",
     "skin_analysis": "Skin Analysis",
     "ai_skin_diagnosis": "AI Skin Diagnosis",
+    "ai_skin_diagnosis_ios": "AI Skin Analysis",
     "start_btn": "Start →",
     "check_health_without_hospital": "Check your health without visiting a hospital",
     "ai_hinty_health_checkup": "AI Hinty Health Checkup",
@@ -757,6 +758,8 @@
     "ai_msg_footer": "For wellness reference only; not a medical diagnosis. Sources: measurement tech binah.ai · health info KDCA (kdca.go.kr).",
     "title": "AI Hinty",
     "subtitle": "AI Health Advisor",
+    "subtitle_ios": "AI Wellness Assistant",
+    "wellness_banner": "For general wellness information only — not a medical diagnosis. Please consult a doctor before making any medical decisions.",
     "placeholder": "Enter health-related questions...",
     "account_default": "Kim Geon-gang",
     "sample_products": {
@@ -779,6 +782,7 @@
       "father": "Father"
     },
     "ai_welcome": "Hello! I'm an AI health advisor. Feel free to ask any health or skin-related questions. 😊",
+    "ai_welcome_ios": "Hi! I'm your AI wellness assistant. Ask me about general wellness or skin-care information. 😊",
     "start_health_checkup": "Start Health Checkup",
     "start_health_checkup_sub": "Assess your health through medical interview like a doctor",
     "health_checkup_response": "Yes, {{name}}! I'll start a comprehensive health checkup.\n\nFirst, I'll retrieve your recent health analysis data to check your health status.\n\nIf you have past health checkup data, you can load it by pressing the button below. More accurate consultation is possible based on the data.",
@@ -1036,6 +1040,8 @@
       "flow_step_3_desc": "Point your face at the camera and hold for about 60 seconds",
       "flow_step_4": "Health Diagnosis",
       "flow_step_4_desc": "View pulse, blood pressure, SpO2 and get AI Hinty diagnosis",
+      "flow_step_4_ios": "Health Summary",
+      "flow_step_4_desc_ios": "Review your wellness metrics and get general insights from AI Hinty",
       "guidelines_title": "Measurement Precautions",
       "guideline_1": "Position yourself so your face is clearly visible to the camera",
       "guideline_2": "Measure in a place with uniform and bright lighting",
