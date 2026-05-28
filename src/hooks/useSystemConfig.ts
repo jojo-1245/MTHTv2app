@@ -33,6 +33,12 @@ export async function v_6daddc(): Promise<v_eca0c9> {
   return v_d7fc78;
 }
 
+export async function v_bb8240(): Promise<v_eca0c9> {
+  v_340a92 = null;
+  v_d7fc78 = null;
+  return v_6daddc();
+}
+
 export function v_1f53bf() {
   const [v_74a79c, v_f816d2] = v_5ab095<v_eca0c9 | null>(v_340a92);
   const [v_683210, v_34a50a] = v_5ab095(v_340a92 === null);
