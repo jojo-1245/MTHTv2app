@@ -66,9 +66,9 @@
       <true/>
     </dict>
     <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>건강 측정 디바이스와 연결하기 위해 블루투스 접근이 필요합니다</string>
+    <string>MetaHint uses Bluetooth to connect optional external wellness devices, for example to import readings from a compatible device. 외부 웰니스 기기 연결에 사용됩니다(예: 호환 기기 데이터 가져오기).</string>
     <key>NSCameraUsageDescription</key>
-    <string>건강 상태 분석을 위한 얼굴 측정에 사용됩니다</string>
+    <string>MetaHint uses the camera to estimate wellness indicators from facial blood-flow signals. Video is processed in real time and not stored. 카메라로 얼굴 혈류 신호 기반 웰니스 지표를 추정하며, 영상은 실시간 처리 후 저장하지 않습니다.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your location</string>
     <key>NSLocationAlwaysUsageDescription</key>
@@ -78,7 +78,7 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSMotionUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your device motion</string>
+    <string>MetaHint uses Motion &amp; Fitness data to improve the accuracy of your wellness estimates. For example, recent step counts and activity intensity help refine your heart-rate trend estimates. 동작·피트니스 데이터는 웰니스 추정치의 정확도를 높이기 위해 사용됩니다(예: 최근 걸음 수·활동 강도로 심박 추세 추정 보정).</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to save photos</string>
     <key>NSPhotoLibraryUsageDescription</key>
