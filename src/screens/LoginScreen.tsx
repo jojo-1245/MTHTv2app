@@ -551,36 +551,9 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 </View>
 
                 <View style={v_d81136.socialButtons}>
-                  <TouchableOpacity
-                    style={[v_d81136.socialIconButton, v_d81136.kakaoButton]}
-                    onPress={handleKakaoLogin}
-                    disabled={v_cd31a8}
-                    activeOpacity={0.85}
-                    accessibilityRole="button"
-                    accessibilityLabel={v_8d41d7('login.kakao_login')}
-                  >
-                    <KakaoIcon size={32} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[v_d81136.socialIconButton, v_d81136.naverButton]}
-                    onPress={v_40f9f9}
-                    disabled={v_cd31a8}
-                    activeOpacity={0.85}
-                    accessibilityRole="button"
-                    accessibilityLabel={v_8d41d7('login.naver_login')}
-                  >
-                    <NaverIcon size={24} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[v_d81136.socialIconButton, v_d81136.googleButton]}
-                    onPress={v_6dd38d}
-                    disabled={v_cd31a8}
-                    activeOpacity={0.85}
-                    accessibilityRole="button"
-                    accessibilityLabel={v_8d41d7('login.google_login')}
-                  >
-                    <GoogleIcon size={24} />
-                  </TouchableOpacity>
+                  {
+
+}
                   {v_326be8.OS === 'ios' && (
                     <TouchableOpacity
                       style={[v_d81136.socialIconButton, v_d81136.appleButton]}
@@ -593,6 +566,26 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                       <AppleIcon size={24} />
                     </TouchableOpacity>
                   )}
+                  <TouchableOpacity
+                    style={[v_d81136.socialIconButton, v_d81136.googleButton]}
+                    onPress={v_6dd38d}
+                    disabled={v_cd31a8}
+                    activeOpacity={0.85}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7('login.google_login')}
+                  >
+                    <GoogleIcon size={24} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[v_d81136.socialIconButton, v_d81136.naverButton]}
+                    onPress={v_40f9f9}
+                    disabled={v_cd31a8}
+                    activeOpacity={0.85}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7('login.naver_login')}
+                  >
+                    <NaverIcon size={24} />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
