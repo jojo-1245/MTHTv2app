@@ -47,6 +47,7 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } 
 import { v_556baf } from '../components';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_75c3c7, v_271901 } from '../context';
+import { v_bb8240 } from '../hooks/useSystemConfig';
 import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
 import { v_0c7e2f } from '../services/stepTrackingService';
 import type { v_2d8e3c } from '../services';
@@ -278,6 +279,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_cf763b(
     v_de06a3(() => {
       v_e4961f();
+
+      v_bb8240().catch(() => {});
     }, [v_e4961f])
   );
 
