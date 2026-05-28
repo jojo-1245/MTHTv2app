@@ -1141,7 +1141,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         <Header
           variant="analysis"
           title={v_8d41d7('chat.title')}
-          subtitle={v_8d41d7('chat.subtitle')}
+          subtitle={v_326be8.OS === 'ios' ? v_8d41d7('chat.subtitle_ios') : v_8d41d7('chat.subtitle')}
           containerStyle={{ paddingTop: v_033e14.top + v_9b1a04.medium }}
           leftAccessory={(
             <View style={v_d81136.headerLeft}>
@@ -1179,6 +1179,11 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
+            {v_326be8.OS === 'ios' && (
+              <View style={v_d81136.wellnessBanner}>
+                <Text style={v_d81136.wellnessBannerText}>{v_8d41d7('chat.wellness_banner')}</Text>
+              </View>
+            )}
             <View style={v_d81136.introChatContainer}>
               {}
               <View style={v_d81136.aiMessageRow}>
@@ -1187,7 +1192,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 </View>
                 <View style={v_d81136.aiBubbleWrap}>
                   <View style={v_d81136.aiBubble}>
-                    <Text style={v_d81136.aiBubbleText}>{v_8d41d7('chat.ai_welcome')}</Text>
+                    <Text style={v_d81136.aiBubbleText}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.ai_welcome_ios') : v_8d41d7('chat.ai_welcome')}</Text>
                   </View>
                   <Text style={v_d81136.aiMessageDateOuter}>
                     {new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
@@ -1379,6 +1384,20 @@ const v_d81136 = v_472849.create({
     color: '#9AA0A6',
     marginTop: 6,
     lineHeight: 15,
+  },
+  wellnessBanner: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginHorizontal: v_9b1a04.medium,
+    marginBottom: v_9b1a04.small,
+  },
+  wellnessBannerText: {
+    fontSize: 11,
+    color: '#6B7280',
+    lineHeight: 16,
+    textAlign: 'center',
   },
   aiBubbleActionButton: {
     marginTop: v_9b1a04.medium,

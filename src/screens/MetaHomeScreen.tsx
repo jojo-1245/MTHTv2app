@@ -850,7 +850,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <Droplet size={28} color="#3B82F6" />
                 </View>
                 <Text style={v_d81136.mgmtTitle}>{v_8d41d7('home.skin_analysis')}</Text>
-                <Text style={v_d81136.mgmtSub}>{v_8d41d7('home.ai_skin_diagnosis')}</Text>
+                <Text style={v_d81136.mgmtSub}>{v_326be8.OS === 'ios' ? v_8d41d7('home.ai_skin_diagnosis_ios') : v_8d41d7('home.ai_skin_diagnosis')}</Text>
                 <Text style={v_d81136.mgmtLink}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
             </View>
