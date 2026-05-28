@@ -102,10 +102,12 @@ export const v_bcb8af = [
   { sectionKey: 'section_cardiovascular', itemKeys: ['prq', 'cardiac_workload', 'pulse_pressure', 'mean_arterial_pressure'] },
   { sectionKey: 'section_blood_tests', itemKeys: ['hemoglobin', 'hemoglobin_a1c'] },
   { sectionKey: 'section_risk_prediction', itemKeys: ['high_hemoglobin_a1c_risk', 'high_blood_pressure_risk', 'ascvd_risk', 'high_fasting_glucose_risk', 'high_total_cholesterol_risk', 'low_hemoglobin_risk', 'heart_age'] },
-].map(v_b4fa6c => ({
-  ...v_b4fa6c,
-  itemKeys: v_b4fa6c.itemKeys.filter(v_b24339 => !v_9da885(v_b24339))
-})).filter(v_b4fa6c => v_b4fa6c.itemKeys.length > 0);
+];
+
+export const v_ac1ebb = (): { sectionKey: string; itemKeys: string[] }[] =>
+  v_bcb8af
+    .map(v_b4fa6c => ({ ...v_b4fa6c, itemKeys: v_b4fa6c.itemKeys.filter(v_b24339 => !v_9da885(v_b24339)) }))
+    .filter(v_b4fa6c => v_b4fa6c.itemKeys.length > 0);
 
 const v_70af8f = [
   {
@@ -1005,7 +1007,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
                 {}
                 <Text style={v_d81136.measurementItemsTitle}>{v_8d41d7('health_records.measurement_items')}</Text>
-                {v_bcb8af.map((v_b4fa6c) => {
+                {v_ac1ebb().map((v_b4fa6c) => {
                   const v_2afa46 = v_8cc501.items.filter((v_8c0b26) =>
                     v_b4fa6c.itemKeys.includes(v_8c0b26.key),
                   );
