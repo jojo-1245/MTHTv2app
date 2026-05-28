@@ -1889,8 +1889,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <View style={v_d81136.flowStepIconWrap}>
                       <Heart size={44} color={v_1bfbd0.bluePrimary} strokeWidth={2} />
                     </View>
-                    <Text style={v_d81136.flowStepLabel}>{v_8d41d7('health_analysis.intro.flow_step_4')}</Text>
-                    <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_4_desc')}</Text>
+                    <Text style={v_d81136.flowStepLabel}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.flow_step_4_ios') : v_8d41d7('health_analysis.intro.flow_step_4')}</Text>
+                    <Text style={v_d81136.flowStepDesc}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.flow_step_4_desc_ios') : v_8d41d7('health_analysis.intro.flow_step_4_desc')}</Text>
                   </View>
                 </ScrollView>
                 <View style={v_d81136.flowSwiperPagination}>
