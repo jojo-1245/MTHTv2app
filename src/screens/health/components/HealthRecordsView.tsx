@@ -20,6 +20,7 @@ import { v_777b12, v_d531ea, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
+import { v_bb8240 } from '../../../hooks/useSystemConfig';
 
 export interface MeasurementItem {
   key: string;
@@ -400,6 +401,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
       v_deef62(true);
       v_885e0e(null);
       try {
+
+        await v_bb8240().catch(() => {});
 
         const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
