@@ -19,11 +19,11 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../constants';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_5d13be, v_b703a5 } from './components/HealthRecordsView';
-import { v_bcb8af, v_38756f } from './components/HealthRecordsView';
+import { v_ac1ebb, v_38756f } from './components/HealthRecordsView';
 import { v_a55499, v_61fb31, type v_c052e5 } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
-const v_bd24d7 = v_bcb8af.flatMap((v_fd5f43) => v_fd5f43.itemKeys);
+const v_daac77 = () => v_ac1ebb().flatMap((v_fd5f43) => v_fd5f43.itemKeys);
 
 type Props = v_432191<v_8ad91b, 'HealthComparison'>;
 
@@ -179,7 +179,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
   const [v_43d0c0, v_74570e] = v_5ab095<string | null>(null);
   const [v_474c16, v_41fe7e] = v_5ab095(false);
   const [v_782929, v_3cc752] = v_5ab095<Set<string>>(
-    () => new Set(v_bd24d7)
+    () => new Set(v_daac77())
   );
 
   const [v_dcc13b, v_1a48f5] = v_5ab095<v_5d13be | null>(null);
@@ -283,12 +283,12 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     });
   };
 
-  const v_45e488 = () => v_3cc752(new Set(v_bd24d7));
+  const v_45e488 = () => v_3cc752(new Set(v_daac77()));
   const v_cebe2b = () => v_3cc752(new Set());
 
   const v_15f2ac = v_df9f57(
     () =>
-      v_bcb8af.map((v_b4fa6c) => ({
+      v_ac1ebb().map((v_b4fa6c) => ({
         ...v_b4fa6c,
         itemKeys: v_b4fa6c.itemKeys.filter((v_0eb677) => v_782929.has(v_0eb677)),
       })).filter((v_fd5f43) => v_fd5f43.itemKeys.length > 0),
@@ -603,7 +603,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
               </TouchableOpacity>
             </View>
             <ScrollView style={v_d81136.modalList} showsVerticalScrollIndicator={false}>
-              {v_bcb8af.map((v_b4fa6c) => (
+              {v_ac1ebb().map((v_b4fa6c) => (
                 <View key={v_b4fa6c.sectionKey} style={v_d81136.modalSection}>
                   <Text style={v_d81136.modalSectionTitle}>{v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
                   {v_b4fa6c.itemKeys.map((v_b24339) => {
