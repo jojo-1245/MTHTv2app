@@ -1312,14 +1312,14 @@
         "solution": "Setel tanggal/waktu/zona waktu dengan benar (disarankan otomatis), lalu coba lagi."
       },
       "19": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Bluetooth mati.",
-        "solution": "Nyalakan Bluetooth lalu coba lagi."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan.",
+        "solution": "Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi."
       },
       "20": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Izin Bluetooth tidak tersedia.",
-        "solution": "Berikan izin Bluetooth di pengaturan perangkat lalu coba lagi."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan.",
+        "solution": "Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi."
       },
       "21": {
         "title": "Kesalahan Perangkat",
@@ -1443,7 +1443,7 @@
       },
       "7006": {
         "title": "Kesalahan Inisialisasi",
-        "reason": "SDK gagal diinisialisasi (kemungkinan hardware tidak didukung).",
+        "reason": "Pengukuran tidak dapat dimulai. Silakan perbarui aplikasi atau coba perangkat lain.",
         "solution": "Pastikan perangkat/OS 64-bit lalu coba lagi."
       },
       "7007": {
@@ -1497,39 +1497,39 @@
         "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
       },
       "8003": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Waktu koneksi perangkat PPG habis.",
-        "solution": "Matikan dan nyalakan Bluetooth, lalu hubungkan lagi."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan. Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi.",
+        "solution": "Mulai ulang aplikasi lalu coba lagi."
       },
       "8004": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Format ID perangkat PPG tidak valid.",
-        "solution": "Gunakan ID perangkat yang valid dan coba lagi."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan. Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi.",
+        "solution": "Mulai ulang aplikasi lalu coba lagi."
       },
       "8005": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Firmware perangkat PPG tidak didukung.",
-        "solution": "Perbarui firmware atau gunakan perangkat lain."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan. Silakan perbarui aplikasi atau coba perangkat lain.",
+        "solution": "Perbarui aplikasi lalu coba lagi."
       },
       "8006": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Model perangkat PPG tidak didukung.",
-        "solution": "Gunakan perangkat yang didukung."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan. Silakan perbarui aplikasi atau coba perangkat lain.",
+        "solution": "Perbarui aplikasi lalu coba lagi."
       },
       "8007": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Perangkat PPG terputus.",
-        "solution": "Periksa baterai/Bluetooth lalu sambungkan kembali."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Pengukuran tidak dapat diselesaikan. Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi.",
+        "solution": "Mulai ulang aplikasi lalu coba lagi."
       },
       "8008": {
-        "title": "Kesalahan Perangkat",
-        "reason": "Sensor tidak terpasang dengan benar.",
-        "solution": "Pasang perangkat dengan rapat pada kulit."
+        "title": "Kesalahan Pengukuran",
+        "reason": "Sinyal tidak terdeteksi dengan jelas. Harap tetap diam lalu coba lagi.",
+        "solution": "Pegang perangkat dengan stabil dan pastikan wajah Anda cukup terang."
       },
       "8501": {
         "title": "Peringatan Pengukuran",
-        "reason": "Perangkat PPG tidak terpasang di lengan.",
-        "solution": "Pasang perangkat PPG dengan kencang di lengan."
+        "reason": "Sinyal tidak terdeteksi dengan jelas. Harap tetap diam lalu coba lagi.",
+        "solution": "Pastikan wajah Anda terlihat jelas oleh kamera."
       },
       "9001": {
         "title": "Kesalahan Pemantauan",
@@ -1539,7 +1539,7 @@
       "9500": {
         "title": "Peringatan Pengukuran",
         "reason": "Terdeteksi jeda data dalam stream.",
-        "solution": "Periksa koneksi Bluetooth."
+        "solution": "Pastikan koneksi stabil lalu coba lagi."
       }
     }
   },
