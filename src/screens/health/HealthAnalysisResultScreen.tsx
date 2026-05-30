@@ -4,6 +4,7 @@ import {
   v_aa7413,
   v_bd64bf,
   v_da479e,
+  v_326be8,
   v_09d0e5,
   v_472849,
   v_19b633,
@@ -297,13 +298,13 @@ const v_2c4b08 = (v_3b27d9, v_8d41d7): string => {
     [v_e3e816.HEMOGLOBIN]: v_8d41d7('health_analysis.vitals.hemoglobin_desc'),
     [v_e3e816.HEMOGLOBIN_A1C]: v_8d41d7('health_analysis.vitals.hemoglobin_a1c_desc'),
     [v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK]: v_8d41d7('health_analysis.vitals.high_hemoglobin_a1c_risk_desc'),
-    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: v_8d41d7('health_analysis.vitals.high_blood_pressure_risk_desc'),
-    [v_e3e816.ASCVD_RISK]: v_8d41d7('health_analysis.vitals.ascvd_risk_desc'),
+    [v_e3e816.HIGH_BLOOD_PRESSURE_RISK]: v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.vitals.high_blood_pressure_risk_desc_ios') : v_8d41d7('health_analysis.vitals.high_blood_pressure_risk_desc'),
+    [v_e3e816.ASCVD_RISK]: v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.vitals.ascvd_risk_desc_ios') : v_8d41d7('health_analysis.vitals.ascvd_risk_desc'),
     [v_e3e816.NORMALIZED_STRESS_INDEX]: v_8d41d7('health_analysis.vitals.normalized_stress_index_desc'),
     [v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK]: v_8d41d7('health_analysis.vitals.high_total_cholesterol_risk_desc'),
     [v_e3e816.HIGH_FASTING_GLUCOSE_RISK]: v_8d41d7('health_analysis.vitals.high_fasting_glucose_risk_desc'),
     [v_e3e816.LOW_HEMOGLOBIN_RISK]: v_8d41d7('health_analysis.vitals.low_hemoglobin_risk_desc'),
-    [v_e3e816.ASCVD_RISK_LEVEL]: v_8d41d7('health_analysis.vitals.ascvd_risk_level_desc'),
+    [v_e3e816.ASCVD_RISK_LEVEL]: v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.vitals.ascvd_risk_level_desc_ios') : v_8d41d7('health_analysis.vitals.ascvd_risk_level_desc'),
     [v_e3e816.MEAN_ARTERIAL_PRESSURE]: v_8d41d7('health_analysis.vitals.mean_arterial_pressure_desc'),
     [v_e3e816.CARDIAC_WORKLOAD]: v_8d41d7('health_analysis.vitals.cardiac_workload_desc'),
     [v_e3e816.PULSE_PRESSURE]: v_8d41d7('health_analysis.vitals.pulse_pressure_desc'),
@@ -382,7 +383,7 @@ const v_2e7086 = (v_3b27d9, v_3b402b, v_8d41d7): string | null => {
     } else if (v_842d09 === 2) {
       return v_8d41d7('health_analysis.result.risk_caution'); 
     } else if (v_842d09 === 3) {
-      return v_8d41d7('health_analysis.result.risk_warning'); 
+      return v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.risk_warning_ios') : v_8d41d7('health_analysis.result.risk_warning'); 
     }
   }
 
@@ -1350,7 +1351,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const v_afc36a = v_df9f57(() => {
     if (v_6f0881 === 'wellnessIndex') {
-      return v_8d41d7('health_analysis.result.wellness_score_help_text');
+      return v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.wellness_score_help_text_ios') : v_8d41d7('health_analysis.result.wellness_score_help_text');
     }
     return '';
   }, [v_8d41d7, v_6f0881]);
@@ -1585,9 +1586,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       v_e3e816.WELLNESS_INDEX,
     ]);
 
-    if (v_9da885(v_e3e816.BLOOD_PRESSURE)) v_bb8024.add(v_e3e816.BLOOD_PRESSURE);
-    if (v_9da885(v_e3e816.OXYGEN_SATURATION)) v_bb8024.add(v_e3e816.OXYGEN_SATURATION);
-    if (v_9da885(v_e3e816.HIGH_BLOOD_PRESSURE_RISK)) v_bb8024.add(v_e3e816.HIGH_BLOOD_PRESSURE_RISK);
+    const v_f0dd16 = Object.values(v_e3e816).filter(
+      (v_81e2ef): v_81e2ef is number => typeof v_81e2ef === 'number',
+    );
+    for (const v_653390 of v_f0dd16) {
+      if (v_9da885(v_653390)) {
+        v_bb8024.add(v_653390);
+      }
+    }
 
     return v_bb8024;
   }, []);
@@ -1684,10 +1690,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     const v_44d6b6 = v_f5338f.length > 0;
     const v_32da70 = v_b4203b.slice(0, 5).map((v_ebec57) => v_ebec57.name).join(', ');
     const v_a83ac8 = v_44d6b6
-      ? 'ai_health_summary_with_risks'
+      ? (v_326be8.OS === 'ios' ? 'ai_health_summary_with_risks_ios' : 'ai_health_summary_with_risks')
       : v_32da70 ? 'ai_health_summary_all_normal' : 'ai_health_summary_text';
     const v_4723c3 = Array.from(v_fd4243).length > 0
-      ? Array.from(v_fd4243).map((v_0eb677) => v_8d41d7(`health_analysis.result.${v_0eb677}`))
+      ? Array.from(v_fd4243).map((v_0eb677) => {
+          if (v_326be8.OS === 'ios') {
+            const v_165aee = `health_analysis.result.${v_0eb677}_ios`;
+
+            if (v_9c213b.exists(v_165aee)) {
+              return v_8d41d7(v_165aee);
+            }
+          }
+          return v_8d41d7(`health_analysis.result.${v_0eb677}`);
+        })
       : [v_8d41d7('health_analysis.result.ai_improvement_1'), v_8d41d7('health_analysis.result.ai_improvement_2'), v_8d41d7('health_analysis.result.ai_improvement_3')];
 
     return {
@@ -1908,7 +1923,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       return v_8d41d7('health_analysis.result.item_headline_normal', { name: v_8a1355, particle: v_1c35ff });
     }
     if (v_d308b5 === '위험') {
-      return v_8d41d7('health_analysis.result.item_headline_risk', { name: v_8a1355, particle: v_1c35ff });
+      return v_326be8.OS === 'ios'
+        ? v_8d41d7('health_analysis.result.item_headline_risk_ios', { name: v_8a1355, particle: v_1c35ff })
+        : v_8d41d7('health_analysis.result.item_headline_risk', { name: v_8a1355, particle: v_1c35ff });
     }
     return v_8d41d7('health_analysis.result.item_headline_default', { name: v_8a1355, particle: v_1c35ff });
   };
@@ -2335,7 +2352,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                           {v_8d41d7('health_analysis.result.wellness_info.wellness_index_purpose')}
                                         </Text>
                                         <Text style={v_d81136.infoExpandText}>
-                                          {v_8d41d7('health_analysis.result.wellness_info.wellness_index_purpose_text')}
+                                          {v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.wellness_info.wellness_index_purpose_text_ios') : v_8d41d7('health_analysis.result.wellness_info.wellness_index_purpose_text')}
                                         </Text>
                                       </View>
                                       <View style={v_d81136.infoExpandSection}>
@@ -2370,7 +2387,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                           {v_8d41d7('health_analysis.result.wellness_info.wellness_level_usage')}
                                         </Text>
                                         <Text style={v_d81136.infoExpandText}>
-                                          {v_8d41d7('health_analysis.result.wellness_info.wellness_level_usage_text')}
+                                          {v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.wellness_info.wellness_level_usage_text_ios') : v_8d41d7('health_analysis.result.wellness_info.wellness_level_usage_text')}
                                         </Text>
                                       </View>
                                     </>
@@ -2732,7 +2749,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           </View>
                           <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('health_analysis.result.ai_precautions')}</Text>
                         </View>
-                        <Text style={v_d81136.aiAnalysisSectionText}>{v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
+                        <Text style={v_d81136.aiAnalysisSectionText}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
                       </View>
                       <TouchableOpacity style={v_d81136.aiCheckupButton} activeOpacity={0.8}>
                         <ExpoLinearGradient
@@ -2818,7 +2835,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                               const v_f1fd13 = v_06dd00 === '정상'
                                 ? v_8d41d7('health_analysis.result.item_headline_normal', { name: v_ed2859, particle: v_1c35ff })
                                 : v_06dd00 === '위험'
-                                  ? v_8d41d7('health_analysis.result.item_headline_risk', { name: v_ed2859, particle: v_1c35ff })
+                                  ? (v_326be8.OS === 'ios'
+                                    ? v_8d41d7('health_analysis.result.item_headline_risk_ios', { name: v_ed2859, particle: v_1c35ff })
+                                    : v_8d41d7('health_analysis.result.item_headline_risk', { name: v_ed2859, particle: v_1c35ff }))
                                   : v_8d41d7('health_analysis.result.item_headline_default', { name: v_ed2859, particle: v_1c35ff });
 
                               return (
@@ -3058,7 +3077,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {}
                 <View style={v_d81136.infoContainer}>
                   <Text style={v_d81136.infoText}>
-                    {v_8d41d7('health_analysis.result.disclaimer')}
+                    {v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.disclaimer_ios') : v_8d41d7('health_analysis.result.disclaimer')}
                   </Text>
                 </View>
 
@@ -3081,14 +3100,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               style={v_d81136.abnormalFooter}
               onPress={() => v_75fa2e(true)}
               accessibilityRole="button"
-              accessibilityLabel={v_8d41d7('health_analysis.result.abnormal_footer_label')}
+              accessibilityLabel={v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.abnormal_footer_label_ios') : v_8d41d7('health_analysis.result.abnormal_footer_label')}
               accessibilityHint={v_8d41d7('health_analysis.result.abnormal_footer_hint')}
             >
               <View style={v_d81136.abnormalFooterIcon}>
                 <Ionicons name="warning-outline" size={18} color={v_d8cb4d.warning.color} />
               </View>
               <Text style={v_d81136.abnormalFooterText}>
-                {v_8d41d7('health_analysis.result.abnormal_footer_text')}
+                {v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.abnormal_footer_text_ios') : v_8d41d7('health_analysis.result.abnormal_footer_text')}
               </Text>
             </TouchableOpacity>
           </>

@@ -7,6 +7,7 @@ import {
   v_122070,
   v_700696,
   v_aa7413,
+  v_326be8,
   v_09d0e5,
   v_39a996,
   v_03e392,
@@ -702,7 +703,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                   <Ionicons name="warning" size={18} color="#333" />
                   <Text style={v_d81136.aiResultCardTitle}>{v_8d41d7('skin_comparison.ai_disclaimer_title')}</Text>
                 </View>
-                <Text style={v_d81136.aiResultCardContent}>{v_8d41d7('skin_comparison.ai_disclaimer')}</Text>
+                <Text style={v_d81136.aiResultCardContent}>{v_326be8.OS === 'ios' ? v_8d41d7('skin_comparison.ai_disclaimer_ios') : v_8d41d7('skin_comparison.ai_disclaimer')}</Text>
               </View>
             </View>
           )}
