@@ -6,6 +6,7 @@ import {
   v_4623af,
   v_472849,
   v_acfdec,
+  v_326be8,
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
@@ -57,16 +58,20 @@ export function v_3b68d0() {
               <Text style={v_d81136.icon}>⚕️</Text>
             </View>
 
-            <Text style={v_d81136.title}>{v_8d41d7('medical_disclaimer.title')}</Text>
+            <Text style={v_d81136.title}>
+              {v_326be8.OS === 'ios' ? v_8d41d7('medical_disclaimer.title_ios') : v_8d41d7('medical_disclaimer.title')}
+            </Text>
 
             <Text style={v_d81136.content}>
               {v_8d41d7('medical_disclaimer.body_1')}
               <Text style={v_d81136.bold}>{v_8d41d7('medical_disclaimer.highlight_1')}</Text>
-              {v_8d41d7('medical_disclaimer.body_2')}
+              {v_326be8.OS === 'ios' ? v_8d41d7('medical_disclaimer.body_2_ios') : v_8d41d7('medical_disclaimer.body_2')}
               {'\n\n'}
-              {v_8d41d7('medical_disclaimer.body_3')}
-              <Text style={v_d81136.bold}>{v_8d41d7('medical_disclaimer.highlight_2')}</Text>
-              {v_8d41d7('medical_disclaimer.body_4')}
+              {v_326be8.OS === 'ios' ? v_8d41d7('medical_disclaimer.body_3_ios') : v_8d41d7('medical_disclaimer.body_3')}
+              <Text style={v_d81136.bold}>
+                {v_326be8.OS === 'ios' ? v_8d41d7('medical_disclaimer.highlight_2_ios') : v_8d41d7('medical_disclaimer.highlight_2')}
+              </Text>
+              {v_326be8.OS === 'ios' ? v_8d41d7('medical_disclaimer.body_4_ios') : v_8d41d7('medical_disclaimer.body_4')}
             </Text>
 
             <TouchableOpacity

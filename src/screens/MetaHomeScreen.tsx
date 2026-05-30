@@ -722,7 +722,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   };
 
   const v_6562a2 = v_df9f57(
-    () => [v_8d41d7('home.greeting_1'), v_8d41d7('home.greeting_2'), v_8d41d7('home.greeting_3'), v_8d41d7('home.greeting_4'), v_8d41d7('home.greeting_5')],
+    () => [v_8d41d7('home.greeting_1'), v_326be8.OS === 'ios' ? v_8d41d7('home.greeting_2_ios') : v_8d41d7('home.greeting_2'), v_8d41d7('home.greeting_3'), v_8d41d7('home.greeting_4'), v_8d41d7('home.greeting_5')],
     [v_8d41d7]
   );
 
