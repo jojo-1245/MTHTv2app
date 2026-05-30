@@ -158,6 +158,7 @@
     "ai_improvements": "Improved Items",
     "ai_improvements_sample": "Heart rate stabilization, improved recovery ability, and oxygen saturation improvement were observed.",
     "ai_disclaimer": "This comparison analysis is for reference only. If you feel any health concerns, please visit a medical institution for accurate diagnosis.",
+    "ai_disclaimer_ios": "This comparison analysis is for reference only. If you feel any health concerns, please consult a healthcare professional.",
     "ai_start_btn": "Start AI Comparison Analysis",
     "ai_comparison_card_title": "AI Hinti's Comparison Analysis",
     "ai_comparison_card_desc_line1": "AI compares and analyzes health data from two points in time",
@@ -230,13 +231,15 @@
     "ai_plan_item3": "Maintain regular sleep and stress management",
     "ai_plan_item4": "Next measurement: Re-measure after 1-2 weeks to check skin changes",
     "ai_disclaimer_title": "Disclaimer",
-    "ai_disclaimer": "This comparison analysis is for reference only. If you notice any skin concerns, please consult a dermatologist."
+    "ai_disclaimer": "This comparison analysis is for reference only. If you notice any skin concerns, please consult a dermatologist.",
+    "ai_disclaimer_ios": "This comparison analysis is for reference only. If you notice any skin concerns, please consult a healthcare professional."
   },
   "home": {
     "welcome": "Hello.",
     "ai_intro": "I'm Hinti, your Health Analysis AI",
     "greeting_1": "Hello. I'm Hinti, your Health Analysis AI.",
     "greeting_2": "Check your health without visiting a hospital.",
+    "greeting_2_ios": "Check your wellness anytime, anywhere.",
     "greeting_3": "Get skin analysis and health checkup in one place.",
     "greeting_4": "Attend daily and earn rewards with your steps.",
     "greeting_5": "Manage your family's health together.",
@@ -250,6 +253,7 @@
     "ai_skin_diagnosis_ios": "AI Skin Analysis",
     "start_btn": "Start →",
     "check_health_without_hospital": "Check your health without visiting a hospital",
+    "check_health_without_hospital_ios": "Check your wellness anytime, anywhere",
     "ai_hinty_health_checkup": "AI Hinti Health Checkup",
     "ai_hinty_health_desc": "Analyze your health comprehensively through AI Hinti and receive personalized health consultations",
     "family_health_connect": "Family Health Checkup Connection",
@@ -401,17 +405,27 @@
   "analysis": {
     "title": "Analysis",
     "subtitle": "Skin & Health Analysis",
+    "subtitle_ios": "Skin & Wellness Check",
     "health_title": "Health Analysis",
+    "health_title_ios": "Wellness Check",
     "health_desc": "Check your health information with a simple camera shot and review the comprehensive health prescription from the AI Doctor.",
+    "health_desc_ios": "Check your wellness information with a simple camera shot and review a general wellness summary from the AI wellness assistant.",
     "health_measure": "Measure Health Information",
+    "health_measure_ios": "Wellness Check",
     "health_measure_sub": "Check recent examination results",
+    "health_measure_sub_ios": "View your recent wellness summary",
     "health_records": "View Health Records",
+    "health_records_ios": "View Wellness Summary",
     "health_records_sub": "Check previous examination results",
+    "health_records_sub_ios": "View your past wellness summary",
     "skin_title": "Skin Analysis",
     "skin_desc": "Check your skin condition with a simple photo and the AI Doctor will suggest customized care.",
+    "skin_desc_ios": "Check your skin condition with a simple photo and the AI wellness assistant will suggest customized skin-care tips.",
     "skin_measure": "Measure Skin Information",
+    "skin_measure_ios": "Check Skin Condition",
     "skin_measure_sub": "AI-based skin condition analysis",
     "skin_records": "View Skin Records",
+    "skin_records_ios": "View Skin History",
     "skin_records_sub": "Check previous analysis results"
   },
   "login": {
@@ -673,10 +687,12 @@
       "ai_improvement_sample_2": "Improve sleep patterns and apply eye cream",
       "ai_precautions": "Precautions",
       "ai_precautions_text": "This measurement result is for reference only. Please consult a specialist for accurate diagnosis.",
+      "ai_precautions_text_ios": "This measurement result is for reference only. Please consult a healthcare professional.",
       "ai_recommended_products": "Recommended Products",
       "ai_custom_recommend": "AI Custom Recommendation",
       "ai_more_btn": "More",
       "disclaimer": "This measurement result is for reference only. Please consult a medical institution for accurate diagnosis.",
+      "disclaimer_ios": "This measurement result is for reference only. Please consult a healthcare professional.",
       "btn_remake": "Remake",
       "btn_save": "Save Result (JSON)",
       "btn_new": "Start New Analysis",
@@ -755,7 +771,9 @@
   },
   "chat": {
     "medical_disclaimer": "⚠️ [Medical Disclaimer]\nThis AI Hinti service is for general fitness and wellness purposes and is not a substitute for medical diagnosis, treatment, or prevention. Please refer to the following external resources for technology and evidence.\n\n• [Technology Principles](https://www.binah.ai/technology/)\n• [Accuracy Reports](https://www.binah.ai/research/)",
+    "medical_disclaimer_ios": "⚠️ [Medical Disclaimer]\nThis AI Hinti service is for general fitness and wellness purposes and is not a substitute for medical diagnosis, treatment, or prevention. For health-related decisions, please consult a healthcare professional.",
     "ai_msg_footer": "For wellness reference only; not a medical diagnosis. Sources: measurement tech binah.ai · health info KDCA (kdca.go.kr).",
+    "ai_msg_footer_ios": "For wellness reference only; not a medical diagnosis. Reference: general wellness information (KDCA, kdca.go.kr).",
     "title": "AI Hinti",
     "subtitle": "AI Health Advisor",
     "subtitle_ios": "AI Wellness Assistant",
@@ -785,13 +803,16 @@
     "ai_welcome_ios": "Hi! I'm your AI wellness assistant. Ask me about general wellness or skin-care information. 😊",
     "start_health_checkup": "Start Health Checkup",
     "start_health_checkup_sub": "Assess your health through medical interview like a doctor",
+    "start_health_checkup_sub_ios": "Answer a few simple wellness questions",
     "health_checkup_response": "Yes, {{name}}! I'll start a comprehensive health checkup.\n\nFirst, I'll retrieve your recent health analysis data to check your health status.\n\nIf you have past health checkup data, you can load it by pressing the button below. More accurate consultation is possible based on the data.",
     "load_recent_data": "Load {{name}}'s recent data",
     "loading_health_data": "Loading {{name}}'s recent health analysis data... 📊",
     "health_data_loaded": "{{name}}'s recent health analysis data has been successfully loaded! ✅\n\n🗓️ Measurement date: {{measureDate}}\n💚 Health Index: {{healthIndex}}/10\n\nI will now begin {{name}}'s health checkup questionnaire. 🩺 Please click the button below to proceed.",
     "start_questionnaire": "Enter Questionnaire",
     "questionnaire_intro": "Understood! I will proceed with the questionnaire directly with {{name}}. 📋\n\nFirst, I will ask for basic information.",
+    "questionnaire_intro_ios": "Great! Let me ask {{name}} a few questions.\n\nTell us about your general health background (optional, for wellness reference).",
     "questionnaire_q1": "1. Do you currently have any illnesses?",
+    "questionnaire_q1_ios": "1. Do you have any of the following health conditions? (optional)",
     "questionnaire_q1_instruction": "Please select all applicable items below.",
     "questionnaire_options": {
       "hypertension": "Hypertension",
@@ -860,7 +881,9 @@
     "health_report_status_caution": "Caution",
     "health_report_precautions": "Precautions",
     "health_report_precaution_bp": "Blood pressure is in pre-hypertension stage.",
+    "health_report_precaution_bp_ios": "Your blood pressure reading is on the higher side. Consider reducing sodium intake and monitoring it regularly. (For wellness reference only.)",
     "health_report_precaution_glucose": "Fasting glucose suggests pre-diabetes. HbA1c test recommended.",
+    "health_report_precaution_glucose_ios": "Your fasting glucose level is worth keeping an eye on. Maintaining a balanced diet may help. (For wellness reference only.)",
     "health_report_precaution_lifestyle": "Current lifestyle may increase cardiovascular risk.",
     "health_report_improvement": "Improvement Methods",
     "health_report_improvement_diet": "Dietary Improvement",
@@ -872,9 +895,11 @@
     "health_report_improvement_checkup": "Regular Check-ups",
     "health_report_improvement_checkup_items": "Weekly BP, glucose retest in 3 months, annual checkup",
     "health_report_doctor_opinion": "Doctor's Opinion",
+    "health_report_doctor_opinion_ios": "Wellness Note",
     "health_report_doctor_text": "Overall health is good but blood pressure and glucose are borderline. Lifestyle improvements recommended.",
     "health_report_download_pdf": "Download PDF",
     "health_report_recommend_hospital": "Recommend Specialist",
+    "health_report_recommend_hospital_ios": "Consider consulting a professional",
     "questionnaire_medication_options": {
       "bp_med": "Blood pressure medicine",
       "diabetes_med": "Diabetes medicine",
@@ -985,12 +1010,15 @@
       "hemoglobin_a1c_desc": "Hemoglobin A1C (HbA1c) reflects average blood sugar levels over the past 2-3 months. When sugar enters the bloodstream, it attaches to hemoglobin. People with higher blood sugar have more sugar-coated hemoglobin. This test is commonly used for diabetes screening.",
       "high_hemoglobin_a1c_risk_desc": "High HbA1c Risk assesses the risk of having elevated glycated hemoglobin levels. HbA1c reflects long-term blood sugar control, and consistently high levels may indicate difficulty maintaining balanced glucose. Classified as Low(1), Medium(2), or High(3).",
       "high_blood_pressure_risk_desc": "High Blood Pressure Risk assesses the risk of having elevated blood pressure levels. Based on systolic and diastolic measurements, classified as Low(1), Medium(2), or High(3). High blood pressure strains the heart and blood vessels, increasing cardiovascular disease risk.",
+      "high_blood_pressure_risk_desc_ios": "High Blood Pressure Risk assesses the likelihood of elevated blood pressure levels. Based on systolic and diastolic measurements, classified as Low(1), Medium(2), or High(3). Elevated blood pressure may affect cardiovascular wellness.",
       "ascvd_risk_desc": "ASCVD (Atherosclerotic Cardiovascular Disease) Risk estimates the likelihood of developing cardiovascular diseases like heart attack and stroke within 10 years. Using the Framingham risk score, it considers age, gender, blood pressure, smoking status, etc. Below 10% is Low, 10-20% is Medium, above 20% is High.",
+      "ascvd_risk_desc_ios": "ASCVD Risk is a cardiovascular wellness indicator estimating 10-year likelihood of cardiovascular events. Using the Framingham risk score, it considers age, gender, blood pressure, smoking status, etc. Below 10% is Low, 10-20% is Medium, above 20% is High.",
       "normalized_stress_index_desc": "Normalized Stress Index represents stress levels on a standardized scale. It allows consistent comparison of stress measurements taken under various conditions.",
       "high_total_cholesterol_risk_desc": "High Total Cholesterol Risk assesses the risk of having elevated cholesterol levels. Excessive cholesterol can lead to fatty deposits in blood vessels causing atherosclerosis. Classified as Low(1), Medium(2), or High(3).",
       "high_fasting_glucose_risk_desc": "High Fasting Glucose Risk assesses the risk of having elevated blood glucose after 8-12 hours of fasting. High fasting glucose may be an early sign of prediabetes or diabetes. Classified as Low(1) or High(3).",
       "low_hemoglobin_risk_desc": "Low Hemoglobin Risk assesses the risk of having hemoglobin levels below normal range. Hemoglobin transports oxygen, and low levels can cause fatigue, dizziness, and shortness of breath. Classified as Low(1) or High(3).",
       "ascvd_risk_level_desc": "ASCVD Risk Level classifies 10-year cardiovascular disease risk. Low(1): below 10%, Medium(2): 10-20%, High(3): above 20%. High risk is associated with high blood pressure, high cholesterol, obesity, diabetes, and smoking.",
+      "ascvd_risk_level_desc_ios": "ASCVD Risk Level classifies 10-year cardiovascular wellness risk. Low(1): below 10%, Medium(2): 10-20%, High(3): above 20%. Higher levels are associated with elevated blood pressure, high cholesterol, obesity, and smoking.",
       "mean_arterial_pressure_desc": "Mean Arterial Pressure (MAP) represents the average pressure in arteries during one complete heartbeat. It is crucial for assessing whether vital organs like brain and kidneys receive steady blood supply. Normal range is 70-100 mmHg; below 60 mmHg may indicate reduced blood flow to vital organs.",
       "cardiac_workload_desc": "Cardiac Workload measures how much effort the heart is putting in to pump blood throughout the body. A lower value indicates efficient heart function, while a higher value indicates more strain. It naturally increases during exercise or stress compared to rest.",
       "pulse_pressure_desc": "Pulse Pressure is the difference between systolic and diastolic blood pressure (Pulse Pressure = Systolic - Diastolic). It shows the force generated by each heartbeat and arterial flexibility. Normal resting pulse pressure is about 40 mmHg. Consistently high values may suggest less elastic arteries, while low values may indicate insufficient cardiac output.",
@@ -1120,8 +1148,10 @@
       "no_result_title": "No Results",
       "no_result_message": "No measurement data available.",
       "disclaimer": "Measurement results are for reference only.\nPlease consult a specialist for accurate diagnosis.",
+      "disclaimer_ios": "Measurement results are for reference only.\nPlease consult a healthcare professional.",
       "finish_button": "Remake",
       "risk_warning": "⚠️ Risk: Consultation with a specialist is recommended.",
+      "risk_warning_ios": "For your wellness, you may consider checking in with a professional.",
       "risk_normal": "✅ Normal: Current risk level is low.",
       "status_excellent_wellness": "Excellent: Health status is very good.",
       "status_good_wellness": "Good: Health status is good.",
@@ -1138,6 +1168,7 @@
       "my_vital_signs": "My Vital Signs",
       "item_headline_normal": "Your {{name}}{{particle}} is normal.",
       "item_headline_risk": "Your {{name}}{{particle}} is at risk.",
+      "item_headline_risk_ios": "Your {{name}}{{particle}} may need attention.",
       "item_headline_default": "Here are your {{name}}{{particle}} results.",
       "item_headline_with_level": "Your {{name}}{{particle}} is {{level}}.",
       "stress_level_low": "low",
@@ -1163,22 +1194,30 @@
       "ai_health_summary_text": "Your overall health status is good. Blood pressure, heart rate, and oxygen saturation are within normal range, and stress levels are low. Please maintain your current healthy lifestyle habits.",
       "ai_health_summary_all_normal": "Your measured {{normalNames}} are within normal range. Your overall health status is good. Please maintain your current healthy lifestyle habits.",
       "ai_health_summary_with_risks": "{{riskCount}} item(s) ({{riskNames}}) require attention. Please refer to the improvement points below and consider medical consultation if symptoms persist.",
+      "ai_health_summary_with_risks_ios": "{{riskCount}} item(s) to keep an eye on. The points below are for general wellness reference only.",
       "ai_risk_section_title": "Risk & Caution Items",
       "ai_measurement_summary": "Measurement Results Summary",
       "ai_normal": "Normal",
       "ai_caution": "Caution",
       "ai_advice_blood_pressure": "Reduce salt intake and monitor blood pressure regularly. Consult a doctor if systolic is 140mmHg or higher or diastolic is 90mmHg or higher.",
+      "ai_advice_blood_pressure_ios": "Maintaining a balanced lifestyle supports healthy blood pressure. If you have ongoing concerns, consider consulting a professional. (For wellness reference only.)",
       "ai_advice_stress": "Get adequate sleep (7-8 hours) and rest. Try meditation or breathing exercises to manage stress.",
+      "ai_advice_stress_ios": "Quality sleep and relaxation practices support overall wellness. Breathing exercises and mindfulness can be beneficial. (For wellness reference only.)",
       "ai_advice_cardiovascular": "Strengthen cardiovascular health with aerobic exercise 3-4 times per week for 30 minutes.",
+      "ai_advice_cardiovascular_ios": "Regular moderate activity supports heart and vascular wellness. A balanced lifestyle promotes overall wellbeing. (For wellness reference only.)",
       "ai_advice_respiratory": "Improve respiratory function with deep breathing exercises and light aerobic activity.",
+      "ai_advice_respiratory_ios": "Deep breathing exercises and light movement can support respiratory wellness. (For wellness reference only.)",
       "ai_advice_blood": "Eat a balanced diet rich in Omega-3 and iron. Regular health checkups are recommended.",
+      "ai_advice_blood_ios": "A varied diet with nutrients like Omega-3 and iron supports general wellness. Routine wellness checkups are a good habit. (For wellness reference only.)",
       "ai_advice_heart": "Maintain regular exercise and a healthy diet for cardiovascular health. Consult a specialist if risk is high.",
+      "ai_advice_heart_ios": "Regular exercise and a heart-healthy diet support general cardiovascular wellness. (For wellness reference only.)",
       "ai_improvement_points": "Improvement Points",
       "ai_improvement_1": "Strengthen cardiovascular health through regular aerobic exercise (3-4 times/week, 30 min)",
       "ai_improvement_2": "Maintain vascular health by consuming Omega-3 rich foods",
       "ai_improvement_3": "Boost recovery with adequate sleep (7-8 hours)",
       "ai_precautions": "Precautions",
       "ai_precautions_text": "Analysis results are for reference only. If you feel any health abnormalities, please visit a medical institution for accurate diagnosis.",
+      "ai_precautions_text_ios": "Analysis results are for reference only. If you feel any health abnormalities, please consult a healthcare professional.",
       "ai_checkup_btn": "Get AI Hinti Comprehensive Check-up",
       "ai_recommended_products": "Recommended Products",
       "ai_custom_recommend": "AI Custom Recommendation",
@@ -1230,6 +1269,7 @@
       "respiratory_modal_abnormal": "Abnormal",
       "wellness_score_oxygen_prefix": "Oxygen Saturation",
       "wellness_score_help_text": "The Wellness Score predicts cardiovascular risk for the next 5–10 years. It is calculated from measured vital signs and is intended as a reference when measured at rest under similar conditions with consistent results over time.\n\nA higher Wellness Score indicates lower cardiovascular risk.\n\nHow is it calculated?\nYour Wellness Score is calculated using your vitals results from any single measurement. The values of each vital sign measurement affect your Wellness Score prediction.\n\nGenerally, a lower resting Heart Rate implies more efficient heart function and better cardiovascular fitness. Therefore, a higher Heart Rate reduces your Wellness Score—even when the heart rate is within the normal range. For example, heart rates higher than 65 reduce the wellness score to a medium score, and values higher than 84 reduce the score to a low score.\n\nHRV measures the variation in time between heartbeats. The Stress Level calculated from this variance also affects your Wellness Score. Thus, Very High and High stress levels are correlated with a low score, while Mild and Normal stress levels are correlated with a medium score.\n\nYour Oxygen Saturation level measures the amount of oxygen in the blood delivered from the lungs to the rest of the body. A higher level implies more efficient function, thus a lower Oxygen Saturation level reduces the Wellness Score.\n\nIn addition, high Blood Pressure readings at rest may pose a higher risk of health problems and therefore may reduce the Wellness Score.\n\nMeasured indicators are not for medical use.",
+      "wellness_score_help_text_ios": "The Wellness Score is a general wellness indicator calculated from your measured vital signs. For reference only.\n\nA higher Wellness Score indicates a more favorable wellness balance.\n\nHow is it calculated?\nYour Wellness Score is calculated using your vitals results from any single measurement. The values of each vital sign measurement affect your Wellness Score.\n\nGenerally, a lower resting Heart Rate implies more efficient heart function and better cardiovascular fitness. Therefore, a higher Heart Rate reduces your Wellness Score—even when the heart rate is within the normal range. For example, heart rates higher than 65 reduce the wellness score to a medium score, and values higher than 84 reduce the score to a low score.\n\nHRV measures the variation in time between heartbeats. The Stress Level calculated from this variance also affects your Wellness Score. Thus, Very High and High stress levels are correlated with a low score, while Mild and Normal stress levels are correlated with a medium score.\n\nYour Oxygen Saturation level measures the amount of oxygen in the blood delivered from the lungs to the rest of the body. A higher level implies more efficient function, thus a lower Oxygen Saturation level reduces the Wellness Score.\n\nIn addition, high Blood Pressure readings at rest may be associated with various health factors and therefore may reduce the Wellness Score.\n\nMeasured indicators are not for medical use.",
       "wellness_range_low": "1-3 Low",
       "wellness_range_medium": "4-7 Medium",
       "wellness_range_high": "8-10 High",
@@ -1240,12 +1280,15 @@
         "breathing_rate_body": "Breaths per minute. The normal resting respiration rate for a healthy adult is 12–20 breaths per minute. Generally, women's respiration rates are slightly faster than men's.\n\nWhen you inhale, oxygen enters the lungs and circulates to various organs. When you exhale, carbon dioxide leaves the body. A normal breathing rate is very important for maintaining the balance of oxygen and carbon dioxide in the body. If blood oxygen levels are low or carbon dioxide levels are high, the breathing rate increases.\n\nRespiration rate is affected by various factors such as injury, exercise, fever, anxiety, emotions, mood, alcohol consumption, metabolic problems, and illness. A high or low respiration rate does not necessarily mean there is a problem. However, if the respiration rate changes abnormally due to various diseases, injuries, dehydration, heart disease, etc., medical consultation may be necessary.\n\nKnowing your respiration rate can help a doctor provide appropriate medical advice. If you feel your respiration rate has changed or is too fast or too slow, consult a doctor.",
         "prq_title": "PRQ",
         "prq_body": "The Pulse-Respiration Quotient (PRQ) is a value that measures the ratio of a person's pulse rate (beats per minute) to their respiration rate (breaths per minute).\n\nPRQ (pulse rate-respiration rate ratio) indicates how efficiently the heart and lungs cooperate. Generally, a normal PRQ ratio is about 5. When the pulse rate is 60 beats per minute, the normal respiration rate is about 12 breaths per minute, and when the pulse rate is 100 beats per minute, the normal respiration rate is about 20 breaths per minute. If this ratio deviates significantly, a doctor's examination is required.\n\nThe Pulse-Respiration Quotient (PRQ) is an indicator that measures the degree to which heart rate and respiration rate interact normally. If the PRQ value is low or high, it indicates that the heart rate and respiration rate are operating in an unbalanced manner, suggesting that both the heart and lungs are functioning inefficiently. Furthermore, abnormal PRQ values can indicate pathophysiological conditions resulting from illness or injury.",
+        "prq_body_ios": "The Pulse-Respiration Quotient (PRQ) is a value that measures the ratio of a person's pulse rate (beats per minute) to their respiration rate (breaths per minute).\n\nPRQ indicates how efficiently the heart and lungs cooperate. Generally, a normal PRQ ratio is about 5. When the pulse rate is 60 beats per minute, the normal respiration rate is about 12 breaths per minute, and when the pulse rate is 100 beats per minute, the normal respiration rate is about 20 breaths per minute. If this ratio deviates significantly, it may be worth discussing with a professional.\n\nThe PRQ is a general wellness indicator that reflects how heart rate and respiration rate are balanced. Values outside the typical range may suggest that the heart and lungs are not operating in optimal balance. For personalized guidance, consider consulting a qualified professional.",
         "oxygen_saturation_title": "Oxygen Saturation",
         "oxygen_saturation_body": "Oxygen saturation (SpO2) is an indicator that measures the amount of oxygen carried by red blood cells from the lungs to other parts of the body. The normal SpO2 for healthy lungs is 95–100%. For individuals with chronic diseases or lung conditions, it may be below 95%.\n\nThe condition of low blood oxygen concentration is called hypoxemia. Generally, oxygen saturation below 90% is considered hypoxemia, and it can be caused by chronic lung diseases (chronic obstructive pulmonary disease, COVID-19, asthma, pulmonary fibrosis, pulmonary hypertension), heart failure, sleep apnea, anemia, high altitude exposure (lack of oxygen in the air), and medications that suppress respiratory control.\n\nCommon symptoms of hypoxemia include headache, rapid heart rate, cough, shortness of breath, wheezing, confusion, and cyanosis of the skin and mucous membranes. Athletes may also use oxygen saturation levels to determine whether performance decline is due to altitude changes or individual skill deterioration.\n\nIf you feel your oxygen saturation is low, consult a doctor and describe your symptoms. The doctor will tell you what is normal for your specific condition.",
         "blood_pressure_title": "Blood Pressure",
         "blood_pressure_body": "Blood pressure is the pressure exerted on the walls of the arteries that carry blood from the heart to other parts of the body. Normal systolic blood pressure is 100–129mmHg.\n\nBlood pressure is a measurement of the pressure of blood against the artery walls, and it is represented by two numbers. The first number, systolic blood pressure, represents the pressure inside the arteries when the heart contracts and pumps blood throughout the body. The second number, diastolic blood pressure, represents the pressure inside the arteries when the heart relaxes and fills with blood.\n\nMost people don't even know if they have high blood pressure. This is especially true because there are often no noticeable warning signs or symptoms. Therefore, it is important to measure blood pressure.\n\nBlood pressure varies with different activities, so it is best to measure it at rest. Consistently high blood pressure readings can lead to a diagnosis of hypertension, which increases the risk of health problems such as heart disease, myocardial infarction, and stroke. In most cases, hypertension is primary hypertension, for which no specific cause has been identified. However, it is associated with unhealthy lifestyle habits such as lack of exercise, stress, obesity, shift work, and pregnancy. It is important to emphasize that blood pressure can be managed through diagnosis, lifestyle changes, medication, and long-term monitoring.\n\nBlood pressure is classified as low, normal, or high. Low blood pressure is defined as systolic blood pressure below 100mmHg, normal blood pressure is systolic blood pressure between 100mmHg and 129mmHg, and high blood pressure is systolic blood pressure of 130mmHg or higher.\n\nUse these numbers for reference only. A single blood pressure reading higher than normal does not necessarily mean there is a problem. Your doctor will measure your blood pressure multiple times over several days or weeks before diagnosing hypertension and starting treatment.",
+        "blood_pressure_body_ios": "Blood pressure is the pressure exerted on the walls of the arteries that carry blood from the heart to other parts of the body. Normal systolic blood pressure is 100–129mmHg.\n\nBlood pressure is a measurement of the pressure of blood against the artery walls, and it is represented by two numbers. The first number, systolic blood pressure, represents the pressure inside the arteries when the heart contracts and pumps blood throughout the body. The second number, diastolic blood pressure, represents the pressure inside the arteries when the heart relaxes and fills with blood.\n\nMost people don't even know if they have elevated blood pressure. This is especially true because there are often no noticeable warning signs or symptoms. Therefore, it is important to measure blood pressure regularly.\n\nBlood pressure varies with different activities, so it is best to measure it at rest. Consistently elevated blood pressure readings may be associated with various health factors, including heart health and circulation. It is associated with lifestyle habits such as lack of exercise, stress, obesity, and diet. Maintaining a balanced lifestyle — including a lower-sodium diet, regular activity, and adequate sleep — may support healthy blood pressure over time.\n\nBlood pressure is classified as low, normal, or high. Low blood pressure is defined as systolic blood pressure below 100mmHg, normal blood pressure is systolic blood pressure between 100mmHg and 129mmHg, and high blood pressure is systolic blood pressure of 130mmHg or higher.\n\nUse these numbers for general wellness reference only. A single reading higher than normal does not necessarily mean there is a problem. If you have ongoing concerns, consider speaking with a qualified professional.",
         "stress_level_title": "Stress Level",
         "stress_level_body": "The way the body responds to challenges or demands. There are five stages of stress.\n\nThe human body is designed to experience and react to stress. When faced with difficulties and changes, the body exhibits physical and mental responses. Stress also has positive aspects, such as making us alert, motivating us, and preparing us to avoid danger. However, when stress factors persist or recur without a period of rest, stress becomes a problem.\n\nThis application's stress level measurement is based on the Baevsky Stress Index, which has received approval for use in the United States and Europe. This index is calculated using Heart Rate Variability (HRV) measurements.\n\nStress levels are merely reference data, and it should be noted that for an accurate diagnosis, a doctor must confirm them along with other indicators. Stress levels are very dynamic, so long-term monitoring is necessary to identify abnormal trends.",
+        "stress_level_body_ios": "The way the body responds to challenges or demands. There are five stages of stress.\n\nThe human body is designed to experience and react to stress. When faced with difficulties and changes, the body exhibits physical and mental responses. Stress also has positive aspects, such as making us alert, motivating us, and preparing us to avoid danger. However, when stress factors persist or recur without a period of rest, stress becomes a problem.\n\nThis application's stress level measurement is based on the Baevsky Stress Index, which has received approval for use in the United States and Europe. This index is calculated using Heart Rate Variability (HRV) measurements.\n\nStress levels are a general wellness indicator only. They are very dynamic, so long-term monitoring is useful for identifying ongoing patterns. For personalized guidance, consider speaking with a qualified professional.",
         "hrv_sdnn_title": "HRV SDNN",
         "hrv_sdnn_body": "SDNN is a calculated parameter of Heart Rate Variability (HRV) that represents the standard deviation of normal-to-normal R-R intervals. SDNN is expressed in milliseconds, and a normal value for this is over 50. However, SDNN values are also dependent on age and gender and normally become lower with age.\n\nAn individual's heartbeats do not occur at constant intervals, but rather with a small variance between them. HRV measures the variation in time between the heartbeats.\n\nHigh levels of HRV generally indicate aerobic and general fitness. Athletes may track HRV to adjust their training program. They can learn when the body is being overworked, which often results in a drop in HRV, and can learn how fast they recover. Moreover, persons with high HRV may be more resilient to stress.\n\nHRV measurements provide feedback about your lifestyle and can help inspire taking steps toward a healthier life. If you are implementing changes in your lifestyle such as meditation, better sleep, better nutrition, and participation in sports and physical activity, you may notice changes in the HRV. In addition, this could help to track your nervous system's reactions to the environment, emotions, thoughts, and feelings.\n\nThe sympathetic system (Stress Response) is activated when the body is under stress, causing the heart to beat faster and more regularly, and causing HRV to decrease. The parasympathetic system (Recovery Ability) manages the heart's activity to help the body reach a relaxed state and to recover from a stressful event. This relaxation response results in a slower and less regular heartbeat and is indicated by a higher HRV.\n\nIf you have questions about your results, seek a doctor's advice and they will let you know what's normal for your specific condition.",
         "mean_rri_title": "Mean RRi",
@@ -1268,9 +1311,12 @@
       "risk": "Risk",
       "normal": "Normal",
       "abnormal": "Abnormal",
+      "abnormal_ios": "Needs attention",
       "warning": "Warning",
       "abnormal_footer_text": "Tap here to view risk items",
+      "abnormal_footer_text_ios": "Tap here to view attention items",
       "abnormal_footer_label": "View risk items",
+      "abnormal_footer_label_ios": "View attention items",
       "abnormal_footer_hint": "Opens the risk items list",
       "abnormal_sheet_title": "Risk Items",
       "abnormal_empty": "No risk items to display.",
@@ -1288,6 +1334,7 @@
         "wellness_index_definition_text": "A composite predictive risk score calculated by combining various health indicators such as cardiovascular risk.",
         "wellness_index_purpose": "Purpose",
         "wellness_index_purpose_text": "The purpose is to predict the risk of cardiovascular diseases that may occur within 5 to 10 years and encourage users to take preventive measures.",
+        "wellness_index_purpose_text_ios": "The purpose is to provide a general wellness indicator based on measured vital signs and encourage users to maintain a healthy lifestyle.",
         "wellness_index_display": "Display Format",
         "wellness_index_display_text": "Usually displayed as a numerical value (Score) such as '7/10'.",
         "wellness_level_title": "Wellness Level and Interpretation",
@@ -1296,7 +1343,8 @@
         "wellness_level_role": "Role",
         "wellness_level_role_text": "Converts the user's current status based on numerical data (e.g., 4/10) into intuitive feedback.",
         "wellness_level_usage": "Report Usage",
-        "wellness_level_usage_text": "This level information is directly displayed to end users or delivered to insurance underwriting teams, and is used as a basis for decision-making, such as recommending additional medical examinations when the risk level is high."
+        "wellness_level_usage_text": "This level information is directly displayed to end users or delivered to insurance underwriting teams, and is used as a basis for decision-making, such as recommending additional medical examinations when the risk level is high.",
+        "wellness_level_usage_text_ios": "This level is shown to the user as a general wellness reference only."
       }
     },
     "sdk_alerts": {
@@ -1322,14 +1370,14 @@
         "solution": "Set date/time/timezone correctly (auto setting recommended) and try again."
       },
       "19": {
-        "title": "Device Error",
-        "reason": "Bluetooth is off.",
-        "solution": "Turn on Bluetooth and try again."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed.",
+        "solution": "Please ensure your face is centered and well-lit, then try again."
       },
       "20": {
-        "title": "Device Error",
-        "reason": "Bluetooth permission is missing.",
-        "solution": "Grant Bluetooth permission in device settings and try again."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed.",
+        "solution": "Please ensure your face is centered and well-lit, then try again."
       },
       "21": {
         "title": "Device Error",
@@ -1453,7 +1501,7 @@
       },
       "7006": {
         "title": "Initialization Error",
-        "reason": "SDK failed to initialize (hardware may be unsupported).",
+        "reason": "Measurement could not start. Please update the app or try another device.",
         "solution": "Verify device/OS is 64-bit and try again."
       },
       "7007": {
@@ -1507,39 +1555,39 @@
         "solution": "Check license/internet status and try again."
       },
       "8003": {
-        "title": "Device Error",
-        "reason": "PPG device connection timed out.",
-        "solution": "Turn Bluetooth off and on, then reconnect."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed. Please ensure your face is centered and well-lit, then try again.",
+        "solution": "Restart the app and try again."
       },
       "8004": {
-        "title": "Device Error",
-        "reason": "Invalid PPG device ID format.",
-        "solution": "Provide a valid device ID and try again."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed. Please ensure your face is centered and well-lit, then try again.",
+        "solution": "Restart the app and try again."
       },
       "8005": {
-        "title": "Device Error",
-        "reason": "PPG device firmware is not supported.",
-        "solution": "Update firmware or use another device."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed. Please update the app or try another device.",
+        "solution": "Update the app and try again."
       },
       "8006": {
-        "title": "Device Error",
-        "reason": "PPG device model is not supported.",
-        "solution": "Use a supported device."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed. Please update the app or try another device.",
+        "solution": "Update the app and try again."
       },
       "8007": {
-        "title": "Device Error",
-        "reason": "PPG device was disconnected.",
-        "solution": "Check battery/Bluetooth and reconnect."
+        "title": "Measurement Error",
+        "reason": "Measurement could not be completed. Please ensure your face is centered and well-lit, then try again.",
+        "solution": "Restart the app and try again."
       },
       "8008": {
-        "title": "Device Error",
-        "reason": "Sensor is misplaced or not fastened properly.",
-        "solution": "Wear the device snugly with direct skin contact."
+        "title": "Measurement Warning",
+        "reason": "Could not detect a clear signal. Please hold still and try again.",
+        "solution": "Hold your device steady and ensure your face is well-lit."
       },
       "8501": {
         "title": "Measurement Warning",
-        "reason": "PPG device is not on the user's arm.",
-        "solution": "Fasten the device strap firmly to the arm."
+        "reason": "Could not detect a clear signal. Please hold still and try again.",
+        "solution": "Ensure your face is clearly visible to the camera."
       },
       "9001": {
         "title": "Monitoring Error",
@@ -1549,7 +1597,7 @@
       "9500": {
         "title": "Measurement Warning",
         "reason": "Data gap detected in the stream.",
-        "solution": "Check the Bluetooth connection."
+        "solution": "Ensure a stable connection and try again."
       }
     }
   },
@@ -1722,6 +1770,7 @@
     "history_attendance": "Daily Attendance Reward",
     "history_vitamin": "Multivitamin Purchase",
     "history_ai_consult": "AI Doctor Consultation Completed",
+    "history_ai_consult_ios": "AI wellness chat completed",
     "guide_title": "Wallet Guide",
     "guide_desc": "MetaHint uses the Polygon network. Safely transfer tokens using the Send/Receive function.",
     "copy_success_title": "Copy Complete",
@@ -1848,11 +1897,15 @@
   },
   "medical_disclaimer": {
     "title": "Health & Skin Analysis Notice",
+    "title_ios": "Wellness Notice",
     "body_1": "The health and skin analysis results provided by this app are ",
     "highlight_1": "for general reference only",
     "body_2": " and cannot replace medical diagnosis or prescriptions.",
+    "body_2_ios": " and is for general wellness reference only and is not a medical diagnosis or treatment.",
     "body_3": "For actual diagnosis, treatment, and health management, ",
+    "body_3_ios": "For your health and wellbeing, ",
     "highlight_2": "please consult a qualified medical professional",
+    "highlight_2_ios": "consider speaking with a qualified professional",
     "body_4": ".",
     "hide_for_month": "Don't show for 1 month",
     "confirm": "OK"

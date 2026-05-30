@@ -4,6 +4,7 @@ import {
   v_19b633,
   v_4623af,
   v_3094a2,
+  v_326be8,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_86c222, v_a43dd8, v_7ebf51, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
@@ -33,7 +34,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
           variant="analysis"
           iconLeft={<BarChart3 size={24} color="#FFFFFF" />}
           title={v_8d41d7('analysis.title')}
-          subtitle={v_8d41d7('analysis.subtitle')}
+          subtitle={v_326be8.OS === 'ios' ? v_8d41d7('analysis.subtitle_ios') : v_8d41d7('analysis.subtitle')}
           containerStyle={{ paddingTop: v_033e14.top + v_9b1a04.medium }}
         />
         <SafeScrollView
@@ -44,8 +45,8 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
         >
           {}
           <View style={[v_d81136.section, v_d81136.healthSection]}>
-            <Text style={v_d81136.sectionTitle}>{v_8d41d7('analysis.health_title')}</Text>
-            <Text style={v_d81136.sectionDesc}>{v_8d41d7('analysis.health_desc')}</Text>
+            <Text style={v_d81136.sectionTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_title_ios') : v_8d41d7('analysis.health_title')}</Text>
+            <Text style={v_d81136.sectionDesc}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_desc_ios') : v_8d41d7('analysis.health_desc')}</Text>
             <TouchableOpacity
               style={v_d81136.card}
               onPress={() => v_9b57fc('HealthAnalysis')}
@@ -55,8 +56,8 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
                 <Heart size={24} color="#EF4444" />
               </View>
               <View style={v_d81136.cardText}>
-                <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.health_measure')}</Text>
-                <Text style={v_d81136.cardSub}>{v_8d41d7('analysis.health_measure_sub')}</Text>
+                <Text style={v_d81136.cardTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_measure_ios') : v_8d41d7('analysis.health_measure')}</Text>
+                <Text style={v_d81136.cardSub}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_measure_sub_ios') : v_8d41d7('analysis.health_measure_sub')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -68,8 +69,8 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
                 <ClipboardList size={24} color="#EF4444" />
               </View>
               <View style={v_d81136.cardText}>
-                <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.health_records')}</Text>
-                <Text style={v_d81136.cardSub}>{v_8d41d7('analysis.health_records_sub')}</Text>
+                <Text style={v_d81136.cardTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_records_ios') : v_8d41d7('analysis.health_records')}</Text>
+                <Text style={v_d81136.cardSub}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_records_sub_ios') : v_8d41d7('analysis.health_records_sub')}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -77,7 +78,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
           {}
           <View style={[v_d81136.section, v_d81136.skinSection]}>
             <Text style={v_d81136.sectionTitle}>{v_8d41d7('analysis.skin_title')}</Text>
-            <Text style={v_d81136.sectionDesc}>{v_8d41d7('analysis.skin_desc')}</Text>
+            <Text style={v_d81136.sectionDesc}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.skin_desc_ios') : v_8d41d7('analysis.skin_desc')}</Text>
             <TouchableOpacity
               style={v_d81136.card}
               onPress={() => v_9b57fc('SkinAnalysis')}
@@ -87,7 +88,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
                 <Droplet size={24} color="#3B82F6" />
               </View>
               <View style={v_d81136.cardText}>
-                <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.skin_measure')}</Text>
+                <Text style={v_d81136.cardTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.skin_measure_ios') : v_8d41d7('analysis.skin_measure')}</Text>
                 <Text style={v_d81136.cardSub}>{v_8d41d7('analysis.skin_measure_sub')}</Text>
               </View>
             </TouchableOpacity>
@@ -100,7 +101,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
                 <ClipboardList size={24} color="#3B82F6" />
               </View>
               <View style={v_d81136.cardText}>
-                <Text style={v_d81136.cardTitle}>{v_8d41d7('analysis.skin_records')}</Text>
+                <Text style={v_d81136.cardTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.skin_records_ios') : v_8d41d7('analysis.skin_records')}</Text>
                 <Text style={v_d81136.cardSub}>{v_8d41d7('analysis.skin_records_sub')}</Text>
               </View>
             </TouchableOpacity>

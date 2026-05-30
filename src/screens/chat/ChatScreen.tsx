@@ -179,7 +179,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     v_87cb2b.push({
       id: 'medical-disclaimer',
       type: 'ai',
-      text: v_8d41d7('chat.medical_disclaimer'),
+      text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
       createdAt: Date.now() - 1000,
     });
 
@@ -348,7 +348,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_7da572 = {
       id: v_5c2f9f.toString(),
       type: 'ai',
-      text: v_8d41d7('chat.questionnaire_intro', { name: v_f08a5e }),
+      text: v_326be8.OS === 'ios' ? v_8d41d7('chat.questionnaire_intro_ios', { name: v_f08a5e }) : v_8d41d7('chat.questionnaire_intro', { name: v_f08a5e }),
       createdAt: v_5c2f9f,
       questionnaire: { questionId: 'q1' },
     };
@@ -794,14 +794,14 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 <Text style={v_d81136.aiBubbleText}>{v_a8cd21.text}</Text>
               ) : null}
               {v_326be8.OS === 'ios' && !v_a8cd21.isLoading && v_a8cd21.text ? (
-                <Text style={v_d81136.aiDisclaimerFooter}>{v_8d41d7('chat.ai_msg_footer')}</Text>
+                <Text style={v_d81136.aiDisclaimerFooter}>{v_8d41d7('chat.ai_msg_footer_ios')}</Text>
               ) : null}
               {v_a8cd21.questionnaire && (() => {
                 const v_0ba044 = v_a8cd21.questionnaire.completed;
                 const v_61e622 = v_a8cd21.questionnaire.completedResult;
                 if (v_0ba044 && v_61e622) {
                   const v_258c83 = {
-                    q1: v_8d41d7('chat.questionnaire_q1'),
+                    q1: v_326be8.OS === 'ios' ? v_8d41d7('chat.questionnaire_q1_ios') : v_8d41d7('chat.questionnaire_q1'),
                     q2: v_8d41d7('chat.questionnaire_q2'),
                     q3: v_8d41d7('chat.questionnaire_q3'),
                     q4: v_8d41d7('chat.questionnaire_q4'),
@@ -928,7 +928,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 const v_bab22e = v_a8cd21.questionnaire.questionId === 'q2';
                 const v_a366b0 = v_bab22e ? v_14e5f6 : v_34de63;
                 const v_ef6c25 = v_bab22e ? 'chat.questionnaire_medication_options' : 'chat.questionnaire_options';
-                const v_de31f5 = v_bab22e ? v_8d41d7('chat.questionnaire_q2') : v_8d41d7('chat.questionnaire_q1');
+                const v_de31f5 = v_bab22e ? v_8d41d7('chat.questionnaire_q2') : (v_326be8.OS === 'ios' ? v_8d41d7('chat.questionnaire_q1_ios') : v_8d41d7('chat.questionnaire_q1'));
                 const v_665b92 = v_bab22e ? v_8d41d7('chat.questionnaire_q2_instruction') : v_8d41d7('chat.questionnaire_q1_instruction');
                 return (
                   <View style={v_d81136.questionnaireContainer}>
@@ -1033,8 +1033,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                         <Ionicons name="warning" size={18} color="#B45309" />
                         <Text style={v_d81136.healthReportPrecautionTitle}>{v_8d41d7('chat.health_report_precautions')}</Text>
                       </View>
-                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_bp')}</Text>
-                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_glucose')}</Text>
+                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_precaution_bp_ios') : v_8d41d7('chat.health_report_precaution_bp')}</Text>
+                      <Text style={v_d81136.healthReportPrecautionItem}>• {v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_precaution_glucose_ios') : v_8d41d7('chat.health_report_precaution_glucose')}</Text>
                       <Text style={v_d81136.healthReportPrecautionItem}>• {v_8d41d7('chat.health_report_precaution_lifestyle')}</Text>
                     </View>
                     <View style={v_d81136.healthReportImprovementSection}>
@@ -1058,16 +1058,16 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                       <Text style={v_d81136.healthReportImprovementSubtitle}>4. {v_8d41d7('chat.health_report_improvement_checkup')}</Text>
                       <Text style={v_d81136.healthReportImprovementText}>• {v_8d41d7('chat.health_report_improvement_checkup_items')}</Text>
                     </View>
-                    <Text style={v_d81136.healthReportDoctorTitle}>{v_8d41d7('chat.health_report_doctor_opinion')}</Text>
+                    <Text style={v_d81136.healthReportDoctorTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_doctor_opinion_ios') : v_8d41d7('chat.health_report_doctor_opinion')}</Text>
                     <Text style={v_d81136.healthReportDoctorText}>{v_8d41d7('chat.health_report_doctor_text')}</Text>
                     <View style={v_d81136.healthReportButtons}>
                       <TouchableOpacity style={v_d81136.healthReportButtonOutline} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_download_pdf'))} activeOpacity={0.8}>
                         <Feather name="download" size={18} color="#615FFF" />
                         <Text style={v_d81136.healthReportButtonOutlineText}>{v_8d41d7('chat.health_report_download_pdf')}</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={v_d81136.healthReportButtonPrimary} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_recommend_hospital'))} activeOpacity={0.8}>
+                      <TouchableOpacity style={v_d81136.healthReportButtonPrimary} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_recommend_hospital_ios') : v_8d41d7('chat.health_report_recommend_hospital'))} activeOpacity={0.8}>
                         <LinearGradient colors={['#615FFF', '#AD46FF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={v_d81136.healthReportButtonGradient}>
-                          <Text style={v_d81136.healthReportButtonPrimaryText}>{v_8d41d7('chat.health_report_recommend_hospital')}</Text>
+                          <Text style={v_d81136.healthReportButtonPrimaryText}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_recommend_hospital_ios') : v_8d41d7('chat.health_report_recommend_hospital')}</Text>
                         </LinearGradient>
                       </TouchableOpacity>
                     </View>
