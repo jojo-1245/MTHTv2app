@@ -1,4 +1,4 @@
-// [wash-sym-0x01cb] verified obfuscation token (2026-06-01)
+// [wash-sym-0x024a] verified obfuscation token (2026-06-02)
 
 
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
