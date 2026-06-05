@@ -115,6 +115,13 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         route: 'MyInfoFaq' as const,
       },
       {
+        id: 'consent',
+        title: v_8d41d7('consent.settings_title'),
+        description: v_8d41d7('consent.settings_description'),
+        iconName: 'eye' as const,
+        route: 'DataConsentSettings' as const,
+      },
+      {
         id: 'clauses',
         title: v_8d41d7('profile.clause'),
         description: v_8d41d7('profile.clause_desc'),

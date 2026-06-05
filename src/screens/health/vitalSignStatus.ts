@@ -24,6 +24,13 @@ export function v_9da885(v_653390): boolean {
     v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
     v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
     v_e3e816.LOW_HEMOGLOBIN_RISK,
+
+    v_e3e816.HEMOGLOBIN,
+    v_e3e816.HEMOGLOBIN_A1C,
+    v_e3e816.HEART_AGE,
+    v_e3e816.CARDIAC_WORKLOAD,
+    v_e3e816.MEAN_ARTERIAL_PRESSURE,
+    v_e3e816.PULSE_PRESSURE,
   ];
 
   if (typeof v_653390 === 'number' && v_40f40b.includes(v_653390)) {
@@ -42,6 +49,13 @@ export function v_9da885(v_653390): boolean {
       'high_fasting_glucose_risk',
       'high_total_cholesterol_risk',
       'low_hemoglobin_risk',
+
+      'hemoglobin',
+      'hemoglobin_a1c',
+      'heart_age',
+      'cardiac_workload',
+      'mean_arterial_pressure',
+      'pulse_pressure',
     ];
     if (v_9cad89.includes(v_653390.toLowerCase())) {
       return true;

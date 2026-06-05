@@ -48,6 +48,7 @@ import {
 import v_7f9fad from "../screens/AnalysisScreen";
 import { v_02d653 } from "../screens/chat";
 import v_67f088 from "../screens/AddSubAccountScreen";
+import v_4fd298 from "../screens/profile/DataConsentSettingsScreen";
 
 const v_cb3606 = v_709be7<v_8ad91b>();
 
@@ -202,6 +203,7 @@ export const AppNavigator: v_a3453e.FC = () => {
                 />
                 <Stack.Screen name="Chat" component={v_02d653} />
                 <Stack.Screen name="AddSubAccount" component={v_67f088} />
+                <Stack.Screen name="DataConsentSettings" component={v_4fd298} />
             </Stack.Navigator>
         </NavigationContainer>
     );

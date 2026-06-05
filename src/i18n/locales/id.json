@@ -179,7 +179,13 @@
     "item_select": "Pilih Item",
     "item_select_modal_title": "Pilih item untuk ditampilkan",
     "select_all": "Pilih semua",
-    "deselect_all": "Batalkan semua"
+    "deselect_all": "Batalkan semua",
+    "delete_record": "Hapus catatan",
+    "delete": "Hapus",
+    "delete_confirm_title": "Hapus catatan",
+    "delete_confirm_message": "Hapus catatan pengukuran ini? Tindakan ini tidak dapat dibatalkan.",
+    "delete_error_title": "Penghapusan gagal",
+    "delete_error_message": "Catatan tidak dapat dihapus. Silakan coba lagi sebentar lagi."
   },
   "skin_records": {
     "calendar": "Kalender",
@@ -896,7 +902,11 @@
     "shop_preparing": "Layar toko sedang disiapkan.",
     "can_ask_these": "Anda dapat menanyakan topik-topik berikut"
   },
+  "health": {
+    "non_medical_disclaimer": "Tanda-tanda vital yang diukur tidak dimaksudkan untuk penggunaan medis, termasuk diagnosis mandiri atau pengganti konsultasi dengan dokter, dan hanya dirancang untuk tujuan kebugaran dan kesehatan umum."
+  },
   "health_analysis": {
+    "recording_indicator": "● Sedang mengukur",
     "result_title": "Hasil Analisis",
     "result_loading": "Memuat hasil...",
     "default_user_name": "Saya",
@@ -1687,7 +1697,7 @@
     "terms_title": "Ketentuan Layanan",
     "terms_content": "[Metahint] Persetujuan Pengumpulan dan Penggunaan Informasi Pribadi\n\n1. Tujuan Pengumpulan dan Penggunaan Informasi Pribadi Perusahaan menggunakan informasi pribadi yang dikumpulkan untuk tujuan berikut.\n* Penyediaan dan analisis layanan: analisis kesehatan dan kulit berbasis AI menggunakan kamera ponsel, pembuatan laporan hasil.\n* Konsultasi AI yang disesuaikan: layanan percakapan AI dan informasi kesehatan yang disesuaikan berdasarkan hasil analisis.\n* Layanan aset virtual: pembuatan dompet koin MTHT, manajemen aset, riwayat transaksi, dan dukungan transfer.\n* Pengelolaan anggota: verifikasi identitas, pencegahan penggunaan curang, konfirmasi pendaftaran, penanganan keluhan.\n* Pemasaran dan peningkatan layanan: pengembangan layanan baru, frekuensi akses, analisis statistik penggunaan layanan.\n\n2. Informasi Pribadi yang Dikumpulkan Perusahaan mengumpulkan informasi berikut untuk penyediaan layanan yang lancar.\n* Informasi akun (wajib): alamat email, kata sandi, nama panggilan, nomor ponsel.\n* Informasi analisis dan konsultasi (wajib): foto dan video dari kamera, konten percakapan AI, kata kunci pencarian.\n* Informasi dompet aset virtual (wajib): alamat dompet koin MTHT, catatan transaksi (TXID).\n* Informasi yang dihasilkan otomatis (opsional): log penggunaan layanan, log akses, cookie, alamat IP, informasi perangkat (model, versi OS).\n\n3. Pengumpulan dan Penggunaan Informasi Sensitif (Wajib) Metahint mengumpulkan informasi sensitif seperti data kesehatan dan kulit untuk menyediakan layanan analisis kesehatan dan kulit.\n* Item yang dikumpulkan: data tangkapan kamera dan hasil analisis kesehatan/kulit.\n* Tujuan: penyediaan panduan kesehatan dan konsultasi yang disesuaikan melalui analisis AI.\n* Masa penyimpanan: hingga penarikan keanggotaan atau hingga tujuan pengumpulan tercapai.\n\n4. Masa Penyimpanan dan Penggunaan Informasi Pribadi\n* Informasi pribadi pada prinsipnya dihapus segera saat penarikan keanggotaan.\n* Jika penyimpanan diwajibkan oleh hukum (mis. UU E-Commerce), perusahaan menyimpan informasi anggota untuk periode yang ditentukan hukum.\n* Blockchain: alamat dompet dan riwayat transaksi dapat tercatat permanen di jaringan dan tidak dapat dihapus.\n\n5. Hak Menolak Persetujuan dan Pemberitahuan Kekurangan\n* Anda berhak menolak persetujuan atas pengumpulan dan penggunaan informasi pribadi dan sensitif.\n* Namun, menolak persetujuan untuk item wajib dapat membatasi penggunaan fitur inti seperti analisis kesehatan/kulit, konsultasi AI, dan dompet koin.",
     "privacy_title": "Kebijakan Privasi",
-    "privacy_content": "Kebijakan Privasi Metahint\n\nMetahint Global INC (\"Perusahaan\") menghargai informasi pribadi pengguna dan mematuhi hukum yang berlaku termasuk Undang-Undang Perlindungan Informasi Pribadi. Kebijakan ini menjelaskan informasi pribadi yang kami kumpulkan, cara kami menggunakannya, dan langkah-langkah perlindungan.\n\n1. Informasi Pribadi yang Kami Kumpulkan dan Cara Pengumpulan\nKami mengumpulkan informasi pribadi minimum untuk penyediaan layanan dan memperoleh persetujuan tersendiri untuk informasi sensitif (data kesehatan dan kulit).\n* Pendaftaran dan pengelolaan akun: alamat email, kata sandi, nama panggilan, nomor ponsel.\n* Layanan analisis kesehatan dan kulit (wajib): foto dan video dari kamera ponsel, hasil analisis (status kesehatan/kulit terkuantifikasi).\n* Layanan konsultasi AI: konten percakapan AI dan riwayat pencarian.\n* Layanan dompet aset virtual: alamat dompet koin MTHT, riwayat transaksi (Transaction ID).\n* Terkumpul otomatis: informasi perangkat (model, OS), alamat IP, log penggunaan layanan, cookie.\n\n2. Tujuan Pengolahan Informasi Pribadi\n* Penyediaan layanan: analisis kesehatan/kulit berbasis AI dan hasil menggunakan kamera.\n* Konsultasi AI yang disesuaikan: informasi kesehatan dan konsultasi berdasarkan data analisis.\n* Layanan keuangan: pembuatan dompet koin MTHT, manajemen aset, dukungan transfer/transaksi.\n* Pengelolaan pengguna: verifikasi identitas, respons pertanyaan pelanggan, pencegahan penipuan.\n\n3. Masa Penyimpanan dan Penggunaan\nKami menghapus informasi pribadi tanpa penundaan setelah tujuan tercapai. Pengecualian: saat penarikan diri; penyimpanan menurut hukum (mis. catatan transaksi aset virtual); catatan kontrak/penarikan penawaran 5 tahun, keluhan/sengketa konsumen 3 tahun, kunjungan layanan 3 bulan.\n\n4. Pengolahan Informasi Sensitif dan Persetujuan Terpisah\nMetahint mengolah informasi sensitif seperti data kesehatan dan kulit. Kami memperoleh persetujuan terpisah dan hanya menggunakan untuk tujuan analisis.\n\n5. Penyediaan ke Pihak Ketiga dan Alih Daya\nKami tidak memberikan informasi pribadi ke pihak ketiga tanpa persetujuan. Kami dapat mengalihdayakan ke (mis. AWS, Google Cloud, penyedia solusi AI) untuk analisis AI dan penyimpanan cloud.\n\n6. Prosedur dan Metode Penghancuran\nKami menghapus dengan aman setelah tujuan tercapai; file elektronik dihapus secara permanen, dokumen kertas dihancurkan atau dibakar.\n\n7. Hak Subjek Data dan Wali Hukum\nPengguna dapat mengakses, memperbaiki informasi, atau mencabut persetujuan melalui penarikan akun kapan saja.\n\n8. Tindakan Keamanan Informasi Pribadi\nKami menerapkan enkripsi (kata sandi, kunci pribadi dompet), SSL untuk transmisi, pembatasan akses dan pelatihan personel.\n\n9. Dompet Aset Virtual\nAlamat dompet MTHT dan riwayat transaksi mungkin tidak dapat dihapus sepenuhnya karena sifat blockchain. Pengguna bertanggung jawab atas kunci pribadi; kami tidak bertanggung jawab atas kehilangan karena kelalaian pengguna."
+    "privacy_content": "Kebijakan Privasi Metahint\n\nMetahint Global INC (\"Perusahaan\") menghargai informasi pribadi pengguna dan mematuhi hukum yang berlaku termasuk Undang-Undang Perlindungan Informasi Pribadi. Kebijakan ini menjelaskan informasi pribadi yang kami kumpulkan, cara kami menggunakannya, dan langkah-langkah perlindungan.\n\n1. Informasi Pribadi yang Kami Kumpulkan dan Cara Pengumpulan\nKami mengumpulkan informasi pribadi minimum untuk penyediaan layanan dan memperoleh persetujuan tersendiri untuk informasi sensitif (data kesehatan dan kulit).\n* Pendaftaran dan pengelolaan akun: alamat email, kata sandi, nama panggilan, nomor ponsel.\n* Layanan analisis kesehatan dan kulit (wajib): foto dan video dari kamera ponsel, hasil analisis (status kesehatan/kulit terkuantifikasi).\n* Layanan konsultasi AI: konten percakapan AI dan riwayat pencarian.\n* Layanan dompet aset virtual: alamat dompet koin MTHT, riwayat transaksi (Transaction ID).\n* Terkumpul otomatis: informasi perangkat (model, OS), alamat IP, log penggunaan layanan, cookie.\n\n2. Tujuan Pengolahan Informasi Pribadi\n* Penyediaan layanan: analisis kesehatan/kulit berbasis AI dan hasil menggunakan kamera.\n* Konsultasi AI yang disesuaikan: informasi kesehatan dan konsultasi berdasarkan data analisis.\n* Layanan keuangan: pembuatan dompet koin MTHT, manajemen aset, dukungan transfer/transaksi.\n* Pengelolaan pengguna: verifikasi identitas, respons pertanyaan pelanggan, pencegahan penipuan.\n\n3. Masa Penyimpanan dan Penggunaan\nKami menghapus informasi pribadi tanpa penundaan setelah tujuan tercapai. Pengecualian: saat penarikan diri; penyimpanan menurut hukum (mis. catatan transaksi aset virtual); catatan kontrak/penarikan penawaran 5 tahun, keluhan/sengketa konsumen 3 tahun, kunjungan layanan 3 bulan.\n\n4. Pengolahan Informasi Sensitif dan Data Biometrik Wajah (Persetujuan Terpisah Diperlukan)\nAplikasi MetaHint mengolah gambar wajah, foto, dan nilai pengukuran kesehatan/kulit yang diturunkan darinya (informasi sensitif) untuk analisis kesehatan dan kulit. Kami memperoleh persetujuan eksplisit terpisah untuk setiap fitur, secara independen dari informasi pribadi umum.\n* Pengukuran kesehatan (biometrik): Video wajah yang diambil selama pengukuran diproses secara real-time di perangkat Anda menggunakan teknologi FzljtiliSignal (Binah). Video asli tidak disimpan atau ditransmisikan ke luar. Hanya nilai hasil pengukuran numerik yang disimpan di server perusahaan.\n* Analisis kulit: Foto wajah yang Anda ambil dikirim ke dan diproses oleh pihak ketiga (YouCam, PerfectCorp) di server luar negeri untuk analisis. Perusahaan menyimpan nilai hasil analisis.\n* Penyimpanan dan penghapusan: Pengguna dapat menghapus setiap catatan pengukuran secara langsung di aplikasi (dihapus segera dan permanen). Semua data terkait dihancurkan saat akun ditarik.\n\n5. Penyediaan ke Pihak Ketiga dan Alih Daya\nPerusahaan tidak memberikan informasi pribadi ke pihak ketiga tanpa persetujuan pengguna. Sebelum data ditransmisikan, pengguna diberi tahu apa yang dikirim, kepada siapa, dan mengapa, serta persetujuan diperoleh per fitur. Untuk penyediaan layanan, kami mengolah dan mengalihdayakan sebagai berikut.\n* YouCam (PerfectCorp): Pemrosesan foto wajah untuk analisis kulit (transfer luar negeri). Langkah perlindungan setara diterapkan.\n* Server AI MetaHint: Pemrosesan konten percakapan dan ringkasan pengukuran kesehatan/kulit untuk chat AI.\n* Infrastruktur cloud (AWS, Google Cloud, dll.): Penyimpanan data.\n* SDK FzljtiliSignal (Binah): Pemrosesan video wajah di perangkat (tidak ada transmisi eksternal).\nPengguna dapat mencabut persetujuan atas penyediaan dan pemrosesan pihak ketiga di atas kapan saja di 'Kelola Persetujuan Data' aplikasi.\n\n6. Prosedur dan Metode Penghancuran\nKami menghapus dengan aman setelah tujuan tercapai; file elektronik dihapus secara permanen, dokumen kertas dihancurkan atau dibakar.\n\n7. Hak Subjek Data dan Wali Hukum\nPengguna dapat mengakses, memperbaiki informasi, atau mencabut persetujuan melalui penarikan akun kapan saja.\n\n8. Tindakan Keamanan Informasi Pribadi\nKami menerapkan enkripsi (kata sandi, kunci pribadi dompet), SSL untuk transmisi, pembatasan akses dan pelatihan personel.\n\n9. Dompet Aset Virtual\nAlamat dompet MTHT dan riwayat transaksi mungkin tidak dapat dihapus sepenuhnya karena sifat blockchain. Pengguna bertanggung jawab atas kunci pribadi; kami tidak bertanggung jawab atas kehilangan karena kelalaian pengguna."
   },
   "wallet": {
     "title": "Dompet MetaHint",
@@ -1846,5 +1856,38 @@
     "body_4": ".",
     "hide_for_month": "Jangan tampilkan selama 1 bulan",
     "confirm": "OK"
+  },
+  "consent": {
+    "label_data": "Data yang dikirim",
+    "label_recipient": "Dikirim ke",
+    "label_purpose": "Tujuan",
+    "settings_title": "Kelola Persetujuan Data",
+    "settings_description": "Aktifkan atau nonaktifkan persetujuan berbagi data per fitur. Jika Anda mencabut, Anda akan diminta persetujuan lagi saat menggunakan fitur tersebut berikutnya.",
+    "revoke_confirm": "Cabut persetujuan? Anda akan diminta menyetujui kembali saat menggunakan fitur ini berikutnya.",
+    "revoke_action": "Cabut",
+    "health": {
+      "title": "Persetujuan: Pengukuran Berbasis Wajah",
+      "data": "Video wajah langsung Anda selama pengukuran",
+      "recipient": "Teknologi FzljtiliSignal (Binah) — diproses hanya di perangkat Anda; video tidak disimpan atau dikirim ke mana pun",
+      "purpose": "Memperkirakan indikator kebugaran/kesehatan umum seperti detak nadi",
+      "agree": "Setuju & mulai",
+      "cancel": "Batal"
+    },
+    "skin": {
+      "title": "Persetujuan: Analisis Foto Kulit",
+      "data": "Foto wajah yang Anda ambil",
+      "recipient": "YouCam oleh PerfectCorp — dikirim ke server analisis luar negeri",
+      "purpose": "Menganalisis kondisi kulit (kerutan, pori-pori, kelembapan, dll.)",
+      "agree": "Setuju & analisis",
+      "cancel": "Batal"
+    },
+    "chat": {
+      "title": "Persetujuan: Chat AI",
+      "data": "Pesan Anda dan ringkasan pengukuran kesehatan/kulit (termasuk data biometrik)",
+      "recipient": "Server AI MetaHint",
+      "purpose": "Menghasilkan respons chat AI yang dipersonalisasi",
+      "agree": "Setuju & kirim",
+      "cancel": "Batal"
+    }
   }
 }
