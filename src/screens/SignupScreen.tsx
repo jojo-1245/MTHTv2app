@@ -66,7 +66,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const v_064327 = v_8d41d7('signup.password_rule');
 
-  const [v_a6fcf8, v_539b92] = v_5ab095(true);
+  const [v_a6fcf8, v_539b92] = v_5ab095(false);
   const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
   const [v_c3eac4, v_bdc43c] =
     v_5ab095<'none' | 'male' | 'female'>('none');

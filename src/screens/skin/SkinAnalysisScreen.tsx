@@ -40,6 +40,8 @@ import type { v_8ad91b } from '../../navigation';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d, v_624bd2 } from '../../constants';
+import { v_2d6571 } from '../../utils/consentStore';
+import v_e209a2 from '../../components/DataConsentModal';
 import {
     v_6bbbb9,
     type v_146928,
@@ -343,6 +345,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const [v_d5fcde, v_e61e4f] = v_5ab095('');
     const [v_e521b9, v_6f6f79] = v_5ab095<any>(null);
     const [v_1744b9, v_5c59f6] = v_5ab095('');
+
+    const [v_22975d, v_9b09d6] = v_5ab095(false);
+
+    const v_2b985c = v_e662ae<(() => void) | null>(null);
 
     const [v_c5caed, v_e2f548] = v_5ab095(false);
 
@@ -677,6 +683,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         mode?: AnalysisMode;
         concerns?: v_146928[];
     }) => {
+
+        const v_5f7d15 = await v_2d6571('skin');
+        if (!v_5f7d15) {
+            v_2b985c.current = () => { v_34776f(v_b36f96); };
+            v_9b09d6(true);
+            return;
+        }
+
         const v_ee89db = v_b36f96?.imageUri ?? v_82f4af;
         const v_34e5bb = v_b36f96?.mode ?? v_52f1d1;
         const v_44eb1a = v_b36f96?.concerns ?? (Array.from(v_76def3) as v_146928[]);
@@ -809,6 +823,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7]);
 
     const v_2e22e6 = v_de06a3(async (v_04e790) => {
+
+        const v_5f7d15 = await v_2d6571('skin');
+        if (!v_5f7d15) {
+            v_2b985c.current = () => { v_2e22e6(v_04e790); };
+            v_9b09d6(true);
+            return;
+        }
+
         try {
 
             if (v_04e790 === 'camera') {
@@ -869,6 +891,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, []);
 
     const v_2091c0 = v_de06a3(async () => {
+
+        const v_5f7d15 = await v_2d6571('skin');
+        if (!v_5f7d15) {
+            v_2b985c.current = () => { v_2091c0(); };
+            v_9b09d6(true);
+            return;
+        }
+
         if (!v_d1a6bb?.granted) {
             const v_43c42e = await v_1e66f0();
             if (!v_43c42e.granted) {
@@ -2099,6 +2129,22 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     )}
                 />
             )}
+
+            {}
+            <DataConsentModal
+                visible={v_22975d}
+                kind="skin"
+                onAgree={() => {
+                    v_9b09d6(false);
+                    const v_483de2 = v_2b985c.current;
+                    v_2b985c.current = null;
+                    if (v_483de2) v_483de2();
+                }}
+                onCancel={() => {
+                    v_9b09d6(false);
+                    v_2b985c.current = null;
+                }}
+            />
         </MainLayout>
     );
 };
