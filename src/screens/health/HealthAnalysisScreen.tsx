@@ -19,6 +19,7 @@ import {
   v_bd64bf,
   v_da479e,
   v_2d4718,
+  v_a2349e,
 } from 'rcmrninabrnb';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_772971 } from 'jmpfvteuuztnp';
@@ -61,6 +62,9 @@ import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_bc6a30 } from '../../types/fzljtili';
 import { v_4e7146, v_7374eb } from './vitalSignStatus';
+
+import { v_2d6571 } from '../../utils/consentStore';
+import v_e209a2 from '../../components/DataConsentModal';
 
 enum SmokingStatus {
   UNSPECIFIED = 0,
@@ -447,6 +451,23 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   const v_e7c1c1 = v_e662ae<boolean>(false);
 
+  const [v_bf6428, v_7dce4d] = v_5ab095(false);
+
+  const v_f2eb11 = v_e662ae<(() => void) | null>(null);
+
+  const v_698d8e = v_e662ae(new v_a2349e.Value(1)).current;
+  v_c4deb2(() => {
+    if (v_91943c !== 'measurement') return;
+    const v_6337ad = v_a2349e.loop(
+      v_a2349e.sequence([
+        v_a2349e.timing(v_698d8e, { toValue: 0, duration: 600, useNativeDriver: true }),
+        v_a2349e.timing(v_698d8e, { toValue: 1, duration: 600, useNativeDriver: true }),
+      ])
+    );
+    v_6337ad.start();
+    return () => v_6337ad.stop();
+  }, [v_91943c, v_698d8e]);
+
   const v_ec0597 = v_de06a3(async (): Promise<boolean> => {
     if (!v_d1a6bb) {
       const v_43c42e = await v_1e66f0();
@@ -757,6 +778,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const v_ac8071 = v_de06a3(async () => {
     try {
       if (v_bc50c7 === v_eb2401.READY) {
+
+        const v_834605 = await v_2d6571('health');
+        if (!v_834605) {
+
+          v_f2eb11.current = () => v_ac8071();
+          v_7dce4d(true);
+          return;
+        }
 
         if (!v_f91d86) {
           const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
@@ -1991,14 +2020,16 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         <KeyboardAvoidingView
           key={v_af8c44}
           behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={0}
           style={v_d81136.stepModalKeyboardAvoid}
           onLayout={(e: v_e99fe0) => {
             v_1efea8.current = v_9e86fd.nativeEvent.layout;
             console.log('[모달 위치] onLayout', v_9e86fd.nativeEvent.layout);
           }}
         >
-          <View style={v_d81136.stepModalOverlay}>
-            <View style={v_d81136.stepModalSpacer} />
+          {}
+          <View style={v_d81136.stepModalOverlay} pointerEvents="box-none">
+            <View style={v_d81136.stepModalSpacer} pointerEvents="none" />
             <View style={[v_d81136.stepModalContent, { paddingBottom: v_9b1a04.xlarge + (v_ac3ab7 ? 0 : v_ea7233) }]}>
               {}
               <TouchableOpacity
@@ -2241,6 +2272,22 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
         </KeyboardAvoidingView>
       </Modal>
+
+      {}
+      <DataConsentModal
+        visible={v_bf6428}
+        kind="health"
+        onAgree={() => {
+          v_7dce4d(false);
+          const v_483de2 = v_f2eb11.current;
+          v_f2eb11.current = null;
+          if (v_483de2) v_483de2();
+        }}
+        onCancel={() => {
+          v_7dce4d(false);
+          v_f2eb11.current = null;
+        }}
+      />
     </>
   );
 
@@ -2260,12 +2307,11 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           <View style={v_d81136.cameraPreviewWrapper} onLayout={v_1f2c01}>
             <CameraPreviewView style={v_d81136.cameraPreview} />
             {}
-            {(v_bc50c7 === v_eb2401.PROCESSING || v_bc50c7 === v_eb2401.STARTING) && (
-              <View style={v_d81136.recordingIndicator}>
-                <View style={v_d81136.recordingDot} />
-                <Text style={v_d81136.recordingText}>REC</Text>
-              </View>
-            )}
+            {}
+            <View style={v_d81136.recordingIndicator}>
+              <Animated.View style={[v_d81136.recordingDot, { opacity: v_698d8e }]} />
+              <Text style={v_d81136.recordingText}>{v_8d41d7('health_analysis.recording_indicator')}</Text>
+            </View>
             {}
             {v_14a7eb?.roi && v_bc50c7 === v_eb2401.PROCESSING && (
               <FaceDetectionBox previewSize={v_cc7953} roi={v_14a7eb.roi} imageWidth={v_14a7eb.imageWidth} imageHeight={v_14a7eb.imageHeight} />
