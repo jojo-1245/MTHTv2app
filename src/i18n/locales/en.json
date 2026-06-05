@@ -180,7 +180,13 @@
     "item_select": "Item Selection",
     "item_select_modal_title": "Select items to display",
     "select_all": "Select all",
-    "deselect_all": "Deselect all"
+    "deselect_all": "Deselect all",
+    "delete_record": "Delete record",
+    "delete": "Delete",
+    "delete_confirm_title": "Delete record",
+    "delete_confirm_message": "Delete this measurement record? This cannot be undone.",
+    "delete_error_title": "Delete failed",
+    "delete_error_message": "Couldn't delete the record. Please try again shortly."
   },
   "skin_records": {
     "calendar": "Calendar",
@@ -928,7 +934,11 @@
     "shop_preparing": "Shop screen is being prepared.",
     "can_ask_these": "You can ask about these topics"
   },
+  "health": {
+    "non_medical_disclaimer": "The measured vital signs are not intended for medical use, including self-diagnosis or consultation with a doctor, and are only designed for general fitness and wellness purposes."
+  },
   "health_analysis": {
+    "recording_indicator": "● Recording",
     "result_title": "Analysis Result",
     "result_loading": "Loading results...",
     "default_user_name": "Me",
@@ -1745,7 +1755,7 @@
     "terms_title": "Terms of Service",
     "terms_content": "[Metahint] Consent to Collection and Use of Personal Information\n\n1. Purpose of Collection and Use of Personal Information The company uses collected personal information for the following purposes.\n* Service provision and analysis: AI-based health and skin analysis using smartphone camera, generation of result reports.\n* AI customized consultation: AI conversation service and customized health information based on analysis results.\n* Virtual asset service: MTHT coin wallet creation, asset management, transaction history, and transfer support.\n* Member management: identity verification, prevention of fraudulent use, sign-up confirmation, complaint handling.\n* Marketing and service improvement: new service development, access frequency, and statistical analysis of service use.\n\n2. Personal Information Collected The company collects the following information for smooth service provision.\n* Account information (required): email address, password, nickname, mobile number.\n* Analysis and consultation information (required): photos and videos from camera, AI conversation content, search keywords.\n* Virtual asset wallet information (required): MTHT coin wallet address, transaction records (TXID).\n* Automatically generated information (optional): service usage logs, access logs, cookies, IP address, device information (model, OS version).\n\n3. Collection and Use of Sensitive Information (Required) Metahint collects sensitive information such as health and skin data to provide health and skin analysis services.\n* Items collected: camera capture data and derived health/skin analysis results.\n* Purpose: provision of customized health guidance and consultation through AI analysis.\n* Retention period: until membership withdrawal or until the purpose of collection is achieved.\n\n4. Retention and Use Period of Personal Information\n* Personal information is in principle destroyed immediately upon membership withdrawal.\n* Where retention is required by law (e.g. E-Commerce Act), the company retains member information for the period specified by such law.\n* Blockchain: wallet addresses and transaction history may be permanently recorded on the network and cannot be deleted.\n\n5. Right to Withhold Consent and Notice of Disadvantages\n* You have the right to withhold consent to collection and use of personal and sensitive information.\n* However, withholding consent for required items may restrict use of core features such as health/skin analysis, AI consultation, and coin wallet.",
     "privacy_title": "Privacy Policy",
-    "privacy_content": "Metahint Privacy Policy\n\nMetahint Global INC (\"Company\") values users' personal information and complies with relevant laws including the Personal Information Protection Act. This policy explains what personal information we collect, how we use it, and what measures we take to protect it.\n\n1. Personal Information We Collect and How We Collect It\nWe collect the minimum necessary personal information for service provision and obtain separate explicit consent for sensitive information (health and skin data).\n* Account registration and management: email address, password, nickname, mobile number.\n* Health and skin analysis service (required): photos and videos captured via smartphone camera, analysis results (quantified health/skin status).\n* AI consultation service: AI conversation content and search history.\n* Virtual asset wallet service: MTHT coin wallet address, transaction history (Transaction ID).\n* Automatically collected: device information (model, OS), IP address, service usage logs, cookies.\n\n2. Purpose of Processing Personal Information\n* Service provision: AI-based health/skin analysis and results using the camera.\n* AI customized consultation: customized health information and conversational consultation based on analysis data.\n* Financial services: MTHT coin wallet creation, asset management, and transfer/transaction support.\n* User management: identity verification, customer inquiry response, fraud prevention.\n\n3. Retention and Use Period of Personal Information\nWe destroy personal information without delay after the purpose of collection and use is achieved. Exceptions:\n* Upon withdrawal: destroyed immediately (except where retention is required by law, e.g. virtual asset transaction records).\n* Retention under applicable laws: records on contracts or withdrawal of offers: 5 years; records on consumer complaints or dispute handling: 3 years; service visit records: 3 months.\n\n4. Processing of Sensitive Information and Separate Consent\nMetahint processes sensitive information such as users' health and skin data. We obtain separate consent and use it only for analysis purposes.\n\n5. Provision to Third Parties and Outsourcing\nWe do not provide personal information to third parties without consent. We may outsource to (e.g. AWS, Google Cloud, AI solution providers) for AI analysis and cloud storage.\n\n6. Procedures and Methods for Destruction\nWe safely delete information after the purpose is achieved; electronic files are irreversibly deleted and paper documents are shredded or incinerated.\n\n7. Rights of Data Subjects and Legal Representatives\nUsers may access, correct their information, or withdraw consent through account withdrawal at any time.\n\n8. Security Measures for Personal Information\nWe take measures such as encryption (passwords, wallet private keys), SSL for transmission, and access restrictions and training for personnel.\n\n9. Virtual Asset Wallet\nMTHT wallet addresses and transaction records may not be fully deletable due to the nature of the blockchain. The user is responsible for managing their private key; we are not liable for loss due to user negligence."
+    "privacy_content": "Metahint Privacy Policy\n\nMetahint Global INC (\"Company\") values users' personal information and complies with relevant laws including the Personal Information Protection Act. This policy explains what personal information we collect, how we use it, and what measures we take to protect it.\n\n1. Personal Information We Collect and How We Collect It\nWe collect the minimum necessary personal information for service provision and obtain separate explicit consent for sensitive information (health and skin data).\n* Account registration and management: email address, password, nickname, mobile number.\n* Health and skin analysis service (required): photos and videos captured via smartphone camera, analysis results (quantified health/skin status).\n* AI consultation service: AI conversation content and search history.\n* Virtual asset wallet service: MTHT coin wallet address, transaction history (Transaction ID).\n* Automatically collected: device information (model, OS), IP address, service usage logs, cookies.\n\n2. Purpose of Processing Personal Information\n* Service provision: AI-based health/skin analysis and results using the camera.\n* AI customized consultation: customized health information and conversational consultation based on analysis data.\n* Financial services: MTHT coin wallet creation, asset management, and transfer/transaction support.\n* User management: identity verification, customer inquiry response, fraud prevention.\n\n3. Retention and Use Period of Personal Information\nWe destroy personal information without delay after the purpose of collection and use is achieved. Exceptions:\n* Upon withdrawal: destroyed immediately (except where retention is required by law, e.g. virtual asset transaction records).\n* Retention under applicable laws: records on contracts or withdrawal of offers: 5 years; records on consumer complaints or dispute handling: 3 years; service visit records: 3 months.\n\n4. Processing of Sensitive Information and Biometric Data (Separate Consent Required)\nThe MetaHint app processes users' facial images, photos, and the health/skin measurements derived from them (sensitive information) for health and skin analysis. We obtain separate explicit consent for each feature, independently from general personal information.\n* Health (biometric) measurement: The facial video captured during measurement is processed in real time on your device using FzljtiliSignal (Binah) technology. The original video is not stored or transmitted externally. Only the numerical measurement results are stored on the company's server.\n* Skin analysis: The facial photo you take is sent to and processed by a third party (YouCam, PerfectCorp) on overseas servers for analysis. The company stores the resulting analysis values.\n* Retention and deletion: Users can delete individual measurement records directly in the app (deleted immediately and permanently). All related data is destroyed upon account withdrawal.\n\n5. Provision to Third Parties and Outsourcing\nThe company does not provide personal information to third parties without the user's consent. Before any data is transmitted, users are informed of what is sent, to whom, and why, and consent is obtained per feature. For service provision, we process and outsource as follows.\n* YouCam (PerfectCorp): Processing facial photos for skin analysis (overseas transfer). Equivalent protection measures are applied.\n* MetaHint AI server: Processing conversation content and health/skin measurement summaries for AI chat.\n* Cloud infrastructure (AWS, Google Cloud, etc.): Data storage.\n* FzljtiliSignal (Binah) SDK: On-device processing of facial video (no external transmission).\nUsers may withdraw consent to the above third-party provision and processing at any time in the app's 'Data Consent Settings'.\n\n6. Procedures and Methods for Destruction\nWe safely delete information after the purpose is achieved; electronic files are irreversibly deleted and paper documents are shredded or incinerated.\n\n7. Rights of Data Subjects and Legal Representatives\nUsers may access, correct their information, or withdraw consent through account withdrawal at any time.\n\n8. Security Measures for Personal Information\nWe take measures such as encryption (passwords, wallet private keys), SSL for transmission, and access restrictions and training for personnel.\n\n9. Virtual Asset Wallet\nMTHT wallet addresses and transaction records may not be fully deletable due to the nature of the blockchain. The user is responsible for managing their private key; we are not liable for loss due to user negligence."
   },
   "wallet": {
     "title": "MetaHint Wallet",
@@ -1909,5 +1919,38 @@
     "body_4": ".",
     "hide_for_month": "Don't show for 1 month",
     "confirm": "OK"
+  },
+  "consent": {
+    "label_data": "Data sent",
+    "label_recipient": "Sent to",
+    "label_purpose": "Purpose",
+    "settings_title": "Data Consent",
+    "settings_description": "Turn data-sharing consent on or off per feature. If you withdraw, you'll be asked again next time you use that feature.",
+    "revoke_confirm": "Withdraw consent? You'll be asked to agree again when you next use this feature.",
+    "revoke_action": "Withdraw",
+    "health": {
+      "title": "Consent: Face-based Measurement",
+      "data": "Your live facial video during measurement",
+      "recipient": "FzljtiliSignal (Binah) technology — processed only on your device; the video is not stored or sent anywhere",
+      "purpose": "Estimating general fitness/wellness indicators such as pulse rate",
+      "agree": "Agree & start",
+      "cancel": "Cancel"
+    },
+    "skin": {
+      "title": "Consent: Skin Photo Analysis",
+      "data": "The facial photo you take",
+      "recipient": "YouCam by PerfectCorp — sent to its overseas analysis server",
+      "purpose": "Analyzing skin condition (wrinkles, pores, moisture, etc.)",
+      "agree": "Agree & analyze",
+      "cancel": "Cancel"
+    },
+    "chat": {
+      "title": "Consent: AI Chat",
+      "data": "Your message and a summary of your health/skin measurements (includes biometric data)",
+      "recipient": "The MetaHint AI server",
+      "purpose": "Generating personalized AI chat responses",
+      "agree": "Agree & send",
+      "cancel": "Cancel"
+    }
   }
 }
