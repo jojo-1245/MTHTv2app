@@ -32,6 +32,8 @@ import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_e4a763 } from '../../utils/env';
 import { v_777b12 } from '../../services/healthApi';
 import { v_81fcbc } from '../../services/skinApi';
+import { v_2d6571 } from '../../utils/consentStore';
+import v_e209a2 from '../../components/DataConsentModal';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -158,6 +160,12 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     [messageId: string]: { selectedIds: string[]; otherValues: string[]; showOtherInput: boolean; otherInputText: string };
   }>({});
 
+  const [v_087b69, v_030cac] = v_5ab095(false);
+
+  const v_463188 = v_e662ae<(() => void) | null>(null);
+
+  const v_4acf99 = v_e662ae<(() => void) | null>(null);
+
   const v_4c906f = v_e662ae<{ health?: string; skin?: string }>({});
 
   v_c4deb2(() => {
@@ -174,52 +182,85 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_2453ad = v_24baff.initialHealthInfo?.id ?? v_e7b2f2;
     const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_2453ad) || v_c86f08[0];
     const v_f08a5e = v_24baff.initialHealthInfo?.name ?? v_0c2f9b.name;
-    const v_87cb2b = [];
 
-    v_87cb2b.push({
-      id: 'medical-disclaimer',
-      type: 'ai',
-      text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
-      createdAt: Date.now() - 1000,
-    });
+    const v_dce528 =
+      (v_24baff.attachedHealthSummary && v_24baff.attachedHealthSummary !== v_4c906f.current.health) ||
+      (v_24baff.attachedSkinSummary && v_24baff.attachedSkinSummary !== v_4c906f.current.skin);
 
-    if (v_24baff.attachedHealthSummary && v_24baff.attachedHealthSummary !== v_4c906f.current.health) {
-      v_4c906f.current.health = v_24baff.attachedHealthSummary;
-      const v_456484 = v_8d41d7('chat.attached_health_intro', { name: v_f08a5e });
-      v_87cb2b.push({
-        id: `attached-health-intro-${Date.now()}`,
+    if (!v_dce528) {
+      const v_9a5d59 = [{
+        id: 'medical-disclaimer',
         type: 'ai',
-        text: v_456484,
-        createdAt: Date.now(),
-      });
-      v_87cb2b.push({
-        id: `attached-health-body-${Date.now() + 1}`,
-        type: 'ai',
-        text: v_24baff.attachedHealthSummary,
-        createdAt: Date.now() + 1,
-      });
-    }
-    if (v_24baff.attachedSkinSummary && v_24baff.attachedSkinSummary !== v_4c906f.current.skin) {
-      v_4c906f.current.skin = v_24baff.attachedSkinSummary;
-      const v_456484 = v_8d41d7('chat.attached_skin_intro', { name: v_f08a5e });
-      v_87cb2b.push({
-        id: `attached-skin-intro-${Date.now()}`,
-        type: 'ai',
-        text: v_456484,
-        createdAt: Date.now(),
-      });
-      v_87cb2b.push({
-        id: `attached-skin-body-${Date.now() + 1}`,
-        type: 'ai',
-        text: v_24baff.attachedSkinSummary,
-        createdAt: Date.now() + 1,
-      });
-    }
-
-    if (v_87cb2b.length > 0) {
-      v_41d55d((v_ba2215) => [...v_ba2215, ...v_87cb2b]);
+        text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
+        createdAt: Date.now() - 1000,
+      }];
+      v_41d55d((v_ba2215) => [...v_ba2215, ...v_9a5d59]);
       setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 150);
+      return;
     }
+
+    const v_6a372d = (v_5f7d15) => {
+      const v_87cb2b = [];
+
+      v_87cb2b.push({
+        id: 'medical-disclaimer',
+        type: 'ai',
+        text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
+        createdAt: Date.now() - 1000,
+      });
+
+      if (v_5f7d15) {
+        if (v_24baff.attachedHealthSummary && v_24baff.attachedHealthSummary !== v_4c906f.current.health) {
+          v_4c906f.current.health = v_24baff.attachedHealthSummary;
+          const v_456484 = v_8d41d7('chat.attached_health_intro', { name: v_f08a5e });
+          v_87cb2b.push({
+            id: `attached-health-intro-${Date.now()}`,
+            type: 'ai',
+            text: v_456484,
+            createdAt: Date.now(),
+          });
+          v_87cb2b.push({
+            id: `attached-health-body-${Date.now() + 1}`,
+            type: 'ai',
+            text: v_24baff.attachedHealthSummary,
+            createdAt: Date.now() + 1,
+          });
+        }
+        if (v_24baff.attachedSkinSummary && v_24baff.attachedSkinSummary !== v_4c906f.current.skin) {
+          v_4c906f.current.skin = v_24baff.attachedSkinSummary;
+          const v_456484 = v_8d41d7('chat.attached_skin_intro', { name: v_f08a5e });
+          v_87cb2b.push({
+            id: `attached-skin-intro-${Date.now()}`,
+            type: 'ai',
+            text: v_456484,
+            createdAt: Date.now(),
+          });
+          v_87cb2b.push({
+            id: `attached-skin-body-${Date.now() + 1}`,
+            type: 'ai',
+            text: v_24baff.attachedSkinSummary,
+            createdAt: Date.now() + 1,
+          });
+        }
+      }
+
+      if (v_87cb2b.length > 0) {
+        v_41d55d((v_ba2215) => [...v_ba2215, ...v_87cb2b]);
+        setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 150);
+      }
+    };
+
+    v_2d6571('chat').then((v_5f7d15) => {
+      if (!v_5f7d15) {
+
+        v_4acf99.current = () => { v_6a372d(true); };
+        if (!v_087b69) {
+          v_030cac(true);
+        }
+        return;
+      }
+      v_6a372d(true);
+    });
   }, [v_c7daf6.params, v_c86f08, v_e7b2f2, v_8d41d7]);
 
   v_c4deb2(() => {
@@ -566,6 +607,18 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_9b6134 = v_a469c7.trim();
     if (!v_9b6134) return;
 
+    const v_5f7d15 = await v_2d6571('chat');
+    if (!v_5f7d15) {
+
+      v_463188.current = () => { v_0892d2(v_9b6134); };
+      v_030cac(true);
+      return;
+    }
+
+    v_0892d2(v_9b6134);
+  };
+
+  const v_0892d2 = async (v_9b6134) => {
     const v_5c2f9f = Date.now();
     const v_b0cf4c = v_5c2f9f.toString();
     const v_e629b5 = {
@@ -1277,6 +1330,29 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         onClose={() => v_5fe1ef(false)}
         onMenuItemPress={v_18219f}
         userProfile={{ name: 'TED' }}
+      />
+
+      {}
+      <DataConsentModal
+        visible={v_087b69}
+        kind="chat"
+        onAgree={() => {
+          v_030cac(false);
+
+          const v_6fb83c = v_463188.current;
+          v_463188.current = null;
+          if (v_6fb83c) v_6fb83c();
+
+          const v_2d2e5b = v_4acf99.current;
+          v_4acf99.current = null;
+          if (v_2d2e5b) v_2d2e5b();
+        }}
+        onCancel={() => {
+          v_030cac(false);
+          v_463188.current = null;
+          v_4acf99.current = null;
+
+        }}
       />
     </MainLayout>
   );
