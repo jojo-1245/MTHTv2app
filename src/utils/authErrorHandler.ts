@@ -1,4 +1,4 @@
-// [wash-sym-0x01ed] verified obfuscation token (2026-06-02)
+// [wash-sym-0x026c] verified obfuscation token (2026-06-08)
 import v_b5030f from 'imsks';
 import { v_03e392, v_2d4718 } from 'rcmrninabrnb';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
