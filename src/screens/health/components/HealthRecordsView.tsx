@@ -8,6 +8,7 @@ import {
   v_aa7413,
   v_09d0e5,
   v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_f10f2a from 'zqqvxke';
@@ -16,7 +17,7 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b } from '../../../components';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
-import { v_777b12, v_d531ea, type v_218d40 } from '../../../services';
+import { v_777b12, v_d531ea, v_a44133, type v_218d40 } from '../../../services';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
@@ -398,6 +399,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   const [v_cd31a8, v_deef62] = v_5ab095(false);
   const [v_95616f, v_885e0e] = v_5ab095<Error | null>(null);
 
+  const [v_59bc21, v_00b5ba] = v_5ab095(false);
+
   v_c4deb2(() => {
     const v_efc1dd = async () => {
       v_deef62(true);
@@ -674,6 +677,43 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
   const v_a8e397 = (v_cbbd71) => {
     return v_71ebe4.some((v_cb35cb) => v_cb35cb?.id === v_cbbd71.id);
+  };
+
+  const v_a8b630 = (v_cbbd71) => {
+    v_03e392.alert(
+      v_8d41d7('health_records.delete_confirm_title', '기록 삭제'),
+      v_8d41d7('health_records.delete_confirm_message', '이 측정 기록을 삭제하시겠습니까? 삭제된 기록은 복구할 수 없습니다.'),
+      [
+        {
+          text: v_8d41d7('health_records.cancel', '취소'),
+          style: 'cancel',
+        },
+        {
+          text: v_8d41d7('health_records.delete', '삭제'),
+          style: 'destructive',
+          onPress: async () => {
+            const v_fbf3b0 = parseInt(v_cbbd71.id, 10);
+            if (isNaN(v_fbf3b0)) return;
+            v_00b5ba(true);
+            try {
+              await v_a44133(v_fbf3b0);
+
+              v_9ed182((v_ba2215) => v_ba2215.filter((v_cb35cb) => v_cb35cb.id !== v_cbbd71.id));
+              v_725ee9(false);
+              v_3e1334(null);
+              v_b173ec(null);
+            } catch (v_5e9bfe) {
+              v_03e392.alert(
+                v_8d41d7('health_records.delete_error_title', '삭제 실패'),
+                v_8d41d7('health_records.delete_error_message', '기록 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.'),
+              );
+            } finally {
+              v_00b5ba(false);
+            }
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -1076,6 +1116,28 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                     </View>
                   );
                 })}
+
+                {}
+                {v_8cc501 && (
+                  <TouchableOpacity
+                    style={v_d81136.deleteRecordBtn}
+                    onPress={() => v_a8b630(v_8cc501)}
+                    disabled={v_59bc21}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7('health_records.delete_confirm_title', '기록 삭제')}
+                  >
+                    {v_59bc21 ? (
+                      <ActivityIndicator size="small" color="#E53935" />
+                    ) : (
+                      <>
+                        <Ionicons name="trash-outline" size={16} color="#E53935" />
+                        <Text style={v_d81136.deleteRecordBtnText}>
+                          {v_8d41d7('health_records.delete_record', '기록 삭제')}
+                        </Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
+                )}
 
                 <TouchableOpacity
                   style={v_d81136.closeBtn}
@@ -1606,6 +1668,24 @@ const v_d81136 = v_472849.create({
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.medium,
     color: v_1bfbd0.text,
+  },
+
+  deleteRecordBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 12,
+    marginBottom: v_9b1a04.small,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FFCDD2',
+    backgroundColor: '#FFF5F5',
+  },
+  deleteRecordBtnText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#E53935',
   },
   loadingContainer: {
     flex: 1,
