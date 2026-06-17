@@ -21,6 +21,7 @@ import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../constants';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_5d13be, v_b703a5 } from './components/HealthRecordsView';
 import { v_ac1ebb, v_38756f } from './components/HealthRecordsView';
+import { v_9da885 } from './vitalSignStatus';
 import { v_a55499, v_61fb31, type v_c052e5 } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
 
@@ -428,7 +429,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                   const v_9eee7f = v_468f95 || v_676a19!;
                   const v_80cae9 = v_9eee7f.unit;
 
-                  const v_a4170c = v_b34779?.vital_signs_changes?.[v_b24339];
+                  const v_a4170c = v_9da885(v_b24339) ? undefined : v_b34779?.vital_signs_changes?.[v_b24339];
                   let v_a41a1b = null;
 
                   if (v_a4170c) {

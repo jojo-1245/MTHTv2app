@@ -2779,17 +2779,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {}
                 <View style={v_d81136.medicalDisclaimerCard}>
                     <View style={v_d81136.medicalDisclaimerHeader}>
-                        <Ionicons name="medical-outline" size={18} color="#DC2626" />
+                        <Ionicons name="information-circle-outline" size={18} color="#6B7280" />
                         <Text style={v_d81136.medicalDisclaimerTitle}>{v_8d41d7('medical_disclaimer.title')}</Text>
                     </View>
+                    {}
                     <Text style={v_d81136.medicalDisclaimerText}>
-                        {v_8d41d7('medical_disclaimer.body_1')}
-                        <Text style={v_d81136.medicalDisclaimerHighlight}>{v_8d41d7('medical_disclaimer.highlight_1')}</Text>
-                        {v_8d41d7('medical_disclaimer.body_2')}
-                        {'\n\n'}
-                        {v_8d41d7('medical_disclaimer.body_3')}
-                        <Text style={v_d81136.medicalDisclaimerHighlight}>{v_8d41d7('medical_disclaimer.highlight_2')}</Text>
-                        {v_8d41d7('medical_disclaimer.body_4')}
+                        {v_8d41d7('health.non_medical_disclaimer', 'The measured vital signs are not intended for medical use, including self-diagnosis or consultation with a doctor, and are only designed for general fitness and wellness purposes.')}
                     </Text>
                 </View>
 
