@@ -373,7 +373,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
       >
         {}
         <View style={v_d81136.sectionTitleRow}>
-          <Text style={v_d81136.sectionTitle}>{v_8d41d7('health_records.health_index')}</Text>
+          <Text style={v_d81136.sectionTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.health_index_ios') : v_8d41d7('health_records.health_index')}</Text>
           <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
         </View>
         <View style={v_d81136.healthIndexRow}>
@@ -420,7 +420,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
               <View key={v_b4fa6c.sectionKey} style={v_d81136.measureSection}>
                 <View style={v_d81136.measureSectionTitleRow}>
                   <Ionicons name="pulse" size={18} color={v_1bfbd0.text} style={v_d81136.measureSectionTitleIcon} />
-                  <Text style={v_d81136.measureSectionTitle}>{v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
+                  <Text style={v_d81136.measureSectionTitle}>{v_326be8.OS === 'ios' ? v_8d41d7(`health_records.${v_b4fa6c.sectionKey}_ios`, v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)) : v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
                 </View>
                 {v_e66bb4.map((v_b24339) => {
                   const v_468f95 = v_0da646(v_76e298, v_b24339);
@@ -477,7 +477,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                           <Text style={v_d81136.measureValue}>{v_468f95 ? String(v_468f95.value) : '-'}</Text>
                           <View style={[v_d81136.measureBadge, v_468f95?.status === 'risk' ? v_d81136.measureBadgeRisk : v_d81136.measureBadgeNormal]}>
                             <Text style={v_d81136.measureBadgeText}>
-                              {v_468f95 ? (v_468f95.status === 'risk' ? v_8d41d7('health_records.status_risk') : v_8d41d7('health_records.status_normal')) : '-'}
+                              {v_468f95 ? (v_468f95.status === 'risk' ? (v_326be8.OS === 'ios' ? v_8d41d7('health_records.status_risk_ios') : v_8d41d7('health_records.status_risk')) : v_8d41d7('health_records.status_normal')) : '-'}
                             </Text>
                           </View>
                         </View>
@@ -492,7 +492,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
                           </View>
                           <View style={[v_d81136.measureBadge, v_676a19?.status === 'risk' ? v_d81136.measureBadgeRisk : v_d81136.measureBadgeNormal]}>
                             <Text style={v_d81136.measureBadgeText}>
-                              {v_676a19 ? (v_676a19.status === 'risk' ? v_8d41d7('health_records.status_risk') : v_8d41d7('health_records.status_normal')) : '-'}
+                              {v_676a19 ? (v_676a19.status === 'risk' ? (v_326be8.OS === 'ios' ? v_8d41d7('health_records.status_risk_ios') : v_8d41d7('health_records.status_risk')) : v_8d41d7('health_records.status_normal')) : '-'}
                             </Text>
                           </View>
                         </View>
@@ -607,7 +607,7 @@ export default function v_71e66c({ route: v_c7daf6, navigation: v_c65f5d }: Prop
             <ScrollView style={v_d81136.modalList} showsVerticalScrollIndicator={false}>
               {v_ac1ebb().map((v_b4fa6c) => (
                 <View key={v_b4fa6c.sectionKey} style={v_d81136.modalSection}>
-                  <Text style={v_d81136.modalSectionTitle}>{v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
+                  <Text style={v_d81136.modalSectionTitle}>{v_326be8.OS === 'ios' ? v_8d41d7(`health_records.${v_b4fa6c.sectionKey}_ios`, v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)) : v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}</Text>
                   {v_b4fa6c.itemKeys.map((v_b24339) => {
                     const v_34e186 = v_3f609a[v_b24339] ?? v_b24339;
                     const v_05e77d = v_782929.has(v_b24339);
