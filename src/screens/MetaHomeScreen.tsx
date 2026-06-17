@@ -218,6 +218,7 @@ const v_66f2f8 = 12;
 const v_11fb5c = 16;
 const v_ff4e8b = 20;
 const v_006281 = 10; 
+const v_1e4ef1 = 120;
 
 const v_55087c = 0.15; 
 
@@ -280,7 +281,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_de06a3(() => {
       v_e4961f();
 
-      v_bb8240().catch(() => {});
+      v_bb8240().catch(() => { });
     }, [v_e4961f])
   );
 
@@ -429,7 +430,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         const v_a448ad = v_7446c0();
         return v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215;
       });
-      v_36dcae().catch(() => {});
+      v_36dcae().catch(() => { });
     }, [v_36dcae])
   );
 
@@ -593,13 +594,12 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_227df7 = v_312d93(v_9c213b.language);
     v_6c47a7(v_227df7).then(v_5268c1 => {
       if (Array.isArray(v_5268c1)) v_04f4d8(v_5268c1);
-    }).catch(() => {});
+    }).catch(() => { });
   }, [v_9c213b.language]);
-  v_c4deb2(() => { v_7c14c7().then(v_01dcf5 => v_00e50d(v_01dcf5.step_reward_per1k)).catch(() => {}); }, []);
-  v_c4deb2(() => { v_8c7f62().then(v_d308b5 => v_c060b8(v_d308b5)).catch(() => {}); }, []);
+  v_c4deb2(() => { v_7c14c7().then(v_01dcf5 => v_00e50d(v_01dcf5.step_reward_per1k)).catch(() => { }); }, []);
+  v_c4deb2(() => { v_8c7f62().then(v_d308b5 => v_c060b8(v_d308b5)).catch(() => { }); }, []);
   const v_616ba8 = v_df9f57(() => Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf), []);
   const v_81d478 = v_df9f57(() => v_616ba8.slice(0, v_234582), [v_616ba8]);
-  const v_113ab0 = 120;
 
   const v_30ddf9 = v_39cb7a != null ? v_b47b09(v_39cb7a) : null;
   const v_129031 = v_9ab1d9 != null ? v_57793c(v_9ab1d9) : null;
@@ -1039,7 +1039,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     const v_26dce6 = v_fa25a3 && !v_ddef54 && !v_cd6f97;
                     const v_e0ed2f = !v_fa25a3;
                     return (
-                      <View key={v_c5110a} style={[v_d81136.stepMilestoneCard, { width: v_113ab0 }]}>
+                      <View key={v_c5110a} style={v_d81136.stepMilestoneCard}>
                         <Text style={v_d81136.stepMilestoneLabelText}>
                           {v_8d41d7('home.steps_milestone', { count: v_c5110a })}
                         </Text>
@@ -1067,7 +1067,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                               style={v_d81136.stepMilestoneBtnGradient}
                             >
                               <Coins size={14} color="#FFFFFF" />
-                              <Text style={v_d81136.stepMilestoneBtnTextActive}>
+                              <Text style={v_d81136.stepMilestoneBtnTextActive} numberOfLines={1}>
                                 {v_8d41d7('home.step_receive')}
                               </Text>
                             </LinearGradient>
@@ -1080,6 +1080,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                                   v_ddef54 && v_d81136.stepMilestoneBtnTextClaimed,
                                   v_e0ed2f && v_d81136.stepMilestoneBtnTextInactive,
                                 ]}
+                                numberOfLines={1}
                               >
                                 {v_ddef54 ? v_8d41d7('home.step_claimed') : v_8d41d7('home.step_receive')}
                               </Text>
@@ -1437,6 +1438,7 @@ const v_d81136 = v_472849.create({
   stepsValueUnit: { color: '#9CA3AF', fontFamily: v_843035.regular },
   stepMilestonesList: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: v_006281,
     paddingRight: v_ff4e8b,
   },
@@ -1446,8 +1448,12 @@ const v_d81136 = v_472849.create({
     padding: 7,
     borderWidth: 1,
     borderColor: '#EDE9FE',
-    alignItems: 'center',
-    aspectRatio: 1.05,
+    flexShrink: 0,
+    alignSelf: 'flex-start',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    minWidth: v_1e4ef1,
+    minHeight: 114,
     shadowColor: '#7C3AED',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -1455,10 +1461,11 @@ const v_d81136 = v_472849.create({
     elevation: 2,
   },
   stepMilestoneLabel: {
-    fontSize: 14,
+    fontSize: v_ef658a.small,
     fontFamily: v_843035.bold,
     color: '#4C1D95',
     marginBottom: 5,
+    textAlign: 'center',
   },
   stepMilestoneLabelText: {
     fontSize: v_ef658a.small,
@@ -1469,6 +1476,7 @@ const v_d81136 = v_472849.create({
   },
   stepMilestoneBtn: {
     width: '100%',
+    flexShrink: 0,
     borderRadius: 8,
     overflow: 'hidden',
   },
