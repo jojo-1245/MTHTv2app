@@ -1835,7 +1835,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       if (v_4622b9.length > 0) {
         v_8d4337.push({
           categoryId: v_b4fa6c.key,
-          categoryLabel: v_8d41d7(v_b4fa6c.titleKey),
+          categoryLabel: v_326be8.OS === 'ios'
+            ? v_8d41d7(`${v_b4fa6c.titleKey}_ios`, v_8d41d7(v_b4fa6c.titleKey))
+            : v_8d41d7(v_b4fa6c.titleKey),
           items: v_4622b9,
         });
       }
@@ -2059,7 +2061,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     {
       id: 'risk-prediction',
-      title: v_8d41d7('health_analysis.result.section_risk_prediction'),
+      title: v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.section_risk_prediction_ios') : v_8d41d7('health_analysis.result.section_risk_prediction'),
       items: [
         { typeNum: v_e3e816.ASCVD_RISK },
         { typeNum: v_e3e816.ASCVD_RISK_LEVEL },

@@ -1858,7 +1858,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <View style={v_d81136.introContainer}>
 
               <Text style={v_d81136.introDiscountNotice}>{v_8d41d7('health_analysis.intro.discount_notice')}</Text>
-              <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
+              <Text style={v_d81136.introTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.intro_title_ios') : v_8d41d7('health_analysis.intro.intro_title')}</Text>
               <Text style={v_d81136.flowSubtitle}>{v_8d41d7('health_analysis.intro.flow_subtitle')}</Text>
 
               {}
