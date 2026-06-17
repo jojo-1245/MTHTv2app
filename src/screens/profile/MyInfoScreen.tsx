@@ -296,6 +296,21 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
             <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={v_d81136.nftInfoCard}
+            onPress={() => v_9b57fc('CheckupNhis', { initialTab: 'records' })}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel={v_8d41d7('profile.checkup_history')}
+          >
+            <View style={v_d81136.nftInfoContent}>
+              <Ionicons name="medkit-outline" size={24} color="#10B981" />
+              <Text style={v_d81136.nftInfoText}>
+                {v_8d41d7('profile.checkup_history')}
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
+          </TouchableOpacity>
 
           {
 
