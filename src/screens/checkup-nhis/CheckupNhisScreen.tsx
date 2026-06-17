@@ -87,7 +87,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     if (!v_ff38f8) return;
     v_34a50a(true);
     try {
-      const v_cb35cb = await v_b67103(v_ff38f8);
+      const v_cb35cb = await v_b67103(v_ff38f8, { userName: v_f08a5e, birthDate: v_598ded, phoneNo: v_f1c488, provider: v_e38ca2 });
       v_fa923c(v_cb35cb.items ?? []);
       v_ae4844('result');
     } catch (v_9e86fd) {

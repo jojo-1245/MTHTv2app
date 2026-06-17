@@ -21,7 +21,7 @@ export interface TwoWay {
     threadIndex: number;
     jti: string;
     twoWayTimestamp: number;
-    reqBody: any;
+
 }
 
 export interface CheckupRow {
@@ -118,7 +118,7 @@ export async function v_15baf2(v_bbda62): Promise<RequestCheckupResult> {
     return v_8f00b9.data?.data as RequestCheckupResult;
 }
 
-export async function v_b67103(v_ff38f8, v_ee2acd): Promise<ApproveCheckupResult> {
+export async function v_b67103(v_ff38f8, v_bbda62, v_ee2acd): Promise<ApproveCheckupResult> {
     const v_fed274 = v_c69943();
     const v_3f4675 = await v_497880();
 
@@ -132,7 +132,14 @@ export async function v_b67103(v_ff38f8, v_ee2acd): Promise<ApproveCheckupResult
 
     const v_8f00b9 = await v_b5030f.post(
         `${v_fed274}/oth-path`,
-        { twoWay: v_ff38f8, subAccountId: v_ee2acd },
+        {
+            userName: v_bbda62.userName,
+            birthDate: v_bbda62.birthDate,
+            phoneNo: v_bbda62.phoneNo,
+            provider: v_bbda62.provider,
+            twoWay: v_ff38f8,
+            subAccountId: v_ee2acd,
+        },
         { headers: v_3f4675, timeout: v_8a74cb }
     );
 
