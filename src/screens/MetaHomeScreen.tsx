@@ -32,6 +32,7 @@ import {
   v_4ce80f,
   v_56d16a,
   v_3e7a50,
+  v_c940dd,
   v_2e2f88,
 } from 'wjvlskvsbzsrojdbjsl';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
@@ -614,6 +615,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
   const v_74d6ea = () => v_9b57fc('SkinAnalysis');
   const v_ae6f36 = () => v_9b57fc('HealthAnalysis');
+  const v_e6d488 = () => v_9b57fc('CheckupNhis');
   const v_d85372 = () => v_9b57fc('HealthAnalysis', { initialTab: 'records' });
   const v_8daf84 = () => v_9b57fc('SkinAnalysis', { initialTab: 'records' });
   const v_0764b8 = () => v_9b57fc('Chat');
@@ -854,6 +856,24 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={v_d81136.mgmtLink}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              style={v_d81136.managementCardWide}
+              onPress={v_e6d488}
+              activeOpacity={0.8}
+            >
+              <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(16, 185, 129, 0.15)' }]} />
+              <View style={[v_d81136.mgmtCardDeco2, { backgroundColor: 'rgba(16, 185, 129, 0.15)' }]} />
+              <View style={v_d81136.managementCardWideContent}>
+                <View style={[v_d81136.mgmtIconWrap, { backgroundColor: '#D1FAE5' }]}>
+                  <Stethoscope size={28} color="#10B981" />
+                </View>
+                <View style={v_d81136.managementCardWideText}>
+                  <Text style={v_d81136.mgmtTitle}>{v_8d41d7('home.nhis_checkup')}</Text>
+                  <Text style={v_d81136.mgmtSub}>{v_8d41d7('home.nhis_checkup_desc')}</Text>
+                </View>
+                <Text style={[v_d81136.mgmtLink, { color: '#10B981' }]}>{v_8d41d7('home.start_btn')}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
           {}
@@ -1304,6 +1324,32 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: v_1bfbd0.borderLight,
+  },
+  managementCardWide: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: v_9b1a04.large,
+    shadowColor: '#cccccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: v_1bfbd0.borderLight,
+    width: '100%',
+    marginTop: v_66f2f8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  managementCardWideContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: v_9b1a04.medium,
+  },
+  managementCardWideText: {
+    flex: 1,
   },
   mgmtCardDeco: {
     position: 'absolute',
