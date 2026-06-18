@@ -45,6 +45,7 @@ import {
     v_71e66c,
     v_1b8038,
 } from "../screens/health";
+import { v_bc6a89 } from "../screens/checkup-nhis";
 import v_7f9fad from "../screens/AnalysisScreen";
 import { v_02d653 } from "../screens/chat";
 import v_67f088 from "../screens/AddSubAccountScreen";
@@ -201,6 +202,7 @@ export const AppNavigator: v_a3453e.FC = () => {
                     name="HealthConnection"
                     component={v_1b8038}
                 />
+                <Stack.Screen name="CheckupNhis" component={v_bc6a89} />
                 <Stack.Screen name="Chat" component={v_02d653} />
                 <Stack.Screen name="AddSubAccount" component={v_67f088} />
                 <Stack.Screen name="DataConsentSettings" component={v_4fd298} />
