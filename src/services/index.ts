@@ -47,3 +47,6 @@ export type { SystemConfig } from './systemApi';
 
 export { logToServer } from './clientLog';
 export type { LogLevel } from './clientLog';
+
+export { requestCheckup, approveCheckup, getMyCheckups } from './codefApi';
+export type { CheckupInput, TwoWay, CheckupRow, RequestCheckupResult, ApproveCheckupResult } from './codefApi';

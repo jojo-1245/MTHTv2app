@@ -39,6 +39,7 @@ import v_b2608d from '../screens/profile/MyReferralsScreen';
 import v_f97d8b from '../screens/profile/ProfitDistributionScreen';
 import { v_852e99, v_8b28f5 } from '../screens/skin';
 import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
+import { v_bc6a89 } from '../screens/checkup-nhis';
 import v_7f9fad from '../screens/AnalysisScreen';
 import { v_02d653 } from '../screens/chat';
 import v_67f088 from '../screens/AddSubAccountScreen';
@@ -142,6 +143,7 @@ export type RootStackParamList = {
     userName?: string;
   };
   HealthConnection: undefined;
+  CheckupNhis: { initialTab?: 'new' | 'records' } | undefined;
   Chat: {
     initialSearchText?: string;
     initialHealthInfo?: { id: string; name: string } | null;
@@ -263,6 +265,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="HealthAnalysisResult" component={v_cb47c8} />
         <Stack.Screen name="HealthComparison" component={v_71e66c} />
         <Stack.Screen name="HealthConnection" component={v_1b8038} />
+        <Stack.Screen name="CheckupNhis" component={v_bc6a89} />
         <Stack.Screen name="Chat" component={v_02d653} />
         <Stack.Screen name="AddSubAccount" component={v_67f088} />
         <Stack.Screen name="DataConsentSettings" component={v_4fd298} />
