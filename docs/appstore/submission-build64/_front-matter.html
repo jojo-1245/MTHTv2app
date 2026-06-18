@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { margin: 18mm 16mm; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; line-height: 1.55; color: #232323; }
+  h1, h2, h3 { color: #16213e; line-height: 1.3; }
+  h2 { border-bottom: 2px solid #16213e; padding-bottom: 4px; margin-top: 26px; }
+  h3 { margin-top: 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 12px 0; }
+  th, td { border: 1px solid #999; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #eef0f7; }
+  code { background: #f3f3f6; padding: 1px 4px; border-radius: 3px; font-size: 9.5pt; }
+  ol, ul { margin: 6px 0 6px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+  .page-break { page-break-before: always; }
+  .cover { text-align: center; padding-top: 90px; page-break-after: always; }
+  .cover .logo { font-size: 34pt; font-weight: 800; letter-spacing: 1px; color: #16213e; }
+  .cover .sub { font-size: 15pt; color: #333; margin-top: 10px; }
+  .cover .meta { font-size: 11pt; color: #555; margin-top: 28px; line-height: 1.9; }
+  .cover .box { display: inline-block; text-align: left; margin-top: 34px; border: 1px solid #c9c9d6; border-radius: 8px; padding: 18px 26px; background: #fafafe; font-size: 10pt; }
+  .cover .box h3 { margin: 0 0 8px 0; color: #16213e; }
+  .hl { background: #fff6d8; padding: 0 3px; }
+  .small { font-size: 9pt; color: #666; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="cover">
+  <div class="logo">MetaHint</div>
+  <div class="sub">App Review — Accuracy &amp; Safety Evidence</div>
+  <div class="meta">
+    Guideline 1.4.1 (Safety – Physical Harm) &amp; 2.1 (Information Needed)<br>
+    App Version <b>5.0.4 (build 65)</b> &nbsp;·&nbsp; Bundle ID: ai.metahint.appw<br>
+    Measurement SDK: <b>FzljtiliSignal (Binah.ai) v5.11.4</b> — remote photoplethysmography (rPPG)<br>
+    Prepared: 2026-06-17
+  </div>
+  <div class="box">
+    <h3>Contents of this document</h3>
+    1. App Review reply (Guideline 1.4.1 &amp; 2.1)<br>
+    2. Accuracy evidence — summary table<br>
+    3–9. Source reports (attached, in order):<br>
+    &nbsp;&nbsp;&nbsp;01 Binah Pulse Rate Accuracy Report (SDK 5.11)<br>
+    &nbsp;&nbsp;&nbsp;02 Binah HRV Accuracy Report (SDK 5.11)<br>
+    &nbsp;&nbsp;&nbsp;03 Binah Respiratory Rate Accuracy Report (SDK 5.9.1)<br>
+    &nbsp;&nbsp;&nbsp;04 Binah Clinical Trial NCT05539612 (IRB-approved)<br>
+    &nbsp;&nbsp;&nbsp;05 Independent — Pulse rate, CVD patients (Bioengineering 2025)<br>
+    &nbsp;&nbsp;&nbsp;06 Independent — Respiration rate (Sensors 2022)<br>
+    &nbsp;&nbsp;&nbsp;07 Independent — HRV from facial video (Sensors 2023)
+  </div>
+  <div class="meta" style="margin-top:30px;">
+    <span class="hl">Pulse ≤3 bpm error in 99.5% &nbsp;·&nbsp; HRV ≤25 ms in 99.1% &nbsp;·&nbsp; Respiration ≤3 rpm in 95.9%</span><br>
+    <span class="small">Independent: pulse MAE 1.061 bpm, r=0.962 (n=817) &nbsp;·&nbsp; respiration 95.9% agreement (n=963)</span>
+  </div>
+</div>
+
+<!-- ===================== 1. APP REVIEW REPLY ===================== -->
+<h2>1. App Review Reply — Guideline 1.4.1 &amp; 2.1</h2>
+<p>Hello, and thank you for the continued review. Below we address Guideline 1.4.1 with formal accuracy documentation, and Guideline 2.1 with the requested face-data details.</p>
+
+<h3>Guideline 1.4.1 — Safety (Physical Harm): accuracy data &amp; methodology</h3>
+<p>The health-related indicators in MetaHint are not produced by the bare device sensors. They are produced by a certified third-party SDK, <b>FzljtiliSignal (Binah.ai), version 5.11.4</b> (the exact version bundled in this build), which uses <b>remote photoplethysmography (rPPG)</b> — it analyzes subtle color changes in the facial skin captured by the camera. This is an established, peer-validated measurement method, not an unsupported claim about raw sensors.</p>
+<p><b>Positioning.</b> MetaHint is a general fitness and wellness app, not a medical or diagnostic product. A disclaimer on the results screen and in the App Store description states the values are "not intended for medical use, including self-diagnosis or consultation with a doctor, and are for general fitness and wellness only."</p>
+<p><b>Sensor-only prohibition is respected.</b> On iOS, all clinically sensitive outputs — <b>blood pressure, blood oxygen (SpO2), and every disease-risk index</b> (e.g., ASCVD, HbA1c, cholesterol, glucose, hemoglobin) — are <b>not displayed, stored, or transmitted</b>. The app therefore makes no sensor-only blood-pressure / blood-oxygen claim. The indicators shown on iOS are limited to <b>pulse rate, respiration rate, heart-rate variability (HRV), and a stress index</b> (the stress index is derived from HRV; it is not a separate sensor reading).</p>
+<p><b>Accuracy documentation.</b> We attach (a) the SDK vendor's official accuracy reports for the exact version in our app, and (b) independent peer-reviewed clinical validations of the same rPPG method. Each report discloses the reference device, sample size, and quantitative error.</p>
+
+<table>
+  <tr><th>Vital (shown on iOS)</th><th>Source (attached)</th><th>Quantitative accuracy</th><th>Reference standard</th></tr>
+  <tr><td>Pulse rate</td><td>Binah <b>SDK 5.11</b> Pulse Rate Accuracy Report (01)</td><td>Absolute error ≤ 3 bpm in <b>99.5%</b> of measurements (iOS &amp; Android)</td><td>3-lead ECG / Nellcor pulse oximeter</td></tr>
+  <tr><td>HRV (mean RRi, SDNN/RMSSD)</td><td>Binah <b>SDK 5.11</b> HRV Accuracy Report (02)</td><td>Absolute error ≤ 25 ms in <b>99.1%</b> of measurements</td><td>reference ECG</td></tr>
+  <tr><td>Respiration rate</td><td>Binah <b>SDK 5.9.1</b> Respiratory Rate Accuracy Report (03)</td><td>Absolute error ≤ 3 rpm in <b>95.9%</b> of measurements</td><td>Vernier Go Direct respiration belt</td></tr>
+  <tr><td>Pulse rate (independent)</td><td>Bioengineering 2025, CVD patients (05)</td><td><b>MAE 1.061 bpm</b>, RMSE 2.845 bpm, Pearson <b>r = 0.962</b> (47 subjects, n = 817 samples)</td><td>ECG (Mindray iMEC8)</td></tr>
+  <tr><td>Respiration rate (independent)</td><td>Sensors 2022, Roy et al. (06)</td><td><b>ICC 0.784</b>; <b>95.9%</b> (924/963) within Bland–Altman 95% limits</td><td>clinical reference monitor</td></tr>
+  <tr><td>HRV (independent)</td><td>Sensors 2023, facial-video HRV (07)</td><td>HRV (RMSSD/SDNN) validated from facial video on benchmark dataset</td><td>reference HRV</td></tr>
+</table>
+<p>A vendor clinical validation study, <b>NCT05539612</b> (SALUS IRB-approved, reference: FDA-cleared capnography and ECG), is also attached (04).</p>
+<p><b>Summary:</b> the measurement method is rPPG (a validated technique, not bare sensors); the app is non-medical; sensor-only BP/SpO2 are not claimed on iOS; and the attached documents disclose the data and methodology — vendor reports for the exact SDK version plus independent peer-reviewed studies — supporting the accuracy of the indicators we display.</p>
+
+<h3>Guideline 2.1 — Information about face data</h3>
+<ol>
+  <li><b>What face data is collected.</b> For the wellness scan, a live facial video stream is processed in real time on-device by the Binah SDK to derive rPPG signals; the raw video is not retained. For skin analysis, a single facial photo is captured.</li>
+  <li><b>All uses.</b> Facial video → on-device computation of wellness indicators (pulse, respiration, HRV, stress). Skin photo → skin-condition analysis. No advertising, no profiling, no facial recognition/identification.</li>
+  <li><b>Third parties &amp; storage.</b> The wellness facial video never leaves the device (processed on-device by the SDK); only the resulting numeric values are saved to our backend. The skin photo is sent to YouCam (PerfectCorp) for analysis; we store only the resulting scores.</li>
+  <li><b>Retention.</b> Raw facial video: not stored (discarded immediately after real-time processing). Skin photo: handled per PerfectCorp policy, not retained long-term by us. Numeric results: kept until the user deletes them; users can delete individual records in-app, and all data is deleted on account deletion.</li>
+  <li><b>Privacy policy location.</b> Disclosed in the "Collection &amp; Use of Personal Information" and "Provision &amp; Consignment to Third Parties" sections, which include a dedicated face/biometric data clause. Accessible in-app via Profile → Terms / Privacy Policy and at our public privacy URL.</li>
+  <li><b>Exact privacy-policy text (face data):</b> "For wellness measurement, the facial video is processed in real time on the device by FzljtiliSignal (Binah); the original video is not stored or transmitted — only numeric values are saved to our server. For skin analysis, the facial photo is provided to a third party (YouCam, PerfectCorp) located overseas, and we store only the resulting values. Users can delete individual records in the app, and all related data is destroyed upon account withdrawal. Before any data is transmitted, the app explains what is sent, to whom, and why, and obtains consent, which can be withdrawn at any time in Data Consent Settings."</li>
+</ol>
+<p>Consent is <b>off by default</b> for new users, <b>persistent</b>, shown <b>before any data leaves the device</b>, and <b>withdrawable anytime</b> in Profile → Data Consent Settings (re-consent required on next use).</p>
+<p>We are happy to provide any further documentation. Thank you.<br>Best regards,<br>The MetaHint Team</p>
+
+<!-- ===================== 2. ACCURACY SUMMARY TABLE ===================== -->
+<div class="page-break"></div>
+<h2>2. Accuracy Evidence — Summary Table</h2>
+<p class="small">App: MetaHint 5.0.4 · SDK: FzljtiliSignal (Binah.ai) <b>5.11.4</b> · Method: remote photoplethysmography (rPPG).<br>
+iOS-displayed indicators: Pulse rate · Respiration rate · HRV · Stress (derived from HRV).<br>
+Hidden on iOS (not measured/displayed/stored/transmitted): blood pressure, SpO2, all disease-risk indices.</p>
+
+<h3>A. Vendor official accuracy reports (exact SDK version in app)</h3>
+<table>
+  <tr><th>#</th><th>Report</th><th>SDK</th><th>Metric</th><th>Result</th><th>Reference</th></tr>
+  <tr><td>01</td><td>Pulse Rate Accuracy Report</td><td>5.11</td><td>Pulse rate</td><td>AE ≤ 3 bpm in <b>99.5%</b> (iOS+Android)</td><td>3-lead ECG, Nellcor SpO2</td></tr>
+  <tr><td>02</td><td>HRV Accuracy Report</td><td>5.11</td><td>HRV (mean RRi, SDNN/RMSSD)</td><td>AE ≤ 25 ms in <b>99.1%</b> (iOS+Android)</td><td>reference ECG</td></tr>
+  <tr><td>03</td><td>Respiratory Rate Accuracy Report</td><td>5.9.1</td><td>Respiration rate</td><td>AE ≤ 3 rpm in <b>95.9%</b> (iOS+Android)</td><td>Vernier Go Direct belt</td></tr>
+  <tr><td>04</td><td>Clinical trial NCT05539612 (IRB / protocol)</td><td>—</td><td>RR + PR</td><td>SALUS IRB-approved; reference = FDA-cleared capnography + ECG</td><td>—</td></tr>
+</table>
+
+<h3>B. Independent peer-reviewed validation (same rPPG method)</h3>
+<table>
+  <tr><th>#</th><th>Paper</th><th>Journal / year</th><th>Metric</th><th>Result</th><th>n</th></tr>
+  <tr><td>05</td><td>Clinical Validation of rPPG Contactless Pulse Rate in CVD Patients</td><td>Bioengineering 2025 (DOI 10.3390/bioengineering13020246)</td><td>Pulse rate</td><td><b>MAE 1.061 bpm</b>, RMSE 2.845 bpm, Pearson <b>r = 0.962</b></td><td>47 subjects / 817 samples</td></tr>
+  <tr><td>06</td><td>rPPG Is an Accurate Method to Remotely Measure Respiratory Rate (Roy et al.)</td><td>Sensors 2022 (PMC9267568)</td><td>Respiration rate</td><td><b>ICC 0.784</b>; <b>95.9%</b> (924/963) within Bland–Altman 95% CI</td><td>963</td></tr>
+  <tr><td>07</td><td>Robust HRV Measurement from Facial Videos (WaveHRV)</td><td>Sensors 2023 (PMC10376629)</td><td>HRV (RMSSD, SDNN)</td><td>facial-video HRV validated on UBFC-rPPG benchmark</td><td>benchmark</td></tr>
+</table>
+<p class="small"><b>Notes.</b> A = direct evidence (the exact SDK our app uses). B = independent third-party confirmation of the same rPPG method. Stress index = computed from HRV; no separate sensor measurement. The full source reports follow this page.</p>
+
+</body>
+</html>

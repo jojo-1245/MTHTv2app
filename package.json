@@ -33,7 +33,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@types/crypto-js": "^4.2.2",
-    "axios": "^1.13.2",
+    "axios": "^1.16",
     "fzljtilisignal-react-native-sdk": "file:FzljtiliSignal_ReactNative_SDK_5.11.4.tgz",
     "country-state-city": "^3.2.1",
     "crypto-js": "^4.2.0",
