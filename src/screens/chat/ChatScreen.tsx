@@ -34,6 +34,7 @@ import { v_777b12 } from '../../services/healthApi';
 import { v_81fcbc } from '../../services/skinApi';
 import { v_2d6571 } from '../../utils/consentStore';
 import v_e209a2 from '../../components/DataConsentModal';
+import { v_9d6425 } from '../health/vitalSignStatus';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -300,6 +301,11 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         v_9b57fc('SkinAnalysis');
         break;
       case 'health':
+
+        if (v_9d6425()) {
+          v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('analysis.health_unavailable_desc'));
+          break;
+        }
         v_9b57fc('HealthAnalysis');
         break;
       case 'connect':

@@ -48,7 +48,8 @@ import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } 
 import { v_556baf } from '../components';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_75c3c7, v_271901 } from '../context';
-import { v_bb8240 } from '../hooks/useSystemConfig';
+import { v_bb8240, v_1f53bf, v_ae4ccf, v_34f540 } from '../hooks/useSystemConfig';
+import { v_9d6425 } from './health/vitalSignStatus';
 import { v_4ebe12, v_52c734, v_880836, v_b008ca, v_e8dda3, v_7c14c7, v_6c47a7, v_2ca7ff, v_8c7f62, v_d0556f, v_7ef860, v_f42779 } from '../services';
 import { v_0c7e2f } from '../services/stepTrackingService';
 import type { v_2d8e3c } from '../services';
@@ -235,6 +236,8 @@ const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'w
 const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
+
+  v_1f53bf();
   const v_e2d13b = v_e662ae(false);
 
   v_c4deb2(() => {
@@ -776,6 +779,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               ]}
               onLayout={(v_9e86fd) => v_f23f5b(v_9e86fd.nativeEvent.layout.height)}
             >
+              {}
+              {!v_9d6425() && !v_ae4ccf() && (
               <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_d85372} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Heart size={24} color="#EF4444" />
@@ -802,6 +807,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   {v_39cb7a != null && v_b08678 && <View style={[v_d81136.metricProgressFill, { width: `${(v_39cb7a / 10) * 100}%`, backgroundColor: v_b08678.color }]} />}
                 </View>
               </TouchableOpacity>
+              )}
               <TouchableOpacity style={[v_d81136.metricCard, { width: v_597fae }]} onPress={v_8daf84} activeOpacity={0.9}>
                 <View style={v_d81136.metricCardHeader}>
                   <Droplet size={24} color="#38BDF8" />
@@ -833,6 +839,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.section}>
             <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.my_health_management')}</Text>
             <View style={v_d81136.managementRow}>
+              {}
+              {!v_9d6425() && (
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_ae6f36} activeOpacity={0.8}>
                 <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]} />
                 <View style={[v_d81136.mgmtCardDeco2, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]} />
@@ -845,6 +853,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 </View>
                 <Text style={[v_d81136.mgmtLink, { color: '#EF4444' }]}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
+              )}
               <TouchableOpacity style={[v_d81136.managementCard, { width: v_597fae }]} onPress={v_74d6ea} activeOpacity={0.8}>
                 <View style={[v_d81136.mgmtCardDeco, { backgroundColor: 'rgba(59, 130, 246, 0.15)' }]} />
                 <View style={[v_d81136.mgmtCardDeco2, { backgroundColor: 'rgba(59, 130, 246, 0.15)' }]} />
@@ -856,6 +865,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={v_d81136.mgmtLink}>{v_8d41d7('home.start_btn')}</Text>
               </TouchableOpacity>
             </View>
+            {}
+            {!v_34f540() && (
             <TouchableOpacity
               style={v_d81136.managementCardWide}
               onPress={v_e6d488}
@@ -874,6 +885,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 <Text style={[v_d81136.mgmtLink, { color: '#10B981' }]}>{v_8d41d7('home.start_btn')}</Text>
               </View>
             </TouchableOpacity>
+            )}
           </View>
 
           {}
