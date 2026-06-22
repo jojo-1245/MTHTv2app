@@ -32,7 +32,8 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
-import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, type v_71beaa } from './vitalSignStatus';
+import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, type v_71beaa } from './vitalSignStatus';
+import { v_1f53bf } from '../../hooks/useSystemConfig';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -596,6 +597,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
+
+  v_1f53bf();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -1835,7 +1838,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       if (v_4622b9.length > 0) {
         v_8d4337.push({
           categoryId: v_b4fa6c.key,
-          categoryLabel: v_8d41d7(v_b4fa6c.titleKey),
+          categoryLabel: v_326be8.OS === 'ios'
+            ? v_8d41d7(`${v_b4fa6c.titleKey}_ios`, v_8d41d7(v_b4fa6c.titleKey))
+            : v_8d41d7(v_b4fa6c.titleKey),
           items: v_4622b9,
         });
       }
@@ -2059,7 +2064,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
     {
       id: 'risk-prediction',
-      title: v_8d41d7('health_analysis.result.section_risk_prediction'),
+      title: v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.section_risk_prediction_ios') : v_8d41d7('health_analysis.result.section_risk_prediction'),
       items: [
         { typeNum: v_e3e816.ASCVD_RISK },
         { typeNum: v_e3e816.ASCVD_RISK_LEVEL },
@@ -2116,6 +2121,21 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_71e822 = v_53d27c.filter(
     ([v_3b27d9]) => !v_a685a5.has(Number(v_3b27d9)) && !v_08e501.has(Number(v_3b27d9)),
   );
+
+  if (v_9d6425()) {
+    return (
+      <MainLayout activeKey="analysis">
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 }}>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: '#1a1a2e', textAlign: 'center', marginBottom: 12 }}>
+            {v_8d41d7('analysis.health_unavailable_title')}
+          </Text>
+          <Text style={{ fontSize: 14, color: '#6b7280', textAlign: 'center', lineHeight: 20 }}>
+            {v_8d41d7('analysis.health_unavailable_desc')}
+          </Text>
+        </View>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout activeKey="analysis">

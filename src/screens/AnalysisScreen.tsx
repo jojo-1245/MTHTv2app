@@ -16,6 +16,8 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../constants';
+import { v_1f53bf } from '../hooks/useSystemConfig';
+import { v_9d6425 } from './health/vitalSignStatus';
 
 const v_ff4e8b = 20;
 
@@ -25,6 +27,8 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
+
+  v_1f53bf();
 
   return (
     <MainLayout activeKey="analysis">
@@ -44,6 +48,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
           contentContainerStyle={v_d81136.scrollContent}
         >
           {}
+          {!v_9d6425() && (
           <View style={[v_d81136.section, v_d81136.healthSection]}>
             <Text style={v_d81136.sectionTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_title_ios') : v_8d41d7('analysis.health_title')}</Text>
             <Text style={v_d81136.sectionDesc}>{v_326be8.OS === 'ios' ? v_8d41d7('analysis.health_desc_ios') : v_8d41d7('analysis.health_desc')}</Text>
@@ -74,6 +79,7 @@ const AnalysisScreen: v_a3453e.FC<Props> = () => {
               </View>
             </TouchableOpacity>
           </View>
+          )}
 
           {}
           <View style={[v_d81136.section, v_d81136.skinSection]}>

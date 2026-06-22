@@ -61,7 +61,7 @@ import {
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_bc6a30 } from '../../types/fzljtili';
-import { v_4e7146, v_7374eb } from './vitalSignStatus';
+import { v_4e7146, v_7374eb, v_9d6425 } from './vitalSignStatus';
 
 import { v_2d6571 } from '../../utils/consentStore';
 import v_e209a2 from '../../components/DataConsentModal';
@@ -72,7 +72,7 @@ enum SmokingStatus {
   NON_SMOKER = 2,
 }
 
-import { v_6daddc, v_2c13e7 } from '../../hooks/useSystemConfig';
+import { v_6daddc, v_2c13e7, v_1f53bf } from '../../hooks/useSystemConfig';
 const v_fa53c9 = async (): Promise<string> => {
   await v_6daddc();
   const v_651d83 = v_2c13e7('fzljtili_license_key');
@@ -204,6 +204,8 @@ const v_a79016 = (v_3b27d9): string => {
 
 const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7 } = v_772971();
+
+  v_1f53bf();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
   const v_262e99 = v_c18c22(0);
@@ -1858,7 +1860,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <View style={v_d81136.introContainer}>
 
               <Text style={v_d81136.introDiscountNotice}>{v_8d41d7('health_analysis.intro.discount_notice')}</Text>
-              <Text style={v_d81136.introTitle}>{v_8d41d7('health_analysis.intro.intro_title')}</Text>
+              <Text style={v_d81136.introTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.intro_title_ios') : v_8d41d7('health_analysis.intro.intro_title')}</Text>
               <Text style={v_d81136.flowSubtitle}>{v_8d41d7('health_analysis.intro.flow_subtitle')}</Text>
 
               {}
@@ -2404,6 +2406,21 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       )}
     </>
   );
+
+  if (v_9d6425()) {
+    return (
+      <MainLayout activeKey="analysis">
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 }}>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: '#1a1a2e', textAlign: 'center', marginBottom: 12 }}>
+            {v_8d41d7('analysis.health_unavailable_title')}
+          </Text>
+          <Text style={{ fontSize: 14, color: '#6b7280', textAlign: 'center', lineHeight: 20 }}>
+            {v_8d41d7('analysis.health_unavailable_desc')}
+          </Text>
+        </View>
+      </MainLayout>
+    );
+  }
 
   if (v_91943c === 'intro') {
     return <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>;
