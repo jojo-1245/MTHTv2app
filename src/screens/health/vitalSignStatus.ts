@@ -4,13 +4,17 @@ import { v_2c13e7 } from '../../hooks/useSystemConfig';
 
 export type GroupStatus = '정상' | '위험';
 
-export function v_9da885(v_653390): boolean {
+export function v_9d6425(): boolean {
 
   if (v_326be8.OS !== 'ios') return false;
-
   const v_479f05 = v_2c13e7('ios_hide_sensitive_vitals');
   const v_97045a = v_479f05 === 'false' || v_479f05 === '0' || v_479f05 === false;
-  if (v_97045a) return false;
+  return !v_97045a;
+}
+
+export function v_9da885(v_653390): boolean {
+
+  if (!v_9d6425()) return false;
 
   const v_40f40b = [
 
@@ -31,6 +35,27 @@ export function v_9da885(v_653390): boolean {
     v_e3e816.CARDIAC_WORKLOAD,
     v_e3e816.MEAN_ARTERIAL_PRESSURE,
     v_e3e816.PULSE_PRESSURE,
+
+    v_e3e816.PULSE_RATE,
+    v_e3e816.RESPIRATION_RATE,
+    v_e3e816.SDNN,
+    v_e3e816.RMSSD,
+    v_e3e816.MEAN_RRI,
+    v_e3e816.RRI,
+    v_e3e816.SD1,
+    v_e3e816.SD2,
+    v_e3e816.PRQ,
+    v_e3e816.STRESS_LEVEL,
+    v_e3e816.STRESS_INDEX,
+    v_e3e816.NORMALIZED_STRESS_INDEX,
+    v_e3e816.SNS_INDEX,
+    v_e3e816.SNS_ZONE,
+    v_e3e816.PNS_INDEX,
+    v_e3e816.PNS_ZONE,
+    v_e3e816.LFHF,
+    v_e3e816.WELLNESS_INDEX,
+    v_e3e816.WELLNESS_LEVEL,
+    v_e3e816.BODY_TENSION_SCORE,
   ];
 
   if (typeof v_653390 === 'number' && v_40f40b.includes(v_653390)) {
@@ -56,6 +81,28 @@ export function v_9da885(v_653390): boolean {
       'cardiac_workload',
       'mean_arterial_pressure',
       'pulse_pressure',
+
+      'pulse_rate',
+      'respiration_rate',
+      'sdnn',
+      'rmssd',
+      'mean_rri',
+      'rri',
+      'sd1',
+      'sd2',
+      'prq',
+      'stress_level',
+      'stress_index',
+      'normalized_stress_index',
+      'sns_index',
+      'sns_zone',
+      'pns_index',
+      'pns_zone',
+      'lfhf',
+      'wellness_index',
+      'wellness_level',
+      'health_index',
+      'body_tension_score',
     ];
     if (v_9cad89.includes(v_653390.toLowerCase())) {
       return true;

@@ -102,6 +102,18 @@ export function v_2c13e7(v_b24339): any {
   return (v_340a92 as any)?.[v_b24339] ?? '';
 }
 
+export function v_ae4ccf(): boolean {
+  if (v_326be8.OS !== 'ios') return false;
+  const v_479f05 = v_2c13e7('ios_health_index_hidden');
+  return v_479f05 === true || v_479f05 === '1' || v_479f05 === 'true';
+}
+
+export function v_34f540(): boolean {
+  if (v_326be8.OS !== 'ios') return false;
+  const v_479f05 = v_2c13e7('ios_health_checkup_hidden');
+  return v_479f05 === true || v_479f05 === '1' || v_479f05 === 'true';
+}
+
 export function v_99cc3c(v_6845e8): any {
   if (!v_340a92) return '';
 
