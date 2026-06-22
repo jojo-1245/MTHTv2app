@@ -9,6 +9,7 @@ import {
   v_09d0e5,
   v_39a996,
   v_03e392,
+  v_326be8,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_f10f2a from 'zqqvxke';
@@ -1037,7 +1038,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                         <HealthIndexRing value={v_8cc501.healthIndex} max={10} />
                         <Text style={v_d81136.healthIndexValue}>{v_8cc501.healthIndex}/10</Text>
                       </View>
-                      <Text style={v_d81136.healthIndexLabel}>{v_8d41d7('health_records.health_index')}</Text>
+                      <Text style={v_d81136.healthIndexLabel}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.health_index_ios') : v_8d41d7('health_records.health_index')}</Text>
                       <Text style={v_d81136.healthIndexStatus}>
                         {v_8d41d7(`health_records.list_status_${v_54e295(v_8cc501.healthIndex)}`)}
                       </Text>
@@ -1046,7 +1047,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 </View>
 
                 {}
-                <Text style={v_d81136.measurementItemsTitle}>{v_8d41d7('health_records.measurement_items')}</Text>
+                <Text style={v_d81136.measurementItemsTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.measurement_items_ios') : v_8d41d7('health_records.measurement_items')}</Text>
                 {v_ac1ebb().map((v_b4fa6c) => {
                   const v_2afa46 = v_8cc501.items.filter((v_8c0b26) =>
                     v_b4fa6c.itemKeys.includes(v_8c0b26.key),
@@ -1056,7 +1057,10 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                   return (
                     <View key={v_b4fa6c.sectionKey} style={v_d81136.measurementSection}>
                       <Text style={v_d81136.measurementSectionTitle}>
-                        {v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}
+                        {}
+                        {v_326be8.OS === 'ios'
+                          ? v_8d41d7(`health_records.${v_b4fa6c.sectionKey}_ios`, v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`))
+                          : v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`)}
                       </Text>
                       <View style={v_d81136.measurementItemsGrid}>
                         {v_2afa46.map((v_8c0b26) => {
@@ -1102,7 +1106,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                                       v_8c0b26.status === 'risk' ? v_d81136.statusBadgeTextRisk : v_d81136.statusBadgeTextNormal,
                                     ]}
                                   >
-                                    {v_8c0b26.status === 'risk' ? v_8d41d7('health_records.status_risk') : v_8d41d7('health_records.status_normal')}
+                                    {v_8c0b26.status === 'risk' ? (v_326be8.OS === 'ios' ? v_8d41d7('health_records.status_risk_ios') : v_8d41d7('health_records.status_risk')) : v_8d41d7('health_records.status_normal')}
                                   </Text>
                                 </View>
                               </View>
