@@ -5,6 +5,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_624bd2 } from '../constants';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
+import { v_4d6220 } from '../navigation/postLoginNavigation';
 
 const v_16cea9 = require('../../assets/images/appicon.png');
 
@@ -42,8 +43,9 @@ const IntroScreen: v_a3453e.FC<Props> = () => {
                     !v_563acb(v_dfaee3);
 
                 if (v_cfcfaf || v_bfc315) {
-                    console.log('[IntroScreen] 로그인 상태 유지됨. MetaHome으로 이동');
-                    v_9b57fc('MetaHome');
+                    const v_a3614c = await v_4d6220();
+                    console.log('[IntroScreen] 로그인 상태 유지됨.', v_a3614c, '으로 이동');
+                    v_9b57fc(v_a3614c);
                 } else {
                     if (v_042a8b === 'true') {
 

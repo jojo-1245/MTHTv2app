@@ -172,3 +172,9 @@ export const v_700ef9 = (): AppContextValue => {
 export { StepTrackingProvider, useStepTracking } from './StepTrackingContext';
 
 export { WalletProvider, useWallet } from './WalletContext';
+
+export {
+  PharmacistGuestProvider,
+  usePharmacistGuest,
+} from './PharmacistGuestContext';
+export type { VerifiedPharmacistGuest } from './PharmacistGuestContext';

@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_de06a3, v_e662ae, v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_de06a3, v_e662ae, v_c4deb2, v_df9f57 } from 'bapkr';
 import {
     v_472849,
     v_19b633,
@@ -23,6 +23,7 @@ import * as v_f38d26 from 'lbosdxgirxcherxohyvziam';
 import * as v_cc38b7 from 'dnbozflmjypi';
 import * as v_fba5a0 from 'hfxxehldoiokdq';
 import { v_b5df25 } from 'ernurodqvmtspux';
+import * as v_168aaf from 'cldrjmebhiqpkcpfvirujpa';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_8c5b32 from 'quibwhxmgaihxjwrkkiuwoxpqb';
 import { v_772971 } from 'jmpfvteuuztnp';
@@ -30,13 +31,12 @@ import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 
 const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
-const v_37c282 = v_0d9f50 - 80; 
 const v_0abe94 = 12;
-const v_48a60c = Math.floor((v_0d9f50 - 24) / 2.5); 
 import { v_a0daa8 } from '../../navigation';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
+import { v_d91974 } from '../../utils/tabletLayout';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d, v_624bd2 } from '../../constants';
@@ -48,8 +48,8 @@ import {
     type v_ee7be6,
     type v_38cf4d,
 } from '../../services/skinAnalysis';
-import { v_9e8766, v_2282da } from '../../hooks';
-import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_9e8766, v_2282da, v_326fbf } from '../../hooks';
+import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
 import { v_81fcbc } from '../../services/skinApi';
 
@@ -69,8 +69,13 @@ const v_7cad20 = 1;
 
 const v_2a9f6c = 1;
 
-const v_a3d09d = 1.1;
-const v_7c252a = 0.95;
+const v_a81a10 = 1.1;
+const v_4eb5d3 = 0.95;
+
+const v_8e6659 = 0.68;
+const v_b90732 = 0.52;
+
+const v_e69eef = 0.13;
 
 const v_333679 = (v_cd1446): Promise<{ width: number; height: number }> =>
     new Promise((v_6f7712, v_bad6f3) => {
@@ -275,6 +280,14 @@ const v_3e09cd = {
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
     const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
+    const v_6c4b91 = v_d91974();
+    const v_161e5a = v_d615ad();
+    const v_6695f2 = v_6c4b91.contentColumnWidth - v_6c4b91.horizontalPadding * 2;
+    const v_3af450 = v_df9f57(() => v_6695f2, [v_6695f2]);
+    const v_c54f24 = v_df9f57(
+        () => Math.floor((v_6695f2 - v_0abe94) / 2.5),
+        [v_6695f2]
+    );
     const v_bf6a8c = v_c7daf6.params?.previewResult;
 
     const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
@@ -324,6 +337,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     );
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
+    v_326fbf(v_91943c === 'camera' && v_161e5a);
 
     const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
     const [v_399221, v_11f378] = v_5ab095<string>('0');
@@ -913,6 +927,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 return;
             }
         }
+        await v_168aaf.lockAsync(v_168aaf.OrientationLock.PORTRAIT_UP).catch(() => null);
         v_639227('camera');
     }, [v_d1a6bb, v_1e66f0, v_8d41d7, v_c7ac57]);
 
@@ -943,10 +958,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 const v_efb3f5 = v_2a5a61.width;
                 const v_d199c9 = v_2a5a61.height;
 
-                const v_a0dbba = (1 - v_7c252a) / 2;  
-                const v_85270c = v_7c252a; 
-                const v_f01cd4 = (1 - v_a3d09d) / 2;  
-                const v_6814d5 = v_a3d09d;  
+                const v_6814d5 = v_6c4b91.isTablet
+                    ? v_8e6659
+                    : v_a81a10;
+                const v_85270c = v_6c4b91.isTablet
+                    ? v_b90732
+                    : v_4eb5d3;
+
+                const v_a0dbba =
+                    v_6c4b91.isTablet && !v_6c4b91.isLandscape
+                        ? v_e69eef
+                        : (1 - v_85270c) / 2;
+                const v_f01cd4 = (1 - v_6814d5) / 2;
 
                 const v_833701 = v_efb3f5 * v_f01cd4;
                 const v_d37d71 = v_d199c9 * v_a0dbba;
@@ -1001,7 +1024,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } finally {
             v_968808(false);
         }
-    }, [v_c00289, v_ef2e54, v_8d41d7]);
+    }, [v_c00289, v_ef2e54, v_8d41d7, v_6c4b91.isTablet, v_6c4b91.isLandscape]);
 
     const v_7f9a52 = v_de06a3(() => {
         v_639227('capture');
@@ -1114,9 +1137,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const v_dd0316 = v_de06a3((event: v_bd64bf<v_da479e>) => {
         const v_bfc931 = v_d48baf.nativeEvent.contentOffset.x;
-        const v_a56041 = Math.round(v_bfc931 / v_37c282);
+        const v_a56041 = Math.round(v_bfc931 / v_3af450);
         v_6e04f8(v_a56041);
-    }, []);
+    }, [v_3af450]);
 
     const v_744c99 = v_de06a3((v_5f1433) => {
         const v_459f64 = v_5f1433.map(v_3f4e2e => v_3f4e2e.type);
@@ -1158,6 +1181,55 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
     }, [v_e521b9]);
 
+    const v_bd22dd = () => {
+        if (v_6c4b91.isTablet) {
+            const v_cf6a37 = `${((1 - v_8e6659) / 2) * 100}%`;
+            const v_a9823d = `${v_8e6659 * 100}%`;
+            const v_b5b2c6 = v_6c4b91.height * v_b90732;
+            const v_8b91b6 = !v_6c4b91.isLandscape;
+
+            return (
+                <View style={v_d81136.cameraGuideOverlay} pointerEvents="none">
+                    <View style={v_d81136.cameraTabletMaskColumn}>
+                        {v_8b91b6 ? (
+                            <View
+                                style={[
+                                    v_d81136.cameraMaskBand,
+                                    { height: v_6c4b91.height * v_e69eef },
+                                ]}
+                            />
+                        ) : (
+                            <View style={[v_d81136.cameraMaskBand, { flex: 1 }]} />
+                        )}
+                        <View style={[v_d81136.cameraTabletViewfinderRow, { height: v_b5b2c6 }]}>
+                            <View style={[v_d81136.cameraMaskBand, { width: v_cf6a37 }]} />
+                            <View style={{ width: v_a9823d }} />
+                            <View style={[v_d81136.cameraMaskBand, { width: v_cf6a37 }]} />
+                        </View>
+                        <View style={[v_d81136.cameraMaskBand, { flex: 1 }]} />
+                    </View>
+                </View>
+            );
+        }
+
+        return (
+            <View style={[v_d81136.cameraGuideOverlay, v_d81136.cameraGuideOverlayMobile]} pointerEvents="none">
+                <View style={v_d81136.cameraMaskTop} />
+                <View style={v_d81136.cameraGuideArea}>
+                    <View style={v_d81136.cameraMaskSide} />
+                    <View style={v_d81136.cameraGuideFrame}>
+                        <View style={v_d81136.cameraFaceGuide}>
+                            <View style={v_d81136.cameraFaceGuideInner} />
+                        </View>
+                        <View style={v_d81136.cameraShoulderGuide} />
+                    </View>
+                    <View style={v_d81136.cameraMaskSide} />
+                </View>
+                <View style={v_d81136.cameraMaskBottom} />
+            </View>
+        );
+    };
+
     const v_c8ac01 = () => (
         <View style={v_d81136.cameraContainer}>
             <CameraView
@@ -1173,34 +1245,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <Ionicons name="close" size={32} color="#FFFFFF" />
                 </TouchableOpacity>
 
-                {}
-                <View style={v_d81136.cameraGuideOverlay}>
-                    {}
-                    <View style={v_d81136.cameraMaskTop} />
-
-                    {}
-                    <View style={v_d81136.cameraGuideArea}>
-                        {}
-                        <View style={v_d81136.cameraMaskSide} />
-
-                        {}
-                        <View style={v_d81136.cameraGuideFrame}>
-                            {}
-                            <View style={v_d81136.cameraFaceGuide}>
-                                <View style={v_d81136.cameraFaceGuideInner} />
-                            </View>
-                            {}
-                            <View style={v_d81136.cameraShoulderGuide} />
-
-                        </View>
-
-                        {}
-                        <View style={v_d81136.cameraMaskSide} />
-                    </View>
-
-                    {}
-                    <View style={v_d81136.cameraMaskBottom} />
-                </View>
+                {v_bd22dd()}
 
                 {}
                 <View style={v_d81136.cameraControls}>
@@ -1256,7 +1301,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
             {}
             <TouchableOpacity
-                style={v_d81136.imageUploadArea}
+                style={[
+                    v_d81136.imageUploadArea,
+                    v_6c4b91.isLandscape && v_6c4b91.isTablet && v_d81136.imageUploadAreaLandscape,
+                ]}
                 onPress={v_46964a}
                 activeOpacity={0.8}
                 disabled={v_bbcab1}
@@ -1544,6 +1592,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                     key={v_ccf527.key}
                                     style={[
                                         v_d81136.concernItem,
+                                        { width: v_6c4b91.isLandscape && v_6c4b91.isTablet ? '31%' : '48%' },
                                         v_599a41 && v_d81136.concernItemSelected,
                                     ]}
                                     onPress={() => v_c7594b(v_ccf527.key)}
@@ -1794,12 +1843,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             style={v_d81136.allResultsSwiperScroll}
                             onScroll={(e: v_bd64bf<v_da479e>) => {
                                 const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
-                                const v_2365e9 = Math.round(v_cbddfc / (v_48a60c + v_0abe94));
+                                const v_2365e9 = Math.round(v_cbddfc / (v_c54f24 + v_0abe94));
                                 v_5bc608(Math.min(v_2365e9, v_17b30f.length - 1));
                             }}
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToInterval={v_48a60c + v_0abe94}
+                            snapToInterval={v_c54f24 + v_0abe94}
                             snapToAlignment="start"
                             contentContainerStyle={v_d81136.allResultsSwiperContent}
                         >
@@ -1810,7 +1859,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 const v_40e4fd = v_d8cb4d[v_ef4192];
                                 const v_ca36a5 = v_ccf527.score / 100;
                                 return (
-                                    <View key={v_ccf527.type} style={[v_d81136.allResultsCard, { width: v_48a60c }]}>
+                                    <View key={v_ccf527.type} style={[v_d81136.allResultsCard, { width: v_c54f24 }]}>
                                         <View style={v_d81136.allResultsCardHeader}>
                                             <Ionicons
                                                 name={v_b0b235(v_ccf527.type)}
@@ -1956,6 +2005,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     variant="healthAnalysis"
                     title={v_8d41d7('skin.title')}
                     showBackButton
+                    centerContentMaxWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.contentColumnWidth}
+                    centerContentPadding={v_6c4b91.isTablet ? undefined : v_6c4b91.horizontalPadding}
                     onBackPress={() => {
                         if (v_91943c === 'capture') {
                             v_c65f5d.goBack();
@@ -1989,39 +2040,52 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     }
                 />
                 <View style={v_d81136.tabBar}>
-                    <View style={v_d81136.tabRow}>
-                        <TouchableOpacity
-                            style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
-                            onPress={() => v_02dd63('measure')}
-                        >
-                            <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
-                                {v_8d41d7('health_tabs.measure')}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
-                            onPress={() => v_02dd63('records')}
-                        >
-                            <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
-                                {v_8d41d7('health_tabs.records')}
-                            </Text>
-                        </TouchableOpacity>
+                    <View
+                        style={[
+                            v_d81136.tabBarInner,
+                            v_6c4b91.isTablet
+                                ? { paddingHorizontal: v_9b1a04.large }
+                                : {
+                                    maxWidth: v_6c4b91.contentColumnWidth,
+                                    paddingHorizontal: v_6c4b91.horizontalPadding,
+                                  },
+                        ]}
+                    >
+                        <View style={v_d81136.tabRow}>
+                            <TouchableOpacity
+                                style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+                                onPress={() => v_02dd63('measure')}
+                            >
+                                <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                                    {v_8d41d7('health_tabs.measure')}
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+                                onPress={() => v_02dd63('records')}
+                            >
+                                <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                                    {v_8d41d7('health_tabs.records')}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <AccountSelector
+                            accounts={v_c86f08}
+                            selectedAccountId={v_e7b2f2}
+                            onSelectAccount={v_1f1e88}
+                            onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
+                            onDeleteAccount={v_5bc46a}
+                            onLinkEmail={v_42b67a}
+                            disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
+                        />
                     </View>
-                    <AccountSelector
-                        accounts={v_c86f08}
-                        selectedAccountId={v_e7b2f2}
-                        onSelectAccount={v_1f1e88}
-                        onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-                        onDeleteAccount={v_5bc46a}
-                        onLinkEmail={v_42b67a}
-                        disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
-                    />
                 </View>
                 {v_ac1d22 === 'records' ? (
                     <SafeScrollView
                         contentContainerStyle={v_d81136.recordsContent}
                         showsVerticalScrollIndicator={false}
                         showBottomBackground={false}
+                        disableBottomPadding={true}
                     >
                         <SkinRecordsView
                             selectedAccountId={v_e7b2f2}
@@ -2043,12 +2107,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         showBottomBackground={false}
                         disableBottomPadding={true}
                     >
-                        <View style={v_d81136.container}>
-                            {v_91943c === 'capture' && v_33853a()}
-                            {v_91943c === 'settings' && v_a5ba83()}
-                            {v_91943c === 'analyzing' && v_5f339d()}
-                            {v_91943c === 'result' && v_4ff022()}
-                        </View>
+                        <CenteredContentShell backgroundColor={v_1bfbd0.background}>
+                            <View style={v_d81136.container}>
+                                {v_91943c === 'capture' && v_33853a()}
+                                {v_91943c === 'settings' && v_a5ba83()}
+                                {v_91943c === 'analyzing' && v_5f339d()}
+                                {v_91943c === 'result' && v_4ff022()}
+                            </View>
+                        </CenteredContentShell>
                     </SafeScrollView>
                 )}
             </SafeView>
@@ -2160,13 +2226,18 @@ const v_d81136 = v_472849.create({
         padding: 8,
     },
     tabBar: {
+        width: '100%',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#F3F4F6',
+        backgroundColor: '#ffffff',
+    },
+    tabBarInner: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: v_9b1a04.large,
         paddingVertical: v_9b1a04.medium,
-        borderBottomWidth: 1,
-        borderBottomColor: '#F3F4F6',
     },
     tabRow: {
         flexDirection: 'row',
@@ -2288,6 +2359,10 @@ const v_d81136 = v_472849.create({
         borderWidth: 2,
         borderColor: v_1bfbd0.border,
         borderStyle: 'dashed',
+    },
+    imageUploadAreaLandscape: {
+        aspectRatio: undefined,
+        maxHeight: 320,
     },
     selectedImage: {
         width: '100%',
@@ -2620,7 +2695,6 @@ const v_d81136 = v_472849.create({
         borderRadius: 12,
         paddingVertical: 10,
         paddingHorizontal: 12,
-        width: '48%',
         borderWidth: 1.5,
         borderColor: 'transparent',
     },
@@ -3500,8 +3574,21 @@ const v_d81136 = v_472849.create({
     },
     cameraGuideOverlay: {
         ...v_472849.absoluteFillObject,
+    },
+    cameraGuideOverlayMobile: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    cameraTabletMaskColumn: {
+        flex: 1,
+        width: '100%',
+    },
+    cameraTabletViewfinderRow: {
+        flexDirection: 'row',
+        width: '100%',
+    },
+    cameraMaskBand: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     cameraMaskTop: {
         flex: 1,
@@ -3518,7 +3605,7 @@ const v_d81136 = v_472849.create({
     },
     cameraGuideArea: {
         flexDirection: 'row',
-        height: v_28d8d8 * v_7c252a,
+        height: v_28d8d8 * v_4eb5d3,
     },
     cameraGuideFrame: {
         width: v_0d9f50,
@@ -3527,9 +3614,9 @@ const v_d81136 = v_472849.create({
         alignItems: 'center',
     },
     cameraFaceGuide: {
-        width: v_0d9f50 * v_a3d09d * 0.85,
-        height: v_28d8d8 * v_7c252a * 0.65,
-        borderRadius: v_0d9f50 * v_a3d09d * 0.425,
+        width: v_0d9f50 * v_a81a10 * 0.85,
+        height: v_28d8d8 * v_4eb5d3 * 0.65,
+        borderRadius: v_0d9f50 * v_a81a10 * 0.425,
         borderWidth: 3,
         borderColor: '#FFFFFF',
         borderStyle: 'dashed',
@@ -3537,17 +3624,17 @@ const v_d81136 = v_472849.create({
         alignItems: 'center',
     },
     cameraFaceGuideInner: {
-        width: v_0d9f50 * v_a3d09d * 0.76,
-        height: v_28d8d8 * v_7c252a * 0.58,
-        borderRadius: v_0d9f50 * v_a3d09d * 0.38,
+        width: v_0d9f50 * v_a81a10 * 0.76,
+        height: v_28d8d8 * v_4eb5d3 * 0.58,
+        borderRadius: v_0d9f50 * v_a81a10 * 0.38,
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.3)',
     },
     cameraShoulderGuide: {
-        width: v_0d9f50 * v_a3d09d,
-        height: v_28d8d8 * v_7c252a * 0.12,
-        borderTopLeftRadius: v_0d9f50 * v_a3d09d * 0.5,
-        borderTopRightRadius: v_0d9f50 * v_a3d09d * 0.5,
+        width: v_0d9f50 * v_a81a10,
+        height: v_28d8d8 * v_4eb5d3 * 0.12,
+        borderTopLeftRadius: v_0d9f50 * v_a81a10 * 0.5,
+        borderTopRightRadius: v_0d9f50 * v_a81a10 * 0.5,
         borderWidth: 3,
         borderBottomWidth: 0,
         borderColor: '#FFFFFF',
@@ -3652,7 +3739,6 @@ const v_d81136 = v_472849.create({
         paddingHorizontal: v_9b1a04.large,
     },
     productCardWrapper: {
-        width: v_37c282,
         paddingRight: v_9b1a04.medium,
         paddingBottom: v_9b1a04.small,
     },

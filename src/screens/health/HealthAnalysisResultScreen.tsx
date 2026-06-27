@@ -1,6 +1,5 @@
 import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3 } from 'bapkr';
 import {
-  v_700696,
   v_aa7413,
   v_bd64bf,
   v_da479e,
@@ -18,7 +17,8 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
+import { v_d91974 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
 import type { v_5d13be } from './components/HealthRecordsView';
 import type { v_8ad91b } from '../../navigation';
@@ -83,9 +83,6 @@ const v_da5121 = v_472849.create({
     maxWidth: 120,
   },
 });
-
-const { width: v_0d9f50 } = v_700696.get('window');
-const v_495d45 = v_0d9f50;
 
 type DisplayItem = {
   typeNum: number;
@@ -597,6 +594,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
+  const v_6c4b91 = v_d91974();
+  const v_39c3a4 = v_df9f57(
+    () => v_6c4b91.contentColumnWidth - v_6c4b91.horizontalPadding * 2,
+    [v_6c4b91.contentColumnWidth, v_6c4b91.horizontalPadding]
+  );
 
   v_1f53bf();
 
@@ -2151,6 +2153,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             variant="healthAnalysis"
             title={v_8d41d7('health_analysis.result_title')}
             showBackButton
+            centerContentMaxWidth={v_6c4b91.contentColumnWidth}
+            centerContentPadding={v_6c4b91.horizontalPadding}
             onBackPress={() => {
               v_c65f5d.replace('HealthAnalysis');
             }}
@@ -2166,36 +2170,46 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           />
         </View>
         <View style={v_d81136.tabBar}>
-          <View style={v_d81136.tabRow}>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('measure')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.measure')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('records')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.records')}
-              </Text>
-            </TouchableOpacity>
+          <View
+            style={[
+              v_d81136.tabBarInner,
+              {
+                maxWidth: v_6c4b91.contentColumnWidth,
+                paddingHorizontal: v_6c4b91.horizontalPadding,
+              },
+            ]}
+          >
+            <View style={v_d81136.tabRow}>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('measure')}
+              >
+                <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.measure')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('records')}
+              >
+                <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.records')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {v_ac1d22 === 'records' ? (
+              <AccountSelector
+                accounts={v_c86f08}
+                selectedAccountId={v_e7b2f2}
+                onSelectAccount={v_1f1e88}
+                onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
+                onDeleteAccount={v_5bc46a}
+                onLinkEmail={v_42b67a}
+              />
+            ) : (
+              <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
+            )}
           </View>
-          {v_ac1d22 === 'records' ? (
-            <AccountSelector
-              accounts={v_c86f08}
-              selectedAccountId={v_e7b2f2}
-              onSelectAccount={v_1f1e88}
-              onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-              onDeleteAccount={v_5bc46a}
-              onLinkEmail={v_42b67a}
-            />
-          ) : (
-            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
-          )}
         </View>
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
@@ -2226,7 +2240,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               scrollEventThrottle={16}
             >
               {}
-              <View style={v_d81136.container}>
+              <CenteredContentShell backgroundColor={v_1bfbd0.background}>
                 {}
                 <View style={v_d81136.resultHeaderStatus}>
                   <View style={v_d81136.resultHeaderStatusRow}>
@@ -2470,7 +2484,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     </View>
                   );
                 })()}
-              </View>
 
               {}
               <View
@@ -2492,7 +2505,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
               {}
               <View
-                style={v_d81136.container}
+                style={v_d81136.listSection}
                 onLayout={(v_d48baf) => {
                   v_91eb96.current = v_d48baf.nativeEvent.layout.y;
                 }}
@@ -2505,13 +2518,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       horizontal
                       pagingEnabled
                       showsHorizontalScrollIndicator={false}
-                      snapToInterval={v_495d45}
+                      snapToInterval={v_39c3a4}
                       snapToAlignment="start"
                       decelerationRate="fast"
                       contentContainerStyle={v_d81136.swiperContent}
                       onScroll={(e: v_bd64bf<v_da479e>) => {
                         const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
-                        const v_2365e9 = Math.round(v_cbddfc / v_495d45);
+                        const v_2365e9 = Math.round(v_cbddfc / v_39c3a4);
                         v_35a1d0(Math.min(v_2365e9, v_7acdeb.length - 1));
                       }}
                       scrollEventThrottle={16}
@@ -2539,7 +2552,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         const v_d11c1e = v_79e11c.length > 0;
 
                         return (
-                          <View key={v_d3e14c} style={[v_d81136.swiperPage, { width: v_495d45 }]}>
+                          <View key={v_d3e14c} style={[v_d81136.swiperPage, { width: v_39c3a4 }]}>
                             <View style={v_d81136.resultCard}>
                               <View style={v_d81136.resultRow}>
                                 <View style={v_d81136.resultLeft}>
@@ -2822,9 +2835,16 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         style={v_d81136.allResultsModalOverlayDim}
                         onPress={() => v_19e3c6(null)}
                       />
-                      <View
-                        style={[v_d81136.allResultsModalContent, { paddingBottom: v_9b1a04.xlarge + v_033e14.bottom }]}
-                      >
+                      <View style={v_d81136.allResultsModalSheetWrap}>
+                        <View
+                          style={[
+                            v_d81136.allResultsModalContent,
+                            {
+                              maxWidth: v_6c4b91.contentColumnWidth,
+                              paddingBottom: v_9b1a04.xlarge + v_033e14.bottom,
+                            },
+                          ]}
+                        >
                         <View style={v_d81136.allResultsModalHandle} />
                         <Text style={v_d81136.allResultsModalTitle}>
                           {v_e70158.name} - {v_8d41d7('health_analysis.result.show_all_results')}
@@ -2902,6 +2922,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             })}
                           </View>
                         </ScrollView>
+                      </View>
                       </View>
                     </View>
                   </Modal>
@@ -3110,6 +3131,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   />
                 </View>
               </View>
+              </CenteredContentShell>
             </SafeScrollView>
             <TouchableOpacity
               style={v_d81136.abnormalFooter}
@@ -3724,13 +3746,18 @@ const v_d81136 = v_472849.create({
     padding: 8,
   },
   tabBar: {
+    width: '100%',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+    backgroundColor: '#ffffff',
+  },
+  tabBarInner: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.medium,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
   },
   tabRow: {
     flexDirection: 'row',
@@ -3755,13 +3782,19 @@ const v_d81136 = v_472849.create({
   recordsContent: {
     flexGrow: 1,
     paddingBottom: v_9b1a04.xlarge,
+    width: '100%',
+    alignSelf: 'stretch',
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
-    ...v_a61db3.content,
+    flexGrow: 1,
     minHeight: '100%',
+    paddingTop: 32,
+    paddingHorizontal: 0,
+    backgroundColor: v_1bfbd0.background,
   },
-  container: {
-    ...v_a61db3.container,
+  listSection: {
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -4924,7 +4957,12 @@ const v_d81136 = v_472849.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
+  allResultsModalSheetWrap: {
+    width: '100%',
+    alignItems: 'center',
+  },
   allResultsModalContent: {
+    width: '100%',
     backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

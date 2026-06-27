@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095, v_c4deb2, v_e662ae, v_de06a3 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_c4deb2, v_e662ae, v_de06a3, v_df9f57 } from 'bapkr';
 import {
   v_472849,
   v_19b633,
@@ -30,13 +30,25 @@ import { v_862296, v_a43dd8, v_77b82e, v_56d16a, v_7ebf51 } from 'wjvlskvsbzsroj
 import { v_a0daa8 } from '../../navigation';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
-import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
+import * as v_168aaf from 'cldrjmebhiqpkcpfvirujpa';
+import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d4f1cc } from 'mbgbsytfgyr';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_89c10a, v_e775af, v_d3705d, v_1c1837 } from '../../components';
+import {
+  v_729608,
+  v_570c34,
+  v_556baf,
+  v_cb41de,
+  v_89c10a,
+  v_e775af,
+  v_d3705d,
+  v_1c1837,
+  v_47f7b9,
+} from '../../components';
+import { v_d91974 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
-import { v_9e8766 } from '../../hooks';
+import { v_9e8766, v_326fbf } from '../../hooks';
 import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
 import { v_777b12 } from '../../services/healthApi';
@@ -86,8 +98,6 @@ const v_8ea06a = 60;
 
 const v_6ac464 = 'metahint_health_user_info';
 
-const { width: v_0d9f50 } = v_700696.get('window');
-const v_5f4735 = v_0d9f50 - v_9b1a04.large * 2; 
 const v_555444 = 4;
 const v_10b8c7 = 3000; 
 
@@ -207,13 +217,23 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   v_1f53bf();
   const { navigate: v_9b57fc } = v_a0daa8();
+  const v_6c4b91 = v_d91974();
+  const v_18a4c7 = v_df9f57(() => {
+    const v_0ce880 = Math.min(v_6c4b91.width, v_6c4b91.contentColumnWidth);
+    return v_0ce880 - v_6c4b91.horizontalPadding * 2;
+  }, [v_6c4b91.width, v_6c4b91.contentColumnWidth, v_6c4b91.horizontalPadding]);
   const v_033e14 = v_e0068c();
   const v_262e99 = v_c18c22(0);
   const v_ea7233 =
     v_326be8.OS === 'ios' ? v_033e14.bottom : Math.max(v_262e99, v_033e14.bottom);
   const [v_ac3ab7, v_028502] = v_5ab095(false);
+  const [v_7e4acc, v_de86c2] = v_5ab095(0);
+  const v_257ddc = v_6c4b91.isLandscape && v_6c4b91.isTablet;
+  const v_594c6e = v_6c4b91.height * (v_257ddc ? 0.42 : 0.55);
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
+  const v_161e5a = v_d615ad();
+  v_326fbf(v_91943c === 'measurement' && v_161e5a);
   const [v_f91d86, v_f193b7] = v_5ab095<boolean>(true);
   const [v_399221, v_11f378] = v_5ab095<string>('0');
   const [v_fab460, v_c96363] = v_5ab095<string>('0');
@@ -341,12 +361,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   v_c4deb2(() => {
     if (!v_d79387) {
       v_028502(false);
+      v_de86c2(0);
       return;
     }
     const v_ef3bab = v_326be8.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
     const v_ffd7d0 = v_326be8.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
     const v_53f5d7 = v_0e1f26.addListener(v_ef3bab, (v_9e86fd) => {
       v_028502(true);
+      v_de86c2(v_9e86fd?.endCoordinates?.height ?? 0);
       const v_32f7b8 = v_700696.get('window');
       console.log('[모달 위치] 키보드 나옴', {
         window: { width: v_32f7b8.width, height: v_32f7b8.height },
@@ -356,6 +378,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     });
     const v_52528b = v_0e1f26.addListener(v_ffd7d0, () => {
       v_028502(false);
+      v_de86c2(0);
       v_a9ff2b((v_0eb677) => v_0eb677 + 1); 
       const v_32f7b8 = v_700696.get('window');
       console.log('[모달 위치] 키보드 사라짐', {
@@ -386,7 +409,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
       const v_995fa2 = v_275ccd === v_555444 - 1;
       v_458e9a.current?.scrollTo({
-        x: v_a448ad * v_5f4735,
+        x: v_a448ad * v_18a4c7,
         animated: !v_995fa2,
       });
     }, v_10b8c7);
@@ -397,7 +420,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_ca0f0f.current = null;
       }
     };
-  }, [v_91943c, v_ac1d22]); 
+  }, [v_91943c, v_ac1d22, v_18a4c7]); 
 
   const [v_109b56, v_49296b] = v_5ab095(false);
   const [v_ee736b, v_054130] = v_5ab095<string | undefined>();
@@ -1791,6 +1814,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           title={v_8d41d7('home.health_analysis')}
           showBackButton
           onBackPress={() => v_c65f5d.goBack()}
+          centerContentMaxWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.contentColumnWidth}
+          centerContentPadding={v_6c4b91.isTablet ? undefined : v_6c4b91.horizontalPadding}
           rightAccessory={
             <TouchableOpacity
               style={v_d81136.skinIconBtn}
@@ -1802,39 +1827,52 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           }
         />
         <View style={v_d81136.tabBar}>
-          <View style={v_d81136.tabRow}>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('measure')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.measure')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('records')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.records')}
-              </Text>
-            </TouchableOpacity>
+          <View
+            style={[
+              v_d81136.tabBarInner,
+              v_6c4b91.isTablet
+                ? { paddingHorizontal: v_9b1a04.large }
+                : {
+                    maxWidth: v_6c4b91.contentColumnWidth,
+                    paddingHorizontal: v_6c4b91.horizontalPadding,
+                  },
+            ]}
+          >
+            <View style={v_d81136.tabRow}>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('measure')}
+              >
+                <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.measure')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('records')}
+              >
+                <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.records')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <AccountSelector
+              accounts={v_c86f08}
+              selectedAccountId={v_e7b2f2}
+              onSelectAccount={v_1f1e88}
+              onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
+              onDeleteAccount={v_5bc46a}
+              onLinkEmail={v_42b67a}
+              disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
+            />
           </View>
-          <AccountSelector
-            accounts={v_c86f08}
-            selectedAccountId={v_e7b2f2}
-            onSelectAccount={v_1f1e88}
-            onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-            onDeleteAccount={v_5bc46a}
-            onLinkEmail={v_42b67a}
-            disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
-          />
         </View>
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}
             showsVerticalScrollIndicator={false}
             showBottomBackground={false}
+            disableBottomPadding={true}
           >
             <HealthRecordsView
               selectedAccountId={v_e7b2f2}
@@ -1857,8 +1895,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             disableBottomPadding={true}
             autoAdjustKeyboardPadding={true}
           >
-            <View style={v_d81136.introContainer}>
-
+            <CenteredContentShell backgroundColor={v_1bfbd0.background}>
               <Text style={v_d81136.introDiscountNotice}>{v_8d41d7('health_analysis.intro.discount_notice')}</Text>
               <Text style={v_d81136.introTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.intro_title_ios') : v_8d41d7('health_analysis.intro.intro_title')}</Text>
               <Text style={v_d81136.flowSubtitle}>{v_8d41d7('health_analysis.intro.flow_subtitle')}</Text>
@@ -1870,20 +1907,20 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   horizontal
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
-                  snapToInterval={v_5f4735}
+                  snapToInterval={v_18a4c7}
                   snapToAlignment="center"
                   decelerationRate="fast"
                   style={v_d81136.flowSwiperScroll}
                   onScroll={(e: v_bd64bf<v_da479e>) => {
                     const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
-                    const v_2365e9 = Math.round(v_cbddfc / v_5f4735);
+                    const v_2365e9 = Math.round(v_cbddfc / v_18a4c7);
                     const v_e86ad8 = Math.min(v_2365e9, v_555444 - 1);
                     v_26808d(v_e86ad8);
                     v_eca1d4.current = v_e86ad8;
                   }}
                   scrollEventThrottle={16}
                 >
-                  <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                  <View style={[v_d81136.flowStepPage, { width: v_18a4c7 }]}>
                     <View style={v_d81136.flowStepBadge}>
                       <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 1 })}</Text>
                     </View>
@@ -1893,7 +1930,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepLabel}>{v_8d41d7('health_analysis.intro.flow_step_1')}</Text>
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_1_desc')}</Text>
                   </View>
-                  <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                  <View style={[v_d81136.flowStepPage, { width: v_18a4c7 }]}>
                     <View style={v_d81136.flowStepBadge}>
                       <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 2 })}</Text>
                     </View>
@@ -1903,7 +1940,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepLabel}>{v_8d41d7('health_analysis.intro.flow_step_2')}</Text>
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_2_desc')}</Text>
                   </View>
-                  <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                  <View style={[v_d81136.flowStepPage, { width: v_18a4c7 }]}>
                     <View style={v_d81136.flowStepBadge}>
                       <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 3 })}</Text>
                     </View>
@@ -1913,7 +1950,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     <Text style={v_d81136.flowStepLabel}>{v_8d41d7('health_analysis.intro.flow_step_3')}</Text>
                     <Text style={v_d81136.flowStepDesc}>{v_8d41d7('health_analysis.intro.flow_step_3_desc')}</Text>
                   </View>
-                  <View style={[v_d81136.flowStepPage, { width: v_5f4735 }]}>
+                  <View style={[v_d81136.flowStepPage, { width: v_18a4c7 }]}>
                     <View style={v_d81136.flowStepBadge}>
                       <Text style={v_d81136.flowStepBadgeText}>{v_8d41d7('health_analysis.intro.flow_badge_step', { n: 4 })}</Text>
                     </View>
@@ -2007,7 +2044,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 </TouchableOpacity>
               )}
               </View>
-            </View>
+            </CenteredContentShell>
           </SafeScrollView>
         )}
       </SafeView>
@@ -2021,7 +2058,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       >
         <KeyboardAvoidingView
           key={v_af8c44}
-          behavior={v_326be8.OS === 'ios' ? 'padding' : 'height'}
+          behavior={
+            v_326be8.OS === 'ios' ? 'padding' : v_257ddc ? undefined : 'height'
+          }
           keyboardVerticalOffset={0}
           style={v_d81136.stepModalKeyboardAvoid}
           onLayout={(e: v_e99fe0) => {
@@ -2029,10 +2068,37 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             console.log('[모달 위치] onLayout', v_9e86fd.nativeEvent.layout);
           }}
         >
-          {}
-          <View style={v_d81136.stepModalOverlay} pointerEvents="box-none">
-            <View style={v_d81136.stepModalSpacer} pointerEvents="none" />
-            <View style={[v_d81136.stepModalContent, { paddingBottom: v_9b1a04.xlarge + (v_ac3ab7 ? 0 : v_ea7233) }]}>
+          <View
+            style={[
+              v_d81136.stepModalOverlay,
+              v_257ddc ? v_d81136.stepModalOverlayCenter : v_d81136.stepModalOverlayBottom,
+            ]}
+            pointerEvents="box-none"
+          >
+            <View
+              style={[
+                v_d81136.stepModalSheetWrap,
+                {
+                  maxWidth: v_6c4b91.contentColumnWidth,
+                  paddingHorizontal: v_257ddc ? v_6c4b91.horizontalPadding : 0,
+                  marginBottom:
+                    v_257ddc && v_7e4acc > 0
+                      ? Math.max(0, v_7e4acc - v_033e14.bottom)
+                      : 0,
+                },
+              ]}
+            >
+              <View
+                style={[
+                  v_d81136.stepModalContent,
+                  v_257ddc && v_d81136.stepModalContentLandscape,
+                  {
+                    paddingBottom:
+                      v_9b1a04.xlarge +
+                      (!v_ac3ab7 && !v_257ddc ? v_ea7233 : 0),
+                  },
+                ]}
+              >
               {}
               <TouchableOpacity
                 style={v_d81136.stepModalCloseBtn}
@@ -2181,31 +2247,38 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
               {}
               {v_63ed0f === 5 && (
-                <View style={v_d81136.stepBody}>
-                  <Text style={v_d81136.stepTitle}>{v_8d41d7('health_analysis.intro.guidelines_title')}</Text>
-                  <View style={v_d81136.stepGuidelines}>
-                    <View style={v_d81136.guidelineItem}>
-                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_1')}</Text>
-                    </View>
-                    <View style={v_d81136.guidelineItem}>
-                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_2')}</Text>
-                    </View>
-                    <View style={v_d81136.guidelineItem}>
-                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_3')}</Text>
-                    </View>
-                    <View style={v_d81136.guidelineItem}>
-                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
-                    </View>
-                    <View style={v_d81136.guidelineItem}>
-                      <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
-                      <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_5')}</Text>
+                <ScrollView
+                  style={{ maxHeight: v_594c6e }}
+                  keyboardShouldPersistTaps="handled"
+                  bounces={false}
+                  showsVerticalScrollIndicator={false}
+                >
+                  <View style={v_d81136.stepBody}>
+                    <Text style={v_d81136.stepTitle}>{v_8d41d7('health_analysis.intro.guidelines_title')}</Text>
+                    <View style={v_d81136.stepGuidelines}>
+                      <View style={v_d81136.guidelineItem}>
+                        <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                        <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_1')}</Text>
+                      </View>
+                      <View style={v_d81136.guidelineItem}>
+                        <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                        <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_2')}</Text>
+                      </View>
+                      <View style={v_d81136.guidelineItem}>
+                        <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                        <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_3')}</Text>
+                      </View>
+                      <View style={v_d81136.guidelineItem}>
+                        <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                        <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_4')}</Text>
+                      </View>
+                      <View style={v_d81136.guidelineItem}>
+                        <Ionicons name="checkmark-circle" size={20} color={v_1bfbd0.bluePrimary} />
+                        <Text style={v_d81136.guidelineText}>{v_8d41d7('health_analysis.intro.guideline_5')}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
+                </ScrollView>
               )}
 
               {}
@@ -2264,6 +2337,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                       v_f36dd5(undefined);
                       v_7fa926(0);
                       v_b0aeaf(false);
+                      await v_168aaf.lockAsync(
+                        v_168aaf.OrientationLock.PORTRAIT_UP
+                      ).catch(() => null);
                       v_639227('measurement');
                     }}
                     fullWidth
@@ -2271,6 +2347,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 )}
               </View>
             </View>
+          </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
@@ -2306,7 +2383,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         />
         {}
         <View style={v_d81136.cameraContainer} onLayout={v_0bafd1}>
-          <View style={v_d81136.cameraPreviewWrapper} onLayout={v_1f2c01}>
+          <View
+            style={[
+              v_d81136.cameraPreviewWrapper,
+              v_6c4b91.isLandscape && v_d81136.cameraPreviewWrapperLandscape,
+            ]}
+            onLayout={v_1f2c01}
+          >
             <CameraPreviewView style={v_d81136.cameraPreview} />
             {}
             {}
@@ -2323,7 +2406,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             {}
             <View style={v_d81136.cameraOverlaySpacer} />
             {}
-            <View style={v_d81136.infoContainerOverlay}>
+            <View
+              style={[
+                v_d81136.infoContainerOverlay,
+                { paddingBottom: v_6c4b91.isLandscape ? 140 : 200 },
+              ]}
+            >
               {v_12abe8 && (
                 <View style={v_d81136.imageValidityContainer}>
                   <Text style={v_d81136.imageValidityTitle}>{v_8d41d7('health_analysis.measurement.face_detection_title')}</Text>
@@ -2341,6 +2429,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <View
               style={[
                 v_d81136.bottomContainer,
+                v_6c4b91.isLandscape && v_d81136.bottomContainerLandscape,
                 {
                   paddingBottom:
                     v_9b1a04.xlarge +
@@ -2350,6 +2439,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 },
               ]}
             >
+              <View style={[v_d81136.bottomContainerInner, { maxWidth: v_6c4b91.contentColumnWidth }]}>
               {}
               <View style={v_d81136.statusContainer}>
                 {v_109b56 ? (
@@ -2386,6 +2476,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     ((v_bc50c7 === v_eb2401.STARTING || v_bc50c7 === v_eb2401.PROCESSING) && v_955bd3)
                   }
                 />
+              </View>
               </View>
             </View>
           </View>
@@ -2441,14 +2532,18 @@ const v_d81136 = v_472849.create({
     padding: 8,
   },
   tabBar: {
-    flexDirection: 'row',
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: v_9b1a04.large,
-    paddingVertical: v_9b1a04.medium,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
     backgroundColor: '#ffffff',
+  },
+  tabBarInner: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: v_9b1a04.medium,
   },
   tabRow: {
     flexDirection: 'row',
@@ -2480,6 +2575,8 @@ const v_d81136 = v_472849.create({
     flexGrow: 1,
     paddingBottom: v_9b1a04.xlarge,
     backgroundColor: v_1bfbd0.background,
+    width: '100%',
+    alignSelf: 'stretch',
   },
   recordsNavBtn: {
     paddingVertical: 14,
@@ -2501,12 +2598,11 @@ const v_d81136 = v_472849.create({
   },
 
   introContent: {
-    ...v_a61db3.content,
+    flexGrow: 1,
     minHeight: '100%',
+    paddingTop: 32,
+    paddingHorizontal: 0,
     backgroundColor: v_1bfbd0.background,
-  },
-  introContainer: {
-    ...v_a61db3.container,
   },
   introIconContainer: {
     width: 120,
@@ -2580,13 +2676,16 @@ const v_d81136 = v_472849.create({
   flowSwiperWrapper: {
     marginBottom: v_9b1a04.xlarge,
     width: '100%',
+    alignSelf: 'center',
   },
   flowSwiperScroll: {
     width: '100%',
+    alignSelf: 'center',
   },
   flowStepPage: {
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     paddingVertical: v_9b1a04.xlarge,
     paddingHorizontal: v_9b1a04.medium,
   },
@@ -2719,18 +2818,29 @@ const v_d81136 = v_472849.create({
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  stepModalSpacer: {
-    flex: 1,
+  stepModalOverlayBottom: {
+    justifyContent: 'flex-end',
+  },
+  stepModalOverlayCenter: {
+    justifyContent: 'center',
+    paddingVertical: v_9b1a04.medium,
+  },
+  stepModalSheetWrap: {
+    width: '100%',
+    alignSelf: 'center',
   },
   stepModalContent: {
+    width: '100%',
     backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: v_9b1a04.xlarge,
     paddingTop: v_9b1a04.large,
-    paddingBottom: v_9b1a04.xlarge, 
+    paddingBottom: v_9b1a04.xlarge,
     position: 'relative',
-    maxHeight: '80%',
+  },
+  stepModalContentLandscape: {
+    borderRadius: 24,
   },
   stepModalCloseBtn: {
     position: 'absolute',
@@ -2840,10 +2950,15 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#000',
   },
   cameraPreviewWrapper: {
-
     aspectRatio: 0.75,
     width: '100%',
     position: 'relative',
+  },
+  cameraPreviewWrapperLandscape: {
+    flex: 1,
+    aspectRatio: undefined,
+    maxHeight: '100%',
+    alignSelf: 'center',
   },
   cameraPreview: {
     flex: 1,
@@ -2857,15 +2972,14 @@ const v_d81136 = v_472849.create({
     flex: 1,
   },
   bottomContainer: {
+    width: '100%',
+    alignItems: 'center',
     paddingTop: v_9b1a04.large,
     paddingBottom: v_9b1a04.xlarge,
-    paddingHorizontal: v_9b1a04.large,
-    alignItems: 'center',
+    paddingHorizontal: 0,
     backgroundColor: v_1bfbd0.white,
-
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -2873,8 +2987,16 @@ const v_d81136 = v_472849.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 5, 
-    zIndex: 10, 
+    elevation: 5,
+    zIndex: 10,
+  },
+  bottomContainerLandscape: {
+    paddingTop: v_9b1a04.medium,
+  },
+  bottomContainerInner: {
+    width: '100%',
+    paddingHorizontal: v_9b1a04.large,
+    alignItems: 'center',
   },
 
   infoContainerOverlay: {
