@@ -91,6 +91,11 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
         return null;
       }
 
+      if (__DEV__) {
+        console.log('[OTA] __DEV__ — OTA 체크 스킵');
+        return null;
+      }
+
       const v_4587b3 = v_3d4e28();
       const v_f229e4 = v_d752db();
       const v_81a27a = v_326be8.OS;
@@ -100,12 +105,20 @@ export async function v_6ed90b(): Promise<VersionCheckResult | null> {
       const v_f24d57 = await v_e84827.getItem(v_b4e268);
 
       console.log(`[OTA] API 요청 전송 (Version: ${v_4587b3}, Build: ${v_f229e4}):`, v_f71b56, { _ts: Date.now(), _time: new Date().toISOString() });
-const v_8f00b9 = await fetch(v_f71b56, {
-  headers: { 
-    'X-Client-Token': v_f68bbb,
-    'Accept': 'application/json',
-  },
-});
+      const v_4fc7c7 = new AbortController();
+      const v_e18711 = setTimeout(() => v_4fc7c7.abort(), 10_000);
+      let v_8f00b9;
+      try {
+        v_8f00b9 = await fetch(v_f71b56, {
+          headers: {
+            'X-Client-Token': v_f68bbb,
+            Accept: 'application/json',
+          },
+          signal: v_4fc7c7.signal,
+        });
+      } finally {
+        clearTimeout(v_e18711);
+      }
 
 console.log('[OTA] 응답 수신 - Status:', v_8f00b9.status, { _ts: Date.now(), _time: new Date().toISOString() });
 

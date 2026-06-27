@@ -9,6 +9,10 @@ import { v_766523, v_7ef860, v_6a59bc, type v_abf760 } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_624bd2 } from '../constants';
 import type { v_70edf1 } from '../components/AccountSelector';
+import { v_5a0119 } from './useUserRole';
+import { v_4b2942 } from '../context/PharmacistGuestContext';
+import { v_fa6bdc } from '../utils/userRole';
+import type { v_5416aa } from '../constants/memberTypes';
 
 export function v_2282da(v_2453ad): string {
   if (v_2453ad.startsWith('sub-')) {
@@ -20,6 +24,8 @@ export function v_2282da(v_2453ad): string {
 export const v_9e8766 = () => {
   const { t: v_8d41d7 } = v_772971();
   const v_c65f5d = v_ada615<v_390fcc<v_8ad91b>>();
+  const v_5f6b8d = v_5a0119();
+  const { verifiedGuest: v_3de945 } = v_4b2942();
   const [v_c86f08, v_d690d0] = v_5ab095<v_70edf1[]>([]);
   const [v_e7b2f2, v_1f1e88] = v_5ab095<string>('');
   const [v_cd31a8, v_deef62] = v_5ab095(false);
@@ -27,6 +33,31 @@ export const v_9e8766 = () => {
   const v_358be6 = v_de06a3(async () => {
     v_deef62(true);
     try {
+
+      let effectiveRole: v_5416aa = v_5f6b8d;
+      const v_b4f754 = await v_e84827.getItem(v_624bd2.memberInfo);
+      if (v_b4f754) {
+        try {
+          v_61deaf = v_fa6bdc(JSON.parse(v_b4f754) as Record<string, unknown>);
+        } catch {
+
+        }
+      }
+
+      if (v_61deaf === 'pharmacist') {
+        if (v_3de945) {
+          const v_37944d = `guest-${v_3de945.sessionId}`;
+          v_d690d0([
+            { id: v_37944d, name: v_3de945.name, isCurrent: true },
+          ]);
+          v_1f1e88(v_37944d);
+        } else {
+          v_d690d0([]);
+          v_1f1e88('');
+        }
+        return;
+      }
+
       console.log('[useAccountList] 계정 리스트 로드 시작...');
 
       let myAccount: v_70edf1 | null = null;
@@ -180,10 +211,10 @@ export const v_9e8766 = () => {
 
       if (v_f0f175.length > 0) {
         v_d690d0(v_f0f175);
-
-        if (!v_e7b2f2 || !v_f0f175.some((v_9f1d92) => v_9f1d92.id === v_e7b2f2)) {
-          v_1f1e88(v_f0f175[0].id);
-        }
+        v_1f1e88((v_ba2215) => {
+          if (v_ba2215 && v_f0f175.some((v_9f1d92) => v_9f1d92.id === v_ba2215)) return v_ba2215;
+          return v_f0f175[0].id;
+        });
         console.log('[useAccountList] 계정 리스트 설정 완료:', {
           totalCount: v_f0f175.length,
           selectedId: v_f0f175[0].id,
@@ -197,11 +228,11 @@ export const v_9e8766 = () => {
     } finally {
       v_deef62(false);
     }
-  }, [v_8d41d7, v_c65f5d, v_e7b2f2]);
+  }, [v_8d41d7, v_c65f5d, v_5f6b8d, v_3de945]);
 
   v_c4deb2(() => {
     v_358be6();
-  }, []); 
+  }, [v_358be6]);
 
   const v_5bc46a = v_de06a3(async (v_2453ad) => {
 

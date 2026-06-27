@@ -9,6 +9,12 @@ interface OtpInputProps {
   onChange?: (code: string) => void;
   showError?: boolean;
   editable?: boolean;
+  wrapperStyle?: object;
+  rowStyle?: object;
+  boxStyle?: object;
+  activeBoxStyle?: object;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const OtpInput: v_a3453e.FC<OtpInputProps> = ({
@@ -17,6 +23,12 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   onChange: v_b187d9,
   showError: v_f74c59,
   editable: v_87d063 = true,
+  wrapperStyle: v_31a2d4,
+  rowStyle: v_e77352,
+  boxStyle: v_79930a,
+  activeBoxStyle: v_841e53,
+  onFocus: v_cd3cee,
+  onBlur: v_40ce7e,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const [v_1036a8, v_c17726] = v_5ab095(v_3b402b);
@@ -40,9 +52,9 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   const v_0cc28c = Math.min(v_1036a8.length, v_724489 - 1);
 
   return (
-    <View style={v_d81136.wrapper}>
+    <View style={[v_d81136.wrapper, v_31a2d4]}>
       <Pressable
-        style={v_d81136.row}
+        style={[v_d81136.row, v_e77352]}
         onPress={() => {
           v_32f473.current?.focus();
         }}
@@ -57,7 +69,9 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
               key={`${v_a56041}`}
               style={[
                 v_d81136.box,
+                v_79930a,
                 v_26dce6 && v_d81136.boxActive,
+                v_26dce6 && v_841e53,
                 v_f74c59 && v_a56041 === v_0cc28c && v_d81136.boxError,
               ]}
             >
@@ -70,6 +84,8 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
         ref={v_32f473}
         value={v_1036a8}
         onChangeText={v_4090ac}
+        onFocus={v_cd3cee}
+        onBlur={v_40ce7e}
         keyboardType="number-pad"
         inputMode="numeric"
         maxLength={v_724489}

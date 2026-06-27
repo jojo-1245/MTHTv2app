@@ -7,7 +7,7 @@
       "metahintai"
     ],
     "version": "5.0.4",
-    "orientation": "portrait",
+    "orientation": "default",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
     "splash": {
@@ -39,6 +39,9 @@
         ],
         "LSApplicationQueriesSchemes": [
           "metahintai"
+        ],
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait"
         ]
       }
     },
@@ -91,6 +94,12 @@
     "plugins": [
       "./plugins/withKakaoRepo.js",
       "expo-localization",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
       "expo-apple-authentication",
       [
         "expo-build-properties",

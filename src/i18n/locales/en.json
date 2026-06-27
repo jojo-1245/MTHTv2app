@@ -1975,5 +1975,40 @@
       "agree": "Agree & send",
       "cancel": "Cancel"
     }
+  },
+  "pharmacist": {
+    "home_title": "Guest Verification",
+    "home_subtitle": "Verify customer info before analysis",
+    "bottom_nav_skin": "Skin",
+    "bottom_nav_health": "Health Analysis",
+    "guest_auth": {
+      "form_title": "Customer Information",
+      "form_heading": "Please enter\ncustomer details",
+      "otp_heading": "Enter\nverification code",
+      "verified_heading": "Verification\ncomplete",
+      "otp_field_label": "Verification code",
+      "verified_customer_label": "Verified customer",
+      "form_subtitle": "Enter name and phone number, then request a verification code.",
+      "name_placeholder": "Customer name",
+      "phone_placeholder": "01012345678",
+      "send_code": "Send verification code",
+      "otp_title": "Enter verification code",
+      "otp_subtitle": "Enter the 6-digit code sent to {{phone}}.",
+      "verify": "Verify",
+      "timer_remaining": "Time remaining {{time}}",
+      "timer_expired": "Verification code expired.",
+      "resend": "Resend code",
+      "verified_title": "Verified",
+      "analysis_hint": "Start health analysis or skin analysis\nfrom the buttons below or the bottom tabs.",
+      "new_guest": "Verify another customer",
+      "required_title": "Verification required",
+      "required_message": "Please complete customer verification before starting analysis.",
+      "go_verify": "Verify now",
+      "send_failed": "Failed to send verification code.",
+      "verify_failed": "Verification failed.",
+      "expired_request": "Verification request expired. Please try again.",
+      "dev_code_title": "Dev verification code",
+      "dev_code_message": "Test code: {{code}}"
+    }
   }
 }
