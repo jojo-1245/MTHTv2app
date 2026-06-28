@@ -1,8 +1,12 @@
-import v_a3453e, { v_5ab095, v_de06a3 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_de06a3, v_df9f57 } from 'bapkr';
 import {
   v_39a996,
+  v_03e392,
+  v_9cabcb,
   v_e767d1,
+  v_aa7413,
   v_326be8,
+  v_09d0e5,
   v_472849,
   v_19b633,
   v_79c4f2,
@@ -32,7 +36,11 @@ import {
   v_e76669,
   v_3dafc1,
 } from '../../services/pharmacistGuestApi';
-import { v_66896f, type v_443c12 } from '../../services/pharmacyApi';
+import {
+  v_66896f,
+  v_582387,
+  type v_443c12,
+} from '../../services/pharmacyApi';
 import {
   v_af2c88,
   v_d91974,
@@ -42,7 +50,14 @@ type Props = v_432191<v_8ad91b, 'PharmacistHome'>;
 
 type AuthStep = 'form' | 'otp' | 'verified';
 
+const v_b087a6 = 5;
+const v_3cf12d = 200;
+const v_0d8f46 = 0.88;
+const v_1ad284 = 440;
+
 const v_28d629 = 6;
+
+const v_cad514 = v_af2c88(14, 16);
 
 function v_bb47b9(v_3b402b): string {
   const v_e6d4a6 = v_3b402b.replace(/\D/g, '').slice(0, 11);
@@ -100,13 +115,43 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
   const [v_8fdb5e, v_0c5d4b] = v_5ab095<v_443c12[]>([]);
   const [v_970e84, v_13aff2] = v_5ab095(false);
   const [v_3d3f39, v_183269] = v_5ab095<string | null>(null);
+  const [v_b2f874, v_63873e] = v_5ab095(false);
+  const [v_06aecf, v_f2985a] = v_5ab095('');
 
   const v_aa102c = v_d74a81.replace(/\D/g, '');
   const v_210199 = !v_07589d && v_1833e7.trim().length > 0 && v_aa102c.length >= 10;
   const v_15a612 = !v_d1dd8f && v_aa596d.length >= v_28d629;
   const v_10f75e = !v_07589d && v_cb36b1 <= 240;
 
-  const v_18c30b = v_6c4b91.isTablet ? (v_6c4b91.isLandscape ? 560 : 480) : undefined;
+  const v_e599a1 = v_6c4b91.isTablet && v_6c4b91.isLandscape;
+  const v_f617b4 = v_6c4b91.width - v_6c4b91.horizontalPadding * 2;
+  const v_a2aab0 = Math.min(v_6c4b91.width * v_0d8f46, v_1ad284);
+
+  const v_280abb = v_df9f57(
+    () => v_8fdb5e.slice(0, v_b087a6),
+    [v_8fdb5e]
+  );
+
+  const v_7b7807 = v_df9f57(() => {
+    const v_ab6401 = v_06aecf.trim().toLowerCase();
+    const v_e6d4a6 = v_06aecf.replace(/\D/g, '');
+    if (!v_ab6401 && !v_e6d4a6) return v_8fdb5e;
+    return v_8fdb5e.filter((v_81e2ef) => {
+      const v_8cb36b = v_81e2ef.name.toLowerCase().includes(v_ab6401);
+      const v_3c21b3 = v_e6d4a6.length > 0 && v_81e2ef.phone.replace(/\D/g, '').includes(v_e6d4a6);
+      return v_8cb36b || v_3c21b3;
+    });
+  }, [v_8fdb5e, v_06aecf]);
+
+  const v_3be70d = v_de06a3(() => {
+    v_f2985a('');
+    v_63873e(true);
+  }, []);
+
+  const v_cea649 = v_de06a3(() => {
+    v_63873e(false);
+    v_f2985a('');
+  }, []);
 
   v_a3453e.useEffect(() => {
     if (v_729796 !== 'otp' || v_cb36b1 <= 0) return;
@@ -189,9 +234,37 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     await v_3fec5d(v_1833e7, v_d74a81);
   };
 
-  const v_a41235 = async (visitor: v_443c12) => {
+  const v_a41235 = async (visitor: v_443c12, v_7b5712) => {
+    v_cea649();
     v_9cf8a5();
     await v_3fec5d(v_e769c6.name, v_e769c6.phone);
+    v_7b5712?.();
+  };
+
+  const v_35e0b9 = (visitor: v_443c12) => {
+    v_03e392.alert(
+      v_8d41d7('pharmacist.visitor_list.delete_visitor_title'),
+      v_8d41d7('pharmacist.visitor_list.delete_visitor_message', { name: v_e769c6.name }),
+      [
+        { text: v_8d41d7('common.cancel'), style: 'cancel' },
+        {
+          text: v_8d41d7('health_records.delete', '삭제'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await v_582387(v_e769c6.id);
+              if (v_3de945?.visitorId === v_e769c6.id) {
+                v_9cf8a5();
+                v_fd7d1f('form');
+              }
+              await v_a933e0();
+            } catch (v_9e86fd) {
+              v_f74c59(v_9e86fd instanceof Error ? v_9e86fd.message : v_8d41d7('pharmacist.visitor_list.delete_failed'));
+            }
+          },
+        },
+      ]
+    );
   };
 
   const v_4f034c = async (v_2b9e3b) => {
@@ -257,47 +330,195 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     v_9b57fc('SkinAnalysis', { initialTab: 'measure' });
   };
 
-  const v_e1a617 = () => (
-    <View style={v_d81136.visitorSection}>
-      <Text style={v_d81136.visitorSectionTitle}>{v_8d41d7('pharmacist.visitor_list.title')}</Text>
-      <Text style={v_d81136.visitorSectionHint}>{v_8d41d7('pharmacist.visitor_list.select_reauth')}</Text>
+  const v_ee7d58 = (
+    <TouchableOpacity
+      style={v_d81136.headerVisitorsBtn}
+      onPress={v_3be70d}
+      activeOpacity={0.85}
+      accessibilityRole="button"
+      accessibilityLabel={v_8d41d7('pharmacist.visitor_list.title')}
+    >
+      <Feather name="users" size={v_af2c88(22, 24)} color="#615FFF" />
+    </TouchableOpacity>
+  );
+
+  const v_1224a5 = (
+    visitor: v_443c12,
+    v_b36f96 = {}
+  ) => {
+    const v_26dce6 = v_3de945?.visitorId === v_e769c6.id;
+    const { showDelete: v_205a67 = false, compact: v_c22a7a = false } = v_b36f96;
+
+    const v_7ceab6 = (
+      <>
+        <View style={v_d81136.visitorAvatar}>
+          <Feather name="user" size={v_af2c88(18, 20)} color={v_26dce6 ? '#615FFF' : '#6B7280'} />
+        </View>
+        <View style={v_d81136.visitorInfo}>
+          <Text style={v_d81136.visitorName}>{v_e769c6.name}</Text>
+          <Text style={v_d81136.visitorMeta}>
+            {v_bb47b9(v_e769c6.phone)}
+            {v_e769c6.recordCount > 0
+              ? ` · ${v_8d41d7('pharmacist.visitor_list.record_count', { count: v_e769c6.recordCount })}`
+              : ` · ${v_8d41d7('pharmacist.visitor_list.no_records_yet')}`}
+          </Text>
+        </View>
+      </>
+    );
+
+    if (v_205a67) {
+      return (
+        <View
+          key={v_e769c6.id}
+          style={[
+            v_d81136.visitorRow,
+            v_d81136.visitorRowPanel,
+            v_c22a7a && v_d81136.visitorRowCompact,
+            v_26dce6 && v_d81136.visitorRowActive,
+          ]}
+        >
+          <TouchableOpacity
+            style={v_d81136.visitorRowMain}
+            onPress={() => v_a41235(v_e769c6)}
+            disabled={v_07589d}
+            activeOpacity={0.85}
+          >
+            {v_7ceab6}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={v_d81136.visitorDeleteBtnInline}
+            onPress={() => v_35e0b9(v_e769c6)}
+            hitSlop={8}
+            accessibilityLabel={v_8d41d7('pharmacist.visitor_list.delete_visitor_title')}
+          >
+            <Feather name="trash-2" size={18} color="#EF4444" />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <View key={v_e769c6.id} style={v_d81136.visitorRowWrap}>
+        <TouchableOpacity
+          style={[
+            v_d81136.visitorRow,
+            v_c22a7a && v_d81136.visitorRowCompact,
+            v_26dce6 && v_d81136.visitorRowActive,
+          ]}
+          onPress={() => v_a41235(v_e769c6)}
+          disabled={v_07589d}
+          activeOpacity={0.85}
+        >
+          {v_7ceab6}
+          <Feather name="chevron-right" size={18} color="#9CA3AF" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const v_4ae1bb = () => (
+    <View style={v_d81136.recentVisitorsBlock}>
+      <View style={v_d81136.visitorSectionHeader}>
+        <View style={v_d81136.visitorSectionHeaderText}>
+          <Text style={v_d81136.visitorSectionTitle}>{v_8d41d7('pharmacist.visitor_list.recent_title')}</Text>
+          <Text style={v_d81136.visitorSectionHint}>
+            {v_8d41d7('pharmacist.visitor_list.recent_hint', { count: v_b087a6 })}
+          </Text>
+        </View>
+        {v_8fdb5e.length > v_b087a6 ? (
+          <TouchableOpacity onPress={v_3be70d} style={v_d81136.viewAllBtn}>
+            <Text style={v_d81136.viewAllText}>{v_8d41d7('pharmacist.visitor_list.view_all')}</Text>
+            <Feather name="chevron-right" size={16} color="#615FFF" />
+          </TouchableOpacity>
+        ) : null}
+      </View>
       {v_970e84 ? (
         <ActivityIndicator color={v_1bfbd0.primary} style={v_d81136.visitorLoader} />
       ) : v_3d3f39 ? (
         <Text style={v_d81136.visitorError}>{v_3d3f39}</Text>
-      ) : v_8fdb5e.length === 0 ? (
+      ) : v_280abb.length === 0 ? (
         <Text style={v_d81136.visitorEmpty}>{v_8d41d7('pharmacist.visitor_list.empty')}</Text>
       ) : (
         <View style={v_d81136.visitorList}>
-          {v_8fdb5e.map((v_e769c6) => {
-            const v_26dce6 = v_3de945?.visitorId === v_e769c6.id;
-            return (
-              <TouchableOpacity
-                key={v_e769c6.id}
-                style={[v_d81136.visitorRow, v_26dce6 && v_d81136.visitorRowActive]}
-                onPress={() => v_a41235(v_e769c6)}
-                disabled={v_07589d}
-                activeOpacity={0.85}
-              >
-                <View style={v_d81136.visitorAvatar}>
-                  <Feather name="user" size={v_af2c88(18, 20)} color={v_26dce6 ? '#615FFF' : '#6B7280'} />
-                </View>
-                <View style={v_d81136.visitorInfo}>
-                  <Text style={v_d81136.visitorName}>{v_e769c6.name}</Text>
-                  <Text style={v_d81136.visitorMeta}>
-                    {v_bb47b9(v_e769c6.phone)}
-                    {v_e769c6.recordCount > 0
-                      ? ` · ${v_8d41d7('pharmacist.visitor_list.record_count', { count: v_e769c6.recordCount })}`
-                      : ''}
-                  </Text>
-                </View>
-                <Feather name="chevron-right" size={18} color="#9CA3AF" />
-              </TouchableOpacity>
-            );
-          })}
+          {v_280abb.map((v_e769c6) => v_1224a5(v_e769c6, { compact: true }))}
         </View>
       )}
     </View>
+  );
+
+  const v_f4cdfe = () => (
+    <Modal
+      visible={v_b2f874}
+      transparent
+      animationType="fade"
+      onRequestClose={v_cea649}
+    >
+      <View style={v_d81136.panelRoot}>
+        <Pressable style={v_d81136.panelBackdrop} onPress={v_cea649} />
+        <View
+          style={[
+            v_d81136.panelSheet,
+            {
+              width: v_a2aab0,
+              paddingTop: v_033e14.top + v_af2c88(12, 16),
+              paddingBottom: v_033e14.bottom + v_af2c88(12, 16),
+            },
+          ]}
+        >
+          <View style={v_d81136.panelHeader}>
+            <Text style={v_d81136.panelTitle}>{v_8d41d7('pharmacist.visitor_list.title')}</Text>
+            <TouchableOpacity onPress={v_cea649} style={v_d81136.panelCloseBtn} hitSlop={8}>
+              <Feather name="x" size={22} color="#111111" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={v_d81136.panelSearchBox}>
+            <Feather name="search" size={18} color="#9CA3AF" />
+            <TextInput
+              style={v_d81136.panelSearchInput}
+              value={v_06aecf}
+              onChangeText={v_f2985a}
+              placeholder={v_8d41d7('pharmacist.visitor_list.search_placeholder')}
+              placeholderTextColor="#C4C4C4"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            {v_06aecf.length > 0 ? (
+              <TouchableOpacity onPress={() => v_f2985a('')} hitSlop={8}>
+                <Feather name="x-circle" size={18} color="#9CA3AF" />
+              </TouchableOpacity>
+            ) : null}
+          </View>
+
+          <Text style={v_d81136.panelCountText}>
+            {v_8d41d7('pharmacist.visitor_list.total_count', { count: v_8fdb5e.length })}
+            {v_8fdb5e.length >= v_3cf12d
+              ? ` · ${v_8d41d7('pharmacist.visitor_list.limit_hint', { limit: v_3cf12d })}`
+              : ''}
+          </Text>
+          <Text style={v_d81136.panelDeleteHint}>{v_8d41d7('pharmacist.visitor_list.delete_visitor_hint')}</Text>
+
+          {v_970e84 ? (
+            <ActivityIndicator color={v_1bfbd0.primary} style={v_d81136.visitorLoader} />
+          ) : v_3d3f39 ? (
+            <Text style={v_d81136.visitorError}>{v_3d3f39}</Text>
+          ) : (
+            <FlatList
+              data={v_7b7807}
+              keyExtractor={(v_8c0b26) => String(v_8c0b26.id)}
+              contentContainerStyle={v_d81136.panelListContent}
+              ItemSeparatorComponent={() => <View style={v_d81136.visitorListSeparator} />}
+              showsVerticalScrollIndicator
+              keyboardShouldPersistTaps="handled"
+              ListEmptyComponent={
+                <Text style={v_d81136.visitorEmpty}>{v_8d41d7('pharmacist.visitor_list.search_empty')}</Text>
+              }
+              renderItem={({ item: v_8c0b26 }) => v_1224a5(v_8c0b26, { showDelete: true, compact: true })}
+            />
+          )}
+        </View>
+      </View>
+    </Modal>
   );
 
   const v_003e08 = () => (
@@ -351,8 +572,6 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
           </Text>
         )}
       </TouchableOpacity>
-
-      {v_e1a617()}
     </View>
   );
 
@@ -460,7 +679,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
         {v_8d41d7('pharmacist.guest_auth.analysis_hint')}
       </Text>
 
-      <View style={[v_d81136.actionRow, v_6c4b91.isLandscape && v_d81136.actionRowLandscape]}>
+      <View style={[v_d81136.actionRow, v_6c4b91.isTablet && v_6c4b91.isLandscape && v_d81136.actionRowLandscape]}>
         <TouchableOpacity style={v_d81136.actionCard} onPress={v_985ec8} activeOpacity={0.85}>
           <View style={[v_d81136.actionIconCircle, v_d81136.actionIconHealth]}>
             <Feather name="activity" size={v_af2c88(24, 28)} color="#615FFF" />
@@ -478,10 +697,33 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       <TouchableOpacity onPress={v_f099d7} style={v_d81136.newGuestBtn} activeOpacity={0.7}>
         <Text style={v_d81136.newGuestText}>{v_8d41d7('pharmacist.guest_auth.new_guest')}</Text>
       </TouchableOpacity>
-
-      {v_e1a617()}
     </View>
   );
+
+  const v_c9e46b = () => {
+    if (v_729796 === 'otp') {
+      return v_1f1fc7();
+    }
+
+    const v_49b18e = v_729796 === 'form' ? v_003e08() : v_9c4dd3();
+    const v_e488af = v_4ae1bb();
+
+    if (v_e599a1) {
+      return (
+        <View style={v_d81136.twoColumnRow}>
+          <View style={v_d81136.twoColumnCol}>{v_49b18e}</View>
+          <View style={v_d81136.twoColumnCol}>{v_e488af}</View>
+        </View>
+      );
+    }
+
+    return (
+      <View style={v_d81136.singleColumnStack}>
+        {v_49b18e}
+        {v_e488af}
+      </View>
+    );
+  };
 
   return (
     <MainLayout activeKey="home">
@@ -494,8 +736,8 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
           iconLeft={<Feather name="home" size={24} color="#FFFFFF" />}
           title={v_8d41d7('pharmacist.home_title')}
           subtitle={v_8d41d7('pharmacist.home_subtitle')}
-          centerContentMaxWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.contentColumnWidth}
-          centerContentPadding={v_6c4b91.isTablet ? undefined : v_6c4b91.horizontalPadding}
+          rightAccessory={v_ee7d58}
+          centerContentMaxWidth={undefined}
           containerStyle={{ paddingTop: v_033e14.top + (v_6c4b91.isLandscape ? 12 : v_af2c88(12, 20)) }}
         />
         <SafeScrollView
@@ -512,15 +754,16 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
         >
           <CenteredContentShell
             backgroundColor="#FAFAFA"
-            applyHorizontalPadding={false}
-            contentStyle={{ maxWidth: v_18c30b, width: '100%' }}
+            applyHorizontalPadding={v_6c4b91.isTablet}
+            contentColumnWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.width}
+            contentStyle={{ width: '100%', ...(v_6c4b91.isTablet ? { maxWidth: v_f617b4 } : null) }}
           >
-            {v_729796 === 'form' && v_003e08()}
-            {v_729796 === 'otp' && v_1f1fc7()}
-            {v_729796 === 'verified' && v_9c4dd3()}
+            {v_c9e46b()}
           </CenteredContentShell>
         </SafeScrollView>
       </KeyboardAvoidingView>
+
+      {v_f4cdfe()}
 
       <AlertModal
         visible={!!v_5c50c0}
@@ -541,10 +784,135 @@ const v_d81136 = v_472849.create({
   },
   formStep: {
     width: '100%',
-    paddingHorizontal: v_af2c88(20, 32),
-    paddingTop: v_af2c88(8, 16),
-    paddingBottom: v_af2c88(24, 32),
-    gap: v_af2c88(24, 32),
+    paddingHorizontal: v_af2c88(20, 28),
+    paddingTop: v_af2c88(8, 12),
+    paddingBottom: v_af2c88(16, 20),
+    gap: v_af2c88(16, 20),
+  },
+  headerVisitorsBtn: {
+    width: v_af2c88(40, 44),
+    height: v_af2c88(40, 44),
+    borderRadius: v_cad514,
+    backgroundColor: '#EEF2FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  twoColumnRow: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: v_af2c88(20, 28),
+  },
+  twoColumnCol: {
+    flex: 1,
+    minWidth: 0,
+  },
+  singleColumnStack: {
+    width: '100%',
+    gap: v_af2c88(12, 16),
+  },
+  recentVisitorsBlock: {
+    width: '100%',
+    paddingHorizontal: v_af2c88(20, 28),
+    paddingTop: v_af2c88(4, 8),
+    paddingBottom: v_af2c88(16, 20),
+    gap: v_af2c88(8, 10),
+  },
+  panelRoot: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  panelBackdrop: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  panelSheet: {
+    height: '100%',
+    backgroundColor: '#FAFAFA',
+    borderTopLeftRadius: v_af2c88(18, 22),
+    borderBottomLeftRadius: v_af2c88(18, 22),
+    paddingHorizontal: v_af2c88(16, 20),
+    ...v_326be8.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: -4, height: 0 },
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+      },
+      android: { elevation: 12 },
+    }),
+  },
+  panelHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: v_af2c88(12, 16),
+  },
+  panelTitle: {
+    fontFamily: v_843035.bold,
+    fontSize: v_af2c88(18, 20),
+    color: '#111111',
+  },
+  panelCloseBtn: {
+    padding: 4,
+  },
+  panelSearchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: v_af2c88(12, 14),
+    paddingHorizontal: v_af2c88(12, 14),
+    paddingVertical: v_af2c88(10, 12),
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginBottom: v_af2c88(10, 12),
+  },
+  panelSearchInput: {
+    flex: 1,
+    fontFamily: v_843035.medium,
+    fontSize: v_af2c88(15, 16),
+    color: '#111111',
+    padding: 0,
+    margin: 0,
+  },
+  panelCountText: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(13, 14),
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  panelDeleteHint: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(12, 13),
+    color: '#9CA3AF',
+    marginBottom: v_af2c88(8, 10),
+    lineHeight: v_af2c88(18, 20),
+  },
+  panelListContent: {
+    paddingBottom: v_af2c88(12, 16),
+  },
+  viewAllBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    paddingVertical: 4,
+  },
+  viewAllText: {
+    fontFamily: v_843035.semibold,
+    fontSize: v_af2c88(13, 14),
+    color: '#615FFF',
+  },
+  visitorSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  visitorSectionHeaderText: {
+    flex: 1,
+    gap: 4,
   },
   formHeading: {
     fontFamily: v_843035.bold,
@@ -564,9 +932,9 @@ const v_d81136 = v_472849.create({
   },
   authFieldBox: {
     backgroundColor: v_1bfbd0.white,
-    borderRadius: v_af2c88(18, 22),
-    paddingHorizontal: v_af2c88(18, 22),
-    paddingVertical: v_af2c88(16, 20),
+    borderRadius: v_cad514,
+    paddingHorizontal: v_af2c88(16, 18),
+    paddingVertical: v_af2c88(14, 16),
     borderWidth: 2,
     borderColor: 'transparent',
     ...v_326be8.select({
@@ -608,8 +976,8 @@ const v_d81136 = v_472849.create({
   },
   capsuleBtn: {
     width: '100%',
-    minHeight: v_af2c88(54, 58),
-    borderRadius: 999,
+    minHeight: v_af2c88(52, 56),
+    borderRadius: v_cad514,
     backgroundColor: '#111111',
     alignItems: 'center',
     justifyContent: 'center',
@@ -638,7 +1006,7 @@ const v_d81136 = v_472849.create({
     minWidth: 0,
     width: undefined,
     height: v_af2c88(48, 52),
-    borderRadius: v_af2c88(12, 14),
+    borderRadius: v_cad514,
     borderWidth: 1,
     borderColor: '#E5E7EB',
     marginHorizontal: 0,
@@ -782,8 +1150,7 @@ const v_d81136 = v_472849.create({
   },
   visitorSection: {
     width: '100%',
-    gap: v_af2c88(8, 10),
-    marginTop: v_af2c88(4, 8),
+    gap: v_af2c88(10, 12),
   },
   visitorSectionTitle: {
     fontFamily: v_843035.bold,
@@ -812,16 +1179,22 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_af2c88(8, 12),
   },
   visitorList: {
-    gap: v_af2c88(8, 10),
+    gap: v_af2c88(6, 8),
+  },
+  visitorListSeparator: {
+    height: v_af2c88(4, 6),
+  },
+  visitorRowWrap: {
+    width: '100%',
   },
   visitorRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: v_af2c88(12, 14),
+    gap: v_af2c88(10, 12),
     backgroundColor: v_1bfbd0.white,
-    borderRadius: v_af2c88(14, 18),
-    paddingHorizontal: v_af2c88(14, 18),
-    paddingVertical: v_af2c88(12, 14),
+    borderRadius: v_af2c88(12, 14),
+    paddingHorizontal: v_af2c88(12, 16),
+    paddingVertical: v_af2c88(10, 12),
     borderWidth: 2,
     borderColor: 'transparent',
     ...v_326be8.select({
@@ -832,6 +1205,34 @@ const v_d81136 = v_472849.create({
         shadowRadius: 8,
       },
       android: { elevation: 2 },
+    }),
+  },
+  visitorRowPanel: {
+    paddingRight: v_af2c88(8, 10),
+  },
+  visitorRowMain: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_af2c88(10, 12),
+    minWidth: 0,
+  },
+  visitorDeleteBtnInline: {
+    width: v_af2c88(40, 44),
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+  },
+  visitorRowCompact: {
+    paddingVertical: v_af2c88(8, 10),
+    gap: v_af2c88(8, 10),
+    borderRadius: v_af2c88(10, 12),
+    ...v_326be8.select({
+      ios: {
+        shadowOpacity: 0.03,
+        shadowRadius: 4,
+      },
+      android: { elevation: 1 },
     }),
   },
   visitorRowActive: {

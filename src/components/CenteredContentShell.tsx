@@ -9,6 +9,8 @@ export interface CenteredContentShellProps {
   backgroundColor?: string;
 
   applyHorizontalPadding?: boolean;
+
+  contentColumnWidth?: number;
 }
 
 const CenteredContentShell: v_a3453e.FC<CenteredContentShellProps> = ({
@@ -17,8 +19,11 @@ const CenteredContentShell: v_a3453e.FC<CenteredContentShellProps> = ({
   contentStyle: v_9c5a07,
   backgroundColor: v_f7b9fb,
   applyHorizontalPadding: v_926e68 = true,
+  contentColumnWidth: v_bc932c,
 }) => {
-  const { contentColumnWidth: v_541e93, horizontalPadding: v_30e711 } = v_d91974();
+  const v_6c4b91 = v_d91974();
+  const v_541e93 = v_bc932c ?? v_6c4b91.contentColumnWidth;
+  const v_30e711 = v_6c4b91.horizontalPadding;
 
   return (
     <View

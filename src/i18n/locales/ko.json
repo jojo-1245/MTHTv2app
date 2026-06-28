@@ -3020,6 +3020,7 @@
             "required_title": "고객 인증 필요",
             "required_message": "분석을 시작하려면 먼저 고객 이름과 휴대폰 인증을 완료해주세요.",
             "go_verify": "인증하기",
+            "measure_reauth_message": "측정하려면 선택한 고객으로 OTP 인증을 완료해주세요.",
             "send_failed": "인증번호 전송에 실패했습니다.",
             "verify_failed": "인증에 실패했습니다.",
             "expired_request": "인증 요청이 만료되었습니다. 다시 시도해주세요.",
@@ -3031,7 +3032,23 @@
             "empty": "아직 측정한 고객이 없습니다.",
             "record_count": "검진 {{count}}회",
             "select_reauth": "고객을 선택하면 OTP 재인증 후 분석할 수 있습니다.",
-            "load_failed": "고객 목록을 불러오지 못했습니다."
+            "load_failed": "고객 목록을 불러오지 못했습니다.",
+            "total_count": "총 {{count}}명",
+            "limit_hint": "최근 {{limit}}명까지 표시",
+            "recent_title": "최근 측정 고객",
+            "recent_hint": "최근 {{count}}명까지 표시",
+            "view_all": "전체 보기",
+            "search_placeholder": "이름 또는 전화번호 검색",
+            "search_empty": "검색 결과가 없습니다.",
+            "no_records_yet": "검진 이력 없음",
+            "delete_visitor_hint": "휴지통을 누르면 고객이 목록에서 삭제됩니다.",
+            "delete_visitor_title": "고객 삭제",
+            "delete_visitor_message": "{{name}} 고객을 목록에서 삭제하시겠습니까? 검진 이력이 있으면 함께 삭제됩니다.",
+            "delete_visitor_success": "고객이 삭제되었습니다.",
+            "delete_all_title": "검진 이력 삭제",
+            "delete_all_message": "{{name}} 고객의 모든 검진 이력을 삭제하시겠습니까? 고객 정보는 유지됩니다.",
+            "delete_all_success": "검진 이력이 삭제되었습니다.",
+            "delete_failed": "검진 이력 삭제에 실패했습니다."
         }
     },
     "medical_disclaimer": {
