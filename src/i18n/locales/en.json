@@ -54,7 +54,8 @@
   "account_selector": {
     "title": "Account Selection",
     "add_sub_account": "Add Sub-account",
-    "delete": "Delete"
+    "delete": "Delete",
+    "empty": "No accounts found."
   },
   "sub_account": {
     "relationship": {
@@ -1156,7 +1157,7 @@
       "result_preparing_session": "Cleaning up session...",
       "result_missing_title": "Result Incomplete",
       "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen.",
-      "medical_disclaimer": "The measurement results are for reference only and not for medical use. Please consult a doctor if you have any health concerns."
+      "medical_disclaimer": "The measurement results are for reference only and not for medical use.\nPlease consult a doctor if you have any health concerns."
     },
     "result": {
       "detail_info": "Detail Info",
@@ -2009,6 +2010,13 @@
       "expired_request": "Verification request expired. Please try again.",
       "dev_code_title": "Dev verification code",
       "dev_code_message": "Test code: {{code}}"
+    },
+    "visitor_list": {
+      "title": "Measured customers",
+      "empty": "No customers measured yet.",
+      "record_count": "{{count}} screening(s)",
+      "select_reauth": "Select a customer, then complete OTP verification to start analysis.",
+      "load_failed": "Failed to load customer list."
     }
   }
 }

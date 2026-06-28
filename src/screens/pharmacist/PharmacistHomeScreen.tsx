@@ -1,4 +1,4 @@
-import v_a3453e, { v_5ab095 } from 'bapkr';
+import v_a3453e, { v_5ab095, v_de06a3 } from 'bapkr';
 import {
   v_39a996,
   v_e767d1,
@@ -10,6 +10,7 @@ import {
   v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
+import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
@@ -31,6 +32,7 @@ import {
   v_e76669,
   v_3dafc1,
 } from '../../services/pharmacistGuestApi';
+import { v_66896f, type v_443c12 } from '../../services/pharmacyApi';
 import {
   v_af2c88,
   v_d91974,
@@ -78,7 +80,7 @@ const GuestAuthField: v_a3453e.FC<GuestAuthFieldProps> = ({
   </View>
 );
 
-const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
+const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
@@ -95,6 +97,9 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_5c50c0, v_199f88] = v_5ab095<{ title: string; message: string } | null>(null);
   const [v_b4aca1, v_c679ff] = v_5ab095<'name' | 'phone' | null>(null);
   const [v_ecc251, v_96a3c6] = v_5ab095(false);
+  const [v_8fdb5e, v_0c5d4b] = v_5ab095<v_443c12[]>([]);
+  const [v_970e84, v_13aff2] = v_5ab095(false);
+  const [v_3d3f39, v_183269] = v_5ab095<string | null>(null);
 
   const v_aa102c = v_d74a81.replace(/\D/g, '');
   const v_210199 = !v_07589d && v_1833e7.trim().length > 0 && v_aa102c.length >= 10;
@@ -119,10 +124,31 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
     v_199f88({ title: v_8d41d7('common.error'), message: v_a8cd21 });
   };
 
-  const v_2de427 = async () => {
+  const v_a933e0 = v_de06a3(async () => {
+    v_13aff2(true);
+    v_183269(null);
+    try {
+      const v_ef8ab1 = await v_66896f();
+      v_0c5d4b(v_ef8ab1);
+    } catch (v_9e86fd) {
+      v_183269(v_9e86fd instanceof Error ? v_9e86fd.message : v_8d41d7('pharmacist.visitor_list.load_failed'));
+    } finally {
+      v_13aff2(false);
+    }
+  }, [v_8d41d7]);
+
+  v_cf763b(
+    v_de06a3(() => {
+      v_a933e0();
+    }, [v_a933e0])
+  );
+
+  const v_3fec5d = v_de06a3(async (v_bf301a, v_25b518) => {
     v_9fbff7(true);
     try {
-      const v_43c42e = await v_cb0098({ name: v_1833e7, phone: v_d74a81 });
+      const v_43c42e = await v_cb0098({ name: v_bf301a, phone: v_25b518 });
+      v_318f24(v_bf301a);
+      v_fcce73(v_25b518);
       v_f07cc4('');
       v_6a8302(v_43c42e.expiresIn ?? 180);
       v_fd7d1f('otp');
@@ -137,6 +163,35 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
     } finally {
       v_9fbff7(false);
     }
+  }, [v_8d41d7]);
+
+  v_a3453e.useEffect(() => {
+    const v_24baff = v_c7daf6.params;
+    if (!v_24baff?.prefillName || !v_24baff?.prefillPhone || !v_24baff.autoSendOtp) return;
+    v_9cf8a5();
+    v_fd7d1f('form');
+    v_3fec5d(v_24baff.prefillName, v_24baff.prefillPhone);
+    v_c65f5d.setParams({
+      prefillName: undefined,
+      prefillPhone: undefined,
+      autoSendOtp: undefined,
+    });
+  }, [
+    v_c7daf6.params?.prefillName,
+    v_c7daf6.params?.prefillPhone,
+    v_c7daf6.params?.autoSendOtp,
+    v_9cf8a5,
+    v_3fec5d,
+    v_c65f5d,
+  ]);
+
+  const v_2de427 = async () => {
+    await v_3fec5d(v_1833e7, v_d74a81);
+  };
+
+  const v_a41235 = async (visitor: v_443c12) => {
+    v_9cf8a5();
+    await v_3fec5d(v_e769c6.name, v_e769c6.phone);
   };
 
   const v_4f034c = async (v_2b9e3b) => {
@@ -158,6 +213,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
       v_318f24(v_43c42e.name);
       v_fcce73(v_43c42e.phone);
       v_fd7d1f('verified');
+      v_a933e0();
     } catch (v_9e86fd) {
       v_f74c59(v_9e86fd instanceof Error ? v_9e86fd.message : v_8d41d7('pharmacist.guest_auth.verify_failed'));
     } finally {
@@ -200,6 +256,49 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
   const v_9026f2 = () => {
     v_9b57fc('SkinAnalysis', { initialTab: 'measure' });
   };
+
+  const v_e1a617 = () => (
+    <View style={v_d81136.visitorSection}>
+      <Text style={v_d81136.visitorSectionTitle}>{v_8d41d7('pharmacist.visitor_list.title')}</Text>
+      <Text style={v_d81136.visitorSectionHint}>{v_8d41d7('pharmacist.visitor_list.select_reauth')}</Text>
+      {v_970e84 ? (
+        <ActivityIndicator color={v_1bfbd0.primary} style={v_d81136.visitorLoader} />
+      ) : v_3d3f39 ? (
+        <Text style={v_d81136.visitorError}>{v_3d3f39}</Text>
+      ) : v_8fdb5e.length === 0 ? (
+        <Text style={v_d81136.visitorEmpty}>{v_8d41d7('pharmacist.visitor_list.empty')}</Text>
+      ) : (
+        <View style={v_d81136.visitorList}>
+          {v_8fdb5e.map((v_e769c6) => {
+            const v_26dce6 = v_3de945?.visitorId === v_e769c6.id;
+            return (
+              <TouchableOpacity
+                key={v_e769c6.id}
+                style={[v_d81136.visitorRow, v_26dce6 && v_d81136.visitorRowActive]}
+                onPress={() => v_a41235(v_e769c6)}
+                disabled={v_07589d}
+                activeOpacity={0.85}
+              >
+                <View style={v_d81136.visitorAvatar}>
+                  <Feather name="user" size={v_af2c88(18, 20)} color={v_26dce6 ? '#615FFF' : '#6B7280'} />
+                </View>
+                <View style={v_d81136.visitorInfo}>
+                  <Text style={v_d81136.visitorName}>{v_e769c6.name}</Text>
+                  <Text style={v_d81136.visitorMeta}>
+                    {v_bb47b9(v_e769c6.phone)}
+                    {v_e769c6.recordCount > 0
+                      ? ` · ${v_8d41d7('pharmacist.visitor_list.record_count', { count: v_e769c6.recordCount })}`
+                      : ''}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="#9CA3AF" />
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
+    </View>
+  );
 
   const v_003e08 = () => (
     <View style={v_d81136.formStep}>
@@ -252,6 +351,8 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
           </Text>
         )}
       </TouchableOpacity>
+
+      {v_e1a617()}
     </View>
   );
 
@@ -377,6 +478,8 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
       <TouchableOpacity onPress={v_f099d7} style={v_d81136.newGuestBtn} activeOpacity={0.7}>
         <Text style={v_d81136.newGuestText}>{v_8d41d7('pharmacist.guest_auth.new_guest')}</Text>
       </TouchableOpacity>
+
+      {v_e1a617()}
     </View>
   );
 
@@ -676,6 +779,86 @@ const v_d81136 = v_472849.create({
     fontSize: v_af2c88(15, 16),
     color: '#6B7280',
     textDecorationLine: 'underline',
+  },
+  visitorSection: {
+    width: '100%',
+    gap: v_af2c88(8, 10),
+    marginTop: v_af2c88(4, 8),
+  },
+  visitorSectionTitle: {
+    fontFamily: v_843035.bold,
+    fontSize: v_af2c88(16, 18),
+    color: '#111111',
+  },
+  visitorSectionHint: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(13, 14),
+    color: '#6B7280',
+    lineHeight: v_af2c88(20, 22),
+  },
+  visitorLoader: {
+    marginVertical: v_af2c88(12, 16),
+  },
+  visitorEmpty: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(14, 15),
+    color: '#9CA3AF',
+    paddingVertical: v_af2c88(8, 12),
+  },
+  visitorError: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(14, 15),
+    color: '#EF4444',
+    paddingVertical: v_af2c88(8, 12),
+  },
+  visitorList: {
+    gap: v_af2c88(8, 10),
+  },
+  visitorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_af2c88(12, 14),
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: v_af2c88(14, 18),
+    paddingHorizontal: v_af2c88(14, 18),
+    paddingVertical: v_af2c88(12, 14),
+    borderWidth: 2,
+    borderColor: 'transparent',
+    ...v_326be8.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+      },
+      android: { elevation: 2 },
+    }),
+  },
+  visitorRowActive: {
+    borderColor: '#615FFF',
+    backgroundColor: '#F5F3FF',
+  },
+  visitorAvatar: {
+    width: v_af2c88(36, 40),
+    height: v_af2c88(36, 40),
+    borderRadius: v_af2c88(18, 20),
+    backgroundColor: '#F3F4F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  visitorInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  visitorName: {
+    fontFamily: v_843035.semibold,
+    fontSize: v_af2c88(16, 17),
+    color: '#111111',
+  },
+  visitorMeta: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(13, 14),
+    color: '#6B7280',
   },
 });
 
