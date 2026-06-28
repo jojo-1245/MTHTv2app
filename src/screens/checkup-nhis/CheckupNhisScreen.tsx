@@ -114,7 +114,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
           showsVerticalScrollIndicator={false}
         >
           {v_ab4803 === 'form' && (
-            <View>
+            <View style={v_d81136.form}>
               <TextField
                 label="이름"
                 value={v_f08a5e}
@@ -268,6 +268,9 @@ const v_d81136 = v_472849.create({
   body: {
     padding: v_9b1a04.large,
     paddingBottom: v_9b1a04.xlarge,
+  },
+  form: {
+    gap: v_9b1a04.medium,
   },
   label: {
     fontSize: v_ef658a.medium,

@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getEnv } from '../utils/env';
 import { STORAGE_KEYS } from '../constants';
 import { setCachedToken, clearCachedToken } from '../utils/tokenCache';
+import { normalizeMemberForSession } from '../utils/userRole';
 
 const API_TIMEOUT = 20000;
 
@@ -339,10 +340,13 @@ export async function persistAuthSession(
   }
   const userPayload = payload.user ?? (payload as Record<string, unknown>).member;
   if (userPayload !== undefined && userPayload !== null) {
-    await AsyncStorage.setItem(
-      STORAGE_KEYS.memberInfo,
-      typeof userPayload === 'string' ? userPayload : JSON.stringify(userPayload)
-    );
+    const toStore =
+      typeof userPayload === 'string'
+        ? userPayload
+        : JSON.stringify(
+            normalizeMemberForSession(userPayload as Record<string, unknown>)
+          );
+    await AsyncStorage.setItem(STORAGE_KEYS.memberInfo, toStore);
   }
 
   if (keepLoggedIn) {
@@ -380,8 +384,9 @@ export interface MeProfile {
   firstname?: string;
   lastname?: string;
   referral_code?: string;
-  tier?: 'wm' | 'bm' | 'pm' | 'WM' | 'BM' | 'PM' | string;
+  tier?: 'wm' | 'bm' | 'pm' | 'ph' | 'WM' | 'BM' | 'PM' | 'PH' | string;
   business?: number | boolean; 
+  member_type?: number; 
   [key: string]: unknown;
 }
 
