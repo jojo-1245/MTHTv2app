@@ -39,6 +39,27 @@ function v_b37be4<T>(v_8f00b9): T {
   return v_931bf0;
 }
 
+export type PharmacyVisitorSummary = {
+  id: number;
+  name: string;
+  phone: string;
+  createdAt: string;
+  lastVisitAt: string | null;
+  recordCount: number;
+};
+
+export async function v_66896f(): Promise<PharmacyVisitorSummary[]> {
+  try {
+    const v_8f00b9 = await v_9a8286.get<{ success: boolean; data: { visitors: PharmacyVisitorSummary[] } }>(
+      '/oth-path'
+    );
+    const v_9390e8 = v_b37be4(v_8f00b9);
+    return v_9390e8.visitors ?? [];
+  } catch (v_5e9bfe) {
+    throw new Error(v_9f9d96(v_5e9bfe, '방문 고객 목록을 불러오지 못했습니다.'));
+  }
+}
+
 export async function v_119173(v_24baff): Promise<{ expiresIn: number; dev?: boolean }> {
   const v_1833e7 = v_24baff.name.trim();
   const v_d74a81 = v_24baff.phone.replace(/\D/g, '');

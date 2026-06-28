@@ -6,6 +6,7 @@ import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import type { v_8ad91b } from '../navigation';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_766523, v_7ef860, v_6a59bc, type v_abf760 } from '../services';
+import { v_66896f, type v_443c12 } from '../services/pharmacyApi';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_624bd2 } from '../constants';
 import type { v_70edf1 } from '../components/AccountSelector';
@@ -45,15 +46,38 @@ export const v_9e8766 = () => {
       }
 
       if (v_61deaf === 'pharmacist') {
-        if (v_3de945) {
-          const v_37944d = `guest-${v_3de945.visitorId ?? v_3de945.sessionId}`;
-          v_d690d0([
-            { id: v_37944d, name: v_3de945.name, isCurrent: true },
-          ]);
-          v_1f1e88(v_37944d);
+        let visitors: v_443c12[] = [];
+        try {
+          v_8fdb5e = await v_66896f();
+        } catch (v_5e9bfe) {
+          console.warn('[useAccountList] pharmacy visitors load failed:', v_5e9bfe);
+          if (v_998b9d(v_c65f5d, v_5e9bfe)) {
+            return;
+          }
+        }
+
+        const visitorAccounts: v_70edf1[] = v_8fdb5e.map((v_81e2ef) => ({
+          id: `guest-${v_81e2ef.id}`,
+          name: v_81e2ef.name || v_8d41d7('sub_account.relationship.guest', '손님'),
+          phone: v_81e2ef.phone,
+          visitorId: v_81e2ef.id,
+          lastVisitAt: v_81e2ef.lastVisitAt,
+          recordCount: v_81e2ef.recordCount,
+          isCurrent: v_3de945?.visitorId === v_81e2ef.id,
+        }));
+
+        v_d690d0(v_29d9b2);
+
+        if (v_3de945?.visitorId) {
+          const v_fa2ccb = `guest-${v_3de945.visitorId}`;
+          v_1f1e88((v_ba2215) =>
+            v_ba2215 === v_fa2ccb || !v_29d9b2.some((v_779914) => v_779914.id === v_ba2215) ? v_fa2ccb : v_ba2215
+          );
         } else {
-          v_d690d0([]);
-          v_1f1e88('');
+          v_1f1e88((v_ba2215) => {
+            if (v_ba2215 && v_29d9b2.some((v_779914) => v_779914.id === v_ba2215)) return v_ba2215;
+            return v_29d9b2[0]?.id ?? '';
+          });
         }
         return;
       }
@@ -294,12 +318,32 @@ export const v_9e8766 = () => {
   }, [v_358be6]);
 
   const v_42b67a = v_de06a3((v_2453ad) => {
-
     v_c65f5d.navigate('AddSubAccount', { 
       showEmailSearch: true,
-      subAccountId: v_2453ad, 
+      subAccountId: v_2453ad,
     });
   }, [v_c65f5d]);
+
+  const v_ccc6c8 = v_de06a3((v_2453ad) => {
+    const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
+    if (!v_b4542a) return;
+
+    if (v_3de945 && `guest-${v_3de945.visitorId}` === v_2453ad) {
+      v_1f1e88(v_2453ad);
+      return;
+    }
+
+    if (!v_b4542a.phone) {
+      v_1f1e88(v_2453ad);
+      return;
+    }
+
+    v_c65f5d.navigate('PharmacistHome', {
+      prefillName: v_b4542a.name,
+      prefillPhone: v_b4542a.phone,
+      autoSendOtp: true,
+    });
+  }, [v_c86f08, v_3de945, v_c65f5d]);
 
   return {
     accounts: v_c86f08,
@@ -310,6 +354,7 @@ export const v_9e8766 = () => {
     handleAddUser: v_20289f,
     handleLinkEmail: v_42b67a,
     reloadAccounts: v_358be6,
+    selectPharmacyVisitor: v_ccc6c8,
   };
 };
 

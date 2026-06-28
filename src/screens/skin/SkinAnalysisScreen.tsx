@@ -303,8 +303,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         handleDeleteAccount: v_5bc46a,
         handleLinkEmail: v_42b67a,
         reloadAccounts: v_604e0f,
+        selectPharmacistVisitor: v_2e22d1,
     } = v_9e8766();
     const v_5f6b8d = v_5a0119();
+    const v_160272 = v_5f6b8d === 'pharmacist';
     const { verifiedGuest: v_3de945 } = v_4b2942();
 
     v_cf763b(
@@ -2080,11 +2082,15 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <AccountSelector
                             accounts={v_c86f08}
                             selectedAccountId={v_e7b2f2}
-                            onSelectAccount={v_1f1e88}
-                            onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-                            onDeleteAccount={v_5bc46a}
-                            onLinkEmail={v_42b67a}
+                            onSelectAccount={v_160272 ? v_2e22d1 : v_1f1e88}
+                            onAddSubAccount={v_160272 ? undefined : () => v_c65f5d.navigate('AddSubAccount')}
+                            onDeleteAccount={v_160272 ? undefined : v_5bc46a}
+                            onLinkEmail={v_160272 ? undefined : v_42b67a}
                             disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
+                            autoLoad={!v_160272}
+                            pharmacistMode={v_160272}
+                            modalTitle={v_160272 ? v_8d41d7('pharmacist.visitor_list.title') : undefined}
+                            emptyText={v_160272 ? v_8d41d7('pharmacist.visitor_list.empty') : undefined}
                         />
                     </View>
                 </View>

@@ -50,7 +50,11 @@ export type RootStackParamList = {
   Intro: undefined;
   Home: undefined;
   MetaHome: undefined;
-  PharmacistHome: undefined;
+  PharmacistHome: {
+    prefillName?: string;
+    prefillPhone?: string;
+    autoSendOtp?: boolean;
+  } | undefined;
   Login: undefined;
   Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'naver' } | undefined;
   ForgotPassword: undefined;

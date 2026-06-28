@@ -55,7 +55,8 @@
         "title": "계정 선택",
         "add_sub_account": "부계정 추가하기",
         "delete": "삭제",
-        "link_email": "이메일 연결"
+        "link_email": "이메일 연결",
+        "empty": "계정이 없습니다."
     },
     "sub_account": {
         "relationship": {
@@ -1174,7 +1175,7 @@
             "result_preparing_session": "세션 정리 중...",
             "result_missing_title": "결과 항목 누락",
             "result_missing_message": "측정 결과 항목이 누락되었습니다. 확인을 누르면 세션을 종료하고 측정 첫 화면으로 이동합니다.",
-            "medical_disclaimer": "본 서비스의 측정 결과는 의료용이 아니며, 참고용으로만 사용하시기 바랍니다. 건강에 이상이 느껴지면 반드시 의사와 상담하십시오."
+            "medical_disclaimer": "본 서비스의 측정 결과는 의료용이 아니며, 참고용으로만 사용하시기 바랍니다.\n건강에 이상이 느껴지면 반드시 의사와 상담하십시오."
         },
         "result": {
             "detail_info": "상세 정보",
@@ -3024,6 +3025,13 @@
             "expired_request": "인증 요청이 만료되었습니다. 다시 시도해주세요.",
             "dev_code_title": "개발용 인증번호",
             "dev_code_message": "테스트용 인증번호: {{code}}"
+        },
+        "visitor_list": {
+            "title": "측정 고객",
+            "empty": "아직 측정한 고객이 없습니다.",
+            "record_count": "검진 {{count}}회",
+            "select_reauth": "고객을 선택하면 OTP 재인증 후 분석할 수 있습니다.",
+            "load_failed": "고객 목록을 불러오지 못했습니다."
         }
     },
     "medical_disclaimer": {

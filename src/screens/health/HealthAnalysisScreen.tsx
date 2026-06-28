@@ -252,8 +252,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     handleAddUser: v_20289f,
     handleLinkEmail: v_42b67a,
     reloadAccounts: v_604e0f,
+    selectPharmacistVisitor: v_2e22d1,
   } = v_9e8766();
   const v_5f6b8d = v_5a0119();
+  const v_160272 = v_5f6b8d === 'pharmacist';
   const { verifiedGuest: v_3de945 } = v_4b2942();
 
   const v_bc50c7 = v_34ffee();
@@ -435,6 +437,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_b3c379, v_f36dd5] = v_5ab095<string | undefined>();
   const [v_12abe8, v_8a8952] = v_5ab095<string | undefined>();
   const [v_cc7953, v_847de1] = v_5ab095({ x: 0, y: 0, width: 0, height: 0 });
+  const [v_5015ab, v_abce29] = v_5ab095(0);
   const [v_68b162, v_128f31] = v_5ab095(false);
 
   const [v_955bd3, v_b30457] = v_5ab095(false);
@@ -1679,6 +1682,25 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_b0aeaf(true);
   }, []);
 
+  const v_2486bf = v_de06a3((event: v_e99fe0) => {
+    const v_c16a42 = v_d48baf.nativeEvent.layout.height;
+    v_abce29((v_ba2215) => (v_ba2215 === v_c16a42 ? v_ba2215 : v_c16a42));
+  }, []);
+
+  const v_136b2e =
+    v_326be8.OS === 'ios' ? v_033e14.bottom : Math.max(v_262e99, v_033e14.bottom);
+  const v_203e20 = v_9b1a04.small + v_136b2e;
+  const v_b8f75b =
+    v_5015ab > 0
+      ? v_5015ab + v_9b1a04.medium
+      : v_6c4b91.isTablet
+        ? v_6c4b91.isLandscape
+          ? 150
+          : 210
+        : v_6c4b91.isLandscape
+          ? 130
+          : 175;
+
   v_cf763b(
     v_de06a3(() => {
       console.log('화면 포커스됨');
@@ -1871,11 +1893,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <AccountSelector
               accounts={v_c86f08}
               selectedAccountId={v_e7b2f2}
-              onSelectAccount={v_1f1e88}
-              onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-              onDeleteAccount={v_5bc46a}
-              onLinkEmail={v_42b67a}
+              onSelectAccount={v_160272 ? v_2e22d1 : v_1f1e88}
+              onAddSubAccount={v_160272 ? undefined : () => v_c65f5d.navigate('AddSubAccount')}
+              onDeleteAccount={v_160272 ? undefined : v_5bc46a}
+              onLinkEmail={v_160272 ? undefined : v_42b67a}
               disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
+              autoLoad={!v_160272}
+              pharmacistMode={v_160272}
+              modalTitle={v_160272 ? v_8d41d7('pharmacist.visitor_list.title') : undefined}
+              emptyText={v_160272 ? v_8d41d7('pharmacist.visitor_list.empty') : undefined}
             />
           </View>
         </View>
@@ -2382,7 +2408,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     </>
   );
 
-  const v_629820 = () => (
+  const v_629820 = () => {
+    const v_2e6d73 = v_6c4b91.isTablet
+      ? v_8d41d7('health_analysis.measurement.medical_disclaimer').replace(/\s*\n\s*/g, ' ')
+      : v_8d41d7('health_analysis.measurement.medical_disclaimer');
+
+    return (
     <>
       <StatusBar style="dark" />
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -2421,7 +2452,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <View
               style={[
                 v_d81136.infoContainerOverlay,
-                { paddingBottom: v_6c4b91.isLandscape ? 140 : 200 },
+                { paddingBottom: v_b8f75b },
               ]}
             >
               {v_12abe8 && (
@@ -2439,31 +2470,52 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
             {}
             <View
+              onLayout={v_2486bf}
               style={[
                 v_d81136.bottomContainer,
                 v_6c4b91.isLandscape && v_d81136.bottomContainerLandscape,
-                {
-                  paddingBottom:
-                    v_9b1a04.xlarge +
-                    (v_326be8.OS === 'ios'
-                      ? v_033e14.bottom
-                      : Math.max(v_262e99, v_033e14.bottom)),
-                },
+                v_6c4b91.isTablet && v_d81136.bottomContainerTablet,
+                { paddingBottom: v_203e20 },
               ]}
             >
               <View style={[v_d81136.bottomContainerInner, { maxWidth: v_6c4b91.contentColumnWidth }]}>
               {}
-              <View style={v_d81136.statusContainer}>
+              <View
+                style={[
+                  v_d81136.statusContainer,
+                  v_6c4b91.isTablet && v_d81136.statusContainerTablet,
+                ]}
+              >
                 {v_109b56 ? (
                   <ActivityIndicator size="large" color={v_1bfbd0.text} />
                 ) : null}
-                <Text style={v_d81136.statusText}>{v_7a93a3()}</Text>
+                <Text
+                  style={[
+                    v_d81136.statusText,
+                    v_6c4b91.isTablet && v_d81136.statusTextTablet,
+                  ]}
+                >
+                  {v_7a93a3()}
+                </Text>
               </View>
 
               {}
-              <View style={v_d81136.medicalDisclaimerContainer}>
-                <Text style={v_d81136.medicalDisclaimerText}>
-                  {v_8d41d7('health_analysis.measurement.medical_disclaimer')}
+              <View
+                style={[
+                  v_d81136.medicalDisclaimerContainer,
+                  v_6c4b91.isTablet && v_d81136.medicalDisclaimerContainerTablet,
+                ]}
+              >
+                <Text
+                  style={[
+                    v_d81136.medicalDisclaimerText,
+                    v_6c4b91.isTablet && v_d81136.medicalDisclaimerTextTablet,
+                  ]}
+                  adjustsFontSizeToFit={v_6c4b91.isTablet}
+                  minimumFontScale={0.82}
+                  numberOfLines={v_6c4b91.isTablet ? 1 : 2}
+                >
+                  {v_2e6d73}
                 </Text>
               </View>
 
@@ -2508,7 +2560,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         </View>
       )}
     </>
-  );
+    );
+  };
 
   if (v_9d6425()) {
     return (
@@ -2986,8 +3039,7 @@ const v_d81136 = v_472849.create({
   bottomContainer: {
     width: '100%',
     alignItems: 'center',
-    paddingTop: v_9b1a04.large,
-    paddingBottom: v_9b1a04.xlarge,
+    paddingTop: v_9b1a04.medium,
     paddingHorizontal: 0,
     backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
@@ -3003,7 +3055,10 @@ const v_d81136 = v_472849.create({
     zIndex: 10,
   },
   bottomContainerLandscape: {
-    paddingTop: v_9b1a04.medium,
+    paddingTop: v_9b1a04.small,
+  },
+  bottomContainerTablet: {
+    paddingTop: v_9b1a04.small,
   },
   bottomContainerInner: {
     width: '100%',
@@ -3017,10 +3072,9 @@ const v_d81136 = v_472849.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 200, 
-    zIndex: 15, 
-    pointerEvents: 'box-none', 
+    justifyContent: 'flex-end',
+    zIndex: 15,
+    pointerEvents: 'box-none',
   },
   infoContainer: {
     marginBottom: v_9b1a04.medium,
@@ -3051,9 +3105,9 @@ const v_d81136 = v_472849.create({
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.small,
-    minWidth: 120, 
+    minWidth: 120,
     borderRadius: 12,
-
+    marginBottom: v_9b1a04.small,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -3061,7 +3115,7 @@ const v_d81136 = v_472849.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 4, 
+    elevation: 4,
   },
   pulseRateText: {
     fontSize: 18,
@@ -3073,8 +3127,12 @@ const v_d81136 = v_472849.create({
   statusContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: v_9b1a04.large,
-    minHeight: 60,
+    marginBottom: v_9b1a04.medium,
+    minHeight: 48,
+  },
+  statusContainerTablet: {
+    marginBottom: v_9b1a04.small,
+    minHeight: 40,
   },
   statusText: {
     fontSize: 16,
@@ -3082,10 +3140,13 @@ const v_d81136 = v_472849.create({
     color: v_1bfbd0.text,
     textAlign: 'center',
     backgroundColor: v_1bfbd0.white,
-    paddingHorizontal: v_9b1a04.xlarge,
-    paddingVertical: v_9b1a04.medium,
+    paddingHorizontal: v_9b1a04.large,
+    paddingVertical: v_9b1a04.small,
     borderRadius: 12,
-
+  },
+  statusTextTablet: {
+    paddingHorizontal: v_9b1a04.medium,
+    paddingVertical: v_9b1a04.xmedium,
   },
   guidanceContainer: {
     marginBottom: v_9b1a04.large,
@@ -3159,15 +3220,23 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.bold,
   },
   medicalDisclaimerContainer: {
-    marginBottom: v_9b1a04.large,
+    marginBottom: v_9b1a04.medium,
     paddingHorizontal: v_9b1a04.large,
   },
+  medicalDisclaimerContainerTablet: {
+    marginBottom: v_9b1a04.small,
+  },
   medicalDisclaimerText: {
+    width: '100%',
     fontSize: 11,
     fontFamily: v_843035.regular,
     color: v_1bfbd0.secondaryText,
     textAlign: 'center',
     lineHeight: 16,
+  },
+  medicalDisclaimerTextTablet: {
+    fontSize: 10,
+    lineHeight: 14,
   },
 });
 
