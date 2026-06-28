@@ -46,7 +46,7 @@ export const v_9e8766 = () => {
 
       if (v_61deaf === 'pharmacist') {
         if (v_3de945) {
-          const v_37944d = `guest-${v_3de945.sessionId}`;
+          const v_37944d = `guest-${v_3de945.visitorId ?? v_3de945.sessionId}`;
           v_d690d0([
             { id: v_37944d, name: v_3de945.name, isCurrent: true },
           ]);

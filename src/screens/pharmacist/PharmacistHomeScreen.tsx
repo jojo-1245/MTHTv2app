@@ -89,8 +89,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
   const [v_1833e7, v_318f24] = v_5ab095(v_3de945?.name ?? '');
   const [v_d74a81, v_fcce73] = v_5ab095(v_3de945?.phone ?? '');
   const [v_aa596d, v_f07cc4] = v_5ab095('');
-  const [v_ca800d, v_8adcb8] = v_5ab095<string | null>(null);
-  const [v_cb36b1, v_6a8302] = v_5ab095(300);
+  const [v_cb36b1, v_6a8302] = v_5ab095(180);
   const [v_07589d, v_9fbff7] = v_5ab095(false);
   const [v_d1dd8f, v_ff0c7a] = v_5ab095(false);
   const [v_5c50c0, v_199f88] = v_5ab095<{ title: string; message: string } | null>(null);
@@ -124,9 +123,8 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
     v_9fbff7(true);
     try {
       const v_43c42e = await v_cb0098({ name: v_1833e7, phone: v_d74a81 });
-      v_8adcb8(v_43c42e.requestId);
       v_f07cc4('');
-      v_6a8302(300);
+      v_6a8302(v_43c42e.expiresIn ?? 180);
       v_fd7d1f('otp');
       if (__DEV__ && v_43c42e.devCode) {
         v_199f88({
@@ -143,18 +141,17 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
 
   const v_4f034c = async (v_2b9e3b) => {
     const v_c99bd2 = (v_2b9e3b ?? v_aa596d).trim();
-    if (!v_ca800d) {
-      v_f74c59(v_8d41d7('pharmacist.guest_auth.expired_request'));
-      return;
-    }
     if (v_c99bd2.length < v_28d629) return;
 
     v_ff0c7a(true);
     try {
-      const v_43c42e = await v_e76669({ requestId: v_ca800d, code: v_c99bd2 });
+      const v_43c42e = await v_e76669({ name: v_1833e7, phone: v_d74a81, code: v_c99bd2 });
       v_e51c8e({
         name: v_43c42e.name,
         phone: v_43c42e.phone,
+        visitorId: v_43c42e.visitorId,
+        isNew: v_43c42e.isNew,
+        records: v_43c42e.records,
         sessionId: v_43c42e.sessionId,
         verifiedAt: new Date().toISOString(),
       });
@@ -169,11 +166,10 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
   };
 
   const v_cf9840 = async () => {
-    if (!v_ca800d) return;
     v_9fbff7(true);
     try {
-      const v_43c42e = await v_3dafc1(v_ca800d);
-      v_6a8302(300);
+      const v_43c42e = await v_3dafc1({ name: v_1833e7, phone: v_d74a81 });
+      v_6a8302(v_43c42e.expiresIn ?? 180);
       v_f07cc4('');
       if (__DEV__ && v_43c42e.devCode) {
         v_199f88({
@@ -194,7 +190,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = () => {
     v_318f24('');
     v_fcce73('');
     v_f07cc4('');
-    v_8adcb8(null);
+    v_6a8302(180);
   };
 
   const v_985ec8 = () => {
