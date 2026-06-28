@@ -48,7 +48,9 @@ import {
     type v_ee7be6,
     type v_38cf4d,
 } from '../../services/skinAnalysis';
-import { v_9e8766, v_2282da, v_326fbf } from '../../hooks';
+import { v_9e8766, v_2282da, v_326fbf, v_5a0119 } from '../../hooks';
+import { v_4b2942 } from '../../context/PharmacistGuestContext';
+import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
 import { v_81fcbc } from '../../services/skinApi';
@@ -302,6 +304,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         handleLinkEmail: v_42b67a,
         reloadAccounts: v_604e0f,
     } = v_9e8766();
+    const v_5f6b8d = v_5a0119();
+    const { verifiedGuest: v_3de945 } = v_4b2942();
 
     v_cf763b(
         v_de06a3(() => {
@@ -549,29 +553,33 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     });
                 }
 
-                const v_23eae7 = await v_79be38(v_60e8e0);
+                let v_0bce57;
+                if (v_8ea5e8(v_5f6b8d, v_3de945)) {
+                    v_0bce57 = await v_e252f4({
+                        verifiedGuest: v_3de945,
+                        kind: 'skin',
+                        payload: v_60e8e0 as Record<string, unknown>,
+                    });
+                } else {
+                    const v_23eae7 = await v_79be38(v_60e8e0);
+                    v_0bce57 = (v_23eae7 as any)?.id ?? v_23eae7?.record_id;
+                }
 
                 v_02a5a0.current = true;
                 v_f013b2.current = v_3a7b16;
 
                 if (__DEV__) {
-                    console.log('[SkinAnalysisScreen] 피부 분석 결과 저장 성공:', {
-                        success: v_23eae7.success,
-                        message: v_23eae7.message,
-                        record_id: v_23eae7.record_id,
-                    });
+                    console.log('[SkinAnalysisScreen] 피부 분석 결과 저장 성공, recordId:', v_0bce57);
                 }
 
-                const v_0bce57 = (v_23eae7 as any)?.id ?? v_23eae7?.record_id;
                 if (v_0bce57) {
                     v_f4f730.current = v_0bce57;
                     v_43dcda(v_0bce57);
-                    if (__DEV__) {
-                        console.log('[피부분석] savedRecordId 설정:', v_0bce57);
+                    if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
+                        v_8c9ccd('skin_analysis', v_0bce57)
+                            .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
+                            .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
                     }
-                    v_8c9ccd('skin_analysis', v_0bce57)
-                        .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
-                        .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
                 }
             } catch (v_5e9bfe) {
                 console.error('[SkinAnalysisScreen] 피부 분석 결과 저장 실패:', v_5e9bfe);

@@ -34,6 +34,9 @@ import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
 import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
+import { v_5a0119 } from '../../hooks/useUserRole';
+import { v_4b2942 } from '../../context/PharmacistGuestContext';
+import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -601,6 +604,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   );
 
   v_1f53bf();
+  const v_5f6b8d = v_5a0119();
+  const { verifiedGuest: v_3de945 } = v_4b2942();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -1312,33 +1317,36 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           console.log('[HealthAnalysisResultScreen] vital_signs 전체 데이터:', JSON.stringify(v_0946e7, null, 2));
         }
 
-        const v_23eae7 = await v_207199(v_60e8e0);
+        let v_0bce57 = null;
+        if (v_8ea5e8(v_5f6b8d, v_3de945)) {
+          v_0bce57 = await v_e252f4({
+            verifiedGuest: v_3de945,
+            kind: 'health',
+            payload: v_60e8e0 as Record<string, unknown>,
+          });
+        } else {
+          const v_23eae7 = await v_207199(v_60e8e0);
+          v_0bce57 = v_23eae7.id ?? (v_23eae7 as any).record_id ?? null;
+        }
 
-        const v_0bce57 = v_23eae7.id ?? (v_23eae7 as any).record_id ?? null;
         v_f4f730.current = v_0bce57;
         v_43dcda(v_0bce57);
 
-        try {
-          if (v_0bce57) {
-            await v_8c9ccd('health_analysis', v_0bce57);
+        if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
+          try {
+            if (v_0bce57) {
+              await v_8c9ccd('health_analysis', v_0bce57);
+            }
+          } catch (v_892e09) {
+            console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
           }
-        } catch (v_892e09) {
-          console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
         }
 
         v_02a5a0.current = true;
         v_f013b2.current = v_42044e;
 
         if (__DEV__) {
-          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 성공 - 응답 정보:', {
-            savedRecord: JSON.stringify(v_23eae7, null, 2),
-            id: v_23eae7.id,
-            record_date: v_23eae7.record_date,
-            record_time: v_23eae7.record_time,
-            health_index: v_23eae7.health_index,
-            health_level: v_23eae7.health_level,
-            created_at: v_23eae7.created_at,
-          });
+          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 성공 - recordId:', v_0bce57);
         }
       } catch (v_5e9bfe) {
         console.error('[HealthAnalysisResultScreen] 건강 측정 저장 실패:', {

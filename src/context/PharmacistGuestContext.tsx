@@ -9,6 +9,16 @@ import v_a3453e, {
 export interface VerifiedPharmacistGuest {
   name: string;
   phone: string;
+  visitorId: number;
+  isNew?: boolean;
+  records?: Array<{
+    id: number;
+    created_at?: string;
+    createdAt?: string;
+    device_info?: string | null;
+    deviceInfo?: string | null;
+  }>;
+
   sessionId: string;
   verifiedAt: string;
 }
