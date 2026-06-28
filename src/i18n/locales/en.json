@@ -54,7 +54,8 @@
   "account_selector": {
     "title": "Account Selection",
     "add_sub_account": "Add Sub-account",
-    "delete": "Delete"
+    "delete": "Delete",
+    "empty": "No accounts found."
   },
   "sub_account": {
     "relationship": {
@@ -1156,7 +1157,7 @@
       "result_preparing_session": "Cleaning up session...",
       "result_missing_title": "Result Incomplete",
       "result_missing_message": "Some measurement results are missing. Tap OK to end the session and return to the measurement start screen.",
-      "medical_disclaimer": "The measurement results are for reference only and not for medical use. Please consult a doctor if you have any health concerns."
+      "medical_disclaimer": "The measurement results are for reference only and not for medical use.\nPlease consult a doctor if you have any health concerns."
     },
     "result": {
       "detail_info": "Detail Info",
@@ -1974,6 +1975,48 @@
       "purpose": "Generating personalized AI chat responses",
       "agree": "Agree & send",
       "cancel": "Cancel"
+    }
+  },
+  "pharmacist": {
+    "home_title": "Guest Verification",
+    "home_subtitle": "Verify customer info before analysis",
+    "bottom_nav_skin": "Skin",
+    "bottom_nav_health": "Health Analysis",
+    "guest_auth": {
+      "form_title": "Customer Information",
+      "form_heading": "Please enter\ncustomer details",
+      "otp_heading": "Enter\nverification code",
+      "verified_heading": "Verification\ncomplete",
+      "otp_field_label": "Verification code",
+      "verified_customer_label": "Verified customer",
+      "form_subtitle": "Enter name and phone number, then request a verification code.",
+      "name_placeholder": "Customer name",
+      "phone_placeholder": "01012345678",
+      "send_code": "Send verification code",
+      "otp_title": "Enter verification code",
+      "otp_subtitle": "Enter the 6-digit code sent to {{phone}}.",
+      "verify": "Verify",
+      "timer_remaining": "Time remaining {{time}}",
+      "timer_expired": "Verification code expired.",
+      "resend": "Resend code",
+      "verified_title": "Verified",
+      "analysis_hint": "Start health analysis or skin analysis\nfrom the buttons below or the bottom tabs.",
+      "new_guest": "Verify another customer",
+      "required_title": "Verification required",
+      "required_message": "Please complete customer verification before starting analysis.",
+      "go_verify": "Verify now",
+      "send_failed": "Failed to send verification code.",
+      "verify_failed": "Verification failed.",
+      "expired_request": "Verification request expired. Please try again.",
+      "dev_code_title": "Dev verification code",
+      "dev_code_message": "Test code: {{code}}"
+    },
+    "visitor_list": {
+      "title": "Measured customers",
+      "empty": "No customers measured yet.",
+      "record_count": "{{count}} screening(s)",
+      "select_reauth": "Select a customer, then complete OTP verification to start analysis.",
+      "load_failed": "Failed to load customer list."
     }
   }
 }

@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_326be8, v_472849, v_3094a2, v_7e4944, v_700696 } from 'rcmrninabrnb';
+import { v_326be8, v_472849, v_3094a2, v_7e4944 } from 'rcmrninabrnb';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
 import { v_1bfbd0, v_963c2c } from '../constants';
@@ -41,7 +41,6 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
             : Math.max(v_f9771e, v_033e14.bottom);
 
     const v_cebf7c = v_acf836 + v_86fc47;
-    const v_cb21f8 = v_700696.get('window').height;
 
     return (
         <View style={[v_d81136.wrapper, v_7fa4e4]}>
@@ -61,7 +60,8 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
                 style={[
                     v_d81136.container,
                     {
-                        height: v_cb21f8,
+                        flex: 1,
+                        width: '100%',
                         backgroundColor: v_f7b9fb,
 
                         paddingBottom: v_bb8530 ? v_cebf7c : 0,
@@ -89,11 +89,15 @@ const SafeView: v_a3453e.FC<SafeViewProps> = ({
 const v_d81136 = v_472849.create({
     wrapper: {
         flex: 1,
+        width: '100%',
+        alignSelf: 'stretch',
         position: 'relative',
         overflow: 'visible',
     },
     container: {
         flex: 1,
+        width: '100%',
+        alignSelf: 'stretch',
         position: 'relative',
         overflow: 'visible',
     },

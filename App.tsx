@@ -9,7 +9,7 @@ import v_2dc4c2, { v_ad9c5b } from 'bsiaazmwsayjedvznfsir';
 import { v_4fb2ad } from './src/navigation';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
-import { v_4b64f4, v_3ce7c2, v_89739b } from './src/context';
+import { v_4b64f4, v_3ce7c2, v_89739b, v_545264 } from './src/context';
 import { v_96a538 } from './src/hooks/useVersionCheck';
 import { v_b357c3 } from './src/services/admob';
 import { v_bfe92f } from './src/hooks/useKeepalive';
@@ -156,11 +156,13 @@ export default function v_6540c3() {
       >
         <StatusBar style="dark" />
         <AppProvider>
-          <WalletProvider>
-            <StepTrackingProvider>
-              <AppNavigator />
-            </StepTrackingProvider>
-          </WalletProvider>
+          <PharmacistGuestProvider>
+            <WalletProvider>
+              <StepTrackingProvider>
+                <AppNavigator />
+              </StepTrackingProvider>
+            </WalletProvider>
+          </PharmacistGuestProvider>
         </AppProvider>
       </SafeAreaProvider>
 

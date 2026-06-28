@@ -40,6 +40,7 @@ import v_f97d8b from '../screens/profile/ProfitDistributionScreen';
 import { v_852e99, v_8b28f5 } from '../screens/skin';
 import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
 import { v_bc6a89 } from '../screens/checkup-nhis';
+import { v_7eacfe } from '../screens/pharmacist';
 import v_7f9fad from '../screens/AnalysisScreen';
 import { v_02d653 } from '../screens/chat';
 import v_67f088 from '../screens/AddSubAccountScreen';
@@ -49,6 +50,11 @@ export type RootStackParamList = {
   Intro: undefined;
   Home: undefined;
   MetaHome: undefined;
+  PharmacistHome: {
+    prefillName?: string;
+    prefillPhone?: string;
+    autoSendOtp?: boolean;
+  } | undefined;
   Login: undefined;
   Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'naver' } | undefined;
   ForgotPassword: undefined;
@@ -227,6 +233,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="Intro" component={v_7af305} />
         <Stack.Screen name="Home" component={v_c316d8} />
         <Stack.Screen name="MetaHome" component={v_7aeeb0} />
+        <Stack.Screen name="PharmacistHome" component={v_7eacfe} />
         <Stack.Screen name="Login" component={v_f4f851} />
         <Stack.Screen name="Signup" component={v_f40fc5} />
         <Stack.Screen name="ForgotPassword" component={v_040c8f} />
