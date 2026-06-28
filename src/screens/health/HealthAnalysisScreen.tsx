@@ -44,13 +44,14 @@ import {
   v_1c1837,
   v_47f7b9,
 } from '../../components';
-import { v_d91974 } from '../../utils/tabletLayout';
+import { v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
 import { v_9e8766, v_326fbf, v_5a0119 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
+import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
 import { v_777b12 } from '../../services/healthApi';
@@ -219,7 +220,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   v_1f53bf();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const v_6c4b91 = v_d91974();
+  const v_6c4b91 = v_2cc9f8();
   const v_18a4c7 = v_df9f57(() => {
     const v_0ce880 = Math.min(v_6c4b91.width, v_6c4b91.contentColumnWidth);
     return v_0ce880 - v_6c4b91.horizontalPadding * 2;
@@ -252,11 +253,27 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     handleAddUser: v_20289f,
     handleLinkEmail: v_42b67a,
     reloadAccounts: v_604e0f,
-    selectPharmacistVisitor: v_2e22d1,
+    selectPharmacyVisitor: v_ccc6c8,
+    handleDeletePharmacyVisitorRecords: v_533a87,
   } = v_9e8766();
   const v_5f6b8d = v_5a0119();
   const v_160272 = v_5f6b8d === 'pharmacist';
   const { verifiedGuest: v_3de945 } = v_4b2942();
+
+  const v_d182a9 = v_de06a3(() => {
+    if (v_160272 && v_3de945?.name?.trim()) {
+      return v_3de945.name.trim();
+    }
+    const v_587413 = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+    if (v_587413?.name?.trim()) {
+      return v_587413.name.trim();
+    }
+    const v_275ccd = v_c86f08.find((v_779914) => v_779914.isCurrent);
+    if (v_275ccd?.name?.trim()) {
+      return v_275ccd.name.trim();
+    }
+    return undefined;
+  }, [v_160272, v_3de945?.name, v_c86f08, v_e7b2f2]);
 
   const v_bc50c7 = v_34ffee();
   const v_288ac3 = v_96a72c();
@@ -272,6 +289,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }, [v_bc50c7]);
 
   v_c4deb2(() => {
+    if (v_160272) {
+      v_f193b7(true);
+      v_11f378('0');
+      v_78c750(false);
+      return;
+    }
     v_23b7ab('health_analysis')
       .then((v_8f00b9) => {
         v_f193b7(v_8f00b9.can_proceed);
@@ -286,7 +309,24 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_11f378(v_c92b58 ?? '확인불가');
         v_c96363('0');
       });
-  }, []);
+  }, [v_160272]);
+
+  const v_d63b37 = v_de06a3(() => {
+    if (!v_160272) return true;
+    const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+    return v_706488({
+      selectedAccountId: v_e7b2f2,
+      verifiedGuest: v_3de945,
+      t: v_8d41d7,
+      onGoVerify: () => {
+        v_c65f5d.navigate('PharmacistHome', {
+          prefillName: v_b4542a?.name,
+          prefillPhone: v_b4542a?.phone,
+          autoSendOtp: true,
+        });
+      },
+    });
+  }, [v_160272, v_c86f08, v_e7b2f2, v_3de945, v_8d41d7, v_c65f5d]);
 
   const [v_d1a6bb, v_1e66f0] = v_d4f1cc();
 
@@ -826,6 +866,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             `건강 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
             [{ text: '확인' }]
           );
+          return;
+        }
+        if (v_160272 && !v_d63b37()) {
           return;
         }
 
@@ -1575,7 +1618,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           v_c65f5d.navigate('HealthAnalysisResult', {
             results: v_9f8792,
             timestamp: v_42044e,
-            userName: v_0c2f9b?.name,
+            userName: v_d182a9(),
             accounts: v_c86f08,
             selectedAccountId: v_e7b2f2,
             userInfo: v_f4ebd0,
@@ -1893,9 +1936,20 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <AccountSelector
               accounts={v_c86f08}
               selectedAccountId={v_e7b2f2}
-              onSelectAccount={v_160272 ? v_2e22d1 : v_1f1e88}
+              onSelectAccount={(v_2453ad) => {
+                if (v_160272 && v_ac1d22 === 'records') {
+                  v_1f1e88(v_2453ad);
+                  return;
+                }
+                if (v_160272) {
+                  v_ccc6c8(v_2453ad);
+                  return;
+                }
+                v_1f1e88(v_2453ad);
+              }}
               onAddSubAccount={v_160272 ? undefined : () => v_c65f5d.navigate('AddSubAccount')}
               onDeleteAccount={v_160272 ? undefined : v_5bc46a}
+              onDeletePharmacyRecords={v_160272 ? v_533a87 : undefined}
               onLinkEmail={v_160272 ? undefined : v_42b67a}
               disabled={v_ac1d22 !== 'records' && v_91943c === 'measurement'}
               autoLoad={!v_160272}
@@ -1915,12 +1969,13 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             <HealthRecordsView
               selectedAccountId={v_e7b2f2}
               accounts={v_c86f08}
+              pharmacistMode={v_160272}
               onCompare={(v_678155) => {
                 const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                 v_c65f5d.navigate('HealthComparison', {
                   recordA: v_678155[0],
                   recordB: v_678155[1],
-                  userName: v_0c2f9b?.name,
+                  userName: v_d182a9(),
                 });
               }}
             />
@@ -1933,7 +1988,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             disableBottomPadding={true}
             autoAdjustKeyboardPadding={true}
           >
-            <CenteredContentShell backgroundColor={v_1bfbd0.background}>
+            <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
               <Text style={v_d81136.introDiscountNotice}>{v_8d41d7('health_analysis.intro.discount_notice')}</Text>
               <Text style={v_d81136.introTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.intro.intro_title_ios') : v_8d41d7('health_analysis.intro.intro_title')}</Text>
               <Text style={v_d81136.flowSubtitle}>{v_8d41d7('health_analysis.intro.flow_subtitle')}</Text>
@@ -2028,6 +2083,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 <PrimaryButton
                   title={v_4452dd ? '무료 체험 시작' : v_8d41d7('health_analysis.intro.start_button')}
                   onPress={async () => {
+                    if (!v_d63b37()) return;
 
                     const v_b6d66b = await v_ec0597();
                     if (v_b6d66b) {
@@ -2067,7 +2123,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                       v_c65f5d.navigate('HealthAnalysisResult', {
                         results: v_1300ee.vital_signs ?? {},
                         timestamp: `${v_1300ee.record_date}T${v_1300ee.record_time}:00`,
-                        userName: v_0c2f9b?.name,
+                        userName: v_d182a9(),
                         accounts: v_c86f08,
                         selectedAccountId: v_e7b2f2,
                         savedBeforeNavigate: true,

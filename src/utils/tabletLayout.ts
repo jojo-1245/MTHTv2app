@@ -15,6 +15,9 @@ export type ResponsiveTypography = {
 };
 
 const v_182b4a = 640;
+
+const v_b35322 = 800;
+const v_aceeab = 920;
 const v_0cbda1 = 480;
 
 export type ResponsiveLayout = {
@@ -26,6 +29,8 @@ export type ResponsiveLayout = {
   contentMaxWidth: number;
 
   contentColumnWidth: number;
+
+  analysisContentColumnWidth: number;
   horizontalPadding: number;
   bottomNavMaxWidth: number;
   typo: ResponsiveTypography;
@@ -37,6 +42,11 @@ function v_d50ba5(v_8e4fb6, v_c86e33): ResponsiveLayout {
   const v_76eb7f = v_abecc7 >= v_a6cff1;
 
   const v_541e93 = v_76eb7f ? v_182b4a : v_0cbda1;
+  const v_31e738 = v_76eb7f
+    ? v_5768e8
+      ? v_aceeab
+      : v_b35322
+    : v_0cbda1;
   const v_762fca = v_541e93;
 
   const v_30e711 = v_76eb7f ? (v_5768e8 ? 32 : 48) : v_5768e8 ? 24 : 20;
@@ -59,6 +69,7 @@ function v_d50ba5(v_8e4fb6, v_c86e33): ResponsiveLayout {
     isTablet: v_76eb7f,
     contentMaxWidth: v_762fca,
     contentColumnWidth: v_541e93,
+    analysisContentColumnWidth: v_31e738,
     horizontalPadding: v_30e711,
     bottomNavMaxWidth: v_88dc6e,
     typo: v_a2df3e,
@@ -68,6 +79,18 @@ function v_d50ba5(v_8e4fb6, v_c86e33): ResponsiveLayout {
 export function v_d91974(): ResponsiveLayout {
   const { width: v_8e4fb6, height: v_c86e33 } = v_e45a99();
   return v_df9f57(() => v_d50ba5(v_8e4fb6, v_c86e33), [v_8e4fb6, v_c86e33]);
+}
+
+export function v_2cc9f8(): ResponsiveLayout {
+  const v_6c4b91 = v_d91974();
+  return v_df9f57(
+    () => ({
+      ...v_6c4b91,
+      contentColumnWidth: v_6c4b91.analysisContentColumnWidth,
+      contentMaxWidth: v_6c4b91.analysisContentColumnWidth,
+    }),
+    [v_6c4b91]
+  );
 }
 
 export function v_b5ab4c(): boolean {

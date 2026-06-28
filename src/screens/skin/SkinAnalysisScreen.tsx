@@ -36,7 +36,8 @@ import { v_a0daa8 } from '../../navigation';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
-import { v_d91974 } from '../../utils/tabletLayout';
+import { v_0d0e7d } from '../../utils/analysisResultTabletStyles';
+import { v_af2c88, v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_1a7837, v_56d16a } from 'wjvlskvsbzsrojdbjsl';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_ef658a, v_53f592, v_afa590, v_d8cb4d, v_624bd2 } from '../../constants';
@@ -51,6 +52,7 @@ import {
 import { v_9e8766, v_2282da, v_326fbf, v_5a0119 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
+import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
 import { v_81fcbc } from '../../services/skinApi';
@@ -74,10 +76,12 @@ const v_2a9f6c = 1;
 const v_a81a10 = 1.1;
 const v_4eb5d3 = 0.95;
 
-const v_8e6659 = 0.68;
-const v_b90732 = 0.52;
+const v_8e6659 = 0.62;
+const v_b90732 = 0.48;
 
-const v_e69eef = 0.13;
+const v_e69eef = 0.17;
+
+const v_4e12bb = 480;
 
 const v_333679 = (v_cd1446): Promise<{ width: number; height: number }> =>
     new Promise((v_6f7712, v_bad6f3) => {
@@ -282,7 +286,8 @@ const v_3e09cd = {
 const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
     const { t: v_8d41d7 } = v_772971();
     const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
-    const v_6c4b91 = v_d91974();
+    const v_6c4b91 = v_2cc9f8();
+    const { merge: v_2f6fcc, isTablet: v_76eb7f, typo: v_52101f } = v_0d0e7d();
     const v_161e5a = v_d615ad();
     const v_6695f2 = v_6c4b91.contentColumnWidth - v_6c4b91.horizontalPadding * 2;
     const v_3af450 = v_df9f57(() => v_6695f2, [v_6695f2]);
@@ -290,6 +295,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         () => Math.floor((v_6695f2 - v_0abe94) / 2.5),
         [v_6695f2]
     );
+    const v_827d31 = v_df9f57(() => {
+        if (!v_6c4b91.isTablet) return undefined;
+        return Math.min(
+            Math.round(v_6695f2 * 0.62),
+            v_4e12bb
+        );
+    }, [v_6c4b91.isTablet, v_6695f2]);
     const v_bf6a8c = v_c7daf6.params?.previewResult;
 
     const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>(
@@ -303,11 +315,29 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         handleDeleteAccount: v_5bc46a,
         handleLinkEmail: v_42b67a,
         reloadAccounts: v_604e0f,
-        selectPharmacistVisitor: v_2e22d1,
+        selectPharmacyVisitor: v_ccc6c8,
+        handleDeletePharmacyVisitorRecords: v_533a87,
     } = v_9e8766();
     const v_5f6b8d = v_5a0119();
     const v_160272 = v_5f6b8d === 'pharmacist';
     const { verifiedGuest: v_3de945 } = v_4b2942();
+
+    const v_d63b37 = v_de06a3(() => {
+        if (!v_160272) return true;
+        const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+        return v_706488({
+            selectedAccountId: v_e7b2f2,
+            verifiedGuest: v_3de945,
+            t: v_8d41d7,
+            onGoVerify: () => {
+                v_c65f5d.navigate('PharmacistHome', {
+                    prefillName: v_b4542a?.name,
+                    prefillPhone: v_b4542a?.phone,
+                    autoSendOtp: true,
+                });
+            },
+        });
+    }, [v_160272, v_c86f08, v_e7b2f2, v_3de945, v_8d41d7, v_c65f5d]);
 
     v_cf763b(
         v_de06a3(() => {
@@ -323,6 +353,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     return;
                 }
 
+                if (v_160272) {
+                    v_f193b7(true);
+                    v_11f378('0');
+                    v_78c750(false);
+                    return;
+                }
                 try {
                     const v_a209e0 = await v_23b7ab('skin_analysis');
                     v_f193b7(v_a209e0.can_proceed);
@@ -339,7 +375,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 }
             })();
             v_604e0f();
-        }, [v_604e0f, v_c65f5d, v_8d41d7])
+        }, [v_604e0f, v_c65f5d, v_8d41d7, v_160272])
     );
 
     const [v_91943c, v_639227] = v_5ab095<AnalysisStep>(v_bf6a8c ? 'result' : 'capture');
@@ -728,6 +764,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
             return;
         }
+        if (v_160272 && !v_d63b37()) {
+            return;
+        }
 
         if (!v_ee89db) {
             v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_image_required'));
@@ -844,7 +883,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } finally {
             v_0942aa(false);
         }
-    }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7]);
+    }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7, v_f91d86, v_fab460, v_399221, v_160272, v_d63b37]);
 
     const v_2e22e6 = v_de06a3(async (v_04e790) => {
 
@@ -1313,6 +1352,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             <TouchableOpacity
                 style={[
                     v_d81136.imageUploadArea,
+                    v_827d31 != null && {
+                        width: v_827d31,
+                        alignSelf: 'center',
+                    },
                     v_6c4b91.isLandscape && v_6c4b91.isTablet && v_d81136.imageUploadAreaLandscape,
                 ]}
                 onPress={v_46964a}
@@ -1520,12 +1563,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                     ui_score: v_a057b5.ui_score ?? v_a057b5.score ?? 0,
                                     mask_urls: v_a057b5.mask_url ? [v_a057b5.mask_url] : [],
                                 }));
-                                v_9ef443.push({ type: 'all', score: v_1300ee.overall_score });
+                                v_9ef443.push({ type: 'all', score: v_1300ee.overall_score ?? 0 });
                                 v_6f6f79({
                                     mode: 'sd',
                                     selectedConcerns: Object.keys(v_8decf8),
                                     taskId: 'debug_last_result',
-                                    result: { error: null, results: { output: v_9ef443 }, task_status: 'success' },
+                                    result: { error: null, results: { output: v_9ef443 as typeof v_3e09cd.result.results.v_9ef443 }, task_status: 'success' },
                                     timestamp: v_1300ee.created_at ?? new Date().toISOString(),
                                 });
                                 v_639227('result');
@@ -1710,8 +1753,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             })()
             : '';
 
-        const v_778b2d = 80;
-        const v_474580 = 8;
+        const v_778b2d = v_76eb7f ? v_af2c88(80, 100) : 80;
+        const v_474580 = v_76eb7f ? 10 : 8;
         const v_0c21c9 = (v_778b2d - v_474580) / 2;
         const v_0288f8 = v_778b2d / 2;
         const v_65e020 = 2 * Math.PI * v_0c21c9;
@@ -1734,10 +1777,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <View style={v_d81136.resultHeaderCheckCircle}>
                             <Ionicons name="checkmark" size={14} color="#FFFFFF" />
                         </View>
-                        <Text style={v_d81136.resultHeaderStatusText}>{v_8d41d7('skin.result.measurement_complete')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.resultHeaderStatusText, 'resultHeaderStatusText')}>{v_8d41d7('skin.result.measurement_complete')}</Text>
                     </View>
                     {v_40248c ? (
-                        <Text style={v_d81136.resultHeaderDateText}>
+                        <Text style={v_2f6fcc(v_d81136.resultHeaderDateText, 'resultHeaderDateText')}>
                             {v_8d41d7('skin.result.measurement_date')}: {v_40248c}
                         </Text>
                     ) : null}
@@ -1760,7 +1803,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                     {}
                     <View style={v_d81136.overallScoreContent}>
-                        <Text style={v_d81136.overallScoreLabel}>{v_8d41d7('skin.result.overall_score_avg')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.overallScoreLabel, 'overallScoreLabel')}>{v_8d41d7('skin.result.overall_score_avg')}</Text>
                         <View style={[v_d81136.overallScoreCircle, { width: v_778b2d, height: v_778b2d }]}>
                             <Svg width={v_778b2d} height={v_778b2d} style={{ position: 'absolute' }}>
                                 {[
@@ -1785,15 +1828,15 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <Circle cx={v_e75d3b} cy={v_576627} r={4} fill={v_54d0c6} stroke="#FFFFFF" strokeWidth={2} />
                             </Svg>
                             <View style={v_d81136.overallScoreGaugeText}>
-                                <Text style={v_d81136.overallScoreNumber}>
+                                <Text style={v_2f6fcc(v_d81136.overallScoreNumber, 'overallScoreNumber')}>
                                     {v_adfd7c}
                                 </Text>
                             </View>
                         </View>
-                        <Text style={[v_d81136.overallGradeText, { color: v_54d0c6 }]}>
+                        <Text style={[v_2f6fcc(v_d81136.overallGradeText, 'overallGradeText'), { color: v_54d0c6 }]}>
                             {v_858eb9}
                         </Text>
-                        <Text style={v_d81136.skinAgeText}>
+                        <Text style={v_2f6fcc(v_d81136.skinAgeText, 'skinAgeText')}>
                             {v_8d41d7('skin_records.skin_age', { age: v_e4ff65 })}
                         </Text>
                     </View>
@@ -1805,14 +1848,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View style={v_d81136.highlightColumn}>
                         <View style={v_d81136.highlightHeader}>
                             <Ionicons name="trophy-outline" size={16} color="#2563EB" />
-                            <Text style={[v_d81136.highlightTitle, { color: '#2563EB' }]}>{v_8d41d7('skin.result.excellent_items')}</Text>
+                            <Text style={[v_2f6fcc(v_d81136.highlightTitle, 'highlightTitle'), { color: '#2563EB' }]}>{v_8d41d7('skin.result.excellent_items')}</Text>
                         </View>
                         <View style={v_d81136.highlightList}>
                             {v_b5b523.map((v_ccf527, v_a56041) => (
                                 <View key={v_ccf527.type} style={v_d81136.highlightItem}>
                                     <Text style={v_d81136.highlightRank}>{v_a56041 + 1}</Text>
-                                    <Text style={v_d81136.highlightLabel} numberOfLines={1}>{v_ccf527.label}</Text>
-                                    <Text style={[v_d81136.highlightScore, { color: '#2563EB' }]}>{v_ccf527.score}</Text>
+                                    <Text style={v_2f6fcc(v_d81136.highlightLabel, 'highlightLabel')} numberOfLines={1}>{v_ccf527.label}</Text>
+                                    <Text style={[v_2f6fcc(v_d81136.highlightScore, 'highlightScore'), { color: '#2563EB' }]}>{v_ccf527.score}</Text>
                                 </View>
                             ))}
                         </View>
@@ -1825,14 +1868,14 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View style={v_d81136.highlightColumn}>
                         <View style={v_d81136.highlightHeader}>
                             <Ionicons name="alert-circle-outline" size={16} color="#DC2626" />
-                            <Text style={[v_d81136.highlightTitle, { color: '#DC2626' }]}>{v_8d41d7('skin.result.care_items')}</Text>
+                            <Text style={[v_2f6fcc(v_d81136.highlightTitle, 'highlightTitle'), { color: '#DC2626' }]}>{v_8d41d7('skin.result.care_items')}</Text>
                         </View>
                         <View style={v_d81136.highlightList}>
                             {v_5f1433.map((v_ccf527, v_a56041) => (
                                 <View key={v_ccf527.type} style={v_d81136.highlightItem}>
                                     <Text style={v_d81136.highlightRank}>{v_a56041 + 1}</Text>
-                                    <Text style={v_d81136.highlightLabel} numberOfLines={1}>{v_ccf527.label}</Text>
-                                    <Text style={[v_d81136.highlightScore, { color: '#DC2626' }]}>{v_ccf527.score}</Text>
+                                    <Text style={v_2f6fcc(v_d81136.highlightLabel, 'highlightLabel')} numberOfLines={1}>{v_ccf527.label}</Text>
+                                    <Text style={[v_2f6fcc(v_d81136.highlightScore, 'highlightScore'), { color: '#DC2626' }]}>{v_ccf527.score}</Text>
                                 </View>
                             ))}
                         </View>
@@ -1843,7 +1886,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <View style={v_d81136.allResultsSection}>
                     <View style={v_d81136.resultSectionHeader}>
                         <Ionicons name="grid-outline" size={18} color={v_1bfbd0.bluePrimary} />
-                        <Text style={v_d81136.resultSectionTitle}>{v_8d41d7('skin.result.all_results')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.resultSectionTitle, 'resultSectionTitle')}>{v_8d41d7('skin.result.all_results')}</Text>
                     </View>
                     <View style={v_d81136.allResultsSwiperContainer}>
                         <ScrollView
@@ -1876,15 +1919,15 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                                 size={18}
                                                 color={v_1bfbd0.bluePrimary}
                                             />
-                                            <Text style={v_d81136.allResultsCardLabel} numberOfLines={1}>{v_ccf527.label}</Text>
+                                            <Text style={v_2f6fcc(v_d81136.allResultsCardLabel, 'allResultsCardLabel')} numberOfLines={1}>{v_ccf527.label}</Text>
                                         </View>
                                         <View style={v_d81136.allResultsCardScoreRow}>
                                             <View style={v_d81136.allResultsCardScoreWrap}>
-                                                <Text style={[v_d81136.allResultsCardScore, { color: v_5e5963 }]}>{v_ccf527.score}</Text>
-                                                <Text style={v_d81136.allResultsCardScoreTotal}>/ 100</Text>
+                                                <Text style={[v_2f6fcc(v_d81136.allResultsCardScore, 'allResultsCardScore'), { color: v_5e5963 }]}>{v_ccf527.score}</Text>
+                                                <Text style={v_2f6fcc(v_d81136.allResultsCardScoreTotal, 'allResultsCardScoreTotal')}>/ 100</Text>
                                             </View>
                                             <View style={[v_d81136.allResultsCardTag, { backgroundColor: v_40e4fd.backgroundColor }]}>
-                                                <Text style={[v_d81136.allResultsCardTagText, { color: v_40e4fd.color }]}>{v_7be0c6}</Text>
+                                                <Text style={[v_2f6fcc(v_d81136.allResultsCardTagText, 'allResultsCardTagText'), { color: v_40e4fd.color }]}>{v_7be0c6}</Text>
                                             </View>
                                         </View>
                                         <View style={v_d81136.allResultsCardProgressBg}>
@@ -1927,11 +1970,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <View style={v_d81136.aiAnalysisStartIcon}>
                                     <Ionicons name="sparkles" size={24} color="#FFFFFF" />
                                 </View>
-                                <Text style={v_d81136.aiAnalysisStartTitle}>{v_8d41d7('skin.result.ai_analysis_title')}</Text>
+                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartTitle, 'aiAnalysisStartTitle')}>{v_8d41d7('skin.result.ai_analysis_title')}</Text>
                             </View>
-                            <Text style={v_d81136.aiAnalysisStartDesc}>{v_8d41d7('skin.result.ai_analysis_desc')}</Text>
+                            <Text style={v_2f6fcc(v_d81136.aiAnalysisStartDesc, 'aiAnalysisStartDesc')}>{v_8d41d7('skin.result.ai_analysis_desc')}</Text>
                             <View style={v_d81136.aiAnalysisStartButton}>
-                                <Text style={v_d81136.aiAnalysisStartButtonText}>{v_8d41d7('skin.result.ai_analysis_start_btn')}</Text>
+                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartButtonText, 'aiAnalysisStartButtonText')}>{v_8d41d7('skin.result.ai_analysis_start_btn')}</Text>
                             </View>
                         </ExpoLinearGradient>
                     </TouchableOpacity>
@@ -1942,22 +1985,22 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <View style={v_d81136.aiAnalysisCardIcon}>
                                     <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
                                 </View>
-                                <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('skin.result.ai_comprehensive_title')}</Text>
+                                <Text style={v_2f6fcc(v_d81136.aiAnalysisCardTitle, 'aiAnalysisCardTitle')}>{v_8d41d7('skin.result.ai_comprehensive_title')}</Text>
                             </View>
                             {v_85cf60 ? (
                                 <View style={{ padding: 20, alignItems: 'center' }}>
                                     <ActivityIndicator size="large" color="#AD46FF" />
-                                    <Text style={[v_d81136.aiAnalysisSectionText, { marginTop: 12, textAlign: 'center' }]}>
+                                    <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { marginTop: 12, textAlign: 'center' }]}>
                                         AI가 피부 상태를 분석 중입니다...
                                     </Text>
                                 </View>
                             ) : v_e399bf ? (
                                 <View style={v_d81136.aiAnalysisSubCard}>
-                                    <Text style={v_d81136.aiAnalysisSectionText}>{v_e399bf}</Text>
+                                    <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_e399bf}</Text>
                                 </View>
                             ) : (
                                 <View style={v_d81136.aiAnalysisSubCard}>
-                                    <Text style={[v_d81136.aiAnalysisSectionText, { color: '#9CA3AF' }]}>
+                                    <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { color: '#9CA3AF' }]}>
                                         AI 분석 결과를 불러오는 중입니다...
                                     </Text>
                                 </View>
@@ -2015,8 +2058,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     variant="healthAnalysis"
                     title={v_8d41d7('skin.title')}
                     showBackButton
-                    centerContentMaxWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.contentColumnWidth}
-                    centerContentPadding={v_6c4b91.isTablet ? undefined : v_6c4b91.horizontalPadding}
+                    centerContentMaxWidth={v_76eb7f ? undefined : v_6c4b91.contentColumnWidth}
+                    centerContentPadding={v_76eb7f ? undefined : v_6c4b91.horizontalPadding}
+                    titleStyle={v_76eb7f ? { fontSize: v_52101f.subtitle } : undefined}
                     onBackPress={() => {
                         if (v_91943c === 'capture') {
                             v_c65f5d.goBack();
@@ -2053,8 +2097,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     <View
                         style={[
                             v_d81136.tabBarInner,
-                            v_6c4b91.isTablet
-                                ? { paddingHorizontal: v_9b1a04.large }
+                            v_76eb7f
+                                ? { paddingHorizontal: v_9b1a04.large, width: '100%' }
                                 : {
                                     maxWidth: v_6c4b91.contentColumnWidth,
                                     paddingHorizontal: v_6c4b91.horizontalPadding,
@@ -2066,7 +2110,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
                                 onPress={() => v_02dd63('measure')}
                             >
-                                <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                                <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
                                     {v_8d41d7('health_tabs.measure')}
                                 </Text>
                             </TouchableOpacity>
@@ -2074,7 +2118,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
                                 onPress={() => v_02dd63('records')}
                             >
-                                <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                                <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
                                     {v_8d41d7('health_tabs.records')}
                                 </Text>
                             </TouchableOpacity>
@@ -2082,9 +2126,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <AccountSelector
                             accounts={v_c86f08}
                             selectedAccountId={v_e7b2f2}
-                            onSelectAccount={v_160272 ? v_2e22d1 : v_1f1e88}
+                            onSelectAccount={(v_2453ad) => {
+                                if (v_160272 && v_ac1d22 === 'records') {
+                                    v_1f1e88(v_2453ad);
+                                    return;
+                                }
+                                if (v_160272) {
+                                    v_ccc6c8(v_2453ad);
+                                    return;
+                                }
+                                v_1f1e88(v_2453ad);
+                            }}
                             onAddSubAccount={v_160272 ? undefined : () => v_c65f5d.navigate('AddSubAccount')}
                             onDeleteAccount={v_160272 ? undefined : v_5bc46a}
+                            onDeletePharmacyRecords={v_160272 ? v_533a87 : undefined}
                             onLinkEmail={v_160272 ? undefined : v_42b67a}
                             disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
                             autoLoad={!v_160272}
@@ -2104,6 +2159,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <SkinRecordsView
                             selectedAccountId={v_e7b2f2}
                             accounts={v_c86f08}
+                            pharmacistMode={v_160272}
                             onCompare={(v_678155) => {
                                 const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                                 v_c65f5d.navigate('SkinComparison', {
@@ -2121,7 +2177,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         showBottomBackground={false}
                         disableBottomPadding={true}
                     >
-                        <CenteredContentShell backgroundColor={v_1bfbd0.background}>
+                        <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
                             <View style={v_d81136.container}>
                                 {v_91943c === 'capture' && v_33853a()}
                                 {v_91943c === 'settings' && v_a5ba83()}
@@ -2377,6 +2433,9 @@ const v_d81136 = v_472849.create({
     imageUploadAreaLandscape: {
         aspectRatio: undefined,
         maxHeight: 320,
+        width: '100%',
+        maxWidth: 440,
+        alignSelf: 'center',
     },
     selectedImage: {
         width: '100%',

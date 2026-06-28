@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getEnv } from '../utils/env';
 import { STORAGE_KEYS } from '../constants';
 import { setCachedToken, clearCachedToken } from '../utils/tokenCache';
+import { clearPharmacistGuestSession } from '../utils/pharmacistGuestSession';
 import { normalizeMemberForSession } from '../utils/userRole';
 
 const API_TIMEOUT = 20000;
@@ -269,6 +270,7 @@ export async function persistAuthSession(
   payload: LoginAuthPayload,
   keepLoggedIn: boolean = true
 ): Promise<void> {
+  clearPharmacistGuestSession();
   if (__DEV__) {
     console.log('[authApi] persistAuthSession 시작:', {
       _ts: Date.now(),
@@ -625,6 +627,7 @@ export async function sendVerification(email: string, purpose: string = 'export_
 
 export async function clearAuthSession(): Promise<void> {
   clearCachedToken(); 
+  clearPharmacistGuestSession();
   await AsyncStorage.multiRemove([
     STORAGE_KEYS.authToken,
     STORAGE_KEYS.refreshToken,
