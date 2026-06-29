@@ -8,19 +8,28 @@ import {
   v_aa7413,
   v_09d0e5,
   v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b, v_47f7b9 } from '../../../components';
-import { v_d91974, v_af2c88 } from '../../../utils/tabletLayout';
+import { v_2cc9f8, v_af2c88 } from '../../../utils/tabletLayout';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04, v_53f592 } from '../../../constants';
-import { v_81fcbc, v_095212, type v_b57732 } from '../../../services';
+import { v_81fcbc, v_095212, v_e42095, type v_b57732 } from '../../../services';
+import {
+  v_f6fac8,
+  v_71f4f5,
+} from '../../../services/pharmacyApi';
+import {
+  v_2e1952,
+  v_ddf2a3,
+} from '../../../utils/pharmacyRecordAdapter';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 
-const v_14a295 = 4;
+const v_14a295 = 3;
 const v_2c6c54 = 12;
 const v_c03413 = v_9b1a04.large * 2;
 
@@ -235,6 +244,8 @@ interface SkinRecordsViewProps {
   selectedAccountId?: string;
 
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
+
+  pharmacistMode?: boolean;
 }
 
 export const v_852b5b = (item: v_b57732, v_8d41d7): SkinRecord => {
@@ -290,10 +301,11 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   onCompare: v_bda358,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
+  pharmacistMode: v_988815 = false,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
-  const v_6c4b91 = v_d91974();
+  const v_6c4b91 = v_2cc9f8();
   const v_76eb7f = v_6c4b91.isTablet;
   const v_3fa560 = v_df9f57(
     () => Math.round(v_6c4b91.height * 0.82),
@@ -321,11 +333,15 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     [v_76eb7f, v_6c4b91.typo]
   );
   const v_f06cf4 = v_76eb7f ? v_af2c88(56, 64) : 56;
+  const [v_3d47f9, v_82f571] = v_5ab095(0);
   const v_7d15a0 = v_df9f57(() => {
-    const v_534018 = Math.min(v_6c4b91.contentColumnWidth, v_6c4b91.width);
-    const v_db991d = v_534018 - v_c03413;
-    return (v_db991d - v_2c6c54 * (v_14a295 - 1)) / v_14a295;
-  }, [v_6c4b91.contentColumnWidth, v_6c4b91.width]);
+    const v_43f4e6 =
+      v_3d47f9 > 0
+        ? v_3d47f9
+        : Math.min(v_6c4b91.contentColumnWidth, v_6c4b91.width) - v_c03413;
+    if (v_43f4e6 <= 0) return 0;
+    return (v_43f4e6 - v_2c6c54 * (v_14a295 - 1)) / v_14a295;
+  }, [v_3d47f9, v_6c4b91.contentColumnWidth, v_6c4b91.width]);
   const v_c65f5d = v_ada615();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('list');
   const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
@@ -347,12 +363,27 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
 
   const [v_a4994e, v_699388] = v_5ab095<SkinRecord | null>(null);
   const [v_e74174, v_8984bb] = v_5ab095(false);
+  const [v_59bc21, v_00b5ba] = v_5ab095(false);
 
   v_c4deb2(() => {
     const v_efc1dd = async () => {
       v_deef62(true);
       v_885e0e(null);
       try {
+        if (v_988815) {
+          const v_610eb5 = v_2e1952(v_e7b2f2);
+          if (!v_610eb5) {
+            v_9ed182([]);
+            return;
+          }
+          const v_952788 = await v_71f4f5(v_610eb5);
+          const v_e21297 = v_952788
+            .map(v_ddf2a3)
+            .filter((v_8c0b26): v_8c0b26 is v_b57732 => v_8c0b26 != null)
+            .map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7));
+          v_9ed182(v_e21297);
+          return;
+        }
 
         const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
@@ -402,7 +433,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f]);
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f, v_988815]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -512,6 +543,11 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           console.log('[SkinRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
         }
 
+        if (v_988815) {
+          v_699388(v_884a36);
+          return;
+        }
+
         const v_61f930 = await v_095212(v_fbf3b0);
         const v_3a28a5 = v_852b5b(v_61f930, v_8d41d7);
 
@@ -534,7 +570,43 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_a715fa();
-  }, [v_b23082, v_884a36?.id, v_8d41d7]);
+  }, [v_b23082, v_884a36?.id, v_884a36, v_8d41d7, v_988815]);
+
+  const v_a8b630 = (v_cbbd71) => {
+    v_03e392.alert(
+      v_8d41d7('health_records.delete_confirm_title', '기록 삭제'),
+      v_8d41d7('health_records.delete_confirm_message', '이 측정 기록을 삭제하시겠습니까? 삭제된 기록은 복구할 수 없습니다.'),
+      [
+        { text: v_8d41d7('health_records.cancel', '취소'), style: 'cancel' },
+        {
+          text: v_8d41d7('health_records.delete', '삭제'),
+          style: 'destructive',
+          onPress: async () => {
+            const v_fbf3b0 = parseInt(v_cbbd71.id, 10);
+            if (isNaN(v_fbf3b0)) return;
+            v_00b5ba(true);
+            try {
+              if (v_988815) {
+                await v_f6fac8(v_fbf3b0);
+              } else {
+                await v_e42095(v_fbf3b0);
+              }
+              v_9ed182((v_ba2215) => v_ba2215.filter((v_cb35cb) => v_cb35cb.id !== v_cbbd71.id));
+              v_725ee9(false);
+              v_b173ec(null);
+            } catch {
+              v_03e392.alert(
+                v_8d41d7('health_records.delete_error_title', '삭제 실패'),
+                v_8d41d7('health_records.delete_error_message', '기록 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
+              );
+            } finally {
+              v_00b5ba(false);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const v_a75897 = v_71ebe4.filter(Boolean).length;
   const v_8c38ef = v_a75897 === 2;
@@ -604,7 +676,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
 
   return (
     <>
-    <CenteredContentShell backgroundColor={v_1bfbd0.background}>
+    <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
       {}
       <View style={v_d81136.viewModeRow}>
         <TouchableOpacity
@@ -628,7 +700,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
       </View>
 
       {}
-      {v_34779a ? (
+      {!v_988815 && (v_34779a ? (
         <View style={v_d81136.compareModeBar}>
           <Text style={v_d81136.compareModeCount}>
             {v_8d41d7('skin_records.compare_selected', { count: v_a75897, total: 2 })}
@@ -657,7 +729,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           onPress={v_2daa27}
           style={v_d81136.compareBtn}
         />
-      )}
+      ))}
 
       {v_cd31a8 ? (
         <View style={v_d81136.loadingContainer}>
@@ -879,8 +951,16 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
 
                 {}
                 <Text style={[v_d81136.sectionTitle, { fontSize: v_c0b708.sectionTitle }]}>{v_8d41d7('skin_records.skin_condition')}</Text>
-                <View style={v_d81136.itemsGrid}>
-                  {v_8cc501.items.map((v_8c0b26) => {
+                <View
+                  style={v_d81136.itemsGrid}
+                  onLayout={(v_9e86fd) => {
+                    const v_8e4fb6 = Math.round(v_9e86fd.nativeEvent.layout.width);
+                    if (v_8e4fb6 > 0 && v_8e4fb6 !== v_3d47f9) {
+                      v_82f571(v_8e4fb6);
+                    }
+                  }}
+                >
+                  {v_7d15a0 > 0 && v_8cc501.items.map((v_8c0b26) => {
                     const v_5e5963 = v_53f592(v_8c0b26.score);
                     const v_3b3648 = v_f06cf4;
                     const v_0c21c9 = v_3b3648 / 2 - 4;
@@ -916,7 +996,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                               transform={`rotate(-90 ${v_3b3648 / 2} ${v_3b3648 / 2})`}
                             />
                           </Svg>
-                          <View style={v_d81136.gridItemScoreWrap}>
+                          <View style={[v_d81136.gridItemScoreWrap, { width: v_3b3648, height: v_3b3648 }]}>
                             <Text style={[v_d81136.gridItemScore, { fontSize: v_c0b708.gridScore, color: v_5e5963 }]}>{v_8c0b26.score}</Text>
                           </View>
                         </View>
@@ -941,6 +1021,25 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                       })}
                     </View>
                   </View>
+                )}
+
+                {v_8cc501 && (
+                  <TouchableOpacity
+                    style={v_d81136.deleteRecordBtn}
+                    onPress={() => v_a8b630(v_8cc501)}
+                    disabled={v_59bc21}
+                  >
+                    {v_59bc21 ? (
+                      <ActivityIndicator size="small" color="#E53935" />
+                    ) : (
+                      <>
+                        <Ionicons name="trash-outline" size={16} color="#E53935" />
+                        <Text style={[v_d81136.deleteRecordBtnText, { fontSize: v_c0b708.closeBtn }]}>
+                          {v_8d41d7('health_records.delete_record', '기록 삭제')}
+                        </Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
                 )}
 
                 <TouchableOpacity
@@ -1154,7 +1253,13 @@ const v_d81136 = v_472849.create({
   gradeBadgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.semibold },
   skinAgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.regular, color: v_1bfbd0.secondaryText, marginTop: 8 },
   sectionTitle: { fontSize: v_ef658a.medium, fontFamily: v_843035.bold, color: v_1bfbd0.text, marginBottom: v_9b1a04.medium },
-  itemsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: v_2c6c54, marginBottom: v_9b1a04.large },
+  itemsGrid: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: v_2c6c54,
+    marginBottom: v_9b1a04.large,
+  },
   gridItem: { alignItems: 'center' },
   gridItemCircle: { alignItems: 'center', justifyContent: 'center', position: 'relative' },
   gridItemScoreWrap: { position: 'absolute', alignItems: 'center', justifyContent: 'center' },
@@ -1167,6 +1272,19 @@ const v_d81136 = v_472849.create({
   cautionTagText: { fontSize: v_ef658a.small, fontFamily: v_843035.medium, color: '#92400E' },
   closeBtn: { alignItems: 'center', paddingVertical: 14, backgroundColor: v_1bfbd0.border, borderRadius: 10 },
   closeBtnText: { fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.text },
+  deleteRecordBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 14,
+    marginBottom: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FECACA',
+    backgroundColor: '#FEF2F2',
+  },
+  deleteRecordBtnText: { fontFamily: v_843035.medium, color: '#E53935' },
   itemDetailModal: { width: '100%', backgroundColor: '#fff', padding: v_9b1a04.large },
   itemDetailModalMobile: {
     borderTopLeftRadius: 20,

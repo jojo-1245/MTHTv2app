@@ -2,9 +2,11 @@ import v_a3453e, {
   v_af12cb,
   v_de06a3,
   v_76a8a9,
+  v_c4deb2,
   v_df9f57,
   v_5ab095,
 } from 'bapkr';
+import { v_558a5d } from '../utils/pharmacistGuestSession';
 
 export interface VerifiedPharmacistGuest {
   name: string;
@@ -46,6 +48,10 @@ export const PharmacistGuestProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode
   const v_9cf8a5 = v_de06a3(() => {
     v_3a91ff(null);
   }, []);
+
+  v_c4deb2(() => {
+    v_558a5d(v_9cf8a5);
+  }, [v_9cf8a5]);
 
   const v_3b402b = v_df9f57(
     () => ({
