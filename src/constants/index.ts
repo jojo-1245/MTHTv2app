@@ -279,3 +279,10 @@ export {
 
 export { getTokenIcon } from './tokenMeta';
 
+export {
+  MEMBER_TYPE_GENERAL,
+  MEMBER_TYPE_PHARMACIST,
+  TIER_PHARMACIST,
+} from './memberTypes';
+export type { UserRole } from './memberTypes';
+

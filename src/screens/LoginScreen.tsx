@@ -31,6 +31,8 @@ import * as v_6d394a from 'rpswwnotkqebxswfnogjwnyum';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import { v_e4a763 } from '../utils/env';
 import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
+import type { v_8adb2f } from '../services/authApi';
+import { v_87ba9a } from '../navigation/postLoginNavigation';
 import { v_9a8286 } from '../services/apiClient';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
@@ -127,6 +129,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_44c732, v_db7885] = v_5ab095(false);
   const v_c85cb5 = v_e662ae(false);
+  const v_95d78d = v_e662ae<v_8adb2f | null>(null);
 
   v_c4deb2(() => {
     const v_219084 = async () => {
@@ -202,7 +205,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       v_7984d2(false);
       v_889581('');
       v_241a35('');
-      v_c65f5d.reset({ index: 0, routes: [{ name: 'MetaHome' }] });
+      v_87ba9a(v_c65f5d, v_95d78d.current ?? {});
     } catch {
       v_889fad(v_8d41d7('common.error'), '비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
     } finally {
@@ -237,18 +240,16 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       const v_b095d7 = (v_bd4b7d as any).member ?? (v_bd4b7d as any).user;
       if (v_b095d7?.force_password_change) {
+        v_95d78d.current = v_bd4b7d;
         v_c85cb5.current = true;
         v_7984d2(true);
         return;
       }
 
       if (__DEV__) {
-        console.log('[Perf] LoginScreen: navigation.reset(MetaHome) 호출 직전', { _ts: Date.now(), _time: new Date().toISOString() });
+        console.log('[Perf] LoginScreen: navigation.reset(home) 호출 직전', { _ts: Date.now(), _time: new Date().toISOString() });
       }
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'MetaHome' }],
-      });
+      v_87ba9a(v_c65f5d, v_bd4b7d);
     } catch (v_5e9bfe) {
       const v_4b5200 = v_8d41d7('login.error_unknown');
       let v_d6bda5 = v_4b5200;
@@ -335,8 +336,8 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         return;
       }
       await v_d41982(v_aa8b54, v_2129ec);
-      if (__DEV__) console.log('[Naver] 로그인 완료 → MetaHome');
-      v_c65f5d.reset({ index: 0, routes: [{ name: 'MetaHome' }] });
+      if (__DEV__) console.log('[Naver] 로그인 완료 → home');
+      v_87ba9a(v_c65f5d, v_aa8b54);
     } catch (v_5e9bfe) {
       if (__DEV__) console.log('[Naver] 에러', v_5e9bfe instanceof Error ? v_5e9bfe.message : v_5e9bfe);
       const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
@@ -416,11 +417,8 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
       if (__DEV__) console.log('[Google] ⑥ persistAuthSession 호출');
       await v_d41982(v_43c42e, v_2129ec);
-      if (__DEV__) console.log('[Google] ⑦ 로그인 완료 → MetaHome 이동');
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'MetaHome' }],
-      });
+      if (__DEV__) console.log('[Google] ⑦ 로그인 완료 → home 이동');
+      v_87ba9a(v_c65f5d, v_43c42e);
     } catch (v_5e9bfe) {
       const v_c99bd2 = v_5e9bfe && typeof v_5e9bfe === 'object' && 'code' in v_5e9bfe ? (v_5e9bfe as { code: string }).code : '';
       if (__DEV__) {
@@ -468,10 +466,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         return;
       }
       await v_d41982(v_43c42e, v_2129ec);
-      v_c65f5d.reset({
-        index: 0,
-        routes: [{ name: 'MetaHome' }],
-      });
+      v_87ba9a(v_c65f5d, v_43c42e);
     } catch (v_5e9bfe) {
       const v_c99bd2 = v_5e9bfe && typeof v_5e9bfe === 'object' && 'code' in v_5e9bfe ? (v_5e9bfe as { code: string }).code : '';
       if (v_c99bd2 === 'ERR_REQUEST_CANCELED' || v_c99bd2 === 'ERR_CANCELED') {

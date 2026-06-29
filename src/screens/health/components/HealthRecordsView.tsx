@@ -15,10 +15,19 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import v_f10f2a from 'zqqvxke';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_dd725b } from '../../../components';
+import { v_dd725b, v_47f7b9 } from '../../../components';
+import { v_2cc9f8, v_af2c88 } from '../../../utils/tabletLayout';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 import { v_777b12, v_d531ea, v_a44133, type v_218d40 } from '../../../services';
+import {
+  v_f6fac8,
+  v_71f4f5,
+} from '../../../services/pharmacyApi';
+import {
+  v_2e1952,
+  v_80f1f0,
+} from '../../../utils/pharmacyRecordAdapter';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
@@ -370,6 +379,8 @@ interface HealthRecordsViewProps {
   selectedAccountId?: string;
 
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
+
+  pharmacistMode?: boolean;
 }
 
 export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
@@ -377,9 +388,41 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   onCompare: v_bda358,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
+  pharmacistMode: v_988815 = false,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
+  const v_6c4b91 = v_2cc9f8();
+  const v_76eb7f = v_6c4b91.isTablet;
+  const v_3fa560 = v_df9f57(
+    () => Math.round(v_6c4b91.height * 0.82),
+    [v_6c4b91.height]
+  );
+  const v_e05613 = v_76eb7f ? v_af2c88(80, 96) : 80;
+  const v_c0b708 = v_df9f57(
+    () => ({
+      listDate: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      listTime: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      listValue: v_76eb7f ? v_6c4b91.typo.title : 24,
+      listBadge: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      detailTimestamp: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      navBtn: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      healthIndexValue: v_76eb7f ? v_6c4b91.typo.subtitle : v_ef658a.large,
+      healthIndexLabel: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      healthIndexStatus: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      measurementItemsTitle: v_76eb7f ? v_6c4b91.typo.subtitle : v_ef658a.medium,
+      measurementSectionTitle: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.small,
+      measurementItemLabel: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      measurementItemValue: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      measurementItemUnit: v_76eb7f ? Math.max(12, v_6c4b91.typo.label - 1) : 10,
+      measurementItemDesc: v_76eb7f ? v_6c4b91.typo.label : 11,
+      statusBadge: v_76eb7f ? v_6c4b91.typo.label : 11,
+      closeBtn: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      deleteBtn: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      loadMore: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+    }),
+    [v_76eb7f, v_6c4b91.typo]
+  );
   const v_c65f5d = v_ada615();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('list');
   const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
@@ -409,6 +452,21 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
       try {
 
         await v_bb8240().catch(() => {});
+
+        if (v_988815) {
+          const v_610eb5 = v_2e1952(v_e7b2f2);
+          if (!v_610eb5) {
+            v_9ed182([]);
+            return;
+          }
+          const v_952788 = await v_71f4f5(v_610eb5);
+          const v_e21297 = v_952788
+            .map(v_80f1f0)
+            .filter((v_8c0b26): v_8c0b26 is v_218d40 => v_8c0b26 != null)
+            .map(v_38756f);
+          v_9ed182(v_e21297);
+          return;
+        }
 
         const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
@@ -458,7 +516,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d]);
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_988815]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -569,6 +627,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           console.log('[HealthRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
         }
 
+        if (v_988815) {
+          v_699388(v_884a36);
+          return;
+        }
+
         const v_61f930 = await v_d531ea(v_fbf3b0);
         const v_3a28a5 = v_38756f(v_61f930);
 
@@ -591,7 +654,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     };
 
     v_a715fa();
-  }, [v_b23082, v_884a36?.id]);
+  }, [v_b23082, v_884a36?.id, v_884a36, v_988815]);
 
   const v_16897e = (v_8dffde, v_f985e6) => {
     const [v_64877a, v_35f85c, v_d5dda0] = v_8dffde.split('-');
@@ -697,7 +760,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
             if (isNaN(v_fbf3b0)) return;
             v_00b5ba(true);
             try {
-              await v_a44133(v_fbf3b0);
+              if (v_988815) {
+                await v_f6fac8(v_fbf3b0);
+              } else {
+                await v_a44133(v_fbf3b0);
+              }
 
               v_9ed182((v_ba2215) => v_ba2215.filter((v_cb35cb) => v_cb35cb.id !== v_cbbd71.id));
               v_725ee9(false);
@@ -718,7 +785,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   };
 
   return (
-    <View style={v_d81136.container}>
+    <>
+    <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
       {}
       <View style={v_d81136.viewModeRow}>
         <TouchableOpacity
@@ -750,7 +818,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
       </View>
 
       {}
-      {v_34779a ? (
+      {!v_988815 && (v_34779a ? (
         <View style={v_d81136.compareModeBar}>
           <Text style={v_d81136.compareModeCount}>
             {v_8d41d7('health_records.compare_selected', { count: v_a75897, total: 2 })}
@@ -779,7 +847,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           onPress={v_2daa27}
           style={v_d81136.compareBtn}
         />
-      )}
+      ))}
 
       {v_0af1e7 === 'calendar' ? (
         <>
@@ -927,11 +995,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                   onPress={() => v_5b20f5(v_cbbd71)}
                 >
                   <View style={v_d81136.listItemLeft}>
-                    <Text style={v_d81136.listItemDate}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
-                    <Text style={v_d81136.listItemTime}>{v_e5585e(v_cbbd71.time)}</Text>
+                    <Text style={[v_d81136.listItemDate, { fontSize: v_c0b708.listDate }]}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
+                    <Text style={[v_d81136.listItemTime, { fontSize: v_c0b708.listTime }]}>{v_e5585e(v_cbbd71.time)}</Text>
                   </View>
                   <View style={v_d81136.listItemRight}>
-                    <Text style={v_d81136.listItemValue}>{v_cbbd71.healthIndex}</Text>
+                    <Text style={[v_d81136.listItemValue, { fontSize: v_c0b708.listValue }]}>{v_cbbd71.healthIndex}</Text>
                     <View
                       style={[
                         v_d81136.listItemBadge,
@@ -943,6 +1011,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                       <Text
                         style={[
                           v_d81136.listItemBadgeText,
+                          { fontSize: v_c0b708.listBadge },
                           v_d308b5 === 'high' && v_d81136.listItemBadgeTextLight,
                         ]}
                       >
@@ -956,16 +1025,18 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           )}
           {!v_cd31a8 && !v_95616f && v_678155.length > v_488860 && v_cff7c3 && (
             <TouchableOpacity style={v_d81136.loadMoreBtn} onPress={v_f660ef}>
-              <Text style={v_d81136.loadMoreText}>{v_8d41d7('health_records.load_more')}</Text>
+              <Text style={[v_d81136.loadMoreText, { fontSize: v_c0b708.loadMore }]}>{v_8d41d7('health_records.load_more')}</Text>
             </TouchableOpacity>
           )}
         </ScrollView>
       )}
 
+    </CenteredContentShell>
+
       {}
       <Modal
         visible={v_b23082}
-        animationType="slide"
+        animationType={v_76eb7f ? 'fade' : 'slide'}
         transparent
         onRequestClose={() => {
           v_725ee9(false);
@@ -973,27 +1044,33 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           v_b173ec(null);
         }}
       >
-        <View style={v_d81136.modalOverlay}>
+        <View style={[v_d81136.modalOverlay, v_76eb7f && v_d81136.modalOverlayTablet]}>
           <Pressable
-            style={v_d81136.modalOverlayDim}
+            style={v_76eb7f ? v_d81136.modalOverlayDim : v_d81136.modalOverlayDimMobile}
             onPress={() => {
               v_725ee9(false);
               v_3e1334(null);
               v_b173ec(null);
             }}
           />
-          <View style={[v_d81136.modalContent, { paddingBottom: v_9b1a04.large + v_033e14.bottom }]}>
+          <View
+            style={[
+              v_d81136.modalContent,
+              v_76eb7f ? v_d81136.modalContentTablet : v_d81136.modalContentMobile,
+              v_76eb7f
+                ? { maxWidth: v_6c4b91.contentColumnWidth, maxHeight: v_3fa560, alignSelf: 'center' }
+                : { paddingBottom: v_9b1a04.large + v_033e14.bottom },
+            ]}
+          >
             {v_e74174 ? (
-              <View style={v_d81136.loadingContainer}>
+              <View style={v_d81136.modalLoadingContainer}>
                 <ActivityIndicator size="large" color={v_1bfbd0.primary} />
                 <Text style={v_d81136.loadingText}>데이터를 불러오는 중...</Text>
               </View>
             ) : v_8cc501 ? (
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[
-                  v_d81136.modalScrollContent,
-                ]}
+                contentContainerStyle={v_d81136.modalScrollContent}
               >
                 {}
                 <View style={v_d81136.detailTimestampRow}>
@@ -1004,14 +1081,14 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                       disabled={!v_a144ca}
                     >
                       <Ionicons name="chevron-back" size={24} color={v_a144ca ? v_1bfbd0.text : v_1bfbd0.border} />
-                      <Text style={[v_d81136.navRecordText, !v_a144ca && v_d81136.navRecordTextDisabled]}>
+                      <Text style={[v_d81136.navRecordText, { fontSize: v_c0b708.navBtn }, !v_a144ca && v_d81136.navRecordTextDisabled]}>
                         {v_8d41d7('health_records.prev')}
                       </Text>
                     </TouchableOpacity>
                   ) : (
                     <View style={v_d81136.navRecordBtnPlaceholder} />
                   )}
-                  <Text style={v_d81136.detailTimestamp} numberOfLines={1}>
+                  <Text style={[v_d81136.detailTimestamp, { fontSize: v_c0b708.detailTimestamp }]} numberOfLines={1}>
                     {v_16897e(v_8cc501.date, v_8cc501.time)}
                   </Text>
                   {v_b277c8 ? (
@@ -1020,7 +1097,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                       onPress={v_f83132}
                       disabled={!v_4a3fe8}
                     >
-                      <Text style={[v_d81136.navRecordText, !v_4a3fe8 && v_d81136.navRecordTextDisabled]}>
+                      <Text style={[v_d81136.navRecordText, { fontSize: v_c0b708.navBtn }, !v_4a3fe8 && v_d81136.navRecordTextDisabled]}>
                         {v_8d41d7('health_records.next')}
                       </Text>
                       <Ionicons name="chevron-forward" size={24} color={v_4a3fe8 ? v_1bfbd0.text : v_1bfbd0.border} />
@@ -1034,12 +1111,12 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 <View style={v_d81136.healthIndexSection}>
                   <View style={v_d81136.healthIndexRow}>
                     <View style={v_d81136.healthIndexCenter}>
-                      <View style={v_d81136.healthIndexCircle}>
-                        <HealthIndexRing value={v_8cc501.healthIndex} max={10} />
-                        <Text style={v_d81136.healthIndexValue}>{v_8cc501.healthIndex}/10</Text>
+                      <View style={[v_d81136.healthIndexCircle, { width: v_e05613, height: v_e05613 }]}>
+                        <HealthIndexRing value={v_8cc501.healthIndex} max={10} size={v_e05613} />
+                        <Text style={[v_d81136.healthIndexValue, { fontSize: v_c0b708.healthIndexValue }]}>{v_8cc501.healthIndex}/10</Text>
                       </View>
-                      <Text style={v_d81136.healthIndexLabel}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.health_index_ios') : v_8d41d7('health_records.health_index')}</Text>
-                      <Text style={v_d81136.healthIndexStatus}>
+                      <Text style={[v_d81136.healthIndexLabel, { fontSize: v_c0b708.healthIndexLabel }]}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.health_index_ios') : v_8d41d7('health_records.health_index')}</Text>
+                      <Text style={[v_d81136.healthIndexStatus, { fontSize: v_c0b708.healthIndexStatus }]}>
                         {v_8d41d7(`health_records.list_status_${v_54e295(v_8cc501.healthIndex)}`)}
                       </Text>
                     </View>
@@ -1047,7 +1124,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 </View>
 
                 {}
-                <Text style={v_d81136.measurementItemsTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.measurement_items_ios') : v_8d41d7('health_records.measurement_items')}</Text>
+                <Text style={[v_d81136.measurementItemsTitle, { fontSize: v_c0b708.measurementItemsTitle }]}>{v_326be8.OS === 'ios' ? v_8d41d7('health_records.measurement_items_ios') : v_8d41d7('health_records.measurement_items')}</Text>
                 {v_ac1ebb().map((v_b4fa6c) => {
                   const v_2afa46 = v_8cc501.items.filter((v_8c0b26) =>
                     v_b4fa6c.itemKeys.includes(v_8c0b26.key),
@@ -1056,7 +1133,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
                   return (
                     <View key={v_b4fa6c.sectionKey} style={v_d81136.measurementSection}>
-                      <Text style={v_d81136.measurementSectionTitle}>
+                      <Text style={[v_d81136.measurementSectionTitle, { fontSize: v_c0b708.measurementSectionTitle }]}>
                         {}
                         {v_326be8.OS === 'ios'
                           ? v_8d41d7(`health_records.${v_b4fa6c.sectionKey}_ios`, v_8d41d7(`health_records.${v_b4fa6c.sectionKey}`))
@@ -1071,7 +1148,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                           return (
                             <View key={v_8c0b26.key} style={v_d81136.measurementItemCard}>
                               <View style={v_d81136.measurementItemHeader}>
-                                <Text style={v_d81136.measurementItemLabel}>
+                                <Text style={[v_d81136.measurementItemLabel, { fontSize: v_c0b708.measurementItemLabel }]}>
                                   {v_8d41d7(`health_analysis.vitals.${v_8c0b26.labelKey}`)}
                                 </Text>
                                 {v_16e592 && (
@@ -1089,9 +1166,9 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                               </View>
                               <View style={v_d81136.measurementValueRow}>
                                 <View style={v_d81136.measurementValueLeft}>
-                                  <Text style={v_d81136.measurementItemValue}>{v_8c0b26.value}</Text>
+                                  <Text style={[v_d81136.measurementItemValue, { fontSize: v_c0b708.measurementItemValue }]}>{v_8c0b26.value}</Text>
                                   {v_8c0b26.unit && (
-                                    <Text style={v_d81136.measurementItemUnit}>{v_8c0b26.unit}</Text>
+                                    <Text style={[v_d81136.measurementItemUnit, { fontSize: v_c0b708.measurementItemUnit }]}>{v_8c0b26.unit}</Text>
                                   )}
                                 </View>
                                 <View
@@ -1103,6 +1180,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                                   <Text
                                     style={[
                                       v_d81136.statusBadgeText,
+                                      { fontSize: v_c0b708.statusBadge },
                                       v_8c0b26.status === 'risk' ? v_d81136.statusBadgeTextRisk : v_d81136.statusBadgeTextNormal,
                                     ]}
                                   >
@@ -1111,7 +1189,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                                 </View>
                               </View>
                               {v_e0061e && v_6856a9 ? (
-                                <Text style={v_d81136.measurementItemDesc}>{v_6856a9}</Text>
+                                <Text style={[v_d81136.measurementItemDesc, { fontSize: v_c0b708.measurementItemDesc }]}>{v_6856a9}</Text>
                               ) : null}
                             </View>
                           );
@@ -1135,7 +1213,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                     ) : (
                       <>
                         <Ionicons name="trash-outline" size={16} color="#E53935" />
-                        <Text style={v_d81136.deleteRecordBtnText}>
+                        <Text style={[v_d81136.deleteRecordBtnText, { fontSize: v_c0b708.deleteBtn }]}>
                           {v_8d41d7('health_records.delete_record', '기록 삭제')}
                         </Text>
                       </>
@@ -1151,19 +1229,18 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                     v_b173ec(null);
                   }}
                 >
-                  <Text style={v_d81136.closeBtnText}>{v_8d41d7('health_records.close')}</Text>
+                  <Text style={[v_d81136.closeBtnText, { fontSize: v_c0b708.closeBtn }]}>{v_8d41d7('health_records.close')}</Text>
                 </TouchableOpacity>
               </ScrollView>
             ) : null}
           </View>
         </View>
       </Modal>
-    </View>
+    </>
   );
 };
 
-function v_3ec516({ value: v_3b402b, max: v_d2c6bf }: { value: number; max: number }) {
-  const v_05b441 = 80;
+function v_3ec516({ value: v_3b402b, max: v_d2c6bf, size: v_05b441 = 80 }: { value: number; max: number; size?: number }) {
   const v_474580 = 8;
   const v_0c21c9 = (v_05b441 - v_474580) / 2;
   const v_0288f8 = v_05b441 / 2;
@@ -1207,15 +1284,10 @@ function v_3ec516({ value: v_3b402b, max: v_d2c6bf }: { value: number; max: numb
 }
 
 const v_d81136 = v_472849.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: v_9b1a04.large,
-    paddingTop: v_9b1a04.medium,
-    backgroundColor: v_1bfbd0.background,
-  },
   viewModeRow: {
     flexDirection: 'row',
     gap: 8,
+    marginTop: v_9b1a04.large,
     marginBottom: v_9b1a04.medium,
     justifyContent: 'center',
   },
@@ -1484,21 +1556,42 @@ const v_d81136 = v_472849.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'transparent',
     justifyContent: 'flex-end',
   },
+  modalOverlayTablet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: v_9b1a04.large,
+  },
   modalOverlayDim: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalOverlayDimMobile: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
+  modalLoadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: v_9b1a04.xlarge,
+  },
   modalContent: {
+    width: '100%',
     backgroundColor: '#fff',
+    padding: v_9b1a04.large,
+  },
+  modalContentMobile: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: v_9b1a04.large,
     maxHeight: '85%',
   },
+  modalContentTablet: {
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
   modalScrollContent: {
+    flexGrow: 0,
     paddingBottom: v_9b1a04.xlarge,
   },
   detailTimestampRow: {
