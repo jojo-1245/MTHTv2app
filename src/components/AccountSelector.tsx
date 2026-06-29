@@ -44,6 +44,8 @@ export interface AccountSelectorProps {
 
   modalTitle?: string;
 
+  onDeletePharmacyRecords?: (accountId: string) => void;
+
   emptyText?: string;
 }
 
@@ -59,6 +61,7 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
   pharmacistMode: v_988815 = false,
   modalTitle: v_dfd0c9,
   emptyText: v_6e7fc2,
+  onDeletePharmacyRecords: v_133324,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_c65f5d = v_ada615();
@@ -253,6 +256,19 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
                         hitSlop={8}
                       >
                         <Feather name="more-vertical" size={18} color={v_1bfbd0.secondaryText} />
+                      </TouchableOpacity>
+                    )}
+                    {v_988815 && v_133324 && (
+                      <TouchableOpacity
+                        style={v_d81136.optionBtn}
+                        onPress={(v_9e86fd) => {
+                          v_9e86fd.stopPropagation();
+                          v_133324(v_b4542a.id);
+                          v_f099fd(false);
+                        }}
+                        hitSlop={8}
+                      >
+                        <Feather name="trash-2" size={18} color="#EF4444" />
                       </TouchableOpacity>
                     )}
                   </TouchableOpacity>

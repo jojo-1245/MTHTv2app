@@ -6,7 +6,12 @@ import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import type { v_8ad91b } from '../navigation';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_766523, v_7ef860, v_6a59bc, type v_abf760 } from '../services';
-import { v_66896f, type v_443c12 } from '../services/pharmacyApi';
+import {
+  v_66896f,
+  v_582387,
+  type v_443c12,
+} from '../services/pharmacyApi';
+import { v_2e1952 } from '../utils/pharmacyRecordAdapter';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_624bd2 } from '../constants';
 import type { v_70edf1 } from '../components/AccountSelector';
@@ -324,6 +329,40 @@ export const v_9e8766 = () => {
     });
   }, [v_c65f5d]);
 
+  const v_533a87 = v_de06a3(
+    (v_2453ad) => {
+      const v_610eb5 = v_2e1952(v_2453ad);
+      const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
+      if (!v_610eb5 || !v_b4542a) return;
+
+      v_03e392.alert(
+        v_8d41d7('pharmacist.visitor_list.delete_visitor_title'),
+        v_8d41d7('pharmacist.visitor_list.delete_visitor_message', { name: v_b4542a.name }),
+        [
+          { text: v_8d41d7('common.cancel'), style: 'cancel' },
+          {
+            text: v_8d41d7('health_records.delete', '삭제'),
+            style: 'destructive',
+            onPress: async () => {
+              try {
+                await v_582387(v_610eb5);
+                await v_358be6();
+                v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('pharmacist.visitor_list.delete_visitor_success'));
+              } catch (v_5e9bfe) {
+                if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
+                v_03e392.alert(
+                  v_8d41d7('health_records.delete_error_title', '삭제 실패'),
+                  v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('pharmacist.visitor_list.delete_failed')
+                );
+              }
+            },
+          },
+        ]
+      );
+    },
+    [v_c86f08, v_358be6, v_c65f5d, v_8d41d7]
+  );
+
   const v_ccc6c8 = v_de06a3((v_2453ad) => {
     const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
     if (!v_b4542a) return;
@@ -355,6 +394,7 @@ export const v_9e8766 = () => {
     handleLinkEmail: v_42b67a,
     reloadAccounts: v_358be6,
     selectPharmacyVisitor: v_ccc6c8,
+    handleDeletePharmacyVisitorRecords: v_533a87,
   };
 };
 

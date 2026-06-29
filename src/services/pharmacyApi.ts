@@ -139,3 +139,11 @@ export async function v_9c95f6(v_610eb5): Promise<void> {
     throw new Error(v_9f9d96(v_5e9bfe, '검진 이력 삭제에 실패했습니다.'));
   }
 }
+
+export async function v_582387(v_610eb5): Promise<void> {
+  try {
+    await v_9a8286.delete(`/oth-path${v_610eb5}`);
+  } catch (v_5e9bfe) {
+    throw new Error(v_9f9d96(v_5e9bfe, '고객 삭제에 실패했습니다.'));
+  }
+}

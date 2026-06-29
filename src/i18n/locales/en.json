@@ -2005,6 +2005,7 @@
       "required_title": "Verification required",
       "required_message": "Please complete customer verification before starting analysis.",
       "go_verify": "Verify now",
+      "measure_reauth_message": "Complete OTP verification for the selected customer before measuring.",
       "send_failed": "Failed to send verification code.",
       "verify_failed": "Verification failed.",
       "expired_request": "Verification request expired. Please try again.",
@@ -2016,7 +2017,23 @@
       "empty": "No customers measured yet.",
       "record_count": "{{count}} screening(s)",
       "select_reauth": "Select a customer, then complete OTP verification to start analysis.",
-      "load_failed": "Failed to load customer list."
+      "load_failed": "Failed to load customer list.",
+      "total_count": "{{count}} customer(s)",
+      "limit_hint": "Showing up to {{limit}} most recent",
+      "recent_title": "Recent customers",
+      "recent_hint": "Showing up to {{count}} most recent",
+      "view_all": "View all",
+      "search_placeholder": "Search by name or phone",
+      "search_empty": "No matching customers.",
+      "no_records_yet": "No screenings yet",
+      "delete_visitor_hint": "Tap trash to remove a customer from the list.",
+      "delete_visitor_title": "Delete customer",
+      "delete_visitor_message": "Remove {{name}} from the list? Screening history will also be deleted.",
+      "delete_visitor_success": "Customer removed.",
+      "delete_all_title": "Delete screening history",
+      "delete_all_message": "Delete all screening records for {{name}}? Customer profile will be kept.",
+      "delete_all_success": "Screening history deleted.",
+      "delete_failed": "Failed to delete screening history."
     }
   }
 }

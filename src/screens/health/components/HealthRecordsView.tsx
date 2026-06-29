@@ -16,10 +16,18 @@ import v_f10f2a from 'zqqvxke';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_dd725b, v_47f7b9 } from '../../../components';
-import { v_d91974, v_af2c88 } from '../../../utils/tabletLayout';
+import { v_2cc9f8, v_af2c88 } from '../../../utils/tabletLayout';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../../constants';
 import { v_777b12, v_d531ea, v_a44133, type v_218d40 } from '../../../services';
+import {
+  v_f6fac8,
+  v_71f4f5,
+} from '../../../services/pharmacyApi';
+import {
+  v_2e1952,
+  v_80f1f0,
+} from '../../../utils/pharmacyRecordAdapter';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
@@ -371,6 +379,8 @@ interface HealthRecordsViewProps {
   selectedAccountId?: string;
 
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
+
+  pharmacistMode?: boolean;
 }
 
 export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
@@ -378,10 +388,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
   onCompare: v_bda358,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
+  pharmacistMode: v_988815 = false,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
-  const v_6c4b91 = v_d91974();
+  const v_6c4b91 = v_2cc9f8();
   const v_76eb7f = v_6c4b91.isTablet;
   const v_3fa560 = v_df9f57(
     () => Math.round(v_6c4b91.height * 0.82),
@@ -442,6 +453,21 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
         await v_bb8240().catch(() => {});
 
+        if (v_988815) {
+          const v_610eb5 = v_2e1952(v_e7b2f2);
+          if (!v_610eb5) {
+            v_9ed182([]);
+            return;
+          }
+          const v_952788 = await v_71f4f5(v_610eb5);
+          const v_e21297 = v_952788
+            .map(v_80f1f0)
+            .filter((v_8c0b26): v_8c0b26 is v_218d40 => v_8c0b26 != null)
+            .map(v_38756f);
+          v_9ed182(v_e21297);
+          return;
+        }
+
         const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
 
@@ -490,7 +516,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d]);
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_988815]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -601,6 +627,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           console.log('[HealthRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
         }
 
+        if (v_988815) {
+          v_699388(v_884a36);
+          return;
+        }
+
         const v_61f930 = await v_d531ea(v_fbf3b0);
         const v_3a28a5 = v_38756f(v_61f930);
 
@@ -623,7 +654,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     };
 
     v_a715fa();
-  }, [v_b23082, v_884a36?.id]);
+  }, [v_b23082, v_884a36?.id, v_884a36, v_988815]);
 
   const v_16897e = (v_8dffde, v_f985e6) => {
     const [v_64877a, v_35f85c, v_d5dda0] = v_8dffde.split('-');
@@ -729,7 +760,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
             if (isNaN(v_fbf3b0)) return;
             v_00b5ba(true);
             try {
-              await v_a44133(v_fbf3b0);
+              if (v_988815) {
+                await v_f6fac8(v_fbf3b0);
+              } else {
+                await v_a44133(v_fbf3b0);
+              }
 
               v_9ed182((v_ba2215) => v_ba2215.filter((v_cb35cb) => v_cb35cb.id !== v_cbbd71.id));
               v_725ee9(false);
@@ -751,7 +786,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
   return (
     <>
-    <CenteredContentShell backgroundColor={v_1bfbd0.background}>
+    <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
       {}
       <View style={v_d81136.viewModeRow}>
         <TouchableOpacity
@@ -783,7 +818,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
       </View>
 
       {}
-      {v_34779a ? (
+      {!v_988815 && (v_34779a ? (
         <View style={v_d81136.compareModeBar}>
           <Text style={v_d81136.compareModeCount}>
             {v_8d41d7('health_records.compare_selected', { count: v_a75897, total: 2 })}
@@ -812,7 +847,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           onPress={v_2daa27}
           style={v_d81136.compareBtn}
         />
-      )}
+      ))}
 
       {v_0af1e7 === 'calendar' ? (
         <>
