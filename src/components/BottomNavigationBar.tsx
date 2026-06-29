@@ -14,6 +14,7 @@ import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_c18c22 } from 'svuoaeceudfxfjvvpmmmchnwljywbphjgb';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_af2c88, v_d91974 } from '../utils/tabletLayout';
 
 const v_90fa17 = require('../../assets/images/robot_face.png');
 const v_96cb41 = require('../../assets/images/symbol.png');
@@ -32,6 +33,8 @@ export interface BottomNavigationBarProps {
   containerStyle?: v_961e77<v_7e4944>;
 
   homepageMode?: boolean;
+
+  variant?: 'default' | 'tablet';
 }
 
 const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
@@ -40,8 +43,18 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
   onTabPress: v_0c5f70,
   containerStyle: v_4affe9,
   homepageMode: v_695971 = false,
+  variant: v_46e192 = 'default',
 }) => {
   const v_033e14 = v_e0068c();
+  const { isLandscape: v_5768e8, isTablet: v_76eb7f, bottomNavMaxWidth: v_88dc6e } = v_d91974();
+  const v_a9fd9a = v_46e192 === 'tablet';
+  const v_6fb2d1 = v_a9fd9a ? v_af2c88(22, v_5768e8 ? 24 : 26) : 22;
+  const v_b3bcea = v_a9fd9a ? v_af2c88(12, v_5768e8 ? 13 : 14) : 12;
+  const v_e54c50 = v_a9fd9a
+    ? v_5768e8
+      ? 8
+      : v_af2c88(v_9b1a04.small, 12)
+    : v_9b1a04.small;
 
   const v_f9771e = v_c18c22(0);
 
@@ -56,7 +69,15 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
 
   return (
     <View style={[v_d81136.wrapper, v_4affe9]}>
-      <View style={v_d81136.inner}>
+      <View
+        style={[
+          v_d81136.inner,
+          {
+            maxWidth: v_76eb7f ? v_88dc6e : 780,
+            paddingHorizontal: v_76eb7f && v_5768e8 ? 24 : v_9b1a04.medium,
+          },
+        ]}
+      >
         {v_4622b9.map(v_8c0b26 => {
           const v_26dce6 = v_8c0b26.key === v_1f1e84;
           const v_13a0ae = v_8c0b26.key === 'aihinty';
@@ -67,7 +88,7 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
             <TouchableOpacity
               key={v_8c0b26.key}
               activeOpacity={0.85}
-              style={[v_d81136.tab, v_13a0ae && v_d81136.tabAihinty]}
+              style={[v_d81136.tab, { paddingVertical: v_e54c50 }, v_13a0ae && v_d81136.tabAihinty]}
               onPress={() => v_0c5f70?.(v_8c0b26)}
               accessibilityRole="button"
               accessibilityState={{ selected: v_26dce6 }}
@@ -93,13 +114,14 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
               ) : (
                 <Feather
                   name={v_8c0b26.icon}
-                  size={22}
+                  size={v_6fb2d1}
                   color={v_26dce6 ? v_4c45ec : v_1bfbd0.secondaryText}
                 />
               )}
               <Text
                 style={[
                   v_d81136.label,
+                  { fontSize: v_b3bcea },
                   v_26dce6 && v_d81136.labelActive,
                   v_13a0ae && v_26dce6 && v_d81136.labelAihintyActive,
                 ]}
@@ -116,27 +138,28 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
 
 const v_d81136 = v_472849.create({
   wrapper: {
-    backgroundColor: 'transparent',
+    width: '100%',
+    alignSelf: 'stretch',
+    backgroundColor: v_1bfbd0.white,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
     zIndex: 20,
     overflow: 'visible',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 4,
   },
   inner: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    maxWidth: 780,
     alignSelf: 'center',
-    backgroundColor: v_1bfbd0.white,
+    backgroundColor: 'transparent',
     paddingHorizontal: v_9b1a04.medium,
-    borderTopWidth: 1,
-    borderTopColor: "#F3F4F6",
     overflow: 'visible',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 4,
   },
   tab: {
     flex: 1,

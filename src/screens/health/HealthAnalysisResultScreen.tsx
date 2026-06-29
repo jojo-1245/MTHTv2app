@@ -1,6 +1,5 @@
 import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3 } from 'bapkr';
 import {
-  v_700696,
   v_aa7413,
   v_bd64bf,
   v_da479e,
@@ -18,7 +17,9 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
-import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d } from '../../components';
+import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
+import { v_0d0e7d, type v_9a970c } from '../../utils/analysisResultTabletStyles';
+import { v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
 import type { v_5d13be } from './components/HealthRecordsView';
 import type { v_8ad91b } from '../../navigation';
@@ -34,6 +35,9 @@ import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
 import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
+import { v_5a0119 } from '../../hooks/useUserRole';
+import { v_4b2942 } from '../../context/PharmacistGuestContext';
+import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 
 type InfoModalType = 'wellnessIndex' | 'wellnessLevel' | null;
 
@@ -62,6 +66,47 @@ function v_11cdee({ name: v_1833e7 }: { name: string }) {
     </View>
   );
 }
+
+type ValueParts = { value: string; unit: string };
+
+function v_b73387({
+  valueParts: v_1d99bf,
+  tx: v_2f6fcc,
+  isTablet: v_76eb7f,
+  unitFontSize: v_79d7b4,
+}: {
+  valueParts: ValueParts;
+  tx: (base: object, key: v_9a970c) => object;
+  isTablet: boolean;
+  unitFontSize?: number;
+}) {
+  return (
+    <View style={[v_d81136.resultValueRow, v_76eb7f && v_d81136.resultValueRowTablet]}>
+      <Text
+        style={v_2f6fcc(v_d81136.resultValueText, 'resultValueText')}
+        numberOfLines={v_76eb7f ? 1 : undefined}
+        adjustsFontSizeToFit={v_76eb7f}
+        minimumFontScale={v_76eb7f ? 0.85 : 1}
+      >
+        {v_1d99bf.value}
+      </Text>
+      {v_1d99bf.unit ? (
+        <Text
+          style={[
+            v_2f6fcc(v_d81136.resultValueUnit, 'resultValueUnit'),
+            v_76eb7f && {
+              fontSize: v_79d7b4 ?? 14,
+              marginBottom: 0,
+              alignSelf: 'flex-start',
+            },
+          ]}
+        >
+          {v_1d99bf.unit}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
 const v_da5121 = v_472849.create({
   wrapper: {
     flexDirection: 'row',
@@ -83,9 +128,6 @@ const v_da5121 = v_472849.create({
     maxWidth: 120,
   },
 });
-
-const { width: v_0d9f50 } = v_700696.get('window');
-const v_495d45 = v_0d9f50;
 
 type DisplayItem = {
   typeNum: number;
@@ -597,14 +639,41 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
+  const v_6c4b91 = v_2cc9f8();
+  const { merge: v_2f6fcc, isTablet: v_76eb7f, typo: v_52101f } = v_0d0e7d();
+  const v_39c3a4 = v_df9f57(
+    () => v_6c4b91.contentColumnWidth - v_6c4b91.horizontalPadding * 2,
+    [v_6c4b91.contentColumnWidth, v_6c4b91.horizontalPadding]
+  );
 
   v_1f53bf();
+  const v_5f6b8d = v_5a0119();
+  const v_160272 = v_5f6b8d === 'pharmacist';
+  const { verifiedGuest: v_3de945 } = v_4b2942();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
   ];
   const [v_c86f08, v_d690d0] = v_5ab095(v_48f046);
   const [v_e7b2f2, v_1f1e88] = v_5ab095(v_565544 || '1');
+
+  const v_a64f0f = v_df9f57(() => {
+    if (v_160272 && v_3de945?.name?.trim()) {
+      return v_3de945.name.trim();
+    }
+    if (v_f08a5e?.trim()) {
+      return v_f08a5e.trim();
+    }
+    const v_587413 = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+    if (v_587413?.name?.trim()) {
+      return v_587413.name.trim();
+    }
+    const v_275ccd = v_c86f08.find((v_779914) => v_779914.isCurrent);
+    if (v_275ccd?.name?.trim()) {
+      return v_275ccd.name.trim();
+    }
+    return v_8d41d7('health_analysis.default_user_name', '나');
+  }, [v_160272, v_3de945?.name, v_f08a5e, v_c86f08, v_e7b2f2, v_8d41d7]);
 
   const v_5bc46a = (v_2453ad) => {
     v_d690d0((v_ba2215) => v_ba2215.filter((v_779914) => v_779914.id !== v_2453ad));
@@ -1310,33 +1379,36 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           console.log('[HealthAnalysisResultScreen] vital_signs 전체 데이터:', JSON.stringify(v_0946e7, null, 2));
         }
 
-        const v_23eae7 = await v_207199(v_60e8e0);
+        let v_0bce57 = null;
+        if (v_8ea5e8(v_5f6b8d, v_3de945)) {
+          v_0bce57 = await v_e252f4({
+            verifiedGuest: v_3de945,
+            kind: 'health',
+            payload: v_60e8e0 as Record<string, unknown>,
+          });
+        } else {
+          const v_23eae7 = await v_207199(v_60e8e0);
+          v_0bce57 = v_23eae7.id ?? (v_23eae7 as any).record_id ?? null;
+        }
 
-        const v_0bce57 = v_23eae7.id ?? (v_23eae7 as any).record_id ?? null;
         v_f4f730.current = v_0bce57;
         v_43dcda(v_0bce57);
 
-        try {
-          if (v_0bce57) {
-            await v_8c9ccd('health_analysis', v_0bce57);
+        if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
+          try {
+            if (v_0bce57) {
+              await v_8c9ccd('health_analysis', v_0bce57);
+            }
+          } catch (v_892e09) {
+            console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
           }
-        } catch (v_892e09) {
-          console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
         }
 
         v_02a5a0.current = true;
         v_f013b2.current = v_42044e;
 
         if (__DEV__) {
-          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 성공 - 응답 정보:', {
-            savedRecord: JSON.stringify(v_23eae7, null, 2),
-            id: v_23eae7.id,
-            record_date: v_23eae7.record_date,
-            record_time: v_23eae7.record_time,
-            health_index: v_23eae7.health_index,
-            health_level: v_23eae7.health_level,
-            created_at: v_23eae7.created_at,
-          });
+          console.log('[HealthAnalysisResultScreen] 건강 측정 저장 성공 - recordId:', v_0bce57);
         }
       } catch (v_5e9bfe) {
         console.error('[HealthAnalysisResultScreen] 건강 측정 저장 실패:', {
@@ -1416,12 +1488,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             <Circle cx={v_e75d3b} cy={v_576627} r={4} fill={v_5bc297} stroke="#FFFFFF" strokeWidth={2} />
           </Svg>
           <View style={v_d81136.wellnessGaugeText}>
-            <Text style={v_d81136.wellnessScoreText}>{`${v_740dd8}/10`}</Text>
-            <Text style={v_d81136.wellnessScoreLabel}>{v_3a09c2}</Text>
+            <Text style={v_2f6fcc(v_d81136.wellnessScoreText, 'wellnessScoreText')}>{`${v_740dd8}/10`}</Text>
+            <Text style={v_2f6fcc(v_d81136.wellnessScoreLabel, 'wellnessScoreLabel')}>{v_3a09c2}</Text>
           </View>
         </View>
         <View style={v_d81136.wellnessTitleRow}>
-          <Text style={v_d81136.wellnessTitle}>
+          <Text style={v_2f6fcc(v_d81136.wellnessTitle, 'wellnessTitle')}>
             {v_8d41d7('health_analysis.result.wellness_score_title')}
           </Text>
           <TouchableOpacity
@@ -2151,6 +2223,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             variant="healthAnalysis"
             title={v_8d41d7('health_analysis.result_title')}
             showBackButton
+            centerContentMaxWidth={v_76eb7f ? undefined : v_6c4b91.contentColumnWidth}
+            centerContentPadding={v_76eb7f ? undefined : v_6c4b91.horizontalPadding}
+            titleStyle={v_76eb7f ? { fontSize: v_52101f.subtitle } : undefined}
             onBackPress={() => {
               v_c65f5d.replace('HealthAnalysis');
             }}
@@ -2166,36 +2241,48 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
           />
         </View>
         <View style={v_d81136.tabBar}>
-          <View style={v_d81136.tabRow}>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('measure')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.measure')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
-              onPress={() => v_02dd63('records')}
-            >
-              <Text style={[v_d81136.tabText, v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
-                {v_8d41d7('health_tabs.records')}
-              </Text>
-            </TouchableOpacity>
+          <View
+            style={[
+              v_d81136.tabBarInner,
+              v_76eb7f
+                ? { paddingHorizontal: v_9b1a04.large, width: '100%' }
+                : {
+                    maxWidth: v_6c4b91.contentColumnWidth,
+                    paddingHorizontal: v_6c4b91.horizontalPadding,
+                  },
+            ]}
+          >
+            <View style={v_d81136.tabRow}>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('measure')}
+              >
+                <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.measure')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
+                onPress={() => v_02dd63('records')}
+              >
+                <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
+                  {v_8d41d7('health_tabs.records')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {v_ac1d22 === 'records' ? (
+              <AccountSelector
+                accounts={v_c86f08}
+                selectedAccountId={v_e7b2f2}
+                onSelectAccount={v_1f1e88}
+                onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
+                onDeleteAccount={v_5bc46a}
+                onLinkEmail={v_42b67a}
+              />
+            ) : (
+              <UserNameDisplay name={v_a64f0f} />
+            )}
           </View>
-          {v_ac1d22 === 'records' ? (
-            <AccountSelector
-              accounts={v_c86f08}
-              selectedAccountId={v_e7b2f2}
-              onSelectAccount={v_1f1e88}
-              onAddSubAccount={() => v_c65f5d.navigate('AddSubAccount')}
-              onDeleteAccount={v_5bc46a}
-              onLinkEmail={v_42b67a}
-            />
-          ) : (
-            <UserNameDisplay name={v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나')} />
-          )}
         </View>
         {v_ac1d22 === 'records' ? (
           <SafeScrollView
@@ -2206,11 +2293,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             <HealthRecordsView
               selectedAccountId={v_e7b2f2}
               accounts={v_c86f08}
+              pharmacistMode={v_160272}
               onCompare={(records: [v_5d13be, v_5d13be]) => {
                 v_c65f5d.navigate('HealthComparison', {
                   recordA: v_678155[0],
                   recordB: v_678155[1],
-                  userName: v_f08a5e,
+                  userName: v_a64f0f,
                 });
               }}
             />
@@ -2226,16 +2314,16 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               scrollEventThrottle={16}
             >
               {}
-              <View style={v_d81136.container}>
+              <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
                 {}
                 <View style={v_d81136.resultHeaderStatus}>
                   <View style={v_d81136.resultHeaderStatusRow}>
                     <View style={v_d81136.resultHeaderCheckCircle}>
                       <Ionicons name="checkmark" size={14} color="#FFFFFF" />
                     </View>
-                    <Text style={v_d81136.resultHeaderStatusText}>{v_8d41d7('health_analysis.measurement_complete')}</Text>
+                    <Text style={v_2f6fcc(v_d81136.resultHeaderStatusText, 'resultHeaderStatusText')}>{v_8d41d7('health_analysis.measurement_complete')}</Text>
                   </View>
-                  <Text style={v_d81136.resultHeaderDateText}>
+                  <Text style={v_2f6fcc(v_d81136.resultHeaderDateText, 'resultHeaderDateText')}>
                     {v_8d41d7('health_analysis.measurement_date')}: {(() => {
                       const v_d5dda0 = new Date(v_42044e);
                       const v_f8e6b9 = `${v_d5dda0.getFullYear()}.${String(v_d5dda0.getMonth() + 1).padStart(2, '0')}.${String(v_d5dda0.getDate()).padStart(2, '0')}`;
@@ -2249,7 +2337,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {v_b30c6b.length > 0 && (
                   <>
                     <View>
-                      <Text style={v_d81136.sectionHeader}>{v_8d41d7('health_analysis.summary_indicators')}</Text>
+                      <Text style={v_2f6fcc(v_d81136.sectionHeader, 'sectionHeader')}>{v_8d41d7('health_analysis.summary_indicators')}</Text>
                       {v_b30c6b.map(([v_3b27d9, v_9390e8]) => {
                         const v_653390 = Number(v_3b27d9);
                         const v_828097 = v_2e7086(v_653390, v_9390e8.value, v_8d41d7);
@@ -2288,7 +2376,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           >
                             {}
                             <View style={v_d81136.sectionTitleRow}>
-                              <Text style={v_d81136.sectionTitle}>
+                              <Text style={v_2f6fcc(v_d81136.sectionTitle, 'sectionTitle')}>
                                 {v_50f905(v_653390, v_8d41d7)}
                               </Text>
                               {v_314d3c && (
@@ -2309,8 +2397,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             </View>
                             <Text
                               style={[
-                                v_d81136.sectionValue,
-                                v_d81136.summaryValue,
+                                v_2f6fcc(v_d81136.sectionValue, 'sectionValue'),
+                                v_2f6fcc(v_d81136.summaryValue, 'summaryValue'),
                                 v_d371b8,
                               ]}
                             >
@@ -2459,18 +2547,17 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <Ionicons name={v_5eae50!.icon} size={24} color={v_5eae50!.iconColor} />
                           </View>
                           <View style={v_d81136.metricCardLabelContainer}>
-                            <Text style={v_d81136.metricCardLabel}>
+                            <Text style={v_2f6fcc(v_d81136.metricCardLabel, 'metricCardLabel')}>
                               {v_5eae50!.label}
                               {v_5eae50!.type === v_e3e816.BLOOD_PRESSURE && v_5eae50!.status && ` (${v_5eae50!.status})`}
                             </Text>
                           </View>
-                          <Text style={[v_d81136.metricCardValue, { color: v_5eae50!.valueColor }]}>{v_5eae50!.displayValue}</Text>
+                          <Text style={[v_2f6fcc(v_d81136.metricCardValue, 'metricCardValue'), { color: v_5eae50!.valueColor }]}>{v_5eae50!.displayValue}</Text>
                         </View>
                       ))}
                     </View>
                   );
                 })()}
-              </View>
 
               {}
               <View
@@ -2485,14 +2572,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   tabContentStyle={v_d81136.categoryTabContent}
                   tabButtonStyle={v_d81136.categoryTabButton}
                   tabButtonActiveStyle={v_d81136.categoryTabButtonActive}
-                  tabTextStyle={v_d81136.categoryTabText}
+                  tabTextStyle={v_2f6fcc(v_d81136.categoryTabText, 'categoryTabText')}
                   tabTextActiveStyle={v_d81136.categoryTabTextActive}
                 />
               </View>
 
               {}
               <View
-                style={v_d81136.container}
+                style={v_d81136.listSection}
                 onLayout={(v_d48baf) => {
                   v_91eb96.current = v_d48baf.nativeEvent.layout.y;
                 }}
@@ -2505,13 +2592,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       horizontal
                       pagingEnabled
                       showsHorizontalScrollIndicator={false}
-                      snapToInterval={v_495d45}
+                      snapToInterval={v_39c3a4}
                       snapToAlignment="start"
                       decelerationRate="fast"
                       contentContainerStyle={v_d81136.swiperContent}
                       onScroll={(e: v_bd64bf<v_da479e>) => {
                         const v_cbddfc = v_9e86fd.nativeEvent.contentOffset.x;
-                        const v_2365e9 = Math.round(v_cbddfc / v_495d45);
+                        const v_2365e9 = Math.round(v_cbddfc / v_39c3a4);
                         v_35a1d0(Math.min(v_2365e9, v_7acdeb.length - 1));
                       }}
                       scrollEventThrottle={16}
@@ -2539,7 +2626,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         const v_d11c1e = v_79e11c.length > 0;
 
                         return (
-                          <View key={v_d3e14c} style={[v_d81136.swiperPage, { width: v_495d45 }]}>
+                          <View key={v_d3e14c} style={[v_d81136.swiperPage, { width: v_39c3a4 }]}>
                             <View style={v_d81136.resultCard}>
                               <View style={v_d81136.resultRow}>
                                 <View style={v_d81136.resultLeft}>
@@ -2552,25 +2639,25 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                       />
                                     </View>
                                     {v_d308b5 && (
-                                      <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                      <Text style={[v_2f6fcc(v_d81136.resultStatus, 'resultStatus'), { color: v_d72c04.text }]}>
                                         {v_d308b5 === '정상'
                                           ? v_8d41d7('health_analysis.result.normal')
                                           : v_8d41d7('health_analysis.result.risk')}
                                       </Text>
                                     )}
                                   </View>
-                                  <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
-                                  <View style={v_d81136.resultValueRow}>
-                                    <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
-                                    {v_1d99bf.unit ? (
-                                      <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
-                                    ) : null}
-                                  </View>
+                                  <Text style={v_2f6fcc(v_d81136.resultLabel, 'resultLabel')}>{v_1833e7}</Text>
+                                  <ResultMeasureValue
+                                    valueParts={v_1d99bf}
+                                    tx={v_2f6fcc}
+                                    isTablet={v_76eb7f}
+                                    unitFontSize={v_52101f.label}
+                                  />
                                 </View>
                                 <View style={v_d81136.resultDivider} />
                                 <View style={v_d81136.resultRight}>
                                   <View style={v_d81136.resultRightHeader}>
-                                    <Text style={v_d81136.resultHeadline}>
+                                    <Text style={v_2f6fcc(v_d81136.resultHeadline, 'resultHeadline')}>
                                       {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_df7b8f(v_653390) === 'number' ? v_df7b8f(v_653390) as number : undefined)}
                                     </Text>
                                   </View>
@@ -2617,7 +2704,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       })}
                     </ScrollView>
                     <View style={v_d81136.swiperPagination}>
-                      <Text style={v_d81136.swiperPaginationText}>
+                      <Text style={v_2f6fcc(v_d81136.swiperPaginationText, 'swiperPaginationText')}>
                         {v_7018dd + 1} / {v_7acdeb.length}
                       </Text>
                     </View>
@@ -2627,19 +2714,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {}
                 {v_2e670e.length > 0 && (
                   <View style={v_d81136.aiCategorizedSummaryCard}>
-                    <Text style={v_d81136.aiCategorizedSummaryTitle}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
+                    <Text style={v_2f6fcc(v_d81136.aiCategorizedSummaryTitle, 'aiCategorizedSummaryTitle')}>{v_8d41d7('health_analysis.result.ai_measurement_summary')}</Text>
                     {v_2e670e.map((v_b4fa6c) => (
                       <View key={v_b4fa6c.categoryId} style={v_d81136.aiCategorizedSection}>
                         <View style={v_d81136.aiCategorizedSectionHeader}>
                           <View style={v_d81136.aiCategorizedSectionBar} />
-                          <Text style={v_d81136.aiCategorizedSectionTitle}>{v_b4fa6c.categoryLabel}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiCategorizedSectionTitle, 'aiCategorizedSectionTitle')}>{v_b4fa6c.categoryLabel}</Text>
                         </View>
                         <View style={v_d81136.aiCategorizedItemList}>
                           {v_b4fa6c.items.map((v_8c0b26) => (
                             <View key={v_8c0b26.typeNum} style={v_d81136.aiCategorizedItem}>
-                              <Text style={v_d81136.aiCategorizedItemName}>{v_8c0b26.name}</Text>
+                              <Text style={v_2f6fcc(v_d81136.aiCategorizedItemName, 'aiCategorizedItemName')}>{v_8c0b26.name}</Text>
                               <View style={v_d81136.aiCategorizedItemRight}>
-                                <Text style={v_d81136.aiCategorizedItemValue}>{v_8c0b26.valueText}</Text>
+                                <Text style={v_2f6fcc(v_d81136.aiCategorizedItemValue, 'aiCategorizedItemValue')}>{v_8c0b26.valueText}</Text>
                                 {v_8c0b26.status && (
                                   <View style={[v_d81136.aiCategorizedBadge, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeCaution : v_d81136.aiCategorizedBadgeNormal]}>
                                     <Text style={[v_d81136.aiCategorizedBadgeText, v_8c0b26.status === '위험' ? v_d81136.aiCategorizedBadgeTextCaution : v_d81136.aiCategorizedBadgeTextNormal]}>
@@ -2674,11 +2761,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         <View style={v_d81136.aiAnalysisStartIcon}>
                           <Ionicons name="sparkles" size={24} color="#FFFFFF" />
                         </View>
-                        <Text style={v_d81136.aiAnalysisStartTitle}>{v_8d41d7('health_analysis.result.ai_analysis_title')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisStartTitle, 'aiAnalysisStartTitle')}>{v_8d41d7('health_analysis.result.ai_analysis_title')}</Text>
                       </View>
-                      <Text style={v_d81136.aiAnalysisStartDesc}>{v_8d41d7('health_analysis.result.ai_analysis_desc')}</Text>
+                      <Text style={v_2f6fcc(v_d81136.aiAnalysisStartDesc, 'aiAnalysisStartDesc')}>{v_8d41d7('health_analysis.result.ai_analysis_desc')}</Text>
                       <View style={v_d81136.aiAnalysisStartButton}>
-                        <Text style={v_d81136.aiAnalysisStartButtonText}>{v_8d41d7('health_analysis.result.ai_analysis_start_btn')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisStartButtonText, 'aiAnalysisStartButtonText')}>{v_8d41d7('health_analysis.result.ai_analysis_start_btn')}</Text>
                       </View>
                     </ExpoLinearGradient>
                   </TouchableOpacity>
@@ -2689,7 +2776,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         <View style={v_d81136.aiAnalysisCardIcon}>
                           <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
                         </View>
-                        <Text style={v_d81136.aiAnalysisCardTitle}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisCardTitle, 'aiAnalysisCardTitle')}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
                       </View>
                       {}
                       <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
@@ -2704,7 +2791,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       {v_85cf60 ? (
                         <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
                           <Ionicons name="sparkles" size={28} color="#AD46FF" />
-                          <Text style={[v_d81136.aiAnalysisSectionText, { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
+                          <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
                         </View>
                       ) : v_e399bf ? (
                         <View style={v_d81136.aiAnalysisSubCard}>
@@ -2712,9 +2799,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
                               <Ionicons name="sparkles" size={18} color="#AD46FF" />
                             </View>
-                            <Text style={v_d81136.aiAnalysisSectionTitle}>AI 힌티 종합 분석</Text>
+                            <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>AI 힌티 종합 분석</Text>
                           </View>
-                          <Text style={v_d81136.aiAnalysisSectionText}>{v_e399bf}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_e399bf}</Text>
                         </View>
                       ) : (
                       <>
@@ -2724,9 +2811,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
                             <Ionicons name="stats-chart-outline" size={18} color="#22C55E" />
                           </View>
-                          <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('health_analysis.result.ai_health_summary')}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_health_summary')}</Text>
                         </View>
-                        <Text style={v_d81136.aiAnalysisSectionText}>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>
                           {v_8d41d7(`health_analysis.result.${v_f1235f.summaryKey}`, v_f1235f.summaryParams)}
                         </Text>
                       </View>
@@ -2736,7 +2823,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEE2E2' }]}>
                               <Ionicons name="alert-circle-outline" size={18} color="#EF4444" />
                             </View>
-                            <Text style={[v_d81136.aiAnalysisSectionTitle, { color: '#EF4444' }]}>{v_8d41d7('health_analysis.result.ai_risk_section_title')}</Text>
+                            <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle'), { color: '#EF4444' }]}>{v_8d41d7('health_analysis.result.ai_risk_section_title')}</Text>
                           </View>
                           <View style={v_d81136.aiRiskItemList}>
                             {v_f1235f.riskItems.map((v_8c0b26, v_e86ad8) => (
@@ -2755,10 +2842,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEF3C7' }]}>
                             <Ionicons name="bulb-outline" size={18} color="#F59E0B" />
                           </View>
-                          <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('health_analysis.result.ai_improvement_points')}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_improvement_points')}</Text>
                         </View>
                         {v_f1235f.improvementPoints.map((v_49cb67, v_e86ad8) => (
-                          <Text key={v_e86ad8} style={v_d81136.aiAnalysisSectionText}>• {v_49cb67}</Text>
+                          <Text key={v_e86ad8} style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>• {v_49cb67}</Text>
                         ))}
                       </View>
                       {}
@@ -2767,9 +2854,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#F3F4F6' }]}>
                             <Ionicons name="warning-outline" size={18} color="#374151" />
                           </View>
-                          <Text style={v_d81136.aiAnalysisSectionTitle}>{v_8d41d7('health_analysis.result.ai_precautions')}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_precautions')}</Text>
                         </View>
-                        <Text style={v_d81136.aiAnalysisSectionText}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
                       </View>
                       <TouchableOpacity style={v_d81136.aiCheckupButton} activeOpacity={0.8}>
                         <ExpoLinearGradient
@@ -2822,9 +2909,16 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         style={v_d81136.allResultsModalOverlayDim}
                         onPress={() => v_19e3c6(null)}
                       />
-                      <View
-                        style={[v_d81136.allResultsModalContent, { paddingBottom: v_9b1a04.xlarge + v_033e14.bottom }]}
-                      >
+                      <View style={v_d81136.allResultsModalSheetWrap}>
+                        <View
+                          style={[
+                            v_d81136.allResultsModalContent,
+                            {
+                              maxWidth: v_6c4b91.contentColumnWidth,
+                              paddingBottom: v_9b1a04.xlarge + v_033e14.bottom,
+                            },
+                          ]}
+                        >
                         <View style={v_d81136.allResultsModalHandle} />
                         <Text style={v_d81136.allResultsModalTitle}>
                           {v_e70158.name} - {v_8d41d7('health_analysis.result.show_all_results')}
@@ -2903,6 +2997,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           </View>
                         </ScrollView>
                       </View>
+                      </View>
                     </View>
                   </Modal>
                 )}
@@ -2951,7 +3046,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                       }
                                     }
                                     return (
-                                      <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                      <Text style={[v_2f6fcc(v_d81136.resultStatus, 'resultStatus'), { color: v_d72c04.text }]}>
                                         {v_d308b5 === '정상'
                                           ? v_8d41d7('health_analysis.result.normal')
                                           : v_8d41d7('health_analysis.result.risk')}
@@ -2959,18 +3054,18 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                     );
                                   })()}
                                 </View>
-                                <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
-                                <View style={v_d81136.resultValueRow}>
-                                  <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
-                                  {v_1d99bf.unit ? (
-                                    <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
-                                  ) : null}
-                                </View>
+                            <Text style={v_2f6fcc(v_d81136.resultLabel, 'resultLabel')}>{v_1833e7}</Text>
+                            <ResultMeasureValue
+                              valueParts={v_1d99bf}
+                              tx={v_2f6fcc}
+                              isTablet={v_76eb7f}
+                              unitFontSize={v_52101f.label}
+                            />
                               </View>
                               <View style={v_d81136.resultDivider} />
                               <View style={v_d81136.resultRight}>
                                 <View style={v_d81136.resultRightHeader}>
-                                  <Text style={v_d81136.resultHeadline}>
+                                  <Text style={v_2f6fcc(v_d81136.resultHeadline, 'resultHeadline')}>
                                     {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8.value === 'number' ? v_9390e8.value : undefined)}
                                   </Text>
                                 </View>
@@ -3110,6 +3205,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   />
                 </View>
               </View>
+              </CenteredContentShell>
             </SafeScrollView>
             <TouchableOpacity
               style={v_d81136.abnormalFooter}
@@ -3201,7 +3297,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                   }
                                 }
                                 return (
-                                  <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                  <Text style={[v_2f6fcc(v_d81136.resultStatus, 'resultStatus'), { color: v_d72c04.text }]}>
                                     {v_d308b5 === '정상'
                                       ? v_8d41d7('health_analysis.result.normal')
                                       : v_8d41d7('health_analysis.result.risk')}
@@ -3209,18 +3305,18 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                 );
                               })()}
                             </View>
-                            <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
-                            <View style={v_d81136.resultValueRow}>
-                              <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
-                              {v_1d99bf.unit ? (
-                                <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
-                              ) : null}
-                            </View>
+                            <Text style={v_2f6fcc(v_d81136.resultLabel, 'resultLabel')}>{v_1833e7}</Text>
+                            <ResultMeasureValue
+                              valueParts={v_1d99bf}
+                              tx={v_2f6fcc}
+                              isTablet={v_76eb7f}
+                              unitFontSize={v_52101f.label}
+                            />
                           </View>
                           <View style={v_d81136.resultDivider} />
                           <View style={v_d81136.resultRight}>
                             <View style={v_d81136.resultRightHeader}>
-                              <Text style={v_d81136.resultHeadline}>
+                              <Text style={v_2f6fcc(v_d81136.resultHeadline, 'resultHeadline')}>
                                 {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                               </Text>
                             </View>
@@ -3382,7 +3478,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                   }
                                 }
                                 return (
-                                  <Text style={[v_d81136.resultStatus, { color: v_d72c04.text }]}>
+                                  <Text style={[v_2f6fcc(v_d81136.resultStatus, 'resultStatus'), { color: v_d72c04.text }]}>
                                     {v_d308b5 === '정상'
                                       ? v_8d41d7('health_analysis.result.normal')
                                       : v_8d41d7('health_analysis.result.risk')}
@@ -3390,18 +3486,18 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                 );
                               })()}
                             </View>
-                            <Text style={v_d81136.resultLabel}>{v_1833e7}</Text>
-                            <View style={v_d81136.resultValueRow}>
-                              <Text style={v_d81136.resultValueText}>{v_1d99bf.value}</Text>
-                              {v_1d99bf.unit ? (
-                                <Text style={v_d81136.resultValueUnit}>{v_1d99bf.unit}</Text>
-                              ) : null}
-                            </View>
+                            <Text style={v_2f6fcc(v_d81136.resultLabel, 'resultLabel')}>{v_1833e7}</Text>
+                            <ResultMeasureValue
+                              valueParts={v_1d99bf}
+                              tx={v_2f6fcc}
+                              isTablet={v_76eb7f}
+                              unitFontSize={v_52101f.label}
+                            />
                           </View>
                           <View style={v_d81136.resultDivider} />
                           <View style={v_d81136.resultRight}>
                             <View style={v_d81136.resultRightHeader}>
-                              <Text style={v_d81136.resultHeadline}>
+                              <Text style={v_2f6fcc(v_d81136.resultHeadline, 'resultHeadline')}>
                                 {v_e4ae59(v_1833e7, v_d308b5, undefined, v_653390, typeof v_9390e8?.value === 'number' ? v_9390e8.value : undefined)}
                               </Text>
                             </View>
@@ -3724,13 +3820,18 @@ const v_d81136 = v_472849.create({
     padding: 8,
   },
   tabBar: {
+    width: '100%',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+    backgroundColor: '#ffffff',
+  },
+  tabBarInner: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: v_9b1a04.large,
     paddingVertical: v_9b1a04.medium,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
   },
   tabRow: {
     flexDirection: 'row',
@@ -3755,13 +3856,19 @@ const v_d81136 = v_472849.create({
   recordsContent: {
     flexGrow: 1,
     paddingBottom: v_9b1a04.xlarge,
+    width: '100%',
+    alignSelf: 'stretch',
+    backgroundColor: v_1bfbd0.background,
   },
   content: {
-    ...v_a61db3.content,
+    flexGrow: 1,
     minHeight: '100%',
+    paddingTop: 32,
+    paddingHorizontal: 0,
+    backgroundColor: v_1bfbd0.background,
   },
-  container: {
-    ...v_a61db3.container,
+  listSection: {
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -4818,6 +4925,11 @@ const v_d81136 = v_472849.create({
     alignItems: 'flex-end',
     gap: v_9b1a04.small / 2,
   },
+  resultValueRowTablet: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 2,
+  },
   resultValueText: {
     fontSize: v_ef658a.input,
     fontFamily: v_843035.bold,
@@ -4924,7 +5036,12 @@ const v_d81136 = v_472849.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
+  allResultsModalSheetWrap: {
+    width: '100%',
+    alignItems: 'center',
+  },
   allResultsModalContent: {
+    width: '100%',
     backgroundColor: v_1bfbd0.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

@@ -7,24 +7,31 @@ import {
   v_122070,
   v_aa7413,
   v_09d0e5,
-  v_700696,
   v_39a996,
+  v_03e392,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
-import { v_dd725b } from '../../../components';
+import { v_dd725b, v_47f7b9 } from '../../../components';
+import { v_2cc9f8, v_af2c88 } from '../../../utils/tabletLayout';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04, v_53f592 } from '../../../constants';
-import { v_81fcbc, v_095212, type v_b57732 } from '../../../services';
+import { v_81fcbc, v_095212, v_e42095, type v_b57732 } from '../../../services';
+import {
+  v_f6fac8,
+  v_71f4f5,
+} from '../../../services/pharmacyApi';
+import {
+  v_2e1952,
+  v_ddf2a3,
+} from '../../../utils/pharmacyRecordAdapter';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 
-const { width: v_0d9f50 } = v_700696.get('window');
-const v_14a295 = 4;
+const v_14a295 = 3;
 const v_2c6c54 = 12;
 const v_c03413 = v_9b1a04.large * 2;
-const v_7f37df = (v_0d9f50 - v_c03413 - v_2c6c54 * (v_14a295 - 1)) / v_14a295;
 
 export interface SkinConditionItem {
   key: string;
@@ -237,6 +244,8 @@ interface SkinRecordsViewProps {
   selectedAccountId?: string;
 
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
+
+  pharmacistMode?: boolean;
 }
 
 export const v_852b5b = (item: v_b57732, v_8d41d7): SkinRecord => {
@@ -292,9 +301,47 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   onCompare: v_bda358,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
+  pharmacistMode: v_988815 = false,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
+  const v_6c4b91 = v_2cc9f8();
+  const v_76eb7f = v_6c4b91.isTablet;
+  const v_3fa560 = v_df9f57(
+    () => Math.round(v_6c4b91.height * 0.82),
+    [v_6c4b91.height]
+  );
+  const v_c0b708 = v_df9f57(
+    () => ({
+      listDate: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      listTime: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      listValue: v_76eb7f ? v_6c4b91.typo.title : 24,
+      listBadge: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      sectionTitle: v_76eb7f ? v_6c4b91.typo.subtitle : v_ef658a.medium,
+      summaryScore: v_76eb7f ? v_6c4b91.typo.title + 6 : 32,
+      summaryLabel: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      detailTimestamp: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+      navBtn: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      gridScore: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      gridLabel: v_76eb7f ? v_6c4b91.typo.label : 10,
+      skinAge: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      gradeBadge: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      cautionTitle: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.small,
+      cautionTag: v_76eb7f ? v_6c4b91.typo.label : v_ef658a.small,
+      closeBtn: v_76eb7f ? v_6c4b91.typo.body : v_ef658a.medium,
+    }),
+    [v_76eb7f, v_6c4b91.typo]
+  );
+  const v_f06cf4 = v_76eb7f ? v_af2c88(56, 64) : 56;
+  const [v_3d47f9, v_82f571] = v_5ab095(0);
+  const v_7d15a0 = v_df9f57(() => {
+    const v_43f4e6 =
+      v_3d47f9 > 0
+        ? v_3d47f9
+        : Math.min(v_6c4b91.contentColumnWidth, v_6c4b91.width) - v_c03413;
+    if (v_43f4e6 <= 0) return 0;
+    return (v_43f4e6 - v_2c6c54 * (v_14a295 - 1)) / v_14a295;
+  }, [v_3d47f9, v_6c4b91.contentColumnWidth, v_6c4b91.width]);
   const v_c65f5d = v_ada615();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('list');
   const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
@@ -316,12 +363,27 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
 
   const [v_a4994e, v_699388] = v_5ab095<SkinRecord | null>(null);
   const [v_e74174, v_8984bb] = v_5ab095(false);
+  const [v_59bc21, v_00b5ba] = v_5ab095(false);
 
   v_c4deb2(() => {
     const v_efc1dd = async () => {
       v_deef62(true);
       v_885e0e(null);
       try {
+        if (v_988815) {
+          const v_610eb5 = v_2e1952(v_e7b2f2);
+          if (!v_610eb5) {
+            v_9ed182([]);
+            return;
+          }
+          const v_952788 = await v_71f4f5(v_610eb5);
+          const v_e21297 = v_952788
+            .map(v_ddf2a3)
+            .filter((v_8c0b26): v_8c0b26 is v_b57732 => v_8c0b26 != null)
+            .map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7));
+          v_9ed182(v_e21297);
+          return;
+        }
 
         const v_0c2f9b = v_c86f08?.find((v_9f1d92) => v_9f1d92.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
@@ -371,7 +433,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f]);
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f, v_988815]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -481,6 +543,11 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           console.log('[SkinRecordsView] 기록 상세 데이터 로드 시작:', { recordId: v_fbf3b0 });
         }
 
+        if (v_988815) {
+          v_699388(v_884a36);
+          return;
+        }
+
         const v_61f930 = await v_095212(v_fbf3b0);
         const v_3a28a5 = v_852b5b(v_61f930, v_8d41d7);
 
@@ -503,7 +570,43 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_a715fa();
-  }, [v_b23082, v_884a36?.id, v_8d41d7]);
+  }, [v_b23082, v_884a36?.id, v_884a36, v_8d41d7, v_988815]);
+
+  const v_a8b630 = (v_cbbd71) => {
+    v_03e392.alert(
+      v_8d41d7('health_records.delete_confirm_title', '기록 삭제'),
+      v_8d41d7('health_records.delete_confirm_message', '이 측정 기록을 삭제하시겠습니까? 삭제된 기록은 복구할 수 없습니다.'),
+      [
+        { text: v_8d41d7('health_records.cancel', '취소'), style: 'cancel' },
+        {
+          text: v_8d41d7('health_records.delete', '삭제'),
+          style: 'destructive',
+          onPress: async () => {
+            const v_fbf3b0 = parseInt(v_cbbd71.id, 10);
+            if (isNaN(v_fbf3b0)) return;
+            v_00b5ba(true);
+            try {
+              if (v_988815) {
+                await v_f6fac8(v_fbf3b0);
+              } else {
+                await v_e42095(v_fbf3b0);
+              }
+              v_9ed182((v_ba2215) => v_ba2215.filter((v_cb35cb) => v_cb35cb.id !== v_cbbd71.id));
+              v_725ee9(false);
+              v_b173ec(null);
+            } catch {
+              v_03e392.alert(
+                v_8d41d7('health_records.delete_error_title', '삭제 실패'),
+                v_8d41d7('health_records.delete_error_message', '기록 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
+              );
+            } finally {
+              v_00b5ba(false);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const v_a75897 = v_71ebe4.filter(Boolean).length;
   const v_8c38ef = v_a75897 === 2;
@@ -572,7 +675,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   const v_e60572 = (v_b24339, v_0debf4) => v_8d41d7(`skin.concerns.${v_62eb5a(v_b24339)}`) || v_0debf4;
 
   return (
-    <View style={v_d81136.container}>
+    <>
+    <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
       {}
       <View style={v_d81136.viewModeRow}>
         <TouchableOpacity
@@ -596,7 +700,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
       </View>
 
       {}
-      {v_34779a ? (
+      {!v_988815 && (v_34779a ? (
         <View style={v_d81136.compareModeBar}>
           <Text style={v_d81136.compareModeCount}>
             {v_8d41d7('skin_records.compare_selected', { count: v_a75897, total: 2 })}
@@ -625,7 +729,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           onPress={v_2daa27}
           style={v_d81136.compareBtn}
         />
-      )}
+      ))}
 
       {v_cd31a8 ? (
         <View style={v_d81136.loadingContainer}>
@@ -740,13 +844,13 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                 onPress={() => v_5b20f5(v_cbbd71)}
               >
                 <View style={v_d81136.listItemLeft}>
-                  <Text style={v_d81136.listItemDate}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
-                  <Text style={v_d81136.listItemTime}>{v_e5585e(v_cbbd71.time)}</Text>
+                  <Text style={[v_d81136.listItemDate, { fontSize: v_c0b708.listDate }]}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
+                  <Text style={[v_d81136.listItemTime, { fontSize: v_c0b708.listTime }]}>{v_e5585e(v_cbbd71.time)}</Text>
                 </View>
                 <View style={v_d81136.listItemRight}>
-                  <Text style={v_d81136.listItemValue}>{v_cbbd71.overallScore}</Text>
+                  <Text style={[v_d81136.listItemValue, { fontSize: v_c0b708.listValue }]}>{v_cbbd71.overallScore}</Text>
                   <View style={[v_d81136.listItemBadge, v_d81136.listItemBadgeNormal]}>
-                    <Text style={v_d81136.listItemBadgeText}>{v_d50d17(v_cbbd71.gradeKey)}</Text>
+                    <Text style={[v_d81136.listItemBadgeText, { fontSize: v_c0b708.listBadge }]}>{v_d50d17(v_cbbd71.gradeKey)}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -760,34 +864,44 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
         </ScrollView>
       )}
 
+    </CenteredContentShell>
+
       {}
       <Modal
         visible={v_b23082}
-        animationType="slide"
+        animationType={v_76eb7f ? 'fade' : 'slide'}
         transparent
         onRequestClose={() => {
           v_725ee9(false);
           v_b173ec(null);
         }}
       >
-        <View style={v_d81136.modalOverlay}>
+        <View style={[v_d81136.modalOverlay, v_76eb7f && v_d81136.modalOverlayTablet]}>
           <Pressable
-            style={v_d81136.modalOverlayDim}
+            style={v_76eb7f ? v_d81136.modalOverlayDim : v_d81136.modalOverlayDimMobile}
             onPress={() => {
               v_725ee9(false);
               v_b173ec(null);
             }}
           />
-          <View style={[v_d81136.modalContent, { paddingBottom: v_9b1a04.large + v_033e14.bottom }]}>
+          <View
+            style={[
+              v_d81136.modalContent,
+              v_76eb7f ? v_d81136.modalContentTablet : v_d81136.modalContentMobile,
+              v_76eb7f
+                ? { maxWidth: v_6c4b91.contentColumnWidth, maxHeight: v_3fa560, alignSelf: 'center' }
+                : { paddingBottom: v_9b1a04.large + v_033e14.bottom },
+            ]}
+          >
             {v_e74174 ? (
-              <View style={v_d81136.loadingContainer}>
+              <View style={v_d81136.modalLoadingContainer}>
                 <ActivityIndicator size="large" color={v_1bfbd0.primary} />
                 <Text style={v_d81136.loadingText}>데이터를 불러오는 중...</Text>
               </View>
             ) : v_8cc501 ? (
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[v_d81136.modalScrollContent,]}
+                contentContainerStyle={v_d81136.modalScrollContent}
               >
                 {}
                 <View style={v_d81136.detailTimestampRow}>
@@ -798,12 +912,12 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                       disabled={!v_a144ca}
                     >
                       <Ionicons name="chevron-back" size={24} color={v_a144ca ? v_1bfbd0.text : v_1bfbd0.border} />
-                      <Text style={[v_d81136.summaryNavBtnText, !v_a144ca && v_d81136.summaryNavBtnTextDisabled]}>{v_8d41d7('skin_records.prev')}</Text>
+                      <Text style={[v_d81136.summaryNavBtnText, { fontSize: v_c0b708.navBtn }, !v_a144ca && v_d81136.summaryNavBtnTextDisabled]}>{v_8d41d7('skin_records.prev')}</Text>
                     </TouchableOpacity>
                   ) : (
                     <View style={v_d81136.summaryNavPlaceholder} />
                   )}
-                  <Text style={v_d81136.detailTimestamp} numberOfLines={1}>
+                  <Text style={[v_d81136.detailTimestamp, { fontSize: v_c0b708.detailTimestamp }]} numberOfLines={1}>
                     {v_16897e(v_8cc501.date, v_8cc501.time)}
                   </Text>
                   {v_b277c8 ? (
@@ -812,7 +926,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                       onPress={v_f83132}
                       disabled={!v_4a3fe8}
                     >
-                      <Text style={[v_d81136.summaryNavBtnText, !v_4a3fe8 && v_d81136.summaryNavBtnTextDisabled]}>{v_8d41d7('skin_records.next')}</Text>
+                      <Text style={[v_d81136.summaryNavBtnText, { fontSize: v_c0b708.navBtn }, !v_4a3fe8 && v_d81136.summaryNavBtnTextDisabled]}>{v_8d41d7('skin_records.next')}</Text>
                       <Ionicons name="chevron-forward" size={24} color={v_4a3fe8 ? v_1bfbd0.text : v_1bfbd0.border} />
                     </TouchableOpacity>
                   ) : (
@@ -823,31 +937,39 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                 {}
                 <View style={v_d81136.summaryCard}>
                   <View style={v_d81136.summaryLeft}>
-                    <Text style={v_d81136.summaryScore}>{v_8cc501.overallScore}</Text>
-                    <Text style={v_d81136.summaryLabel}>{v_8d41d7('skin_records.overall_score')}</Text>
+                    <Text style={[v_d81136.summaryScore, { fontSize: v_c0b708.summaryScore }]}>{v_8cc501.overallScore}</Text>
+                    <Text style={[v_d81136.summaryLabel, { fontSize: v_c0b708.summaryLabel }]}>{v_8d41d7('skin_records.overall_score')}</Text>
                   </View>
                   <View style={v_d81136.summaryDivider} />
                   <View style={v_d81136.summaryRight}>
                     <View style={[v_d81136.gradeBadge, { backgroundColor: '#FFFBEB' }]}>
-                      <Text style={[v_d81136.gradeBadgeText, { color: '#D97706' }]}>{v_d50d17(v_8cc501.gradeKey)}</Text>
+                      <Text style={[v_d81136.gradeBadgeText, { fontSize: v_c0b708.gradeBadge, color: '#D97706' }]}>{v_d50d17(v_8cc501.gradeKey)}</Text>
                     </View>
-                    <Text style={v_d81136.skinAgeText}>{v_8d41d7('skin_records.skin_age', { age: v_8cc501.skinAge })}</Text>
+                    <Text style={[v_d81136.skinAgeText, { fontSize: v_c0b708.skinAge }]}>{v_8d41d7('skin_records.skin_age', { age: v_8cc501.skinAge })}</Text>
                   </View>
                 </View>
 
                 {}
-                <Text style={v_d81136.sectionTitle}>{v_8d41d7('skin_records.skin_condition')}</Text>
-                <View style={v_d81136.itemsGrid}>
-                  {v_8cc501.items.map((v_8c0b26) => {
+                <Text style={[v_d81136.sectionTitle, { fontSize: v_c0b708.sectionTitle }]}>{v_8d41d7('skin_records.skin_condition')}</Text>
+                <View
+                  style={v_d81136.itemsGrid}
+                  onLayout={(v_9e86fd) => {
+                    const v_8e4fb6 = Math.round(v_9e86fd.nativeEvent.layout.width);
+                    if (v_8e4fb6 > 0 && v_8e4fb6 !== v_3d47f9) {
+                      v_82f571(v_8e4fb6);
+                    }
+                  }}
+                >
+                  {v_7d15a0 > 0 && v_8cc501.items.map((v_8c0b26) => {
                     const v_5e5963 = v_53f592(v_8c0b26.score);
-                    const v_3b3648 = 56;
+                    const v_3b3648 = v_f06cf4;
                     const v_0c21c9 = v_3b3648 / 2 - 4;
                     const v_65e020 = 2 * Math.PI * v_0c21c9;
                     const v_a63fde = v_8c0b26.score / 100;
                     return (
                       <TouchableOpacity
                         key={v_8c0b26.key}
-                        style={v_d81136.gridItem}
+                        style={[v_d81136.gridItem, { width: v_7d15a0 }]}
                         onPress={() => v_8e442f(v_8c0b26)}
                         activeOpacity={0.8}
                       >
@@ -874,11 +996,11 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                               transform={`rotate(-90 ${v_3b3648 / 2} ${v_3b3648 / 2})`}
                             />
                           </Svg>
-                          <View style={v_d81136.gridItemScoreWrap}>
-                            <Text style={[v_d81136.gridItemScore, { color: v_5e5963 }]}>{v_8c0b26.score}</Text>
+                          <View style={[v_d81136.gridItemScoreWrap, { width: v_3b3648, height: v_3b3648 }]}>
+                            <Text style={[v_d81136.gridItemScore, { fontSize: v_c0b708.gridScore, color: v_5e5963 }]}>{v_8c0b26.score}</Text>
                           </View>
                         </View>
-                        <Text style={v_d81136.gridItemLabel} numberOfLines={1}>{v_e60572(v_8c0b26.key, v_8c0b26.label)}</Text>
+                        <Text style={[v_d81136.gridItemLabel, { fontSize: v_c0b708.gridLabel }]} numberOfLines={1}>{v_e60572(v_8c0b26.key, v_8c0b26.label)}</Text>
                       </TouchableOpacity>
                     );
                   })}
@@ -887,18 +1009,37 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                 {}
                 {v_8cc501.cautionKeys.length > 0 && (
                   <View style={v_d81136.cautionCard}>
-                    <Text style={v_d81136.cautionTitle}>{v_8d41d7('skin_records.caution')}</Text>
+                    <Text style={[v_d81136.cautionTitle, { fontSize: v_c0b708.cautionTitle }]}>{v_8d41d7('skin_records.caution')}</Text>
                     <View style={v_d81136.cautionTags}>
                       {v_8cc501.cautionKeys.map((v_b24339) => {
                         const v_8c0b26 = v_8cc501.items.find((v_ebec57) => v_ebec57.key === v_b24339);
                         return (
                           <View key={v_b24339} style={v_d81136.cautionTag}>
-                            <Text style={v_d81136.cautionTagText}>{v_8c0b26 ? v_e60572(v_8c0b26.key, v_8c0b26.label) : v_b24339}</Text>
+                            <Text style={[v_d81136.cautionTagText, { fontSize: v_c0b708.cautionTag }]}>{v_8c0b26 ? v_e60572(v_8c0b26.key, v_8c0b26.label) : v_b24339}</Text>
                           </View>
                         );
                       })}
                     </View>
                   </View>
+                )}
+
+                {v_8cc501 && (
+                  <TouchableOpacity
+                    style={v_d81136.deleteRecordBtn}
+                    onPress={() => v_a8b630(v_8cc501)}
+                    disabled={v_59bc21}
+                  >
+                    {v_59bc21 ? (
+                      <ActivityIndicator size="small" color="#E53935" />
+                    ) : (
+                      <>
+                        <Ionicons name="trash-outline" size={16} color="#E53935" />
+                        <Text style={[v_d81136.deleteRecordBtnText, { fontSize: v_c0b708.closeBtn }]}>
+                          {v_8d41d7('health_records.delete_record', '기록 삭제')}
+                        </Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
                 )}
 
                 <TouchableOpacity
@@ -908,7 +1049,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                     v_b173ec(null);
                   }}
                 >
-                  <Text style={v_d81136.closeBtnText}>{v_8d41d7('skin_records.close')}</Text>
+                  <Text style={[v_d81136.closeBtnText, { fontSize: v_c0b708.closeBtn }]}>{v_8d41d7('skin_records.close')}</Text>
                 </TouchableOpacity>
               </ScrollView>
             ) : null}
@@ -919,12 +1060,25 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
       {}
       <Modal
         visible={v_088a9b}
-        animationType="slide"
+        animationType={v_76eb7f ? 'fade' : 'slide'}
         transparent
         onRequestClose={() => v_4eaeca(false)}
       >
-        <Pressable style={v_d81136.modalOverlay} onPress={() => v_4eaeca(false)}>
-          <Pressable style={[v_d81136.itemDetailModal, { paddingBottom: v_033e14.bottom + v_9b1a04.large }]} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
+        <View style={[v_d81136.modalOverlay, v_76eb7f && v_d81136.modalOverlayTablet]}>
+          <Pressable
+            style={v_76eb7f ? v_d81136.modalOverlayDim : v_d81136.modalOverlayDimMobile}
+            onPress={() => v_4eaeca(false)}
+          />
+          <Pressable
+            style={[
+              v_d81136.itemDetailModal,
+              v_76eb7f ? v_d81136.itemDetailModalTablet : v_d81136.itemDetailModalMobile,
+              v_76eb7f
+                ? { maxWidth: v_6c4b91.contentColumnWidth, alignSelf: 'center' }
+                : { paddingBottom: v_9b1a04.large + v_033e14.bottom },
+            ]}
+            onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}
+          >
             {v_9dc715 && (
               <>
                 <View style={v_d81136.itemDetailHeader}>
@@ -951,9 +1105,9 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
               </>
             )}
           </Pressable>
-        </Pressable>
+        </View>
       </Modal>
-    </View>
+    </>
   );
 };
 
@@ -1009,7 +1163,7 @@ const v_d81136 = v_472849.create({
     fontFamily: v_843035.medium,
     color: v_1bfbd0.secondaryText,
   },
-  viewModeRow: { flexDirection: 'row', gap: 8, marginBottom: v_9b1a04.medium, justifyContent: 'center' },
+  viewModeRow: { flexDirection: 'row', gap: 8, marginTop: v_9b1a04.large, marginBottom: v_9b1a04.medium, justifyContent: 'center' },
   viewModeBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 10, paddingHorizontal: 16, borderRadius: 10, backgroundColor: '#fff', borderWidth: 1, borderColor: v_1bfbd0.border },
   viewModeBtnActive: { backgroundColor: '#000', borderColor: '#000' },
   viewModeText: { fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.secondaryText },
@@ -1058,10 +1212,30 @@ const v_d81136 = v_472849.create({
   listItemBadgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.medium, color: '#D97706' },
   loadMoreBtn: { alignItems: 'center', justifyContent: 'center', paddingVertical: v_9b1a04.large, marginTop: v_9b1a04.small, borderWidth: 1, borderColor: v_1bfbd0.border, borderRadius: 12, backgroundColor: '#fff' },
   loadMoreText: { fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.bluePrimary },
-  modalOverlay: { flex: 1, backgroundColor: 'transparent', justifyContent: 'flex-end' },
-  modalOverlayDim: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
-  modalContent: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: v_9b1a04.large, maxHeight: '85%' },
-  modalScrollContent: { paddingBottom: v_9b1a04.xlarge },
+  modalOverlay: { flex: 1, justifyContent: 'flex-end' },
+  modalOverlayTablet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: v_9b1a04.large,
+  },
+  modalOverlayDim: { ...v_472849.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' },
+  modalOverlayDimMobile: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
+  modalLoadingContainer: { justifyContent: 'center', alignItems: 'center', paddingVertical: v_9b1a04.xlarge },
+  modalContent: {
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: v_9b1a04.large,
+  },
+  modalContentMobile: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    maxHeight: '85%',
+  },
+  modalContentTablet: {
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  modalScrollContent: { flexGrow: 0, paddingBottom: v_9b1a04.xlarge },
   detailTimestampRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: v_9b1a04.large },
   detailTimestamp: { flex: 1, fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.secondaryText, textAlign: 'center' },
   summaryNavBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: 8, paddingHorizontal: 4, minWidth: 56 },
@@ -1079,8 +1253,14 @@ const v_d81136 = v_472849.create({
   gradeBadgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.semibold },
   skinAgeText: { fontSize: v_ef658a.small, fontFamily: v_843035.regular, color: v_1bfbd0.secondaryText, marginTop: 8 },
   sectionTitle: { fontSize: v_ef658a.medium, fontFamily: v_843035.bold, color: v_1bfbd0.text, marginBottom: v_9b1a04.medium },
-  itemsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: v_2c6c54, marginBottom: v_9b1a04.large },
-  gridItem: { width: v_7f37df, alignItems: 'center' },
+  itemsGrid: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: v_2c6c54,
+    marginBottom: v_9b1a04.large,
+  },
+  gridItem: { alignItems: 'center' },
   gridItemCircle: { alignItems: 'center', justifyContent: 'center', position: 'relative' },
   gridItemScoreWrap: { position: 'absolute', alignItems: 'center', justifyContent: 'center' },
   gridItemScore: { fontSize: v_ef658a.small, fontFamily: v_843035.bold },
@@ -1092,7 +1272,25 @@ const v_d81136 = v_472849.create({
   cautionTagText: { fontSize: v_ef658a.small, fontFamily: v_843035.medium, color: '#92400E' },
   closeBtn: { alignItems: 'center', paddingVertical: 14, backgroundColor: v_1bfbd0.border, borderRadius: 10 },
   closeBtnText: { fontSize: v_ef658a.medium, fontFamily: v_843035.medium, color: v_1bfbd0.text },
-  itemDetailModal: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: v_9b1a04.large },
+  deleteRecordBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 14,
+    marginBottom: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FECACA',
+    backgroundColor: '#FEF2F2',
+  },
+  deleteRecordBtnText: { fontFamily: v_843035.medium, color: '#E53935' },
+  itemDetailModal: { width: '100%', backgroundColor: '#fff', padding: v_9b1a04.large },
+  itemDetailModalMobile: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  itemDetailModalTablet: { borderRadius: 20 },
   itemDetailHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: v_9b1a04.medium },
   itemDetailLabel: { fontSize: v_ef658a.large, fontFamily: v_843035.bold, color: v_1bfbd0.text },
   itemDetailScoreRow: { flexDirection: 'row', alignItems: 'baseline', marginBottom: v_9b1a04.small },

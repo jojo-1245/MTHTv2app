@@ -7,7 +7,7 @@
       "metahintai"
     ],
     "version": "5.0.4",
-    "orientation": "portrait",
+    "orientation": "default",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
     "splash": {
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ai.metahint.appw",
-      "buildNumber": "65",
+      "buildNumber": "66",
       "usesAppleSignIn": true,
       "icon": "./assets/images/appicon.png",
       "infoPlist": {
@@ -39,13 +39,16 @@
         ],
         "LSApplicationQueriesSchemes": [
           "metahintai"
+        ],
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait"
         ]
       }
     },
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 65,
+      "versionCode": 66,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
@@ -91,6 +94,12 @@
     "plugins": [
       "./plugins/withKakaoRepo.js",
       "expo-localization",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
       "expo-apple-authentication",
       [
         "expo-build-properties",

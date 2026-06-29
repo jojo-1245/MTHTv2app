@@ -19,7 +19,12 @@ export interface AccountItem {
   id: string;
   name: string;
   isCurrent?: boolean;
-  linked_member_id?: number | null; 
+  linked_member_id?: number | null;
+
+  phone?: string;
+  visitorId?: number;
+  lastVisitAt?: string | null;
+  recordCount?: number;
 }
 
 export interface AccountSelectorProps {
@@ -29,11 +34,19 @@ export interface AccountSelectorProps {
   onSelectAccount: (accountId: string) => void;
   onAddSubAccount?: () => void;
   onDeleteAccount?: (accountId: string) => void;
-  onLinkEmail?: (accountId: string) => void; 
+  onLinkEmail?: (accountId: string) => void;
 
   disabled?: boolean;
 
   autoLoad?: boolean;
+
+  pharmacistMode?: boolean;
+
+  modalTitle?: string;
+
+  onDeletePharmacyRecords?: (accountId: string) => void;
+
+  emptyText?: string;
 }
 
 export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
@@ -45,6 +58,10 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
   onLinkEmail: v_20eb4f,
   disabled: v_4a6533 = false,
   autoLoad: v_e22d35 = true,
+  pharmacistMode: v_988815 = false,
+  modalTitle: v_dfd0c9,
+  emptyText: v_6e7fc2,
+  onDeletePharmacyRecords: v_133324,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_c65f5d = v_ada615();
@@ -169,7 +186,9 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
           }}
         >
           <Pressable style={v_d81136.modalContent} onPress={(v_9e86fd) => v_9e86fd.stopPropagation()}>
-            <Text style={v_d81136.modalTitle}>{v_8d41d7('account_selector.title')}</Text>
+            <Text style={v_d81136.modalTitle}>
+              {v_dfd0c9 ?? v_8d41d7('account_selector.title')}
+            </Text>
             {v_cd31a8 ? (
               <View style={v_d81136.loadingContainer}>
                 <ActivityIndicator size="small" color={v_1bfbd0.primary} />
@@ -181,7 +200,9 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
               </View>
             ) : v_c86f08.length === 0 ? (
               <View style={v_d81136.emptyContainer}>
-                <Text style={v_d81136.emptyText}>계정이 없습니다.</Text>
+                <Text style={v_d81136.emptyText}>
+                  {v_6e7fc2 ?? v_8d41d7('account_selector.empty')}
+                </Text>
               </View>
             ) : (
               v_c86f08.map((v_b4542a, v_a56041) => (
@@ -207,16 +228,23 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
                         color={v_b4542a.id === v_e7b2f2 ? '#FFFFFF' : '#615FFF'}
                       />
                     </View>
-                    <Text
-                      style={[
-                        v_d81136.accountName,
-                        v_b4542a.id === v_e7b2f2 && v_d81136.accountNameSelected,
-                      ]}
-                      numberOfLines={1}
-                    >
-                      {v_b4542a.name}
-                    </Text>
-                    {v_6162cd && v_a56041 > 0 && (
+                    <View style={v_d81136.accountNameCol}>
+                      <Text
+                        style={[
+                          v_d81136.accountName,
+                          v_b4542a.id === v_e7b2f2 && v_d81136.accountNameSelected,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {v_b4542a.name}
+                      </Text>
+                      {v_988815 && v_b4542a.phone ? (
+                        <Text style={v_d81136.accountSubtext} numberOfLines={1}>
+                          {v_b4542a.phone}
+                        </Text>
+                      ) : null}
+                    </View>
+                    {v_6162cd && !v_988815 && v_a56041 > 0 && (
                       <TouchableOpacity
                         style={v_d81136.optionBtn}
                         onPress={(v_9e86fd) => {
@@ -228,6 +256,19 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
                         hitSlop={8}
                       >
                         <Feather name="more-vertical" size={18} color={v_1bfbd0.secondaryText} />
+                      </TouchableOpacity>
+                    )}
+                    {v_988815 && v_133324 && (
+                      <TouchableOpacity
+                        style={v_d81136.optionBtn}
+                        onPress={(v_9e86fd) => {
+                          v_9e86fd.stopPropagation();
+                          v_133324(v_b4542a.id);
+                          v_f099fd(false);
+                        }}
+                        hitSlop={8}
+                      >
+                        <Feather name="trash-2" size={18} color="#EF4444" />
                       </TouchableOpacity>
                     )}
                   </TouchableOpacity>
@@ -266,7 +307,7 @@ export const AccountSelector: v_a3453e.FC<AccountSelectorProps> = ({
                 </View>
               ))
             )}
-            {v_ea2e32 && (
+            {v_ea2e32 && !v_988815 && (
               <TouchableOpacity
                 style={v_d81136.addRow}
                 onPress={() => {
@@ -349,10 +390,18 @@ const v_d81136 = v_472849.create({
     gap: 12,
   },
   accountName: {
-    flex: 1,
     fontSize: v_ef658a.medium,
     fontFamily: v_843035.regular,
     color: v_1bfbd0.text,
+  },
+  accountNameCol: {
+    flex: 1,
+    gap: 2,
+  },
+  accountSubtext: {
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
   },
   accountNameSelected: {
     fontFamily: v_843035.semibold,

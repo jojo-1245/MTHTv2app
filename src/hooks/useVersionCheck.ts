@@ -65,8 +65,9 @@ export function v_96a538(v_b36f96 = {}) {
   const v_405bdd = v_de06a3(async () => {
     if (v_24a76a) return;
 
-    const v_43c42e = await v_79a9df.checkVersions();
-    if (!v_43c42e) return;
+    try {
+      const v_43c42e = await v_79a9df.checkVersions();
+      if (!v_43c42e) return;
 
     const { store: v_a73fa2, ota: v_cf418f } = v_43c42e;
 
@@ -92,7 +93,14 @@ export function v_96a538(v_b36f96 = {}) {
 
     if (v_cf418f.update_available && v_cf418f.bundle_url) {
       console.log('[OTA] OTA 선택 업데이트 안내');
-      v_690a8a(v_cf418f, false);
+      v_03e392.alert(
+        v_8d41d7('common.notification') || 'Update Available',
+        v_cf418f.changelog || '새 버전을 다운로드하시겠습니까?',
+        [
+          { text: v_8d41d7('common.cancel'), style: 'cancel' },
+          { text: v_8d41d7('common.confirm') || 'OK', onPress: () => v_690a8a(v_cf418f, false) },
+        ]
+      );
       return;
     }
 
@@ -108,6 +116,11 @@ export function v_96a538(v_b36f96 = {}) {
       return;
     }
     console.log('[OTA] 업데이트 체크 종료 (최신 상태)');
+    } catch (v_9e86fd) {
+      console.warn('[useVersionCheck] 버전 체크 실패 (무시):', v_9e86fd);
+      v_9dec4b(false);
+      v_79a9df.setUpdateProcessing(false);
+    }
   }, [v_690a8a, v_24a76a, v_b36f96, v_8d41d7]);
 
   v_c4deb2(() => {

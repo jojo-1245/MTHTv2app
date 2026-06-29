@@ -38,6 +38,9 @@ export interface HeaderProps {
   titleStyle?: v_961e77<v_5e8657>;
   eyebrowStyle?: v_961e77<v_5e8657>;
   subtitleStyle?: v_961e77<v_5e8657>;
+
+  centerContentMaxWidth?: number;
+  centerContentPadding?: number;
 }
 
 const Header: v_a3453e.FC<HeaderProps> = ({
@@ -59,6 +62,8 @@ const Header: v_a3453e.FC<HeaderProps> = ({
   titleStyle: v_672cf3,
   eyebrowStyle: v_faa4b0,
   subtitleStyle: v_7e5e48,
+  centerContentMaxWidth: v_e2c5a4,
+  centerContentPadding: v_e73654,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_033e14 = v_e0068c();
@@ -145,14 +150,10 @@ const Header: v_a3453e.FC<HeaderProps> = ({
 
   const v_a3707d = v_033e14.top + v_9b1a04.small;
   const v_d839ea = v_5cc641 || v_798703 || (v_e2510f && !v_5cc641 && !v_798703);
-  return (
-    <View style={[
-      v_d81136.container,
-      v_5cc641 && v_d81136.analysisContainer,
-      v_d839ea && !v_5cc641 && !v_798703 && v_d81136.backButtonContainer,
-      (v_5cc641 || v_798703 || (v_e2510f && !v_5cc641 && !v_798703)) && { paddingTop: v_a3707d },
-      v_4affe9,
-    ]}>
+  const v_5d38a5 = v_e2c5a4 != null;
+
+  const v_15befe = (
+    <>
       <View style={[v_d81136.topRow, v_5cc641 && v_d81136.analysisTopRow]}>
         <View style={[v_d81136.leftWrapper, v_5cc641 && v_d81136.analysisLeftWrapper, v_798703 && v_d81136.healthAnalysisLeftWrapper]}>{v_8b8176}</View>
         {!v_798703 && (
@@ -216,6 +217,39 @@ const Header: v_a3453e.FC<HeaderProps> = ({
       {v_b13a55 ? (
         <View style={v_d81136.bottomContent}>{v_b13a55}</View>
       ) : null}
+    </>
+  );
+
+  return (
+    <View
+      style={[
+        v_d81136.container,
+        v_5cc641 && v_d81136.analysisContainer,
+        v_d839ea && !v_5cc641 && !v_798703 && v_d81136.backButtonContainer,
+        (v_5cc641 || v_798703 || (v_e2510f && !v_5cc641 && !v_798703)) && {
+          paddingTop: v_a3707d,
+        },
+        v_5d38a5 && v_d81136.fullWidthShell,
+        v_5d38a5 && v_d81136.centeredShellNoPadding,
+        v_5d38a5 && v_5cc641 && v_d81136.analysisContainerFullWidth,
+        v_4affe9,
+      ]}
+    >
+      {v_5d38a5 ? (
+        <View
+          style={[
+            v_d81136.centeredContentInner,
+            {
+              maxWidth: v_e2c5a4,
+              paddingHorizontal: v_e73654 ?? v_9b1a04.large,
+            },
+          ]}
+        >
+          {v_15befe}
+        </View>
+      ) : (
+        v_15befe
+      )}
     </View>
   );
 };
@@ -242,6 +276,20 @@ const v_d81136 = v_472849.create({
     elevation: 0,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
+  },
+  fullWidthShell: {
+    width: '100%',
+    alignSelf: 'stretch',
+  },
+  centeredShellNoPadding: {
+    paddingHorizontal: 0,
+  },
+  analysisContainerFullWidth: {
+    paddingHorizontal: 0,
+  },
+  centeredContentInner: {
+    width: '100%',
+    alignSelf: 'center',
   },
   backButtonContainer: {
     backgroundColor: '#ffffff',
