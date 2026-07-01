@@ -46,6 +46,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
+import v_ef8a11 from '../components/ShopCarousel';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_75c3c7, v_271901 } from '../context';
 import { v_bb8240, v_1f53bf, v_ae4ccf, v_34f540 } from '../hooks/useSystemConfig';
@@ -1214,6 +1215,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               ))}
             </ScrollView>
           </View>
+
+          <ShopCarousel />
 
         </SafeScrollView>
       </SafeView>
