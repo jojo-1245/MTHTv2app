@@ -3069,5 +3069,14 @@
         "body_4_ios": ".",
         "hide_for_month": "1개월간 보지 않기",
         "confirm": "확인"
+    },
+    "shop": {
+        "carousel_title": "쇼핑몰 추천",
+        "view_all": "전체보기",
+        "list_title": "쇼핑몰",
+        "soldout": "품절",
+        "empty": "표시할 상품이 없어요",
+        "error_title": "쇼핑몰 연결 실패",
+        "error_desc": "잠시 후 다시 시도해 주세요"
     }
 }
