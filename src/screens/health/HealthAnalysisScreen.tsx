@@ -101,6 +101,8 @@ const v_8ea06a = 60;
 
 const v_6ac464 = 'metahint_health_user_info';
 
+const v_776a50 = 520;
+
 const v_555444 = 4;
 const v_10b8c7 = 3000; 
 
@@ -232,6 +234,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const [v_ac3ab7, v_028502] = v_5ab095(false);
   const [v_7e4acc, v_de86c2] = v_5ab095(0);
   const v_257ddc = v_6c4b91.isLandscape && v_6c4b91.isTablet;
+  const v_0c5071 = v_df9f57(() => {
+    const v_654864 = v_6c4b91.horizontalPadding * 2;
+    return Math.min(
+      v_776a50,
+      v_6c4b91.contentColumnWidth,
+      Math.max(280, v_6c4b91.width - v_654864)
+    );
+  }, [v_6c4b91.width, v_6c4b91.contentColumnWidth, v_6c4b91.horizontalPadding]);
   const v_594c6e = v_6c4b91.height * (v_257ddc ? 0.42 : 0.55);
 
   const [v_91943c, v_639227] = v_5ab095<AnalysisStep>('intro');
@@ -2202,6 +2212,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             style={[
               v_d81136.stepModalOverlay,
               v_257ddc ? v_d81136.stepModalOverlayCenter : v_d81136.stepModalOverlayBottom,
+              { paddingHorizontal: v_6c4b91.horizontalPadding },
             ]}
             pointerEvents="box-none"
           >
@@ -2209,8 +2220,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               style={[
                 v_d81136.stepModalSheetWrap,
                 {
-                  maxWidth: v_6c4b91.contentColumnWidth,
-                  paddingHorizontal: v_257ddc ? v_6c4b91.horizontalPadding : 0,
+                  width: v_0c5071,
+                  maxWidth: v_0c5071,
                   marginBottom:
                     v_257ddc && v_7e4acc > 0
                       ? Math.max(0, v_7e4acc - v_033e14.bottom)
@@ -2964,6 +2975,7 @@ const v_d81136 = v_472849.create({
   stepModalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
   },
   stepModalOverlayBottom: {
     justifyContent: 'flex-end',
@@ -2973,7 +2985,6 @@ const v_d81136 = v_472849.create({
     paddingVertical: v_9b1a04.medium,
   },
   stepModalSheetWrap: {
-    width: '100%',
     alignSelf: 'center',
   },
   stepModalContent: {
