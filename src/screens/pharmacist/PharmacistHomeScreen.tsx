@@ -3,6 +3,7 @@ import {
   v_39a996,
   v_03e392,
   v_9cabcb,
+  v_cf9c33,
   v_e767d1,
   v_aa7413,
   v_326be8,
@@ -14,6 +15,7 @@ import {
   v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
+import v_dc0e55 from 'bfgjhdhiuhcmlahuvrfzrfn';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
@@ -45,8 +47,15 @@ import {
   v_af2c88,
   v_d91974,
 } from '../../utils/tabletLayout';
+import { v_e4a763 } from '../../utils/env';
 
 type Props = v_432191<v_8ad91b, 'PharmacistHome'>;
+
+const v_f881c9 = require('../../../assets/images/symbol.png');
+const v_7f6e88 = require('../../../assets/images/logo.png');
+const v_541ff4 = v_af2c88(58, 72);
+const v_1ae176 = v_af2c88(76, 92);
+const v_9557ef = v_af2c88(220, 260);
 
 type AuthStep = 'form' | 'otp' | 'verified';
 
@@ -117,6 +126,12 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
   const [v_3d3f39, v_183269] = v_5ab095<string | null>(null);
   const [v_b2f874, v_63873e] = v_5ab095(false);
   const [v_06aecf, v_f2985a] = v_5ab095('');
+  const [v_7f5598, v_543a19] = v_5ab095(false);
+
+  const v_8f155e = v_df9f57(
+    () => `${v_e4a763().GATEWAY}/pages/appdownload`,
+    []
+  );
 
   const v_aa102c = v_d74a81.replace(/\D/g, '');
   const v_210199 = !v_07589d && v_1833e7.trim().length > 0 && v_aa102c.length >= 10;
@@ -342,6 +357,40 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     </TouchableOpacity>
   );
 
+  const v_e54e28 = v_df9f57(() => {
+    if (v_729796 === 'otp') return 'pharmacist.guest_auth.otp_heading';
+    if (v_729796 === 'verified') return 'pharmacist.guest_auth.verified_heading';
+    return 'pharmacist.guest_auth.form_heading';
+  }, [v_729796]);
+
+  const v_60bed6 = () => (
+    <View style={v_d81136.contentTopBar}>
+      <View style={v_d81136.contentTopLeft}>
+        <View style={v_d81136.contentLogoRow}>
+          <Image source={v_f881c9} style={v_d81136.contentSymbol} resizeMode="contain" />
+          <Image source={v_7f6e88} style={v_d81136.contentLogoText} resizeMode="contain" />
+        </View>
+        <Text
+          style={[v_d81136.contentTopTitle, { fontSize: v_6c4b91.isTablet ? 26 : 22 }]}
+          {...(v_326be8.OS === 'ios' ? { lineBreakStrategyIOS: 'hangul-word' as const } : {})}
+        >
+          {v_8d41d7(v_e54e28)}
+        </Text>
+      </View>
+      <TouchableOpacity
+        style={v_d81136.contentQrBtn}
+        onPress={() => v_543a19(true)}
+        activeOpacity={0.85}
+        accessibilityRole="button"
+        accessibilityLabel={v_8d41d7('pharmacist.app_download_qr_label')}
+      >
+        <View style={v_d81136.contentQrPreview}>
+          <QRCode value={v_8f155e} size={v_541ff4} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+
   const v_1224a5 = (
     visitor: v_443c12,
     v_b36f96 = {}
@@ -446,6 +495,38 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     </View>
   );
 
+  const v_8a83e5 = () => (
+    <Modal
+      visible={v_7f5598}
+      transparent
+      animationType="fade"
+      onRequestClose={() => v_543a19(false)}
+    >
+      <View style={v_d81136.qrModalRoot}>
+        <Pressable style={v_d81136.qrModalBackdrop} onPress={() => v_543a19(false)} />
+        <View style={v_d81136.qrModalCard}>
+          <TouchableOpacity
+            style={v_d81136.qrModalCloseBtn}
+            onPress={() => v_543a19(false)}
+            hitSlop={8}
+            accessibilityRole="button"
+            accessibilityLabel={v_8d41d7('common.close')}
+          >
+            <Feather name="x" size={22} color="#111111" />
+          </TouchableOpacity>
+          <Text style={v_d81136.qrModalTitle}>{v_8d41d7('pharmacist.app_download_qr_title')}</Text>
+          <Text style={v_d81136.qrModalHint}>{v_8d41d7('pharmacist.app_download_qr_hint')}</Text>
+          <View style={v_d81136.qrModalCodeWrap}>
+            <QRCode value={v_8f155e} size={v_9557ef} />
+            <View style={v_d81136.qrModalLogoBadge}>
+              <Image source={v_f881c9} style={v_d81136.qrModalLogo} resizeMode="contain" />
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
   const v_f4cdfe = () => (
     <Modal
       visible={v_b2f874}
@@ -523,13 +604,6 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
 
   const v_003e08 = () => (
     <View style={v_d81136.formStep}>
-      <Text
-        style={[v_d81136.formHeading, { fontSize: v_6c4b91.isTablet ? 32 : 28 }]}
-        {...(v_326be8.OS === 'ios' ? { lineBreakStrategyIOS: 'hangul-word' as const } : {})}
-      >
-        {v_8d41d7('pharmacist.guest_auth.form_heading')}
-      </Text>
-
       <View style={v_d81136.authFieldStack}>
         <GuestAuthField
           label={v_8d41d7('common.name')}
@@ -581,13 +655,6 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
         <Feather name="arrow-left" size={v_af2c88(20, 22)} color="#111111" />
         <Text style={v_d81136.backText}>{v_8d41d7('common.back')}</Text>
       </TouchableOpacity>
-
-      <Text
-        style={[v_d81136.formHeading, { fontSize: v_6c4b91.isTablet ? 32 : 28 }]}
-        {...(v_326be8.OS === 'ios' ? { lineBreakStrategyIOS: 'hangul-word' as const } : {})}
-      >
-        {v_8d41d7('pharmacist.guest_auth.otp_heading')}
-      </Text>
 
       <Text
         style={v_d81136.formSubtext}
@@ -652,13 +719,6 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
 
   const v_9c4dd3 = () => (
     <View style={v_d81136.formStep}>
-      <Text
-        style={[v_d81136.formHeading, { fontSize: v_6c4b91.isTablet ? 32 : 28 }]}
-        {...(v_326be8.OS === 'ios' ? { lineBreakStrategyIOS: 'hangul-word' as const } : {})}
-      >
-        {v_8d41d7('pharmacist.guest_auth.verified_heading')}
-      </Text>
-
       <View style={v_d81136.authFieldBox}>
         <Text style={v_d81136.authFieldLabel}>{v_8d41d7('pharmacist.guest_auth.verified_customer_label')}</Text>
         <View style={v_d81136.verifiedCustomerRow}>
@@ -758,12 +818,14 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
             contentColumnWidth={v_6c4b91.isTablet ? undefined : v_6c4b91.width}
             contentStyle={{ width: '100%', ...(v_6c4b91.isTablet ? { maxWidth: v_f617b4 } : null) }}
           >
+            {v_60bed6()}
             {v_c9e46b()}
           </CenteredContentShell>
         </SafeScrollView>
       </KeyboardAvoidingView>
 
       {v_f4cdfe()}
+      {v_8a83e5()}
 
       <AlertModal
         visible={!!v_5c50c0}
@@ -789,6 +851,66 @@ const v_d81136 = v_472849.create({
     paddingBottom: v_af2c88(16, 20),
     gap: v_af2c88(16, 20),
   },
+  contentTopBar: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: v_af2c88(20, 28),
+    paddingTop: v_af2c88(4, 8),
+    paddingBottom: v_af2c88(16, 20),
+    gap: v_af2c88(16, 20),
+  },
+  contentTopLeft: {
+    flex: 1,
+    minWidth: 0,
+    gap: v_af2c88(10, 12),
+    paddingRight: v_af2c88(8, 12),
+  },
+  contentLogoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: v_af2c88(8, 10),
+  },
+  contentSymbol: {
+    width: v_af2c88(36, 42),
+    height: v_af2c88(36, 42),
+  },
+  contentLogoText: {
+    width: v_af2c88(100, 116),
+    height: v_af2c88(26, 30),
+  },
+  contentTopTitle: {
+    fontFamily: v_843035.bold,
+    color: '#111111',
+    lineHeight: v_af2c88(30, 34),
+    letterSpacing: -0.4,
+  },
+  contentQrBtn: {
+    width: v_1ae176,
+    height: v_1ae176,
+    borderRadius: v_af2c88(16, 18),
+    backgroundColor: v_1bfbd0.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    overflow: 'hidden',
+    flexShrink: 0,
+    ...v_326be8.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
+      },
+      android: { elevation: 3 },
+    }),
+  },
+  contentQrPreview: {
+    padding: v_af2c88(4, 5),
+    backgroundColor: v_1bfbd0.white,
+  },
   headerVisitorsBtn: {
     width: v_af2c88(40, 44),
     height: v_af2c88(40, 44),
@@ -796,6 +918,84 @@ const v_d81136 = v_472849.create({
     backgroundColor: '#EEF2FF',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  qrModalRoot: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: v_af2c88(24, 32),
+  },
+  qrModalBackdrop: {
+    ...v_472849.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  qrModalCard: {
+    width: '100%',
+    maxWidth: v_af2c88(340, 400),
+    backgroundColor: v_1bfbd0.white,
+    borderRadius: v_af2c88(20, 24),
+    paddingHorizontal: v_af2c88(24, 28),
+    paddingTop: v_af2c88(20, 24),
+    paddingBottom: v_af2c88(28, 32),
+    alignItems: 'center',
+    ...v_326be8.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.15,
+        shadowRadius: 24,
+      },
+      android: { elevation: 12 },
+    }),
+  },
+  qrModalCloseBtn: {
+    position: 'absolute',
+    top: v_af2c88(12, 14),
+    right: v_af2c88(12, 14),
+    padding: 4,
+    zIndex: 1,
+  },
+  qrModalTitle: {
+    fontFamily: v_843035.bold,
+    fontSize: v_af2c88(18, 20),
+    color: '#111111',
+    textAlign: 'center',
+    marginBottom: v_af2c88(8, 10),
+  },
+  qrModalHint: {
+    fontFamily: v_843035.regular,
+    fontSize: v_af2c88(14, 15),
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: v_af2c88(20, 22),
+    marginBottom: v_af2c88(20, 24),
+  },
+  qrModalCodeWrap: {
+    padding: v_af2c88(14, 16),
+    borderRadius: v_af2c88(16, 18),
+    backgroundColor: v_1bfbd0.white,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    position: 'relative',
+  },
+  qrModalLogoBadge: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: v_af2c88(40, 48),
+    height: v_af2c88(40, 48),
+    marginLeft: v_af2c88(-20, -24),
+    marginTop: v_af2c88(-20, -24),
+    borderRadius: v_af2c88(10, 12),
+    backgroundColor: v_1bfbd0.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#F3F4F6',
+  },
+  qrModalLogo: {
+    width: v_af2c88(24, 28),
+    height: v_af2c88(24, 28),
   },
   twoColumnRow: {
     width: '100%',
