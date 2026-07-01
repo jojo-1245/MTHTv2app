@@ -1980,13 +1980,16 @@
   "pharmacist": {
     "home_title": "Guest Verification",
     "home_subtitle": "Verify customer info before analysis",
+    "app_download_qr_label": "MetaHint app download QR",
+    "app_download_qr_title": "Download MetaHint App",
+    "app_download_qr_hint": "Customers can scan this QR code with their phone to download the MetaHint app.",
     "bottom_nav_skin": "Skin",
     "bottom_nav_health": "Health Analysis",
     "guest_auth": {
       "form_title": "Customer Information",
       "form_heading": "Please enter\ncustomer details",
       "otp_heading": "Enter\nverification code",
-      "verified_heading": "Verification\ncomplete",
+      "verified_heading": "Verification complete",
       "otp_field_label": "Verification code",
       "verified_customer_label": "Verified customer",
       "form_subtitle": "Enter name and phone number, then request a verification code.",
