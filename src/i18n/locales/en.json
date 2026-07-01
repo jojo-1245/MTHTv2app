@@ -2038,5 +2038,14 @@
       "delete_all_success": "Screening history deleted.",
       "delete_failed": "Failed to delete screening history."
     }
+  },
+  "shop": {
+    "carousel_title": "Shop Picks",
+    "view_all": "View all",
+    "list_title": "Shop",
+    "soldout": "Sold out",
+    "empty": "No products to show",
+    "error_title": "Shop connection failed",
+    "error_desc": "Please try again in a moment"
   }
 }
