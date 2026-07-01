@@ -1892,5 +1892,14 @@
       "agree": "Setuju & kirim",
       "cancel": "Batal"
     }
+  },
+  "shop": {
+    "carousel_title": "Pilihan Toko",
+    "view_all": "Lihat semua",
+    "list_title": "Toko",
+    "soldout": "Habis",
+    "empty": "Tidak ada produk",
+    "error_title": "Koneksi toko gagal",
+    "error_desc": "Silakan coba lagi nanti"
   }
 }
