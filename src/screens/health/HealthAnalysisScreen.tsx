@@ -629,6 +629,42 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_639227('intro');
   }, [v_98caa0]);
 
+  const v_0afa99 = v_de06a3(async () => {
+    v_d2b6af(false);
+    v_6cd027(0);
+    console.log('측정하기 버튼 클릭 - 상태 초기화');
+    if (v_a3ff5a.current) {
+      await v_98caa0();
+      v_a3ff5a.current = undefined;
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
+    }
+    v_ce2e95.current = false;
+    v_3be953.current = false;
+    v_49296b(false);
+    v_b1faa7.current = false;
+    v_8a8952(undefined);
+    v_f36dd5(undefined);
+    v_7fa926(0);
+    v_b0aeaf(false);
+    await v_168aaf.lockAsync(
+      v_168aaf.OrientationLock.PORTRAIT_UP
+    ).catch(() => null);
+    v_639227('measurement');
+  }, [v_98caa0]);
+
+  const v_dbf4e9 = v_de06a3(async () => {
+    const v_834605 = await v_2d6571('health');
+    if (!v_834605) {
+      v_d2b6af(false);
+      v_f2eb11.current = () => {
+        void v_0afa99();
+      };
+      v_7dce4d(true);
+      return;
+    }
+    await v_0afa99();
+  }, [v_0afa99]);
+
   const v_141cf8 = v_de06a3(
     (v_c99bd2): boolean => {
       if (!v_c99bd2) {
@@ -2414,27 +2450,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 ) : (
                   <PrimaryButton
                     title={v_8d41d7('health_analysis.intro.start_button')}
-                    onPress={async () => {
-                      v_d2b6af(false);
-                      v_6cd027(0);
-                      console.log('측정하기 버튼 클릭 - 상태 초기화');
-                      if (v_a3ff5a.current) {
-                        await v_98caa0();
-                        v_a3ff5a.current = undefined;
-                        await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
-                      }
-                      v_ce2e95.current = false;
-                      v_3be953.current = false;
-                      v_49296b(false);
-                      v_b1faa7.current = false;
-                      v_8a8952(undefined);
-                      v_f36dd5(undefined);
-                      v_7fa926(0);
-                      v_b0aeaf(false);
-                      await v_168aaf.lockAsync(
-                        v_168aaf.OrientationLock.PORTRAIT_UP
-                      ).catch(() => null);
-                      v_639227('measurement');
+                    onPress={() => {
+                      void v_dbf4e9();
                     }}
                     fullWidth
                   />
@@ -2445,22 +2462,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           </View>
         </KeyboardAvoidingView>
       </Modal>
-
-      {}
-      <DataConsentModal
-        visible={v_bf6428}
-        kind="health"
-        onAgree={() => {
-          v_7dce4d(false);
-          const v_483de2 = v_f2eb11.current;
-          v_f2eb11.current = null;
-          if (v_483de2) v_483de2();
-        }}
-        onCancel={() => {
-          v_7dce4d(false);
-          v_f2eb11.current = null;
-        }}
-      />
     </>
   );
 
@@ -2634,16 +2635,41 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     );
   }
 
+  const v_e95e2c = (
+    <DataConsentModal
+      visible={v_bf6428}
+      kind="health"
+      onAgree={() => {
+        v_7dce4d(false);
+        const v_483de2 = v_f2eb11.current;
+        v_f2eb11.current = null;
+        if (v_483de2) v_483de2();
+      }}
+      onCancel={() => {
+        v_7dce4d(false);
+        v_f2eb11.current = null;
+      }}
+    />
+  );
+
   if (v_91943c === 'intro') {
-    return <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>;
+    return (
+      <>
+        <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>
+        {v_e95e2c}
+      </>
+    );
   }
 
   return (
-    <MainLayout activeKey="analysis" hideBottomNav={true}>
-      <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
-        {v_629820()}
-      </View>
-    </MainLayout>
+    <>
+      <MainLayout activeKey="analysis" hideBottomNav={true}>
+        <View key={v_709c4b} style={{ flex: 1 }} collapsable={false}>
+          {v_629820()}
+        </View>
+      </MainLayout>
+      {v_e95e2c}
+    </>
   );
 };
 
