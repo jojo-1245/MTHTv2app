@@ -161,6 +161,7 @@ export type RootStackParamList = {
     subAccountId?: string;
   } | undefined;
   DataConsentSettings: undefined;
+  ShopProductList: undefined;
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();
