@@ -10,6 +10,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../constants';
 
 function v_55ca78(v_81e2ef): string {
+  if (typeof v_81e2ef !== 'number' || !isFinite(v_81e2ef)) return '-';
   return v_81e2ef.toLocaleString('ko-KR') + '원';
 }
 
