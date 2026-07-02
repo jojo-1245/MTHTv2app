@@ -86,3 +86,7 @@ scripts/*
 # 공용 빌드 도구는 추적 (openrsync 우회 IPA 추출 등)
 !scripts/extract-ipa.sh
 .envrc
+
+# 에이전트 도구 디렉토리 (Claude Code 워크트리·superpowers SDD 산출물)
+.claude/
+.superpowers/
