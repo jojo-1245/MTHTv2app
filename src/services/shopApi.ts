@@ -18,8 +18,18 @@ export async function v_f96be4(): Promise<string> {
   return v_9390e8.ticket;
 }
 
-export async function v_649c8b(): Promise<ShopProduct[]> {
-  const v_8f00b9 = await v_9a8286.get<ApiResponse<{ items: ShopProduct[] }>>('/oth-path');
-  const v_9390e8 = (v_8f00b9.data?.data ?? v_8f00b9.data) as { items?: ShopProduct[] } | undefined;
-  return v_9390e8?.items ?? [];
+export interface ShopProductsResult {
+  items: ShopProduct[];
+  rate: number | null; 
+}
+
+export async function v_649c8b(): Promise<ShopProductsResult> {
+  const v_8f00b9 = await v_9a8286.get<ApiResponse<{ items: ShopProduct[]; rate_krw_per_mtht: number | null }>>('/oth-path');
+  const v_9390e8 = (v_8f00b9.data?.data ?? v_8f00b9.data) as { items?: ShopProduct[]; rate_krw_per_mtht?: number | null } | undefined;
+  return { items: v_9390e8?.items ?? [], rate: v_9390e8?.rate_krw_per_mtht ?? null };
+}
+
+export function v_95c036(v_6bbb57, v_f4d612): string | null {
+  if (!v_f4d612 || v_f4d612 <= 0 || typeof v_6bbb57 !== 'number' || !isFinite(v_6bbb57) || v_6bbb57 < 0) return null;
+  return (Math.round((v_6bbb57 / v_f4d612) * 100) / 100).toString();
 }
