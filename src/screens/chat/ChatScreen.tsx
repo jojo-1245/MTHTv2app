@@ -15,6 +15,8 @@ import {
   v_bd64bf,
   v_0e1f26,
   v_39a996,
+  v_f2c756,
+  v_aa7413,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
@@ -89,6 +91,10 @@ interface ChatMessage {
   isLoading?: boolean;
   questionnaire?: ChatMessageQuestionnaire;
   healthReport?: boolean;
+
+  isCrisis?: boolean;
+
+  crisisRegion?: 'KR' | 'US';
 }
 
 const v_44ff40 = (v_8d41d7): Product[] => [
@@ -129,7 +135,7 @@ const v_44ff40 = (v_8d41d7): Product[] => [
 import { v_772971 } from 'jmpfvteuuztnp';
 
 const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
-  const { t: v_8d41d7 } = v_772971();
+  const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_033e14 = v_e0068c();
   const v_e99f51 = v_e662ae<v_122070>(null);
@@ -139,6 +145,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const [v_3ba9c6, v_655a4e] = v_5ab095(false);
   const [v_2f29a7, v_5fe1ef] = v_5ab095(false);
   const [v_6e882f, v_6e04f8] = v_5ab095<{ [key: string]: number }>({});
+
+  const [v_30727e, v_c3d124] = v_5ab095(false);
 
   const {
     accounts: v_c86f08,
@@ -320,6 +328,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         break;
       case 'myinfo':
         v_9b57fc('MyInfo');
+        break;
+      case 'emergency_help':
+        v_c3d124(true);
         break;
       default:
         if (v_8c0b26.id.startsWith('suggestion-')) {
@@ -720,6 +731,15 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       let v_3e1c56 = 0;
 
       v_6f3521.onreadystatechange = () => {
+
+        if (v_6f3521.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+          const v_b29ff1 = v_6f3521.getResponseHeader('X-Hinty-Crisis');
+          if (v_b29ff1 === '1') {
+            const v_041734 = v_6f3521.getResponseHeader('X-Hinty-Region');
+            const v_a6c30b = v_041734 === 'US' ? 'US' : 'KR';
+            v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, isCrisis: true, crisisRegion: v_a6c30b } : v_35f85c));
+          }
+        }
         if (v_6f3521.readyState === XMLHttpRequest.LOADING || v_6f3521.readyState === XMLHttpRequest.DONE) {
           const v_f48e68 = v_6f3521.responseText;
           if (v_f48e68 && v_f48e68.length > 0) {
@@ -855,6 +875,51 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
               {v_326be8.OS === 'ios' && !v_a8cd21.isLoading && v_a8cd21.text ? (
                 <Text style={v_d81136.aiDisclaimerFooter}>{v_8d41d7('chat.ai_msg_footer_ios')}</Text>
               ) : null}
+              {}
+              {v_a8cd21.isCrisis && (
+                <View style={v_d81136.crisisBox}>
+                  <View style={v_d81136.crisisHeaderRow}>
+                    <Ionicons name="alert-circle" size={18} color="#DC2626" />
+                    <Text style={v_d81136.crisisTitle}>{v_8d41d7('chat.crisis_alert_title')}</Text>
+                  </View>
+                  <Text style={v_d81136.crisisDesc}>{v_8d41d7('chat.crisis_alert_desc')}</Text>
+                  {v_a8cd21.crisisRegion === 'US' ? (
+                    <TouchableOpacity
+                      style={v_d81136.crisisCallButton}
+                      onPress={() => v_f2c756.openURL('tel:988')}
+                      activeOpacity={0.8}
+                      accessibilityRole="button"
+                      accessibilityLabel={v_8d41d7('chat.crisis_call_988')}
+                    >
+                      <Feather name="phone-call" size={16} color="#FFFFFF" />
+                      <Text style={v_d81136.crisisCallButtonText}>{v_8d41d7('chat.crisis_call_988')}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        style={v_d81136.crisisCallButton}
+                        onPress={() => v_f2c756.openURL('tel:109')}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        accessibilityLabel={v_8d41d7('chat.crisis_call_109')}
+                      >
+                        <Feather name="phone-call" size={16} color="#FFFFFF" />
+                        <Text style={v_d81136.crisisCallButtonText}>{v_8d41d7('chat.crisis_call_109')}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={[v_d81136.crisisCallButton, v_d81136.crisisCallButtonSecondary]}
+                        onPress={() => v_f2c756.openURL('tel:1577-0199')}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        accessibilityLabel={v_8d41d7('chat.crisis_call_1577')}
+                      >
+                        <Feather name="phone-call" size={16} color="#DC2626" />
+                        <Text style={[v_d81136.crisisCallButtonText, v_d81136.crisisCallButtonTextSecondary]}>{v_8d41d7('chat.crisis_call_1577')}</Text>
+                      </TouchableOpacity>
+                    </>
+                  )}
+                </View>
+              )}
               {v_a8cd21.questionnaire && (() => {
                 const v_0ba044 = v_a8cd21.questionnaire.completed;
                 const v_61e622 = v_a8cd21.questionnaire.completedResult;
@@ -1360,6 +1425,62 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 
         }}
       />
+
+      {}
+      <Modal
+        visible={v_30727e}
+        transparent
+        animationType="fade"
+        onRequestClose={() => v_c3d124(false)}
+      >
+        <View style={v_d81136.emergencyModalOverlay}>
+          <View style={v_d81136.emergencyModalCard}>
+            <View style={v_d81136.emergencyModalHeaderRow}>
+              <Ionicons name="alert-circle" size={22} color="#DC2626" />
+              <Text style={v_d81136.emergencyModalTitle}>{v_8d41d7('chat.emergency_help_title')}</Text>
+            </View>
+            <Text style={v_d81136.emergencyModalDesc}>{v_8d41d7('chat.emergency_help_desc')}</Text>
+
+            {(v_9c213b.language?.startsWith('ko')
+              ? [
+                  { titleKey: 'chat.emergency_helpline_kr_title', numbers: [{ tel: 'tel:109', labelKey: 'chat.crisis_call_109' }, { tel: 'tel:1577-0199', labelKey: 'chat.crisis_call_1577' }, { tel: 'tel:112', labelKey: 'chat.emergency_call_112' }, { tel: 'tel:119', labelKey: 'chat.emergency_call_119' }] },
+                  { titleKey: 'chat.emergency_helpline_us_title', numbers: [{ tel: 'tel:988', labelKey: 'chat.crisis_call_988' }, { tel: 'tel:911', labelKey: 'chat.emergency_call_911' }] },
+                ]
+              : [
+                  { titleKey: 'chat.emergency_helpline_us_title', numbers: [{ tel: 'tel:988', labelKey: 'chat.crisis_call_988' }, { tel: 'tel:911', labelKey: 'chat.emergency_call_911' }] },
+                  { titleKey: 'chat.emergency_helpline_kr_title', numbers: [{ tel: 'tel:109', labelKey: 'chat.crisis_call_109' }, { tel: 'tel:1577-0199', labelKey: 'chat.crisis_call_1577' }, { tel: 'tel:112', labelKey: 'chat.emergency_call_112' }, { tel: 'tel:119', labelKey: 'chat.emergency_call_119' }] },
+                ]
+            ).map((v_b4fa6c) => (
+              <View key={v_b4fa6c.titleKey} style={v_d81136.emergencyModalSection}>
+                <Text style={v_d81136.emergencyModalSectionTitle}>{v_8d41d7(v_b4fa6c.titleKey)}</Text>
+                {v_b4fa6c.numbers.map((v_f4e98d) => (
+                  <TouchableOpacity
+                    key={v_f4e98d.tel}
+                    style={v_d81136.emergencyModalCallRow}
+                    onPress={() => v_f2c756.openURL(v_f4e98d.tel)}
+                    activeOpacity={0.8}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7(v_f4e98d.labelKey)}
+                  >
+                    <Feather name="phone-call" size={16} color="#DC2626" />
+                    <Text style={v_d81136.emergencyModalCallText}>{v_8d41d7(v_f4e98d.labelKey)}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={v_d81136.emergencyModalCloseButton}
+              onPress={() => v_c3d124(false)}
+              activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityLabel={v_8d41d7('common.close')}
+            >
+              <Text style={v_d81136.emergencyModalCloseText}>{v_8d41d7('common.close')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </MainLayout>
   );
 };
@@ -1480,6 +1601,125 @@ const v_d81136 = v_472849.create({
     color: '#6B7280',
     lineHeight: 16,
     textAlign: 'center',
+  },
+  crisisBox: {
+    marginTop: v_9b1a04.medium,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#FCA5A5',
+    backgroundColor: '#FEF2F2',
+    padding: v_9b1a04.medium,
+  },
+  crisisHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  crisisTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.bold,
+    color: '#B91C1C',
+  },
+  crisisDesc: {
+    fontSize: 13,
+    fontFamily: v_843035.regular,
+    color: '#7F1D1D',
+    lineHeight: 18,
+    marginBottom: 10,
+  },
+  crisisCallButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: '#DC2626',
+    borderRadius: 10,
+    paddingVertical: 12,
+    marginTop: 8,
+  },
+  crisisCallButtonSecondary: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#DC2626',
+  },
+  crisisCallButtonText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#FFFFFF',
+  },
+  crisisCallButtonTextSecondary: {
+    color: '#DC2626',
+  },
+  emergencyModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: v_9b1a04.large,
+  },
+  emergencyModalCard: {
+    width: '100%',
+    maxWidth: 420,
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    padding: v_9b1a04.large,
+  },
+  emergencyModalHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 6,
+  },
+  emergencyModalTitle: {
+    fontSize: v_ef658a.large,
+    fontFamily: v_843035.bold,
+    color: '#111827',
+  },
+  emergencyModalDesc: {
+    fontSize: 13,
+    fontFamily: v_843035.regular,
+    color: '#6B7280',
+    lineHeight: 18,
+    marginBottom: v_9b1a04.medium,
+  },
+  emergencyModalSection: {
+    marginBottom: v_9b1a04.medium,
+  },
+  emergencyModalSectionTitle: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
+    marginBottom: 8,
+  },
+  emergencyModalCallRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FCA5A5',
+    backgroundColor: '#FEF2F2',
+    marginBottom: 8,
+  },
+  emergencyModalCallText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.medium,
+    color: '#B91C1C',
+  },
+  emergencyModalCloseButton: {
+    marginTop: 4,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: '#F3F4F6',
+  },
+  emergencyModalCloseText: {
+    fontSize: v_ef658a.medium,
+    fontFamily: v_843035.semibold,
+    color: '#374151',
   },
   aiBubbleActionButton: {
     marginTop: v_9b1a04.medium,
