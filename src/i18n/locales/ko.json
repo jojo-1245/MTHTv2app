@@ -974,7 +974,20 @@
         "family_preparing": "가족 프로필 화면은 준비 중입니다.",
         "history_preparing": "검색 기록 화면은 준비 중입니다.",
         "shop_preparing": "Shop 화면은 준비 중입니다.",
-        "can_ask_these": "이러한 내용을 물어볼 수 있습니다"
+        "can_ask_these": "이러한 내용을 물어볼 수 있습니다",
+        "crisis_alert_title": "혼자가 아니에요",
+        "crisis_alert_desc": "지금 많이 힘드신 것 같아요. 아래 번호로 전화하시면 전문 상담사와 즉시 연결됩니다.",
+        "crisis_call_109": "109 (자살예방상담전화)",
+        "crisis_call_1577": "1577-0199 (정신건강 위기상담)",
+        "crisis_call_988": "988 (Suicide & Crisis Lifeline)",
+        "emergency_help": "긴급 도움",
+        "emergency_help_title": "긴급 도움",
+        "emergency_help_desc": "위급한 상황이라면 아래 번호로 즉시 전화해 도움을 받으세요.",
+        "emergency_helpline_kr_title": "대한민국 헬프라인",
+        "emergency_helpline_us_title": "US Helpline",
+        "emergency_call_112": "112 (경찰)",
+        "emergency_call_119": "119 (소방·구급)",
+        "emergency_call_911": "911 (Police / Fire / Medical)"
     },
     "health_analysis": {
         "recording_indicator": "● 측정 중",
@@ -1941,6 +1954,7 @@
         "health_connect": "건강정보 연결하기",
         "search_history": "검색 기록",
         "my_info": "나의 정보",
+        "emergency_help": "긴급 도움",
         "suggestions": {
             "vitamin": "비타민 보충할수 있는 영양제 알려줘",
             "height": "키클수 있는 영양제 알려줘"

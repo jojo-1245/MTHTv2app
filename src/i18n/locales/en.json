@@ -953,7 +953,20 @@
     "family_preparing": "Family profile screen is being prepared.",
     "history_preparing": "Search history screen is being prepared.",
     "shop_preparing": "Shop screen is being prepared.",
-    "can_ask_these": "You can ask about these topics"
+    "can_ask_these": "You can ask about these topics",
+    "crisis_alert_title": "You're not alone",
+    "crisis_alert_desc": "It sounds like things are really hard right now. Call one of the numbers below to talk to a crisis counselor immediately.",
+    "crisis_call_109": "109 (Suicide Prevention Hotline, KR)",
+    "crisis_call_1577": "1577-0199 (Mental Health Crisis Counseling, KR)",
+    "crisis_call_988": "988 (Suicide & Crisis Lifeline)",
+    "emergency_help": "Emergency Help",
+    "emergency_help_title": "Emergency Help",
+    "emergency_help_desc": "If this is an emergency, call one of the numbers below right away.",
+    "emergency_helpline_kr_title": "Korea Helpline",
+    "emergency_helpline_us_title": "US Helpline",
+    "emergency_call_112": "112 (Police, KR)",
+    "emergency_call_119": "119 (Fire / Ambulance, KR)",
+    "emergency_call_911": "911 (Police / Fire / Medical)"
   },
   "health": {
     "non_medical_disclaimer": "The measured vital signs are not intended for medical use, including self-diagnosis or consultation with a doctor, and are only designed for general fitness and wellness purposes."
@@ -1919,6 +1932,7 @@
     "health_connect": "Connect Health Info",
     "search_history": "Search History",
     "my_info": "My Info",
+    "emergency_help": "Emergency Help",
     "suggestions": {
       "vitamin": "Tell me about vitamins for supplementation",
       "height": "Tell me about supplements for height growth"
