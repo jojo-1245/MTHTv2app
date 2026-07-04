@@ -949,7 +949,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
     }, [v_c00289, v_8d41d7, v_c7ac57]);
 
-    const v_46964a = v_de06a3(() => {
+    const v_46964a = v_de06a3(async () => {
+        const v_5f7d15 = await v_2d6571('skin');
+        if (!v_5f7d15) {
+            v_2b985c.current = () => { v_e2f548(true); };
+            v_9b09d6(true);
+            return;
+        }
         v_e2f548(true);
     }, []);
 
@@ -2046,8 +2052,30 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         );
     };
 
+    const v_46088d = (
+        <DataConsentModal
+            visible={v_22975d}
+            kind="skin"
+            onAgree={() => {
+                v_9b09d6(false);
+                const v_483de2 = v_2b985c.current;
+                v_2b985c.current = null;
+                if (v_483de2) v_483de2();
+            }}
+            onCancel={() => {
+                v_9b09d6(false);
+                v_2b985c.current = null;
+            }}
+        />
+    );
+
     if (v_91943c === 'camera') {
-        return <MainLayout activeKey="analysis">{v_c8ac01()}</MainLayout>;
+        return (
+            <>
+                <MainLayout activeKey="analysis">{v_c8ac01()}</MainLayout>
+                {v_46088d}
+            </>
+        );
     }
 
     return (
@@ -2266,21 +2294,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 />
             )}
 
-            {}
-            <DataConsentModal
-                visible={v_22975d}
-                kind="skin"
-                onAgree={() => {
-                    v_9b09d6(false);
-                    const v_483de2 = v_2b985c.current;
-                    v_2b985c.current = null;
-                    if (v_483de2) v_483de2();
-                }}
-                onCancel={() => {
-                    v_9b09d6(false);
-                    v_2b985c.current = null;
-                }}
-            />
+            {v_46088d}
         </MainLayout>
     );
 };
