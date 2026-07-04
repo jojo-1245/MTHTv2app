@@ -46,6 +46,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a, v_f54309, v_b47b09, v_57793c } from '../constants';
 import { v_556baf } from '../components';
+import v_ef8a11 from '../components/ShopCarousel';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_75c3c7, v_271901 } from '../context';
 import { v_bb8240, v_1f53bf, v_ae4ccf, v_34f540 } from '../hooks/useSystemConfig';
@@ -1177,43 +1178,10 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
           </View>
 
-          {}
-          <View style={v_d81136.section}>
-            <View style={v_d81136.coinHeader}>
-              <Text style={v_d81136.sectionTitle}>{v_8d41d7('home.coin_products')}</Text>
-              <TouchableOpacity onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.view_all'))}>
-                <Text style={v_d81136.viewAll}>{v_8d41d7('home.view_all')}</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={v_d81136.productList}
-              decelerationRate="fast"
-              snapToInterval={v_3af450 + v_11fb5c}
-              snapToAlignment="start"
-            >
-              {v_3a2785.map((v_e2a85c) => (
-                <View key={v_e2a85c.id} style={[v_d81136.productCard, { width: v_3af450, marginRight: v_11fb5c }]}>
-                  <View style={v_d81136.productImageBox}>
-                    <Image source={v_9c75ed[v_e2a85c.imageIndex]} style={v_d81136.productImage} resizeMode="contain" />
-                  </View>
-                  <View style={v_d81136.productInfo}>
-                    <Text style={v_d81136.productTitle} numberOfLines={2}>{v_e2a85c.title}</Text>
-                    <Text style={v_d81136.productSub}>{v_e2a85c.subtitle}</Text>
-                    <View style={v_d81136.productPrice}>
-                      <Coins size={14} color="#615FFF" />
-                      <Text style={v_d81136.productPriceText}>{v_e2a85c.price} MTHT</Text>
-                    </View>
-                    <View style={v_d81136.productRating}>
-                      <Star size={12} color="#FBBF24" />
-                      <Text style={v_d81136.productRatingText}>{v_e2a85c.rating} ({v_e2a85c.reviews})</Text>
-                    </View>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
+          {
+}
+
+          <ShopCarousel />
 
         </SafeScrollView>
       </SafeView>

@@ -148,6 +148,23 @@ const SidebarMenu: v_a3453e.FC<SidebarMenuProps> = ({
                         </TouchableOpacity>
 
                         {}
+                        <TouchableOpacity
+                            style={v_d81136.emergencyHelpButton}
+                            onPress={() => v_8e442f({ id: 'emergency_help', label: v_8d41d7('sidebar.emergency_help') })}
+                            activeOpacity={0.8}
+                            accessibilityRole="button"
+                            accessibilityLabel={v_8d41d7('sidebar.emergency_help')}
+                        >
+                            <Feather
+                                name="phone-call"
+                                size={18}
+                                color="#DC2626"
+                                style={v_d81136.menuIcon}
+                            />
+                            <Text style={v_d81136.emergencyHelpText}>{v_8d41d7('sidebar.emergency_help')}</Text>
+                        </TouchableOpacity>
+
+                        {}
                         <View style={v_d81136.divider} />
 
                         {}
@@ -266,6 +283,24 @@ const v_d81136 = v_472849.create({
         fontSize: 16,
         fontFamily: v_843035.semibold,
         color: '#FFFFFF',
+    },
+    emergencyHelpButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: v_9b1a04.large,
+        marginBottom: v_9b1a04.medium,
+        paddingVertical: 10,
+        paddingHorizontal: v_9b1a04.medium,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#FCA5A5',
+        backgroundColor: '#FEF2F2',
+        gap: 8,
+    },
+    emergencyHelpText: {
+        fontSize: 15,
+        fontFamily: v_843035.semibold,
+        color: '#DC2626',
     },
     divider: {
         height: 1,

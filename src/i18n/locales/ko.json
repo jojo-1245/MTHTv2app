@@ -974,7 +974,20 @@
         "family_preparing": "가족 프로필 화면은 준비 중입니다.",
         "history_preparing": "검색 기록 화면은 준비 중입니다.",
         "shop_preparing": "Shop 화면은 준비 중입니다.",
-        "can_ask_these": "이러한 내용을 물어볼 수 있습니다"
+        "can_ask_these": "이러한 내용을 물어볼 수 있습니다",
+        "crisis_alert_title": "혼자가 아니에요",
+        "crisis_alert_desc": "지금 많이 힘드신 것 같아요. 아래 번호로 전화하시면 전문 상담사와 즉시 연결됩니다.",
+        "crisis_call_109": "109 (자살예방상담전화)",
+        "crisis_call_1577": "1577-0199 (정신건강 위기상담)",
+        "crisis_call_988": "988 (Suicide & Crisis Lifeline)",
+        "emergency_help": "긴급 도움",
+        "emergency_help_title": "긴급 도움",
+        "emergency_help_desc": "위급한 상황이라면 아래 번호로 즉시 전화해 도움을 받으세요.",
+        "emergency_helpline_kr_title": "대한민국 헬프라인",
+        "emergency_helpline_us_title": "US Helpline",
+        "emergency_call_112": "112 (경찰)",
+        "emergency_call_119": "119 (소방·구급)",
+        "emergency_call_911": "911 (Police / Fire / Medical)"
     },
     "health_analysis": {
         "recording_indicator": "● 측정 중",
@@ -1941,6 +1954,7 @@
         "health_connect": "건강정보 연결하기",
         "search_history": "검색 기록",
         "my_info": "나의 정보",
+        "emergency_help": "긴급 도움",
         "suggestions": {
             "vitamin": "비타민 보충할수 있는 영양제 알려줘",
             "height": "키클수 있는 영양제 알려줘"
@@ -2995,13 +3009,16 @@
     "pharmacist": {
         "home_title": "고객 인증",
         "home_subtitle": "분석 전 고객 정보를 확인해주세요",
+        "app_download_qr_label": "메타힌트 앱 다운로드 QR",
+        "app_download_qr_title": "메타힌트 앱 다운로드",
+        "app_download_qr_hint": "고객이 스마트폰으로 QR을 스캔하면\n메타힌트 앱을 다운로드할 수 있습니다.",
         "bottom_nav_skin": "피부분석",
         "bottom_nav_health": "건강분석",
         "guest_auth": {
             "form_title": "고객 정보 입력",
             "form_heading": "고객 정보를\n입력해주세요",
             "otp_heading": "인증번호를\n입력해주세요",
-            "verified_heading": "고객 인증\n완료",
+            "verified_heading": "고객 인증 완료",
             "otp_field_label": "인증번호",
             "verified_customer_label": "인증된 고객",
             "form_subtitle": "이름과 휴대폰 번호를 입력한 뒤 인증번호를 받아주세요.",
@@ -3066,5 +3083,14 @@
         "body_4_ios": ".",
         "hide_for_month": "1개월간 보지 않기",
         "confirm": "확인"
+    },
+    "shop": {
+        "carousel_title": "쇼핑몰 추천",
+        "view_all": "전체보기",
+        "list_title": "쇼핑몰",
+        "soldout": "품절",
+        "empty": "표시할 상품이 없어요",
+        "error_title": "쇼핑몰 연결 실패",
+        "error_desc": "잠시 후 다시 시도해 주세요"
     }
 }
