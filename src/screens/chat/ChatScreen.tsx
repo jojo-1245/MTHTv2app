@@ -728,6 +728,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       v_6f3521.open('POST', v_f71b56, true);
       v_6f3521.setRequestHeader('Content-Type', 'application/json');
 
+      v_6f3521.setRequestHeader('x-app-locale', v_9c213b.language || 'ko');
+
       let v_3e1c56 = 0;
 
       v_6f3521.onreadystatechange = () => {
