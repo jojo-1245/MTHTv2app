@@ -46,6 +46,8 @@ import { v_02d653 } from '../screens/chat';
 import v_67f088 from '../screens/AddSubAccountScreen';
 import v_4fd298 from '../screens/profile/DataConsentSettingsScreen';
 import v_f6b2e9 from '../screens/ShopProductListScreen';
+import v_d3b4f6 from '../screens/ShopPaymentConfirmScreen';
+import { v_4482f8, v_5bfacf } from '../hooks/useShopPaymentPush';
 
 export type RootStackParamList = {
   Intro: undefined;
@@ -163,6 +165,11 @@ export type RootStackParamList = {
   } | undefined;
   DataConsentSettings: undefined;
   ShopProductList: undefined;
+  ShopPaymentConfirm: {
+    orderId: string;
+    krwAmount?: string;
+    mthtAmount?: string;
+  };
 };
 
 const v_cb3606 = v_709be7<RootStackParamList>();
@@ -203,13 +210,20 @@ async function v_8360c1(v_f71b56) {
   v_268c38();
 }
 
+async function v_d0aaa6(v_f71b56) {
+  if (v_4482f8(v_f71b56)) return;
+  await v_8360c1(v_f71b56);
+}
+
 export const AppNavigator: v_a3453e.FC = () => {
+  v_5bfacf();
+
   const v_ad5855 = v_de06a3(async () => {
     console.log('[DeepLink] onReady 진입 — getInitialURL 호출');
     const v_f71b56 = await v_f2c756.getInitialURL();
     console.log('[DeepLink] getInitialURL 결과:', v_f71b56);
     if (v_f71b56) {
-      await v_8360c1(v_f71b56);
+      await v_d0aaa6(v_f71b56);
     } else {
       console.log('[DeepLink] initialURL 없음 — 딥링크 없이 정상 시작');
     }
@@ -219,7 +233,7 @@ export const AppNavigator: v_a3453e.FC = () => {
     console.log('[DeepLink] Linking 이벤트 리스너 등록');
     const v_269481 = v_f2c756.addEventListener('url', ({ url: v_f71b56 }) => {
       console.log('[DeepLink] url 이벤트 수신:', v_f71b56);
-      v_8360c1(v_f71b56);
+      v_d0aaa6(v_f71b56);
     });
     return () => v_269481.remove();
   }, []);
@@ -279,6 +293,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="AddSubAccount" component={v_67f088} />
         <Stack.Screen name="DataConsentSettings" component={v_4fd298} />
         <Stack.Screen name="ShopProductList" component={v_f6b2e9} />
+        <Stack.Screen name="ShopPaymentConfirm" component={v_d3b4f6} />
       </Stack.Navigator>
     </NavigationContainer>
   );
