@@ -95,6 +95,7 @@ export function v_1f53bf() {
     }),
     fzljtiliLicenseKey: (v_74a79c?.fzljtili_license_key as string) ?? '',
     youcamApiKey: (v_74a79c?.youcam_api_key as string) ?? '',
+    skinAcneHidden: v_74a79c === null ? true : !(v_74a79c.skin_acne_hidden === false || v_74a79c.skin_acne_hidden === 'false' || v_74a79c.skin_acne_hidden === '0'),
   };
 }
 
@@ -112,6 +113,12 @@ export function v_34f540(): boolean {
   if (v_326be8.OS !== 'ios') return false;
   const v_479f05 = v_2c13e7('ios_health_checkup_hidden');
   return v_479f05 === true || v_479f05 === '1' || v_479f05 === 'true';
+}
+
+export function v_19dbdf(): boolean {
+  if (!v_340a92) return true;
+  const v_479f05 = (v_340a92 as any)?.skin_acne_hidden;
+  return !(v_479f05 === false || v_479f05 === 'false' || v_479f05 === '0');
 }
 
 export function v_99cc3c(v_6845e8): any {
