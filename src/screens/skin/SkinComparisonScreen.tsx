@@ -463,8 +463,8 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           });
         }
 
-        const v_dc0b95 = v_852b5b(v_3393e3.skin_datas[0], v_8d41d7, v_487e04);
-        const v_40a830 = v_852b5b(v_3393e3.skin_datas[1], v_8d41d7, v_487e04);
+        const v_dc0b95 = v_852b5b(v_3393e3.skin_datas[0], v_8d41d7);
+        const v_40a830 = v_852b5b(v_3393e3.skin_datas[1], v_8d41d7);
 
         v_1a48f5(v_dc0b95);
         v_4d426d(v_40a830);
@@ -493,7 +493,8 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     };
 
     v_4cdaab();
-  }, [v_c7daf6.params.recordA.id, v_c7daf6.params.recordB.id, v_c65f5d, v_8d41d7, v_487e04]);
+
+  }, [v_c7daf6.params.recordA.id, v_c7daf6.params.recordB.id, v_c65f5d, v_8d41d7]);
 
   const [v_1a2523, v_fe1802] = v_df9f57(() => {
     const v_103ac1 = v_dcc13b || v_c7daf6.params.recordA;
