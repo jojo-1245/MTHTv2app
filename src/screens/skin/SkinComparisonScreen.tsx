@@ -24,6 +24,8 @@ import type { v_cb37be } from './components/SkinRecordsView';
 import { v_852b5b } from './components/SkinRecordsView';
 import { v_3680d3, v_df51cf, type v_b918db } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
+import { v_f5ba54 } from '../../services/skinAnalysis';
+import { v_1f53bf } from '../../hooks/useSystemConfig';
 
 const { width: v_0d9f50 } = v_700696.get('window');
 const v_47dd8d = Math.min(v_0d9f50 - v_9b1a04.large * 4, 300);
@@ -420,6 +422,11 @@ const v_e186fe = v_472849.create({
 export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Props) {
   const { t: v_8d41d7 } = v_772971();
   const { userName: v_f08a5e } = v_c7daf6.params;
+  const { skinAcneHidden: v_487e04 } = v_1f53bf();
+  const v_f84dbf = v_df9f57(
+    () => v_3a27d9.filter((v_0eb677) => !(v_487e04 && v_f5ba54(v_0eb677))),
+    [v_487e04]
+  );
 
   const [v_dcc13b, v_1a48f5] = v_5ab095<v_cb37be | null>(null);
   const [v_7f4b4c, v_4d426d] = v_5ab095<v_cb37be | null>(null);
@@ -486,6 +493,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     };
 
     v_4cdaab();
+
   }, [v_c7daf6.params.recordA.id, v_c7daf6.params.recordB.id, v_c65f5d, v_8d41d7]);
 
   const [v_1a2523, v_fe1802] = v_df9f57(() => {
@@ -499,8 +507,15 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
   const [v_43d0c0, v_74570e] = v_5ab095<string | null>(null);
   const [v_474c16, v_41fe7e] = v_5ab095(false);
   const [v_782929, v_3cc752] = v_5ab095<Set<string>>(
-    () => new Set(v_3a27d9)
+    () => new Set(v_f84dbf)
   );
+
+  v_c4deb2(() => {
+    v_3cc752((v_ba2215) => {
+      const v_a448ad = new Set([...v_ba2215].filter((v_0eb677) => v_f84dbf.includes(v_0eb677)));
+      return v_a448ad.size === v_ba2215.size ? v_ba2215 : v_a448ad;
+    });
+  }, [v_f84dbf]);
 
   const v_0ab8c5 = (v_b24339) => {
     v_3cc752((v_ba2215) => {
@@ -515,17 +530,17 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
     });
   };
 
-  const v_45e488 = () => v_3cc752(new Set(v_3a27d9));
+  const v_45e488 = () => v_3cc752(new Set(v_f84dbf));
   const v_cebe2b = () => {
     if (v_782929.size <= v_031985) return;
-    v_3cc752(new Set(v_3a27d9.slice(0, v_031985)));
+    v_3cc752(new Set(v_f84dbf.slice(0, v_031985)));
   };
 
   const v_2a9eab = v_782929.size > v_031985;
 
   const v_831a4c = v_df9f57(
-    () => v_3a27d9.filter((v_0eb677) => v_782929.has(v_0eb677)),
-    [v_782929]
+    () => v_f84dbf.filter((v_0eb677) => v_782929.has(v_0eb677)),
+    [v_f84dbf, v_782929]
   );
 
   const v_9f6fdd = (v_8dffde, v_f985e6) => v_22e3c0(v_8d41d7, v_8dffde, v_f985e6);
@@ -742,7 +757,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
               </TouchableOpacity>
             </View>
             <ScrollView style={v_d81136.modalList} showsVerticalScrollIndicator={false}>
-              {v_3a27d9.map((v_b24339) => {
+              {v_f84dbf.map((v_b24339) => {
                 const v_2869c1 = v_8d41d7(`skin.concerns.${v_62eb5a(v_b24339)}`);
                 const v_05e77d = v_782929.has(v_b24339);
                 const v_3873da = v_05e77d && v_782929.size <= v_031985;
