@@ -338,3 +338,20 @@ export const v_0446a9 = {
   droopy_lower_eyelid: '처진 아랫눈꺼풀',
 };
 
+export function v_f5ba54(v_b24339): boolean {
+  return v_b24339 === 'acne' || v_b24339 === 'hd_acne';
+}
+
+export function v_199a39(v_fa53ec, v_9590aa): string[] {
+  return v_9590aa ? v_fa53ec.filter((v_0eb677) => !v_f5ba54(v_0eb677)) : v_fa53ec;
+}
+
+export function v_e12bcd<T extends Record<string, any>>(v_8decf8, v_9590aa): T {
+  if (!v_9590aa) return v_8decf8;
+  const v_8d4337 = {};
+  for (const [v_0eb677, v_81e2ef] of Object.entries(v_8decf8)) {
+    if (!v_f5ba54(v_0eb677)) v_8d4337[v_0eb677] = v_81e2ef;
+  }
+  return v_8d4337 as T;
+}
+
