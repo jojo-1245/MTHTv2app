@@ -28,7 +28,7 @@ import {
 } from '../../../utils/pharmacyRecordAdapter';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_998b9d } from '../../../utils/authErrorHandler';
-import { v_f5ba54, v_199a39, v_e12bcd } from '../../../services/skinAnalysis';
+import { v_f5ba54, v_199a39 } from '../../../services/skinAnalysis';
 import { v_1f53bf } from '../../../hooks/useSystemConfig';
 
 const v_14a295 = 3;
@@ -252,8 +252,7 @@ interface SkinRecordsViewProps {
 
 export const v_852b5b = (
   item: v_b57732,
-  v_8d41d7,
-  v_487e04 = false
+  v_8d41d7
 ): SkinRecord => {
 
   let v_e521b9 = {};
@@ -268,8 +267,6 @@ export const v_852b5b = (
       v_e521b9 = v_8c0b26.analysis_result;
     }
   }
-
-  v_e521b9 = v_e12bcd(v_e521b9, v_487e04);
 
   const v_4622b9 = [];
   Object.keys(v_e521b9).forEach((v_b24339) => {
@@ -389,7 +386,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           const v_e21297 = v_952788
             .map(v_ddf2a3)
             .filter((v_8c0b26): v_8c0b26 is v_b57732 => v_8c0b26 != null)
-            .map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7, v_487e04));
+            .map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7));
           v_9ed182(v_e21297);
           return;
         }
@@ -422,7 +419,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
           records: JSON.stringify(v_1f4ef0, null, 2),
         });
 
-        const v_e21297 = v_1f4ef0.map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7, v_487e04));
+        const v_e21297 = v_1f4ef0.map((v_8c0b26) => v_852b5b(v_8c0b26, v_8d41d7));
         v_9ed182(v_e21297);
       } catch (v_5e9bfe) {
         console.error('[SkinRecordsView] 피부 기록 로드 실패:', {
@@ -442,7 +439,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_efc1dd();
-  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f, v_988815, v_487e04]);
+
+  }, [v_e7b2f2, v_c86f08, v_c65f5d, v_8d41d7, v_32428f, v_988815]);
 
   const v_f7f9e2 = v_df9f57(() => {
     const v_8dcb51 = {};
@@ -558,7 +556,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
         }
 
         const v_61f930 = await v_095212(v_fbf3b0);
-        const v_3a28a5 = v_852b5b(v_61f930, v_8d41d7, v_487e04);
+        const v_3a28a5 = v_852b5b(v_61f930, v_8d41d7);
 
         if (__DEV__) {
           console.log('[SkinRecordsView] 기록 상세 데이터 로드 성공:', {
@@ -579,7 +577,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     };
 
     v_a715fa();
-  }, [v_b23082, v_884a36?.id, v_884a36, v_8d41d7, v_988815, v_487e04]);
+
+  }, [v_b23082, v_884a36?.id, v_884a36, v_8d41d7, v_988815]);
 
   const v_a8b630 = (v_cbbd71) => {
     v_03e392.alert(
