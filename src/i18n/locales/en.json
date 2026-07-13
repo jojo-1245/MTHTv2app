@@ -2060,6 +2060,30 @@
     "soldout": "Sold out",
     "empty": "No products to show",
     "error_title": "Shop connection failed",
-    "error_desc": "Please try again in a moment"
+    "error_desc": "Please try again in a moment",
+    "payment": {
+      "title": "Shop payment",
+      "order_id": "Order ID",
+      "amount": "Amount",
+      "hint": "MTHT will be deducted from your MetaHint wallet. Approve?",
+      "approve": "Approve payment",
+      "decline": "Decline",
+      "success": "Payment completed.",
+      "declined": "Payment declined.",
+            "error_generic": "Payment failed.",
+            "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
+            "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
+            "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
+            "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
+            "error_declined_status": "This order was already declined. Please start payment again in the shop.",
+            "error_expired": "The approval window expired. Please pay again from the shop.",
+            "error_timeout": "Approval is taking longer than usual. Check the shop payment page shortly.",
+            "processing": "Processing on-chain payment. Please wait…",
+            "error_failed_retry": "Transfer failed. Tap Approve again to retry.",
+            "error_failed_shop": "Payment failed. Please retry from the shop payment page.",
+            "return_shop_hint": "Tap the button below to view your shop order. (The previous browser tab may have closed.)",
+            "view_order": "View shop order",
+            "open_shop_payment": "Open shop payment page"
+    }
   }
 }

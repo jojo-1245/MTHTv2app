@@ -37,6 +37,8 @@ import { v_81fcbc } from '../../services/skinApi';
 import { v_2d6571 } from '../../utils/consentStore';
 import v_e209a2 from '../../components/DataConsentModal';
 import { v_9d6425 } from '../health/vitalSignStatus';
+import { v_19dbdf } from '../../hooks/useSystemConfig';
+import { v_f5ba54 } from '../../services/skinAnalysis';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -707,15 +709,21 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         const v_69de92 = v_068098.caution_items
           ? (typeof v_068098.caution_items === 'string' ? JSON.parse(v_068098.caution_items) : v_068098.caution_items)
           : [];
-        const v_44f5a0 = Object.entries(v_b95193).map(([v_b24339, v_a057b5]: [string, any]) => {
-          const v_740dd8 = v_a057b5?.ui_score ?? v_a057b5?.raw_score;
-          return v_740dd8 != null ? `  - ${v_b24339}: ${v_740dd8}점` : null;
-        }).filter(Boolean).join('\n');
+        const v_7ef476 = v_19dbdf();
+        const v_514f26 = (Array.isArray(v_69de92) ? v_69de92 : []).filter(
+          (v_0eb677) => !(v_7ef476 && v_f5ba54(String(v_0eb677)))
+        );
+        const v_44f5a0 = Object.entries(v_b95193)
+          .filter(([v_b24339]) => !(v_7ef476 && v_f5ba54(v_b24339)))
+          .map(([v_b24339, v_a057b5]: [string, any]) => {
+            const v_740dd8 = v_a057b5?.ui_score ?? v_a057b5?.raw_score;
+            return v_740dd8 != null ? `  - ${v_b24339}: ${v_740dd8}점` : null;
+          }).filter(Boolean).join('\n');
         v_0fa025 = `[피부 데이터]
 - 측정일: ${v_068098.record_date ?? '알 수 없음'}
 - 종합 점수: ${v_068098.overall_score ?? '데이터 없음'}점
 - 피부 나이: ${v_068098.skin_age ?? '데이터 없음'}세
-- 등급: ${v_068098.grade ?? '데이터 없음'}${v_44f5a0 ? `\n- 세부 분석:\n${v_44f5a0}` : ''}${v_69de92.length > 0 ? `\n- 주의 항목: ${v_69de92.join(', ')}` : ''}`;
+- 등급: ${v_068098.grade ?? '데이터 없음'}${v_44f5a0 ? `\n- 세부 분석:\n${v_44f5a0}` : ''}${v_514f26.length > 0 ? `\n- 주의 항목: ${v_514f26.join(', ')}` : ''}`;
       }
 
       const v_c9c489 = v_e4a763();
@@ -727,6 +735,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       const v_6f3521 = new XMLHttpRequest();
       v_6f3521.open('POST', v_f71b56, true);
       v_6f3521.setRequestHeader('Content-Type', 'application/json');
+
+      v_6f3521.setRequestHeader('x-app-locale', v_9c213b.language || 'ko');
 
       let v_3e1c56 = 0;
 

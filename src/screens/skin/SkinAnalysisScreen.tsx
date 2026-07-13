@@ -45,10 +45,14 @@ import { v_2d6571 } from '../../utils/consentStore';
 import v_e209a2 from '../../components/DataConsentModal';
 import {
     v_6bbbb9,
+    v_f5ba54,
+    v_199a39,
+    v_e12bcd,
     type v_146928,
     type v_ee7be6,
     type v_38cf4d,
 } from '../../services/skinAnalysis';
+import { v_19dbdf } from '../../hooks/useSystemConfig';
 import { v_9e8766, v_2282da, v_326fbf, v_5a0119 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
@@ -105,39 +109,45 @@ const v_62eb5a = (v_b24339): string => {
     return v_b24339;
 };
 
-const v_6c3b8b = (v_8d41d7): { key: v_ee7be6; label: string }[] => [
-    { key: 'acne', label: v_8d41d7('skin.concerns.acne') },
-    { key: 'dark_circle_v2', label: v_8d41d7('skin.concerns.dark_circle_v2') },
-    { key: 'droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
-    { key: 'droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
-    { key: 'eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
-    { key: 'firmness', label: v_8d41d7('skin.concerns.firmness') },
-    { key: 'moisture', label: v_8d41d7('skin.concerns.moisture') },
-    { key: 'oiliness', label: v_8d41d7('skin.concerns.oiliness') },
-    { key: 'pore', label: v_8d41d7('skin.concerns.pore') },
-    { key: 'radiance', label: v_8d41d7('skin.concerns.radiance') },
-    { key: 'redness', label: v_8d41d7('skin.concerns.redness') },
-    { key: 'age_spot', label: v_8d41d7('skin.concerns.age_spot') },
-    { key: 'texture', label: v_8d41d7('skin.concerns.texture') },
-    { key: 'wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
-];
+const v_6c3b8b = (v_8d41d7): { key: v_ee7be6; label: string }[] => {
+    const items: { key: v_ee7be6; label: string }[] = [
+        { key: 'acne', label: v_8d41d7('skin.concerns.acne') },
+        { key: 'dark_circle_v2', label: v_8d41d7('skin.concerns.dark_circle_v2') },
+        { key: 'droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
+        { key: 'droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
+        { key: 'eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
+        { key: 'firmness', label: v_8d41d7('skin.concerns.firmness') },
+        { key: 'moisture', label: v_8d41d7('skin.concerns.moisture') },
+        { key: 'oiliness', label: v_8d41d7('skin.concerns.oiliness') },
+        { key: 'pore', label: v_8d41d7('skin.concerns.pore') },
+        { key: 'radiance', label: v_8d41d7('skin.concerns.radiance') },
+        { key: 'redness', label: v_8d41d7('skin.concerns.redness') },
+        { key: 'age_spot', label: v_8d41d7('skin.concerns.age_spot') },
+        { key: 'texture', label: v_8d41d7('skin.concerns.texture') },
+        { key: 'wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
+    ];
+    return v_4622b9.filter((v_3f4e2e) => !(v_19dbdf() && v_f5ba54(v_3f4e2e.key)));
+};
 
-const v_e803bf = (v_8d41d7): { key: v_38cf4d; label: string }[] => [
-    { key: 'hd_acne', label: v_8d41d7('skin.concerns.acne') },
-    { key: 'hd_dark_circle', label: v_8d41d7('skin.concerns.dark_circle_v2') },
-    { key: 'hd_droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
-    { key: 'hd_droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
-    { key: 'hd_eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
-    { key: 'hd_firmness', label: v_8d41d7('skin.concerns.firmness') },
-    { key: 'hd_moisture', label: v_8d41d7('skin.concerns.moisture') },
-    { key: 'hd_oiliness', label: v_8d41d7('skin.concerns.oiliness') },
-    { key: 'hd_pore', label: v_8d41d7('skin.concerns.pore') },
-    { key: 'hd_radiance', label: v_8d41d7('skin.concerns.radiance') },
-    { key: 'hd_redness', label: v_8d41d7('skin.concerns.redness') },
-    { key: 'hd_age_spot', label: v_8d41d7('skin.concerns.age_spot') },
-    { key: 'hd_texture', label: v_8d41d7('skin.concerns.texture') },
-    { key: 'hd_wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
-];
+const v_e803bf = (v_8d41d7): { key: v_38cf4d; label: string }[] => {
+    const items: { key: v_38cf4d; label: string }[] = [
+        { key: 'hd_acne', label: v_8d41d7('skin.concerns.acne') },
+        { key: 'hd_dark_circle', label: v_8d41d7('skin.concerns.dark_circle_v2') },
+        { key: 'hd_droopy_lower_eyelid', label: v_8d41d7('skin.concerns.droopy_lower_eyelid') },
+        { key: 'hd_droopy_upper_eyelid', label: v_8d41d7('skin.concerns.droopy_upper_eyelid') },
+        { key: 'hd_eye_bag', label: v_8d41d7('skin.concerns.eye_bag') },
+        { key: 'hd_firmness', label: v_8d41d7('skin.concerns.firmness') },
+        { key: 'hd_moisture', label: v_8d41d7('skin.concerns.moisture') },
+        { key: 'hd_oiliness', label: v_8d41d7('skin.concerns.oiliness') },
+        { key: 'hd_pore', label: v_8d41d7('skin.concerns.pore') },
+        { key: 'hd_radiance', label: v_8d41d7('skin.concerns.radiance') },
+        { key: 'hd_redness', label: v_8d41d7('skin.concerns.redness') },
+        { key: 'hd_age_spot', label: v_8d41d7('skin.concerns.age_spot') },
+        { key: 'hd_texture', label: v_8d41d7('skin.concerns.texture') },
+        { key: 'hd_wrinkle', label: v_8d41d7('skin.concerns.wrinkle') },
+    ];
+    return v_4622b9.filter((v_3f4e2e) => !(v_19dbdf() && v_f5ba54(v_3f4e2e.key)));
+};
 
 const v_9b034b = (v_b24339, v_8d41d7): string => {
     const v_73543d = v_62eb5a(v_b24339);
@@ -451,11 +461,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             }
         });
 
-        v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
+        const v_2c9332 = v_17b30f.filter((v_3f4e2e) => !(v_19dbdf() && v_f5ba54(v_3f4e2e.type)));
+
+        v_2c9332.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
 
         const v_e4ff65 = v_d1402b ?? Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
 
-        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 };
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_2c9332, skinAge: v_e4ff65 };
     }, [v_e521b9, v_8d41d7]);
 
     const v_30222e = v_de06a3(() => {
@@ -481,7 +493,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     v_c4deb2(() => {
         if (v_bf6a8c) {
-            v_6f6f79(v_3e09cd);
+            const v_9590aa = v_19dbdf();
+            v_6f6f79(v_9590aa ? {
+                ...v_3e09cd,
+                selectedConcerns: v_199a39(v_3e09cd.selectedConcerns, v_9590aa),
+                result: {
+                    ...v_3e09cd.result,
+                    results: {
+                        ...v_3e09cd.result.results,
+                        output: v_3e09cd.result.results.output.filter((v_b6c474) => !v_f5ba54(v_b6c474.type)),
+                    },
+                },
+            } : v_3e09cd);
             v_639227('result');
         }
     }, [v_bf6a8c]);
@@ -1561,9 +1584,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 }
                                 const v_1300ee = v_678155[0];
                                 const v_d3c7f7 = v_1300ee.analysis_result;
-                                const v_8decf8 = typeof v_d3c7f7 === 'string'
+                                const v_79d59f = typeof v_d3c7f7 === 'string'
                                     ? JSON.parse(v_d3c7f7)
                                     : (v_d3c7f7 ?? {});
+                                const v_8decf8 = v_e12bcd(v_79d59f, v_19dbdf());
                                 const v_9ef443 = Object.entries(v_8decf8).map(([v_3b27d9, v_a057b5]: [string, any]) => ({
                                     type: v_3b27d9,
                                     ui_score: v_a057b5.ui_score ?? v_a057b5.score ?? 0,
