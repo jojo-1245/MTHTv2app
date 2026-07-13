@@ -461,11 +461,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             }
         });
 
-        v_17b30f.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
+        const v_2c9332 = v_17b30f.filter((v_3f4e2e) => !(v_19dbdf() && v_f5ba54(v_3f4e2e.type)));
+
+        v_2c9332.sort((v_779914, v_148ff6) => v_148ff6.score - v_779914.score);
 
         const v_e4ff65 = v_d1402b ?? Math.max(20, Math.min(60, Math.round(100 - v_adfd7c + 20)));
 
-        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_17b30f, skinAge: v_e4ff65 };
+        return { overallScore: v_adfd7c, resizeImageUrl: v_c2741d, concernScores: v_2c9332, skinAge: v_e4ff65 };
     }, [v_e521b9, v_8d41d7]);
 
     const v_30222e = v_de06a3(() => {
