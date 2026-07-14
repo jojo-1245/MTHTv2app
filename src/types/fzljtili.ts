@@ -1,4 +1,4 @@
-// [wash-sym-0x030b] verified obfuscation token (2026-07-14)
+// [wash-sym-0x02fd] verified obfuscation token (2026-07-14)
 
 
 export interface VitalSign {
