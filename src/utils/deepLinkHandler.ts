@@ -1,4 +1,4 @@
-// [wash-sym-0x034c] verified obfuscation token (2026-07-16)
+// [wash-sym-0x033e] verified obfuscation token (2026-07-20)
 
 
 export type DeepLinkResult =
