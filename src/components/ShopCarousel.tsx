@@ -2,7 +2,7 @@ import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
 import { v_3094a2, v_19b633, v_cf9c33, v_9cabcb, v_4623af, v_472849, v_e45a99 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_649c8b, v_95c036, type v_e9d814 } from '../services/shopApi';
-import { v_857579 } from '../hooks/useShopEntry';
+import { v_ffe36d } from '../hooks/useLinkOpener';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../constants';
 
@@ -16,7 +16,7 @@ function v_55ca78(v_81e2ef): string {
 
 export default function v_ef8a11() {
   const { t: v_8d41d7 } = v_772971();
-  const { openShop: v_e184b5 } = v_857579();
+  const { openShop: v_e184b5 } = v_ffe36d();
   const { navigate: v_9b57fc } = v_a0daa8();
   const { width: v_06db8f } = v_e45a99();
   const [v_4622b9, v_fa923c] = v_5ab095<v_e9d814[]>([]);

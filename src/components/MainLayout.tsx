@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_03e392, v_f2c756, v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
+import { v_03e392, v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
 import { v_2d8264 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_556baf from './SafeView';
@@ -9,6 +9,7 @@ import { v_a0daa8 } from '../navigation';
 import { v_1f53bf } from '../hooks/useSystemConfig';
 import { v_5a0119 } from '../hooks/useUserRole';
 import { v_4b2942 } from '../context/PharmacistGuestContext';
+import { v_5ab0fb } from '../services/linking';
 
 const v_eecdb6 = {
   MetaHome: 'home',
@@ -129,13 +130,9 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({
 
     if (!v_160272 && v_8c0b26.key === 'wallet' && v_695971) {
       if (v_a2243f) {
-        v_f2c756.openURL(v_a2243f).catch((v_9e86fd) =>
-          console.warn('[MainLayout] wallet_tab_url 열기 실패:', v_9e86fd)
-        );
+        v_5ab0fb(v_a2243f);
       } else {
-        v_f2c756.openURL('https://service-mh.example.invalid').catch((v_9e86fd) =>
-          console.warn('[MainLayout] 기본 URL 열기 실패:', v_9e86fd)
-        );
+        v_5ab0fb('https://service-mh.example.invalid');
       }
       return;
     }
