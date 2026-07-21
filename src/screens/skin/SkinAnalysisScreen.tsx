@@ -34,6 +34,7 @@ const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_0abe94 = 12;
 import { v_a0daa8 } from '../../navigation';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
+import v_6f3f7e from '../../components/SupplementRecommendSection';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_0d0e7d } from '../../utils/analysisResultTabletStyles';
@@ -2037,14 +2038,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             )}
                         </View>
                         {}
-                        <View style={v_d81136.aiProductsCard}>
-                            <View style={v_d81136.aiProductsHeader}>
-                                <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('skin.result.ai_recommended_products')}</Text>
-                            </View>
-                            <View style={{ paddingVertical: 24, alignItems: 'center' }}>
-                                <Text style={{ fontSize: 14, color: '#9CA3AF' }}>현재 추천 제품 기획중입니다.</Text>
-                            </View>
-                        </View>
+                        <SupplementRecommendSection source="skin" recordId={v_4ae380 ?? null} />
                     </>
                 )}
 
