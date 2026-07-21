@@ -2089,5 +2089,9 @@
   },
   "linking": {
     "open_failed": "Couldn't open the link. Please try again later."
+  },
+  "supplements": {
+    "section_title": "Recommended supplements",
+    "view_in_shop": "View in shop"
   }
 }
