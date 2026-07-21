@@ -4,12 +4,12 @@ import {
   v_3094a2,
   v_19b633,
   v_4623af,
-  v_f2c756,
   v_472849,
   v_acfdec,
 } from 'rcmrninabrnb';
 import { v_d8b303 } from '../services/keepaliveService';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
+import { v_5ab0fb } from '../services/linking';
 
 interface EmergencyNoticeModalProps {
   notice: v_d8b303 | null;
@@ -21,7 +21,7 @@ export function v_fba277({ notice: v_d48273, onDismiss: v_1b97a8 }: EmergencyNot
 
   const v_c33327 = () => {
     if (v_d48273.url) {
-      v_f2c756.openURL(v_d48273.url).catch(() => {});
+      v_5ab0fb(v_d48273.url);
     }
   };
 
