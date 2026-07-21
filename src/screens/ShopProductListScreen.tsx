@@ -4,7 +4,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_729608, v_570c34, v_1c1837 } from '../components';
 import { v_649c8b, v_95c036, type v_e9d814 } from '../services/shopApi';
-import { v_857579 } from '../hooks/useShopEntry';
+import { v_ffe36d } from '../hooks/useLinkOpener';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../constants';
@@ -19,7 +19,7 @@ type Props = v_432191<v_8ad91b, 'ShopProductList'>;
 const ShopProductListScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57 } = v_a0daa8();
-  const { openShop: v_e184b5 } = v_857579();
+  const { openShop: v_e184b5 } = v_ffe36d();
   const [v_4622b9, v_fa923c] = v_5ab095<v_e9d814[]>([]);
   const [v_f4d612, v_13fd7a] = v_5ab095<number | null>(null);
   const [v_bf751c, v_8bbf9d] = v_5ab095(false);

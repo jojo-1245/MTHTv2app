@@ -9,7 +9,6 @@ import {
   v_39a996,
   v_122070,
   v_03e392,
-  v_f2c756,
   v_326be8,
   v_e767d1,
 } from 'rcmrninabrnb';
@@ -30,6 +29,7 @@ import {
 } from '../services';
 import { v_998b9d } from '../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
+import { v_5ab0fb } from '../services/linking';
 
 const v_28d629 = 6;
 
@@ -354,7 +354,8 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       if (v_2fa46c) {
 
         const v_3f557d = `https://service-mh.example.invalid/referral/${v_2fa46c}`;
-        await v_f2c756.openURL(v_3f557d);
+        const v_3ed4c3 = await v_5ab0fb(v_3f557d);
+        if (!v_3ed4c3) return;
       } else {
         v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.no_referral_code'));
       }

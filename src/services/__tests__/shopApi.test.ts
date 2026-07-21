@@ -1,8 +1,18 @@
 jest.mock('../apiClient', () => ({ __esModule: true, default: { post: jest.fn(), get: jest.fn() } }));
+jest.mock('../linking', () => ({ openShop: jest.fn() }));
 import v_9a8286 from '../apiClient';
-import { v_f96be4, v_649c8b, v_95c036 } from '../shopApi';
+import { v_e184b5 } from '../linking';
+import {
+  v_f96be4,
+  v_649c8b,
+  v_95c036,
+  v_b0c711,
+  v_c61ec1,
+  v_ad3415,
+} from '../shopApi';
 
 const v_bc7549 = v_9a8286 as unknown as { post: jest.Mock; get: jest.Mock };
+const v_e943e6 = v_e184b5 as jest.Mock;
 
 describe('getSSOTicket', () => {
   afterEach(() => jest.clearAllMocks());
@@ -35,6 +45,22 @@ describe('getShopProducts', () => {
   it('returns empty items and null rate when missing', async () => {
     v_bc7549.get.mockResolvedValue({ data: { data: {} } });
     await expect(v_649c8b()).resolves.toEqual({ items: [], rate: null });
+  });
+});
+
+describe('open* delegate to linking openShop', () => {
+  afterEach(() => jest.clearAllMocks());
+  it('openShopPaymentPage passes payment_wait next', async () => {
+    await v_b0c711('order-1');
+    expect(v_e943e6).toHaveBeenCalledWith('/oth-path?od_id=order-1');
+  });
+  it('openShopOrderAfterPayment passes payment_complete next', async () => {
+    await v_c61ec1('order-2');
+    expect(v_e943e6).toHaveBeenCalledWith('/oth-path?od_id=order-2');
+  });
+  it('openShopOrderList passes orderinquiry next', async () => {
+    await v_ad3415();
+    expect(v_e943e6).toHaveBeenCalledWith('/oth-path');
   });
 });
 
