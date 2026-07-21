@@ -2085,5 +2085,8 @@
             "view_order": "View shop order",
             "open_shop_payment": "Open shop payment page"
     }
+  },
+  "linking": {
+    "open_failed": "Couldn't open the link. Please try again later."
   }
 }

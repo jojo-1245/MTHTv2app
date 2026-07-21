@@ -1901,5 +1901,8 @@
     "empty": "Tidak ada produk",
     "error_title": "Koneksi toko gagal",
     "error_desc": "Silakan coba lagi nanti"
+  },
+  "linking": {
+    "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti."
   }
 }
