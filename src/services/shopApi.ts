@@ -1,6 +1,5 @@
 import v_9a8286 from './apiClient';
-import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
-import { v_dbb24a } from '../utils/shopUrl';
+import { v_e184b5 } from './linking';
 
 type ApiResponse<T> = { success?: boolean; data?: T; error?: { message?: string } };
 
@@ -103,26 +102,18 @@ export function v_40afef(v_9d3240): string {
   return `${v_694b25}/oth-path?od_id=${encodeURIComponent(v_9d3240)}`;
 }
 
-const BROWSER_OPTS: v_2c8bdd.WebBrowserOpenOptions = {
-  showInRecents: true,
-  enableBarCollapsing: false,
-};
-
 export async function v_b0c711(v_9d3240): Promise<void> {
-  const v_c9c6be = await v_f96be4();
   const v_a448ad = `/oth-path?od_id=${encodeURIComponent(v_9d3240)}`;
-  await v_2c8bdd.openBrowserAsync(v_dbb24a(v_c9c6be, v_a448ad), v_4793d0);
+  await v_e184b5(v_a448ad);
 }
 
 export async function v_c61ec1(v_9d3240): Promise<void> {
-  const v_c9c6be = await v_f96be4();
   const v_a448ad = `/oth-path?od_id=${encodeURIComponent(v_9d3240)}`;
-  await v_2c8bdd.openBrowserAsync(v_dbb24a(v_c9c6be, v_a448ad), v_4793d0);
+  await v_e184b5(v_a448ad);
 }
 
 export async function v_ad3415(): Promise<void> {
-  const v_c9c6be = await v_f96be4();
-  await v_2c8bdd.openBrowserAsync(v_dbb24a(v_c9c6be, '/oth-path'), v_4793d0);
+  await v_e184b5('/oth-path');
 }
 
 export async function v_a1b0e7(

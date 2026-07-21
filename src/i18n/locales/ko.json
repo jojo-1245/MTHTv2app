@@ -3116,5 +3116,8 @@
             "view_order": "쇼핑몰 주문 확인",
             "open_shop_payment": "쇼핑몰 결제 화면 열기"
         }
+    },
+    "linking": {
+        "open_failed": "링크를 열 수 없습니다. 잠시 후 다시 시도해 주세요."
     }
 }
