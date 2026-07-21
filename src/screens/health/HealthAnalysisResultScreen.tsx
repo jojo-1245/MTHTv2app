@@ -18,6 +18,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
+import v_6f3f7e from '../../components/SupplementRecommendSection';
 import { v_0d0e7d, type v_9a970c } from '../../utils/analysisResultTabletStyles';
 import { v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
@@ -2872,14 +2873,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       </>
                       )}
                     </View>
-                    <View style={v_d81136.aiProductsCard}>
-                      <View style={v_d81136.aiProductsHeader}>
-                        <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('health_analysis.result.ai_recommended_products')}</Text>
-                      </View>
-                      <View style={{ paddingVertical: 24, alignItems: 'center' }}>
-                        <Text style={{ fontSize: 14, color: '#9CA3AF' }}>현재 추천 제품 기획중입니다.</Text>
-                      </View>
-                    </View>
+                    <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
                   </>
                 )}
 
