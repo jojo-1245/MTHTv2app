@@ -11,6 +11,7 @@ import {
   v_326be8,
 } from 'rcmrninabrnb';
 import { v_556baf, v_729608, v_cb41de, v_e775af } from '../../components';
+import v_6f3f7e from '../../components/SupplementRecommendSection';
 import { v_a0daa8 } from '../../navigation';
 import { v_15baf2, v_b67103, v_ff5546 } from '../../services';
 import type { v_84adce, v_e86309 } from '../../services/codefApi';
@@ -50,6 +51,21 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const [v_4622b9, v_fa923c] = v_5ab095<any[]>([]);
   const [v_678155, v_9ed182] = v_5ab095<v_84adce[]>([]);
 
+  const [v_7c9da3, v_db9949] = v_5ab095<number | null>(null);
+
+  const v_28c823 = (v_43c42e): number | null => {
+    const v_4e8a78 = Array.isArray(v_43c42e?.data?.saved)
+      ? (v_43c42e.data.saved[0]?.id ?? v_43c42e.data.saved[0])
+      : undefined;
+    const v_479f05 =
+      v_43c42e?.data?.id ??
+      v_4e8a78 ??
+      v_43c42e?.items?.[0]?.id ??
+      v_43c42e?.id ??
+      null;
+    return typeof v_479f05 === 'number' ? v_479f05 : null;
+  };
+
   v_c4deb2(() => {
     if (v_ab4803 !== 'records') return;
     let v_759436 = true;
@@ -74,6 +90,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         v_ae4844('authPending');
       } else {
         v_fa923c(v_cb35cb.data ? [v_cb35cb.data] : []);
+        v_db9949(v_28c823(v_cb35cb));
         v_ae4844('result');
       }
     } catch (v_9e86fd) {
@@ -89,6 +106,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     try {
       const v_cb35cb = await v_b67103(v_ff38f8, { userName: v_f08a5e, birthDate: v_598ded, phoneNo: v_f1c488, provider: v_e38ca2 });
       v_fa923c(v_cb35cb.items ?? []);
+      v_db9949(v_28c823(v_cb35cb));
       v_ae4844('result');
     } catch (v_9e86fd) {
       v_03e392.alert('인증 미완료', '폰에서 인증을 완료한 뒤 다시 시도해주세요.');
@@ -187,6 +205,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               {v_4622b9.map((v_23805a, v_ebec57) => (
                 <ResultCard key={v_ebec57} it={v_23805a} />
               ))}
+              <SupplementRecommendSection source="checkup" recordId={v_7c9da3} />
               <PrimaryButton title="완료" onPress={v_c7ac57} />
             </View>
           )}
