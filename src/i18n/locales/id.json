@@ -1904,5 +1904,9 @@
   },
   "linking": {
     "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti."
+  },
+  "supplements": {
+    "section_title": "Suplemen yang direkomendasikan",
+    "view_in_shop": "Lihat di toko"
   }
 }
