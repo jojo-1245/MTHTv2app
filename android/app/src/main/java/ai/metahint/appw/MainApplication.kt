@@ -31,11 +31,6 @@ class MainApplication : Application(), ReactApplication {
 
           override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
 
-          override fun getJSBundleFile(): String? {
-            val otaBundle = File(applicationContext.filesDir, "index.android.bundle")
-            return if (otaBundle.exists()) otaBundle.absolutePath else null
-          }
-
           override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
           override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
@@ -47,6 +42,7 @@ class MainApplication : Application(), ReactApplication {
 
   override fun onCreate() {
     super.onCreate()
+    cleanupLegacyOtaArtifacts()
     DefaultNewArchitectureEntryPoint.releaseLevel = try {
       ReleaseLevel.valueOf(BuildConfig.REACT_NATIVE_RELEASE_LEVEL.uppercase())
     } catch (e: IllegalArgumentException) {
@@ -59,5 +55,15 @@ class MainApplication : Application(), ReactApplication {
   override fun onConfigurationChanged(newConfig: Configuration) {
     super.onConfigurationChanged(newConfig)
     ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig)
+  }
+
+  private fun cleanupLegacyOtaArtifacts() {
+    try {
+      File(filesDir, "index.android.bundle").let { if (it.exists()) it.delete() }
+      File(filesDir, "ota_meta.json").let { if (it.exists()) it.delete() }
+      File(filesDir, "assets").let { if (it.exists()) it.deleteRecursively() }
+    } catch (e: Exception) {
+
+    }
   }
 }
