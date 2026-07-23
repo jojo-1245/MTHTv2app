@@ -6,7 +6,7 @@
       "ai.metahint.appw",
       "metahintai"
     ],
-    "version": "5.0.4",
+    "version": "5.0.5",
     "orientation": "default",
     "userInterfaceStyle": "light",
     "icon": "./assets/images/appicon.png",
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ai.metahint.appw",
-      "buildNumber": "69",
+      "buildNumber": "70",
       "usesAppleSignIn": true,
       "icon": "./assets/images/appicon.png",
       "infoPlist": {
@@ -48,7 +48,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 69,
+      "versionCode": 70,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
