@@ -65,6 +65,7 @@ export default function v_6540c3() {
     dismissStoreUpdate: v_8f0153 
   } = v_96a538({
     enabled: v_4c1272 && v_43f571,
+    otaEnabled: false,
     onOtaProgress: (v_ba2265) => {
       if (__DEV__) {
         console.log(`[OTA] 다운로드 진행률: ${v_ba2265}%`);
