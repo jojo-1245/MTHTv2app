@@ -251,6 +251,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   v_5ad1fd();
 
   const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({
+    otaEnabled: false,
     onOtaProgress: (v_ba2265) => {
       if (__DEV__) console.log(`[OTA] 메인화면 업데이트 다운로드: ${v_ba2265}%`);
     },

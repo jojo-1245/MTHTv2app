@@ -11,13 +11,15 @@ interface Options {
   onOtaProgress?: (percent: number) => void;
 
   enabled?: boolean;
+
+  otaEnabled?: boolean;
 }
 
 export function v_96a538(v_b36f96 = {}) {
   const { t: v_8d41d7 } = v_772971();
   const v_94a194 = v_e662ae(v_6b5698.currentState);
   const v_da90dc = v_e662ae(false);
-  const { enabled: v_d20c84 = true } = v_b36f96;
+  const { enabled: v_d20c84 = true, otaEnabled: v_452bb7 = false } = v_b36f96;
 
   const [v_24a76a, v_9dec4b] = v_5ab095(false);
   const [v_a63fde, v_6306c3] = v_5ab095(0);
@@ -73,7 +75,7 @@ export function v_96a538(v_b36f96 = {}) {
 
     console.log(`[OTA] 업데이트 체크 결과: OTA(${v_cf418f.update_available}), Store(${v_a73fa2.update_available})`);
 
-    if (v_cf418f.update_available && v_cf418f.force_update && v_cf418f.bundle_url) {
+    if (v_452bb7 && v_cf418f.update_available && v_cf418f.force_update && v_cf418f.bundle_url) {
       console.log('[OTA] OTA 강제 업데이트 시작');
       await v_690a8a(v_cf418f, true);
       return;
@@ -91,7 +93,7 @@ export function v_96a538(v_b36f96 = {}) {
       return;
     }
 
-    if (v_cf418f.update_available && v_cf418f.bundle_url) {
+    if (v_452bb7 && v_cf418f.update_available && v_cf418f.bundle_url) {
       console.log('[OTA] OTA 선택 업데이트 안내');
       v_03e392.alert(
         v_8d41d7('common.notification') || 'Update Available',
