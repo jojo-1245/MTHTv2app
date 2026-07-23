@@ -91,6 +91,12 @@
         "projectId": "b0a6287a-1e8b-41ef-8233-3e15da97212d"
       }
     },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/b0a6287a-1e8b-41ef-8233-3e15da97212d",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
     "plugins": [
       "./plugins/withKakaoRepo.js",
       "expo-localization",

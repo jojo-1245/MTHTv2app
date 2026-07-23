@@ -49,7 +49,7 @@ const PERMISSION_ITEMS: { type: v_9613bb; iconName: keyof typeof v_dec439.glyphM
 const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc, goBack: v_c7ac57 } = v_a0daa8();
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
-  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538();
+  const { isUpdating: v_24a76a, progress: v_a63fde } = v_96a538({ otaEnabled: false });
   const [v_106b0c, v_47daa9] = v_5ab095(false);
   const [v_264467, v_e882e2] = v_5ab095(false);
   const [v_94f165, v_f1704d] = v_5ab095(false);
