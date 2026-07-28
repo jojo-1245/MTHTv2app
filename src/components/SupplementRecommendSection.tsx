@@ -74,7 +74,7 @@ export default function v_6f3f7e({
             <TouchableOpacity
               style={v_d81136.button}
               disabled={v_683210}
-              onPress={() => v_99cd96(v_8c0b26.shopItemId)}
+              onPress={() => v_99cd96(v_8c0b26.shopItemId, { confirm: true })}
             >
               <Text style={v_d81136.buttonText}>{v_8d41d7('supplements.view_in_shop')}</Text>
             </TouchableOpacity>
