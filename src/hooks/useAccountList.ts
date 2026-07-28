@@ -71,6 +71,21 @@ export const v_9e8766 = () => {
           isCurrent: v_3de945?.visitorId === v_81e2ef.id,
         }));
 
+        if (v_3de945?.visitorId) {
+          const v_fa2ccb = `guest-${v_3de945.visitorId}`;
+          if (!v_29d9b2.some((v_779914) => v_779914.id === v_fa2ccb)) {
+            v_29d9b2.unshift({
+              id: v_fa2ccb,
+              name: v_3de945.name || v_8d41d7('sub_account.relationship.guest', '손님'),
+              phone: v_3de945.phone,
+              visitorId: v_3de945.visitorId,
+              lastVisitAt: null,
+              recordCount: 0,
+              isCurrent: true,
+            });
+          }
+        }
+
         v_d690d0(v_29d9b2);
 
         if (v_3de945?.visitorId) {
