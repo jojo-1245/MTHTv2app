@@ -2061,6 +2061,7 @@
     "empty": "No products to show",
     "error_title": "Shop connection failed",
     "error_desc": "Please try again in a moment",
+    "refresh": "Refresh",
     "payment": {
       "title": "Shop payment",
       "order_id": "Order ID",
