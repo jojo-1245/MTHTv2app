@@ -41,7 +41,7 @@ describe('SupplementRecommendSection', () => {
     const { getByText: v_2b0f8a, getAllByText: v_221148 } = v_624657(<SupplementRecommendSection source="checkup" recordId={5} />);
     await v_81e49f(() => v_2b0f8a('카테킨&바나바'));
     v_77aa68.press(v_221148('supplements.view_in_shop')[0]);
-    expect(v_83d350).toHaveBeenCalledWith('2026062420');
+    expect(v_83d350).toHaveBeenCalledWith('2026062420', { confirm: true });
   });
 
   it('요청 실패 시 null(조용히 숨김)', async () => {

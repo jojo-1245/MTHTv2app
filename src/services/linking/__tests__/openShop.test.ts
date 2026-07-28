@@ -81,4 +81,32 @@ describe('openShopProduct', () => {
     const v_246950 = (v_2c8bdd.openBrowserAsync as jest.Mock).mock.calls[0][0];
     expect(v_246950).toContain(encodeURIComponent('/oth-path'));
   });
+  it('confirm:true 이고 취소하면 브라우저를 열지 않는다', async () => {
+    (v_03e392.alert as jest.Mock).mockImplementation((v_d53ff0, v_413567, v_3d694a) => {
+      const v_5df3e0 = v_3d694a.find((v_148ff6) => v_148ff6.style === 'cancel');
+      v_5df3e0.onPress();
+    });
+    const v_3ed4c3 = await v_99cd96('1001', { confirm: true });
+    expect(v_3ed4c3).toBe(false);
+    expect(v_f96be4).not.toHaveBeenCalled();
+    expect(v_2c8bdd.openBrowserAsync).not.toHaveBeenCalled();
+    expect(v_03e392.alert).toHaveBeenCalledWith(
+      'linking.shop_confirm_title',
+      'linking.shop_confirm_message',
+      expect.any(Array),
+      expect.any(Object),
+    );
+  });
+  it('confirm:true 이고 동의하면 SSO로 상품을 연다', async () => {
+    (v_03e392.alert as jest.Mock).mockImplementation((v_d53ff0, v_413567, v_3d694a) => {
+      const v_d02b59 = v_3d694a.find((v_148ff6) => v_148ff6.text === 'linking.shop_confirm_continue');
+      v_d02b59.onPress();
+    });
+    (v_f96be4 as jest.Mock).mockResolvedValue('t_abc');
+    (v_2c8bdd.openBrowserAsync as jest.Mock).mockResolvedValue({ type: 'opened' });
+    const v_3ed4c3 = await v_99cd96('1001', { confirm: true });
+    expect(v_3ed4c3).toBe(true);
+    const v_246950 = (v_2c8bdd.openBrowserAsync as jest.Mock).mock.calls[0][0];
+    expect(v_246950).toContain(encodeURIComponent('/oth-path?it_id=1001'));
+  });
 });

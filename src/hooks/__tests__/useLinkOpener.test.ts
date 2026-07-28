@@ -18,7 +18,7 @@ describe('useLinkOpener', () => {
     await v_be73a0(async () => {
       await v_43c42e.current.openShop('/x');
     });
-    expect(v_141151.openShop).toHaveBeenCalledWith('/x');
+    expect(v_141151.openShop).toHaveBeenCalledWith('/x', undefined);
     expect(v_43c42e.current.loading).toBe(false);
   });
 
@@ -26,8 +26,8 @@ describe('useLinkOpener', () => {
     (v_141151.openShopProduct as jest.Mock).mockResolvedValue(true);
     const { result: v_43c42e } = v_0da18b(() => v_ffe36d());
     await v_be73a0(async () => {
-      await v_43c42e.current.openShopProduct('1001');
+      await v_43c42e.current.openShopProduct('1001', { confirm: true });
     });
-    expect(v_141151.openShopProduct).toHaveBeenCalledWith('1001');
+    expect(v_141151.openShopProduct).toHaveBeenCalledWith('1001', { confirm: true });
   });
 });

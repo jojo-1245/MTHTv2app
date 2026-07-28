@@ -1904,7 +1904,10 @@
     "refresh": "Muat ulang"
   },
   "linking": {
-    "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti."
+    "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti.",
+    "shop_confirm_title": "Buka toko",
+    "shop_confirm_message": "Anda akan membuka toko MetaHint untuk membeli suplemen. Lanjutkan?",
+    "shop_confirm_continue": "Lanjutkan"
   },
   "supplements": {
     "section_title": "Suplemen yang direkomendasikan",
