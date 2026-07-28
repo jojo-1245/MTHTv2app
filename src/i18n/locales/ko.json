@@ -3092,6 +3092,7 @@
         "empty": "표시할 상품이 없어요",
         "error_title": "쇼핑몰 연결 실패",
         "error_desc": "잠시 후 다시 시도해 주세요",
+        "refresh": "새로고침",
         "payment": {
             "title": "쇼핑몰 결제",
             "order_id": "주문번호",
