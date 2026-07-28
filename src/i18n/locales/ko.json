@@ -3119,6 +3119,13 @@
         }
     },
     "linking": {
-        "open_failed": "링크를 열 수 없습니다. 잠시 후 다시 시도해 주세요."
+        "open_failed": "링크를 열 수 없습니다. 잠시 후 다시 시도해 주세요.",
+        "shop_confirm_title": "쇼핑몰로 이동",
+        "shop_confirm_message": "건강기능식품 구매를 위해 메타힌트 쇼핑몰로 이동합니다. 계속할까요?",
+        "shop_confirm_continue": "이동하기"
+    },
+    "supplements": {
+        "section_title": "추천 영양성분",
+        "view_in_shop": "쇼핑몰에서 보기"
     }
 }

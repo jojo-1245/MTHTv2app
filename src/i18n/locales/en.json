@@ -2088,6 +2088,13 @@
     }
   },
   "linking": {
-    "open_failed": "Couldn't open the link. Please try again later."
+    "open_failed": "Couldn't open the link. Please try again later.",
+    "shop_confirm_title": "Go to the shop",
+    "shop_confirm_message": "You'll leave the app to open the MetaHint shop and buy supplements. Continue?",
+    "shop_confirm_continue": "Continue"
+  },
+  "supplements": {
+    "section_title": "Recommended supplements",
+    "view_in_shop": "View in shop"
   }
 }

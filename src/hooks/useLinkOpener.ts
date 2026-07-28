@@ -3,6 +3,7 @@ import {
   v_5ab0fb,
   v_e184b5 as v_7ea0f8,
   v_99cd96 as v_be62cb,
+  type v_deb755,
 } from '../services/linking';
 
 export function v_ffe36d() {
@@ -22,11 +23,12 @@ export function v_ffe36d() {
   }, []);
 
   const v_e184b5 = v_de06a3(
-    (v_a448ad) => v_b704b8(() => v_7ea0f8(v_a448ad)),
+    (v_a448ad, options?: v_deb755) => v_b704b8(() => v_7ea0f8(v_a448ad, v_b36f96)),
     [v_b704b8],
   );
   const v_99cd96 = v_de06a3(
-    (v_6e55b1) => v_b704b8(() => v_be62cb(v_6e55b1)),
+    (v_6e55b1, options?: v_deb755) =>
+      v_b704b8(() => v_be62cb(v_6e55b1, v_b36f96)),
     [v_b704b8],
   );
 
