@@ -29,13 +29,9 @@ type Phase = 'form' | 'authPending' | 'result' | 'records';
 
 const v_280029 = [
   { label: '카카오톡', value: '1' },
-  { label: '페이코', value: '2' },
   { label: '삼성패스', value: '3' },
-  { label: 'KB모바일', value: '4' },
   { label: '네이버', value: '6' },
-  { label: '신한인증서', value: '7' },
   { label: '토스', value: '8' },
-  { label: '하나인증서', value: '9' },
 ];
 
 type Props = v_432191<v_8ad91b, 'CheckupNhis'>;
