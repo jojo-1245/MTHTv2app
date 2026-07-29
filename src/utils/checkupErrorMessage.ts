@@ -8,6 +8,8 @@ export function v_b724a0(
     case 'CF-09002':
     case 'CF-00003':
       return '일시적인 연동 오류입니다. 잠시 후 다시 시도하거나 고객센터에 문의해 주세요.';
+    case 'CF-13000':
+      return '입력하신 정보와 CODEF 등록 정보가 일치하지 않습니다. 생년월일/이름/휴대폰번호를 다시 확인해 주세요.';
     case 'CF-00017':
       return '일시적인 연동 오류입니다. 고객센터에 문의해 주세요.';
     case 'CF-NETWORK':
