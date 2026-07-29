@@ -15,6 +15,11 @@ import v_6f3f7e from '../../components/SupplementRecommendSection';
 import { v_a0daa8 } from '../../navigation';
 import { v_15baf2, v_b67103, v_ff5546 } from '../../services';
 import type { v_84adce, v_e86309 } from '../../services/codefApi';
+import {
+  v_b724a0,
+  v_ae5f46,
+  v_4e2e5d,
+} from '../../utils/checkupErrorMessage';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import type { v_8ad91b } from '../../navigation';
@@ -78,8 +83,8 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   }, [v_ab4803]);
 
   const v_cfb0b1 = async () => {
-    if (!v_f08a5e || !/^\d{6}$/.test(v_598ded) || !/^01\d{8,9}$/.test(v_f1c488) || !v_e38ca2) {
-      v_03e392.alert('입력 확인', '이름·생년월일(6자리)·휴대폰·인증사를 모두 확인해주세요.');
+    if (!v_f08a5e || !/^\d{8}$/.test(v_598ded) || !/^01\d{8,9}$/.test(v_f1c488) || !v_e38ca2) {
+      v_03e392.alert('입력 확인', '이름·생년월일(YYYYMMDD 8자리)·휴대폰·인증사를 모두 확인해주세요.');
       return;
     }
     v_34a50a(true);
@@ -94,7 +99,8 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         v_ae4844('result');
       }
     } catch (v_9e86fd) {
-      v_03e392.alert('오류', v_9e86fd?.response?.data?.message ?? v_9e86fd?.message ?? '요청 실패');
+      const v_c99bd2 = v_4e2e5d(v_9e86fd);
+      v_03e392.alert('오류', v_b724a0(v_c99bd2));
     } finally {
       v_34a50a(false);
     }
@@ -108,8 +114,18 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       v_fa923c(v_cb35cb.items ?? []);
       v_db9949(v_28c823(v_cb35cb));
       v_ae4844('result');
+      if (!v_cb35cb.items?.length) {
+        v_03e392.alert('안내', v_ae5f46());
+      }
     } catch (v_9e86fd) {
-      v_03e392.alert('인증 미완료', '폰에서 인증을 완료한 뒤 다시 시도해주세요.');
+      const v_c99bd2 = v_4e2e5d(v_9e86fd);
+      v_03e392.alert(
+        v_c99bd2 === 'TIMEOUT' ? '시간 초과' : '인증 확인',
+        v_b724a0(
+          v_c99bd2,
+          '폰에서 인증을 완료한 뒤 다시 시도해주세요.',
+        ),
+      );
     } finally {
       v_34a50a(false);
     }
@@ -139,11 +155,11 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                 onChangeText={v_bcbad6}
               />
               <TextField
-                label="생년월일 (YYMMDD)"
+                label="생년월일 (YYYYMMDD)"
                 value={v_598ded}
                 onChangeText={v_20e43d}
                 keyboardType="number-pad"
-                maxLength={6}
+                maxLength={8}
               />
               <TextField
                 label="휴대폰번호"
@@ -187,13 +203,25 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
             <View style={v_d81136.center}>
               <ActivityIndicator size="large" color={v_1bfbd0.buttonPrimary} />
               <Text style={v_d81136.guide}>
-                {'선택한 인증 앱에서 인증을 완료해주세요.\n완료 후 아래 버튼을 눌러주세요.'}
+                {'선택한 인증 앱에서 인증을 완료해주세요.\n완료 후 아래 버튼을 눌러주세요.\n(최대 약 3분까지 대기할 수 있습니다)'}
               </Text>
               <PrimaryButton
                 title={v_683210 ? '확인 중...' : '인증 완료했어요'}
                 onPress={v_b25ffb}
                 disabled={v_683210}
               />
+              <TouchableOpacity
+                style={{ marginTop: 16, padding: 12 }}
+                onPress={() => {
+                  v_7b5f10(null);
+                  v_ae4844('form');
+                }}
+                disabled={v_683210}
+              >
+                <Text style={{ color: v_1bfbd0.secondaryText, textAlign: 'center' }}>
+                  취소하고 다시 입력
+                </Text>
+              </TouchableOpacity>
             </View>
           )}
 

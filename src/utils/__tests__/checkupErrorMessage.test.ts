@@ -1,0 +1,25 @@
+import { v_b724a0, v_ae5f46, v_4e2e5d } from '../checkupErrorMessage';
+
+describe('checkupErrorMessage', () => {
+  it('CF-09002는 연동 오류 안내', () => {
+    expect(v_b724a0('CF-09002')).toContain('연동 오류');
+  });
+  it('TIMEOUT은 대기 초과 안내', () => {
+    expect(v_b724a0('TIMEOUT')).toContain('초과');
+  });
+  it('빈 결과 안내', () => {
+    expect(v_ae5f46()).toContain('기록이 없습니다');
+  });
+  it('axios timeout 코드 추출', () => {
+    expect(v_4e2e5d({ code: 'ECONNABORTED', message: 'timeout of 180000ms exceeded' })).toBe(
+      'TIMEOUT',
+    );
+  });
+  it('details.code 추출', () => {
+    expect(
+      v_4e2e5d({
+        response: { data: { error: { details: { code: 'CF-09002' } } } },
+      }),
+    ).toBe('CF-09002');
+  });
+});

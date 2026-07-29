@@ -6,7 +6,7 @@ import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 
-const v_8a74cb = 60000;  
+const v_8a74cb = 180000;  
 
 export interface CheckupInput {
     userName: string;
@@ -95,7 +95,7 @@ export async function v_15baf2(v_bbda62): Promise<RequestCheckupResult> {
     if (__DEV__) {
         console.log('[codefApi] requestCheckup 요청:', {
             userName: v_bbda62.userName,
-            birthDate: v_bbda62.birthDate,
+            birthDate: v_bbda62.birthDate ? `${v_bbda62.birthDate.slice(0, 2)}******` : '',
             provider: v_bbda62.provider,
             hasSubAccountId: !!v_bbda62.subAccountId,
         });
