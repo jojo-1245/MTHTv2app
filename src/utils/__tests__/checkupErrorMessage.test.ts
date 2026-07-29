@@ -7,6 +7,9 @@ describe('checkupErrorMessage', () => {
   it('TIMEOUT은 대기 초과 안내', () => {
     expect(v_b724a0('TIMEOUT')).toContain('초과');
   });
+  it('CF-13000은 입력정보 불일치 안내', () => {
+    expect(v_b724a0('CF-13000')).toContain('일치');
+  });
   it('빈 결과 안내', () => {
     expect(v_ae5f46()).toContain('기록이 없습니다');
   });
