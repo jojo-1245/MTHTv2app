@@ -58,7 +58,7 @@ export interface RequestCheckupResult {
 }
 
 export interface ApproveCheckupResult {
-    status: 'done';
+    status: 'done' | 'pending';
     saved: number;
     items: any[];
 }

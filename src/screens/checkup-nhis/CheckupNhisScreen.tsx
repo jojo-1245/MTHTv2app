@@ -1,9 +1,10 @@
-import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_de06a3, v_c4deb2, v_e662ae, v_5ab095 } from 'bapkr';
 import {
   v_3094a2,
   v_19b633,
   v_39a996,
   v_03e392,
+  v_6b5698,
   v_472849,
   v_122070,
   v_4623af,
@@ -31,7 +32,6 @@ const v_280029 = [
   { label: '페이코', value: '2' },
   { label: '삼성패스', value: '3' },
   { label: 'KB모바일', value: '4' },
-  { label: '통신사 PASS', value: '5' },
   { label: '네이버', value: '6' },
   { label: '신한인증서', value: '7' },
   { label: '토스', value: '8' },
@@ -100,17 +100,36 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       }
     } catch (v_9e86fd) {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
-      v_03e392.alert('오류', v_b724a0(v_c99bd2));
+      const v_badeaf = v_b724a0(v_c99bd2);
+      v_03e392.alert(
+        '오류',
+        __DEV__ ? `${v_badeaf}\n(CODE=${v_c99bd2 || 'unknown'})` : v_badeaf,
+      );
     } finally {
       v_34a50a(false);
     }
   };
 
-  const v_b25ffb = async () => {
-    if (!v_ff38f8) return;
+  const v_0aa733 = v_e662ae(false);
+
+  const v_b25ffb = v_de06a3(async () => {
+    if (!v_ff38f8 || v_0aa733.current) return;
+    v_0aa733.current = true;
     v_34a50a(true);
     try {
-      const v_cb35cb = await v_b67103(v_ff38f8, { userName: v_f08a5e, birthDate: v_598ded, phoneNo: v_f1c488, provider: v_e38ca2 });
+      const v_7bc42a = 10;
+      const v_f839bb = 5000;
+      let r: Awaited<ReturnType<typeof v_b67103>> | null = null;
+      for (let v_ebec57 = 0; v_ebec57 < v_7bc42a; v_ebec57++) {
+        v_cb35cb = await v_b67103(v_ff38f8, { userName: v_f08a5e, birthDate: v_598ded, phoneNo: v_f1c488, provider: v_e38ca2 });
+        if (v_cb35cb.status === 'done') break;
+        if (__DEV__) console.log(`[codefApi] approve pending, retry ${v_ebec57 + 1}/${v_7bc42a}`);
+        await new Promise(v_8f00b9 => setTimeout(v_8f00b9, v_f839bb));
+      }
+      if (!v_cb35cb || v_cb35cb.status !== 'done') {
+        v_03e392.alert('인증 확인', '인증 대기 시간이 초과되었습니다. 다시 시도해 주세요.');
+        return;
+      }
       v_fa923c(v_cb35cb.items ?? []);
       v_db9949(v_28c823(v_cb35cb));
       v_ae4844('result');
@@ -121,15 +140,28 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
       v_03e392.alert(
         v_c99bd2 === 'TIMEOUT' ? '시간 초과' : '인증 확인',
-        v_b724a0(
-          v_c99bd2,
-          '폰에서 인증을 완료한 뒤 다시 시도해주세요.',
-        ),
+        (() => {
+          const v_badeaf = v_b724a0(
+            v_c99bd2,
+            '폰에서 인증을 완료한 뒤 다시 시도해주세요.',
+          );
+          return __DEV__ ? `${v_badeaf}\n(CODE=${v_c99bd2 || 'unknown'})` : v_badeaf;
+        })(),
       );
     } finally {
       v_34a50a(false);
+      v_0aa733.current = false;
     }
-  };
+  }, [v_ff38f8, v_f08a5e, v_598ded, v_f1c488, v_e38ca2]);
+
+  v_c4deb2(() => {
+    const v_1ae212 = v_6b5698.addEventListener('change', (v_a448ad) => {
+      if (v_a448ad === 'active' && v_ab4803 === 'authPending' && v_ff38f8 && !v_0aa733.current) {
+        v_b25ffb();
+      }
+    });
+    return () => v_1ae212.remove();
+  }, [v_ab4803, v_ff38f8, v_b25ffb]);
 
   return (
     <SafeView style={v_d81136.screen} showBottomBackground={false}>
