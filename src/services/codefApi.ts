@@ -13,6 +13,8 @@ export interface CheckupInput {
     birthDate: string;
     phoneNo: string;
     provider: string;
+
+    telecom?: string;
     subAccountId?: string;
 }
 
@@ -137,6 +139,7 @@ export async function v_b67103(v_ff38f8, v_bbda62, v_ee2acd): Promise<ApproveChe
             birthDate: v_bbda62.birthDate,
             phoneNo: v_bbda62.phoneNo,
             provider: v_bbda62.provider,
+            telecom: v_bbda62.telecom,
             twoWay: v_ff38f8,
             subAccountId: v_ee2acd,
         },
