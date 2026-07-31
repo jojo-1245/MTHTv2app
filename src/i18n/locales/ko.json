@@ -49,7 +49,9 @@
         "year_month": "{{year}}년 {{month}}월",
         "or": "또는",
         "coming_soon": "준비 중",
-        "coming_soon_message": "이 기능은 곧 제공될 예정입니다."
+        "coming_soon_message": "이 기능은 곧 제공될 예정입니다.",
+        "paste": "붙여넣기",
+        "done": "완료"
     },
     "account_selector": {
         "title": "계정 선택",
@@ -72,7 +74,7 @@
         "select_relationship_placeholder": "관계 선택",
         "nickname": "닉네임",
         "enter_nickname_placeholder": "닉네임 입력",
-        "enter_nickname": "부계정 닉네임을 입력하세요",
+        "enter_nickname": "닉네임을 입력해주세요.",
         "enter_nickname_and_relationship": "부계정 닉네임과 관계를 입력하세요",
         "search_by_email": "이메일로 회원을 검색하세요",
         "enter_email": "이메일 입력",
@@ -96,7 +98,6 @@
         "otp_invalid": "인증 코드가 올바르지 않습니다.",
         "otp_verification_failed": "인증 실패",
         "member_not_found": "회원 정보를 찾을 수 없습니다.",
-        "enter_nickname": "닉네임을 입력해주세요.",
         "select_relationship": "관계를 선택해주세요.",
         "enter_all_info": "모든 정보를 입력해주세요.",
         "link_success": "부계정이 연결되었습니다.",
@@ -1852,7 +1853,7 @@
             "deposit_address": "입금 주소"
         },
         "address_required_title": "주소 필요",
-        "address_required_message": "바코드 스캔으로 수신자 주소를 입력해주세요.",
+        "address_required_message": "지갑 주소를 입력해주세요.",
         "reward_type": {
             "attendance": "출석 체크",
             "health_analysis": "건강 분석",
@@ -1911,7 +1912,6 @@
         "gas_estimate_failed_message": "가스비를 계산하는 중 오류가 발생했습니다.",
         "amount_invalid_title": "수량 오류",
         "amount_invalid_message": "유효한 수량을 입력해주세요.",
-        "address_required_message": "지갑 주소를 입력해주세요.",
         "tx_progress_title": "전송 중",
         "tx_sending_amount": "전송 금액",
         "tx_from": "보내는 주소",
@@ -1932,7 +1932,40 @@
         "tx_gas_fee": "사용 가스 / 수수료",
         "tx_block_number": "블록 번호",
         "tx_pending": "대기 중",
-        "tx_not_found": "최근 트랜잭션을 찾을 수 없습니다."
+        "tx_not_found": "최근 트랜잭션을 찾을 수 없습니다.",
+        "action_info": "지갑 정보",
+        "user_not_found": "사용자 정보를 찾을 수 없습니다.",
+        "info_guide_title": "지갑 안내",
+        "info_guide": "지갑 안내",
+        "info_guide_desc": "지갑 보안과 사용 방법",
+        "info_backup": "백업",
+        "info_backup_desc": "지갑을 안전하게 파일로 백업",
+        "info_restore": "복원",
+        "info_restore_desc": "백업 파일로 지갑 복원",
+        "info_guide_body": "이 지갑은 회원님만 사용할 수 있는 비수탁형 지갑입니다.\n\n• 결제 비밀번호(PIN)로 지갑을 보호합니다.\n• 개인키는 이 기기에만 안전하게 저장됩니다.\n• 기기를 바꾸거나 앱을 재설치하면 백업 파일로만 복구할 수 있어요.\n\n⚠️ 반드시 \"백업\"으로 백업 파일과 백업 비밀번호를 안전하게 보관하세요. 백업이 없으면 자산을 복구할 수 없습니다.",
+        "backup_err_pin": "결제 비밀번호 6자리를 입력하세요",
+        "backup_err_pass": "백업 비밀번호는 8자 이상이어야 합니다",
+        "backup_err_mismatch": "백업 비밀번호가 일치하지 않습니다",
+        "backup_desc": "결제 비밀번호와 백업 비밀번호로 지갑을 백업합니다. 백업 비밀번호는 복원 시 꼭 필요하니 잊지 마세요.",
+        "backup_pin_ph": "결제 비밀번호(6자리)",
+        "backup_pass_ph": "백업 비밀번호(8자 이상)",
+        "backup_pass2_ph": "백업 비밀번호 확인",
+        "backup_create": "백업 생성",
+        "backup_done": "백업이 생성됐어요. 파일로 저장하거나 복사해 안전하게 보관하세요.",
+        "backup_save_file": "파일로 저장/공유",
+        "backup_copy": "복사",
+        "backup_copied": "백업 코드를 복사했습니다. 안전한 곳에 보관하세요.",
+        "restore_err_code": "올바른 백업 코드를 붙여넣으세요",
+        "restore_err_pass": "백업 비밀번호를 입력하세요",
+        "restore_err_pin": "새 결제 비밀번호 6자리를 입력하세요",
+        "restore_err_pin_mismatch": "새 비밀번호가 일치하지 않습니다",
+        "restore_desc": "백업 코드와 백업할 때 설정한 비밀번호로 지갑을 복원합니다. 비밀번호를 잊으면 복원이 불가능합니다.",
+        "restore_code_ph": "백업 코드(bv2:...) 붙여넣기",
+        "restore_pass_ph": "백업 비밀번호",
+        "restore_pin_ph": "새 결제 비밀번호(6자리)",
+        "restore_pin2_ph": "새 비밀번호 확인",
+        "restore_now": "복원하기",
+        "restore_done": "지갑을 복원했어요. 이제 새 비밀번호로 사용할 수 있어요."
     },
     "my_info_faq": {
         "title": "자주 묻는 질문",
@@ -3127,5 +3160,15 @@
     "supplements": {
         "section_title": "추천 영양성분",
         "view_in_shop": "쇼핑몰에서 보기"
+    },
+    "walletV2Pin": {
+        "title_enter": "지갑 보호 PIN 설정",
+        "title_confirm": "비밀번호 확인",
+        "desc_enter": "지갑 보호를 위한 6자리 숫자를 설정하세요.",
+        "desc_confirm": "같은 비밀번호를 한 번 더 입력하세요.",
+        "err_format": "6자리 숫자를 입력하세요",
+        "err_mismatch": "비밀번호가 일치하지 않습니다",
+        "err_setup": "설정에 실패했습니다",
+        "err_unknown": "오류가 발생했습니다"
     }
 }

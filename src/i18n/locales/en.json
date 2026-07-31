@@ -49,7 +49,9 @@
     "year_month": "{{month}} {{year}}",
     "or": "OR",
     "coming_soon": "Coming Soon",
-    "coming_soon_message": "This feature will be available soon."
+    "coming_soon_message": "This feature will be available soon.",
+    "paste": "Paste",
+    "done": "Done"
   },
   "account_selector": {
     "title": "Account Selection",
@@ -71,7 +73,7 @@
     "select_relationship_placeholder": "Select Relationship",
     "nickname": "Nickname",
     "enter_nickname_placeholder": "Enter Nickname",
-    "enter_nickname": "Enter sub-account nickname",
+    "enter_nickname": "Please enter a nickname.",
     "enter_nickname_and_relationship": "Enter sub-account nickname and relationship",
     "search_by_email": "Search member by email",
     "enter_email": "Enter Email",
@@ -95,7 +97,6 @@
     "otp_invalid": "Invalid verification code.",
     "otp_verification_failed": "Verification Failed",
     "member_not_found": "Member information not found.",
-    "enter_nickname": "Please enter a nickname.",
     "select_relationship": "Please select a relationship.",
     "enter_all_info": "Please enter all information.",
     "link_success": "Sub-account has been linked.",
@@ -272,7 +273,7 @@
     "comprehensive_health_check": "Comprehensive Health Check",
     "nhis_checkup": "Health Checkup",
     "nhis_checkup_desc": "View your NHIS health checkup results",
-    "skin_analysis": "Skin Analysis",
+    "skin_analysis": "Analysis",
     "ai_skin_diagnosis": "AI Skin Diagnosis",
     "ai_skin_diagnosis_ios": "AI Skin Analysis",
     "start_btn": "Start →",
@@ -352,7 +353,6 @@
     "bottom_nav_myinfo": "My Info",
     "popular_questions": "Popular Questions",
     "my_health_status": "My Health Status",
-    "skin_analysis": "Analysis",
     "health_analysis": "Analysis",
     "health_index": "Health Index",
     "before_measurement": "Before measurement",
@@ -516,13 +516,13 @@
     "success_title": "Sign Up Complete",
     "success_message": "Please proceed with email verification.",
     "success_message_social": "You have signed up. Tap social login to sign in.",
-        "social_email_locked": "The social account email cannot be changed.",
-        "region_all": "All Regions",
-        "terms_of_service": "Terms of Service",
-        "privacy_policy": "Privacy Policy",
-        "terms_middle": " and ",
-        "terms_suffix": " agreement.",
-        "policy_load_error": "Failed to load content.",
+    "social_email_locked": "The social account email cannot be changed.",
+    "region_all": "All Regions",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "terms_middle": " and ",
+    "terms_suffix": " agreement.",
+    "policy_load_error": "Failed to load content.",
     "error_title": "Sign Up Failed",
     "error_validation": "Please check your input information.",
     "error_unknown": "An unknown error occurred during sign up."
@@ -805,7 +805,7 @@
     "subtitle": "AI Health Advisor",
     "subtitle_ios": "AI Wellness Assistant",
     "wellness_banner": "For general wellness information only — not a medical diagnosis. Please consult a doctor before making any medical decisions.",
-    "placeholder": "Enter health-related questions...",
+    "placeholder": "Search for health information",
     "account_default": "Kim Geon-gang",
     "sample_products": {
       "product_1_name": "Jongkundang Health I-Care Calcium Up Plus",
@@ -941,7 +941,6 @@
       "supplements": "Nutritional supplements",
       "sleeping_pills": "Sleeping pills"
     },
-    "placeholder": "Search for health information",
     "ai_preparing": "I'm preparing an answer...",
     "view_product": "View Product",
     "health_info_title": "Load Health Info",
@@ -1394,7 +1393,6 @@
       }
     },
     "sdk_alerts": {
-      "solution_prefix": "Solution:",
       "4": {
         "title": "Device Error",
         "reason": "A session was requested to run while the device is in Low Power mode.",
@@ -1520,6 +1518,26 @@
         "reason": "License sync is required.",
         "solution": "Connect to the internet and try again."
       },
+      "3505": {
+        "title": "Measurement Warning",
+        "reason": "Camera FPS is degraded and may affect measurement quality.",
+        "solution": "Follow measurement best practices and try again."
+      },
+      "3506": {
+        "title": "Measurement Warning",
+        "reason": "A frame was received in incorrect timestamp order.",
+        "solution": "You can proceed with the measurement."
+      },
+      "4505": {
+        "title": "Measurement Warning",
+        "reason": "Blood pressure calculation failed.",
+        "solution": "BP results will be omitted for this measurement. Try again."
+      },
+      "4506": {
+        "title": "Measurement Warning",
+        "reason": "No vital signs were processed.",
+        "solution": "Check license/internet status and try again."
+      },
       "6004": {
         "title": "Session Error",
         "reason": "Start was called when session is not READY.",
@@ -1580,26 +1598,6 @@
         "reason": "Unsupported user height was provided.",
         "solution": "Use 130–230 cm or omit height."
       },
-      "3505": {
-        "title": "Measurement Warning",
-        "reason": "Camera FPS is degraded and may affect measurement quality.",
-        "solution": "Follow measurement best practices and try again."
-      },
-      "3506": {
-        "title": "Measurement Warning",
-        "reason": "A frame was received in incorrect timestamp order.",
-        "solution": "You can proceed with the measurement."
-      },
-      "4505": {
-        "title": "Measurement Warning",
-        "reason": "Blood pressure calculation failed.",
-        "solution": "BP results will be omitted for this measurement. Try again."
-      },
-      "4506": {
-        "title": "Measurement Warning",
-        "reason": "No vital signs were processed.",
-        "solution": "Check license/internet status and try again."
-      },
       "8003": {
         "title": "Measurement Error",
         "reason": "Measurement could not be completed. Please ensure your face is centered and well-lit, then try again.",
@@ -1644,7 +1642,8 @@
         "title": "Measurement Warning",
         "reason": "Data gap detected in the stream.",
         "solution": "Ensure a stable connection and try again."
-      }
+      },
+      "solution_prefix": "Solution:"
     }
   },
   "my_info_edit": {
@@ -1830,7 +1829,7 @@
       "deposit_address": "Deposit Address"
     },
     "address_required_title": "Address Required",
-    "address_required_message": "Please enter the recipient address by scanning the barcode.",
+    "address_required_message": "Please enter a wallet address.",
     "reward_type": {
       "attendance": "Attendance Check",
       "health_analysis": "Health Analysis",
@@ -1889,7 +1888,6 @@
     "gas_estimate_failed_message": "An error occurred while estimating the gas fee.",
     "amount_invalid_title": "Invalid Amount",
     "amount_invalid_message": "Please enter a valid amount.",
-    "address_required_message": "Please enter a wallet address.",
     "tx_progress_title": "Sending",
     "tx_sending_amount": "Sending Amount",
     "tx_from": "From",
@@ -1910,7 +1908,40 @@
     "tx_gas_fee": "Used Gas / Fee",
     "tx_block_number": "Block Number",
     "tx_pending": "Pending",
-    "tx_not_found": "No recent transaction found."
+    "tx_not_found": "No recent transaction found.",
+    "action_info": "Wallet Info",
+    "user_not_found": "User info not found.",
+    "info_guide_title": "Wallet Guide",
+    "info_guide": "Wallet Guide",
+    "info_guide_desc": "Wallet security & how to use",
+    "info_backup": "Backup",
+    "info_backup_desc": "Safely back up your wallet to a file",
+    "info_restore": "Restore",
+    "info_restore_desc": "Restore wallet from a backup file",
+    "info_guide_body": "This is a non-custodial wallet that only you can use.\n\n• Protected by your payment PIN.\n• Your private key is stored securely on this device only.\n• If you change devices or reinstall, you can only recover with a backup file.\n\n⚠️ Be sure to use \"Backup\" and keep your backup file and backup password safe. Without a backup, your assets cannot be recovered.",
+    "backup_err_pin": "Enter your 6-digit payment PIN",
+    "backup_err_pass": "Backup password must be at least 8 characters",
+    "backup_err_mismatch": "Backup passwords do not match",
+    "backup_desc": "Back up your wallet with your payment PIN and a backup password. You'll need the backup password to restore, so don't forget it.",
+    "backup_pin_ph": "Payment PIN (6 digits)",
+    "backup_pass_ph": "Backup password (8+ chars)",
+    "backup_pass2_ph": "Confirm backup password",
+    "backup_create": "Create backup",
+    "backup_done": "Backup created. Save it as a file or copy it and keep it safe.",
+    "backup_save_file": "Save/share as file",
+    "backup_copy": "Copy",
+    "backup_copied": "Backup code copied. Keep it somewhere safe.",
+    "restore_err_code": "Paste a valid backup code",
+    "restore_err_pass": "Enter the backup password",
+    "restore_err_pin": "Enter a new 6-digit payment PIN",
+    "restore_err_pin_mismatch": "New PINs do not match",
+    "restore_desc": "Restore your wallet with the backup code and the password you set when backing up. If you forget the password, restore is impossible.",
+    "restore_code_ph": "Paste backup code (bv2:...)",
+    "restore_pass_ph": "Backup password",
+    "restore_pin_ph": "New payment PIN (6 digits)",
+    "restore_pin2_ph": "Confirm new PIN",
+    "restore_now": "Restore",
+    "restore_done": "Wallet restored. You can now use it with your new PIN."
   },
   "my_info_faq": {
     "title": "Frequently Asked Questions",
@@ -2071,20 +2102,20 @@
       "decline": "Decline",
       "success": "Payment completed.",
       "declined": "Payment declined.",
-            "error_generic": "Payment failed.",
-            "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
-            "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
-            "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
-            "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
-            "error_declined_status": "This order was already declined. Please start payment again in the shop.",
-            "error_expired": "The approval window expired. Please pay again from the shop.",
-            "error_timeout": "Approval is taking longer than usual. Check the shop payment page shortly.",
-            "processing": "Processing on-chain payment. Please wait…",
-            "error_failed_retry": "Transfer failed. Tap Approve again to retry.",
-            "error_failed_shop": "Payment failed. Please retry from the shop payment page.",
-            "return_shop_hint": "Tap the button below to view your shop order. (The previous browser tab may have closed.)",
-            "view_order": "View shop order",
-            "open_shop_payment": "Open shop payment page"
+      "error_generic": "Payment failed.",
+      "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
+      "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
+      "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
+      "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
+      "error_declined_status": "This order was already declined. Please start payment again in the shop.",
+      "error_expired": "The approval window expired. Please pay again from the shop.",
+      "error_timeout": "Approval is taking longer than usual. Check the shop payment page shortly.",
+      "processing": "Processing on-chain payment. Please wait…",
+      "error_failed_retry": "Transfer failed. Tap Approve again to retry.",
+      "error_failed_shop": "Payment failed. Please retry from the shop payment page.",
+      "return_shop_hint": "Tap the button below to view your shop order. (The previous browser tab may have closed.)",
+      "view_order": "View shop order",
+      "open_shop_payment": "Open shop payment page"
     }
   },
   "linking": {
@@ -2096,5 +2127,15 @@
   "supplements": {
     "section_title": "Recommended supplements",
     "view_in_shop": "View in shop"
+  },
+  "walletV2Pin": {
+    "title_enter": "Set wallet protection PIN",
+    "title_confirm": "Confirm PIN",
+    "desc_enter": "Set a 6-digit number to protect your wallet.",
+    "desc_confirm": "Enter the same PIN once more.",
+    "err_format": "Enter a 6-digit number",
+    "err_mismatch": "PINs do not match",
+    "err_setup": "Setup failed",
+    "err_unknown": "An error occurred"
   }
 }
