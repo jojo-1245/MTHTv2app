@@ -2136,6 +2136,8 @@
     "err_format": "Enter a 6-digit number",
     "err_mismatch": "PINs do not match",
     "err_setup": "Setup failed",
-    "err_unknown": "An error occurred"
+    "err_unknown": "An error occurred",
+    "prompt_title": "Enter payment PIN",
+    "prompt_desc": "Enter your 6-digit PIN to sign your transaction."
   }
 }
