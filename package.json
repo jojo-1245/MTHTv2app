@@ -39,6 +39,7 @@
     "fzljtilisignal-react-native-sdk": "file:FzljtiliSignal_ReactNative_SDK_5.11.4.tgz",
     "country-state-city": "^3.2.1",
     "crypto-js": "^4.2.0",
+    "ethers": "^6.17.0",
     "expo": "~54.0.31",
     "expo-apple-authentication": "~8.0.8",
     "expo-application": "~7.0.8",
