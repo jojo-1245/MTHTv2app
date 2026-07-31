@@ -3169,6 +3169,8 @@
         "err_format": "6자리 숫자를 입력하세요",
         "err_mismatch": "비밀번호가 일치하지 않습니다",
         "err_setup": "설정에 실패했습니다",
-        "err_unknown": "오류가 발생했습니다"
+        "err_unknown": "오류가 발생했습니다",
+        "prompt_title": "결제 비밀번호 입력",
+        "prompt_desc": "지갑 서명을 위해 6자리 비밀번호를 입력하세요."
     }
 }

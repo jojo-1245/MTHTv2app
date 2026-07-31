@@ -1953,6 +1953,8 @@
     "err_format": "Masukkan 6 digit angka",
     "err_mismatch": "PIN tidak cocok",
     "err_setup": "Pengaturan gagal",
-    "err_unknown": "Terjadi kesalahan"
+    "err_unknown": "Terjadi kesalahan",
+    "prompt_title": "Masukkan PIN pembayaran",
+    "prompt_desc": "Masukkan PIN 6 digit untuk menandatangani transaksi."
   }
 }
