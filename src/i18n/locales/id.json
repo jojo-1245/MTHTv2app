@@ -49,7 +49,9 @@
     "year_month": "{{month}} {{year}}",
     "or": "ATAU",
     "coming_soon": "Segera Hadir",
-    "coming_soon_message": "Fitur ini akan segera tersedia."
+    "coming_soon_message": "Fitur ini akan segera tersedia.",
+    "paste": "Tempel",
+    "done": "Selesai"
   },
   "account_selector": {
     "title": "Pilihan Akun",
@@ -70,7 +72,7 @@
     "select_relationship_placeholder": "Pilih Hubungan",
     "nickname": "Nama Panggilan",
     "enter_nickname_placeholder": "Masukkan Nama Panggilan",
-    "enter_nickname": "Masukkan nama panggilan sub-akun",
+    "enter_nickname": "Silakan masukkan nama panggilan.",
     "enter_nickname_and_relationship": "Masukkan nama panggilan dan hubungan sub-akun",
     "search_by_email": "Cari anggota berdasarkan email",
     "enter_email": "Masukkan Email",
@@ -94,7 +96,6 @@
     "otp_invalid": "Kode verifikasi tidak valid.",
     "otp_verification_failed": "Verifikasi Gagal",
     "member_not_found": "Informasi anggota tidak ditemukan.",
-    "enter_nickname": "Silakan masukkan nama panggilan.",
     "select_relationship": "Silakan pilih hubungan.",
     "enter_all_info": "Silakan masukkan semua informasi.",
     "link_success": "Sub-akun telah ditautkan.",
@@ -763,7 +764,7 @@
   "chat": {
     "title": "AI Hinti",
     "subtitle": "AI Penasihat Kesehatan",
-    "placeholder": "Masukkan pertanyaan terkait kesehatan...",
+    "placeholder": "Cari informasi kesehatan",
     "account_default": "Kim Geon-gang",
     "sample_products": {
       "product_1_name": "Jongkundang Health I-Care Calcium Up Plus",
@@ -891,7 +892,6 @@
       "supplements": "Suplemen nutrisi",
       "sleeping_pills": "Obat tidur"
     },
-    "placeholder": "Cari informasi kesehatan",
     "ai_preparing": "Sedang menyiapkan jawaban...",
     "view_product": "Lihat Produk",
     "health_info_title": "Muat Info Kesehatan",
@@ -1303,7 +1303,6 @@
       }
     },
     "sdk_alerts": {
-      "solution_prefix": "Solusi:",
       "4": {
         "title": "Kesalahan Perangkat",
         "reason": "Sesi diminta saat perangkat berada dalam mode hemat daya.",
@@ -1429,6 +1428,26 @@
         "reason": "Sinkronisasi lisensi diperlukan.",
         "solution": "Hubungkan ke internet lalu coba lagi."
       },
+      "3505": {
+        "title": "Peringatan Pengukuran",
+        "reason": "FPS kamera menurun dan dapat memengaruhi kualitas pengukuran.",
+        "solution": "Ikuti panduan pengukuran dan coba lagi."
+      },
+      "3506": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Frame diterima dengan urutan timestamp yang salah.",
+        "solution": "Anda bisa melanjutkan pengukuran."
+      },
+      "4505": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Perhitungan tekanan darah gagal.",
+        "solution": "Hasil tekanan darah akan dikecualikan. Coba lagi."
+      },
+      "4506": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Tidak ada vital sign yang diproses.",
+        "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
+      },
       "6004": {
         "title": "Kesalahan Sesi",
         "reason": "Start dipanggil saat sesi tidak READY.",
@@ -1489,26 +1508,6 @@
         "reason": "Tinggi badan pengguna tidak didukung.",
         "solution": "Gunakan 130–230 cm atau kosongkan."
       },
-      "3505": {
-        "title": "Peringatan Pengukuran",
-        "reason": "FPS kamera menurun dan dapat memengaruhi kualitas pengukuran.",
-        "solution": "Ikuti panduan pengukuran dan coba lagi."
-      },
-      "3506": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Frame diterima dengan urutan timestamp yang salah.",
-        "solution": "Anda bisa melanjutkan pengukuran."
-      },
-      "4505": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Perhitungan tekanan darah gagal.",
-        "solution": "Hasil tekanan darah akan dikecualikan. Coba lagi."
-      },
-      "4506": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Tidak ada vital sign yang diproses.",
-        "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
-      },
       "8003": {
         "title": "Kesalahan Pengukuran",
         "reason": "Pengukuran tidak dapat diselesaikan. Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi.",
@@ -1553,7 +1552,8 @@
         "title": "Peringatan Pengukuran",
         "reason": "Terdeteksi jeda data dalam stream.",
         "solution": "Pastikan koneksi stabil lalu coba lagi."
-      }
+      },
+      "solution_prefix": "Solusi:"
     }
   },
   "my_info_edit": {
@@ -1738,7 +1738,7 @@
       "deposit_address": "Alamat Setoran"
     },
     "address_required_title": "Alamat Diperlukan",
-    "address_required_message": "Silakan masukkan alamat penerima dengan memindai kode batang.",
+    "address_required_message": "Harap masukkan alamat dompet.",
     "reward_type": {
       "attendance": "Cek Kehadiran",
       "health_analysis": "Analisis Kesehatan",
@@ -1797,7 +1797,6 @@
     "gas_estimate_failed_message": "Terjadi kesalahan saat menghitung biaya gas.",
     "amount_invalid_title": "Jumlah Tidak Valid",
     "amount_invalid_message": "Harap masukkan jumlah yang valid.",
-    "address_required_message": "Harap masukkan alamat dompet.",
     "tx_progress_title": "Mengirim",
     "tx_sending_amount": "Jumlah Pengiriman",
     "tx_from": "Dari",
@@ -1818,7 +1817,40 @@
     "tx_gas_fee": "Gas Digunakan / Biaya",
     "tx_block_number": "Nomor Blok",
     "tx_pending": "Tertunda",
-    "tx_not_found": "Transaksi terbaru tidak ditemukan."
+    "tx_not_found": "Transaksi terbaru tidak ditemukan.",
+    "action_info": "Info Dompet",
+    "user_not_found": "Info pengguna tidak ditemukan.",
+    "info_guide_title": "Panduan Dompet",
+    "info_guide": "Panduan Dompet",
+    "info_guide_desc": "Keamanan & cara pakai dompet",
+    "info_backup": "Cadangkan",
+    "info_backup_desc": "Cadangkan dompet ke file dengan aman",
+    "info_restore": "Pulihkan",
+    "info_restore_desc": "Pulihkan dompet dari file cadangan",
+    "info_guide_body": "Ini adalah dompet non-kustodian yang hanya bisa Anda gunakan.\n\n• Dilindungi PIN pembayaran Anda.\n• Kunci privat disimpan aman hanya di perangkat ini.\n• Jika ganti perangkat atau instal ulang, pemulihan hanya lewat file cadangan.\n\n⚠️ Pastikan gunakan \"Cadangkan\" dan simpan file serta kata sandi cadangan dengan aman. Tanpa cadangan, aset tidak dapat dipulihkan.",
+    "backup_err_pin": "Masukkan PIN pembayaran 6 digit",
+    "backup_err_pass": "Kata sandi cadangan minimal 8 karakter",
+    "backup_err_mismatch": "Kata sandi cadangan tidak cocok",
+    "backup_desc": "Cadangkan dompet dengan PIN pembayaran dan kata sandi cadangan. Kata sandi cadangan diperlukan untuk memulihkan, jangan lupa.",
+    "backup_pin_ph": "PIN pembayaran (6 digit)",
+    "backup_pass_ph": "Kata sandi cadangan (8+ karakter)",
+    "backup_pass2_ph": "Konfirmasi kata sandi cadangan",
+    "backup_create": "Buat cadangan",
+    "backup_done": "Cadangan dibuat. Simpan sebagai file atau salin dan simpan dengan aman.",
+    "backup_save_file": "Simpan/bagikan sebagai file",
+    "backup_copy": "Salin",
+    "backup_copied": "Kode cadangan disalin. Simpan di tempat aman.",
+    "restore_err_code": "Tempel kode cadangan yang valid",
+    "restore_err_pass": "Masukkan kata sandi cadangan",
+    "restore_err_pin": "Masukkan PIN pembayaran baru 6 digit",
+    "restore_err_pin_mismatch": "PIN baru tidak cocok",
+    "restore_desc": "Pulihkan dompet dengan kode cadangan dan kata sandi saat mencadangkan. Jika lupa kata sandi, pemulihan tidak mungkin.",
+    "restore_code_ph": "Tempel kode cadangan (bv2:...)",
+    "restore_pass_ph": "Kata sandi cadangan",
+    "restore_pin_ph": "PIN pembayaran baru (6 digit)",
+    "restore_pin2_ph": "Konfirmasi PIN baru",
+    "restore_now": "Pulihkan",
+    "restore_done": "Dompet dipulihkan. Sekarang bisa dipakai dengan PIN baru."
   },
   "my_info_faq": {
     "title": "Pertanyaan yang Sering Diajukan",
@@ -1912,5 +1944,15 @@
   "supplements": {
     "section_title": "Suplemen yang direkomendasikan",
     "view_in_shop": "Lihat di toko"
+  },
+  "walletV2Pin": {
+    "title_enter": "Atur PIN perlindungan dompet",
+    "title_confirm": "Konfirmasi PIN",
+    "desc_enter": "Atur 6 digit angka untuk melindungi dompet.",
+    "desc_confirm": "Masukkan PIN yang sama sekali lagi.",
+    "err_format": "Masukkan 6 digit angka",
+    "err_mismatch": "PIN tidak cocok",
+    "err_setup": "Pengaturan gagal",
+    "err_unknown": "Terjadi kesalahan"
   }
 }
