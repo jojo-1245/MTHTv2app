@@ -1746,6 +1746,7 @@
     "copy_success_message": "PIN code has been copied to clipboard.",
     "kakao_share_button": "Share via KakaoTalk",
     "my_referrals_button": "View My Referrals",
+    "referral_sales_button": "View Referral Sales",
     "share_error": "Failed to share.",
     "share_message": "Become a HiNT Partner! Referral code: {{code}}\n{{link}}",
     "share_title": "HiNT Partner Referral"
@@ -1754,6 +1755,19 @@
     "title": "My Referrals",
     "total_count": "Total {{count}}",
     "empty": "No one has used your referral code yet."
+  },
+  "referral_sales": {
+    "title": "Referral Sales",
+    "total_count": "{{count}} orders",
+    "pending_commission": "Pending commission {{amount}}",
+    "empty": "No referral sales yet.\nCompleted deliveries from your referrals will appear here.",
+    "buyer_unknown": "Buyer",
+    "receipt": "Paid {{amount}}",
+    "role_referrer": "Direct",
+    "role_upline": "Upline",
+    "settle_on": "Settle {{date}}",
+    "status_pending": "Pending",
+    "status_settled": "Settled"
   },
   "my_info_email_auth": {
     "title": "Identity Verification",
