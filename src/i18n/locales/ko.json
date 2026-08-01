@@ -1787,7 +1787,8 @@
         "role_upline": "상위 분배",
         "settle_on": "정산 {{date}}",
         "status_pending": "정산 대기",
-        "status_settled": "정산 완료"
+        "status_settled": "정산 완료",
+        "load_more": "더보기"
     },
     "my_info_email_auth": {
         "title": "본인 인증",
