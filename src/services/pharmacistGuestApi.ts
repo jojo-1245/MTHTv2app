@@ -16,7 +16,7 @@ export type PharmacistGuestVerifyResult = {
   sessionId: string;
 };
 
-export async function v_cb0098(v_24baff): Promise<{ expiresIn: number; dev?: boolean; devCode?: string }> {
+export async function v_cb0098(v_24baff): Promise<{ expiresIn: number; dev?: boolean; devCode?: string; name?: string; phone?: string }> {
   const v_43c42e = await v_119173(v_24baff);
   if (__DEV__) {
     console.log('[pharmacistGuestApi] DEV OTP: 111111 (pharmacy dev mode)');
@@ -25,6 +25,8 @@ export async function v_cb0098(v_24baff): Promise<{ expiresIn: number; dev?: boo
     expiresIn: v_43c42e.expiresIn,
     dev: v_43c42e.dev,
     devCode: __DEV__ ? '111111' : undefined,
+    name: v_43c42e.name,
+    phone: v_43c42e.phone,
   };
 }
 
