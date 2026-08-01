@@ -8,6 +8,10 @@ export interface SupplementItem {
   imageUrl: string | null;
   reason: string;
   shopItemId: string | null;
+
+  label?: 'ai' | 'extra';
+
+  price?: number;
 }
 
 export interface RecommendResponse {
