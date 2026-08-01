@@ -206,6 +206,17 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                             {v_8d41d7('referral_share.my_referrals_button')}
                         </Text>
                     </TouchableOpacity>
+
+                    {}
+                    <TouchableOpacity
+                        style={v_d81136.myReferralsButton}
+                        onPress={() => v_c65f5d.navigate('ReferralSales')}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={v_d81136.myReferralsButtonText}>
+                            {v_8d41d7('referral_share.referral_sales_button')}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </SafeView>
         </MainLayout>
