@@ -3129,6 +3129,9 @@
         "view_in_shop": "쇼핑몰에서 보기",
         "label_ai": "AI 추천",
         "label_extra": "선택 추가",
-        "price_won": "원"
+        "price_won": "원",
+        "included": "포함",
+        "total_label": "합계",
+        "checkout_cta": "결제하기"
     }
 }
