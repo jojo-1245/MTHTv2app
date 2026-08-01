@@ -550,6 +550,45 @@ export async function getMyReferrals(): Promise<MyReferralsResponse> {
   }
 }
 
+export interface ReferralSaleItem {
+  order_id: string;
+  buyer_member_id: number;
+  buyer_name?: string | null;
+  buyer_email?: string | null;
+  od_receipt_price: number;
+  role: 'referrer' | 'upline';
+  rate_bp: number;
+  commission_krw: number;
+  delivered_at: string;
+  period_key: string;
+  settle_on: string;
+  status: string;
+}
+
+export interface ReferralSalesResponse {
+  sales: ReferralSaleItem[];
+  page: number;
+  limit: number;
+  total: number;
+  pending_commission_krw: number;
+}
+
+export async function getReferralSales(params?: {
+  page?: number;
+  limit?: number;
+}): Promise<ReferralSalesResponse> {
+  try {
+    const res = await apiClient.get<ApiResponse<ReferralSalesResponse>>(
+      '/oth-path',
+      { params: { page: params?.page ?? 1, limit: params?.limit ?? 50 } }
+    );
+    const data = res.data?.data ?? (res.data as unknown as ReferralSalesResponse);
+    return data;
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
 export interface UpdateProfilePayload {
   name: string;
   mobile?: string | null;
