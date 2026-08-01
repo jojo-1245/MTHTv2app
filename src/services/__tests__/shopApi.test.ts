@@ -65,9 +65,11 @@ describe('open* delegate to linking openShop', () => {
 });
 
 describe('priceToMtht', () => {
-  it('converts KRW to MTHT by rate', () => {
+  it('converts KRW to MTHT by rate (up to 3 decimals)', () => {
     expect(v_95c036(30000, 1000)).toBe('30');
     expect(v_95c036(13500, 1000)).toBe('13.5');
+    expect(v_95c036(1, 1000)).toBe('0.001');
+    expect(v_95c036(1234, 1000)).toBe('1.234');
   });
   it('returns null for missing/invalid rate or price', () => {
     expect(v_95c036(1000, null)).toBeNull();
