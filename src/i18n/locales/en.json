@@ -2098,6 +2098,9 @@
     "view_in_shop": "View in shop",
     "label_ai": "AI pick",
     "label_extra": "Add-on",
-    "price_won": " KRW"
+    "price_won": " KRW",
+    "included": "Included",
+    "total_label": "Total",
+    "checkout_cta": "Checkout"
   }
 }
