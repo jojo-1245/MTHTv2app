@@ -1676,7 +1676,8 @@
     "role_upline": "Upline",
     "settle_on": "Settlement {{date}}",
     "status_pending": "Menunggu",
-    "status_settled": "Selesai"
+    "status_settled": "Selesai",
+    "load_more": "Muat lebih"
   },
   "my_info_email_auth": {
     "title": "Verifikasi Identitas",

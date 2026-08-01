@@ -1767,7 +1767,8 @@
     "role_upline": "Upline",
     "settle_on": "Settle {{date}}",
     "status_pending": "Pending",
-    "status_settled": "Settled"
+    "status_settled": "Settled",
+    "load_more": "Load more"
   },
   "my_info_email_auth": {
     "title": "Identity Verification",
