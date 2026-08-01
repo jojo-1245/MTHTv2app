@@ -69,6 +69,8 @@ const v_28d629 = 6;
 const v_cad514 = v_af2c88(14, 16);
 
 function v_bb47b9(v_3b402b): string {
+
+  if (v_3b402b.includes('*')) return v_3b402b.trim();
   const v_e6d4a6 = v_3b402b.replace(/\D/g, '').slice(0, 11);
   if (v_e6d4a6.length <= 3) return v_e6d4a6;
   if (v_e6d4a6.length <= 7) return `${v_e6d4a6.slice(0, 3)} ${v_e6d4a6.slice(3)}`;
@@ -203,12 +205,13 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     }, [v_a933e0])
   );
 
-  const v_3fec5d = v_de06a3(async (v_bf301a, v_25b518) => {
+  const v_3fec5d = v_de06a3(async (v_24baff) => {
     v_9fbff7(true);
     try {
-      const v_43c42e = await v_cb0098({ name: v_bf301a, phone: v_25b518 });
-      v_318f24(v_bf301a);
-      v_fcce73(v_25b518);
+      const v_43c42e = await v_cb0098(v_24baff);
+
+      v_318f24((v_43c42e.name ?? v_24baff.name ?? '').trim());
+      v_fcce73((v_43c42e.phone ?? v_24baff.phone ?? '').replace(/\D/g, ''));
       v_f07cc4('');
       v_6a8302(v_43c42e.expiresIn ?? 180);
       v_fd7d1f('otp');
@@ -230,7 +233,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     if (!v_24baff?.prefillName || !v_24baff?.prefillPhone || !v_24baff.autoSendOtp) return;
     v_9cf8a5();
     v_fd7d1f('form');
-    v_3fec5d(v_24baff.prefillName, v_24baff.prefillPhone);
+    v_3fec5d({ name: v_24baff.prefillName, phone: v_24baff.prefillPhone });
     v_c65f5d.setParams({
       prefillName: undefined,
       prefillPhone: undefined,
@@ -246,13 +249,13 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
   ]);
 
   const v_2de427 = async () => {
-    await v_3fec5d(v_1833e7, v_d74a81);
+    await v_3fec5d({ name: v_1833e7, phone: v_d74a81 });
   };
 
   const v_a41235 = async (visitor: v_443c12, v_7b5712) => {
     v_cea649();
     v_9cf8a5();
-    await v_3fec5d(v_e769c6.name, v_e769c6.phone);
+    await v_3fec5d({ visitorId: v_e769c6.id });
     v_7b5712?.();
   };
 
