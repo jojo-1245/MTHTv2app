@@ -3126,6 +3126,9 @@
     },
     "supplements": {
         "section_title": "추천 영양성분",
-        "view_in_shop": "쇼핑몰에서 보기"
+        "view_in_shop": "쇼핑몰에서 보기",
+        "label_ai": "AI 추천",
+        "label_extra": "선택 추가",
+        "price_won": "원"
     }
 }
