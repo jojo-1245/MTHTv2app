@@ -11,6 +11,12 @@ function v_295d07(v_f71b56): string | undefined {
   return `${v_e4a763().GATEWAY}${v_f71b56}`;
 }
 
+function v_28895b(it: v_d74666, v_a56041): string {
+  if (v_23805a.shopItemId) return `${v_23805a.label ?? 'ai'}-${v_23805a.shopItemId}`;
+  if (v_23805a.gunkiId) return `gunki-${v_23805a.gunkiId}`;
+  return `idx-${v_a56041}`;
+}
+
 interface SupplementRecommendSectionProps {
   source: v_5a09f2;
   recordId: number | null;
@@ -54,32 +60,47 @@ export default function v_6f3f7e({
     <View style={v_d81136.section}>
       <Text style={v_d81136.title}>{v_8d41d7('supplements.section_title')}</Text>
       <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
+        scrollEnabled={false}
         data={v_4622b9}
-        keyExtractor={(v_23805a) => String(v_23805a.gunkiId)}
-        renderItem={({ item: v_8c0b26 }) => (
-          <View style={v_d81136.card}>
-            {v_295d07(v_8c0b26.imageUrl) ? (
-              <Image source={{ uri: v_295d07(v_8c0b26.imageUrl) }} style={v_d81136.image} />
-            ) : (
-              <View style={[v_d81136.image, v_d81136.imagePlaceholder]} />
-            )}
-            <Text style={v_d81136.name} numberOfLines={2}>
-              {v_8c0b26.productName}
-            </Text>
-            <Text style={v_d81136.reason} numberOfLines={3}>
-              {v_8c0b26.reason}
-            </Text>
-            <TouchableOpacity
-              style={v_d81136.button}
-              disabled={v_683210}
-              onPress={() => v_99cd96(v_8c0b26.shopItemId, { confirm: true })}
-            >
-              <Text style={v_d81136.buttonText}>{v_8d41d7('supplements.view_in_shop')}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        keyExtractor={(v_23805a, v_ebec57) => v_28895b(v_23805a, v_ebec57)}
+        renderItem={({ item: v_8c0b26 }) => {
+          const v_a98e33 = v_8c0b26.label === 'extra';
+          return (
+            <View style={v_d81136.row}>
+              {v_295d07(v_8c0b26.imageUrl) ? (
+                <Image source={{ uri: v_295d07(v_8c0b26.imageUrl) }} style={v_d81136.image} />
+              ) : (
+                <View style={[v_d81136.image, v_d81136.imagePlaceholder]} />
+              )}
+              <View style={v_d81136.body}>
+                <View style={v_d81136.badgeRow}>
+                  <Text style={[v_d81136.badge, v_a98e33 ? v_d81136.badgeExtra : v_d81136.badgeAi]}>
+                    {v_a98e33 ? v_8d41d7('supplements.label_extra') : v_8d41d7('supplements.label_ai')}
+                  </Text>
+                </View>
+                <Text style={v_d81136.name} numberOfLines={2}>
+                  {v_8c0b26.productName}
+                </Text>
+                <Text style={v_d81136.reason} numberOfLines={3}>
+                  {v_8c0b26.reason}
+                </Text>
+                {v_a98e33 && v_8c0b26.price != null && v_8c0b26.price > 0 ? (
+                  <Text style={v_d81136.price}>
+                    {Number(v_8c0b26.price).toLocaleString('ko-KR')}
+                    {v_8d41d7('supplements.price_won')}
+                  </Text>
+                ) : null}
+                <TouchableOpacity
+                  style={v_d81136.button}
+                  disabled={v_683210}
+                  onPress={() => v_99cd96(v_8c0b26.shopItemId, { confirm: true })}
+                >
+                  <Text style={v_d81136.buttonText}>{v_8d41d7('supplements.view_in_shop')}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        }}
       />
     </View>
   );
@@ -88,19 +109,32 @@ export default function v_6f3f7e({
 const v_d81136 = v_472849.create({
   section: { marginTop: 16, marginBottom: 8 },
   title: { fontSize: 16, fontWeight: '700', marginBottom: 10, paddingHorizontal: 4 },
-  card: {
-    width: 160,
-    marginRight: 12,
+  row: {
+    flexDirection: 'row',
+    marginBottom: 12,
     borderRadius: 12,
     backgroundColor: '#fff',
     padding: 10,
     borderWidth: 1,
     borderColor: '#eee',
   },
-  image: { width: '100%', height: 120, borderRadius: 8, backgroundColor: '#f4f4f4' },
+  image: { width: 88, height: 88, borderRadius: 8, backgroundColor: '#f4f4f4' },
   imagePlaceholder: { alignItems: 'center', justifyContent: 'center' },
-  name: { fontSize: 13, fontWeight: '600', marginTop: 8 },
-  reason: { fontSize: 11, color: '#666', marginTop: 4, minHeight: 44 },
-  button: { marginTop: 8, backgroundColor: '#111', borderRadius: 8, paddingVertical: 8, alignItems: 'center' },
+  body: { flex: 1, marginLeft: 12 },
+  badgeRow: { flexDirection: 'row', marginBottom: 4 },
+  badge: {
+    fontSize: 10,
+    fontWeight: '700',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  badgeAi: { backgroundColor: '#E8F0FE', color: '#1A56DB' },
+  badgeExtra: { backgroundColor: '#F3F4F6', color: '#374151' },
+  name: { fontSize: 14, fontWeight: '600' },
+  reason: { fontSize: 12, color: '#666', marginTop: 4 },
+  price: { fontSize: 13, fontWeight: '600', marginTop: 4, color: '#111' },
+  button: { marginTop: 8, alignSelf: 'flex-start', backgroundColor: '#111', borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12 },
   buttonText: { color: '#fff', fontSize: 12, fontWeight: '600' },
 });

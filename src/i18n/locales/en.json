@@ -2095,6 +2095,9 @@
   },
   "supplements": {
     "section_title": "Recommended supplements",
-    "view_in_shop": "View in shop"
+    "view_in_shop": "View in shop",
+    "label_ai": "AI pick",
+    "label_extra": "Add-on",
+    "price_won": " KRW"
   }
 }

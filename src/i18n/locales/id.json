@@ -1911,6 +1911,9 @@
   },
   "supplements": {
     "section_title": "Suplemen yang direkomendasikan",
-    "view_in_shop": "Lihat di toko"
+    "view_in_shop": "Lihat di toko",
+    "label_ai": "Rekomendasi AI",
+    "label_extra": "Tambahan pilihan",
+    "price_won": " won"
   }
 }
