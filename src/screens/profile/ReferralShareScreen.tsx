@@ -214,7 +214,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                         activeOpacity={0.7}
                     >
                         <Text style={v_d81136.myReferralsButtonText}>
-                            {v_8d41d7('referral_share.referral_sales_button')}
+                            {v_8d41d7('referral_share.referral_sales_button', '추천인 매출 내역 보기')}
                         </Text>
                     </TouchableOpacity>
                 </View>
