@@ -1927,7 +1927,9 @@
     "key_warn_msg": "Kunci privat akan ditampilkan sebagai teks biasa.\nPastikan tidak ada orang di sekitar yang dapat melihat layar Anda.",
     "key_shown_warn": "Kunci teks biasa ditampilkan. Waspadai tangkapan layar, perekaman, dan paparan.",
     "backup_secret_label": "Kunci privat",
-    "backup_copy_this_key": "Salin kunci ini"
+    "backup_copy_this_key": "Salin kunci ini",
+    "backup_pass_min": "Kata sandi harus minimal 8 karakter",
+    "backup_pass_mismatch": "Kata sandi tidak cocok"
   },
   "my_info_faq": {
     "title": "Pertanyaan yang Sering Diajukan",
