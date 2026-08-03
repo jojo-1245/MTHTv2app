@@ -664,6 +664,27 @@ export async function sendVerification(email: string, purpose: string = 'export_
   }
 }
 
+export async function verifyEmailCode(
+  email: string,
+  code: string,
+  purpose: string = 'export_private_key',
+): Promise<{ verified: boolean }> {
+  try {
+    const baseURL = process.env.EXPO_PUBLIC_GATEWAY || 'https://oth-path-c38c36.example.invalid';
+    const storedToken = await AsyncStorage.getItem(STORAGE_KEYS.authToken);
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (storedToken) headers['Authorization'] = `Bearer ${storedToken}`;
+    const res = await axios.post<ApiResponse<{ verified: boolean }>>(
+      `${baseURL}/oth-path`,
+      { email, code, purpose },
+      { headers }
+    );
+    return res.data?.data ?? (res.data as unknown as { verified: boolean });
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
 export async function clearAuthSession(): Promise<void> {
   clearCachedToken(); 
   clearPharmacistGuestSession();
