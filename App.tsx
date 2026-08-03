@@ -10,6 +10,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_4eac84 } from 'tdbilgxptaometuphydosyywsglhnlfgkfkzstthk';
 import v_2dc4c2, { v_ad9c5b } from 'bsiaazmwsayjedvznfsir';
 import { v_4fb2ad } from './src/navigation';
+import { v_4f2fc7 } from './src/components/AlertHost';
 import { v_843035 } from './src/constants';
 import { v_a2474a, v_e4a763 } from './src/utils/env';
 import { v_4b64f4, v_3ce7c2, v_89739b, v_545264 } from './src/context';
@@ -164,6 +165,7 @@ export default function v_6540c3() {
             <WalletProvider>
               <StepTrackingProvider>
                 <AppNavigator />
+                <AlertHost />
               </StepTrackingProvider>
             </WalletProvider>
           </PharmacistGuestProvider>

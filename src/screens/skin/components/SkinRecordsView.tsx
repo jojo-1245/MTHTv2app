@@ -8,8 +8,8 @@ import {
   v_aa7413,
   v_09d0e5,
   v_39a996,
-  v_03e392,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../../../components/AlertHost';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
@@ -581,7 +581,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   }, [v_b23082, v_884a36?.id, v_884a36, v_8d41d7, v_988815]);
 
   const v_a8b630 = (v_cbbd71) => {
-    v_03e392.alert(
+    v_889fad(
       v_8d41d7('health_records.delete_confirm_title', '기록 삭제'),
       v_8d41d7('health_records.delete_confirm_message', '이 측정 기록을 삭제하시겠습니까? 삭제된 기록은 복구할 수 없습니다.'),
       [
@@ -603,7 +603,7 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
               v_725ee9(false);
               v_b173ec(null);
             } catch {
-              v_03e392.alert(
+              v_889fad(
                 v_8d41d7('health_records.delete_error_title', '삭제 실패'),
                 v_8d41d7('health_records.delete_error_message', '기록 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
               );

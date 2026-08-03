@@ -6,7 +6,6 @@ import {
   v_79c4f2,
   v_4623af,
   v_122070,
-  v_03e392,
   v_e767d1,
   v_326be8,
   v_cf9c33,
@@ -25,6 +24,7 @@ import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_729608, v_556baf, v_5deec6, v_1c1837, v_d3705d } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_80b5f0 } from '../../components/SidebarMenu';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
@@ -299,7 +299,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         v_9b57fc('Wallet');
         break;
       case 'shop':
-        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.shop_preparing'));
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('chat.shop_preparing'));
         break;
       case 'chat':
 
@@ -313,7 +313,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       case 'health':
 
         if (v_9d6425()) {
-          v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('analysis.health_unavailable_desc'));
+          v_889fad(v_8d41d7('common.notification'), v_8d41d7('analysis.health_unavailable_desc'));
           break;
         }
         v_9b57fc('HealthAnalysis');
@@ -323,10 +323,10 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         break;
       case 'grandma':
       case 'grandpa':
-        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.family_preparing'));
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('chat.family_preparing'));
         break;
       case 'history':
-        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.history_preparing'));
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('chat.history_preparing'));
         break;
       case 'myinfo':
         v_9b57fc('MyInfo');
@@ -786,7 +786,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   };
 
   const v_4f73b9 = (v_01bee9) => {
-    v_03e392.alert(v_8d41d7('chat.view_product'), `${v_01bee9.name}`);
+    v_889fad(v_8d41d7('chat.view_product'), `${v_01bee9.name}`);
   };
 
   const v_07b9b4 = (v_2453ad) => {
@@ -1195,11 +1195,11 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                     <Text style={v_d81136.healthReportDoctorTitle}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_doctor_opinion_ios') : v_8d41d7('chat.health_report_doctor_opinion')}</Text>
                     <Text style={v_d81136.healthReportDoctorText}>{v_8d41d7('chat.health_report_doctor_text')}</Text>
                     <View style={v_d81136.healthReportButtons}>
-                      <TouchableOpacity style={v_d81136.healthReportButtonOutline} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_download_pdf'))} activeOpacity={0.8}>
+                      <TouchableOpacity style={v_d81136.healthReportButtonOutline} onPress={() => v_889fad(v_8d41d7('common.notification'), v_8d41d7('chat.health_report_download_pdf'))} activeOpacity={0.8}>
                         <Feather name="download" size={18} color="#615FFF" />
                         <Text style={v_d81136.healthReportButtonOutlineText}>{v_8d41d7('chat.health_report_download_pdf')}</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={v_d81136.healthReportButtonPrimary} onPress={() => v_03e392.alert(v_8d41d7('common.notification'), v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_recommend_hospital_ios') : v_8d41d7('chat.health_report_recommend_hospital'))} activeOpacity={0.8}>
+                      <TouchableOpacity style={v_d81136.healthReportButtonPrimary} onPress={() => v_889fad(v_8d41d7('common.notification'), v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_recommend_hospital_ios') : v_8d41d7('chat.health_report_recommend_hospital'))} activeOpacity={0.8}>
                         <LinearGradient colors={['#615FFF', '#AD46FF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={v_d81136.healthReportButtonGradient}>
                           <Text style={v_d81136.healthReportButtonPrimaryText}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.health_report_recommend_hospital_ios') : v_8d41d7('chat.health_report_recommend_hospital')}</Text>
                         </LinearGradient>
