@@ -525,7 +525,9 @@
     "policy_load_error": "Failed to load content.",
     "error_title": "Sign Up Failed",
     "error_validation": "Please check your input information.",
-    "error_unknown": "An unknown error occurred during sign up."
+    "error_unknown": "An unknown error occurred during sign up.",
+    "password_too_short": "Password must be at least 8 characters.",
+    "password_requirements": "Password must include both letters and numbers."
   },
   "profile": {
     "title": "My Info",
@@ -789,7 +791,9 @@
     "confirm_pwd_label": "Confirm new password",
     "confirm_pwd_placeholder": "repeat password",
     "btn_title": "Reset password",
-    "footer_text": "Already have an account? "
+    "footer_text": "Already have an account? ",
+    "mismatch": "Passwords do not match.",
+    "failed": "Failed to change password. Please try again."
   },
   "password_changed": {
     "title": "Password changed",

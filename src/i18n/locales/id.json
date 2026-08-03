@@ -492,7 +492,9 @@
     "policy_load_error": "Gagal memuat konten.",
     "error_title": "Pendaftaran Gagal",
     "error_validation": "Silakan periksa informasi yang Anda masukkan.",
-    "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
+    "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran.",
+    "password_too_short": "Kata sandi minimal 8 karakter.",
+    "password_requirements": "Kata sandi harus berisi huruf dan angka."
   },
   "profile": {
     "title": "Info Saya",
@@ -754,7 +756,9 @@
     "confirm_pwd_label": "Konfirmasi kata sandi baru",
     "confirm_pwd_placeholder": "ulangi kata sandi",
     "btn_title": "Atur ulang kata sandi",
-    "footer_text": "Sudah punya akun? "
+    "footer_text": "Sudah punya akun? ",
+    "mismatch": "Kata sandi tidak cocok.",
+    "failed": "Gagal mengubah kata sandi. Silakan coba lagi."
   },
   "password_changed": {
     "title": "Kata sandi diubah",
