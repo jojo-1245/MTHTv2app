@@ -4,11 +4,12 @@ export {
   persistAuthSession,
   getMe,
   getMyReferrals,
+  getReferralSales,
   updateProfile,
   clearAuthSession,
   isSocialLoginNeedsSignup,
 } from './authApi';
-export type { LoginAuthPayload, MeProfile, UpdateProfilePayload, SocialLoginResult, MyReferralItem, MyReferralsResponse } from './authApi';
+export type { LoginAuthPayload, MeProfile, UpdateProfilePayload, SocialLoginResult, MyReferralItem, MyReferralsResponse, ReferralSaleItem, ReferralSalesResponse } from './authApi';
 
 export {
   getSubAccountList,
