@@ -577,7 +577,8 @@
     "copyright": "© 2026 MetaHint. All rights reserved.",
     "pangle_rewarded_test": "Pangle Rewarded Video Test",
     "pangle_rewarded_test_done": "Rewarded video completed (test)",
-    "pangle_rewarded_test_failed": "Ad failed to load"
+    "pangle_rewarded_test_failed": "Ad failed to load",
+    "logout_confirm": "Are you sure you want to log out?"
   },
   "profit_distribution": {
     "title": "Profit Distribution",
