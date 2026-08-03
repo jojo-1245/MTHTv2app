@@ -2012,7 +2012,13 @@
     "consent_c2": "I understand that losing the key means I cannot use the wallet",
     "consent_c3": "It is information that must not be shared with others",
     "consent_c4": "I understand the above and promise not to share it with anyone",
-    "consent_c5": "If you forget your PIN and password, you cannot use the wallet"
+    "consent_c5": "If you forget your PIN and password, you cannot use the wallet",
+    "consent_pk_box": "The private key will be shown in plain text. Make sure no one is nearby first.",
+    "key_warn_title": "Warning",
+    "key_warn_msg": "The private key will be shown in plain text.\nMake sure no one nearby can see your screen.",
+    "key_shown_warn": "A plain-text key is shown. Beware of screenshots, recording, and exposure.",
+    "backup_secret_label": "Private key",
+    "backup_copy_this_key": "Copy this key"
   },
   "my_info_faq": {
     "title": "Frequently Asked Questions",
