@@ -2142,6 +2142,15 @@
     "err_setup": "Setup failed",
     "err_unknown": "An error occurred",
     "prompt_title": "Enter payment PIN",
-    "prompt_desc": "Enter your 6-digit PIN to sign your transaction."
+    "prompt_desc": "Enter your 6-digit PIN to sign your transaction.",
+    "title": "Set wallet protection PIN",
+    "warning": "For wallet key protection only.",
+    "backup_hint": "After setup, back up to protect your wallet.",
+    "enter_prompt": "Enter a 6-digit PIN",
+    "confirm_prompt": "Enter it once more",
+    "verifying": "Verifying...",
+    "error_prompt": "Please try again",
+    "retry": "Retry",
+    "verify_fail": "Verification failed — please try again"
   }
 }

@@ -39,6 +39,7 @@ import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
+import { v_8d3e4b } from '../components/WalletV2SetupGate';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
 import { v_5ad1fd } from '../hooks';
@@ -1188,6 +1189,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       </SafeView>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
       <MedicalDisclaimerModal />
+      <WalletV2SetupGate />
     </MainLayout>
   );
 };
