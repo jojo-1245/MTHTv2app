@@ -2046,7 +2046,8 @@
         "backup_pass_min": "비밀번호는 8자 이상으로 입력해야 합니다",
         "backup_pass_mismatch": "비밀번호가 일치하지 않습니다",
         "backup_saved_title": "백업 완료",
-        "backup_saved_msg": "파일이 저장되었습니다."
+        "backup_saved_msg": "파일이 저장되었습니다.",
+        "backup_save_cancelled": "저장이 취소됐어요. 폴더 접근을 허용해야 파일로 저장됩니다."
     },
     "my_info_faq": {
         "title": "자주 묻는 질문",
