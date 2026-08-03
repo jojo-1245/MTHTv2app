@@ -1888,7 +1888,8 @@
     "restore_key_ph": "Masukkan/tempel kunci privat (0x...)",
     "restore_new_pin_label": "PIN pembayaran baru",
     "restore_err_key": "Masukkan kunci privat yang valid",
-    "restore_err_fail": "Pemulihan gagal. Periksa kunci privat Anda."
+    "restore_err_fail": "Pemulihan gagal. Periksa kunci privat Anda.",
+    "restore_pin2_label": "Konfirmasi PIN baru"
   },
   "my_info_faq": {
     "title": "Pertanyaan yang Sering Diajukan",

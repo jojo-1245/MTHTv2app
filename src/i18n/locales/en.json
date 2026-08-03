@@ -1979,7 +1979,8 @@
     "restore_key_ph": "Enter/paste private key (0x...)",
     "restore_new_pin_label": "New payment PIN",
     "restore_err_key": "Enter a valid private key",
-    "restore_err_fail": "Restore failed. Check your private key."
+    "restore_err_fail": "Restore failed. Check your private key.",
+    "restore_pin2_label": "Confirm new PIN"
   },
   "my_info_faq": {
     "title": "Frequently Asked Questions",
