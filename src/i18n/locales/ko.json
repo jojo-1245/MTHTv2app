@@ -2042,7 +2042,9 @@
         "key_warn_msg": "개인 키를 평문으로 표시합니다.\n주변에 다른 사람이 화면을 보지 못하도록 주의해주세요.",
         "key_shown_warn": "평문 키가 표시되어 있습니다. 화면 캡처·녹화·노출에 주의해주세요.",
         "backup_secret_label": "비밀키",
-        "backup_copy_this_key": "이 키 복사"
+        "backup_copy_this_key": "이 키 복사",
+        "backup_pass_min": "비밀번호는 8자 이상으로 입력해야 합니다",
+        "backup_pass_mismatch": "비밀번호가 일치하지 않습니다"
     },
     "my_info_faq": {
         "title": "자주 묻는 질문",
