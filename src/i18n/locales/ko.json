@@ -2003,7 +2003,8 @@
         "restore_key_ph": "개인키(0x...) 입력/붙여넣기",
         "restore_new_pin_label": "새 결제 비밀번호",
         "restore_err_key": "올바른 개인키를 입력하세요",
-        "restore_err_fail": "복원에 실패했습니다. 개인키를 확인하세요."
+        "restore_err_fail": "복원에 실패했습니다. 개인키를 확인하세요.",
+        "restore_pin2_label": "새 비밀번호 확인"
     },
     "my_info_faq": {
         "title": "자주 묻는 질문",
