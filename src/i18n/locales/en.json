@@ -2152,5 +2152,40 @@
     "error_prompt": "Please try again",
     "retry": "Retry",
     "verify_fail": "Verification failed — please try again"
+  },
+  "walletV2Tutorial": {
+    "page1": {
+      "title": "Your own wallet key",
+      "body": [
+        "Your MetaHint wallet has a private key that only you hold.",
+        "The private key is the most important proof of wallet ownership.",
+        "Only the holder of this key can use the assets in the wallet.",
+        "If your private key leaks, others can use your wallet — never share it."
+      ]
+    },
+    "page2": {
+      "title": "Back up your key safely",
+      "body": [
+        "You can back up your wallet key in the app.",
+        "Even if you lose your device or delete the app, a backup file lets you restore the wallet.",
+        "It is encrypted with your backup password and stored safely.",
+        "If you lose the backup file or password, no one — including support — can recover it."
+      ]
+    },
+    "page3": {
+      "title": "What the company knows and doesn't",
+      "body": [
+        "The MetaHint app only stores your wallet address.",
+        "Your private key is never stored on company servers and the company cannot see it.",
+        "By nature of blockchain, wallet addresses and transactions are publicly viewable.",
+        "If you lose your private key, the company cannot recover your wallet.",
+        "You are responsible for managing your wallet and private key."
+      ]
+    },
+    "rememberHeading": "Please remember",
+    "agree": "I understand all of the above.",
+    "prev": "Back",
+    "next": "Next",
+    "start": "Get started"
   }
 }

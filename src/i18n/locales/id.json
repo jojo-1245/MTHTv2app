@@ -1969,5 +1969,40 @@
     "error_prompt": "Silakan coba lagi",
     "retry": "Coba lagi",
     "verify_fail": "Verifikasi gagal — silakan coba lagi"
+  },
+  "walletV2Tutorial": {
+    "page1": {
+      "title": "Kunci dompet milik Anda",
+      "body": [
+        "Dompet MetaHint memiliki kunci privat yang hanya Anda miliki.",
+        "Kunci privat adalah bukti kepemilikan dompet yang paling penting.",
+        "Hanya pemilik kunci ini yang dapat menggunakan aset di dalam dompet.",
+        "Jika kunci privat bocor, orang lain bisa memakai dompet Anda — jangan pernah dibagikan."
+      ]
+    },
+    "page2": {
+      "title": "Cadangkan kunci Anda dengan aman",
+      "body": [
+        "Anda dapat mencadangkan kunci dompet di aplikasi.",
+        "Meski perangkat hilang atau aplikasi dihapus, file cadangan bisa memulihkan dompet.",
+        "Dienkripsi dengan kata sandi cadangan dan disimpan aman.",
+        "Jika file cadangan atau kata sandi hilang, tidak ada — termasuk layanan pelanggan — yang bisa memulihkannya."
+      ]
+    },
+    "page3": {
+      "title": "Yang diketahui dan tidak oleh perusahaan",
+      "body": [
+        "Aplikasi MetaHint hanya menyimpan alamat dompet Anda.",
+        "Kunci privat tidak disimpan di server perusahaan dan perusahaan tidak dapat melihatnya.",
+        "Karena sifat blockchain, alamat dompet dan transaksi dapat dilihat publik.",
+        "Jika kehilangan kunci privat, perusahaan tidak dapat memulihkan dompet Anda.",
+        "Pengelolaan dompet dan kunci privat adalah tanggung jawab Anda."
+      ]
+    },
+    "rememberHeading": "Harap diingat",
+    "agree": "Saya memahami semua hal di atas.",
+    "prev": "Kembali",
+    "next": "Berikutnya",
+    "start": "Mulai"
   }
 }
