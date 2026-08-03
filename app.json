@@ -100,6 +100,7 @@
     "plugins": [
       "./plugins/withKakaoRepo.js",
       "expo-localization",
+      "expo-secure-store",
       [
         "expo-screen-orientation",
         {
