@@ -1,8 +1,9 @@
 import { v_c4deb2, v_e662ae, v_de06a3, v_5ab095 } from 'bapkr';
-import { v_03e392, v_6b5698 } from 'rcmrninabrnb';
+import { v_6b5698 } from 'rcmrninabrnb';
 import * as v_79a9df from '../services/versionService';
 import type { v_3fe0d9 } from '../services/versionService';
 import { v_772971 } from 'jmpfvteuuztnp';
+import { v_889fad } from '../components/AlertHost';
 
 interface Options {
 
@@ -59,7 +60,7 @@ export function v_96a538(v_b36f96 = {}) {
       v_79a9df.setUpdateProcessing(false); 
 
       if (!v_e98228) {
-        v_03e392.alert(v_8d41d7('common.error'), v_9e86fd.message || 'OTA update failed');
+        v_889fad(v_8d41d7('common.error'), v_9e86fd.message || 'OTA update failed');
       }
     }
   }, [v_24a76a, v_b36f96, v_8d41d7]);
@@ -95,7 +96,7 @@ export function v_96a538(v_b36f96 = {}) {
 
     if (v_452bb7 && v_cf418f.update_available && v_cf418f.bundle_url) {
       console.log('[OTA] OTA 선택 업데이트 안내');
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7('common.notification') || 'Update Available',
         v_cf418f.changelog || '새 버전을 다운로드하시겠습니까?',
         [

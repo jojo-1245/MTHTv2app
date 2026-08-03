@@ -1,7 +1,6 @@
 import v_a3453e, { v_5ab095, v_de06a3, v_df9f57 } from 'bapkr';
 import {
   v_39a996,
-  v_03e392,
   v_9cabcb,
   v_cf9c33,
   v_e767d1,
@@ -48,6 +47,7 @@ import {
   v_d91974,
 } from '../../utils/tabletLayout';
 import { v_e4a763 } from '../../utils/env';
+import { v_889fad } from '../../components/AlertHost';
 
 type Props = v_432191<v_8ad91b, 'PharmacistHome'>;
 
@@ -260,7 +260,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
   };
 
   const v_35e0b9 = (visitor: v_443c12) => {
-    v_03e392.alert(
+    v_889fad(
       v_8d41d7('pharmacist.visitor_list.delete_visitor_title'),
       v_8d41d7('pharmacist.visitor_list.delete_visitor_message', { name: v_e769c6.name }),
       [

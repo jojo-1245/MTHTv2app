@@ -4,7 +4,6 @@ import {
   v_19b633,
   v_79139e,
   v_472849,
-  v_03e392,
 } from 'rcmrninabrnb';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
@@ -12,6 +11,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import v_e209a2 from '../../components/DataConsentModal';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_8ad91b } from '../../navigation';
 import { v_2d6571, v_b26d7d } from '../../utils/consentStore';
 import type { v_8c7694 } from '../../utils/consentStore';
@@ -49,7 +49,7 @@ const DataConsentSettingsScreen: v_a3453e.FC<Props> = () => {
   const v_bf58a4 = async (kind: v_8c7694, v_a448ad) => {
     if (!v_a448ad) {
 
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7(`consent.${v_94302c}.title`, v_94302c),
         v_8d41d7('consent.revoke_confirm', 'Revoking consent will stop this feature until you consent again. Continue?'),
         [

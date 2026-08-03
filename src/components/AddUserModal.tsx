@@ -8,7 +8,6 @@ import {
   v_09d0e5,
   v_39a996,
   v_122070,
-  v_03e392,
   v_326be8,
   v_e767d1,
 } from 'rcmrninabrnb';
@@ -18,6 +17,7 @@ import v_5427ed from './OtpInput';
 import v_cb41de from './PrimaryButton';
 import v_8714fe from './SecondaryButton';
 import v_e775af from './TextField';
+import { v_889fad } from './AlertHost';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../constants';
 import { v_7ef860 } from '../services';
 import {
@@ -140,7 +140,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.load_user_info_failed'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('sub_account.load_user_info_failed'));
       v_0890f8();
     }
   };
@@ -194,7 +194,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
         if (v_998b9d(v_c65f5d, v_5e9bfe)) {
           return;
         }
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.member_search_failed'));
+        v_889fad(v_8d41d7('common.error'), v_8d41d7('sub_account.member_search_failed'));
       } finally {
         v_58158a(false);
       }
@@ -216,12 +216,12 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
     const v_70217c = v_660822.email.toLowerCase().trim();
 
     if (v_1b4841.has(v_70217c)) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
       return;
     }
 
     if ((v_660822 as any).isLinked) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.already_linked'));
       return;
     }
 
@@ -234,13 +234,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       await v_9112f4(v_660822.email);
       v_e37907(true);
       v_fd7d1f('otp');
-      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.otp_sent'));
+      v_889fad(v_8d41d7('common.success'), v_8d41d7('sub_account.otp_sent'));
     } catch (v_5e9bfe) {
       console.error('[AddUserModal] OTP 발송 실패:', v_5e9bfe);
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.otp_send_failed'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('sub_account.otp_send_failed'));
     } finally {
       v_34a50a(false);
     }
@@ -248,13 +248,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_7914f7 = () => {
     if (v_af419b.length !== v_28d629) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_enter_all'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_enter_all'));
       return;
     }
 
     const v_849cde = v_af419b.replace(/\D/g, '').slice(0, v_28d629);
     if (v_849cde.length !== v_28d629) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
       return;
     }
 
@@ -263,13 +263,13 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_0dbfdf = async () => {
     if (!v_7b9eeb || !v_ab0e46.trim() || v_af419b.length !== v_28d629) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_all_info'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_all_info'));
       return;
     }
 
     const v_849cde = v_af419b.replace(/\D/g, '').slice(0, v_28d629);
     if (v_849cde.length !== v_28d629) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.otp_invalid_format'));
       return;
     }
 
@@ -285,7 +285,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       const v_e3c76c = v_7b9eeb.email.toLowerCase().trim();
       v_47501d((v_ba2215) => new Set(v_ba2215).add(v_e3c76c));
 
-      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
+      v_889fad(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
       v_b0e537();
       v_0890f8();
       v_41b56e();
@@ -310,7 +310,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
           v_a8cd21 = v_1744b9;
         }
       }
-      v_03e392.alert(v_8d41d7('sub_account.otp_verification_failed'), v_a8cd21);
+      v_889fad(v_8d41d7('sub_account.otp_verification_failed'), v_a8cd21);
     } finally {
       v_34a50a(false);
     }
@@ -318,7 +318,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
 
   const v_6b4310 = async () => {
     if (!v_a404bd.trim()) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_nickname'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.enter_nickname'));
       return;
     }
 
@@ -327,7 +327,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       await v_01afb4({
         name: v_a404bd.trim(),
       });
-      v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
+      v_889fad(v_8d41d7('common.success'), v_8d41d7('sub_account.add_success'));
       v_b0e537();
       v_0890f8();
       v_41b56e();
@@ -336,7 +336,7 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
       if (v_998b9d(v_c65f5d, v_5e9bfe)) {
         return;
       }
-      v_03e392.alert(v_8d41d7('common.error'), v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('sub_account.add_failed'));
+      v_889fad(v_8d41d7('common.error'), v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('sub_account.add_failed'));
     } finally {
       v_34a50a(false);
     }
@@ -357,11 +357,11 @@ export const AddUserModal: v_a3453e.FC<AddUserModalProps> = ({
         const v_3ed4c3 = await v_5ab0fb(v_3f557d);
         if (!v_3ed4c3) return;
       } else {
-        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('sub_account.no_referral_code'));
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('sub_account.no_referral_code'));
       }
     } catch (v_5e9bfe) {
       console.error('[AddUserModal] 레퍼럴 링크 열기 실패:', v_5e9bfe);
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('sub_account.copy_failed'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('sub_account.copy_failed'));
     }
   };
 
