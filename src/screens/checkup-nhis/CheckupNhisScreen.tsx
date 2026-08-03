@@ -3,7 +3,6 @@ import {
   v_3094a2,
   v_19b633,
   v_39a996,
-  v_03e392,
   v_6b5698,
   v_472849,
   v_4623af,
@@ -11,6 +10,7 @@ import {
   type v_07a341,
 } from 'rcmrninabrnb';
 import { v_556baf, v_570c34, v_729608, v_cb41de, v_e775af } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
 import v_6f3f7e from '../../components/SupplementRecommendSection';
 import { v_a0daa8 } from '../../navigation';
 import { v_15baf2, v_b67103, v_ff5546 } from '../../services';
@@ -98,22 +98,22 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     v_34a50a(true);
     v_ff5546()
       .then(v_18b8bf => { if (v_759436) v_9ed182(v_18b8bf); })
-      .catch(v_9e86fd => v_03e392.alert('오류', v_9e86fd?.message ?? '기록을 불러오지 못했습니다.'))
+      .catch(v_9e86fd => v_889fad('오류', v_9e86fd?.message ?? '기록을 불러오지 못했습니다.'))
       .finally(() => { if (v_759436) v_34a50a(false); });
     return () => { v_759436 = false; };
   }, [v_ab4803]);
 
   const v_cfb0b1 = async () => {
     if (!v_e38ca2) {
-      v_03e392.alert('입력 확인', '간편인증 방식을 선택해주세요.');
+      v_889fad('입력 확인', '간편인증 방식을 선택해주세요.');
       return;
     }
     if (v_fd1bb4 && !v_b627c5) {
-      v_03e392.alert('입력 확인', '통신사를 선택해주세요.');
+      v_889fad('입력 확인', '통신사를 선택해주세요.');
       return;
     }
     if (!v_f08a5e || !/^\d{8}$/.test(v_598ded) || !/^01\d{8,9}$/.test(v_f1c488)) {
-      v_03e392.alert('입력 확인', '이름·생년월일(YYYYMMDD 8자리)·휴대폰을 모두 확인해주세요.');
+      v_889fad('입력 확인', '이름·생년월일(YYYYMMDD 8자리)·휴대폰을 모두 확인해주세요.');
       return;
     }
     v_34a50a(true);
@@ -136,7 +136,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     } catch (v_9e86fd) {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
       const v_badeaf = v_b724a0(v_c99bd2);
-      v_03e392.alert(
+      v_889fad(
         '오류',
         __DEV__ ? `${v_badeaf}\n(CODE=${v_c99bd2 || 'unknown'})` : v_badeaf,
       );
@@ -168,18 +168,18 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         await new Promise(v_8f00b9 => setTimeout(v_8f00b9, v_f839bb));
       }
       if (!v_cb35cb || v_cb35cb.status !== 'done') {
-        v_03e392.alert('인증 확인', '인증 대기 시간이 초과되었습니다. 다시 시도해 주세요.');
+        v_889fad('인증 확인', '인증 대기 시간이 초과되었습니다. 다시 시도해 주세요.');
         return;
       }
       v_fa923c(v_cb35cb.items ?? []);
       v_db9949(v_28c823(v_cb35cb));
       v_ae4844('result');
       if (!v_cb35cb.items?.length) {
-        v_03e392.alert('안내', v_ae5f46());
+        v_889fad('안내', v_ae5f46());
       }
     } catch (v_9e86fd) {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
-      v_03e392.alert(
+      v_889fad(
         v_c99bd2 === 'TIMEOUT' ? '시간 초과' : '인증 확인',
         (() => {
           const v_badeaf = v_b724a0(

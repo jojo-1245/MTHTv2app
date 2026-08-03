@@ -4,7 +4,6 @@ import {
   v_19b633,
   v_3094a2,
   v_39a996,
-  v_03e392,
   v_4623af,
   v_326be8,
   v_67e68d,
@@ -21,6 +20,7 @@ import {
   v_2d4718,
   v_a2349e,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../../components/AlertHost';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
@@ -700,7 +700,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       v_0e2ade.current.add(v_c99bd2);
 
       const v_a8cd21 = `${v_58ca36}\n\n${v_8d41d7('health_analysis.sdk_alerts.solution_prefix')}\n${v_6f0517}\n\n(코드: ${v_c99bd2})`;
-      v_03e392.alert(v_9f1622, v_a8cd21, [
+      v_889fad(v_9f1622, v_a8cd21, [
         {
           text: v_8d41d7('common.confirm'),
           onPress: async () => {
@@ -740,7 +740,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
     const v_32cb14 = await v_ec0597();
     if (!v_32cb14) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('health_analysis.errors.camera_permission_required'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('health_analysis.errors.camera_permission_required'));
       return;
     }
 
@@ -840,7 +840,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_a3ff5a.current = undefined;
         v_49296b(false);
 
-        v_03e392.alert(
+        v_889fad(
           v_8d41d7('health_analysis.errors.session_creation_failed'),
           v_8d41d7('health_analysis.errors.sdk_init_error'),
           [
@@ -877,7 +877,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_49296b(false);
 
         const v_7a5fef = v_748547?.code || '알 수 없음';
-        v_03e392.alert(
+        v_889fad(
           v_8d41d7('health_analysis.errors.session_creation_failed'),
           v_8d41d7('health_analysis.errors.session_failed_code', { code: v_7a5fef }),
           [
@@ -907,7 +907,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
         if (!v_f91d86) {
           const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
-          v_03e392.alert(
+          v_889fad(
             '잔액 부족',
             `건강 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
             [{ text: '확인' }]
@@ -919,7 +919,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         }
 
         if (!v_a3ff5a.current) {
-          v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('health_analysis.errors.session_not_ready'));
+          v_889fad(v_8d41d7('common.error'), v_8d41d7('health_analysis.errors.session_not_ready'));
           return;
         }
 
@@ -985,7 +985,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           v_1744b9 = v_8d41d7('health_analysis.errors.error_default', { code: v_7a5fef || '알 수 없음' });
       }
 
-      v_03e392.alert(v_b5cd35, v_1744b9, [
+      v_889fad(v_b5cd35, v_1744b9, [
         {
           text: v_8d41d7('common.confirm'),
           onPress: () => {
@@ -1122,7 +1122,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           v_1744b9 = v_8d41d7('health_analysis.errors.error_unknown', { code: v_7a5fef || '알 수 없음' });
       }
 
-      v_03e392.alert(v_b5cd35, v_1744b9, [
+      v_889fad(v_b5cd35, v_1744b9, [
         {
           text: v_8d41d7('common.confirm'),
           onPress: () => {
@@ -1497,7 +1497,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
         v_72744e(true);
         v_00defd('session');
-        v_03e392.alert(
+        v_889fad(
           v_8d41d7('health_analysis.measurement.result_missing_title'),
           v_8d41d7('health_analysis.measurement.result_missing_message'),
           [
@@ -1798,7 +1798,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       (async () => {
         const v_21cc31 = await v_e84827.getItem(v_624bd2.authToken);
         if (!v_21cc31) {
-          v_03e392.alert(
+          v_889fad(
             v_8d41d7('common.error'),
             v_8d41d7('health_analysis.login_required_message', '로그인 후 건강 분석을 이용해 주세요. 측정 결과 저장을 위해 로그인이 필요합니다.'),
             [{ text: v_8d41d7('common.confirm'), onPress: () => v_c65f5d.navigate('Login') }],
@@ -2138,7 +2138,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                       v_d2b6af(true);
                     } else {
 
-                      v_03e392.alert(
+                      v_889fad(
                         v_8d41d7('health_analysis.intro.camera_permission_title'),
                         v_8d41d7('health_analysis.errors.camera_permission_required'),
                         [
@@ -2161,7 +2161,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     try {
                       const v_678155 = await v_777b12();
                       if (!v_678155 || v_678155.length === 0) {
-                        v_03e392.alert('알림', '저장된 건강 기록이 없습니다.');
+                        v_889fad('알림', '저장된 건강 기록이 없습니다.');
                         return;
                       }
                       const v_1300ee = v_678155[0];
@@ -2176,7 +2176,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                         recordId: v_1300ee.id,
                       });
                     } catch (v_9e86fd) {
-                      v_03e392.alert('오류', String(v_9e86fd));
+                      v_889fad('오류', String(v_9e86fd));
                     }
                   }}
                 >

@@ -1,12 +1,12 @@
 import v_a3453e, { v_5ab095 } from 'bapkr';
 import {
-  v_03e392,
   v_122070,
   v_472849,
   v_19b633,
   v_4623af,
   v_3094a2,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../components/AlertHost';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
 import { v_729608, v_cb41de, v_e775af } from '../components';
@@ -25,7 +25,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_2de427 = async () => {
     const v_2f361a = v_e0c7e8.trim().toLowerCase();
     if (!v_2f361a || !/\S+@\S+\.\S+/.test(v_2f361a)) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('login.invalid_email') || '올바른 이메일을 입력해주세요.');
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('login.invalid_email') || '올바른 이메일을 입력해주세요.');
       return;
     }
 
@@ -34,7 +34,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       await v_c1a440({ email: v_2f361a, purpose: 'password_reset' });
       v_c65f5d.navigate('PasswordVerification', { email: v_2f361a });
     } catch (v_5e9bfe) {
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7('common.error'),
         v_5e9bfe?.message || '인증코드 발송에 실패했습니다. 다시 시도해주세요.'
       );

@@ -1,6 +1,7 @@
 import v_a3453e, { v_de06a3, v_c4deb2, v_5ab095 } from 'bapkr';
-import { v_3094a2, v_19b633, v_472849, v_39a996, v_03e392 } from 'rcmrninabrnb';
+import { v_3094a2, v_19b633, v_472849, v_39a996 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
+import { v_889fad } from '../components/AlertHost';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_729608, v_1c1837, v_cb41de, v_570c34, v_1a40c4 } from '../components';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../constants';
@@ -86,7 +87,7 @@ const ShopPaymentConfirmScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       }
       const v_badeaf = v_479f05 ? v_8d41d7(v_c4536c(v_479f05)) : v_8d41d7('shop.payment.error_generic');
       const v_3cfdfc = __DEV__ && (v_fc86a8 || v_479f05) ? `\n\n(${v_fc86a8 || v_479f05})` : '';
-      v_03e392.alert(v_8d41d7('common.error'), v_badeaf + v_3cfdfc, [
+      v_889fad(v_8d41d7('common.error'), v_badeaf + v_3cfdfc, [
         {
           text: v_8d41d7('shop.payment.open_shop_payment'),
           onPress: () => { v_b0c711(v_9d3240).catch(() => null); },
