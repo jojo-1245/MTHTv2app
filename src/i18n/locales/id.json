@@ -1932,7 +1932,8 @@
     "backup_pass_min": "Kata sandi harus minimal 8 karakter",
     "backup_pass_mismatch": "Kata sandi tidak cocok",
     "backup_saved_title": "Cadangan selesai",
-    "backup_saved_msg": "File telah disimpan."
+    "backup_saved_msg": "File telah disimpan.",
+    "backup_save_cancelled": "Penyimpanan dibatalkan. Izinkan akses folder untuk menyimpan file."
   },
   "my_info_faq": {
     "title": "Pertanyaan yang Sering Diajukan",
