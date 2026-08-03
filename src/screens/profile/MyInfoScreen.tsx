@@ -7,7 +7,6 @@ import {
   v_4623af,
   v_07a341,
   v_39a996,
-  v_03e392,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
@@ -16,6 +15,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
 import { v_c2fdd1 } from '../../components/wallet/Dialog';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
@@ -158,7 +158,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         ? 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is not set in .env'
         : 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is placeholder. Replace with the placement UID from PointClick.';
       console.error('[Offerwall] Not configured:', v_58ca36, { raw: v_479f05 ?? '(empty)' });
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
       return;
     }
 
@@ -183,7 +183,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       });
     } catch (v_5e9bfe) {
       console.error('[MyInfoScreen] 로그아웃 실패:', v_5e9bfe);
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7('common.error'),
         v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('profile.logout_error', '로그아웃 중 오류가 발생했습니다.'),
       );

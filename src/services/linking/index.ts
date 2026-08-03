@@ -1,6 +1,7 @@
-import { v_f2c756, v_03e392 } from 'rcmrninabrnb';
+import { v_f2c756 } from 'rcmrninabrnb';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import v_9c213b from '../../i18n';
+import { v_889fad } from '../../components/AlertHost';
 import { v_dbb24a, v_739f72, v_c7823e } from './shopUrl';
 import { v_f96be4 } from '../shopApi';
 
@@ -15,12 +16,12 @@ export type OpenShopOptions = {
 };
 
 function v_336a9d(): void {
-  v_03e392.alert(v_9c213b.t('common.error'), v_9c213b.t('linking.open_failed'));
+  v_889fad(v_9c213b.t('common.error'), v_9c213b.t('linking.open_failed'));
 }
 
 export function v_2d2eda(): Promise<boolean> {
   return new Promise((v_6f7712) => {
-    v_03e392.alert(
+    v_889fad(
       v_9c213b.t('linking.shop_confirm_title'),
       v_9c213b.t('linking.shop_confirm_message'),
       [
