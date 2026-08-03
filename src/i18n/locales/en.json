@@ -2207,6 +2207,7 @@
     "agree": "I understand all of the above.",
     "prev": "Back",
     "next": "Next",
-    "start": "Get started"
+    "start": "Get started",
+    "close": "Close"
   }
 }
