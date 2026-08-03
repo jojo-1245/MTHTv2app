@@ -544,7 +544,8 @@
     "copyright": "© 2026 MetaHint. All rights reserved.",
     "pangle_rewarded_test": "Tes Video Berhadiah Pangle",
     "pangle_rewarded_test_done": "Video berhadiah selesai (tes)",
-    "pangle_rewarded_test_failed": "Iklan gagal dimuat"
+    "pangle_rewarded_test_failed": "Iklan gagal dimuat",
+    "logout_confirm": "Apakah Anda yakin ingin keluar?"
   },
   "profit_distribution": {
     "title": "Distribusi Keuntungan",
