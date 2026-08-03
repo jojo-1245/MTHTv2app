@@ -1959,6 +1959,15 @@
     "err_setup": "Pengaturan gagal",
     "err_unknown": "Terjadi kesalahan",
     "prompt_title": "Masukkan PIN pembayaran",
-    "prompt_desc": "Masukkan PIN 6 digit untuk menandatangani transaksi."
+    "prompt_desc": "Masukkan PIN 6 digit untuk menandatangani transaksi.",
+    "title": "Atur PIN perlindungan dompet",
+    "warning": "Khusus untuk melindungi kunci dompet.",
+    "backup_hint": "Setelah selesai, cadangkan untuk melindungi dompet.",
+    "enter_prompt": "Masukkan PIN 6 digit",
+    "confirm_prompt": "Masukkan sekali lagi",
+    "verifying": "Memverifikasi...",
+    "error_prompt": "Silakan coba lagi",
+    "retry": "Coba lagi",
+    "verify_fail": "Verifikasi gagal — silakan coba lagi"
   }
 }

@@ -3175,6 +3175,15 @@
         "err_setup": "설정에 실패했습니다",
         "err_unknown": "오류가 발생했습니다",
         "prompt_title": "결제 비밀번호 입력",
-        "prompt_desc": "지갑 서명을 위해 6자리 비밀번호를 입력하세요."
+        "prompt_desc": "지갑 서명을 위해 6자리 비밀번호를 입력하세요.",
+        "title": "지갑 보호 PIN 설정",
+        "warning": "지갑 키 보호 전용입니다.",
+        "backup_hint": "설정 완료 시에 백업하여 지갑을 보호해주세요.",
+        "enter_prompt": "6자리 PIN을 입력해주세요",
+        "confirm_prompt": "다시 한번 입력해주세요",
+        "verifying": "검증 중...",
+        "error_prompt": "다시 시도해주세요",
+        "retry": "다시 시도",
+        "verify_fail": "검증 실패 — 다시 시도해주세요"
     }
 }
