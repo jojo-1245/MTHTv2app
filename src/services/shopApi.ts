@@ -32,7 +32,8 @@ export async function v_649c8b(): Promise<ShopProductsResult> {
 
 export function v_95c036(v_6bbb57, v_f4d612): string | null {
   if (!v_f4d612 || v_f4d612 <= 0 || typeof v_6bbb57 !== 'number' || !isFinite(v_6bbb57) || v_6bbb57 < 0) return null;
-  return (Math.round((v_6bbb57 / v_f4d612) * 100) / 100).toString();
+  const v_f52086 = Math.round((v_6bbb57 / v_f4d612) * 1000) / 1000;
+  return Number(v_f52086.toFixed(3)).toString();
 }
 
 export type ShopPaymentDecision = 'approve' | 'decline';

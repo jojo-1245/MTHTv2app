@@ -1771,6 +1771,7 @@
         "copy_success_message": "PIN 코드가 클립보드에 복사되었습니다.",
         "kakao_share_button": "레퍼럴 공유하기",
         "my_referrals_button": "나의 추천 목록 보기",
+        "referral_sales_button": "추천인 매출 내역 보기",
         "share_error": "공유에 실패했습니다.",
         "share_message": "HiNT 파트너가 되어보세요! 추천 코드: {{code}}\n{{link}}",
         "share_title": "HiNT 파트너 추천"
@@ -1779,6 +1780,20 @@
         "title": "나의 추천 목록",
         "total_count": "총 {{count}}명",
         "empty": "아직 나를 추천한 사용자가 없습니다."
+    },
+    "referral_sales": {
+        "title": "추천인 매출 내역",
+        "total_count": "총 {{count}}건",
+        "pending_commission": "정산 대기 수당 {{amount}}",
+        "empty": "아직 적립된 추천 매출이 없습니다.\n하위 회원의 배송완료 주문이 반영되면 표시됩니다.",
+        "buyer_unknown": "구매자",
+        "receipt": "결제 {{amount}}",
+        "role_referrer": "직접 추천",
+        "role_upline": "상위 분배",
+        "settle_on": "정산 {{date}}",
+        "status_pending": "정산 대기",
+        "status_settled": "정산 완료",
+        "load_more": "더보기"
     },
     "my_info_email_auth": {
         "title": "본인 인증",
@@ -3163,7 +3178,13 @@
     },
     "supplements": {
         "section_title": "추천 영양성분",
-        "view_in_shop": "쇼핑몰에서 보기"
+        "view_in_shop": "쇼핑몰에서 보기",
+        "label_ai": "AI 추천",
+        "label_extra": "선택 추가",
+        "price_won": "원",
+        "included": "포함",
+        "total_label": "합계",
+        "checkout_cta": "결제하기"
     },
     "walletV2Pin": {
         "title_enter": "지갑 보호 PIN 설정",

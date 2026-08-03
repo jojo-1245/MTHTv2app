@@ -15,3 +15,12 @@ export function v_739f72(v_6e55b1): string {
   if (!v_6e55b1) return '/oth-path';
   return `/oth-path?it_id=${encodeURIComponent(v_6e55b1)}`;
 }
+
+export function v_c7823e(v_735da1, v_acc1e5 = 'ai'): string {
+  const v_52e08b = [...new Set(v_735da1.map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
+  if (!v_52e08b.length) return '/oth-path';
+  const v_ab6401 = new URLSearchParams();
+  v_ab6401.set('it_ids', v_52e08b.join(','));
+  if (v_acc1e5) v_ab6401.set('via', v_acc1e5);
+  return `/oth-path?${v_ab6401.toString()}`;
+}

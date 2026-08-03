@@ -1659,6 +1659,7 @@
     "copy_success_message": "Kode PIN telah disalin ke papan klip.",
     "kakao_share_button": "Bagikan via KakaoTalk",
     "my_referrals_button": "Lihat Referral Saya",
+    "referral_sales_button": "Lihat Penjualan Referral",
     "share_error": "Gagal membagikan.",
     "share_message": "Jadilah Mitra HiNT! Kode referral: {{code}}\n{{link}}",
     "share_title": "Referral Mitra HiNT"
@@ -1667,6 +1668,20 @@
     "title": "Referral Saya",
     "total_count": "Total {{count}}",
     "empty": "Belum ada yang menggunakan kode referral Anda."
+  },
+  "referral_sales": {
+    "title": "Penjualan Referral",
+    "total_count": "{{count}} pesanan",
+    "pending_commission": "Komisi menunggu {{amount}}",
+    "empty": "Belum ada penjualan referral.\nPengiriman selesai dari referral Anda akan muncul di sini.",
+    "buyer_unknown": "Pembeli",
+    "receipt": "Bayar {{amount}}",
+    "role_referrer": "Langsung",
+    "role_upline": "Upline",
+    "settle_on": "Settlement {{date}}",
+    "status_pending": "Menunggu",
+    "status_settled": "Selesai",
+    "load_more": "Muat lebih"
   },
   "my_info_email_auth": {
     "title": "Verifikasi Identitas",
@@ -1947,7 +1962,13 @@
   },
   "supplements": {
     "section_title": "Suplemen yang direkomendasikan",
-    "view_in_shop": "Lihat di toko"
+    "view_in_shop": "Lihat di toko",
+    "label_ai": "Rekomendasi AI",
+    "label_extra": "Tambahan pilihan",
+    "price_won": " won",
+    "included": "Termasuk",
+    "total_label": "Total",
+    "checkout_cta": "Bayar"
   },
   "walletV2Pin": {
     "title_enter": "Atur PIN perlindungan dompet",
