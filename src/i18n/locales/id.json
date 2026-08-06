@@ -2051,7 +2051,9 @@
     "price_won": " won",
     "included": "Termasuk",
     "total_label": "Total",
-    "checkout_cta": "Bayar"
+    "checkout_cta": "Bayar",
+    "detail_hint": "Ketuk untuk melihat detail produk",
+    "detail_a11y": "Lihat detail produk {{name}}"
   },
   "walletV2Pin": {
     "title_enter": "Atur PIN perlindungan dompet",

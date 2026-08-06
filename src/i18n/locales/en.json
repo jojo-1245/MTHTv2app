@@ -2234,7 +2234,9 @@
     "price_won": " KRW",
     "included": "Included",
     "total_label": "Total",
-    "checkout_cta": "Checkout"
+    "checkout_cta": "Checkout",
+    "detail_hint": "Tap to view product details",
+    "detail_a11y": "View product details for {{name}}"
   },
   "walletV2Pin": {
     "title_enter": "Set wallet protection PIN",

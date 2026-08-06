@@ -27,7 +27,7 @@ export default function v_6f3f7e({
   recordId: v_fbf3b0,
 }: SupplementRecommendSectionProps): v_a3453e.JSX.Element | null {
   const { t: v_8d41d7 } = v_772971();
-  const { openShopCheckout: v_565824, loading: v_683210 } = v_ffe36d();
+  const { openShopCheckout: v_565824, openItemExplan: v_9dcb16, loading: v_683210 } = v_ffe36d();
   const [v_4622b9, v_fa923c] = v_5ab095<v_d74666[]>([]);
 
   const [v_1c5924, v_fb4b30] = v_5ab095<Set<string>>(new Set());
@@ -115,45 +115,63 @@ export default function v_6f3f7e({
             ? true
             : !!(v_8c0b26.shopItemId && v_1c5924.has(v_8c0b26.shopItemId));
           return (
-            <TouchableOpacity
-              style={[v_d81136.row, v_587413 && v_d81136.rowSelected]}
-              activeOpacity={v_a98e33 && v_f8bd01 ? 0.7 : 1}
-              disabled={!v_a98e33 || !v_f8bd01}
-              onPress={() => v_8c0b26.shopItemId && v_5cb053(v_8c0b26.shopItemId)}
-            >
-              <View style={v_d81136.checkCol}>
+
+            <View style={[v_d81136.row, v_587413 && v_d81136.rowSelected]}>
+              <TouchableOpacity
+                style={v_d81136.checkCol}
+                hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                activeOpacity={v_a98e33 && v_f8bd01 ? 0.7 : 1}
+                disabled={!v_a98e33 || !v_f8bd01}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: v_587413, disabled: !v_a98e33 || !v_f8bd01 }}
+                accessibilityLabel={v_8c0b26.productName}
+                testID={`supplement-check-${v_8c0b26.shopItemId ?? `gunki-${v_8c0b26.gunkiId}`}`}
+                onPress={() => v_8c0b26.shopItemId && v_5cb053(v_8c0b26.shopItemId)}
+              >
                 <View style={[v_d81136.check, v_587413 && v_d81136.checkOn]}>
                   {v_587413 ? <Text style={v_d81136.checkMark}>✓</Text> : null}
                 </View>
-              </View>
-              {v_295d07(v_8c0b26.imageUrl) ? (
-                <Image source={{ uri: v_295d07(v_8c0b26.imageUrl) }} style={v_d81136.image} />
-              ) : (
-                <View style={[v_d81136.image, v_d81136.imagePlaceholder]} />
-              )}
-              <View style={v_d81136.body}>
-                <View style={v_d81136.badgeRow}>
-                  <Text style={[v_d81136.badge, v_a98e33 ? v_d81136.badgeExtra : v_d81136.badgeAi]}>
-                    {v_a98e33 ? v_8d41d7('supplements.label_extra') : v_8d41d7('supplements.label_ai')}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={v_d81136.detailArea}
+                activeOpacity={v_f8bd01 ? 0.7 : 1}
+                disabled={!v_f8bd01}
+                accessibilityRole="button"
+                accessibilityLabel={v_8d41d7('supplements.detail_a11y', { name: v_8c0b26.productName })}
+                onPress={() => v_f8bd01 && void v_9dcb16(v_8c0b26.shopItemId)}
+              >
+                {v_295d07(v_8c0b26.imageUrl) ? (
+                  <Image source={{ uri: v_295d07(v_8c0b26.imageUrl) }} style={v_d81136.image} />
+                ) : (
+                  <View style={[v_d81136.image, v_d81136.imagePlaceholder]} />
+                )}
+                <View style={v_d81136.body}>
+                  <View style={v_d81136.badgeRow}>
+                    <Text style={[v_d81136.badge, v_a98e33 ? v_d81136.badgeExtra : v_d81136.badgeAi]}>
+                      {v_a98e33 ? v_8d41d7('supplements.label_extra') : v_8d41d7('supplements.label_ai')}
+                    </Text>
+                    {!v_a98e33 ? (
+                      <Text style={v_d81136.includedHint}>{v_8d41d7('supplements.included')}</Text>
+                    ) : null}
+                  </View>
+                  <Text style={v_d81136.name} numberOfLines={2}>
+                    {v_8c0b26.productName}
                   </Text>
-                  {!v_a98e33 ? (
-                    <Text style={v_d81136.includedHint}>{v_8d41d7('supplements.included')}</Text>
+                  <Text style={v_d81136.reason} numberOfLines={3}>
+                    {v_8c0b26.reason}
+                  </Text>
+                  {v_8c0b26.price != null && v_8c0b26.price > 0 ? (
+                    <Text style={v_d81136.price}>
+                      {Number(v_8c0b26.price).toLocaleString('ko-KR')}
+                      {v_8d41d7('supplements.price_won')}
+                    </Text>
+                  ) : null}
+                  {v_f8bd01 ? (
+                    <Text style={v_d81136.detailHint}>{v_8d41d7('supplements.detail_hint')}</Text>
                   ) : null}
                 </View>
-                <Text style={v_d81136.name} numberOfLines={2}>
-                  {v_8c0b26.productName}
-                </Text>
-                <Text style={v_d81136.reason} numberOfLines={3}>
-                  {v_8c0b26.reason}
-                </Text>
-                {v_8c0b26.price != null && v_8c0b26.price > 0 ? (
-                  <Text style={v_d81136.price}>
-                    {Number(v_8c0b26.price).toLocaleString('ko-KR')}
-                    {v_8d41d7('supplements.price_won')}
-                  </Text>
-                ) : null}
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           );
         }}
       />
@@ -207,6 +225,9 @@ const v_d81136 = v_472849.create({
   },
   checkOn: { backgroundColor: '#111', borderColor: '#111' },
   checkMark: { color: '#fff', fontSize: 12, fontWeight: '700' },
+
+  detailArea: { flex: 1, flexDirection: 'row', alignItems: 'flex-start' },
+  detailHint: { fontSize: 11, color: '#1A56DB', marginTop: 6 },
   image: { width: 72, height: 72, borderRadius: 8, backgroundColor: '#f4f4f4' },
   imagePlaceholder: { alignItems: 'center', justifyContent: 'center' },
   body: { flex: 1, marginLeft: 10 },

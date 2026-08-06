@@ -1,4 +1,10 @@
-import { v_a382fa, v_dbb24a, v_739f72, v_c7823e } from '../shopUrl';
+import {
+  v_a382fa,
+  v_dbb24a,
+  v_739f72,
+  v_c7823e,
+  v_bdc222,
+} from '../shopUrl';
 
 describe('sanitizeNext', () => {
   it('passes same-origin absolute path', () => {
@@ -46,5 +52,21 @@ describe('buildCheckoutNext', () => {
     expect(v_a448ad.startsWith('/oth-path?')).toBe(true);
     const v_24baff = new URLSearchParams(v_a448ad.split('?')[1]);
     expect(v_24baff.get('it_ids')!.split(',')).toHaveLength(20);
+  });
+});
+
+describe('buildItemExplanUrl (T-265)', () => {
+  it('제품소개 전용 절대 URL을 만든다', () => {
+    const v_f71b56 = v_bdc222('2026062420')!;
+    expect(v_f71b56.startsWith('https://')).toBe(true);
+    expect(v_f71b56).toContain('/oth-path?it_id=2026062420');
+  });
+  it('it_id를 URL 인코딩한다', () => {
+    expect(v_bdc222('a b&c')).toContain('it_id=a%20b%26c');
+  });
+  it('itemId가 없으면 null (팝업 열지 않음)', () => {
+    expect(v_bdc222(null)).toBeNull();
+    expect(v_bdc222(undefined)).toBeNull();
+    expect(v_bdc222('   ')).toBeNull();
   });
 });

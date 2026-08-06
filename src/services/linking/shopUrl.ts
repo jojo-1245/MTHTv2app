@@ -16,6 +16,13 @@ export function v_739f72(v_6e55b1): string {
   return `/oth-path?it_id=${encodeURIComponent(v_6e55b1)}`;
 }
 
+export function v_bdc222(v_6e55b1): string | null {
+  const v_389afb = String(v_6e55b1 ?? '').trim();
+  if (!v_389afb) return null;
+  const v_694b25 = v_e4a763().SHOP_BASE ?? 'https://oth-path-4f6cfb.example.invalid';
+  return `${v_694b25}/oth-path?it_id=${encodeURIComponent(v_389afb)}`;
+}
+
 export function v_c7823e(v_735da1, v_acc1e5 = 'ai'): string {
   const v_52e08b = [...new Set(v_735da1.map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
   if (!v_52e08b.length) return '/oth-path';
