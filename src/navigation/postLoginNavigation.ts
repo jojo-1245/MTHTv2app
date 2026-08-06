@@ -1,5 +1,7 @@
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import type { v_8ad91b } from './index';
 import type { v_8adb2f } from '../services/authApi';
+import { v_624bd2 } from '../constants';
 import {
   v_3a909c,
   v_186ef0,
@@ -26,10 +28,6 @@ export function v_87ba9a(
 }
 
 export async function v_4d6220(): Promise<v_d1205d> {
-  const { default: v_e84827 } = await import('bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv');
-  const { STORAGE_KEYS: v_624bd2 } = await import('../constants');
-  const { getHomeRouteForMember: v_186ef0 } = await import('../utils/userRole');
-
   try {
     const v_0e3b5e = await v_e84827.getItem(v_624bd2.memberInfo);
     if (!v_0e3b5e) return 'MetaHome';
