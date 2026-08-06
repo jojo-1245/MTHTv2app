@@ -1,7 +1,6 @@
 import v_a3453e, { v_5ab095, v_c4deb2, v_de06a3, v_e662ae, v_df9f57 } from 'bapkr';
 import {
   v_39a996,
-  v_03e392,
   v_a2349e,
   v_6b5698,
   v_1ed974,
@@ -39,6 +38,8 @@ import { v_e0068c } from 'vvfgtwbmdpbnvhtfbtbgudicfmpscw';
 import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_570c34, v_1c1837, v_dd725b, v_1a40c4, v_9cafa7, v_3b68d0 } from '../components';
+import { v_8d3e4b } from '../components/WalletV2SetupGate';
+import { v_889fad } from '../components/AlertHost';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_96a538 } from '../hooks/useVersionCheck';
 import { v_5ad1fd } from '../hooks';
@@ -458,7 +459,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     const v_479f05 = v_e4a763().POINTCLICK_PLACEMENT_UID;
     const v_b922bf = v_479f05?.trim();
     if (!v_b922bf) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured'));
       return;
     }
     let v_021a29 = 'guest';
@@ -500,7 +501,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_59ccdc = v_43c42e.is_bonus
         ? v_8d41d7('home.attendance_bonus_received', { amount: v_43c42e.reward_amount, days: v_43c42e.streak_days })
         : v_8d41d7('home.attendance_reward_received', { amount: v_43c42e.reward_amount });
-      v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
+      v_889fad(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
       const v_377045 = (v_5e9bfe as any)?.isAxiosError ? v_5e9bfe as any : null;
       console.error('[MetaHomeScreen] 출석 체크 실패:', {
@@ -516,11 +517,11 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         } catch {
           v_22e0b8(true);
         }
-        v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('home.already_checked_today'));
         return;
       }
       const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.attendance_check_failed');
-      v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
+      v_889fad(v_8d41d7('common.error'), v_1744b9);
     } finally {
       v_e3bbea(false);
     }
@@ -540,7 +541,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       () => v_e3bbea(false),
       () => {
         v_e3bbea(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.attendance_check_failed'));
+        v_889fad(v_8d41d7('common.error'), v_8d41d7('home.attendance_check_failed'));
       }
     );
   };
@@ -567,7 +568,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_16fedc = v_de06a3(async (v_3b402b) => {
     if (v_092595) return;
     if (!v_0c7e2f()) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
       return;
     }
     v_61eda6(true);
@@ -576,7 +577,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       if (v_3b402b) {
         const v_5885b8 = await v_e84827.getItem(v_8bf63f);
         if (v_5885b8 !== 'true') {
-          v_03e392.alert(
+          v_889fad(
             v_8d41d7('common.error'),
             v_8d41d7('home.step_notification_start_failed'),
             [
@@ -636,7 +637,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       () => { },
       () => {
         v_5ce610(false);
-        v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
+        v_889fad(v_8d41d7('common.error'), v_8d41d7('home.step_reward_failed'));
       }
     );
   };
@@ -695,7 +696,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         ? `${v_8d41d7('common.success')}\n${v_8d41d7('home.step_reward_received', { count: v_43c42e.new_rewards_count, amount: v_43c42e.total_reward_paid })}`
         : v_8d41d7('home.step_sync_success');
 
-      v_03e392.alert(v_8d41d7('common.success'), v_59ccdc);
+      v_889fad(v_8d41d7('common.success'), v_59ccdc);
     } catch (v_5e9bfe) {
 
       try {
@@ -722,7 +723,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       }
 
       const v_1744b9 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('home.step_reward_failed');
-      v_03e392.alert(v_8d41d7('common.error'), v_1744b9);
+      v_889fad(v_8d41d7('common.error'), v_1744b9);
     } finally {
       v_5ce610(false);
     }
@@ -1188,6 +1189,7 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       </SafeView>
       <UpdateOverlay visible={v_24a76a} progress={v_a63fde} />
       <MedicalDisclaimerModal />
+      <WalletV2SetupGate />
     </MainLayout>
   );
 };

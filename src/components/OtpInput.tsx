@@ -9,6 +9,8 @@ interface OtpInputProps {
   onChange?: (code: string) => void;
   showError?: boolean;
   editable?: boolean;
+
+  autoFocus?: boolean;
   wrapperStyle?: object;
   rowStyle?: object;
   boxStyle?: object;
@@ -23,6 +25,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   onChange: v_b187d9,
   showError: v_f74c59,
   editable: v_87d063 = true,
+  autoFocus: v_f04c26,
   wrapperStyle: v_31a2d4,
   rowStyle: v_e77352,
   boxStyle: v_79930a,
@@ -90,7 +93,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
         inputMode="numeric"
         maxLength={v_724489}
         style={v_d81136.hiddenInput}
-        autoFocus={v_87d063}
+        autoFocus={v_f04c26 ?? v_87d063}
         showSoftInputOnFocus={v_87d063}
         editable={v_87d063}
         caretHidden

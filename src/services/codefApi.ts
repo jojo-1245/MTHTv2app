@@ -6,13 +6,15 @@ import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
 import { v_624bd2 } from '../constants';
 
-const v_8a74cb = 60000;  
+const v_8a74cb = 180000;  
 
 export interface CheckupInput {
     userName: string;
     birthDate: string;
     phoneNo: string;
     provider: string;
+
+    telecom?: string;
     subAccountId?: string;
 }
 
@@ -58,7 +60,7 @@ export interface RequestCheckupResult {
 }
 
 export interface ApproveCheckupResult {
-    status: 'done';
+    status: 'done' | 'pending';
     saved: number;
     items: any[];
 }
@@ -95,7 +97,7 @@ export async function v_15baf2(v_bbda62): Promise<RequestCheckupResult> {
     if (__DEV__) {
         console.log('[codefApi] requestCheckup 요청:', {
             userName: v_bbda62.userName,
-            birthDate: v_bbda62.birthDate,
+            birthDate: v_bbda62.birthDate ? `${v_bbda62.birthDate.slice(0, 2)}******` : '',
             provider: v_bbda62.provider,
             hasSubAccountId: !!v_bbda62.subAccountId,
         });
@@ -137,6 +139,7 @@ export async function v_b67103(v_ff38f8, v_bbda62, v_ee2acd): Promise<ApproveChe
             birthDate: v_bbda62.birthDate,
             phoneNo: v_bbda62.phoneNo,
             provider: v_bbda62.provider,
+            telecom: v_bbda62.telecom,
             twoWay: v_ff38f8,
             subAccountId: v_ee2acd,
         },
