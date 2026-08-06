@@ -1330,7 +1330,7 @@
             "risk_level_high": "높음",
             "risk_caution": "주의가 필요합니다",
             "section_blood_pressure": "혈압",
-            "section_others": "기타 결과",
+            "section_others": "측정결과",
             "binah_respiratory": "호흡기",
             "respiratory_headline_normal": "당신의 호흡은 정상입니다.",
             "respiratory_headline_abnormal": "당신의 호흡은 비정상입니다.",
