@@ -110,8 +110,9 @@ export default function v_6f3f7e({
         renderItem={({ item: v_8c0b26 }) => {
           const v_a98e33 = v_8c0b26.label === 'extra';
           const v_f8bd01 = !!v_8c0b26.shopItemId;
+
           const v_587413 = !v_a98e33
-            ? v_f8bd01
+            ? true
             : !!(v_8c0b26.shopItemId && v_1c5924.has(v_8c0b26.shopItemId));
           return (
             <TouchableOpacity
