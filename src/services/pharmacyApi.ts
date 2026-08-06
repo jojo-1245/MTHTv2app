@@ -60,16 +60,26 @@ export async function v_66896f(): Promise<PharmacyVisitorSummary[]> {
   }
 }
 
-export async function v_119173(v_24baff): Promise<{ expiresIn: number; dev?: boolean }> {
-  const v_1833e7 = v_24baff.name.trim();
-  const v_d74a81 = v_24baff.phone.replace(/\D/g, '');
+export async function v_119173(v_24baff): Promise<{ expiresIn: number; dev?: boolean; name?: string; phone?: string }> {
+  const v_4d33b2 =
+    v_24baff.visitorId != null
+      ? { visitorId: v_24baff.visitorId }
+      : {
+          name: (v_24baff.name ?? '').trim(),
+          phone: (v_24baff.phone ?? '').replace(/\D/g, ''),
+        };
   try {
-    const v_8f00b9 = await v_9a8286.post<{ success: boolean; data: { expires_in: number; dev?: boolean } }>(
-      '/oth-path',
-      { name: v_1833e7, phone: v_d74a81 }
-    );
+    const v_8f00b9 = await v_9a8286.post<{
+      success: boolean;
+      data: { expires_in: number; dev?: boolean; name?: string; phone?: string };
+    }>('/oth-path', v_4d33b2);
     const v_9390e8 = v_b37be4(v_8f00b9);
-    return { expiresIn: v_9390e8.expires_in ?? 180, dev: v_9390e8.dev };
+    return {
+      expiresIn: v_9390e8.expires_in ?? 180,
+      dev: v_9390e8.dev,
+      name: v_9390e8.name,
+      phone: v_9390e8.phone,
+    };
   } catch (v_5e9bfe) {
     throw new Error(v_9f9d96(v_5e9bfe, '인증번호 전송에 실패했습니다.'));
   }

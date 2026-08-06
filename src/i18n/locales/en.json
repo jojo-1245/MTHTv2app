@@ -49,7 +49,10 @@
     "year_month": "{{month}} {{year}}",
     "or": "OR",
     "coming_soon": "Coming Soon",
-    "coming_soon_message": "This feature will be available soon."
+    "coming_soon_message": "This feature will be available soon.",
+    "paste": "Paste",
+    "done": "Done",
+    "continue": "Continue"
   },
   "account_selector": {
     "title": "Account Selection",
@@ -71,7 +74,7 @@
     "select_relationship_placeholder": "Select Relationship",
     "nickname": "Nickname",
     "enter_nickname_placeholder": "Enter Nickname",
-    "enter_nickname": "Enter sub-account nickname",
+    "enter_nickname": "Please enter a nickname.",
     "enter_nickname_and_relationship": "Enter sub-account nickname and relationship",
     "search_by_email": "Search member by email",
     "enter_email": "Enter Email",
@@ -95,7 +98,6 @@
     "otp_invalid": "Invalid verification code.",
     "otp_verification_failed": "Verification Failed",
     "member_not_found": "Member information not found.",
-    "enter_nickname": "Please enter a nickname.",
     "select_relationship": "Please select a relationship.",
     "enter_all_info": "Please enter all information.",
     "link_success": "Sub-account has been linked.",
@@ -272,7 +274,7 @@
     "comprehensive_health_check": "Comprehensive Health Check",
     "nhis_checkup": "Health Checkup",
     "nhis_checkup_desc": "View your NHIS health checkup results",
-    "skin_analysis": "Skin Analysis",
+    "skin_analysis": "Analysis",
     "ai_skin_diagnosis": "AI Skin Diagnosis",
     "ai_skin_diagnosis_ios": "AI Skin Analysis",
     "start_btn": "Start →",
@@ -352,7 +354,6 @@
     "bottom_nav_myinfo": "My Info",
     "popular_questions": "Popular Questions",
     "my_health_status": "My Health Status",
-    "skin_analysis": "Analysis",
     "health_analysis": "Analysis",
     "health_index": "Health Index",
     "before_measurement": "Before measurement",
@@ -516,16 +517,18 @@
     "success_title": "Sign Up Complete",
     "success_message": "Please proceed with email verification.",
     "success_message_social": "You have signed up. Tap social login to sign in.",
-        "social_email_locked": "The social account email cannot be changed.",
-        "region_all": "All Regions",
-        "terms_of_service": "Terms of Service",
-        "privacy_policy": "Privacy Policy",
-        "terms_middle": " and ",
-        "terms_suffix": " agreement.",
-        "policy_load_error": "Failed to load content.",
+    "social_email_locked": "The social account email cannot be changed.",
+    "region_all": "All Regions",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "terms_middle": " and ",
+    "terms_suffix": " agreement.",
+    "policy_load_error": "Failed to load content.",
     "error_title": "Sign Up Failed",
     "error_validation": "Please check your input information.",
-    "error_unknown": "An unknown error occurred during sign up."
+    "error_unknown": "An unknown error occurred during sign up.",
+    "password_too_short": "Password must be at least 8 characters.",
+    "password_requirements": "Password must include both letters and numbers."
   },
   "profile": {
     "title": "My Info",
@@ -574,7 +577,8 @@
     "copyright": "© 2026 MetaHint. All rights reserved.",
     "pangle_rewarded_test": "Pangle Rewarded Video Test",
     "pangle_rewarded_test_done": "Rewarded video completed (test)",
-    "pangle_rewarded_test_failed": "Ad failed to load"
+    "pangle_rewarded_test_failed": "Ad failed to load",
+    "logout_confirm": "Are you sure you want to log out?"
   },
   "profit_distribution": {
     "title": "Profit Distribution",
@@ -789,7 +793,9 @@
     "confirm_pwd_label": "Confirm new password",
     "confirm_pwd_placeholder": "repeat password",
     "btn_title": "Reset password",
-    "footer_text": "Already have an account? "
+    "footer_text": "Already have an account? ",
+    "mismatch": "Passwords do not match.",
+    "failed": "Failed to change password. Please try again."
   },
   "password_changed": {
     "title": "Password changed",
@@ -805,7 +811,7 @@
     "subtitle": "AI Health Advisor",
     "subtitle_ios": "AI Wellness Assistant",
     "wellness_banner": "For general wellness information only — not a medical diagnosis. Please consult a doctor before making any medical decisions.",
-    "placeholder": "Enter health-related questions...",
+    "placeholder": "Search for health information",
     "account_default": "Kim Geon-gang",
     "sample_products": {
       "product_1_name": "Jongkundang Health I-Care Calcium Up Plus",
@@ -941,7 +947,6 @@
       "supplements": "Nutritional supplements",
       "sleeping_pills": "Sleeping pills"
     },
-    "placeholder": "Search for health information",
     "ai_preparing": "I'm preparing an answer...",
     "view_product": "View Product",
     "health_info_title": "Load Health Info",
@@ -1394,7 +1399,6 @@
       }
     },
     "sdk_alerts": {
-      "solution_prefix": "Solution:",
       "4": {
         "title": "Device Error",
         "reason": "A session was requested to run while the device is in Low Power mode.",
@@ -1520,6 +1524,26 @@
         "reason": "License sync is required.",
         "solution": "Connect to the internet and try again."
       },
+      "3505": {
+        "title": "Measurement Warning",
+        "reason": "Camera FPS is degraded and may affect measurement quality.",
+        "solution": "Follow measurement best practices and try again."
+      },
+      "3506": {
+        "title": "Measurement Warning",
+        "reason": "A frame was received in incorrect timestamp order.",
+        "solution": "You can proceed with the measurement."
+      },
+      "4505": {
+        "title": "Measurement Warning",
+        "reason": "Blood pressure calculation failed.",
+        "solution": "BP results will be omitted for this measurement. Try again."
+      },
+      "4506": {
+        "title": "Measurement Warning",
+        "reason": "No vital signs were processed.",
+        "solution": "Check license/internet status and try again."
+      },
       "6004": {
         "title": "Session Error",
         "reason": "Start was called when session is not READY.",
@@ -1580,26 +1604,6 @@
         "reason": "Unsupported user height was provided.",
         "solution": "Use 130–230 cm or omit height."
       },
-      "3505": {
-        "title": "Measurement Warning",
-        "reason": "Camera FPS is degraded and may affect measurement quality.",
-        "solution": "Follow measurement best practices and try again."
-      },
-      "3506": {
-        "title": "Measurement Warning",
-        "reason": "A frame was received in incorrect timestamp order.",
-        "solution": "You can proceed with the measurement."
-      },
-      "4505": {
-        "title": "Measurement Warning",
-        "reason": "Blood pressure calculation failed.",
-        "solution": "BP results will be omitted for this measurement. Try again."
-      },
-      "4506": {
-        "title": "Measurement Warning",
-        "reason": "No vital signs were processed.",
-        "solution": "Check license/internet status and try again."
-      },
       "8003": {
         "title": "Measurement Error",
         "reason": "Measurement could not be completed. Please ensure your face is centered and well-lit, then try again.",
@@ -1644,7 +1648,8 @@
         "title": "Measurement Warning",
         "reason": "Data gap detected in the stream.",
         "solution": "Ensure a stable connection and try again."
-      }
+      },
+      "solution_prefix": "Solution:"
     }
   },
   "my_info_edit": {
@@ -1746,6 +1751,7 @@
     "copy_success_message": "PIN code has been copied to clipboard.",
     "kakao_share_button": "Share via KakaoTalk",
     "my_referrals_button": "View My Referrals",
+    "referral_sales_button": "View Referral Sales",
     "share_error": "Failed to share.",
     "share_message": "Become a HiNT Partner! Referral code: {{code}}\n{{link}}",
     "share_title": "HiNT Partner Referral"
@@ -1754,6 +1760,20 @@
     "title": "My Referrals",
     "total_count": "Total {{count}}",
     "empty": "No one has used your referral code yet."
+  },
+  "referral_sales": {
+    "title": "Referral Sales",
+    "total_count": "{{count}} orders",
+    "pending_commission": "Pending commission {{amount}}",
+    "empty": "No referral sales yet.\nCompleted deliveries from your referrals will appear here.",
+    "buyer_unknown": "Buyer",
+    "receipt": "Paid {{amount}}",
+    "role_referrer": "Direct",
+    "role_upline": "Upline",
+    "settle_on": "Settle {{date}}",
+    "status_pending": "Pending",
+    "status_settled": "Settled",
+    "load_more": "Load more"
   },
   "my_info_email_auth": {
     "title": "Identity Verification",
@@ -1830,7 +1850,7 @@
       "deposit_address": "Deposit Address"
     },
     "address_required_title": "Address Required",
-    "address_required_message": "Please enter the recipient address by scanning the barcode.",
+    "address_required_message": "Please enter a wallet address.",
     "reward_type": {
       "attendance": "Attendance Check",
       "health_analysis": "Health Analysis",
@@ -1889,7 +1909,6 @@
     "gas_estimate_failed_message": "An error occurred while estimating the gas fee.",
     "amount_invalid_title": "Invalid Amount",
     "amount_invalid_message": "Please enter a valid amount.",
-    "address_required_message": "Please enter a wallet address.",
     "tx_progress_title": "Sending",
     "tx_sending_amount": "Sending Amount",
     "tx_from": "From",
@@ -1910,7 +1929,121 @@
     "tx_gas_fee": "Used Gas / Fee",
     "tx_block_number": "Block Number",
     "tx_pending": "Pending",
-    "tx_not_found": "No recent transaction found."
+    "tx_not_found": "No recent transaction found.",
+    "action_info": "Wallet Info",
+    "user_not_found": "User info not found.",
+    "info_guide_title": "Wallet Guide",
+    "info_guide": "Wallet Guide",
+    "info_guide_desc": "Wallet security & how to use",
+    "info_backup": "Backup",
+    "info_backup_desc": "Safely back up your wallet to a file",
+    "info_restore": "Restore",
+    "info_restore_desc": "Restore wallet from a backup file",
+    "info_guide_body": "This is a non-custodial wallet that only you can use.\n\n• Protected by your payment PIN.\n• Your private key is stored securely on this device only.\n• If you change devices or reinstall, you can only recover with a backup file.\n\n⚠️ Be sure to use \"Backup\" and keep your backup file and backup password safe. Without a backup, your assets cannot be recovered.",
+    "backup_err_pin": "Enter your 6-digit payment PIN",
+    "backup_err_pass": "Backup password must be 8+ chars and match",
+    "backup_err_mismatch": "Backup passwords do not match",
+    "backup_desc": "Back up your wallet with your payment PIN and a backup password. You'll need the backup password to restore, so don't forget it.",
+    "backup_pin_ph": "Payment PIN (6 digits)",
+    "backup_pass_ph": "8+ characters",
+    "backup_pass2_ph": "Re-enter backup password",
+    "backup_create": "Create backup",
+    "backup_done": "Backup created. Save it as a file or copy it and keep it safe.",
+    "backup_save_file": "Save/share as file",
+    "backup_copy": "Copy",
+    "backup_copied": "Backup code copied. Keep it somewhere safe.",
+    "restore_err_code": "Paste a valid backup code",
+    "restore_err_pass": "Enter the backup password",
+    "restore_err_pin": "Enter a new 6-digit payment PIN",
+    "restore_err_pin_mismatch": "New PINs do not match",
+    "restore_desc": "Restore your wallet with the backup code and the password you set when backing up. If you forget the password, restore is impossible.",
+    "restore_code_ph": "Paste backup code (bv2:...)",
+    "restore_pass_ph": "Backup password",
+    "restore_pin_ph": "New payment PIN (6 digits)",
+    "restore_pin2_ph": "Confirm new PIN",
+    "restore_now": "Restore",
+    "restore_done": "Wallet restored. You can now use it with your new PIN.",
+    "backup_title": "Wallet key backup",
+    "backup_pin_title": "Reveal private key",
+    "backup_pin_desc": "Enter your payment PIN to reveal the private key.",
+    "backup_err_no_vault": "No wallet key to back up",
+    "backup_err_wrong_pin": "Incorrect PIN",
+    "backup_warn_title": "Keep your private key safe",
+    "backup_warn_msg": "If your private key is exposed, anyone can take your wallet assets. Never share it and keep it somewhere safe. You can restore your wallet on another device with this private key.",
+    "backup_address_label": "Wallet address",
+    "backup_key_label": "Private key",
+    "backup_copy_key": "Copy private key",
+    "backup_key_copied": "Private key copied. Keep it somewhere safe.",
+    "restore_title": "Wallet restore",
+    "restore_info_title": "Restore with private key",
+    "restore_info_msg": "Enter the private key you saved to restore your wallet on this device. Set a new payment PIN.",
+    "restore_key_label": "Private key",
+    "restore_key_ph": "Enter/paste private key (0x...)",
+    "restore_new_pin_label": "New payment PIN",
+    "restore_err_key": "Enter a valid private key",
+    "restore_err_fail": "Restore failed. Check your private key.",
+    "restore_pin2_label": "Confirm new PIN",
+    "backup_choose": "Choose a backup method",
+    "backup_choose_desc": "Your wallet key is protected by a PIN.\nFile/Drive backups cannot be decrypted without the PIN.",
+    "backup_file": "Save to file",
+    "backup_file_desc": "Share to another app (mail, cloud, files, etc.)",
+    "backup_drive": "Save to Google Drive",
+    "backup_drive_desc": "Encrypted save to your Google account cloud",
+    "backup_drive_soon": "This feature is coming soon.",
+    "backup_key_view": "View / copy key directly",
+    "backup_key_view_desc": "Shown in plain text on screen + copyable (caution)",
+    "backup_pin_label": "Payment PIN",
+    "backup_pass_label": "Backup password (8+ chars)",
+    "backup_create_file": "Create backup file",
+    "backup_pass_setup": "Set backup password",
+    "backup_done_title": "Backup complete",
+    "backup_pass_field": "Backup password",
+    "backup_pass2_field": "Confirm backup password",
+    "backup_pass_help": "Each backup file has its own password.\nRemember the file name together with its password, and enter the same password you set when restoring.\nIf you forget the password, the backup cannot be restored — keep it safe.",
+    "backup_do": "Back up",
+    "backup_pin_enter": "Confirm PIN",
+    "backup_pin_enter_desc": "Enter your existing PIN to create the backup file.",
+    "consent_title": "Consent before backup",
+    "consent_lead": "The backup file is the only key that controls your wallet assets.",
+    "consent_b1": "Never share it with anyone (including developers/support)",
+    "consent_b2": "Do not send it via messenger or email",
+    "consent_b3": "Do not store it on shared PCs or public clouds",
+    "consent_b4": "Anyone who receives the file can move your assets immediately",
+    "consent_c1": "The key is critical information for using the wallet",
+    "consent_c2": "I understand that losing the key means I cannot use the wallet",
+    "consent_c3": "It is information that must not be shared with others",
+    "consent_c4": "I understand the above and promise not to share it with anyone",
+    "consent_c5": "If you forget your PIN and password, you cannot use the wallet",
+    "consent_pk_box": "The private key will be shown in plain text. Make sure no one is nearby first.",
+    "key_warn_title": "Warning",
+    "key_warn_msg": "The private key will be shown in plain text.\nMake sure no one nearby can see your screen.",
+    "key_shown_warn": "A plain-text key is shown. Beware of screenshots, recording, and exposure.",
+    "backup_secret_label": "Private key",
+    "backup_copy_this_key": "Copy this key",
+    "backup_pass_min": "Password must be at least 8 characters",
+    "backup_pass_mismatch": "Passwords do not match",
+    "backup_saved_title": "Backup complete",
+    "backup_saved_msg": "The file has been saved.",
+    "backup_save_cancelled": "Save cancelled. Allow folder access to save the file.",
+    "restore_choose": "Choose restore source",
+    "restore_choose_desc": "Select a backup file to restore your key. You'll need the password you set during backup.",
+    "restore_from_file": "Restore from file",
+    "restore_from_file_desc": "Choose a backup file from device storage",
+    "restore_from_drive": "Restore from Google Drive",
+    "restore_from_drive_desc": "Import a backup file saved to Drive",
+    "restore_help": "To restore, enter the password you set when backing up. If you forget it, restore is impossible.",
+    "restore_pass_title": "Backup password",
+    "restore_pin_title": "Confirm wallet PIN",
+    "restore_pin_desc": "Set a 6-digit PIN to protect your restored wallet.",
+    "restore_otp_title": "OTP verification",
+    "restore_otp_desc": "Enter the 6-digit code sent to your email.",
+    "restore_otp_expired": "Expired",
+    "restore_otp_resend": "Resend",
+    "restore_err_file": "Not a valid backup file (bv2 format).",
+    "restore_err_otp_send": "Failed to send the code",
+    "restore_err_otp": "Enter the 6-digit code",
+    "restore_err_otp_bad": "Invalid verification code",
+    "restore_pass_label": "Backup password"
   },
   "my_info_faq": {
     "title": "Frequently Asked Questions",
@@ -2071,20 +2204,20 @@
       "decline": "Decline",
       "success": "Payment completed.",
       "declined": "Payment declined.",
-            "error_generic": "Payment failed.",
-            "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
-            "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
-            "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
-            "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
-            "error_declined_status": "This order was already declined. Please start payment again in the shop.",
-            "error_expired": "The approval window expired. Please pay again from the shop.",
-            "error_timeout": "Approval is taking longer than usual. Check the shop payment page shortly.",
-            "processing": "Processing on-chain payment. Please wait…",
-            "error_failed_retry": "Transfer failed. Tap Approve again to retry.",
-            "error_failed_shop": "Payment failed. Please retry from the shop payment page.",
-            "return_shop_hint": "Tap the button below to view your shop order. (The previous browser tab may have closed.)",
-            "view_order": "View shop order",
-            "open_shop_payment": "Open shop payment page"
+      "error_generic": "Payment failed.",
+      "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
+      "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
+      "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
+      "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
+      "error_declined_status": "This order was already declined. Please start payment again in the shop.",
+      "error_expired": "The approval window expired. Please pay again from the shop.",
+      "error_timeout": "Approval is taking longer than usual. Check the shop payment page shortly.",
+      "processing": "Processing on-chain payment. Please wait…",
+      "error_failed_retry": "Transfer failed. Tap Approve again to retry.",
+      "error_failed_shop": "Payment failed. Please retry from the shop payment page.",
+      "return_shop_hint": "Tap the button below to view your shop order. (The previous browser tab may have closed.)",
+      "view_order": "View shop order",
+      "open_shop_payment": "Open shop payment page"
     }
   },
   "linking": {
@@ -2095,6 +2228,69 @@
   },
   "supplements": {
     "section_title": "Recommended supplements",
-    "view_in_shop": "View in shop"
+    "view_in_shop": "View in shop",
+    "label_ai": "AI pick",
+    "label_extra": "Add-on",
+    "price_won": " KRW",
+    "included": "Included",
+    "total_label": "Total",
+    "checkout_cta": "Checkout"
+  },
+  "walletV2Pin": {
+    "title_enter": "Set wallet protection PIN",
+    "title_confirm": "Confirm PIN",
+    "desc_enter": "Set a 6-digit number to protect your wallet.",
+    "desc_confirm": "Enter the same PIN once more.",
+    "err_format": "Enter a 6-digit number",
+    "err_mismatch": "PINs do not match",
+    "err_setup": "Setup failed",
+    "err_unknown": "An error occurred",
+    "prompt_title": "Enter payment PIN",
+    "prompt_desc": "Enter your 6-digit PIN to sign your transaction.",
+    "title": "Set wallet protection PIN",
+    "warning": "For wallet key protection only.",
+    "backup_hint": "After setup, back up to protect your wallet.",
+    "enter_prompt": "Enter a 6-digit PIN",
+    "confirm_prompt": "Enter it once more",
+    "verifying": "Verifying...",
+    "error_prompt": "Please try again",
+    "retry": "Retry",
+    "verify_fail": "Verification failed — please try again"
+  },
+  "walletV2Tutorial": {
+    "page1": {
+      "title": "Your own wallet key",
+      "body": [
+        "Your MetaHint wallet has a private key that only you hold.",
+        "The private key is the most important proof of wallet ownership.",
+        "Only the holder of this key can use the assets in the wallet.",
+        "If your private key leaks, others can use your wallet — never share it."
+      ]
+    },
+    "page2": {
+      "title": "Back up your key safely",
+      "body": [
+        "You can back up your wallet key in the app.",
+        "Even if you lose your device or delete the app, a backup file lets you restore the wallet.",
+        "It is encrypted with your backup password and stored safely.",
+        "If you lose the backup file or password, no one — including support — can recover it."
+      ]
+    },
+    "page3": {
+      "title": "What the company knows and doesn't",
+      "body": [
+        "The MetaHint app only stores your wallet address.",
+        "Your private key is never stored on company servers and the company cannot see it.",
+        "By nature of blockchain, wallet addresses and transactions are publicly viewable.",
+        "If you lose your private key, the company cannot recover your wallet.",
+        "You are responsible for managing your wallet and private key."
+      ]
+    },
+    "rememberHeading": "Please remember",
+    "agree": "I understand all of the above.",
+    "prev": "Back",
+    "next": "Next",
+    "start": "Get started",
+    "close": "Close"
   }
 }

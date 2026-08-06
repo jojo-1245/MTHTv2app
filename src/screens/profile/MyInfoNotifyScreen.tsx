@@ -7,7 +7,6 @@ import {
   v_4623af,
   v_39a996,
   v_6c4f62,
-  v_03e392,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_75de9d } from 'zqqvxke';
@@ -18,6 +17,7 @@ import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_5ade23 } from 'xbfwaaanosqvazmrqoah';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_570c34, v_1c1837, v_729608 } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_880836, v_9803ea, type v_d9bc70 } from '../../services';
@@ -101,7 +101,7 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
   }, []);
 
   const v_8b09cb = (item: v_d9bc70, v_47ef8d) => {
-    v_03e392.alert(
+    v_889fad(
       v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow_title') : v_8d41d7('my_info_notify.health_request_reject_title'),
       v_47ef8d ? v_8d41d7('my_info_notify.health_request_allow_message') : v_8d41d7('my_info_notify.health_request_reject_message'),
       [
@@ -115,8 +115,8 @@ const MyInfoNotifyScreen: v_a3453e.FC<Props> = () => {
             } catch (v_9e86fd) {
               if (__DEV__) console.warn('[MyInfoNotifyScreen] 건강요청 읽음 처리 실패:', v_9e86fd);
             }
-            if (v_47ef8d) v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_allowed'));
-            else v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_rejected'));
+            if (v_47ef8d) v_889fad(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_allowed'));
+            else v_889fad(v_8d41d7('common.success'), v_8d41d7('my_info_notify.health_request_rejected'));
             v_0965ee((v_ba2215) => v_ba2215.filter((v_f4e98d) => v_f4e98d.id !== v_8c0b26.id));
           },
         },

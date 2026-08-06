@@ -19,6 +19,7 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
 import v_6f3f7e from '../../components/SupplementRecommendSection';
+import { v_dff48a } from '../../utils/aiTextFormat';
 import { v_0d0e7d, type v_9a970c } from '../../utils/analysisResultTabletStyles';
 import { v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
@@ -2744,6 +2745,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </View>
                 )}
 
+                {
+}
+                <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
+
                 {}
                 {!v_09e9e3 ? (
                   <TouchableOpacity
@@ -2802,7 +2807,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             </View>
                             <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>AI 힌티 종합 분석</Text>
                           </View>
-                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_e399bf}</Text>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
                         </View>
                       ) : (
                       <>
@@ -2873,7 +2878,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       </>
                       )}
                     </View>
-                    <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
                   </>
                 )}
 
