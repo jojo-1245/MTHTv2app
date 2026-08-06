@@ -35,13 +35,17 @@ export default function v_6f3f7e({
   v_c4deb2(() => {
     let v_759436 = true;
     if (v_fbf3b0 == null) {
+      console.log('[SupplementReco] recordId 없음 — 호출 스킵', { source: v_04e790 });
       v_fa923c([]);
       v_fb4b30(new Set());
       return;
     }
+    console.log('[SupplementReco] 요청', { source: v_04e790, recordId: v_fbf3b0, platform: v_326be8.OS });
     v_ec0289({ source: v_04e790, recordId: v_fbf3b0, platform: v_326be8.OS as 'ios' | 'android' })
       .then((v_cb35cb) => {
         if (!v_759436) return;
+        console.log('[SupplementReco] 응답', { count: v_cb35cb.items.length, safeMode: v_cb35cb.safeMode });
+
         if (v_326be8.OS === 'ios' && v_cb35cb.safeMode === false) {
           v_fa923c([]);
           v_fb4b30(new Set());
@@ -50,7 +54,12 @@ export default function v_6f3f7e({
         v_fa923c(v_cb35cb.items);
         v_fb4b30(new Set());
       })
-      .catch(() => {
+      .catch((v_9e86fd) => {
+        console.log('[SupplementReco] 실패', {
+          message: v_9e86fd?.message,
+          status: v_9e86fd?.response?.status,
+          body: JSON.stringify(v_9e86fd?.response?.data)?.slice(0, 300),
+        });
         if (v_759436) {
           v_fa923c([]);
           v_fb4b30(new Set());
