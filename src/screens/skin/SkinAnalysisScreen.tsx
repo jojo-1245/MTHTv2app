@@ -424,8 +424,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const [v_8da349, v_5bc608] = v_5ab095(0);
 
-    const [v_09e9e3, v_625d0a] = v_5ab095(false);
-
     const [v_c813f5, v_0d73a9] = v_5ab095<{ image: any; name: string } | null>(null);
 
     const v_02a5a0 = v_e662ae(false);
@@ -658,14 +656,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     v_a3453e.useEffect(() => {
         if (__DEV__) {
             console.log('[AI 피부분석 effect]', {
-                aiAnalysisStarted: v_09e9e3,
                 ollamaAnalysis: !!v_e399bf,
                 isOllamaLoading: v_85cf60,
                 savedRecordId: v_4ae380,
                 savedRecordIdRef: v_f4f730.current,
             });
         }
-        if (!v_09e9e3 || v_e399bf || v_85cf60) return;
+        if (v_e399bf || v_85cf60) return;
         const v_fbf3b0 = v_f4f730.current;
         if (!v_fbf3b0) {
             if (__DEV__) console.warn('[AI 피부분석] recordId 없음 - 저장 완료 대기 중');
@@ -683,7 +680,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_b11b33('AI 분석 중 오류가 발생했습니다.');
             })
             .finally(() => v_952b9d(false));
-    }, [v_09e9e3, v_4ae380]);
+    }, [v_4ae380]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         let v_52f726;
@@ -1984,36 +1981,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     </View>
                 </View>
 
-                {}
-                <SupplementRecommendSection source="skin" recordId={v_4ae380 ?? null} />
+                {
 
-                {}
-                {!v_09e9e3 ? (
-                    <TouchableOpacity
-                        activeOpacity={0.9}
-                        onPress={() => v_625d0a(true)}
-                        style={v_d81136.aiAnalysisStartCard}
-                    >
-                        <ExpoLinearGradient
-                            colors={['#AD46FF', '#6B4CBF', '#4A3B8C']}
-                            locations={[0, 0.5, 1]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
-                            style={v_d81136.aiAnalysisStartGradient}
-                        >
-                            <View style={v_d81136.aiAnalysisStartHeader}>
-                                <View style={v_d81136.aiAnalysisStartIcon}>
-                                    <Ionicons name="sparkles" size={24} color="#FFFFFF" />
-                                </View>
-                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartTitle, 'aiAnalysisStartTitle')}>{v_8d41d7('skin.result.ai_analysis_title')}</Text>
-                            </View>
-                            <Text style={v_2f6fcc(v_d81136.aiAnalysisStartDesc, 'aiAnalysisStartDesc')}>{v_8d41d7('skin.result.ai_analysis_desc')}</Text>
-                            <View style={v_d81136.aiAnalysisStartButton}>
-                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartButtonText, 'aiAnalysisStartButtonText')}>{v_8d41d7('skin.result.ai_analysis_start_btn')}</Text>
-                            </View>
-                        </ExpoLinearGradient>
-                    </TouchableOpacity>
-                ) : (
+}
+                {(
                     <>
                         <View style={v_d81136.aiAnalysisCard}>
                             <View style={v_d81136.aiAnalysisCardHeader}>
@@ -2043,6 +2014,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         </View>
                     </>
                 )}
+
+                {
+}
+                <SupplementRecommendSection source="skin" recordId={v_4ae380 ?? null} />
 
                 {}
                 <View style={v_d81136.medicalDisclaimerCard}>
