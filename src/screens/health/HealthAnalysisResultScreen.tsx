@@ -714,7 +714,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   const [v_7018dd, v_35a1d0] = v_5ab095(0);
 
-  const [v_09e9e3, v_625d0a] = v_5ab095(false);
   const [v_e399bf, v_b11b33] = v_5ab095<string | null>(null);
   const [v_85cf60, v_952b9d] = v_5ab095(false);
   const v_f4f730 = v_e662ae<number | null>(null);
@@ -730,13 +729,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
   v_a3453e.useEffect(() => {
     console.log('[AI 분석 effect]', {
-      aiAnalysisStarted: v_09e9e3,
       ollamaAnalysis: !!v_e399bf,
       isOllamaLoading: v_85cf60,
       savedRecordId: v_4ae380,
       savedRecordIdRef: v_f4f730.current,
     });
-    if (!v_09e9e3 || v_e399bf || v_85cf60) return;
+    if (v_e399bf || v_85cf60) return;
     const v_fbf3b0 = v_f4f730.current;
     if (!v_fbf3b0) {
       console.warn('[AI 분석] recordId 없음 - AI 호출 스킵. savedRecordId state:', v_4ae380);
@@ -749,7 +747,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       .catch((v_9e86fd) => console.warn('[건강분석] AI 분석 실패:', v_9e86fd))
       .finally(() => v_952b9d(false));
 
-  }, [v_09e9e3, v_4ae380]);
+  }, [v_4ae380]);
 
   const v_8bc599 = v_df9f57(() => [
     { id: 'vital-signs', label: v_8d41d7('health_analysis.result.category_vital_signs') },
@@ -2745,154 +2743,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </View>
                 )}
 
-                {
-}
-                <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
-
-                {}
-                {!v_09e9e3 ? (
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    onPress={() => v_625d0a(true)}
-                    style={v_d81136.aiAnalysisStartCard}
-                  >
-                    <ExpoLinearGradient
-                      colors={['#AD46FF', '#6B4CBF', '#4A3B8C']}
-                      locations={[0, 0.5, 1]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                      style={v_d81136.aiAnalysisStartGradient}
-                    >
-                      <View style={v_d81136.aiAnalysisStartHeader}>
-                        <View style={v_d81136.aiAnalysisStartIcon}>
-                          <Ionicons name="sparkles" size={24} color="#FFFFFF" />
-                        </View>
-                        <Text style={v_2f6fcc(v_d81136.aiAnalysisStartTitle, 'aiAnalysisStartTitle')}>{v_8d41d7('health_analysis.result.ai_analysis_title')}</Text>
-                      </View>
-                      <Text style={v_2f6fcc(v_d81136.aiAnalysisStartDesc, 'aiAnalysisStartDesc')}>{v_8d41d7('health_analysis.result.ai_analysis_desc')}</Text>
-                      <View style={v_d81136.aiAnalysisStartButton}>
-                        <Text style={v_2f6fcc(v_d81136.aiAnalysisStartButtonText, 'aiAnalysisStartButtonText')}>{v_8d41d7('health_analysis.result.ai_analysis_start_btn')}</Text>
-                      </View>
-                    </ExpoLinearGradient>
-                  </TouchableOpacity>
-                ) : (
-                  <>
-                    <View style={v_d81136.aiAnalysisCard}>
-                      <View style={v_d81136.aiAnalysisCardHeader}>
-                        <View style={v_d81136.aiAnalysisCardIcon}>
-                          <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
-                        </View>
-                        <Text style={v_2f6fcc(v_d81136.aiAnalysisCardTitle, 'aiAnalysisCardTitle')}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
-                      </View>
-                      {}
-                      <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
-                        <Text style={{ fontSize: 11, color: '#9CA3AF' }}>
-                          측정 Record ID:{' '}
-                          <Text style={{ color: v_4ae380 ? '#6B7280' : '#EF4444', fontWeight: '600' }}>
-                            {v_4ae380 != null ? `#${v_4ae380}` : '없음'}
-                          </Text>
-                        </Text>
-                      </View>
-                      {}
-                      {v_85cf60 ? (
-                        <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
-                          <Ionicons name="sparkles" size={28} color="#AD46FF" />
-                          <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
-                        </View>
-                      ) : v_e399bf ? (
-                        <View style={v_d81136.aiAnalysisSubCard}>
-                          <View style={v_d81136.aiAnalysisSectionHeader}>
-                            <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
-                              <Ionicons name="sparkles" size={18} color="#AD46FF" />
-                            </View>
-                            <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>AI 힌티 종합 분석</Text>
-                          </View>
-                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
-                        </View>
-                      ) : (
-                      <>
-                      {}
-                      <View style={v_d81136.aiAnalysisSubCard}>
-                        <View style={v_d81136.aiAnalysisSectionHeader}>
-                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
-                            <Ionicons name="stats-chart-outline" size={18} color="#22C55E" />
-                          </View>
-                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_health_summary')}</Text>
-                        </View>
-                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>
-                          {v_8d41d7(`health_analysis.result.${v_f1235f.summaryKey}`, v_f1235f.summaryParams)}
-                        </Text>
-                      </View>
-                      {v_f1235f.riskItems.length > 0 && (
-                        <View style={v_d81136.aiAnalysisSubCard}>
-                          <View style={v_d81136.aiAnalysisSectionHeader}>
-                            <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEE2E2' }]}>
-                              <Ionicons name="alert-circle-outline" size={18} color="#EF4444" />
-                            </View>
-                            <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle'), { color: '#EF4444' }]}>{v_8d41d7('health_analysis.result.ai_risk_section_title')}</Text>
-                          </View>
-                          <View style={v_d81136.aiRiskItemList}>
-                            {v_f1235f.riskItems.map((v_8c0b26, v_e86ad8) => (
-                              <View key={v_e86ad8} style={v_d81136.aiRiskItem}>
-                                <View style={v_d81136.aiRiskItemDot} />
-                                <Text style={v_d81136.aiRiskItemName}>{v_8c0b26.name}</Text>
-                                <Text style={v_d81136.aiRiskItemValue}>{v_8c0b26.valueText}</Text>
-                              </View>
-                            ))}
-                          </View>
-                        </View>
-                      )}
-                      {}
-                      <View style={v_d81136.aiAnalysisSubCard}>
-                        <View style={v_d81136.aiAnalysisSectionHeader}>
-                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEF3C7' }]}>
-                            <Ionicons name="bulb-outline" size={18} color="#F59E0B" />
-                          </View>
-                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_improvement_points')}</Text>
-                        </View>
-                        {v_f1235f.improvementPoints.map((v_49cb67, v_e86ad8) => (
-                          <Text key={v_e86ad8} style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>• {v_49cb67}</Text>
-                        ))}
-                      </View>
-                      {}
-                      <View style={v_d81136.aiAnalysisSubCard}>
-                        <View style={v_d81136.aiAnalysisSectionHeader}>
-                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#F3F4F6' }]}>
-                            <Ionicons name="warning-outline" size={18} color="#374151" />
-                          </View>
-                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_precautions')}</Text>
-                        </View>
-                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
-                      </View>
-                      <TouchableOpacity style={v_d81136.aiCheckupButton} activeOpacity={0.8}>
-                        <ExpoLinearGradient
-                          colors={['#AD46FF', '#6B4CBF']}
-                          start={{ x: 0, y: 0 }}
-                          end={{ x: 1, y: 0 }}
-                          style={v_d81136.aiCheckupButtonGradient}
-                        >
-                          <Ionicons name="medkit-outline" size={20} color="#FFFFFF" />
-                          <Text style={v_d81136.aiCheckupButtonText}>{v_8d41d7('health_analysis.result.ai_checkup_btn')}</Text>
-                        </ExpoLinearGradient>
-                      </TouchableOpacity>
-                      </>
-                      )}
-                    </View>
-                  </>
-                )}
-
-                {}
-                <View style={v_d81136.medicalDisclaimerCard}>
-                    <View style={v_d81136.medicalDisclaimerHeader}>
-                        <Ionicons name="information-circle-outline" size={18} color="#6B7280" />
-                        <Text style={v_d81136.medicalDisclaimerTitle}>{v_8d41d7('medical_disclaimer.title')}</Text>
-                    </View>
-                    {}
-                    <Text style={v_d81136.medicalDisclaimerText}>
-                        {v_8d41d7('health.non_medical_disclaimer', 'The measured vital signs are not intended for medical use, including self-diagnosis or consultation with a doctor, and are only designed for general fitness and wellness purposes.')}
-                    </Text>
-                </View>
-
                 {}
                 {}
                 {v_e70158 && (
@@ -3181,6 +3031,132 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     })}
                   </>
                 )}
+
+                {
+
+}
+                {(
+                  <>
+                    <View style={v_d81136.aiAnalysisCard}>
+                      <View style={v_d81136.aiAnalysisCardHeader}>
+                        <View style={v_d81136.aiAnalysisCardIcon}>
+                          <Ionicons name="document-text-outline" size={22} color="#FFFFFF" />
+                        </View>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisCardTitle, 'aiAnalysisCardTitle')}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
+                      </View>
+                      {}
+                      <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
+                        <Text style={{ fontSize: 11, color: '#9CA3AF' }}>
+                          측정 Record ID:{' '}
+                          <Text style={{ color: v_4ae380 ? '#6B7280' : '#EF4444', fontWeight: '600' }}>
+                            {v_4ae380 != null ? `#${v_4ae380}` : '없음'}
+                          </Text>
+                        </Text>
+                      </View>
+                      {}
+                      {v_85cf60 ? (
+                        <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
+                          <Ionicons name="sparkles" size={28} color="#AD46FF" />
+                          <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
+                        </View>
+                      ) : v_e399bf ? (
+                        <View style={v_d81136.aiAnalysisSubCard}>
+                          <View style={v_d81136.aiAnalysisSectionHeader}>
+                            <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
+                              <Ionicons name="sparkles" size={18} color="#AD46FF" />
+                            </View>
+                            <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>AI 힌티 종합 분석</Text>
+                          </View>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
+                        </View>
+                      ) : (
+                      <>
+                      {}
+                      <View style={v_d81136.aiAnalysisSubCard}>
+                        <View style={v_d81136.aiAnalysisSectionHeader}>
+                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#E8F5E9' }]}>
+                            <Ionicons name="stats-chart-outline" size={18} color="#22C55E" />
+                          </View>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_health_summary')}</Text>
+                        </View>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>
+                          {v_8d41d7(`health_analysis.result.${v_f1235f.summaryKey}`, v_f1235f.summaryParams)}
+                        </Text>
+                      </View>
+                      {v_f1235f.riskItems.length > 0 && (
+                        <View style={v_d81136.aiAnalysisSubCard}>
+                          <View style={v_d81136.aiAnalysisSectionHeader}>
+                            <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEE2E2' }]}>
+                              <Ionicons name="alert-circle-outline" size={18} color="#EF4444" />
+                            </View>
+                            <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle'), { color: '#EF4444' }]}>{v_8d41d7('health_analysis.result.ai_risk_section_title')}</Text>
+                          </View>
+                          <View style={v_d81136.aiRiskItemList}>
+                            {v_f1235f.riskItems.map((v_8c0b26, v_e86ad8) => (
+                              <View key={v_e86ad8} style={v_d81136.aiRiskItem}>
+                                <View style={v_d81136.aiRiskItemDot} />
+                                <Text style={v_d81136.aiRiskItemName}>{v_8c0b26.name}</Text>
+                                <Text style={v_d81136.aiRiskItemValue}>{v_8c0b26.valueText}</Text>
+                              </View>
+                            ))}
+                          </View>
+                        </View>
+                      )}
+                      {}
+                      <View style={v_d81136.aiAnalysisSubCard}>
+                        <View style={v_d81136.aiAnalysisSectionHeader}>
+                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#FEF3C7' }]}>
+                            <Ionicons name="bulb-outline" size={18} color="#F59E0B" />
+                          </View>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_improvement_points')}</Text>
+                        </View>
+                        {v_f1235f.improvementPoints.map((v_49cb67, v_e86ad8) => (
+                          <Text key={v_e86ad8} style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>• {v_49cb67}</Text>
+                        ))}
+                      </View>
+                      {}
+                      <View style={v_d81136.aiAnalysisSubCard}>
+                        <View style={v_d81136.aiAnalysisSectionHeader}>
+                          <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#F3F4F6' }]}>
+                            <Ionicons name="warning-outline" size={18} color="#374151" />
+                          </View>
+                          <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_precautions')}</Text>
+                        </View>
+                        <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
+                      </View>
+                      <TouchableOpacity style={v_d81136.aiCheckupButton} activeOpacity={0.8}>
+                        <ExpoLinearGradient
+                          colors={['#AD46FF', '#6B4CBF']}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={v_d81136.aiCheckupButtonGradient}
+                        >
+                          <Ionicons name="medkit-outline" size={20} color="#FFFFFF" />
+                          <Text style={v_d81136.aiCheckupButtonText}>{v_8d41d7('health_analysis.result.ai_checkup_btn')}</Text>
+                        </ExpoLinearGradient>
+                      </TouchableOpacity>
+                      </>
+                      )}
+                    </View>
+                  </>
+                )}
+
+                {
+}
+                <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
+
+                {
+}
+                <View style={v_d81136.medicalDisclaimerCard}>
+                    <View style={v_d81136.medicalDisclaimerHeader}>
+                        <Ionicons name="information-circle-outline" size={18} color="#6B7280" />
+                        <Text style={v_d81136.medicalDisclaimerTitle}>{v_8d41d7('medical_disclaimer.title')}</Text>
+                    </View>
+                    {}
+                    <Text style={v_d81136.medicalDisclaimerText}>
+                        {v_8d41d7('health.non_medical_disclaimer', 'The measured vital signs are not intended for medical use, including self-diagnosis or consultation with a doctor, and are only designed for general fitness and wellness purposes.')}
+                    </Text>
+                </View>
 
                 {}
                 <View style={v_d81136.infoContainer}>

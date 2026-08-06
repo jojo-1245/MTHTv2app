@@ -87,6 +87,37 @@ describe('SupplementRecommendSection', () => {
     });
   });
 
+  it('AI 추천은 체크 고정 — 탭해도 해제되지 않는다', async () => {
+    (v_05a921.recommend as jest.Mock).mockResolvedValue({
+      items: [
+        { gunkiId: 20, productName: 'AI상품', imageUrl: null, reason: 'x', shopItemId: 'AI1', label: 'ai', price: 10000 },
+        { gunkiId: 0, productName: '오메가3', imageUrl: null, reason: '기본', shopItemId: '2026062418', label: 'extra', price: 27000 },
+      ],
+      safeMode: true,
+    });
+    const { getByText: v_2b0f8a, getAllByText: v_221148 } = v_624657(<SupplementRecommendSection source="checkup" recordId={7} />);
+    await v_81e49f(() => v_2b0f8a('AI상품'));
+
+    expect(v_221148('✓')).toHaveLength(1);
+
+    v_77aa68.press(v_2b0f8a('AI상품'));
+    expect(v_221148('✓')).toHaveLength(1);
+    v_77aa68.press(v_2b0f8a(/supplements.checkout_cta/));
+    expect(v_784288).toHaveBeenCalledWith(['AI1'], { confirm: true, via: 'ai' });
+  });
+
+  it('shopItemId 없는 AI 추천도 체크 표시는 유지된다', async () => {
+    (v_05a921.recommend as jest.Mock).mockResolvedValue({
+      items: [
+        { gunkiId: 22, productName: '매핑없는AI', imageUrl: null, reason: 'x', shopItemId: null, label: 'ai' },
+      ],
+      safeMode: true,
+    });
+    const { getByText: v_2b0f8a, getAllByText: v_221148 } = v_624657(<SupplementRecommendSection source="health" recordId={8} />);
+    await v_81e49f(() => v_2b0f8a('매핑없는AI'));
+    expect(v_221148('✓')).toHaveLength(1);
+  });
+
   it('요청 실패 시 null(조용히 숨김)', async () => {
     (v_05a921.recommend as jest.Mock).mockRejectedValue(new Error('x'));
     const { toJSON: v_21dbe2 } = v_624657(<SupplementRecommendSection source="health" recordId={2} />);
