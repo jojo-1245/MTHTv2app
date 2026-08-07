@@ -95,5 +95,8 @@ scripts/*
 build/*.aab
 build/*.apk
 build/*.apks
+build/sim/
+build/*.ipa
+build/*.tar.gz
 build-android.log
 build-ios.log
