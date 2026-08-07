@@ -1,5 +1,4 @@
 import { v_5ab095, v_c4deb2, v_de06a3 } from 'bapkr';
-import { v_03e392 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
 import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
@@ -19,6 +18,7 @@ import { v_5a0119 } from './useUserRole';
 import { v_4b2942 } from '../context/PharmacistGuestContext';
 import { v_fa6bdc } from '../utils/userRole';
 import type { v_5416aa } from '../constants/memberTypes';
+import { v_889fad } from '../components/AlertHost';
 
 export function v_2282da(v_2453ad): string {
   if (v_2453ad.startsWith('sub-')) {
@@ -70,6 +70,21 @@ export const v_9e8766 = () => {
           recordCount: v_81e2ef.recordCount,
           isCurrent: v_3de945?.visitorId === v_81e2ef.id,
         }));
+
+        if (v_3de945?.visitorId) {
+          const v_fa2ccb = `guest-${v_3de945.visitorId}`;
+          if (!v_29d9b2.some((v_779914) => v_779914.id === v_fa2ccb)) {
+            v_29d9b2.unshift({
+              id: v_fa2ccb,
+              name: v_3de945.name || v_8d41d7('sub_account.relationship.guest', '손님'),
+              phone: v_3de945.phone,
+              visitorId: v_3de945.visitorId,
+              lastVisitAt: null,
+              recordCount: 0,
+              isCurrent: true,
+            });
+          }
+        }
 
         v_d690d0(v_29d9b2);
 
@@ -267,11 +282,11 @@ export const v_9e8766 = () => {
 
     const v_2ac81e = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
     if (v_2ac81e?.isCurrent) {
-      v_03e392.alert('알림', '현재 계정은 삭제할 수 없습니다.');
+      v_889fad('알림', '현재 계정은 삭제할 수 없습니다.');
       return;
     }
 
-    v_03e392.alert(
+    v_889fad(
       '부계정 삭제',
       `${v_2ac81e?.name || '이 부계정'}을(를) 정말 삭제하시겠습니까?`,
       [
@@ -299,13 +314,13 @@ export const v_9e8766 = () => {
 
               await v_358be6();
 
-              v_03e392.alert('성공', '부계정이 삭제되었습니다.');
+              v_889fad('성공', '부계정이 삭제되었습니다.');
             } catch (v_5e9bfe) {
               console.error('[useAccountList] 부계정 삭제 실패:', v_5e9bfe);
               if (v_998b9d(v_c65f5d, v_5e9bfe)) {
                 return;
               }
-              v_03e392.alert(
+              v_889fad(
                 '오류',
                 v_5e9bfe instanceof Error ? v_5e9bfe.message : '부계정 삭제에 실패했습니다.'
               );
@@ -335,7 +350,7 @@ export const v_9e8766 = () => {
       const v_b4542a = v_c86f08.find((v_779914) => v_779914.id === v_2453ad);
       if (!v_610eb5 || !v_b4542a) return;
 
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7('pharmacist.visitor_list.delete_visitor_title'),
         v_8d41d7('pharmacist.visitor_list.delete_visitor_message', { name: v_b4542a.name }),
         [
@@ -347,10 +362,10 @@ export const v_9e8766 = () => {
               try {
                 await v_582387(v_610eb5);
                 await v_358be6();
-                v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('pharmacist.visitor_list.delete_visitor_success'));
+                v_889fad(v_8d41d7('common.notification'), v_8d41d7('pharmacist.visitor_list.delete_visitor_success'));
               } catch (v_5e9bfe) {
                 if (v_998b9d(v_c65f5d, v_5e9bfe)) return;
-                v_03e392.alert(
+                v_889fad(
                   v_8d41d7('health_records.delete_error_title', '삭제 실패'),
                   v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('pharmacist.visitor_list.delete_failed')
                 );

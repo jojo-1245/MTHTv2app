@@ -1,6 +1,5 @@
 import v_a3453e, { v_5ab095 } from 'bapkr';
 import {
-  v_03e392,
   v_122070,
   v_472849,
   v_19b633,
@@ -9,7 +8,7 @@ import {
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04 } from '../constants';
-import { v_729608, v_e2ca42, v_cb41de } from '../components';
+import { v_729608, v_e2ca42, v_cb41de, v_8e2768 } from '../components';
 import type { v_8ad91b } from '../navigation';
 import { v_7e714c } from '../services/signupApi';
 
@@ -23,18 +22,25 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_683210, v_34a50a] = v_5ab095(false);
+  const [v_3a2ef3, v_e50001] = v_5ab095(false);
+  const [v_a81988, v_838e1b] = v_5ab095('');
+
+  const v_889fad = (v_a8cd21) => {
+    v_838e1b(v_a8cd21);
+    v_e50001(true);
+  };
 
   const v_51e7d1 = async () => {
     if (v_adc076.length < 8) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('signup.password_too_short') || '비밀번호는 8자 이상이어야 합니다.');
+      v_889fad(v_8d41d7('signup.password_too_short'));
       return;
     }
     if (!/[a-zA-Z]/.test(v_adc076) || !/[0-9]/.test(v_adc076)) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('signup.password_requirements') || '비밀번호는 영문과 숫자를 포함해야 합니다.');
+      v_889fad(v_8d41d7('signup.password_requirements'));
       return;
     }
     if (v_adc076 !== v_0b3ebe) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('reset_password.mismatch') || '비밀번호가 일치하지 않습니다.');
+      v_889fad(v_8d41d7('reset_password.mismatch'));
       return;
     }
 
@@ -43,10 +49,7 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
       await v_7e714c({ email: v_e0c7e8, code: v_c99bd2, new_password: v_adc076 });
       v_c65f5d.navigate('PasswordChanged');
     } catch (v_5e9bfe) {
-      v_03e392.alert(
-        v_8d41d7('common.error'),
-        v_5e9bfe?.message || '비밀번호 변경에 실패했습니다. 다시 시도해주세요.'
-      );
+      v_889fad(v_5e9bfe?.message || v_8d41d7('reset_password.failed'));
     } finally {
       v_34a50a(false);
     }
@@ -91,6 +94,13 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
           </View>
         </View>
       </ScrollView>
+
+      <AlertModal
+        visible={v_3a2ef3}
+        title={v_8d41d7('common.error')}
+        message={v_a81988}
+        onConfirm={() => v_e50001(false)}
+      />
     </View>
   );
 };

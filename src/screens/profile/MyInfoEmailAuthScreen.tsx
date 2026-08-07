@@ -1,5 +1,5 @@
 import v_a3453e, { v_5ab095, v_c4deb2 } from 'bapkr';
-import { v_472849, v_3094a2, v_19b633, v_03e392 } from 'rcmrninabrnb';
+import { v_472849, v_3094a2, v_19b633 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04, v_34d45f } from '../../constants';
@@ -8,6 +8,7 @@ import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_c1a440 } from '../../services/signupApi';
 import { v_7ef860 } from '../../services/authApi';
+import { v_889fad } from '../../components/AlertHost';
 
 type Props = v_432191<v_8ad91b, 'MyInfoEmailAuth'>;
 
@@ -71,7 +72,7 @@ const MyInfoEmailAuthScreen: v_a3453e.FC<Props> = () => {
       v_9b57fc('EmailVerification', { email: v_8f37ac, purpose: 'profile_change', redirectTo: 'MyInfoEdit' });
     } catch (v_49263d) {
       const v_a8cd21 = v_49263d instanceof Error ? v_49263d.message : v_8d41d7('my_info_email_auth.send_code_error');
-      v_03e392.alert(v_8d41d7('common.error'), v_a8cd21);
+      v_889fad(v_8d41d7('common.error'), v_a8cd21);
     } finally {
       v_9fbff7(false);
     }

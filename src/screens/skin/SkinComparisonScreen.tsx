@@ -10,8 +10,8 @@ import {
   v_326be8,
   v_09d0e5,
   v_39a996,
-  v_03e392,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_050c3d, v_9033e9, v_19b633 as v_9b42ad } from 'vpztcxjmsfanunln';
@@ -477,7 +477,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
           return;
         }
 
-        v_03e392.alert(
+        v_889fad(
           '오류',
           v_5e9bfe instanceof Error ? v_5e9bfe.message : '비교 데이터를 불러오는데 실패했습니다.',
           [
@@ -562,7 +562,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
       v_74570e(v_43c42e);
     } catch (v_5e9bfe) {
       console.error('[SkinComparisonScreen] AI 분석 실패:', v_5e9bfe);
-      v_03e392.alert('오류', 'AI 분석 결과를 불러오는데 실패했습니다.');
+      v_889fad('오류', 'AI 분석 결과를 불러오는데 실패했습니다.');
       v_20745f(false);
     } finally {
       v_1cdb0e(false);

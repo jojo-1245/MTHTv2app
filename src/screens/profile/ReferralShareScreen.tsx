@@ -5,7 +5,6 @@ import {
     v_19b633,
     v_3094a2,
     v_4623af,
-    v_03e392,
     v_5f4661,
     v_cf9c33,
     v_7618c3,
@@ -20,6 +19,7 @@ import { v_a0daa8 } from '../../navigation';
 import { v_d844c3 } from '../../utils/deepLinkHandler';
 import { v_7ef860 } from '../../services';
 import { v_998b9d } from '../../utils/authErrorHandler';
+import { v_889fad } from '../../components/AlertHost';
 
 const v_08df2d = require('../../../assets/images/bg_gold.png');
 const v_4032b9 = require('../../../assets/images/bg_silver.png');
@@ -95,7 +95,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     const v_682edd = async () => {
         await v_fba5a0.setStringAsync(v_92b6a6);
-        v_03e392.alert(v_8d41d7('referral_share.copy_success_title'), v_8d41d7('referral_share.copy_success_message'));
+        v_889fad(v_8d41d7('referral_share.copy_success_title'), v_8d41d7('referral_share.copy_success_message'));
     };
 
     const v_316053 = async () => {
@@ -105,7 +105,7 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 title: v_8d41d7('referral_share.share_title'),
             });
         } catch (v_5e9bfe) {
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('referral_share.share_error'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('referral_share.share_error'));
         }
     };
 
@@ -204,6 +204,17 @@ const ReferralShareScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     >
                         <Text style={v_d81136.myReferralsButtonText}>
                             {v_8d41d7('referral_share.my_referrals_button')}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {}
+                    <TouchableOpacity
+                        style={v_d81136.myReferralsButton}
+                        onPress={() => v_c65f5d.navigate('ReferralSales')}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={v_d81136.myReferralsButtonText}>
+                            {v_8d41d7('referral_share.referral_sales_button', '추천인 매출 내역 보기')}
                         </Text>
                     </TouchableOpacity>
                 </View>

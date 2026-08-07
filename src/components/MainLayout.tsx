@@ -1,5 +1,5 @@
 import v_a3453e from 'bapkr';
-import { v_03e392, v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
+import { v_472849, v_3094a2, v_7e4944, v_961e77 } from 'rcmrninabrnb';
 import { v_2d8264 } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_772971 } from 'jmpfvteuuztnp';
 import v_556baf from './SafeView';
@@ -10,6 +10,7 @@ import { v_1f53bf } from '../hooks/useSystemConfig';
 import { v_5a0119 } from '../hooks/useUserRole';
 import { v_4b2942 } from '../context/PharmacistGuestContext';
 import { v_5ab0fb } from '../services/linking';
+import { v_889fad } from './AlertHost';
 
 const v_eecdb6 = {
   MetaHome: 'home',
@@ -38,6 +39,8 @@ const v_eecdb6 = {
   MyInfoCloseMembership: 'myinfo',
   MyInfoFaq: 'myinfo',
   ReferralShare: 'myinfo',
+  MyReferrals: 'myinfo',
+  ReferralSales: 'myinfo',
 };
 
 const v_b76a69 = {
@@ -114,7 +117,7 @@ const MainLayout: v_a3453e.FC<MainLayoutProps> = ({
 
   const v_c58a56 = (item: v_7369b0) => {
     if (v_160272 && v_e7e9e9.has(v_8c0b26.key) && !v_28d94d) {
-      v_03e392.alert(
+      v_889fad(
         v_8d41d7('pharmacist.guest_auth.required_title'),
         v_8d41d7('pharmacist.guest_auth.required_message'),
         [

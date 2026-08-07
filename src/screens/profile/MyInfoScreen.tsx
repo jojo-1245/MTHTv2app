@@ -7,7 +7,6 @@ import {
   v_4623af,
   v_07a341,
   v_39a996,
-  v_03e392,
 } from 'rcmrninabrnb';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_dec439, v_25515d } from 'zvyjokvuouwvifyzks';
@@ -16,6 +15,8 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837 } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
+import { v_c2fdd1 } from '../../components/wallet/Dialog';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_7ef860, v_4b3c9f, type v_2c95cc } from '../../services';
@@ -41,6 +42,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_683210, v_34a50a] = v_5ab095(true);
   const [v_5e9bfe, v_3a7d09] = v_5ab095<string | null>(null);
   const [v_d11128, v_36c42a] = v_5ab095(false);
+  const [v_9899e3, v_4c2116] = v_5ab095(false);
   const v_8eff09 = v_727031?.tier?.toLowerCase();
   const v_ec980c = v_8eff09 === 'pm' ? 'pm' : v_8eff09 === 'bm' ? 'bm' : 'wm';
   const tierImage: v_07a341 = v_ec980c === 'pm' ? v_08bdbd : v_ec980c === 'bm' ? v_46de8e : v_5732e6;
@@ -156,7 +158,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         ? 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is not set in .env'
         : 'EXPO_PUBLIC_POINTCLICK_PLACEMENT_UID is placeholder. Replace with the placement UID from PointClick.';
       console.error('[Offerwall] Not configured:', v_58ca36, { raw: v_479f05 ?? '(empty)' });
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('profile.offerwall_not_configured', '오퍼월이 설정되지 않았습니다.'));
       return;
     }
 
@@ -168,32 +170,25 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     v_0e72e5(v_b922bf, v_d84161, v_9f1622);
   };
 
-  const v_06b8a4 = async () => {
-    v_03e392.alert(v_8d41d7('profile.logout'), v_8d41d7('profile.logout_confirm'), [
-      { text: v_8d41d7('common.cancel'), style: 'cancel' },
-      {
-        text: v_8d41d7('common.confirm'),
-        style: 'destructive',
-        onPress: async () => {
-          v_36c42a(true);
-          try {
-            await v_4b3c9f();
+  const v_06b8a4 = () => v_4c2116(true);
+  const v_7d7376 = async () => {
+    v_4c2116(false);
+    v_36c42a(true);
+    try {
+      await v_4b3c9f();
 
-            v_c65f5d.reset({
-              index: 0,
-              routes: [{ name: 'Login' }],
-            });
-          } catch (v_5e9bfe) {
-            console.error('[MyInfoScreen] 로그아웃 실패:', v_5e9bfe);
-            v_03e392.alert(
-              v_8d41d7('common.error'),
-              v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('profile.logout_error', '로그아웃 중 오류가 발생했습니다.'),
-            );
-            v_36c42a(false);
-          }
-        },
-      },
-    ]);
+      v_c65f5d.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
+    } catch (v_5e9bfe) {
+      console.error('[MyInfoScreen] 로그아웃 실패:', v_5e9bfe);
+      v_889fad(
+        v_8d41d7('common.error'),
+        v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('profile.logout_error', '로그아웃 중 오류가 발생했습니다.'),
+      );
+      v_36c42a(false);
+    }
   };
 
   if (v_683210 && !v_727031) {
@@ -377,6 +372,19 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           </View>
         </SafeScrollView>
       </View>
+
+      {}
+      <Dialog
+        visible={v_9899e3}
+        title={v_8d41d7('profile.logout')}
+        onClose={() => v_4c2116(false)}
+        actions={[
+          { label: v_8d41d7('common.cancel'), variant: 'secondary', onPress: () => v_4c2116(false) },
+          { label: v_8d41d7('common.confirm'), variant: 'primary', onPress: v_7d7376 },
+        ]}
+      >
+        <Text style={v_d81136.logoutConfirmText}>{v_8d41d7('profile.logout_confirm')}</Text>
+      </Dialog>
     </MainLayout>
   );
 };
@@ -634,6 +642,13 @@ const v_d81136 = v_472849.create({
     fontSize: 12,
     fontFamily: v_843035.regular,
     color: '#9CA3AF',
+  },
+  logoutConfirmText: {
+    fontSize: 14,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });
 

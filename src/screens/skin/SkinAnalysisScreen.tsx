@@ -6,7 +6,6 @@ import {
     v_4623af,
     v_cf9c33,
     v_39a996,
-    v_03e392,
     v_122070,
     v_09d0e5,
     v_700696,
@@ -15,6 +14,7 @@ import {
     v_bd64bf,
     v_f2c756,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_78ceb7, v_d4f1cc } from 'mbgbsytfgyr';
 import * as v_d05ab5 from 'khtmgrssvfqqjmzoc';
@@ -34,6 +34,8 @@ const { width: v_0d9f50, height: v_28d8d8 } = v_700696.get('window');
 const v_0abe94 = 12;
 import { v_a0daa8 } from '../../navigation';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
+import v_6f3f7e from '../../components/SupplementRecommendSection';
+import { v_dff48a } from '../../utils/aiTextFormat';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_0d0e7d } from '../../utils/analysisResultTabletStyles';
@@ -354,7 +356,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             (async () => {
                 const v_042a8b = await v_e84827.getItem(v_624bd2.isLoggedIn);
                 if (v_042a8b !== 'true') {
-                    v_03e392.alert(
+                    v_889fad(
                         v_8d41d7('common.error'),
                         v_8d41d7('skin.login_required_message', '로그인 후 피부 분석을 이용해 주세요. 분석 결과 저장을 위해 로그인이 필요합니다.'),
                         [{ text: v_8d41d7('common.confirm'), onPress: () => v_c65f5d.navigate('Login') }],
@@ -422,8 +424,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const [v_8da349, v_5bc608] = v_5ab095(0);
 
-    const [v_09e9e3, v_625d0a] = v_5ab095(false);
-
     const [v_c813f5, v_0d73a9] = v_5ab095<{ image: any; name: string } | null>(null);
 
     const v_02a5a0 = v_e662ae(false);
@@ -473,7 +473,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_30222e = v_de06a3(() => {
         const v_8decf8 = v_058956();
         if (!v_8decf8 || !v_e521b9?.timestamp) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
             return;
         }
         const v_d5dda0 = new Date(v_e521b9.timestamp);
@@ -656,14 +656,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     v_a3453e.useEffect(() => {
         if (__DEV__) {
             console.log('[AI 피부분석 effect]', {
-                aiAnalysisStarted: v_09e9e3,
                 ollamaAnalysis: !!v_e399bf,
                 isOllamaLoading: v_85cf60,
                 savedRecordId: v_4ae380,
                 savedRecordIdRef: v_f4f730.current,
             });
         }
-        if (!v_09e9e3 || v_e399bf || v_85cf60) return;
+        if (v_e399bf || v_85cf60) return;
         const v_fbf3b0 = v_f4f730.current;
         if (!v_fbf3b0) {
             if (__DEV__) console.warn('[AI 피부분석] recordId 없음 - 저장 완료 대기 중');
@@ -681,7 +680,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_b11b33('AI 분석 중 오류가 발생했습니다.');
             })
             .finally(() => v_952b9d(false));
-    }, [v_09e9e3, v_4ae380]);
+    }, [v_4ae380]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
         let v_52f726;
@@ -752,7 +751,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } catch (v_5e9bfe) {
             console.error('[FaceDetector] 얼굴 인식 오류:', v_5e9bfe);
 
-            v_03e392.alert(
+            v_889fad(
                 v_8d41d7('skin.alerts.permission_required'),
                 v_8d41d7('skin.alerts.analysis_error'),
                 [{ text: v_8d41d7('common.confirm') }]
@@ -780,7 +779,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
         if (!v_f91d86) {
             const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
-            v_03e392.alert(
+            v_889fad(
                 '잔액 부족',
                 `피부 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
                 [{ text: '확인' }]
@@ -792,18 +791,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
 
         if (!v_ee89db) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_image_required'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_image_required'));
             return;
         }
 
         if (v_44eb1a.length === 0) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.error_no_selection'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.error_no_selection'));
             return;
         }
 
         await v_6bbbb9.ensureApiKey();
         if (!v_6bbbb9.hasApiKey()) {
-            v_03e392.alert(
+            v_889fad(
                 v_8d41d7('common.error'),
                 v_8d41d7('skin.alerts.api_key_error'),
             );
@@ -901,7 +900,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             console.error('피부 분석 오류:', v_5e9bfe);
             const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('skin.alerts.analysis_error');
             v_5c59f6(v_a8cd21);
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.capture.verification_failed_retake'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.capture.verification_failed_retake'));
             v_639227('capture');
         } finally {
             v_0942aa(false);
@@ -922,7 +921,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             if (v_04e790 === 'camera') {
                 const { status: v_d308b5 } = await v_d05ab5.requestCameraPermissionsAsync();
                 if (v_d308b5 !== 'granted') {
-                    v_03e392.alert(
+                    v_889fad(
                         v_8d41d7('skin.alerts.permission_required'),
                         v_8d41d7('skin.alerts.camera_permission_required'),
                         [
@@ -968,7 +967,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } catch (v_5e9bfe) {
             console.error('이미지 선택 오류:', v_5e9bfe);
             v_7db762(false);
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
         }
     }, [v_c00289, v_8d41d7, v_c7ac57]);
 
@@ -994,7 +993,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         if (!v_d1a6bb?.granted) {
             const v_43c42e = await v_1e66f0();
             if (!v_43c42e.granted) {
-                v_03e392.alert(
+                v_889fad(
                     v_8d41d7('skin.alerts.permission_required'),
                     v_8d41d7('skin.alerts.camera_permission_required'),
                     [
@@ -1097,7 +1096,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             }
         } catch (v_5e9bfe) {
             console.error('사진 촬영 오류:', v_5e9bfe);
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
             v_7db762(false);
         } finally {
             v_968808(false);
@@ -1131,12 +1130,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const v_fefb99 = v_de06a3(() => {
         if (!v_82f4af) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_capture_required'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_capture_required'));
             return;
         }
 
         if (!v_07cd8d?.hasFace) {
-            v_03e392.alert(
+            v_889fad(
                 v_8d41d7('skin.capture.not_detected'),
                 v_8d41d7('skin.capture.warning_no_face'),
                 [{ text: v_8d41d7('common.confirm') }]
@@ -1145,7 +1144,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
 
         if (!v_07cd8d?.isFrontal) {
-            v_03e392.alert(
+            v_889fad(
                 v_8d41d7('skin.capture.not_frontal'),
                 v_8d41d7('skin.capture.warning_not_frontal'),
                 [{ text: v_8d41d7('common.confirm') }]
@@ -1154,7 +1153,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         }
 
         if (!v_07cd8d?.isSizeOk) {
-            v_03e392.alert(
+            v_889fad(
                 v_8d41d7('skin.capture.too_small'),
                 v_8d41d7('skin.capture.warning_face_too_small'),
                 [{ text: v_8d41d7('common.confirm') }]
@@ -1179,7 +1178,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const v_8d018e = v_de06a3(async () => {
         if (!v_e521b9) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_save'));
             return;
         }
 
@@ -1203,13 +1202,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     dialogTitle: v_8d41d7('skin.settings.alert_save_dialog_title'),
                     UTI: 'public.json',
                 });
-                v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_save_success'));
+                v_889fad(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_save_success'));
             } else {
-                v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_save_success_path', { path: v_a00264 }));
+                v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_save_success_path', { path: v_a00264 }));
             }
         } catch (v_5e9bfe) {
             console.error('파일 저장 오류:', v_5e9bfe);
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
         }
     }, [v_e521b9]);
 
@@ -1237,7 +1236,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, [v_8d41d7]);
 
     const v_4f73b9 = v_de06a3((v_01bee9) => {
-        v_03e392.alert(
+        v_889fad(
             v_8d41d7('skin.result.view_product'),
             `${v_01bee9.brand}\n${v_01bee9.name}`
         );
@@ -1245,17 +1244,17 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
     const v_3274ee = v_de06a3(async () => {
         if (!v_e521b9) {
-            v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_copy'));
+            v_889fad(v_8d41d7('common.notification'), v_8d41d7('skin.settings.alert_no_result_to_copy'));
             return;
         }
 
         try {
             const v_10f84e = JSON.stringify(v_e521b9, null, 2);
             await v_fba5a0.setStringAsync(v_10f84e);
-            v_03e392.alert(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_copy_success'));
+            v_889fad(v_8d41d7('common.success'), v_8d41d7('skin.settings.alert_copy_success'));
         } catch (v_5e9bfe) {
             console.error('클립보드 복사 오류:', v_5e9bfe);
-            v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
+            v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.analysis_error'));
         }
     }, [v_e521b9]);
 
@@ -1579,7 +1578,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             try {
                                 const v_678155 = await v_81fcbc();
                                 if (!v_678155 || v_678155.length === 0) {
-                                    v_03e392.alert('알림', '저장된 피부 기록이 없습니다.');
+                                    v_889fad('알림', '저장된 피부 기록이 없습니다.');
                                     return;
                                 }
                                 const v_1300ee = v_678155[0];
@@ -1603,7 +1602,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 });
                                 v_639227('result');
                             } catch (v_9e86fd) {
-                                v_03e392.alert('오류', String(v_9e86fd));
+                                v_889fad('오류', String(v_9e86fd));
                             }
                         }}
                     >
@@ -1982,33 +1981,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     </View>
                 </View>
 
-                {}
-                {!v_09e9e3 ? (
-                    <TouchableOpacity
-                        activeOpacity={0.9}
-                        onPress={() => v_625d0a(true)}
-                        style={v_d81136.aiAnalysisStartCard}
-                    >
-                        <ExpoLinearGradient
-                            colors={['#AD46FF', '#6B4CBF', '#4A3B8C']}
-                            locations={[0, 0.5, 1]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
-                            style={v_d81136.aiAnalysisStartGradient}
-                        >
-                            <View style={v_d81136.aiAnalysisStartHeader}>
-                                <View style={v_d81136.aiAnalysisStartIcon}>
-                                    <Ionicons name="sparkles" size={24} color="#FFFFFF" />
-                                </View>
-                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartTitle, 'aiAnalysisStartTitle')}>{v_8d41d7('skin.result.ai_analysis_title')}</Text>
-                            </View>
-                            <Text style={v_2f6fcc(v_d81136.aiAnalysisStartDesc, 'aiAnalysisStartDesc')}>{v_8d41d7('skin.result.ai_analysis_desc')}</Text>
-                            <View style={v_d81136.aiAnalysisStartButton}>
-                                <Text style={v_2f6fcc(v_d81136.aiAnalysisStartButtonText, 'aiAnalysisStartButtonText')}>{v_8d41d7('skin.result.ai_analysis_start_btn')}</Text>
-                            </View>
-                        </ExpoLinearGradient>
-                    </TouchableOpacity>
-                ) : (
+                {
+
+}
+                {(
                     <>
                         <View style={v_d81136.aiAnalysisCard}>
                             <View style={v_d81136.aiAnalysisCardHeader}>
@@ -2026,7 +2002,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 </View>
                             ) : v_e399bf ? (
                                 <View style={v_d81136.aiAnalysisSubCard}>
-                                    <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_e399bf}</Text>
+                                    <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
                                 </View>
                             ) : (
                                 <View style={v_d81136.aiAnalysisSubCard}>
@@ -2036,17 +2012,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 </View>
                             )}
                         </View>
-                        {}
-                        <View style={v_d81136.aiProductsCard}>
-                            <View style={v_d81136.aiProductsHeader}>
-                                <Text style={v_d81136.aiProductsTitle}>{v_8d41d7('skin.result.ai_recommended_products')}</Text>
-                            </View>
-                            <View style={{ paddingVertical: 24, alignItems: 'center' }}>
-                                <Text style={{ fontSize: 14, color: '#9CA3AF' }}>현재 추천 제품 기획중입니다.</Text>
-                            </View>
-                        </View>
                     </>
                 )}
+
+                {
+}
+                <SupplementRecommendSection source="skin" recordId={v_4ae380 ?? null} />
 
                 {}
                 <View style={v_d81136.medicalDisclaimerCard}>

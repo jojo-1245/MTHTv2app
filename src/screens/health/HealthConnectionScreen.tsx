@@ -10,8 +10,8 @@ import {
     v_e767d1,
     v_326be8,
     v_cf9c33,
-    v_03e392,
 } from 'rcmrninabrnb';
+import { v_889fad } from '../../components/AlertHost';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import { v_b5df25 } from 'ernurodqvmtspux';
@@ -129,7 +129,7 @@ const HealthConnectionScreen: v_a3453e.FC = () => {
         const v_993c20 = v_fb2a6e.find(v_8c0b26 => v_8c0b26.id === v_389afb);
         const v_d044ab = v_993c20?.name || v_993c20?.email || v_8d41d7('health_connection.item');
 
-        v_03e392.alert(
+        v_889fad(
             v_8d41d7('health_connection.delete_title'),
             v_8d41d7('health_connection.delete_message', { name: v_d044ab }),
             [
