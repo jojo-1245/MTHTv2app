@@ -2,7 +2,12 @@ import { v_f2c756 } from 'rcmrninabrnb';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import v_9c213b from '../../i18n';
 import { v_889fad } from '../../components/AlertHost';
-import { v_dbb24a, v_739f72, v_c7823e } from './shopUrl';
+import {
+  v_dbb24a,
+  v_739f72,
+  v_c7823e,
+  v_bdc222,
+} from './shopUrl';
 import { v_f96be4 } from '../shopApi';
 
 export const BROWSER_OPTS: v_2c8bdd.WebBrowserOpenOptions = {
@@ -87,6 +92,17 @@ export async function v_99cd96(
   v_b36f96,
 ): Promise<boolean> {
   return v_e184b5(v_739f72(v_6e55b1), v_b36f96);
+}
+
+export async function v_9dcb16(v_6e55b1): Promise<boolean> {
+  const v_f71b56 = v_bdc222(v_6e55b1);
+  if (!v_f71b56) return false;
+  return v_bb4efc(v_f71b56, {
+    showInRecents: false,
+    enableBarCollapsing: false,
+    presentationStyle: v_2c8bdd.WebBrowserPresentationStyle.PAGE_SHEET,
+    dismissButtonStyle: 'close',
+  });
 }
 
 export async function v_565824(

@@ -3266,7 +3266,9 @@
         "price_won": "원",
         "included": "포함",
         "total_label": "합계",
-        "checkout_cta": "결제하기"
+        "checkout_cta": "결제하기",
+        "detail_hint": "눌러서 제품소개 보기",
+        "detail_a11y": "{{name}} 제품소개 보기"
     },
     "walletV2Pin": {
         "title_enter": "지갑 보호 PIN 설정",

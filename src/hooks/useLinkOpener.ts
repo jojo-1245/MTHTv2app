@@ -4,6 +4,7 @@ import {
   v_e184b5 as v_7ea0f8,
   v_99cd96 as v_be62cb,
   v_565824 as v_7a3921,
+  v_9dcb16 as v_4ade11,
   type v_deb755,
 } from '../services/linking';
 
@@ -38,5 +39,10 @@ export function v_ffe36d() {
     [v_b704b8],
   );
 
-  return { loading: v_683210, openExternalUrl: v_5ab0fb, openShop: v_e184b5, openShopProduct: v_99cd96, openShopCheckout: v_565824 };
+  const v_9dcb16 = v_de06a3(
+    (v_6e55b1) => v_4ade11(v_6e55b1),
+    [],
+  );
+
+  return { loading: v_683210, openExternalUrl: v_5ab0fb, openShop: v_e184b5, openShopProduct: v_99cd96, openShopCheckout: v_565824, openItemExplan: v_9dcb16 };
 }
