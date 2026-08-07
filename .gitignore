@@ -90,3 +90,10 @@ scripts/*
 # 에이전트 도구 디렉토리 (Claude Code 워크트리·superpowers SDD 산출물)
 .claude/
 .superpowers/
+
+# EAS 로컬 빌드 산출물 (대용량 — GitHub 100MB 제한 초과)
+build/*.aab
+build/*.apk
+build/*.apks
+build-android.log
+build-ios.log
