@@ -36,6 +36,7 @@ import v_9e06f6 from '../screens/profile/MyInfoCloseMembershipScreen';
 import v_083aa7 from '../screens/profile/MyInfoFaqScreen';
 import v_52f825 from '../screens/profile/ReferralShareScreen';
 import v_b2608d from '../screens/profile/MyReferralsScreen';
+import v_6b59bb from '../screens/profile/ReferralSalesScreen';
 import v_f97d8b from '../screens/profile/ProfitDistributionScreen';
 import { v_852e99, v_8b28f5 } from '../screens/skin';
 import { v_daf220, v_cb47c8, v_71e66c, v_1b8038 } from '../screens/health';
@@ -118,6 +119,7 @@ export type RootStackParamList = {
   MyInfoFaq: undefined;
   ReferralShare: undefined;
   MyReferrals: undefined;
+  ReferralSales: undefined;
   ProfitDistribution: undefined;
   SkinAnalysis: { previewResult?: boolean; initialTab?: 'measure' | 'records' } | undefined;
   SkinComparison: {
@@ -280,6 +282,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="MyInfoFaq" component={v_083aa7} />
         <Stack.Screen name="ReferralShare" component={v_52f825} />
         <Stack.Screen name="MyReferrals" component={v_b2608d} />
+        <Stack.Screen name="ReferralSales" component={v_6b59bb} />
         <Stack.Screen name="ProfitDistribution" component={v_f97d8b} />
         <Stack.Screen name="SkinAnalysis" component={v_852e99} />
         <Stack.Screen name="SkinComparison" component={v_8b28f5} />

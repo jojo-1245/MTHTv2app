@@ -49,7 +49,10 @@
     "year_month": "{{month}} {{year}}",
     "or": "ATAU",
     "coming_soon": "Segera Hadir",
-    "coming_soon_message": "Fitur ini akan segera tersedia."
+    "coming_soon_message": "Fitur ini akan segera tersedia.",
+    "paste": "Tempel",
+    "done": "Selesai",
+    "continue": "Lanjutkan"
   },
   "account_selector": {
     "title": "Pilihan Akun",
@@ -70,7 +73,7 @@
     "select_relationship_placeholder": "Pilih Hubungan",
     "nickname": "Nama Panggilan",
     "enter_nickname_placeholder": "Masukkan Nama Panggilan",
-    "enter_nickname": "Masukkan nama panggilan sub-akun",
+    "enter_nickname": "Silakan masukkan nama panggilan.",
     "enter_nickname_and_relationship": "Masukkan nama panggilan dan hubungan sub-akun",
     "search_by_email": "Cari anggota berdasarkan email",
     "enter_email": "Masukkan Email",
@@ -94,7 +97,6 @@
     "otp_invalid": "Kode verifikasi tidak valid.",
     "otp_verification_failed": "Verifikasi Gagal",
     "member_not_found": "Informasi anggota tidak ditemukan.",
-    "enter_nickname": "Silakan masukkan nama panggilan.",
     "select_relationship": "Silakan pilih hubungan.",
     "enter_all_info": "Silakan masukkan semua informasi.",
     "link_success": "Sub-akun telah ditautkan.",
@@ -491,7 +493,9 @@
     "policy_load_error": "Gagal memuat konten.",
     "error_title": "Pendaftaran Gagal",
     "error_validation": "Silakan periksa informasi yang Anda masukkan.",
-    "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran."
+    "error_unknown": "Terjadi kesalahan yang tidak diketahui selama pendaftaran.",
+    "password_too_short": "Kata sandi minimal 8 karakter.",
+    "password_requirements": "Kata sandi harus berisi huruf dan angka."
   },
   "profile": {
     "title": "Info Saya",
@@ -540,7 +544,8 @@
     "copyright": "© 2026 MetaHint. All rights reserved.",
     "pangle_rewarded_test": "Tes Video Berhadiah Pangle",
     "pangle_rewarded_test_done": "Video berhadiah selesai (tes)",
-    "pangle_rewarded_test_failed": "Iklan gagal dimuat"
+    "pangle_rewarded_test_failed": "Iklan gagal dimuat",
+    "logout_confirm": "Apakah Anda yakin ingin keluar?"
   },
   "profit_distribution": {
     "title": "Distribusi Keuntungan",
@@ -753,7 +758,9 @@
     "confirm_pwd_label": "Konfirmasi kata sandi baru",
     "confirm_pwd_placeholder": "ulangi kata sandi",
     "btn_title": "Atur ulang kata sandi",
-    "footer_text": "Sudah punya akun? "
+    "footer_text": "Sudah punya akun? ",
+    "mismatch": "Kata sandi tidak cocok.",
+    "failed": "Gagal mengubah kata sandi. Silakan coba lagi."
   },
   "password_changed": {
     "title": "Kata sandi diubah",
@@ -763,7 +770,7 @@
   "chat": {
     "title": "AI Hinti",
     "subtitle": "AI Penasihat Kesehatan",
-    "placeholder": "Masukkan pertanyaan terkait kesehatan...",
+    "placeholder": "Cari informasi kesehatan",
     "account_default": "Kim Geon-gang",
     "sample_products": {
       "product_1_name": "Jongkundang Health I-Care Calcium Up Plus",
@@ -891,7 +898,6 @@
       "supplements": "Suplemen nutrisi",
       "sleeping_pills": "Obat tidur"
     },
-    "placeholder": "Cari informasi kesehatan",
     "ai_preparing": "Sedang menyiapkan jawaban...",
     "view_product": "Lihat Produk",
     "health_info_title": "Muat Info Kesehatan",
@@ -1224,7 +1230,7 @@
       "risk_level_high": "Tinggi",
       "risk_caution": "Perlu perhatian",
       "section_blood_pressure": "Tekanan Darah",
-      "section_others": "Hasil Lainnya",
+      "section_others": "Hasil Pengukuran",
       "binah_respiratory": "Pernafasan",
       "respiratory_headline_normal": "Pernapasan Anda normal.",
       "respiratory_headline_abnormal": "Pernapasan Anda tidak normal.",
@@ -1303,7 +1309,6 @@
       }
     },
     "sdk_alerts": {
-      "solution_prefix": "Solusi:",
       "4": {
         "title": "Kesalahan Perangkat",
         "reason": "Sesi diminta saat perangkat berada dalam mode hemat daya.",
@@ -1429,6 +1434,26 @@
         "reason": "Sinkronisasi lisensi diperlukan.",
         "solution": "Hubungkan ke internet lalu coba lagi."
       },
+      "3505": {
+        "title": "Peringatan Pengukuran",
+        "reason": "FPS kamera menurun dan dapat memengaruhi kualitas pengukuran.",
+        "solution": "Ikuti panduan pengukuran dan coba lagi."
+      },
+      "3506": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Frame diterima dengan urutan timestamp yang salah.",
+        "solution": "Anda bisa melanjutkan pengukuran."
+      },
+      "4505": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Perhitungan tekanan darah gagal.",
+        "solution": "Hasil tekanan darah akan dikecualikan. Coba lagi."
+      },
+      "4506": {
+        "title": "Peringatan Pengukuran",
+        "reason": "Tidak ada vital sign yang diproses.",
+        "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
+      },
       "6004": {
         "title": "Kesalahan Sesi",
         "reason": "Start dipanggil saat sesi tidak READY.",
@@ -1489,26 +1514,6 @@
         "reason": "Tinggi badan pengguna tidak didukung.",
         "solution": "Gunakan 130–230 cm atau kosongkan."
       },
-      "3505": {
-        "title": "Peringatan Pengukuran",
-        "reason": "FPS kamera menurun dan dapat memengaruhi kualitas pengukuran.",
-        "solution": "Ikuti panduan pengukuran dan coba lagi."
-      },
-      "3506": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Frame diterima dengan urutan timestamp yang salah.",
-        "solution": "Anda bisa melanjutkan pengukuran."
-      },
-      "4505": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Perhitungan tekanan darah gagal.",
-        "solution": "Hasil tekanan darah akan dikecualikan. Coba lagi."
-      },
-      "4506": {
-        "title": "Peringatan Pengukuran",
-        "reason": "Tidak ada vital sign yang diproses.",
-        "solution": "Periksa lisensi/koneksi internet lalu coba lagi."
-      },
       "8003": {
         "title": "Kesalahan Pengukuran",
         "reason": "Pengukuran tidak dapat diselesaikan. Pastikan wajah Anda berada di tengah dan pencahayaan cukup, lalu coba lagi.",
@@ -1553,7 +1558,8 @@
         "title": "Peringatan Pengukuran",
         "reason": "Terdeteksi jeda data dalam stream.",
         "solution": "Pastikan koneksi stabil lalu coba lagi."
-      }
+      },
+      "solution_prefix": "Solusi:"
     }
   },
   "my_info_edit": {
@@ -1655,6 +1661,7 @@
     "copy_success_message": "Kode PIN telah disalin ke papan klip.",
     "kakao_share_button": "Bagikan via KakaoTalk",
     "my_referrals_button": "Lihat Referral Saya",
+    "referral_sales_button": "Lihat Penjualan Referral",
     "share_error": "Gagal membagikan.",
     "share_message": "Jadilah Mitra HiNT! Kode referral: {{code}}\n{{link}}",
     "share_title": "Referral Mitra HiNT"
@@ -1663,6 +1670,20 @@
     "title": "Referral Saya",
     "total_count": "Total {{count}}",
     "empty": "Belum ada yang menggunakan kode referral Anda."
+  },
+  "referral_sales": {
+    "title": "Penjualan Referral",
+    "total_count": "{{count}} pesanan",
+    "pending_commission": "Komisi menunggu {{amount}}",
+    "empty": "Belum ada penjualan referral.\nPengiriman selesai dari referral Anda akan muncul di sini.",
+    "buyer_unknown": "Pembeli",
+    "receipt": "Bayar {{amount}}",
+    "role_referrer": "Langsung",
+    "role_upline": "Upline",
+    "settle_on": "Settlement {{date}}",
+    "status_pending": "Menunggu",
+    "status_settled": "Selesai",
+    "load_more": "Muat lebih"
   },
   "my_info_email_auth": {
     "title": "Verifikasi Identitas",
@@ -1738,7 +1759,7 @@
       "deposit_address": "Alamat Setoran"
     },
     "address_required_title": "Alamat Diperlukan",
-    "address_required_message": "Silakan masukkan alamat penerima dengan memindai kode batang.",
+    "address_required_message": "Harap masukkan alamat dompet.",
     "reward_type": {
       "attendance": "Cek Kehadiran",
       "health_analysis": "Analisis Kesehatan",
@@ -1797,7 +1818,6 @@
     "gas_estimate_failed_message": "Terjadi kesalahan saat menghitung biaya gas.",
     "amount_invalid_title": "Jumlah Tidak Valid",
     "amount_invalid_message": "Harap masukkan jumlah yang valid.",
-    "address_required_message": "Harap masukkan alamat dompet.",
     "tx_progress_title": "Mengirim",
     "tx_sending_amount": "Jumlah Pengiriman",
     "tx_from": "Dari",
@@ -1818,7 +1838,121 @@
     "tx_gas_fee": "Gas Digunakan / Biaya",
     "tx_block_number": "Nomor Blok",
     "tx_pending": "Tertunda",
-    "tx_not_found": "Transaksi terbaru tidak ditemukan."
+    "tx_not_found": "Transaksi terbaru tidak ditemukan.",
+    "action_info": "Info Dompet",
+    "user_not_found": "Info pengguna tidak ditemukan.",
+    "info_guide_title": "Panduan Dompet",
+    "info_guide": "Panduan Dompet",
+    "info_guide_desc": "Keamanan & cara pakai dompet",
+    "info_backup": "Cadangkan",
+    "info_backup_desc": "Cadangkan dompet ke file dengan aman",
+    "info_restore": "Pulihkan",
+    "info_restore_desc": "Pulihkan dompet dari file cadangan",
+    "info_guide_body": "Ini adalah dompet non-kustodian yang hanya bisa Anda gunakan.\n\n• Dilindungi PIN pembayaran Anda.\n• Kunci privat disimpan aman hanya di perangkat ini.\n• Jika ganti perangkat atau instal ulang, pemulihan hanya lewat file cadangan.\n\n⚠️ Pastikan gunakan \"Cadangkan\" dan simpan file serta kata sandi cadangan dengan aman. Tanpa cadangan, aset tidak dapat dipulihkan.",
+    "backup_err_pin": "Masukkan PIN pembayaran 6 digit",
+    "backup_err_pass": "Kata sandi cadangan harus 8+ karakter dan cocok",
+    "backup_err_mismatch": "Kata sandi cadangan tidak cocok",
+    "backup_desc": "Cadangkan dompet dengan PIN pembayaran dan kata sandi cadangan. Kata sandi cadangan diperlukan untuk memulihkan, jangan lupa.",
+    "backup_pin_ph": "PIN pembayaran (6 digit)",
+    "backup_pass_ph": "8+ karakter",
+    "backup_pass2_ph": "Masukkan ulang kata sandi cadangan",
+    "backup_create": "Buat cadangan",
+    "backup_done": "Cadangan dibuat. Simpan sebagai file atau salin dan simpan dengan aman.",
+    "backup_save_file": "Simpan/bagikan sebagai file",
+    "backup_copy": "Salin",
+    "backup_copied": "Kode cadangan disalin. Simpan di tempat aman.",
+    "restore_err_code": "Tempel kode cadangan yang valid",
+    "restore_err_pass": "Masukkan kata sandi cadangan",
+    "restore_err_pin": "Masukkan PIN pembayaran baru 6 digit",
+    "restore_err_pin_mismatch": "PIN baru tidak cocok",
+    "restore_desc": "Pulihkan dompet dengan kode cadangan dan kata sandi saat mencadangkan. Jika lupa kata sandi, pemulihan tidak mungkin.",
+    "restore_code_ph": "Tempel kode cadangan (bv2:...)",
+    "restore_pass_ph": "Kata sandi cadangan",
+    "restore_pin_ph": "PIN pembayaran baru (6 digit)",
+    "restore_pin2_ph": "Konfirmasi PIN baru",
+    "restore_now": "Pulihkan",
+    "restore_done": "Dompet dipulihkan. Sekarang bisa dipakai dengan PIN baru.",
+    "backup_title": "Cadangan kunci dompet",
+    "backup_pin_title": "Tampilkan kunci privat",
+    "backup_pin_desc": "Masukkan PIN pembayaran untuk menampilkan kunci privat.",
+    "backup_err_no_vault": "Tidak ada kunci dompet untuk dicadangkan",
+    "backup_err_wrong_pin": "PIN salah",
+    "backup_warn_title": "Simpan kunci privat dengan aman",
+    "backup_warn_msg": "Jika kunci privat bocor, siapa pun dapat mengambil aset dompet Anda. Jangan pernah membagikannya dan simpan di tempat aman. Anda dapat memulihkan dompet di perangkat lain dengan kunci privat ini.",
+    "backup_address_label": "Alamat dompet",
+    "backup_key_label": "Kunci privat",
+    "backup_copy_key": "Salin kunci privat",
+    "backup_key_copied": "Kunci privat disalin. Simpan di tempat aman.",
+    "restore_title": "Pemulihan dompet",
+    "restore_info_title": "Pulihkan dengan kunci privat",
+    "restore_info_msg": "Masukkan kunci privat yang Anda simpan untuk memulihkan dompet di perangkat ini. Atur PIN pembayaran baru.",
+    "restore_key_label": "Kunci privat",
+    "restore_key_ph": "Masukkan/tempel kunci privat (0x...)",
+    "restore_new_pin_label": "PIN pembayaran baru",
+    "restore_err_key": "Masukkan kunci privat yang valid",
+    "restore_err_fail": "Pemulihan gagal. Periksa kunci privat Anda.",
+    "restore_pin2_label": "Konfirmasi PIN baru",
+    "backup_choose": "Pilih metode cadangan",
+    "backup_choose_desc": "Kunci dompet dilindungi PIN.\nCadangan file/Drive tidak dapat didekripsi tanpa PIN.",
+    "backup_file": "Simpan ke file",
+    "backup_file_desc": "Bagikan ke aplikasi lain (email, cloud, file, dll.)",
+    "backup_drive": "Simpan ke Google Drive",
+    "backup_drive_desc": "Simpan terenkripsi ke cloud akun Google",
+    "backup_drive_soon": "Fitur ini akan segera hadir.",
+    "backup_key_view": "Lihat / salin kunci langsung",
+    "backup_key_view_desc": "Ditampilkan sebagai teks biasa + dapat disalin (hati-hati)",
+    "backup_pin_label": "PIN pembayaran",
+    "backup_pass_label": "Kata sandi cadangan (8+ karakter)",
+    "backup_create_file": "Buat file cadangan",
+    "backup_pass_setup": "Atur kata sandi cadangan",
+    "backup_done_title": "Cadangan selesai",
+    "backup_pass_field": "Kata sandi cadangan",
+    "backup_pass2_field": "Konfirmasi kata sandi cadangan",
+    "backup_pass_help": "Setiap file cadangan memiliki kata sandi sendiri.\nIngat nama file beserta kata sandinya, dan masukkan kata sandi yang sama saat memulihkan.\nJika lupa kata sandi, cadangan tidak dapat dipulihkan — simpan dengan aman.",
+    "backup_do": "Cadangkan",
+    "backup_pin_enter": "Konfirmasi PIN",
+    "backup_pin_enter_desc": "Masukkan PIN yang sudah ada untuk membuat file cadangan.",
+    "consent_title": "Persetujuan sebelum pencadangan",
+    "consent_lead": "File cadangan adalah satu-satunya kunci yang mengendalikan aset dompet Anda.",
+    "consent_b1": "Jangan bagikan kepada siapa pun (termasuk pengembang/layanan pelanggan)",
+    "consent_b2": "Jangan kirim melalui pesan atau email",
+    "consent_b3": "Jangan simpan di PC bersama atau cloud publik",
+    "consent_b4": "Siapa pun yang menerima file dapat memindahkan aset Anda segera",
+    "consent_c1": "Kunci adalah informasi penting untuk menggunakan dompet",
+    "consent_c2": "Saya paham kehilangan kunci berarti tidak dapat menggunakan dompet",
+    "consent_c3": "Informasi ini tidak boleh dibagikan dengan orang lain",
+    "consent_c4": "Saya memahami hal di atas dan berjanji tidak membagikannya kepada siapa pun",
+    "consent_c5": "Jika lupa PIN dan kata sandi, Anda tidak dapat menggunakan dompet",
+    "consent_pk_box": "Kunci privat akan ditampilkan sebagai teks biasa. Pastikan tidak ada orang di sekitar terlebih dahulu.",
+    "key_warn_title": "Peringatan",
+    "key_warn_msg": "Kunci privat akan ditampilkan sebagai teks biasa.\nPastikan tidak ada orang di sekitar yang dapat melihat layar Anda.",
+    "key_shown_warn": "Kunci teks biasa ditampilkan. Waspadai tangkapan layar, perekaman, dan paparan.",
+    "backup_secret_label": "Kunci privat",
+    "backup_copy_this_key": "Salin kunci ini",
+    "backup_pass_min": "Kata sandi harus minimal 8 karakter",
+    "backup_pass_mismatch": "Kata sandi tidak cocok",
+    "backup_saved_title": "Cadangan selesai",
+    "backup_saved_msg": "File telah disimpan.",
+    "backup_save_cancelled": "Penyimpanan dibatalkan. Izinkan akses folder untuk menyimpan file.",
+    "restore_choose": "Pilih sumber pemulihan",
+    "restore_choose_desc": "Pilih file cadangan untuk memulihkan kunci Anda. Anda memerlukan kata sandi yang Anda atur saat pencadangan.",
+    "restore_from_file": "Pulihkan dari file",
+    "restore_from_file_desc": "Pilih file cadangan dari penyimpanan perangkat",
+    "restore_from_drive": "Pulihkan dari Google Drive",
+    "restore_from_drive_desc": "Impor file cadangan yang disimpan di Drive",
+    "restore_help": "Untuk memulihkan, masukkan kata sandi yang Anda atur saat mencadangkan. Jika lupa, pemulihan tidak mungkin.",
+    "restore_pass_title": "Kata sandi cadangan",
+    "restore_pin_title": "Konfirmasi PIN dompet",
+    "restore_pin_desc": "Atur PIN 6 digit untuk melindungi dompet yang dipulihkan.",
+    "restore_otp_title": "Verifikasi OTP",
+    "restore_otp_desc": "Masukkan kode 6 digit yang dikirim ke email Anda.",
+    "restore_otp_expired": "Kedaluwarsa",
+    "restore_otp_resend": "Kirim ulang",
+    "restore_err_file": "Bukan file cadangan yang valid (format bv2).",
+    "restore_err_otp_send": "Gagal mengirim kode",
+    "restore_err_otp": "Masukkan kode 6 digit",
+    "restore_err_otp_bad": "Kode verifikasi tidak valid",
+    "restore_pass_label": "Kata sandi cadangan"
   },
   "my_info_faq": {
     "title": "Pertanyaan yang Sering Diajukan",
@@ -1900,9 +2034,80 @@
     "soldout": "Habis",
     "empty": "Tidak ada produk",
     "error_title": "Koneksi toko gagal",
-    "error_desc": "Silakan coba lagi nanti"
+    "error_desc": "Silakan coba lagi nanti",
+    "refresh": "Muat ulang"
   },
   "linking": {
-    "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti."
+    "open_failed": "Tidak dapat membuka tautan. Silakan coba lagi nanti.",
+    "shop_confirm_title": "Buka toko",
+    "shop_confirm_message": "Anda akan membuka toko MetaHint untuk membeli suplemen. Lanjutkan?",
+    "shop_confirm_continue": "Lanjutkan"
+  },
+  "supplements": {
+    "section_title": "Suplemen yang direkomendasikan",
+    "view_in_shop": "Lihat di toko",
+    "label_ai": "Rekomendasi AI",
+    "label_extra": "Tambahan pilihan",
+    "price_won": " won",
+    "included": "Termasuk",
+    "total_label": "Total",
+    "checkout_cta": "Bayar"
+  },
+  "walletV2Pin": {
+    "title_enter": "Atur PIN perlindungan dompet",
+    "title_confirm": "Konfirmasi PIN",
+    "desc_enter": "Atur 6 digit angka untuk melindungi dompet.",
+    "desc_confirm": "Masukkan PIN yang sama sekali lagi.",
+    "err_format": "Masukkan 6 digit angka",
+    "err_mismatch": "PIN tidak cocok",
+    "err_setup": "Pengaturan gagal",
+    "err_unknown": "Terjadi kesalahan",
+    "prompt_title": "Masukkan PIN pembayaran",
+    "prompt_desc": "Masukkan PIN 6 digit untuk menandatangani transaksi.",
+    "title": "Atur PIN perlindungan dompet",
+    "warning": "Khusus untuk melindungi kunci dompet.",
+    "backup_hint": "Setelah selesai, cadangkan untuk melindungi dompet.",
+    "enter_prompt": "Masukkan PIN 6 digit",
+    "confirm_prompt": "Masukkan sekali lagi",
+    "verifying": "Memverifikasi...",
+    "error_prompt": "Silakan coba lagi",
+    "retry": "Coba lagi",
+    "verify_fail": "Verifikasi gagal — silakan coba lagi"
+  },
+  "walletV2Tutorial": {
+    "page1": {
+      "title": "Kunci dompet milik Anda",
+      "body": [
+        "Dompet MetaHint memiliki kunci privat yang hanya Anda miliki.",
+        "Kunci privat adalah bukti kepemilikan dompet yang paling penting.",
+        "Hanya pemilik kunci ini yang dapat menggunakan aset di dalam dompet.",
+        "Jika kunci privat bocor, orang lain bisa memakai dompet Anda — jangan pernah dibagikan."
+      ]
+    },
+    "page2": {
+      "title": "Cadangkan kunci Anda dengan aman",
+      "body": [
+        "Anda dapat mencadangkan kunci dompet di aplikasi.",
+        "Meski perangkat hilang atau aplikasi dihapus, file cadangan bisa memulihkan dompet.",
+        "Dienkripsi dengan kata sandi cadangan dan disimpan aman.",
+        "Jika file cadangan atau kata sandi hilang, tidak ada — termasuk layanan pelanggan — yang bisa memulihkannya."
+      ]
+    },
+    "page3": {
+      "title": "Yang diketahui dan tidak oleh perusahaan",
+      "body": [
+        "Aplikasi MetaHint hanya menyimpan alamat dompet Anda.",
+        "Kunci privat tidak disimpan di server perusahaan dan perusahaan tidak dapat melihatnya.",
+        "Karena sifat blockchain, alamat dompet dan transaksi dapat dilihat publik.",
+        "Jika kehilangan kunci privat, perusahaan tidak dapat memulihkan dompet Anda.",
+        "Pengelolaan dompet dan kunci privat adalah tanggung jawab Anda."
+      ]
+    },
+    "rememberHeading": "Harap diingat",
+    "agree": "Saya memahami semua hal di atas.",
+    "prev": "Kembali",
+    "next": "Berikutnya",
+    "start": "Mulai",
+    "close": "Tutup"
   }
 }

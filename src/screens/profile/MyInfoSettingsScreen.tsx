@@ -8,7 +8,6 @@ import {
   v_09d0e5,
   v_79139e,
   v_326be8,
-  v_03e392,
   v_39a996,
 } from 'rcmrninabrnb';
 import { v_cf763b } from 'ixigazcpvfldbecwtbvavtbi';
@@ -18,8 +17,10 @@ import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_3d4e28, v_d752db } from '../../utils/appVersion';
 import { v_3aacaa } from '../../services/versionService';
+import { v_916f2a, v_b0123f } from '../../utils/easUpdateInfo';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_570c34, v_1c1837, v_9cafa7 } from '../../components';
+import { v_889fad } from '../../components/AlertHost';
 import type { v_8ad91b } from '../../navigation';
 import { v_a0daa8 } from '../../navigation';
 import { v_96a538 } from '../../hooks/useVersionCheck';
@@ -106,7 +107,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
   const v_c19e2d = 10000;
   const v_16fedc = async (v_3b402b) => {
     if (!v_0c7e2f()) {
-      v_03e392.alert(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
+      v_889fad(v_8d41d7('common.notification'), v_8d41d7('home.step_notification_unsupported'));
       return;
     }
     v_f1704d(true);
@@ -118,7 +119,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
           await v_e84827.setItem(v_8bf63f, 'true');
           v_8348d9(0, v_c19e2d, v_8d41d7('home.step_unit'));
         } else {
-          v_03e392.alert(v_8d41d7('common.error'), v_43c42e.error ?? v_8d41d7('home.step_notification_start_failed'));
+          v_889fad(v_8d41d7('common.error'), v_43c42e.error ?? v_8d41d7('home.step_notification_start_failed'));
         }
       } else {
         await v_015a21();
@@ -126,7 +127,7 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
         await v_e84827.setItem(v_8bf63f, 'false');
       }
     } catch (v_9e86fd) {
-      v_03e392.alert(v_8d41d7('common.error'), v_8d41d7('home.step_notification_start_failed'));
+      v_889fad(v_8d41d7('common.error'), v_8d41d7('home.step_notification_start_failed'));
     } finally {
       v_f1704d(false);
     }
@@ -252,9 +253,13 @@ const MyInfoSettingsScreen: v_a3453e.FC<Props> = () => {
             <Text style={v_d81136.versionText}>
               {v_326be8.OS === 'ios' ? 'iOS' : 'Android'} Store Version: {v_3d4e28()} ({v_d752db()})
             </Text>
+            {}
+            <Text style={v_d81136.versionText} selectable>
+              OTA: {v_b0123f(v_916f2a(), '내장 번들 (OTA 미적용)')}
+            </Text>
             {v_211e13 && (
               <Text style={v_d81136.versionText}>
-                OTA Version: {v_211e13}
+                Legacy OTA: {v_211e13}
               </Text>
             )}
           </View>
