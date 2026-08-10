@@ -35,6 +35,7 @@ import {
 } from '../services';
 import { v_2282da } from '../hooks/useAccountList';
 import { v_998b9d } from '../utils/authErrorHandler';
+import { v_8ba358 } from '../utils/deepLinkHandler';
 import type { v_8ad91b } from '../navigation';
 import { v_6bce96 } from 'wjvlskvsbzsrojdbjsl';
 
@@ -740,7 +741,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                 return;
             }
 
-            const v_3f557d = `https://oth-path-c38c36.example.invalid/pages/refer?reff=${encodeURIComponent(v_2fa46c)}`;
+            const v_3f557d = v_8ba358(v_2fa46c);
 
             const v_1074b5 = encodeURIComponent(v_8d41d7('sub_account.referral_email_subject'));
             const v_8f4a40 = encodeURIComponent(

@@ -1,5 +1,7 @@
 
 
+import { v_e4a763 } from './env';
+
 export type DeepLinkResult =
   | { type: 'referral'; code: string }
   | { type: 'shop_payment'; orderId: string; krw?: string; mtht?: string }
@@ -45,7 +47,8 @@ export function v_6f0675(v_f71b56): DeepLinkResult {
 }
 
 export function v_8ba358(v_c99bd2): string {
-  return `https://oth-path-c38c36.example.invalid/pages/refer?reff=${encodeURIComponent(v_c99bd2)}`;
+  const v_a9653b = v_e4a763().GATEWAY;
+  return `${v_a9653b}/pages/refer?reff=${encodeURIComponent(v_c99bd2)}`;
 }
 
 export function v_d844c3(v_c99bd2): string {
