@@ -18,7 +18,7 @@ import { v_b5df25 } from 'ernurodqvmtspux';
 import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
-import v_6f3f7e from '../../components/SupplementRecommendSection';
+import v_16c240 from '../../components/SupplementRecommendCta';
 import { v_dff48a } from '../../utils/aiTextFormat';
 import { v_0d0e7d, type v_9a970c } from '../../utils/analysisResultTabletStyles';
 import { v_2cc9f8 } from '../../utils/tabletLayout';
@@ -3141,9 +3141,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </>
                 )}
 
-                {
-}
-                <SupplementRecommendSection source="health" recordId={v_4ae380 ?? null} />
+                {}
+                <SupplementRecommendCta source="health" recordId={v_4ae380 ?? null} />
 
                 {
 }

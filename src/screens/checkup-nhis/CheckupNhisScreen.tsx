@@ -11,7 +11,7 @@ import {
 } from 'rcmrninabrnb';
 import { v_556baf, v_570c34, v_729608, v_cb41de, v_e775af } from '../../components';
 import { v_889fad } from '../../components/AlertHost';
-import v_6f3f7e from '../../components/SupplementRecommendSection';
+import v_16c240 from '../../components/SupplementRecommendCta';
 import { v_a0daa8 } from '../../navigation';
 import { v_15baf2, v_b67103, v_ff5546 } from '../../services';
 import type { v_84adce, v_e86309 } from '../../services/codefApi';
@@ -80,15 +80,16 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const v_2d6e99 = v_280029.find(v_e2a85c => v_e2a85c.value === v_e38ca2);
 
   const v_28c823 = (v_43c42e): number | null => {
-    const v_4e8a78 = Array.isArray(v_43c42e?.data?.saved)
-      ? (v_43c42e.data.saved[0]?.id ?? v_43c42e.data.saved[0])
-      : undefined;
+    const v_4f7358 = (v_d0c056): number | null => {
+      if (!Array.isArray(v_d0c056)) return null;
+      const v_715950 = v_d0c056.find((v_62c214) => typeof v_62c214?.id === 'number');
+      return v_715950 ? (v_715950 as { id: number }).id : null;
+    };
     const v_479f05 =
-      v_43c42e?.data?.id ??
-      v_4e8a78 ??
-      v_43c42e?.items?.[0]?.id ??
-      v_43c42e?.id ??
-      null;
+      v_4f7358(v_43c42e?.items) ??
+      v_4f7358(v_43c42e?.data?.items) ??
+      (typeof v_43c42e?.data?.id === 'number' ? v_43c42e.data.id : null) ??
+      (typeof v_43c42e?.id === 'number' ? v_43c42e.id : null);
     return typeof v_479f05 === 'number' ? v_479f05 : null;
   };
 
@@ -171,10 +172,71 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         v_889fad('인증 확인', '인증 대기 시간이 초과되었습니다. 다시 시도해 주세요.');
         return;
       }
-      v_fa923c(v_cb35cb.items ?? []);
-      v_db9949(v_28c823(v_cb35cb));
+      const v_5f5c66 = v_cb35cb.items ?? [];
+      console.log('[CheckupNhis] approve 응답 raw', {
+        status: v_cb35cb.status,
+        saved: (v_cb35cb as any).saved,
+        itemsCount: v_5f5c66.length,
+        items: v_5f5c66.map((v_23805a, v_e86ad8) => ({
+          idx: v_e86ad8,
+          keys: Object.keys(v_23805a || {}),
+          checkupDate: v_23805a?.checkupDate ?? v_23805a?.checkup_date ?? v_23805a?.resCheckupDate,
+          height: v_23805a?.height ?? v_23805a?.resHeight,
+          weight: v_23805a?.weight ?? v_23805a?.resWeight,
+          bmi: v_23805a?.bmi ?? v_23805a?.resBMI,
+          systolicBp: v_23805a?.systolicBp ?? v_23805a?.systolic_bp,
+          diastolicBp: v_23805a?.diastolicBp ?? v_23805a?.diastolic_bp,
+          fastingGlucose: v_23805a?.fastingGlucose ?? v_23805a?.fasting_glucose,
+          totalCholesterol: v_23805a?.totalCholesterol ?? v_23805a?.total_cholesterol,
+          judgment: v_23805a?.judgment ?? v_23805a?.resJudgment,
+          sample: JSON.stringify(v_23805a)?.slice(0, 800),
+        })),
+      });
+
+      const v_450f7d = v_5f5c66.length === 0 || v_5f5c66.every(
+        (v_23805a) =>
+          v_9bbdf7(v_23805a, 'height', 'resHeight', 'weight', 'resWeight', 'bmi', 'resBMI') == null,
+      );
+      let v_907715 = v_5f5c66;
+      if (v_450f7d) {
+        try {
+          const v_18b8bf = await v_ff5546();
+          console.log('[CheckupNhis] vitals 비어 DB fallback', {
+            rowsCount: v_18b8bf.length,
+            sample: v_18b8bf.slice(0, 3).map((v_3ac7e7) => ({
+              id: v_3ac7e7.id,
+              checkup_date: v_3ac7e7.checkup_date,
+              height: v_3ac7e7.height,
+              weight: v_3ac7e7.weight,
+              bmi: v_3ac7e7.bmi,
+              systolic_bp: v_3ac7e7.systolic_bp,
+              fasting_glucose: v_3ac7e7.fasting_glucose,
+            })),
+          });
+          if (v_18b8bf.length) {
+            v_907715 = v_18b8bf.map((v_3ac7e7) => ({
+              id: v_3ac7e7.id,
+              checkupDate: v_3ac7e7.checkup_date,
+              organization: v_3ac7e7.organization,
+              height: v_3ac7e7.height,
+              weight: v_3ac7e7.weight,
+              bmi: v_3ac7e7.bmi,
+              systolicBp: v_3ac7e7.systolic_bp,
+              diastolicBp: v_3ac7e7.diastolic_bp,
+              fastingGlucose: v_3ac7e7.fasting_glucose,
+              totalCholesterol: v_3ac7e7.total_cholesterol,
+              judgment: v_3ac7e7.judgment,
+            }));
+          }
+        } catch (v_9e86fd) {
+          console.log('[CheckupNhis] DB fallback 실패', v_9e86fd);
+        }
+      }
+
+      v_fa923c(v_907715);
+      v_db9949(v_28c823(v_cb35cb) ?? (v_907715[0]?.id ?? null));
       v_ae4844('result');
-      if (!v_cb35cb.items?.length) {
+      if (!v_907715.length) {
         v_889fad('안내', v_ae5f46());
       }
     } catch (v_9e86fd) {
@@ -353,7 +415,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               {v_4622b9.map((v_23805a, v_ebec57) => (
                 <ResultCard key={v_ebec57} it={v_23805a} />
               ))}
-              <SupplementRecommendSection source="checkup" recordId={v_7c9da3} />
+              <SupplementRecommendCta source="checkup" recordId={v_7c9da3} />
               <PrimaryButton title="완료" onPress={v_c7ac57} />
             </View>
           )}
@@ -384,27 +446,89 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   );
 };
 
-const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => (
-  <View style={v_3839df.card}>
-    <Text style={v_3839df.cardTitle}>
-      {v_23805a.checkupDate ?? '검진'}{v_23805a.organization ? ` · ${v_23805a.organization}` : ''}
-    </Text>
-    <Text style={v_3839df.row}>
-      키 {v_23805a.height ?? '-'}cm / 몸무게 {v_23805a.weight ?? '-'}kg / BMI {v_23805a.bmi ?? '-'}
-    </Text>
-    <Text style={v_3839df.row}>
-      혈압 {v_23805a.systolicBp ?? '-'}/{v_23805a.diastolicBp ?? '-'} · 공복혈당 {v_23805a.fastingGlucose ?? '-'}
-    </Text>
-    <Text style={v_3839df.row}>
-      총콜레스테롤 {v_23805a.totalCholesterol ?? '-'} · 판정 {v_23805a.judgment ?? '-'}
-    </Text>
-  </View>
-);
+function v_608e6b(v_479f05): string {
+  if (v_479f05 == null || v_479f05 === '') return '검진';
+  const v_fd5f43 = String(v_479f05).trim();
+  const v_35f85c = v_fd5f43.match(/^(\d{4})[-\/.]?(\d{2})[-\/.]?(\d{2})/);
+  if (v_35f85c) return `${v_35f85c[1]}년 ${Number(v_35f85c[2])}월 ${Number(v_35f85c[3])}일`;
+  return v_fd5f43;
+}
+
+function v_9bbdf7(v_23805a, ...v_fa53ec: string[]): unknown {
+  if (!v_23805a || typeof v_23805a !== 'object') return undefined;
+  for (const v_0eb677 of v_fa53ec) {
+    const v_81e2ef = v_23805a[v_0eb677];
+    if (v_81e2ef !== undefined && v_81e2ef !== null && v_81e2ef !== '') return v_81e2ef;
+  }
+  return undefined;
+}
+
+function v_6ab990(v_23805a, ...v_fa53ec: string[]): string {
+  const v_81e2ef = v_9bbdf7(v_23805a, ...v_fa53ec);
+  return v_81e2ef == null || v_81e2ef === '' ? '-' : String(v_81e2ef);
+}
+
+const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
+  v_a3453e.useEffect(() => {
+    console.log('[CheckupNhis] ResultCard 렌더', {
+      keys: Object.keys(v_23805a || {}),
+      json: JSON.stringify(v_23805a),
+    });
+  }, [v_23805a]);
+
+  const v_3cffaf = v_608e6b(
+    v_9bbdf7(v_23805a, 'checkupDate', 'checkup_date', 'resCheckupDate'),
+  );
+  const v_95f192 = v_6ab990(v_23805a, 'organization', 'resOrganizationName', 'resOrganization');
+  const v_f85720 = v_95f192 === '-' ? '-' : v_95f192.replace(/\+/g, ' ');
+  const v_342b41 = v_6ab990(v_23805a, 'checkupType', 'resCheckupType');
+  const v_c86e33 = v_6ab990(v_23805a, 'height', 'resHeight');
+  const v_14832c = v_6ab990(v_23805a, 'weight', 'resWeight');
+  const v_38fea4 = v_6ab990(v_23805a, 'bmi', 'resBMI');
+  const v_1a85dc = v_6ab990(v_23805a, 'systolicBp', 'systolic_bp');
+  const v_c1441e = v_6ab990(v_23805a, 'diastolicBp', 'diastolic_bp');
+  const v_dfca81 = v_6ab990(v_23805a, 'fastingGlucose', 'fasting_glucose', 'resFastingBloodSuger', 'resFastingBloodSugar');
+  const v_510b1a = v_6ab990(v_23805a, 'totalCholesterol', 'total_cholesterol', 'resTotalCholesterol');
+  const v_2312b4 = v_6ab990(v_23805a, 'judgment', 'resJudgment');
+  const v_b935a3 = v_c86e33 !== '-' || v_14832c !== '-' || v_38fea4 !== '-' || v_1a85dc !== '-' || v_dfca81 !== '-';
+
+  return (
+    <View style={v_3839df.card}>
+      <Text style={v_3839df.cardTitle}>
+        {v_3cffaf}{v_f85720 !== '-' ? ` · ${v_f85720}` : ''}
+      </Text>
+      {v_342b41 !== '-' ? (
+        <Text style={v_3839df.row}>검진유형 {v_342b41}</Text>
+      ) : null}
+      {v_b935a3 ? (
+        <>
+          <Text style={v_3839df.row}>
+            키 {v_c86e33}cm / 몸무게 {v_14832c}kg / BMI {v_38fea4}
+          </Text>
+          <Text style={v_3839df.row}>
+            혈압 {v_1a85dc}/{v_c1441e} · 공복혈당 {v_dfca81}
+          </Text>
+          <Text style={v_3839df.row}>
+            총콜레스테롤 {v_510b1a} · 판정 {v_2312b4}
+          </Text>
+        </>
+      ) : (
+        <Text style={v_3839df.row}>
+          이 기록에는 키·몸무게 등 일반검진 수치가 없습니다
+          {v_342b41 !== '-' && v_342b41.includes('암')
+            ? ` (${v_342b41} 요약)`
+            : ''}
+          .
+        </Text>
+      )}
+    </View>
+  );
+};
 
 const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => (
   <View style={v_3839df.card}>
     <Text style={v_3839df.cardTitle}>
-      {v_3ac7e7.checkup_date ?? v_3ac7e7.checkup_year ?? '검진'}
+      {v_608e6b(v_3ac7e7.checkup_date ?? v_3ac7e7.checkup_year)}
       {v_3ac7e7.organization ? ` · ${v_3ac7e7.organization}` : ''}
     </Text>
     <Text style={v_3839df.row}>
