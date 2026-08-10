@@ -4,6 +4,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import { v_ec0289, type v_d74666, type v_5a09f2 } from '../services/supplementApi';
 import { v_ffe36d } from '../hooks/useLinkOpener';
 import { v_e4a763 } from '../utils/env';
+import { v_9f896c } from '../utils/shopProductKind';
 
 function v_295d07(v_f71b56): string | undefined {
   if (!v_f71b56) return undefined;
@@ -164,6 +165,9 @@ export default function v_6f3f7e({
                     <Text style={v_d81136.price}>
                       {Number(v_8c0b26.price).toLocaleString('ko-KR')}
                       {v_8d41d7('supplements.price_won')}
+                      {v_9f896c({ shopItemId: v_8c0b26.shopItemId }) ? (
+                        <Text style={v_d81136.monthInline}> · {v_8d41d7('supplements.month_supply')}</Text>
+                      ) : null}
                     </Text>
                   ) : null}
                   {v_f8bd01 ? (
@@ -246,6 +250,7 @@ const v_d81136 = v_472849.create({
   name: { fontSize: 14, fontWeight: '600' },
   reason: { fontSize: 12, color: '#666', marginTop: 4 },
   price: { fontSize: 13, fontWeight: '600', marginTop: 4, color: '#111' },
+  monthInline: { fontSize: 12, fontWeight: '500', color: '#92400E' },
   footer: {
     marginTop: 4,
     paddingTop: 12,

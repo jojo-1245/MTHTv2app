@@ -48,6 +48,7 @@ import v_67f088 from '../screens/AddSubAccountScreen';
 import v_4fd298 from '../screens/profile/DataConsentSettingsScreen';
 import v_f6b2e9 from '../screens/ShopProductListScreen';
 import v_d3b4f6 from '../screens/ShopPaymentConfirmScreen';
+import v_5109e7 from '../screens/RecommendedSupplementsScreen';
 import { v_4482f8, v_5bfacf } from '../hooks/useShopPaymentPush';
 
 export type RootStackParamList = {
@@ -167,6 +168,7 @@ export type RootStackParamList = {
   } | undefined;
   DataConsentSettings: undefined;
   ShopProductList: undefined;
+  RecommendedSupplements: undefined;
   ShopPaymentConfirm: {
     orderId: string;
     krwAmount?: string;
@@ -296,6 +298,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="AddSubAccount" component={v_67f088} />
         <Stack.Screen name="DataConsentSettings" component={v_4fd298} />
         <Stack.Screen name="ShopProductList" component={v_f6b2e9} />
+        <Stack.Screen name="RecommendedSupplements" component={v_5109e7} />
         <Stack.Screen name="ShopPaymentConfirm" component={v_d3b4f6} />
       </Stack.Navigator>
     </NavigationContainer>
