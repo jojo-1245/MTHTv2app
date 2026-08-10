@@ -11,6 +11,7 @@ import {
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_649c8b, v_95c036, type v_e9d814 } from '../services/shopApi';
+import { v_9f896c } from '../utils/shopProductKind';
 import { v_ffe36d } from '../hooks/useLinkOpener';
 import { v_a0daa8 } from '../navigation';
 import { v_1bfbd0, v_843035, v_ef658a, v_9b1a04 } from '../constants';
@@ -155,8 +156,11 @@ export default function v_ef8a11() {
                   : <View style={[v_d81136.image, v_d81136.imagePlaceholder]} />}
               </View>
               <View style={v_d81136.info}>
-                <Text numberOfLines={2} style={v_d81136.name}>{v_8c0b26.it_name}</Text>
+                    <Text numberOfLines={2} style={v_d81136.name}>{v_8c0b26.it_name}</Text>
                 {v_6e4734 && !v_8c0b26.soldout ? <Text style={v_d81136.mtht}>≈ {v_6e4734} MTHT</Text> : null}
+                {!v_8c0b26.soldout && v_9f896c(v_8c0b26) ? (
+                  <Text style={v_d81136.monthSupply}>{v_8d41d7('shop.month_supply')}</Text>
+                ) : null}
                 <Text style={v_d81136.price}>{v_8c0b26.soldout ? v_8d41d7('shop.soldout') : v_55ca78(v_8c0b26.it_price)}</Text>
               </View>
             </TouchableOpacity>
@@ -181,6 +185,7 @@ const v_d81136 = v_472849.create({
   info: { padding: v_9b1a04.medium, paddingTop: 12 },
   name: { fontSize: 14, fontFamily: v_843035.bold, color: '#000000', marginBottom: 8, height: 40, lineHeight: 20 },
   mtht: { fontSize: 11, fontFamily: v_843035.semibold, color: '#615FFF', marginBottom: 2 },
+  monthSupply: { fontSize: 11, fontFamily: v_843035.semibold, color: '#92400E', marginBottom: 2 },
   price: { fontSize: 15, fontFamily: v_843035.bold, color: '#000000', letterSpacing: -0.5 },
   placeholderBox: {
     borderRadius: 16,
