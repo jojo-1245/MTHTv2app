@@ -4,6 +4,7 @@ import { v_772971 } from 'jmpfvteuuztnp';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_729608, v_570c34, v_1c1837 } from '../components';
 import { v_649c8b, v_95c036, type v_e9d814 } from '../services/shopApi';
+import { v_9f896c } from '../utils/shopProductKind';
 import { v_ffe36d } from '../hooks/useLinkOpener';
 import type { v_8ad91b } from '../navigation';
 import { v_a0daa8 } from '../navigation';
@@ -64,6 +65,9 @@ const ShopProductListScreen: v_a3453e.FC<Props> = () => {
                       : <View style={[v_d81136.img, v_d81136.imgPlaceholder]} />}
                     <Text numberOfLines={2} style={v_d81136.name}>{v_8c0b26.it_name}</Text>
                     {v_6e4734 && !v_8c0b26.soldout ? <Text style={v_d81136.mtht}>≈ {v_6e4734} MTHT</Text> : null}
+                    {!v_8c0b26.soldout && v_9f896c(v_8c0b26) ? (
+                      <Text style={v_d81136.monthSupply}>{v_8d41d7('shop.month_supply')}</Text>
+                    ) : null}
                     <Text style={v_d81136.price}>{v_8c0b26.soldout ? v_8d41d7('shop.soldout') : v_55ca78(v_8c0b26.it_price)}</Text>
                   </TouchableOpacity>
                 );
@@ -87,6 +91,7 @@ const v_d81136 = v_472849.create({
   imgPlaceholder: { alignItems: 'center', justifyContent: 'center' },
   name: { fontSize: v_ef658a.medium, fontFamily: v_843035.regular, color: v_1bfbd0.text, marginTop: v_9b1a04.small - 2 },
   mtht: { fontSize: 11, fontFamily: v_843035.semibold, color: '#615FFF', marginTop: 4 },
+  monthSupply: { fontSize: 11, fontFamily: v_843035.semibold, color: '#92400E', marginTop: 2 },
   price: { fontSize: v_ef658a.large, fontFamily: v_843035.bold, color: v_1bfbd0.text, marginTop: 2 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 80 },
   emptyText: { fontSize: v_ef658a.medium, fontFamily: v_843035.regular, color: v_1bfbd0.secondaryText },
