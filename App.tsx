@@ -18,7 +18,7 @@ import { v_96a538 } from './src/hooks/useVersionCheck';
 import { v_bfb6ac } from './src/hooks/useEasUpdate';
 import { v_b357c3 } from './src/services/admob';
 import { v_bfe92f } from './src/hooks/useKeepalive';
-import { v_9cafa7, v_fba277, v_26d101 } from './src/components';
+import { v_9cafa7, v_fba277, v_26d101, v_e7b48a } from './src/components';
 import * as v_79a9df from './src/services/versionService';
 import './src/i18n';
 
@@ -78,7 +78,11 @@ export default function v_6540c3() {
     },
   });
 
-  v_bfb6ac();
+  const {
+    status: v_aec69b,
+    applyUpdate: v_bf5792,
+    dismiss: v_24b920,
+  } = v_bfb6ac();
 
   const { notice: v_d48273, dismissNotice: v_2852e3 } = v_bfe92f(v_4c1272);
 
@@ -189,6 +193,13 @@ export default function v_6540c3() {
           }
         }}
         onCancel={v_8f0153}
+      />
+
+      {}
+      <UpdateReadyModal
+        visible={v_aec69b === 'pending'}
+        onConfirm={v_bf5792}
+        onCancel={v_24b920}
       />
 
       {}
