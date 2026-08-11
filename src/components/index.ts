@@ -73,6 +73,7 @@ export { UpdateOverlay } from './UpdateOverlay';
 export { EmergencyNoticeModal } from './EmergencyNoticeModal';
 export { MedicalDisclaimerModal } from './MedicalDisclaimerModal';
 export { StoreUpdateModal } from './StoreUpdateModal';
+export { UpdateReadyModal } from './UpdateReadyModal';
 
 export { default as SidebarMenu } from './SidebarMenu';
 export type { SidebarMenuProps, SidebarMenuItem } from './SidebarMenu';
