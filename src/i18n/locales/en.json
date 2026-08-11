@@ -9,6 +9,8 @@
     "select_language": "Select Language",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "update_ready_title": "A new version is available",
+    "update_ready_message": "Restart now?\nIf you skip, it will be applied the next time you open the app.",
     "back": "Back",
     "close": "Close",
     "login": "Login",
