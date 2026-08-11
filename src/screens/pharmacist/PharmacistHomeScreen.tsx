@@ -370,7 +370,6 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
     <View style={v_d81136.contentTopBar}>
       <View style={v_d81136.contentTopLeft}>
         <View style={v_d81136.contentLogoRow}>
-          <Image source={v_f881c9} style={v_d81136.contentSymbol} resizeMode="contain" />
           <Image source={v_7f6e88} style={v_d81136.contentLogoText} resizeMode="contain" />
         </View>
         <Text
@@ -875,13 +874,10 @@ const v_d81136 = v_472849.create({
     alignItems: 'center',
     gap: v_af2c88(8, 10),
   },
-  contentSymbol: {
-    width: v_af2c88(36, 42),
-    height: v_af2c88(36, 42),
-  },
   contentLogoText: {
-    width: v_af2c88(100, 116),
-    height: v_af2c88(26, 30),
+
+    width: v_af2c88(151, 185),
+    height: v_af2c88(36, 44),
   },
   contentTopTitle: {
     fontFamily: v_843035.bold,
