@@ -9,6 +9,8 @@
     "select_language": "Pilih Bahasa",
     "cancel": "Batal",
     "confirm": "Konfirmasi",
+    "update_ready_title": "Versi baru tersedia",
+    "update_ready_message": "Mulai ulang sekarang?\nJika nanti, pembaruan akan diterapkan saat Anda membuka aplikasi lagi.",
     "back": "Kembali",
     "close": "Tutup",
     "login": "Masuk",

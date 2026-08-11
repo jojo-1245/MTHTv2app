@@ -9,6 +9,8 @@
         "select_language": "언어 선택",
         "cancel": "취소",
         "confirm": "확인",
+        "update_ready_title": "새 버전이 있습니다",
+        "update_ready_message": "지금 재시작하시겠습니까?\n나중에 하셔도 앱을 다시 켜면 적용됩니다.",
         "back": "뒤로가기",
         "close": "닫기",
         "login": "로그인",
