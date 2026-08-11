@@ -1228,8 +1228,8 @@ const v_d81136 = v_472849.create({
     marginTop: 5,
   },
   greetingMain: { fontSize: 16, fontFamily: v_843035.medium, color: '#FFFFFF', textAlign: 'center', letterSpacing: -0.5 },
-  headerLeft: { flexDirection: 'row', alignItems: 'flex-start', gap: 0 },
-  headerLogo: { width: 120, height: 20, objectFit: 'contain', opacity: 0.8 },
+  headerLeft: { flexDirection: 'row', alignItems: 'flex-start', gap: 0,  },
+  headerLogo: { width: 134, height: 32, objectFit: 'contain', opacity: 0.9 },
   headerRight: { flexDirection: 'row', alignItems: 'center', gap: 0 },
   headerIconBtn: { padding: 4 },
   headerIconPill: {

@@ -41,6 +41,7 @@ const v_eecdb6 = {
   ReferralShare: 'myinfo',
   MyReferrals: 'myinfo',
   ReferralSales: 'myinfo',
+  RecommendedSupplements: 'myinfo',
 };
 
 const v_b76a69 = {
@@ -62,6 +63,7 @@ const v_b76a69 = {
   ClauseDetail: 'myinfo',
   MyInfoCloseMembership: 'myinfo',
   MyInfoFaq: 'myinfo',
+  RecommendedSupplements: 'myinfo',
 };
 
 const v_e7e9e9 = new Set(['health', 'skin']);
