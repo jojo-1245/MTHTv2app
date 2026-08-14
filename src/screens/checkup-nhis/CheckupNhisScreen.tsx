@@ -474,6 +474,15 @@ function v_6ab990(v_23805a, ...v_fa53ec: string[]): string {
   return v_81e2ef == null || v_81e2ef === '' ? '-' : String(v_81e2ef);
 }
 
+function v_1068f0(v_468545, v_24cf2a = ' · '): string | null {
+  const v_ef8ab1 = v_468545.filter((v_e2a85c): v_e2a85c is string => !!v_e2a85c && v_e2a85c !== '-');
+  return v_ef8ab1.length ? v_ef8ab1.join(v_24cf2a) : null;
+}
+
+function v_9216a2(v_81e2ef): boolean {
+  return v_81e2ef != null && v_81e2ef !== '' && v_81e2ef !== '-';
+}
+
 const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
   v_a3453e.useEffect(() => {
     console.log('[CheckupNhis] ResultCard 렌더', {
@@ -497,7 +506,25 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
   const v_dfca81 = v_6ab990(v_23805a, 'fastingGlucose', 'fasting_glucose', 'resFastingBloodSuger', 'resFastingBloodSugar');
   const v_510b1a = v_6ab990(v_23805a, 'totalCholesterol', 'total_cholesterol', 'resTotalCholesterol');
   const v_2312b4 = v_6ab990(v_23805a, 'judgment', 'resJudgment');
-  const v_b935a3 = v_c86e33 !== '-' || v_14832c !== '-' || v_38fea4 !== '-' || v_1a85dc !== '-' || v_dfca81 !== '-';
+
+  const v_ce04c7 = v_1068f0([
+    v_9216a2(v_c86e33) ? `키 ${v_c86e33}cm` : null,
+    v_9216a2(v_14832c) ? `몸무게 ${v_14832c}kg` : null,
+    v_9216a2(v_38fea4) ? `BMI ${v_38fea4}` : null,
+  ], ' / ');
+  const v_6e9efd =
+    v_9216a2(v_1a85dc) || v_9216a2(v_c1441e)
+      ? `혈압 ${v_9216a2(v_1a85dc) ? v_1a85dc : '-'}/${v_9216a2(v_c1441e) ? v_c1441e : '-'}`
+      : null;
+  const v_909ad1 = v_1068f0([
+    v_6e9efd,
+    v_9216a2(v_dfca81) ? `공복혈당 ${v_dfca81}` : null,
+  ]);
+  const v_4cbb19 = v_1068f0([
+    v_9216a2(v_510b1a) ? `총콜레스테롤 ${v_510b1a}` : null,
+    v_9216a2(v_2312b4) ? `판정 ${v_2312b4}` : null,
+  ]);
+  const v_b935a3 = !!(v_ce04c7 || v_909ad1 || v_4cbb19);
 
   return (
     <View style={v_3839df.card}>
@@ -509,16 +536,9 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
       ) : null}
       {v_b935a3 ? (
         <>
-          <Text style={v_3839df.row}>
-            키 {v_c86e33}cm / 몸무게 {v_14832c}kg / BMI {v_38fea4}
-          </Text>
-          <Text style={v_3839df.row}>
-            혈압 {v_1a85dc}/{v_c1441e} · 공복혈당 {v_dfca81}
-          </Text>
-          <Text style={v_3839df.row}>
-            총콜레스테롤 {v_510b1a}
-            {v_2312b4 !== '-' ? ` · 판정 ${v_2312b4}` : ''}
-          </Text>
+          {v_ce04c7 ? <Text style={v_3839df.row}>{v_ce04c7}</Text> : null}
+          {v_909ad1 ? <Text style={v_3839df.row}>{v_909ad1}</Text> : null}
+          {v_4cbb19 ? <Text style={v_3839df.row}>{v_4cbb19}</Text> : null}
         </>
       ) : (
         <Text style={v_3839df.row}>
@@ -533,29 +553,56 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
   );
 };
 
-const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => (
-  <View style={v_3839df.card}>
-    <Text style={v_3839df.cardTitle}>
-      {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year)}
-      {v_3ac7e7.organization ? ` · ${String(v_3ac7e7.organization).replace(/\+/g, ' ')}` : ''}
-    </Text>
-    <Text style={v_3839df.row}>
-      키 {v_3ac7e7.height ?? '-'}cm / 몸무게 {v_3ac7e7.weight ?? '-'}kg / BMI {v_3ac7e7.bmi ?? '-'}
-    </Text>
-    <Text style={v_3839df.row}>
-      혈압 {v_3ac7e7.systolic_bp ?? '-'}/{v_3ac7e7.diastolic_bp ?? '-'} · 공복혈당 {v_3ac7e7.fasting_glucose ?? '-'}
-    </Text>
-    <Text style={v_3839df.row}>
-      총콜레스테롤 {v_3ac7e7.total_cholesterol ?? '-'} · HDL {v_3ac7e7.hdl ?? '-'} · LDL {v_3ac7e7.ldl ?? '-'}
-    </Text>
-    <Text style={v_3839df.row}>
-      AST {v_3ac7e7.ast ?? '-'} · ALT {v_3ac7e7.alt ?? '-'} · γGTP {v_3ac7e7.gtp ?? '-'}
-    </Text>
-    {v_3ac7e7.judgment ? (
-      <Text style={v_3839df.row}>판정 {v_3ac7e7.judgment}</Text>
-    ) : null}
-  </View>
-);
+const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => {
+  const v_ce04c7 = v_1068f0([
+    v_3ac7e7.height != null ? `키 ${v_3ac7e7.height}cm` : null,
+    v_3ac7e7.weight != null ? `몸무게 ${v_3ac7e7.weight}kg` : null,
+    v_3ac7e7.bmi != null ? `BMI ${v_3ac7e7.bmi}` : null,
+  ], ' / ');
+  const v_6e9efd =
+    v_3ac7e7.systolic_bp != null || v_3ac7e7.diastolic_bp != null
+      ? `혈압 ${v_3ac7e7.systolic_bp ?? '-'}/${v_3ac7e7.diastolic_bp ?? '-'}`
+      : null;
+  const v_909ad1 = v_1068f0([
+    v_6e9efd,
+    v_3ac7e7.fasting_glucose != null ? `공복혈당 ${v_3ac7e7.fasting_glucose}` : null,
+  ]);
+  const v_4cbb19 = v_1068f0([
+    v_3ac7e7.total_cholesterol != null ? `총콜레스테롤 ${v_3ac7e7.total_cholesterol}` : null,
+    v_3ac7e7.hdl != null ? `HDL ${v_3ac7e7.hdl}` : null,
+    v_3ac7e7.ldl != null ? `LDL ${v_3ac7e7.ldl}` : null,
+  ]);
+  const v_79cdfc = v_1068f0([
+    v_3ac7e7.ast != null ? `AST ${v_3ac7e7.ast}` : null,
+    v_3ac7e7.alt != null ? `ALT ${v_3ac7e7.alt}` : null,
+    v_3ac7e7.gtp != null ? `γGTP ${v_3ac7e7.gtp}` : null,
+  ]);
+  const v_b935a3 = !!(v_ce04c7 || v_909ad1 || v_4cbb19 || v_79cdfc || v_3ac7e7.judgment);
+
+  return (
+    <View style={v_3839df.card}>
+      <Text style={v_3839df.cardTitle}>
+        {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year)}
+        {v_3ac7e7.organization ? ` · ${String(v_3ac7e7.organization).replace(/\+/g, ' ')}` : ''}
+      </Text>
+      {v_b935a3 ? (
+        <>
+          {v_ce04c7 ? <Text style={v_3839df.row}>{v_ce04c7}</Text> : null}
+          {v_909ad1 ? <Text style={v_3839df.row}>{v_909ad1}</Text> : null}
+          {v_4cbb19 ? <Text style={v_3839df.row}>{v_4cbb19}</Text> : null}
+          {v_79cdfc ? <Text style={v_3839df.row}>{v_79cdfc}</Text> : null}
+          {v_3ac7e7.judgment ? (
+            <Text style={v_3839df.row}>판정 {v_3ac7e7.judgment}</Text>
+          ) : null}
+        </>
+      ) : (
+        <Text style={v_3839df.row}>
+          이 기록에는 키·몸무게 등 일반검진 수치가 없습니다.
+        </Text>
+      )}
+    </View>
+  );
+};
 
 const v_d81136 = v_472849.create({
   screen: {
