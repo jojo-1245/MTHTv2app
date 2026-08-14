@@ -516,7 +516,8 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
             혈압 {v_1a85dc}/{v_c1441e} · 공복혈당 {v_dfca81}
           </Text>
           <Text style={v_3839df.row}>
-            총콜레스테롤 {v_510b1a} · 판정 {v_2312b4}
+            총콜레스테롤 {v_510b1a}
+            {v_2312b4 !== '-' ? ` · 판정 ${v_2312b4}` : ''}
           </Text>
         </>
       ) : (
@@ -550,7 +551,9 @@ const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => (
     <Text style={v_3839df.row}>
       AST {v_3ac7e7.ast ?? '-'} · ALT {v_3ac7e7.alt ?? '-'} · γGTP {v_3ac7e7.gtp ?? '-'}
     </Text>
-    <Text style={v_3839df.row}>판정 {v_3ac7e7.judgment ?? '-'}</Text>
+    {v_3ac7e7.judgment ? (
+      <Text style={v_3839df.row}>판정 {v_3ac7e7.judgment}</Text>
+    ) : null}
   </View>
 );
 
