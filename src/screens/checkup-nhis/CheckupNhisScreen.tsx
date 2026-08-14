@@ -446,11 +446,17 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   );
 };
 
-function v_608e6b(v_479f05): string {
+function v_608e6b(v_479f05, v_0eaaff): string {
   if (v_479f05 == null || v_479f05 === '') return '검진';
   const v_fd5f43 = String(v_479f05).trim();
   const v_35f85c = v_fd5f43.match(/^(\d{4})[-\/.]?(\d{2})[-\/.]?(\d{2})/);
   if (v_35f85c) return `${v_35f85c[1]}년 ${Number(v_35f85c[2])}월 ${Number(v_35f85c[3])}일`;
+
+  const v_861f6d = v_fd5f43.match(/^(\d{2})(\d{2})$/);
+  const v_64877a = v_0eaaff != null ? String(v_0eaaff).replace(/\D/g, '').slice(0, 4) : '';
+  if (v_861f6d && v_64877a.length === 4) {
+    return `${v_64877a}년 ${Number(v_861f6d[1])}월 ${Number(v_861f6d[2])}일`;
+  }
   return v_fd5f43;
 }
 
@@ -478,6 +484,7 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
 
   const v_3cffaf = v_608e6b(
     v_9bbdf7(v_23805a, 'checkupDate', 'checkup_date', 'resCheckupDate'),
+    v_9bbdf7(v_23805a, 'checkupYear', 'checkup_year', 'resCheckupYear'),
   );
   const v_95f192 = v_6ab990(v_23805a, 'organization', 'resOrganizationName', 'resOrganization');
   const v_f85720 = v_95f192 === '-' ? '-' : v_95f192.replace(/\+/g, ' ');
@@ -528,8 +535,8 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
 const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => (
   <View style={v_3839df.card}>
     <Text style={v_3839df.cardTitle}>
-      {v_608e6b(v_3ac7e7.checkup_date ?? v_3ac7e7.checkup_year)}
-      {v_3ac7e7.organization ? ` · ${v_3ac7e7.organization}` : ''}
+      {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year)}
+      {v_3ac7e7.organization ? ` · ${String(v_3ac7e7.organization).replace(/\+/g, ' ')}` : ''}
     </Text>
     <Text style={v_3839df.row}>
       키 {v_3ac7e7.height ?? '-'}cm / 몸무게 {v_3ac7e7.weight ?? '-'}kg / BMI {v_3ac7e7.bmi ?? '-'}
