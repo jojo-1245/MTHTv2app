@@ -278,11 +278,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
+          {
+}
+          <View
             style={v_d81136.nftInfoCard}
-            onPress={() => v_9b57fc('ProfitDistribution')}
-            activeOpacity={0.85}
-            accessibilityRole="button"
             accessibilityLabel={v_8d41d7('profile.nft_held')}
           >
             <View style={v_d81136.nftInfoContent}>
@@ -291,8 +290,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>{v_a75189.toLocaleString()}{v_8d41d7('profile.nft_unit')}</Text>
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={v_d81136.nftInfoCard}
             onPress={() => v_9b57fc('CheckupNhis', { initialTab: 'records' })}
