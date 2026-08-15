@@ -76,7 +76,7 @@ import {
 import type { v_ef2cf2, v_90dba6 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import { v_689447 } from 'itscvgofwkypynbtmpkqsziydpcjrgp';
 import type { v_bc6a30 } from '../../types/fzljtili';
-import { v_4e7146, v_7374eb, v_9d6425 } from './vitalSignStatus';
+import { v_4e7146, v_7374eb, v_9d6425, v_c7d798 } from './vitalSignStatus';
 
 import { v_2d6571 } from '../../utils/consentStore';
 import v_e209a2 from '../../components/DataConsentModal';
@@ -2167,13 +2167,14 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                       const v_1300ee = v_678155[0];
                       const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                       v_c65f5d.navigate('HealthAnalysisResult', {
-                        results: v_1300ee.vital_signs ?? {},
+                        results: v_c7d798(v_1300ee.vital_signs ?? {}),
                         timestamp: `${v_1300ee.record_date}T${v_1300ee.record_time}:00`,
                         userName: v_d182a9(),
                         accounts: v_c86f08,
                         selectedAccountId: v_e7b2f2,
                         savedBeforeNavigate: true,
                         recordId: v_1300ee.id,
+                        fromHistory: true,
                       });
                     } catch (v_9e86fd) {
                       v_889fad('오류', String(v_9e86fd));

@@ -30,7 +30,9 @@ import {
 } from '../../../utils/pharmacyRecordAdapter';
 import { v_998b9d } from '../../../utils/authErrorHandler';
 import { v_ada615 } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_d28324, v_7374eb, v_9da885 } from '../vitalSignStatus';
+import type { v_390fcc } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
+import type { v_8ad91b } from '../../../navigation';
+import { v_d28324, v_7374eb, v_9da885, v_c7d798 } from '../vitalSignStatus';
 import { v_bb8240 } from '../../../hooks/useSystemConfig';
 
 export interface MeasurementItem {
@@ -378,7 +380,7 @@ interface HealthRecordsViewProps {
 
   selectedAccountId?: string;
 
-  accounts?: Array<{ id: string; isCurrent?: boolean }>;
+  accounts?: Array<{ id: string; name?: string; isCurrent?: boolean }>;
 
   pharmacistMode?: boolean;
 }
@@ -423,13 +425,16 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     }),
     [v_76eb7f, v_6c4b91.typo]
   );
-  const v_c65f5d = v_ada615();
+  const v_c65f5d = v_ada615<v_390fcc<v_8ad91b>>();
   const [v_0af1e7, v_9e8c08] = v_5ab095<'calendar' | 'list'>('list');
   const [v_0ab6f2, v_3a7c17] = v_5ab095(new Date());
   const [v_1835e1, v_f04d19] = v_5ab095<string | null>(null);
   const [v_b23082, v_725ee9] = v_5ab095(false);
   const [v_16e1dd, v_3e1334] = v_5ab095<string | null>(null);
   const [v_37dcee, v_10eb9c] = v_5ab095(v_488860);
+
+  const [v_7a92f4, v_a89797] = v_5ab095<Record<string, v_218d40>>({});
+  const [v_a708b9, v_4dca01] = v_5ab095(false);
   const [v_b66218, v_ab9961] = v_5ab095(0);
   const [v_a4994e, v_699388] = v_5ab095<HealthRecord | null>(null);
   const [v_e74174, v_8984bb] = v_5ab095(false);
@@ -457,14 +462,19 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           const v_610eb5 = v_2e1952(v_e7b2f2);
           if (!v_610eb5) {
             v_9ed182([]);
+            v_a89797({});
             return;
           }
           const v_952788 = await v_71f4f5(v_610eb5);
-          const v_e21297 = v_952788
+          const v_4622b9 = v_952788
             .map(v_80f1f0)
-            .filter((v_8c0b26): v_8c0b26 is v_218d40 => v_8c0b26 != null)
-            .map(v_38756f);
-          v_9ed182(v_e21297);
+            .filter((v_8c0b26): v_8c0b26 is v_218d40 => v_8c0b26 != null);
+          const byId: Record<string, v_218d40> = {};
+          v_4622b9.forEach((v_8c0b26) => {
+            v_b6b02f[String(v_8c0b26.id)] = v_8c0b26;
+          });
+          v_a89797(v_b6b02f);
+          v_9ed182(v_4622b9.map(v_38756f));
           return;
         }
 
@@ -496,8 +506,12 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
           records: JSON.stringify(v_1f4ef0, null, 2),
         });
 
-        const v_e21297 = v_1f4ef0.map(v_38756f);
-        v_9ed182(v_e21297);
+        const byId: Record<string, v_218d40> = {};
+        v_1f4ef0.forEach((v_8c0b26) => {
+          v_b6b02f[String(v_8c0b26.id)] = v_8c0b26;
+        });
+        v_a89797(v_b6b02f);
+        v_9ed182(v_1f4ef0.map(v_38756f));
       } catch (v_5e9bfe) {
         console.error('[HealthRecordsView] 건강 기록 로드 실패:', {
           error: v_5e9bfe,
@@ -510,6 +524,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
 
         v_885e0e(v_5e9bfe instanceof Error ? v_5e9bfe : new Error('건강 기록을 불러오는데 실패했습니다.'));
         v_9ed182([]); 
+        v_a89797({});
       } finally {
         v_deef62(false);
       }
@@ -575,13 +590,10 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     const v_f8e6b9 = `${v_0ab6f2.getFullYear()}-${String(v_0ab6f2.getMonth() + 1).padStart(2, '0')}-${String(v_087ffc).padStart(2, '0')}`;
     if (!v_384480.has(v_f8e6b9)) return;
 
-    const v_678155 = v_f7f9e2[v_f8e6b9] || [];
-    if (v_678155.length === 1) {
-
-      v_f04d19(v_f8e6b9);
-      v_ab9961(0);
-      v_725ee9(true);
-    } else if (v_678155.length > 1) {
+    const v_9e0e87 = v_f7f9e2[v_f8e6b9] || [];
+    if (v_9e0e87.length === 1) {
+      void v_9115ac(v_9e0e87[0]);
+    } else if (v_9e0e87.length > 1) {
 
       v_b173ec(v_f8e6b9);
     }
@@ -679,6 +691,74 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     return 'low';
   };
 
+  const v_9115ac = async (v_cbbd71) => {
+    if (v_a708b9) return;
+    v_4dca01(true);
+    v_b173ec(null);
+    try {
+      const v_fbf3b0 = parseInt(v_cbbd71.id, 10);
+      if (isNaN(v_fbf3b0)) {
+        v_889fad(v_8d41d7('common.notification'), v_8d41d7('health_records.invalid_record', '유효하지 않은 기록입니다.'));
+        return;
+      }
+
+      let detailItem: v_218d40 | undefined = v_7a92f4[v_cbbd71.id];
+      if (!v_988815) {
+        try {
+          v_61f930 = await v_d531ea(v_fbf3b0);
+          v_a89797((v_ba2215) => ({ ...v_ba2215, [String(v_61f930!.id)]: v_61f930! }));
+        } catch (v_9e86fd) {
+          if (v_998b9d(v_c65f5d, v_9e86fd)) return;
+          if (!v_61f930) throw v_9e86fd;
+        }
+      }
+
+      if (!v_61f930?.vital_signs || Object.keys(v_61f930.vital_signs).length === 0) {
+
+        const v_3e15d3 = v_f7f9e2[v_cbbd71.date] || [];
+        const v_e86ad8 = v_3e15d3.findIndex((v_cb35cb) => v_cb35cb.id === v_cbbd71.id);
+        v_f04d19(v_cbbd71.date);
+        v_ab9961(v_e86ad8 >= 0 ? v_e86ad8 : 0);
+        v_725ee9(true);
+        return;
+      }
+
+      const v_a7f568 = v_c7d798(v_61f930.vital_signs);
+      const v_c4583c = v_61f930.record_time?.length === 5
+        ? `${v_61f930.record_time}:00`
+        : (v_61f930.record_time || '00:00:00');
+      const v_42044e =
+        (v_61f930.metadata?.timestamp as string | undefined) ||
+        `${v_61f930.record_date}T${v_c4583c}`;
+      const v_0c2f9b = v_c86f08?.find((v_779914) => v_779914.id === v_e7b2f2);
+      const v_bb789b = v_61f930.metadata?.user_info;
+
+      v_c65f5d.navigate('HealthAnalysisResult', {
+        results: v_a7f568,
+        timestamp: v_42044e,
+        userName: v_0c2f9b?.name,
+        accounts: v_c86f08?.map((v_779914) => ({
+          id: v_779914.id,
+          name: v_779914.name || '',
+          isCurrent: v_779914.isCurrent,
+        })),
+        selectedAccountId: v_e7b2f2,
+        userInfo: v_bb789b && typeof v_bb789b === 'object' ? v_bb789b : undefined,
+        savedBeforeNavigate: true,
+        recordId: v_fbf3b0,
+        fromHistory: true,
+      });
+    } catch (v_5e9bfe) {
+      console.error('[HealthRecordsView] 전체 결과 열기 실패:', v_5e9bfe);
+      v_889fad(
+        v_8d41d7('common.error', '오류'),
+        v_8d41d7('health_records.open_result_failed', '측정 결과를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'),
+      );
+    } finally {
+      v_4dca01(false);
+    }
+  };
+
   const v_a75897 = v_71ebe4.filter(Boolean).length;
   const v_8c38ef = v_a75897 === 2;
 
@@ -720,11 +800,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
     if (v_34779a) {
       v_66e2a0(v_cbbd71);
     } else {
-      const v_3e15d3 = v_f7f9e2[v_cbbd71.date] || [];
-      const v_e86ad8 = v_3e15d3.findIndex((v_cb35cb) => v_cb35cb.id === v_cbbd71.id);
-      v_f04d19(v_cbbd71.date);
-      v_ab9961(v_e86ad8 >= 0 ? v_e86ad8 : 0);
-      v_725ee9(true);
+      void v_9115ac(v_cbbd71);
     }
   };
 
@@ -923,13 +999,8 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                       if (v_34779a) {
                         v_66e2a0(v_94a7a9);
                       } else {
-
-                        const v_678155 = v_f7f9e2[v_4dd592] || [];
-                        const v_e86ad8 = v_678155.findIndex((v_cb35cb) => v_cb35cb.id === v_94a7a9.id);
-                        v_f04d19(v_4dd592);
-                        v_ab9961(v_e86ad8 >= 0 ? v_e86ad8 : 0);
                         v_b173ec(null);
-                        v_725ee9(true);
+                        void v_9115ac(v_94a7a9);
                       }
                     }}
                   >
@@ -993,6 +1064,10 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                   key={v_cbbd71.id}
                   style={[v_d81136.listItem, v_599a41 && v_d81136.listItemSelected]}
                   onPress={() => v_5b20f5(v_cbbd71)}
+                  onLongPress={() => {
+                    if (!v_34779a) v_a8b630(v_cbbd71);
+                  }}
+                  delayLongPress={450}
                 >
                   <View style={v_d81136.listItemLeft}>
                     <Text style={[v_d81136.listItemDate, { fontSize: v_c0b708.listDate }]}>{v_cbbd71.date.replace(/-/g, '.')}</Text>
