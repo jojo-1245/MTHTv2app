@@ -2482,6 +2482,8 @@ const v_d81136 = v_472849.create({
     },
     content: {
         ...v_a61db3.content,
+
+        paddingHorizontal: 0,
         minHeight: '100%',
     },
     container: {
