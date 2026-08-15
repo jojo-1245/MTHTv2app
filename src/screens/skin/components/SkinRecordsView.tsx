@@ -243,6 +243,8 @@ const v_173689 = ['weekday_sun', 'weekday_mon', 'weekday_tue', 'weekday_wed', 'w
 interface SkinRecordsViewProps {
   onCompare?: (records: [SkinRecord, SkinRecord]) => void;
 
+  onViewFullResult?: (record: SkinRecord) => void;
+
   selectedAccountId?: string;
 
   accounts?: Array<{ id: string; isCurrent?: boolean }>;
@@ -304,6 +306,7 @@ export const v_852b5b = (
 
 export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   onCompare: v_bda358,
+  onViewFullResult: v_3eac2b,
   selectedAccountId: v_e7b2f2,
   accounts: v_c86f08,
   pharmacistMode: v_988815 = false,
@@ -502,13 +505,16 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
     const v_f8e6b9 = `${v_0ab6f2.getFullYear()}-${String(v_0ab6f2.getMonth() + 1).padStart(2, '0')}-${String(v_087ffc).padStart(2, '0')}`;
     if (!v_384480.has(v_f8e6b9)) return;
 
-    const v_678155 = v_f7f9e2[v_f8e6b9] || [];
-    if (v_678155.length === 1) {
-
-      v_f04d19(v_f8e6b9);
-      v_ab9961(0);
-      v_725ee9(true);
-    } else if (v_678155.length > 1) {
+    const v_9e0e87 = v_f7f9e2[v_f8e6b9] || [];
+    if (v_9e0e87.length === 1) {
+      if (v_3eac2b) {
+        v_3eac2b(v_9e0e87[0]);
+      } else {
+        v_f04d19(v_f8e6b9);
+        v_ab9961(0);
+        v_725ee9(true);
+      }
+    } else if (v_9e0e87.length > 1) {
 
       v_b173ec(v_f8e6b9);
     }
@@ -652,6 +658,8 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
   const v_5b20f5 = (v_cbbd71) => {
     if (v_34779a) {
       v_66e2a0(v_cbbd71);
+    } else if (v_3eac2b) {
+      v_3eac2b(v_cbbd71);
     } else {
       const v_3e15d3 = v_f7f9e2[v_cbbd71.date] || [];
       const v_e86ad8 = v_3e15d3.findIndex((v_cb35cb) => v_cb35cb.id === v_cbbd71.id);
@@ -831,8 +839,10 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                     onPress={() => {
                       if (v_34779a) {
                         v_66e2a0(v_94a7a9);
+                      } else if (v_3eac2b) {
+                        v_b173ec(null);
+                        v_3eac2b(v_94a7a9);
                       } else {
-
                         const v_678155 = v_f7f9e2[v_4dd592] || [];
                         const v_e86ad8 = v_678155.findIndex((v_cb35cb) => v_cb35cb.id === v_94a7a9.id);
                         v_f04d19(v_4dd592);
@@ -859,6 +869,10 @@ export const SkinRecordsView: v_a3453e.FC<SkinRecordsViewProps> = ({
                 key={v_cbbd71.id}
                 style={[v_d81136.listItem, v_599a41 && v_d81136.listItemSelected]}
                 onPress={() => v_5b20f5(v_cbbd71)}
+                onLongPress={() => {
+                  if (!v_34779a) v_a8b630(v_cbbd71);
+                }}
+                delayLongPress={450}
               >
                 <View style={v_d81136.listItemLeft}>
                   <Text style={[v_d81136.listItemDate, { fontSize: v_c0b708.listDate }]}>{v_cbbd71.date.replace(/-/g, '.')}</Text>

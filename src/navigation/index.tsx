@@ -148,6 +148,8 @@ export type RootStackParamList = {
     savedBeforeNavigate?: boolean;
 
     recordId?: number;
+
+    fromHistory?: boolean;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
