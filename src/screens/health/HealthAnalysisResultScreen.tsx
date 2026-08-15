@@ -638,7 +638,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7 } = v_c7daf6.params;
+  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7, fromHistory: v_4c18b6 } = v_c7daf6.params;
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
   const v_6c4b91 = v_2cc9f8();
@@ -2221,12 +2221,20 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         >
           <Header
             variant="healthAnalysis"
-            title={v_8d41d7('health_analysis.result_title')}
+            title={
+              v_4c18b6
+                ? v_8d41d7('health_records.detail_title', v_8d41d7('health_analysis.result_title'))
+                : v_8d41d7('health_analysis.result_title')
+            }
             showBackButton
             centerContentMaxWidth={v_76eb7f ? undefined : v_6c4b91.contentColumnWidth}
             centerContentPadding={v_76eb7f ? undefined : v_6c4b91.horizontalPadding}
             titleStyle={v_76eb7f ? { fontSize: v_52101f.subtitle } : undefined}
             onBackPress={() => {
+              if (v_4c18b6) {
+                v_c65f5d.goBack();
+                return;
+              }
               v_c65f5d.replace('HealthAnalysis');
             }}
             rightAccessory={
@@ -2240,6 +2248,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             }
           />
         </View>
+        {}
+        {!v_4c18b6 && (
         <View style={v_d81136.tabBar}>
           <View
             style={[
@@ -2284,7 +2294,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             )}
           </View>
         </View>
-        {v_ac1d22 === 'records' ? (
+        )}
+        {!v_4c18b6 && v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}
             showsVerticalScrollIndicator={false}
@@ -3142,7 +3153,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 )}
 
                 {}
-                <SupplementRecommendCta source="health" recordId={v_4ae380 ?? null} />
+                <SupplementRecommendCta
+                  source="health"
+                  recordId={v_4ae380 ?? null}
+                  skipUpsert={!!v_4c18b6}
+                />
 
                 {
 }
@@ -3167,8 +3182,16 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {}
                 <View style={v_d81136.buttonContainer}>
                   <PrimaryButton
-                    title={v_8d41d7('health_analysis.result.finish_button')}
+                    title={
+                      v_4c18b6
+                        ? v_8d41d7('health_records.close', '닫기')
+                        : v_8d41d7('health_analysis.result.finish_button')
+                    }
                     onPress={() => {
+                      if (v_4c18b6) {
+                        v_c65f5d.goBack();
+                        return;
+                      }
 
                       v_c65f5d.navigate('HealthAnalysis', {
                         initialTab: 'measure',
