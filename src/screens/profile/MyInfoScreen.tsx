@@ -47,6 +47,8 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_ec980c = v_8eff09 === 'pm' ? 'pm' : v_8eff09 === 'bm' ? 'bm' : 'wm';
   const tierImage: v_07a341 = v_ec980c === 'pm' ? v_08bdbd : v_ec980c === 'bm' ? v_46de8e : v_5732e6;
 
+  const v_a75189 = Number(v_727031?.vip ?? 0) || 0;
+
   const v_63c23a = async () => {
     v_34a50a(true);
     v_3a7d09(null);
@@ -276,21 +278,19 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
+          {
+}
+          <View
             style={v_d81136.nftInfoCard}
-            onPress={() => v_9b57fc('ProfitDistribution')}
-            activeOpacity={0.85}
-            accessibilityRole="button"
             accessibilityLabel={v_8d41d7('profile.nft_held')}
           >
             <View style={v_d81136.nftInfoContent}>
               <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
               <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>0{v_8d41d7('profile.nft_unit')}</Text>
+                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount}>{v_a75189.toLocaleString()}{v_8d41d7('profile.nft_unit')}</Text>
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={v_d81136.nftInfoCard}
             onPress={() => v_9b57fc('CheckupNhis', { initialTab: 'records' })}

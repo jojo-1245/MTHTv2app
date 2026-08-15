@@ -57,7 +57,7 @@ export interface AttendanceMonthStatusResponse {
 export interface RewardHistoryItem {
   id: number;
   member_id: number;
-  type: 'attendance' | 'health_analysis' | 'skin_analysis' | 'steps' | string;
+  type: 'attendance' | 'health_analysis' | 'skin_analysis' | 'steps' | 'shop_purchase' | string;
   amount: string;
   token_id: number;
   reference_id: number | null;
@@ -68,6 +68,9 @@ export interface RewardHistoryItem {
   retry_count: number;
   last_error: string | null;
   created_at: string; 
+
+  order_id?: string;
+  krw_amount?: number;
 }
 
 export type RewardTransferStatus = 'pending' | 'queued' | 'completed' | 'failed';
@@ -81,6 +84,7 @@ export interface GetRewardsHistoryParams {
 export interface RewardsHistoryResult {
   logs: RewardHistoryItem[];
   hasMore: boolean;
+  total: number;
 }
 
 export interface RewardHistoryResponse {
@@ -88,6 +92,7 @@ export interface RewardHistoryResponse {
   data: {
     logs: RewardHistoryItem[];
     has_more?: boolean;
+    total?: number;
   };
   timestamp?: string;
 }
@@ -333,7 +338,7 @@ export async function v_2ca7ff(
 export async function v_7740c3(
   v_24baff = {},
 ): Promise<RewardsHistoryResult> {
-  const { limit: v_02be30 = 20, offset: v_3bbadf = 0, transfer_status: v_d250fb } = v_24baff;
+  const { limit: v_02be30 = 100, offset: v_3bbadf = 0, transfer_status: v_d250fb } = v_24baff;
   const v_c9c489 = v_e4a763();
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
@@ -367,6 +372,7 @@ export async function v_7740c3(
         hasData: !!v_3393e3.data.data,
         logsCount: v_3393e3.data.data?.logs?.length ?? 0,
         hasMore: v_3393e3.data.data?.has_more,
+        total: v_3393e3.data.data?.total,
         transfer_status: v_d250fb ?? '(none)',
       });
     }
@@ -374,7 +380,8 @@ export async function v_7740c3(
     if (v_3393e3.data.success && v_3393e3.data.data) {
       const v_056206 = v_3393e3.data.data.logs ?? [];
       const v_6bbe19 = v_3393e3.data.data.has_more ?? false;
-      return { logs: v_056206, hasMore: v_6bbe19 };
+      const v_c83285 = v_3393e3.data.data.total ?? v_056206.length;
+      return { logs: v_056206, hasMore: v_6bbe19, total: v_c83285 };
     }
 
     throw new Error('보상 이력 조회에 실패했습니다.');
