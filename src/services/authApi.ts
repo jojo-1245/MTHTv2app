@@ -387,6 +387,7 @@ export interface MeProfile {
   lastname?: string;
   referral_code?: string;
   tier?: 'wm' | 'bm' | 'pm' | 'ph' | 'WM' | 'BM' | 'PM' | 'PH' | string;
+  vip?: number; 
   business?: number | boolean; 
   member_type?: number; 
   [key: string]: unknown;
