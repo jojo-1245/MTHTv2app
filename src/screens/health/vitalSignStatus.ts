@@ -243,6 +243,75 @@ export function v_4e7146(
   return undefined;
 }
 
+const v_35c2be = {
+  pulse_rate: v_e3e816.PULSE_RATE,
+  respiration_rate: v_e3e816.RESPIRATION_RATE,
+  oxygen_saturation: v_e3e816.OXYGEN_SATURATION,
+  blood_pressure: v_e3e816.BLOOD_PRESSURE,
+  sdnn: v_e3e816.SDNN,
+  rmssd: v_e3e816.RMSSD,
+  mean_rri: v_e3e816.MEAN_RRI,
+  sd1: v_e3e816.SD1,
+  sd2: v_e3e816.SD2,
+  sns_zone: v_e3e816.SNS_ZONE,
+  sns_index: v_e3e816.SNS_INDEX,
+  stress_level: v_e3e816.STRESS_LEVEL,
+  stress_index: v_e3e816.STRESS_INDEX,
+  normalized_stress_index: v_e3e816.NORMALIZED_STRESS_INDEX,
+  pns_zone: v_e3e816.PNS_ZONE,
+  pns_index: v_e3e816.PNS_INDEX,
+  prq: v_e3e816.PRQ,
+  hemoglobin: v_e3e816.HEMOGLOBIN,
+  hemoglobin_a1c: v_e3e816.HEMOGLOBIN_A1C,
+  high_hemoglobin_a1c_risk: v_e3e816.HIGH_HEMOGLOBIN_A1C_RISK,
+  high_blood_pressure_risk: v_e3e816.HIGH_BLOOD_PRESSURE_RISK,
+  ascvd_risk: v_e3e816.ASCVD_RISK,
+  high_fasting_glucose_risk: v_e3e816.HIGH_FASTING_GLUCOSE_RISK,
+  high_total_cholesterol_risk: v_e3e816.HIGH_TOTAL_CHOLESTEROL_RISK,
+  low_hemoglobin_risk: v_e3e816.LOW_HEMOGLOBIN_RISK,
+  heart_age: v_e3e816.HEART_AGE,
+  cardiac_workload: v_e3e816.CARDIAC_WORKLOAD,
+  pulse_pressure: v_e3e816.PULSE_PRESSURE,
+  mean_arterial_pressure: v_e3e816.MEAN_ARTERIAL_PRESSURE,
+  lfhf: v_e3e816.LFHF,
+  ascvd_risk_level: v_e3e816.ASCVD_RISK_LEVEL,
+  body_tension_score: v_e3e816.BODY_TENSION_SCORE,
+  wellness_index: v_e3e816.WELLNESS_INDEX,
+  wellness_level: v_e3e816.WELLNESS_LEVEL,
+  rri: v_e3e816.RRI,
+};
+
+export type SdkVitalResultEntry = {
+  value: any;
+  status?: string;
+  confidence?: { level?: number };
+};
+
+export function v_c7d798(
+  v_0946e7,
+): Record<number, SdkVitalResultEntry> {
+  const v_8d4337 = {};
+  if (!v_0946e7 || typeof v_0946e7 !== 'object') return v_8d4337;
+
+  for (const [v_b24339, v_9390e8] of Object.entries(v_0946e7)) {
+    if (v_9390e8 == null) continue;
+    const v_ec95db = Number(v_b24339);
+    const v_653390 = Number.isFinite(v_ec95db) && String(v_ec95db) === v_b24339
+      ? v_ec95db
+      : v_35c2be[v_b24339];
+    if (v_653390 == null || !Number.isFinite(v_653390)) continue;
+
+    const v_3b402b = v_9390e8?.value !== undefined ? v_9390e8.value : v_9390e8;
+    if (v_3b402b === undefined) continue;
+    v_8d4337[v_653390] = {
+      value: v_3b402b,
+      ...(v_9390e8?.status != null ? { status: String(v_9390e8.status) } : {}),
+      ...(v_9390e8?.confidence != null ? { confidence: v_9390e8.confidence } : {}),
+    };
+  }
+  return v_8d4337;
+}
+
 export function v_d28324(v_479f05): boolean {
   if (v_479f05 === true || v_479f05 === 1) return true;
   if (v_479f05 === false || v_479f05 === 0) return false;
