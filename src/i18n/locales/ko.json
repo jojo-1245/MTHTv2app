@@ -1844,6 +1844,7 @@
         "no_wallet_title": "지갑에 문제가 있습니다",
         "no_wallet_message": "관리자에게 문의하세요.",
         "my_wallet": "My Wallet",
+        "shop_usable": "쇼핑몰 사용가능",
         "tab_balance": "잔액",
         "tab_deposit": "적립",
         "tab_history": "내역",
