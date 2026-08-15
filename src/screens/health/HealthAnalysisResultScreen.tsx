@@ -2221,7 +2221,11 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         >
           <Header
             variant="healthAnalysis"
-            title={v_8d41d7('health_analysis.result_title')}
+            title={
+              v_4c18b6
+                ? v_8d41d7('health_records.detail_title', v_8d41d7('health_analysis.result_title'))
+                : v_8d41d7('health_analysis.result_title')
+            }
             showBackButton
             centerContentMaxWidth={v_76eb7f ? undefined : v_6c4b91.contentColumnWidth}
             centerContentPadding={v_76eb7f ? undefined : v_6c4b91.horizontalPadding}
@@ -2244,6 +2248,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             }
           />
         </View>
+        {}
+        {!v_4c18b6 && (
         <View style={v_d81136.tabBar}>
           <View
             style={[
@@ -2288,7 +2294,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             )}
           </View>
         </View>
-        {v_ac1d22 === 'records' ? (
+        )}
+        {!v_4c18b6 && v_ac1d22 === 'records' ? (
           <SafeScrollView
             contentContainerStyle={v_d81136.recordsContent}
             showsVerticalScrollIndicator={false}

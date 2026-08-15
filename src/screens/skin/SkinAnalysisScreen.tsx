@@ -1268,7 +1268,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 },
                 timestamp: v_42044e,
             });
-            v_02dd63('measure');
+
+            v_02dd63('records');
             v_639227('result');
         } catch (v_9e86fd) {
             console.error('[SkinAnalysisScreen] 기록보기 결과 열기 실패:', v_9e86fd);
@@ -2253,7 +2254,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         <View style={v_d81136.tabRow}>
                             <TouchableOpacity
                                 style={[v_d81136.tab, v_ac1d22 === 'measure' && v_d81136.tabActive]}
-                                onPress={() => v_02dd63('measure')}
+                                onPress={() => {
+                                    if (v_72ba9a) {
+                                        v_a2f2ec();
+                                    }
+                                    v_02dd63('measure');
+                                }}
                             >
                                 <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'measure' && v_d81136.tabTextActive]}>
                                     {v_8d41d7('health_tabs.measure')}
@@ -2261,7 +2267,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[v_d81136.tab, v_ac1d22 === 'records' && v_d81136.tabActive]}
-                                onPress={() => v_02dd63('records')}
+                                onPress={() => {
+                                    if (v_72ba9a) {
+                                        v_a2f2ec();
+                                    }
+                                    v_02dd63('records');
+                                }}
                             >
                                 <Text style={[v_2f6fcc(v_d81136.tabText, 'tabText'), v_ac1d22 === 'records' && v_d81136.tabTextActive]}>
                                     {v_8d41d7('health_tabs.records')}
@@ -2286,7 +2297,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             onDeleteAccount={v_160272 ? undefined : v_5bc46a}
                             onDeletePharmacyRecords={v_160272 ? v_533a87 : undefined}
                             onLinkEmail={v_160272 ? undefined : v_42b67a}
-                            disabled={v_91943c === 'result' && v_ac1d22 !== 'records'}
+                            disabled={(v_91943c === 'result' && v_ac1d22 !== 'records') || v_72ba9a}
                             autoLoad={!v_160272}
                             pharmacistMode={v_160272}
                             modalTitle={v_160272 ? v_8d41d7('pharmacist.visitor_list.title') : undefined}
@@ -2295,6 +2306,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     </View>
                 </View>
                 {v_ac1d22 === 'records' ? (
+                    v_72ba9a && v_91943c === 'result' ? (
+                        <SafeScrollView
+                            contentContainerStyle={v_d81136.content}
+                            showsVerticalScrollIndicator={false}
+                            showBottomBackground={false}
+                            disableBottomPadding={true}
+                        >
+                            <CenteredContentShell backgroundColor={v_1bfbd0.background} contentColumnWidth={v_6c4b91.contentColumnWidth}>
+                                <View style={v_d81136.container}>
+                                    {v_4ff022()}
+                                </View>
+                            </CenteredContentShell>
+                        </SafeScrollView>
+                    ) : (
                     <SafeScrollView
                         contentContainerStyle={v_d81136.recordsContent}
                         showsVerticalScrollIndicator={false}
@@ -2318,6 +2343,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             }}
                         />
                     </SafeScrollView>
+                    )
                 ) : (
                     <SafeScrollView
                         contentContainerStyle={v_d81136.content}
