@@ -69,6 +69,28 @@ export async function v_6a6196(v_9d3240): Promise<MyShopPaymentStatus | null> {
   }
 }
 
+export interface PendingShopPayment {
+  order_id: string;
+  krw_amount?: number;
+  mtht_amount?: string;
+  rate?: number;
+  expires_in?: number;
+}
+
+export async function v_4fb75e(): Promise<PendingShopPayment | null> {
+  try {
+    const v_8f00b9 = await v_9a8286.get<ApiResponse<{ pending: PendingShopPayment | null }>>(
+      '/oth-path',
+    );
+    const v_9390e8 = (v_8f00b9.data?.data ?? v_8f00b9.data) as { pending?: PendingShopPayment | null } | undefined;
+    return v_9390e8?.pending?.order_id ? v_9390e8.pending : null;
+  } catch (v_9e86fd) {
+    const v_35a1f5 = v_9e86fd as { response?: { status?: number } };
+    if (__DEV__) console.warn('[shopApi] my-pending failed:', v_35a1f5.response?.status);
+    return null;
+  }
+}
+
 export function v_c4536c(v_a8cd21): string {
   const v_35f85c = v_a8cd21.toLowerCase();
   if (v_35f85c.includes('insufficient')) return 'shop.payment.error_insufficient';
