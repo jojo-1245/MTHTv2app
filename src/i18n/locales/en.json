@@ -2209,7 +2209,7 @@
       "success": "Payment completed.",
       "declined": "Payment declined.",
       "error_generic": "Payment failed.",
-      "error_insufficient": "Insufficient MTHT. Please check your wallet balance.",
+      "error_insufficient": "Insufficient usable MTHT.",
       "error_rpc": "Balance check is temporarily unavailable. Please try again shortly.",
       "error_account_mismatch": "Your shop account does not match the app login. Please sign in with the same account.",
       "error_stale_order": "This order can no longer be approved. Please retry from the shop payment page.",
