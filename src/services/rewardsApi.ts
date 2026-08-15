@@ -338,7 +338,7 @@ export async function v_2ca7ff(
 export async function v_7740c3(
   v_24baff = {},
 ): Promise<RewardsHistoryResult> {
-  const { limit: v_02be30 = 500, offset: v_3bbadf = 0, transfer_status: v_d250fb } = v_24baff;
+  const { limit: v_02be30 = 100, offset: v_3bbadf = 0, transfer_status: v_d250fb } = v_24baff;
   const v_c9c489 = v_e4a763();
   const v_fed274 = v_c9c489.GATEWAY;
   if (!v_fed274) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
