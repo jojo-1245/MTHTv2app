@@ -61,7 +61,13 @@ import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
-import { v_81fcbc } from '../../services/skinApi';
+import { v_81fcbc, v_095212, type v_b57732 } from '../../services/skinApi';
+import { v_71f4f5 } from '../../services/pharmacyApi';
+import {
+    v_2e1952,
+    v_ddf2a3,
+} from '../../utils/pharmacyRecordAdapter';
+import type { v_cb37be } from './components/SkinRecordsView';
 
 type Props = v_432191<v_8ad91b, 'SkinAnalysis'>;
 
@@ -432,6 +438,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_f4f730 = v_e662ae<number | null>(null);
     const [v_4ae380, v_43dcda] = v_5ab095<number | null>(null);
 
+    const v_85278b = v_e662ae(false);
+    const [v_72ba9a, v_ce85ec] = v_5ab095(false);
+
     const [v_e399bf, v_b11b33] = v_5ab095<string | null>(null);
     const [v_85cf60, v_952b9d] = v_5ab095(false);
 
@@ -512,6 +521,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     v_c4deb2(() => {
         const v_329ab2 = async () => {
             if (!v_e521b9 || !v_e521b9.result?.results?.output) {
+                return;
+            }
+            if (v_85278b.current) {
                 return;
             }
 
@@ -1166,6 +1178,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, [v_82f4af, v_07cd8d, v_8d41d7, v_34776f]);
 
     const v_a2f2ec = v_de06a3(() => {
+        v_85278b.current = false;
+        v_ce85ec(false);
         v_639227('capture');
         v_60b86c(null);
         v_ff4473(null);
@@ -1174,7 +1188,96 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         v_6f6f79(null);
         v_5c59f6('');
         v_e61e4f('');
+        v_b11b33(null);
+        v_43dcda(null);
+        v_f4f730.current = null;
+        v_02a5a0.current = false;
+        v_f013b2.current = null;
     }, []);
+
+    const v_eb7b32 = v_de06a3(async (record: v_cb37be) => {
+        try {
+            const v_fbf3b0 = parseInt(v_cbbd71.id, 10);
+            if (isNaN(v_fbf3b0)) {
+                v_889fad(v_8d41d7('common.notification'), v_8d41d7('health_records.invalid_record', '유효하지 않은 기록입니다.'));
+                return;
+            }
+
+            let detail: v_b57732 | null = null;
+            if (v_160272) {
+                const v_610eb5 = v_2e1952(v_e7b2f2);
+                if (!v_610eb5) {
+                    v_889fad(v_8d41d7('common.notification'), v_8d41d7('health_records.invalid_record', '유효하지 않은 기록입니다.'));
+                    return;
+                }
+                const v_952788 = await v_71f4f5(v_610eb5);
+                v_3cfdfc =
+                    v_952788
+                        .map(v_ddf2a3)
+                        .find((v_8c0b26): v_8c0b26 is v_b57732 => v_8c0b26 != null && v_8c0b26.id === v_fbf3b0) ?? null;
+            } else {
+                v_3cfdfc = await v_095212(v_fbf3b0);
+            }
+
+            if (!v_3cfdfc?.analysis_result) {
+                v_889fad(
+                    v_8d41d7('common.error', '오류'),
+                    v_8d41d7('skin_records.open_result_failed', '측정 결과를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'),
+                );
+                return;
+            }
+
+            const v_d3c7f7 = v_3cfdfc.analysis_result;
+            const v_79d59f =
+                typeof v_d3c7f7 === 'string' ? JSON.parse(v_d3c7f7) : (v_d3c7f7 ?? {});
+            const v_8decf8 = v_e12bcd(v_79d59f, v_19dbdf());
+            const v_9ef443 = Object.entries(v_8decf8).map(([v_3b27d9, v_a057b5]: [string, any]) => ({
+                type: v_3b27d9,
+                ui_score: v_a057b5.ui_score ?? v_a057b5.score ?? 0,
+                mask_urls: v_a057b5.mask_url ? [v_a057b5.mask_url] : [],
+            }));
+            v_9ef443.push({ type: 'all', score: v_3cfdfc.overall_score ?? 0 });
+            if (v_3cfdfc.skin_age != null) {
+                v_9ef443.push({ type: 'skin_age', score: v_3cfdfc.skin_age });
+            }
+
+            const v_c4583c =
+                v_3cfdfc.record_time?.length === 5 ? `${v_3cfdfc.record_time}:00` : (v_3cfdfc.record_time || '00:00:00');
+            const v_42044e =
+                v_3cfdfc.created_at ||
+                (v_3cfdfc.metadata?.timestamp as string | undefined) ||
+                `${v_3cfdfc.record_date}T${v_c4583c}`;
+
+            v_85278b.current = true;
+            v_ce85ec(true);
+            v_02a5a0.current = true;
+            v_f013b2.current = v_42044e;
+            v_f4f730.current = v_3cfdfc.id;
+            v_43dcda(v_3cfdfc.id);
+            v_b11b33(null);
+            v_952b9d(false);
+            v_60b86c(v_3cfdfc.image_url ?? null);
+            v_6f6f79({
+                mode: 'sd',
+                selectedConcerns: Object.keys(v_8decf8),
+                taskId: `history_${v_3cfdfc.id}`,
+                result: {
+                    error: null,
+                    results: { output: v_9ef443 as typeof v_3e09cd.result.results.v_9ef443 },
+                    task_status: 'success',
+                },
+                timestamp: v_42044e,
+            });
+            v_02dd63('measure');
+            v_639227('result');
+        } catch (v_9e86fd) {
+            console.error('[SkinAnalysisScreen] 기록보기 결과 열기 실패:', v_9e86fd);
+            v_889fad(
+                v_8d41d7('common.error', '오류'),
+                v_8d41d7('skin_records.open_result_failed', '측정 결과를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'),
+            );
+        }
+    }, [v_160272, v_e7b2f2, v_8d41d7]);
 
     const v_8d018e = v_de06a3(async () => {
         if (!v_e521b9) {
@@ -2016,7 +2119,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 )}
 
                 {}
-                <SupplementRecommendCta source="skin" recordId={v_4ae380 ?? null} />
+                <SupplementRecommendCta
+                    source="skin"
+                    recordId={v_4ae380 ?? null}
+                    skipUpsert={v_72ba9a}
+                />
 
                 {}
                 <View style={v_d81136.medicalDisclaimerCard}>
@@ -2038,8 +2145,19 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 {}
                 <View style={v_d81136.resultButtonSection}>
                     <PrimaryButton
-                        title={v_8d41d7('skin.result.btn_remake')}
-                        onPress={v_a2f2ec}
+                        title={
+                            v_72ba9a
+                                ? v_8d41d7('health_records.close', '닫기')
+                                : v_8d41d7('skin.result.btn_remake')
+                        }
+                        onPress={() => {
+                            if (v_72ba9a) {
+                                v_a2f2ec();
+                                v_02dd63('records');
+                                return;
+                            }
+                            v_a2f2ec();
+                        }}
                     />
                 </View>
             </>
@@ -2089,7 +2207,12 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         } else if (v_91943c === 'settings') {
                             v_639227('capture');
                         } else if (v_91943c === 'result') {
-                            v_a2f2ec();
+                            if (v_72ba9a) {
+                                v_a2f2ec();
+                                v_02dd63('records');
+                            } else {
+                                v_a2f2ec();
+                            }
                         }
                     }}
                     rightAccessory={
@@ -2182,6 +2305,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             selectedAccountId={v_e7b2f2}
                             accounts={v_c86f08}
                             pharmacistMode={v_160272}
+                            onViewFullResult={(v_cbbd71) => {
+                                void v_eb7b32(v_cbbd71);
+                            }}
                             onCompare={(v_678155) => {
                                 const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
                                 v_c65f5d.navigate('SkinComparison', {
