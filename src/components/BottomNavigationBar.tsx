@@ -87,6 +87,7 @@ const BottomNavigationBar: v_a3453e.FC<BottomNavigationBarProps> = ({
           return (
             <TouchableOpacity
               key={v_8c0b26.key}
+              testID={`bottom-nav-${v_8c0b26.key}`}
               activeOpacity={0.85}
               style={[v_d81136.tab, { paddingVertical: v_e54c50 }, v_13a0ae && v_d81136.tabAihinty]}
               onPress={() => v_0c5f70?.(v_8c0b26)}
