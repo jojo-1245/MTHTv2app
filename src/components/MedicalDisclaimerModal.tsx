@@ -85,7 +85,12 @@ export function v_3b68d0() {
               <Text style={v_d81136.checkboxLabel}>{v_8d41d7('medical_disclaimer.hide_for_month')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={v_d81136.button} onPress={v_e1f1e1} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={v_d81136.button}
+              testID="medical-disclaimer-confirm"
+              onPress={v_e1f1e1}
+              activeOpacity={0.8}
+            >
               <Text style={v_d81136.buttonText}>{v_8d41d7('medical_disclaimer.confirm')}</Text>
             </TouchableOpacity>
           </View>
