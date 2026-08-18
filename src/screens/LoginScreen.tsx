@@ -496,6 +496,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           <View style={v_d81136.inner}>
             <View style={v_d81136.form}>
               <TextField
+                testID="login-email"
                 label={v_8d41d7('login.email_label')}
                 placeholder={v_8d41d7('login.email_placeholder')}
                 keyboardType="email-address"
@@ -505,6 +506,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 editable={!v_cd31a8}
               />
               <PasswordField
+                testID="login-password"
                 label={v_8d41d7('login.password_label')}
                 placeholder={v_8d41d7('login.password_placeholder')}
                 value={v_adc076}
@@ -513,6 +515,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                 autoCapitalize="none"
               />
               <FormCheckbox
+                testID="login-keep-logged-in"
                 label={v_8d41d7('login.keep_logged_in')}
                 value={v_2129ec}
                 onChange={v_874dfe}
@@ -525,6 +528,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               </TouchableOpacity>
               <View style={v_d81136.buttonWrapper}>
                 <GradientButton
+                  testID="login-submit"
                   title={v_cd31a8 ? v_8d41d7('login.logging_in') : v_8d41d7('common.login')}
                   onPress={v_ec4736}
                   disabled={v_cd31a8}
