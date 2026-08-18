@@ -904,6 +904,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
               <Text style={v_d81136.compareCancelText}>{v_8d41d7('health_records.cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              testID="health-record-compare"
               style={[v_d81136.compareConfirmBtn, !v_8c38ef && v_d81136.compareConfirmBtnDisabled]}
               onPress={v_fbead4}
               disabled={!v_8c38ef}
@@ -1062,6 +1063,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
               return (
                 <TouchableOpacity
                   key={v_cbbd71.id}
+                  testID={`health-record-row-${v_cbbd71.id}`}
                   style={[v_d81136.listItem, v_599a41 && v_d81136.listItemSelected]}
                   onPress={() => v_5b20f5(v_cbbd71)}
                   onLongPress={() => {
@@ -1277,6 +1279,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                 {}
                 {v_8cc501 && (
                   <TouchableOpacity
+                    testID="health-record-delete"
                     style={v_d81136.deleteRecordBtn}
                     onPress={() => v_a8b630(v_8cc501)}
                     disabled={v_59bc21}
