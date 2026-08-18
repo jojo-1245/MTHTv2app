@@ -1374,6 +1374,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
             {}
             <View style={[v_d81136.inputBar, v_3ba9c6 && v_d81136.inputBarFocused]}>
               <TextInput
+                testID="chat-input"
                 style={v_d81136.textInput}
                 placeholder={v_8d41d7('chat.placeholder')}
                 placeholderTextColor="#9CA3AF"
@@ -1386,6 +1387,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                 multiline={false}
               />
               <TouchableOpacity
+                testID="chat-send"
                 onPress={v_465869}
                 style={v_d81136.sendButtonWrap}
                 activeOpacity={0.8}
