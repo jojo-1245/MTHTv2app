@@ -131,6 +131,7 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
             {}
             <View style={v_d81136.otpContainer}>
               <OtpInput
+                testID="email-verification-code"
                 value={v_c99bd2}
                 length={6}
                 onChange={v_537cbb}
@@ -140,17 +141,18 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
 
             {}
             <View style={v_d81136.resendContainer}>
-              <TouchableOpacity onPress={v_cf9840} disabled={v_cb36b1 > 0}>
+              <TouchableOpacity testID="email-verification-resend" onPress={v_cf9840} disabled={v_cb36b1 > 0}>
                 <Text style={[v_d81136.resendText, v_cb36b1 <= 0 && v_d81136.resendTextActive]}>
                   {v_8d41d7('email_verification.resend')}
                 </Text>
               </TouchableOpacity>
-              <Text style={v_d81136.timerText}>{v_f85cd6(v_cb36b1)}</Text>
+              <Text style={v_d81136.timerText} testID="email-verification-timer">{v_f85cd6(v_cb36b1)}</Text>
             </View>
 
             {}
             <View style={v_d81136.buttonContainer}>
               <PrimaryButton
+                testID="email-verification-submit"
                 title={v_d1dd8f ? v_8d41d7('email_verification.verifying') || '확인 중...' : v_8d41d7('email_verification.verify_btn')}
                 onPress={v_83b05b}
                 disabled={!v_15a612}
