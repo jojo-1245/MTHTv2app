@@ -569,6 +569,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
           <View style={v_d81136.form}>
             {}
             <TextField
+              testID="signup-name"
               label={v_8d41d7('signup.name_label')}
               placeholder={v_8d41d7('signup.name_placeholder')}
               value={v_1833e7}
@@ -579,6 +580,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             {}
             <View>
               <TextField
+                testID="signup-email"
                 label={v_8d41d7('signup.email_label')}
                 placeholder={v_8d41d7('signup.email_placeholder')}
                 keyboardType="email-address"
@@ -597,6 +599,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             {}
             <View>
               <PasswordField
+                testID="signup-password"
                 label={v_8d41d7('signup.password_label')}
                 placeholder={v_8d41d7('signup.password_placeholder')}
                 value={v_adc076}
@@ -605,7 +608,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 autoCapitalize="none"
               />
               {v_e8fd53 ? (
-                <Text style={v_d81136.errorText}>{v_e8fd53}</Text>
+                <Text style={v_d81136.errorText} testID="signup-password-error">{v_e8fd53}</Text>
               ) : (
                 <Text style={v_d81136.hintText}>{v_064327}</Text>
               )}
@@ -614,6 +617,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             {}
             <View>
               <PasswordField
+                testID="signup-password-confirm"
                 label={v_8d41d7('signup.password_confirm_label')}
                 placeholder={v_8d41d7('signup.password_confirm_placeholder')}
                 value={v_0b3ebe}
@@ -622,12 +626,13 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 autoCapitalize="none"
               />
               {v_9523d2 && (
-                <Text style={v_d81136.errorText}>{v_9523d2}</Text>
+                <Text style={v_d81136.errorText} testID="signup-password-confirm-error">{v_9523d2}</Text>
               )}
             </View>
 
             {}
             <TextField
+              testID="signup-phone"
               label={v_8d41d7('signup.phone_label')}
               placeholder={v_8d41d7('signup.phone_placeholder')}
               keyboardType="phone-pad"
@@ -637,6 +642,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
               leftIcon={
                 <TouchableOpacity
                   style={v_d81136.phonePrefix}
+                  testID="signup-country-open"
                   onPress={v_cbf7db}
                   disabled={v_88dca2}
                 >
@@ -655,6 +661,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
             {}
             <SelectField
+              testID="signup-region"
               label={v_8d41d7('signup.region_label')}
               placeholder={v_8d41d7('signup.region_placeholder')}
               value={v_56743f}
@@ -698,6 +705,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             {}
             <View>
               <TextField
+                testID="signup-referral"
                 label={v_8d41d7('signup.referral_label')}
                 placeholder={v_8d41d7('signup.referral_placeholder')}
                 keyboardType="default"
@@ -707,13 +715,14 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
                 editable={!v_88dca2}
               />
               {v_2c06d8 && (
-                <Text style={v_d81136.errorText}>{v_2c06d8}</Text>
+                <Text style={v_d81136.errorText} testID="signup-referral-error">{v_2c06d8}</Text>
               )}
             </View>
 
             {}
             <TouchableOpacity
               style={v_d81136.termsRow}
+              testID="signup-agree-terms"
               onPress={() => !v_88dca2 && v_539b92(!v_a6fcf8)}
               activeOpacity={0.7}
             >
@@ -736,6 +745,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
             {}
             <View style={v_d81136.buttonWrapper}>
               <GradientButton
+                testID="signup-submit"
                 title={v_88dca2 ? v_8d41d7('signup.submitting') : v_8d41d7('signup.submit')}
                 onPress={v_47ed2f}
                 disabled={v_88dca2}

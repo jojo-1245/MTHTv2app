@@ -70,18 +70,21 @@ const ResetPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
       >
         <View style={v_d81136.form}>
           <PasswordField
+            testID="reset-password-new"
             label={v_8d41d7('reset_password.new_pwd_label')}
             placeholder={v_8d41d7('reset_password.new_pwd_placeholder')}
             value={v_adc076}
             onChangeText={v_52b279}
           />
           <PasswordField
+            testID="reset-password-confirm"
             label={v_8d41d7('reset_password.confirm_pwd_label')}
             placeholder={v_8d41d7('reset_password.confirm_pwd_placeholder')}
             value={v_0b3ebe}
             onChangeText={v_241a35}
           />
           <PrimaryButton
+            testID="reset-password-submit"
             title={v_8d41d7('reset_password.btn_title')}
             onPress={v_51e7d1}
             disabled={v_683210}
