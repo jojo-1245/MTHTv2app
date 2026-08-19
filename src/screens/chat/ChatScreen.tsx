@@ -35,6 +35,7 @@ import { v_e4a763 } from '../../utils/env';
 import { v_777b12 } from '../../services/healthApi';
 import { v_81fcbc } from '../../services/skinApi';
 import { v_2d6571 } from '../../utils/consentStore';
+import { v_011245, v_fd771c } from '../../utils/chatRecordScope';
 import v_e209a2 from '../../components/DataConsentModal';
 import { v_9d6425 } from '../health/vitalSignStatus';
 import { v_19dbdf } from '../../hooks/useSystemConfig';
@@ -345,7 +346,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const v_bb559e = () => {
     v_41d55d([]);
     v_f32824('');
-    v_1f1e88('1');
+
+    const v_7d3bb1 = v_011245(v_c86f08);
+    if (v_7d3bb1) v_1f1e88(v_7d3bb1);
   };
 
   const v_84bbe1 = v_de06a3(() => {
@@ -668,9 +671,17 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     }, 100);
 
     try {
-      const v_c253c5 = v_e7b2f2 === '1' ? undefined : v_e7b2f2;
-      const v_5213e7 = v_777b12(v_c253c5).catch(() => []);
-      const v_ed4b7b = v_81fcbc(v_c253c5).catch(() => []);
+
+      const v_27ecba = v_fd771c(v_e7b2f2);
+      const v_ee2acd = v_27ecba.kind === 'sub' ? v_27ecba.subAccountId : undefined;
+
+      const v_fd3957 = v_27ecba.kind === 'mine' || v_27ecba.kind === 'sub';
+      const v_5213e7 = v_fd3957
+        ? v_777b12(v_ee2acd).catch(() => [])
+        : Promise.resolve([]);
+      const v_ed4b7b = v_fd3957
+        ? v_81fcbc(v_ee2acd).catch(() => [])
+        : Promise.resolve([]);
 
       const [v_77cfc3, v_d6b96e] = await Promise.all([v_5213e7, v_ed4b7b]);
 
