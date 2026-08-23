@@ -15,8 +15,7 @@ import { v_d91974 } from '../utils/tabletLayout';
 
 type Props = v_432191<v_8ad91b, 'Home'>;
 
-const v_186735 = require('../../assets/images/symbol.png');
-const v_16cea9 = require('../../assets/images/logo.png');
+const v_186735 = require('../../assets/images/logo_col.png');
 
 const HomeScreen: v_a3453e.FC<Props> = () => {
   const { navigate: v_9b57fc } = v_a0daa8();
@@ -51,7 +50,6 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
           <View style={[v_d81136.tabletInner, v_762fca != null && { maxWidth: v_762fca }]}>
             <View style={v_d81136.logoContainerTablet}>
               <Image source={v_186735} style={v_d81136.symbolTablet} resizeMode="contain" />
-              <Image source={v_16cea9} style={v_d81136.logoTablet} resizeMode="contain" />
             </View>
 
             <View style={v_d81136.buttonContainerTablet}>
@@ -74,7 +72,6 @@ const HomeScreen: v_a3453e.FC<Props> = () => {
         <>
           <View style={v_d81136.logoContainerMobile}>
             <Image source={v_186735} style={v_d81136.symbol} resizeMode="contain" />
-            <Image source={v_16cea9} style={v_d81136.logo} resizeMode="contain" />
           </View>
 
           <SafeScrollView
@@ -132,12 +129,8 @@ const v_d81136 = v_472849.create({
     gap: 16,
   },
   symbolTablet: {
-    width: 140,
-    height: 140,
-  },
-  logoTablet: {
-    width: 200,
-    height: 50,
+    width: 168,
+    height: 168,
   },
   buttonContainerTablet: {
     width: '100%',
@@ -154,12 +147,8 @@ const v_d81136 = v_472849.create({
     zIndex: 10,
   },
   symbol: {
-    width: 120,
-    height: 120,
-  },
-  logo: {
-    width: 160,
-    height: 40,
+    width: 148,
+    height: 148,
   },
   scrollContent: {
     flexGrow: 1,
