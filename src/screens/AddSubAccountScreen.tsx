@@ -797,6 +797,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                     <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.search_by_email')}</Text>
                     <TextField
                         ref={v_2df89f}
+                        testID="subaccount-search-email"
                         label={v_8d41d7('common.email')}
                         value={v_e0c7e8}
                         onChangeText={v_fedf34}
@@ -897,6 +898,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                     </Text>
                     <View style={v_d81136.otpWrap}>
                         <OtpInput
+                            testID="subaccount-otp"
                             length={v_28d629}
                             value={v_af419b}
                             onChange={v_9c3167}
@@ -904,6 +906,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         />
                     </View>
                     <PrimaryButton
+                        testID="subaccount-otp-next"
                         title={v_8d41d7('sub_account.complete_link')}
                         onPress={v_7914f7}
                         disabled={v_af419b.length !== v_28d629 || v_683210}
@@ -933,6 +936,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         containerStyle={v_d81136.inputContainer}
                     />
                     <PrimaryButton
+                        testID="subaccount-link-family"
                         title={v_8d41d7('sub_account.complete_link')}
                         onPress={v_a91919}
                         disabled={!v_ab0e46.trim() || !v_d39e78 || v_683210}
@@ -953,6 +957,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                     </Text>
                     <View style={v_d81136.otpWrap}>
                         <OtpInput
+                            testID="subaccount-otp"
                             length={v_28d629}
                             value={v_af419b}
                             onChange={v_9c3167}
@@ -960,6 +965,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         />
                     </View>
                     <PrimaryButton
+                        testID="subaccount-otp-next"
                         title={v_8d41d7('common.next')}
                         onPress={v_7914f7}
                         disabled={v_af419b.length !== v_28d629 || v_683210}
@@ -989,6 +995,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         containerStyle={v_d81136.inputContainer}
                     />
                     <PrimaryButton
+                        testID="subaccount-link-family"
                         title={v_8d41d7('sub_account.complete_link')}
                         onPress={v_a91919}
                         disabled={!v_ab0e46.trim() || !v_d39e78 || v_683210}
@@ -1010,6 +1017,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         containerStyle={v_d81136.inputContainer}
                     />
                     <PrimaryButton
+                        testID="subaccount-add-nonmember"
                         title={v_8d41d7('sub_account.add_sub_account')}
                         onPress={v_6b4310}
                         disabled={!v_a404bd.trim() || v_683210}
@@ -1032,6 +1040,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                     <Text style={v_d81136.instruction}>{v_8d41d7('sub_account.search_by_email')}</Text>
                     <TextField
                         ref={v_2df89f}
+                        testID="subaccount-search-email"
                         label={v_8d41d7('common.email')}
                         value={v_e0c7e8}
                         onChangeText={v_fedf34}
@@ -1147,6 +1156,7 @@ const AddSubAccountScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: 
                         containerStyle={v_d81136.inputContainer}
                     />
                     <PrimaryButton
+                        testID="subaccount-add-basic"
                         title={v_8d41d7('sub_account.link')}
                         onPress={v_0dbfdf}
                         disabled={!v_ab0e46.trim() || v_683210}

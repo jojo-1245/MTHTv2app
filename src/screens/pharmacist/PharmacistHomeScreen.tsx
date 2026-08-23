@@ -558,6 +558,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
           <View style={v_d81136.panelSearchBox}>
             <Feather name="search" size={18} color="#9CA3AF" />
             <TextInput
+              testID="pharmacist-visitor-search"
               style={v_d81136.panelSearchInput}
               value={v_06aecf}
               onChangeText={v_f2985a}
@@ -587,6 +588,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
             <Text style={v_d81136.visitorError}>{v_3d3f39}</Text>
           ) : (
             <FlatList
+              testID="pharmacist-visitor-list"
               data={v_7b7807}
               keyExtractor={(v_8c0b26) => String(v_8c0b26.id)}
               contentContainerStyle={v_d81136.panelListContent}
@@ -635,6 +637,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       </View>
 
       <TouchableOpacity
+        testID="pharmacist-guest-send-code"
         style={[v_d81136.capsuleBtn, !v_210199 && v_d81136.capsuleBtnDisabled]}
         onPress={v_2de427}
         disabled={!v_210199}
@@ -668,6 +671,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       <View style={[v_d81136.authFieldBox, v_ecc251 && v_d81136.authFieldBoxFocused]}>
         <Text style={v_d81136.authFieldLabel}>{v_8d41d7('pharmacist.guest_auth.otp_field_label')}</Text>
         <OtpInput
+          testID="pharmacist-guest-otp"
           length={v_28d629}
           value={v_aa596d}
           wrapperStyle={v_d81136.otpInputWrapper}
@@ -685,13 +689,14 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
         />
       </View>
 
-      <Text style={[v_d81136.timerText, v_cb36b1 <= 0 && v_d81136.timerExpired]}>
+      <Text style={[v_d81136.timerText, v_cb36b1 <= 0 && v_d81136.timerExpired]} testID="pharmacist-guest-timer">
         {v_cb36b1 > 0
           ? v_8d41d7('pharmacist.guest_auth.timer_remaining', { time: v_f85cd6(v_cb36b1) })
           : v_8d41d7('pharmacist.guest_auth.timer_expired')}
       </Text>
 
       <TouchableOpacity
+        testID="pharmacist-guest-verify"
         style={[v_d81136.capsuleBtn, !v_15a612 && v_d81136.capsuleBtnDisabled]}
         onPress={() => v_4f034c()}
         disabled={!v_15a612}
@@ -707,6 +712,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       </TouchableOpacity>
 
       <TouchableOpacity
+        testID="pharmacist-guest-resend"
         onPress={v_cf9840}
         disabled={!v_10f75e}
         style={v_d81136.resendBtn}
