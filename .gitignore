@@ -46,6 +46,10 @@ yarn-error.*
 # local env files
 .env*.local
 .dev.vars
+# 로컬 env 백업본 (커밋 금지 — 시크릿 평문 포함)
+.env.bak*
+.env.*.bak
+.env.backup*
 
 # typescript
 *.tsbuildinfo
