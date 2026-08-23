@@ -58,6 +58,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       >
         <View style={v_d81136.form}>
           <TextField
+            testID="forgot-password-email"
             label={v_8d41d7('login.email_label')}
             placeholder={v_8d41d7('login.email_placeholder')}
             keyboardType="email-address"
@@ -66,6 +67,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             onChangeText={v_fedf34}
           />
           <PrimaryButton
+            testID="forgot-password-send-code"
             title={v_8d41d7('forgot_password.send_code')}
             onPress={v_2de427}
             disabled={v_683210}

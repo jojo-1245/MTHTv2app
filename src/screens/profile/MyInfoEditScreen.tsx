@@ -754,6 +754,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         >
           <View style={v_d81136.form}>
             <TextField
+              testID="profile-edit-email"
               label={v_8d41d7('my_info_edit.email_label')}
               placeholder={v_8d41d7('my_info_email_auth.email_placeholder')}
               keyboardType="email-address"
@@ -764,6 +765,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               inputWrapperStyle={v_d81136.disabledInputWrapper}
             />
             <TextField
+              testID="profile-edit-name"
               label={v_8d41d7('my_info_edit.name_label')}
               placeholder={v_8d41d7('my_info_edit.name_placeholder')}
               value={v_1833e7}
@@ -771,6 +773,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               editable={!v_88dca2}
             />
             <TextField
+              testID="profile-edit-phone"
               label={v_8d41d7('my_info_edit.phone_label')}
               placeholder="010-1010-1000"
               keyboardType="phone-pad"
@@ -780,6 +783,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               leftIcon={
                 <TouchableOpacity
                   style={v_d81136.phonePrefix}
+                  testID="profile-edit-country-open"
                   onPress={v_cbf7db}
                   disabled={v_88dca2}
                 >
@@ -796,6 +800,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               }
             />
             <SelectField
+              testID="profile-edit-region"
               label={v_8d41d7('my_info_edit.region_label')}
               placeholder={v_8d41d7('my_info_edit.region_placeholder')}
               value={v_56743f}
@@ -833,6 +838,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             </View>
             <View>
               <PasswordField
+                testID="profile-edit-password"
                 label={v_8d41d7('my_info_edit.password_label')}
                 placeholder={v_8d41d7('my_info_edit.password_placeholder')}
                 value={v_adc076}
@@ -848,6 +854,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
             {v_adc076 ? (
               <View>
                 <PasswordField
+                  testID="profile-edit-password-confirm"
                   label={v_8d41d7('my_info_edit.password_confirm_label')}
                   placeholder={v_8d41d7('my_info_edit.password_confirm_placeholder')}
                   value={v_0b3ebe}
@@ -864,6 +871,7 @@ const MyInfoEditScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
             <View style={v_d81136.buttonWrapper}>
               <PrimaryButton
+                testID="profile-edit-submit"
                 title={v_88dca2 ? v_8d41d7('my_info_edit.updating') : v_8d41d7('my_info_edit.update_button')}
                 onPress={v_02f61c}
                 disabled={v_88dca2}

@@ -7,12 +7,15 @@ interface FormCheckboxProps {
   label: string;
   value: boolean;
   onChange: (nextValue: boolean) => void;
+
+  testID?: string;
 }
 
-const FormCheckbox: v_a3453e.FC<FormCheckboxProps> = ({ label: v_2869c1, value: v_3b402b, onChange: v_b187d9 }) => {
+const FormCheckbox: v_a3453e.FC<FormCheckboxProps> = ({ label: v_2869c1, value: v_3b402b, onChange: v_b187d9, testID: v_681472 }) => {
   return (
     <Pressable
       style={v_d81136.container}
+      testID={v_681472}
       onPress={() => v_b187d9(!v_3b402b)}
       accessibilityRole="checkbox"
       accessibilityState={{ checked: v_3b402b }}

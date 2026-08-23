@@ -655,6 +655,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
         <View style={v_d81136.aiSection}>
           {!v_e7ae15 ? (
             <TouchableOpacity
+              testID="skin-comparison-ai-start"
               style={v_d81136.aiStartCard}
               onPress={v_9de26b}
               activeOpacity={0.9}
