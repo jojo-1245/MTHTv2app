@@ -335,6 +335,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               return (
                 <TouchableOpacity
                   key={v_8c0b26.id}
+                  testID={`profile-menu-${v_8c0b26.id}`}
                   style={[
                     v_d81136.menuItem,
                     v_a56041 < v_0dea6d.length - 1 && v_d81136.menuItemBorder,
