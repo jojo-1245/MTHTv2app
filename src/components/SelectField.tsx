@@ -27,6 +27,8 @@ export interface SelectFieldProps {
   options?: SelectOption[];
   onValueChange?: (value: string) => void;
   maxDropdownHeight?: number;
+
+  testID?: string;
 }
 
 const v_038b88 = 48;
@@ -41,6 +43,7 @@ const SelectField: v_a3453e.FC<SelectFieldProps> = ({
   options: v_b36f96,
   onValueChange: v_cc2531,
   maxDropdownHeight: v_83ce6e,
+  testID: v_681472,
 }) => {
   const v_b2926d = v_3b402b ?? v_c6baea ?? '';
   const v_87a4e3 = !v_3b402b;
@@ -71,6 +74,7 @@ const SelectField: v_a3453e.FC<SelectFieldProps> = ({
       {v_2869c1 ? <Text style={v_d81136.label}>{v_2869c1}</Text> : null}
       <TouchableOpacity
         style={v_d81136.field}
+        testID={v_681472}
         onPress={v_5ba0f2}
         activeOpacity={0.85}
         disabled={v_4a6533}
@@ -101,6 +105,7 @@ const SelectField: v_a3453e.FC<SelectFieldProps> = ({
                 {v_b36f96!.map(v_0bd920 => (
                   <TouchableOpacity
                     key={v_0bd920.value}
+                    testID={v_681472 ? `${v_681472}-option-${v_0bd920.value}` : undefined}
                     style={v_d81136.optionRow}
                     activeOpacity={0.85}
                     onPress={() => v_6121dc(v_0bd920.value)}
@@ -217,5 +222,4 @@ const v_d81136 = v_472849.create({
 });
 
 export default v_d56c0a;
-
 

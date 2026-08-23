@@ -17,6 +17,8 @@ interface OtpInputProps {
   activeBoxStyle?: object;
   onFocus?: () => void;
   onBlur?: () => void;
+
+  testID?: string;
 }
 
 const OtpInput: v_a3453e.FC<OtpInputProps> = ({
@@ -32,6 +34,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
   activeBoxStyle: v_841e53,
   onFocus: v_cd3cee,
   onBlur: v_40ce7e,
+  testID: v_681472,
 }) => {
   const { t: v_8d41d7 } = v_772971();
   const [v_1036a8, v_c17726] = v_5ab095(v_3b402b);
@@ -85,6 +88,7 @@ const OtpInput: v_a3453e.FC<OtpInputProps> = ({
       </Pressable>
       <TextInput
         ref={v_32f473}
+        testID={v_681472}
         value={v_1036a8}
         onChangeText={v_4090ac}
         onFocus={v_cd3cee}
