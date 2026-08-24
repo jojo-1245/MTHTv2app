@@ -33,7 +33,7 @@ import { v_e4a763 } from '../utils/env';
 import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
 import type { v_8adb2f } from '../services/authApi';
 import { v_87ba9a } from '../navigation/postLoginNavigation';
-import { v_9a8286 } from '../services/apiClient';
+import v_9a8286 from '../services/apiClient';
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
