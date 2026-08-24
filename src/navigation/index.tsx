@@ -1,11 +1,10 @@
-import v_a3453e, { v_de06a3, v_c4deb2 } from 'bapkr';
+import v_a3453e, { v_de06a3, v_c4deb2, v_5ab095 } from 'bapkr';
 import { v_f2c756 } from 'rcmrninabrnb';
 import { v_ac28fd } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_709be7 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_60875a } from './rootNavigationRef';
 import { v_4b3c9f } from '../services';
 import { v_6f0675 } from '../utils/deepLinkHandler';
-import v_7af305 from '../screens/IntroScreen';
 import v_c316d8 from '../screens/HomeScreen';
 import v_7aeeb0 from '../screens/MetaHomeScreen';
 import v_f4f851 from '../screens/LoginScreen';
@@ -50,9 +49,9 @@ import v_f6b2e9 from '../screens/ShopProductListScreen';
 import v_d3b4f6 from '../screens/ShopPaymentConfirmScreen';
 import v_5109e7 from '../screens/RecommendedSupplementsScreen';
 import { v_4482f8, v_5bfacf } from '../hooks/useShopPaymentPush';
+import { v_6c5337, type v_c99f09 } from './resolveInitialRoute';
 
 export type RootStackParamList = {
-  Intro: undefined;
   Home: undefined;
   MetaHome: undefined;
   PharmacistHome: {
@@ -223,6 +222,24 @@ async function v_d0aaa6(v_f71b56) {
 
 export const AppNavigator: v_a3453e.FC = () => {
   v_5bfacf();
+  const [v_9a7abf, v_41354b] = v_5ab095<v_c99f09 | null>(null);
+
+  v_c4deb2(() => {
+    let v_2a15fd = true;
+    (async () => {
+      const v_f71b56 = await v_f2c756.getInitialURL();
+      if (!v_2a15fd) return;
+      if (v_f71b56) {
+        v_41354b('Home');
+        return;
+      }
+      const v_c7daf6 = await v_6c5337();
+      if (v_2a15fd) v_41354b(v_c7daf6);
+    })();
+    return () => {
+      v_2a15fd = false;
+    };
+  }, []);
 
   const v_ad5855 = v_de06a3(async () => {
     console.log('[DeepLink] onReady 진입 — getInitialURL 호출');
@@ -244,15 +261,18 @@ export const AppNavigator: v_a3453e.FC = () => {
     return () => v_269481.remove();
   }, []);
 
+  if (!v_9a7abf) {
+    return null;
+  }
+
   return (
     <NavigationContainer ref={v_60875a} onReady={v_ad5855}>
       <Stack.Navigator
-        initialRouteName="Intro"
+        initialRouteName={v_9a7abf}
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="Intro" component={v_7af305} />
         <Stack.Screen name="Home" component={v_c316d8} />
         <Stack.Screen name="MetaHome" component={v_7aeeb0} />
         <Stack.Screen name="PharmacistHome" component={v_7eacfe} />
