@@ -28,9 +28,9 @@ describe('SupplementRecommendSection', () => {
   });
 
   it('추천 0개면 null 렌더', async () => {
-    (v_05a921.recommend as jest.Mock).mockResolvedValue({ items: [], safeMode: true });
     const { toJSON: v_21dbe2 } = v_624657(<SupplementRecommendSection source="skin" recordId={1} />);
     await v_81e49f(() => expect(v_21dbe2()).toBeNull());
+    expect(v_05a921.recommend).not.toHaveBeenCalled();
   });
 
   it('AI는 기본 포함·결제하기 시 openShopCheckout', async () => {
