@@ -41,6 +41,13 @@ export default function v_6f3f7e({
       v_fb4b30(new Set());
       return;
     }
+
+    if (v_04e790 === 'skin') {
+      console.log('[SupplementReco] skin source — 추천 upsert 스킵', { recordId: v_fbf3b0 });
+      v_fa923c([]);
+      v_fb4b30(new Set());
+      return;
+    }
     console.log('[SupplementReco] 요청', { source: v_04e790, recordId: v_fbf3b0, platform: v_326be8.OS });
     v_ec0289({ source: v_04e790, recordId: v_fbf3b0, platform: v_326be8.OS as 'ios' | 'android' })
       .then((v_cb35cb) => {
