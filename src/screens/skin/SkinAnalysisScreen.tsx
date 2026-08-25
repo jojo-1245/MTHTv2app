@@ -2123,7 +2123,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 <SupplementRecommendCta
                     source="skin"
                     recordId={v_4ae380 ?? null}
-                    skipUpsert={v_72ba9a}
+                    skipUpsert
                 />
 
                 {}
