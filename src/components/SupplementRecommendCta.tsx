@@ -23,7 +23,7 @@ export default function v_16c240({
   v_c4deb2(() => {
     if (v_fbf3b0 == null) return;
 
-    if (v_5bfc02) return;
+    if (v_5bfc02 || v_04e790 === 'skin') return;
     let v_759436 = true;
 
     v_ec0289({ source: v_04e790, recordId: v_fbf3b0, platform: v_326be8.OS as 'ios' | 'android' })
