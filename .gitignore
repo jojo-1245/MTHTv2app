@@ -31,6 +31,16 @@ credentials/
 *.key
 *.mobileprovision
 
+# 서명 자격증명 — credentials/ 와 *.jks 만 막으면 아래 json 이 그물을 빠져나간다.
+# 실제로 credentials.json 이 keystore 비번을 평문으로 담은 채 커밋돼 있었다(2026-08-25 세탁).
+# 원본 백업 = KB projects/metahint/secrets/credentials/2026-08-25_mtht-signing-bundle/
+credentials.json
+credentials.*.json
+!google-services.json
+*.keystore
+*.pem
+*.p8.txt
+
 # Metro
 .metro-health-check*
 
