@@ -15,6 +15,7 @@ export { HealthAnalysisScreen } from './health';
 export { ChatScreen } from './chat';
 export { WalletScreen } from './wallet/WalletScreen';
 export { WalletSendScreen } from './wallet/WalletSendScreen';
+export { WalletSwapScreen } from './wallet/WalletSwapScreen';
 export { WalletReceiveScreen } from './wallet/WalletReceiveScreen';
 export { WalletQrScanScreen } from './wallet/WalletQrScanScreen';
 export { WalletTransactionProgressScreen } from './wallet/WalletTransactionProgressScreen';
