@@ -13,6 +13,10 @@ function v_e6bbf4() {
 
 const v_d66c57 = [0, 500, 1500, 3000];
 
+function v_3b5a18(v_479f05): boolean {
+  return v_479f05 === true || v_479f05 === '1' || v_479f05 === 'true';
+}
+
 async function v_3fe399(): Promise<v_eca0c9> {
   let v_7b2f0c;
   for (const v_4b24d2 of v_d66c57) {
@@ -96,6 +100,10 @@ export function v_1f53bf() {
     fzljtiliLicenseKey: (v_74a79c?.fzljtili_license_key as string) ?? '',
     youcamApiKey: (v_74a79c?.youcam_api_key as string) ?? '',
     skinAcneHidden: v_74a79c === null ? true : !(v_74a79c.skin_acne_hidden === false || v_74a79c.skin_acne_hidden === 'false' || v_74a79c.skin_acne_hidden === '0'),
+
+    bnbWalletEnabled: v_74a79c !== null && v_3b5a18(v_74a79c.bnb_wallet_enabled),
+
+    swapEnabled: v_74a79c !== null && v_3b5a18(v_74a79c.swap_enabled),
   };
 }
 
