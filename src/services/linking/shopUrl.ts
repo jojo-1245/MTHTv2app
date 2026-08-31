@@ -23,11 +23,42 @@ export function v_bdc222(v_6e55b1): string | null {
   return `${v_694b25}/oth-path?it_id=${encodeURIComponent(v_389afb)}`;
 }
 
-export function v_c7823e(v_735da1, v_acc1e5 = 'ai'): string {
-  const v_52e08b = [...new Set(v_735da1.map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
-  if (!v_52e08b.length) return '/oth-path';
+export type ShopCheckoutOrigin = {
+  aiIds?: string[];
+  genIds?: string[];
+};
+
+export type ShopCheckoutLegacy = {
+  itemIds: string[];
+  via?: 'ai' | '';
+};
+
+export function v_c7823e(
+  v_f17108,
+  v_6c5ae2 = 'ai',
+): string {
+  let v_603f7b = [];
+  let v_3376c2 = [];
+
+  if (Array.isArray(v_f17108)) {
+    const v_52e08b = [...new Set(v_f17108.map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
+    if (!v_52e08b.length) return '/oth-path';
+    if (v_6c5ae2 === 'ai') v_603f7b = v_52e08b;
+    else v_3376c2 = v_52e08b;
+  } else if ('itemIds' in v_f17108) {
+    const v_52e08b = [...new Set(v_f17108.itemIds.map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
+    if (!v_52e08b.length) return '/oth-path';
+    if ((v_f17108.via ?? 'ai') === 'ai') v_603f7b = v_52e08b;
+    else v_3376c2 = v_52e08b;
+  } else {
+    v_603f7b = [...new Set((v_f17108.aiIds ?? []).map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
+    v_3376c2 = [...new Set((v_f17108.genIds ?? []).map((v_62c214) => String(v_62c214 || '').trim()).filter(Boolean))].slice(0, 20);
+  }
+
+  if (!v_603f7b.length && !v_3376c2.length) return '/oth-path';
+
   const v_ab6401 = new URLSearchParams();
-  v_ab6401.set('it_ids', v_52e08b.join(','));
-  if (v_acc1e5) v_ab6401.set('via', v_acc1e5);
+  if (v_603f7b.length) v_ab6401.set('ai_ids', v_603f7b.join(','));
+  if (v_3376c2.length) v_ab6401.set('gen_ids', v_3376c2.join(','));
   return `/oth-path?${v_ab6401.toString()}`;
 }
