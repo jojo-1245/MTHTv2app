@@ -101,9 +101,14 @@ export default function v_6f3f7e({
   };
 
   const v_3f0264 = () => {
-    const v_52e08b = v_5e422d.map((v_23805a) => v_23805a.shopItemId!).filter(Boolean);
-    if (!v_52e08b.length) return;
-    void v_565824(v_52e08b, { confirm: true, via: 'ai' });
+    const v_603f7b = v_4622b9
+      .filter((v_23805a) => v_23805a.shopItemId && v_23805a.label !== 'extra')
+      .map((v_23805a) => v_23805a.shopItemId!);
+    const v_3376c2 = v_4622b9
+      .filter((v_23805a) => v_23805a.shopItemId && v_23805a.label === 'extra' && v_1c5924.has(v_23805a.shopItemId))
+      .map((v_23805a) => v_23805a.shopItemId!);
+    if (!v_603f7b.length && !v_3376c2.length) return;
+    void v_565824({ aiIds: v_603f7b, genIds: v_3376c2 }, { confirm: true });
   };
 
   if (v_fbf3b0 == null || v_4622b9.length === 0) return null;
