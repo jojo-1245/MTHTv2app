@@ -101,6 +101,8 @@ export function v_1f53bf() {
     youcamApiKey: (v_74a79c?.youcam_api_key as string) ?? '',
     skinAcneHidden: v_74a79c === null ? true : !(v_74a79c.skin_acne_hidden === false || v_74a79c.skin_acne_hidden === 'false' || v_74a79c.skin_acne_hidden === '0'),
 
+    iosVitalReferenceShown: v_74a79c !== null && v_3b5a18(v_74a79c.ios_vital_reference_shown),
+
     bnbWalletEnabled: v_74a79c !== null && v_3b5a18(v_74a79c.bnb_wallet_enabled),
 
     swapEnabled: v_74a79c !== null && v_3b5a18(v_74a79c.swap_enabled),

@@ -1314,6 +1314,14 @@
       "risk_caution": "Caution required",
       "section_blood_pressure": "Blood Pressure",
       "section_others": "Measurement Results",
+      "vital_reference": {
+        "pulse_rate": "Normal 60–100 bpm",
+        "respiration_rate": "Normal 12–20 /min",
+        "prq": "Normal 4–5",
+        "sdnn": "Normal ≥50",
+        "blood_pressure": "Risk: systolic ≥140 or diastolic ≥95",
+        "stress_level": "Normal below 3"
+      },
       "binah_respiratory": "Respiratory",
       "respiratory_headline_normal": "Your breathing is normal.",
       "respiratory_headline_abnormal": "Your breathing is abnormal.",
