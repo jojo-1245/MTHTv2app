@@ -1233,6 +1233,14 @@
       "risk_caution": "Perlu perhatian",
       "section_blood_pressure": "Tekanan Darah",
       "section_others": "Hasil Pengukuran",
+      "vital_reference": {
+        "pulse_rate": "Normal 60–100 bpm",
+        "respiration_rate": "Normal 12–20 /menit",
+        "prq": "Normal 4–5",
+        "sdnn": "Normal ≥50",
+        "blood_pressure": "Risiko: sistolik ≥140 atau diastolik ≥95",
+        "stress_level": "Normal di bawah 3"
+      },
       "binah_respiratory": "Pernafasan",
       "respiratory_headline_normal": "Pernapasan Anda normal.",
       "respiratory_headline_abnormal": "Pernapasan Anda tidak normal.",

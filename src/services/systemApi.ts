@@ -13,6 +13,8 @@ export interface SystemConfig {
   fzljtili_license_key?: string;
   youcam_api_key?: string;
   skin_acne_hidden?: boolean | string;
+
+  ios_vital_reference_shown?: boolean | string;
   [key: string]: unknown;
 }
 

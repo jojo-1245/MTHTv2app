@@ -1333,6 +1333,14 @@
             "risk_caution": "주의가 필요합니다",
             "section_blood_pressure": "혈압",
             "section_others": "측정결과",
+            "vital_reference": {
+                "pulse_rate": "정상 60~100 bpm",
+                "respiration_rate": "정상 12~20 회/분",
+                "prq": "정상 4~5",
+                "sdnn": "정상 50 이상",
+                "blood_pressure": "위험: 수축기 140 이상 또는 이완기 95 이상",
+                "stress_level": "정상 3 미만"
+            },
             "binah_respiratory": "호흡기",
             "respiratory_headline_normal": "당신의 호흡은 정상입니다.",
             "respiratory_headline_abnormal": "당신의 호흡은 비정상입니다.",
