@@ -52,7 +52,7 @@ describe('SupplementRecommendSection', () => {
     await v_81e49f(() => v_2b0f8a('카테킨&바나바'));
     expect(v_2b0f8a('supplements.label_ai')).toBeTruthy();
     v_77aa68.press(v_2b0f8a(/supplements.checkout_cta/));
-    expect(v_784288).toHaveBeenCalledWith(['2026062420'], { confirm: true, via: 'ai' });
+    expect(v_784288).toHaveBeenCalledWith({ aiIds: ['2026062420'], genIds: [] }, { confirm: true });
   });
 
   it('선택 추가 탭 시 합계에 포함 후 체크아웃', async () => {
@@ -86,9 +86,8 @@ describe('SupplementRecommendSection', () => {
 
     v_77aa68.press(v_f177b5('supplement-check-2026062418'));
     v_77aa68.press(v_2b0f8a(/supplements.checkout_cta/));
-    expect(v_784288).toHaveBeenCalledWith(['AI1', '2026062418'], {
+    expect(v_784288).toHaveBeenCalledWith({ aiIds: ['AI1'], genIds: ['2026062418'] }, {
       confirm: true,
-      via: 'ai',
     });
   });
 
@@ -110,7 +109,7 @@ describe('SupplementRecommendSection', () => {
     v_77aa68.press(v_f177b5('supplement-check-AI1'));
     expect(v_221148('✓')).toHaveLength(1);
     v_77aa68.press(v_2b0f8a(/supplements.checkout_cta/));
-    expect(v_784288).toHaveBeenCalledWith(['AI1'], { confirm: true, via: 'ai' });
+    expect(v_784288).toHaveBeenCalledWith({ aiIds: ['AI1'], genIds: [] }, { confirm: true });
   });
 
   it('카드 본문을 누르면 제품소개 팝업이 열린다', async () => {
