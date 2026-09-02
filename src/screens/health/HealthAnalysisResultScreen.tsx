@@ -35,7 +35,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
-import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, type v_71beaa } from './vitalSignStatus';
+import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
 import { v_5a0119 } from '../../hooks/useUserRole';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
@@ -109,6 +109,20 @@ function v_b73387({
     </View>
   );
 }
+
+function v_523901({
+  typeNum: v_653390,
+  t: v_8d41d7,
+}: {
+  typeNum: number;
+  t: (key: string) => string;
+}) {
+  if (!v_b1cb48() || v_9da885(v_653390)) return null;
+  const v_3c1d34 = v_014afc(v_653390);
+  if (!v_3c1d34) return null;
+  return <Text style={v_d81136.vitalReferenceText}>{v_8d41d7(v_3c1d34)}</Text>;
+}
+
 const v_da5121 = v_472849.create({
   wrapper: {
     flexDirection: 'row',
@@ -643,9 +657,10 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_033e14 = v_e0068c();
   const v_6c4b91 = v_2cc9f8();
   const { merge: v_2f6fcc, isTablet: v_76eb7f, typo: v_52101f } = v_0d0e7d();
+
   const v_39c3a4 = v_df9f57(
-    () => v_6c4b91.contentColumnWidth - v_6c4b91.horizontalPadding * 2,
-    [v_6c4b91.contentColumnWidth, v_6c4b91.horizontalPadding]
+    () => Math.min(v_6c4b91.width, v_6c4b91.contentColumnWidth),
+    [v_6c4b91.width, v_6c4b91.contentColumnWidth]
   );
 
   v_1f53bf();
@@ -2597,7 +2612,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
               >
                 {}
                 {v_7acdeb.length > 0 && (
-                  <View style={v_d81136.swiperContainer}>
+                  <View style={[v_d81136.swiperContainer, { marginHorizontal: -v_6c4b91.horizontalPadding }]}>
                     <ScrollView
                       ref={v_61a127}
                       horizontal
@@ -2664,6 +2679,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                                     isTablet={v_76eb7f}
                                     unitFontSize={v_52101f.label}
                                   />
+                                  <VitalReferenceLine typeNum={v_653390} t={v_8d41d7} />
                                 </View>
                                 <View style={v_d81136.resultDivider} />
                                 <View style={v_d81136.resultRight}>
@@ -2920,6 +2936,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                               isTablet={v_76eb7f}
                               unitFontSize={v_52101f.label}
                             />
+                            <VitalReferenceLine typeNum={v_653390} t={v_8d41d7} />
                               </View>
                               <View style={v_d81136.resultDivider} />
                               <View style={v_d81136.resultRight}>
@@ -4068,7 +4085,6 @@ const v_d81136 = v_472849.create({
   swiperContainer: {
     marginTop: v_9b1a04.medium,
     minHeight: 200,
-    marginHorizontal: -v_9b1a04.large,
   },
   swiperContent: {},
   swiperPage: {
@@ -4892,6 +4908,8 @@ const v_d81136 = v_472849.create({
   },
   resultLeft: {
     width: v_9b1a04.xlarge * 4.5,
+    maxWidth: '44%',
+    flexShrink: 1,
     alignItems: 'flex-start',
     gap: v_9b1a04.small / 2,
   },
@@ -4944,6 +4962,8 @@ const v_d81136 = v_472849.create({
   },
   resultRight: {
     flex: 1,
+    flexShrink: 1,
+    minWidth: 0,
     gap: v_9b1a04.small,
   },
   resultRightHeader: {
@@ -5011,6 +5031,15 @@ const v_d81136 = v_472849.create({
   },
   resultCardFooterLeft: {
     flex: 1,
+  },
+  vitalReferenceText: {
+    marginTop: v_9b1a04.small / 2,
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    lineHeight: 18,
+    alignSelf: 'stretch',
+    flexShrink: 1,
   },
   resultToggleFooter: {
     flexDirection: 'row',
