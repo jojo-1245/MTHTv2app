@@ -7,6 +7,7 @@ import {
   v_739f72,
   v_c7823e,
   v_bdc222,
+  type v_196d09,
 } from './shopUrl';
 import { v_f96be4 } from '../shopApi';
 
@@ -106,8 +107,11 @@ export async function v_9dcb16(v_6e55b1): Promise<boolean> {
 }
 
 export async function v_565824(
-  v_735da1,
+  origin: v_196d09 | string[],
   v_b36f96,
 ): Promise<boolean> {
-  return v_e184b5(v_c7823e(v_735da1, v_b36f96?.via ?? 'ai'), v_b36f96);
+  const v_a448ad = Array.isArray(v_f17108)
+    ? v_c7823e(v_f17108, 'ai')
+    : v_c7823e(v_f17108);
+  return v_e184b5(v_a448ad, v_b36f96);
 }
