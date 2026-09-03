@@ -58,7 +58,10 @@ describe('supplementApi.getRecommendation', () => {
       },
     });
     const v_8d4337 = await v_4a4fc7();
-    expect(v_9a8286.get).toHaveBeenCalledWith('/oth-path');
+
+    expect(v_9a8286.get).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/oth-path\/supplements\/recommendation\?platform=(ios|android)$/),
+    );
     expect(v_8d4337.recordId).toBe(99);
     expect(v_8d4337.source).toBe('health');
     expect(v_8d4337.items).toHaveLength(1);
