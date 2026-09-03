@@ -40,8 +40,13 @@ describe('buildProductNext', () => {
 });
 
 describe('buildCheckoutNext', () => {
-  it('복수 it_id를 cart_checkout next로 만든다', () => {
-    expect(v_c7823e(['a', 'b'], 'ai')).toBe('/oth-path?it_ids=a%2Cb&via=ai');
+  it('MH-651: ai_ids·gen_ids 분리', () => {
+    expect(v_c7823e({ aiIds: ['a', 'b'], genIds: ['c'] })).toBe(
+      '/oth-path?ai_ids=a%2Cb&gen_ids=c',
+    );
+  });
+  it('legacy 배열+via=ai', () => {
+    expect(v_c7823e(['a', 'b'], 'ai')).toBe('/oth-path?ai_ids=a%2Cb');
   });
   it('빈 배열이면 코너 폴백', () => {
     expect(v_c7823e([])).toBe('/oth-path');
@@ -51,7 +56,7 @@ describe('buildCheckoutNext', () => {
     const v_a448ad = v_c7823e(['x', 'x', ...v_52e08b]);
     expect(v_a448ad.startsWith('/oth-path?')).toBe(true);
     const v_24baff = new URLSearchParams(v_a448ad.split('?')[1]);
-    expect(v_24baff.get('it_ids')!.split(',')).toHaveLength(20);
+    expect(v_24baff.get('ai_ids')!.split(',')).toHaveLength(20);
   });
 });
 

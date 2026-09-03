@@ -7,6 +7,7 @@ import {
   v_9dcb16 as v_4ade11,
   type v_deb755,
 } from '../services/linking';
+import type { v_196d09 } from '../services/linking/shopUrl';
 import { v_4fb75e } from '../services/shopApi';
 import { v_9bf7de } from './useShopPaymentPush';
 
@@ -60,8 +61,8 @@ export function v_ffe36d() {
     [v_b704b8, v_ec6344],
   );
   const v_565824 = v_de06a3(
-    (v_735da1, options?: v_deb755 & { via?: 'ai' | '' }) =>
-      v_b704b8(() => v_ec6344(() => v_7a3921(v_735da1, v_b36f96))),
+    (origin: v_196d09 | string[], options?: v_deb755) =>
+      v_b704b8(() => v_ec6344(() => v_7a3921(v_f17108, v_b36f96))),
     [v_b704b8, v_ec6344],
   );
 
