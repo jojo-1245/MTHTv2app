@@ -112,6 +112,52 @@ export function v_9da885(v_653390): boolean {
   return false;
 }
 
+export type VitalReferenceDef = {
+  textKey: string;
+  min?: number;
+  max?: number;
+
+  minNormal?: number;
+
+  stressRiskFrom?: number;
+  systolicHigh?: number;
+  diastolicHigh?: number;
+};
+
+export const v_b7a130 = {
+  [v_e3e816.PULSE_RATE]: { min: 60, max: 100, textKey: 'pulse_rate' },
+  [v_e3e816.RESPIRATION_RATE]: { min: 12, max: 20, textKey: 'respiration_rate' },
+  [v_e3e816.PRQ]: { min: 4, max: 5, textKey: 'prq' },
+  [v_e3e816.SDNN]: { minNormal: 50, textKey: 'sdnn' },
+  [v_e3e816.BLOOD_PRESSURE]: { systolicHigh: 140, diastolicHigh: 95, textKey: 'blood_pressure' },
+  [v_e3e816.STRESS_LEVEL]: { stressRiskFrom: 3, textKey: 'stress_level' },
+};
+
+function v_c77a2e(v_549ed3, v_9e3676): boolean {
+  if (v_9e3676.min !== undefined && v_9e3676.max !== undefined) {
+    return v_549ed3 >= v_9e3676.min && v_549ed3 <= v_9e3676.max;
+  }
+  if (v_9e3676.minNormal !== undefined) {
+    return v_549ed3 >= v_9e3676.minNormal;
+  }
+  if (v_9e3676.stressRiskFrom !== undefined) {
+    return v_549ed3 < v_9e3676.stressRiskFrom;
+  }
+  return false;
+}
+
+export function v_014afc(v_653390): string | null {
+  const v_9e3676 = v_b7a130[v_653390];
+  if (!v_9e3676) return null;
+  return `health_analysis.result.vital_reference.${v_9e3676.textKey}`;
+}
+
+export function v_b1cb48(): boolean {
+  if (v_326be8.OS !== 'ios') return true;
+  const v_479f05 = v_2c13e7('ios_vital_reference_shown');
+  return v_479f05 === true || v_479f05 === '1' || v_479f05 === 'true';
+}
+
 export const v_399d2c = (v_3b402b): GroupStatus | null => {
   const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
   if (isNaN(v_549ed3)) {
@@ -142,13 +188,14 @@ export function v_a6cea6(
     return v_399d2c(v_3b402b);
   }
   if (v_653390 === v_e3e816.BLOOD_PRESSURE) {
+    const v_8de366 = v_b7a130[v_e3e816.BLOOD_PRESSURE]!;
     const v_5d0a1b = v_3b402b as any;
     if (typeof v_5d0a1b === 'object' && v_5d0a1b !== null && !Array.isArray(v_5d0a1b)) {
       const v_e7392b = typeof v_5d0a1b.systolic === 'number' ? v_5d0a1b.systolic : Number(v_5d0a1b.systolic);
       const v_8cfeff = typeof v_5d0a1b.diastolic === 'number' ? v_5d0a1b.diastolic : Number(v_5d0a1b.diastolic);
 
       if (!isNaN(v_e7392b) && !isNaN(v_8cfeff)) {
-        return v_e7392b >= 140 || v_8cfeff >= 95 ? '위험' : '정상';
+        return v_e7392b >= (v_8de366.systolicHigh ?? 140) || v_8cfeff >= (v_8de366.diastolicHigh ?? 95) ? '위험' : '정상';
       }
     }
     return v_005339(v_afd724?.(v_e3e816.HIGH_BLOOD_PRESSURE_RISK));
@@ -156,31 +203,11 @@ export function v_a6cea6(
   if (v_653390 === v_e3e816.HIGH_BLOOD_PRESSURE_RISK) {
     return v_005339(v_3b402b);
   }
-  if (v_653390 === v_e3e816.PULSE_RATE) {
+  const v_d5b8a0 = v_b7a130[v_653390];
+  if (v_d5b8a0 && (v_d5b8a0.min !== undefined || v_d5b8a0.minNormal !== undefined || v_d5b8a0.stressRiskFrom !== undefined)) {
     const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
     if (!isNaN(v_549ed3)) {
-      return v_549ed3 >= 60 && v_549ed3 <= 100 ? '정상' : '위험';
-    }
-    return null;
-  }
-  if (v_653390 === v_e3e816.RESPIRATION_RATE) {
-    const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    if (!isNaN(v_549ed3)) {
-      return v_549ed3 >= 12 && v_549ed3 <= 20 ? '정상' : '위험';
-    }
-    return null;
-  }
-  if (v_653390 === v_e3e816.PRQ) {
-    const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    if (!isNaN(v_549ed3)) {
-      return v_549ed3 >= 4 && v_549ed3 <= 5 ? '정상' : '위험';
-    }
-    return null;
-  }
-  if (v_653390 === v_e3e816.SDNN) {
-    const v_549ed3 = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-    if (!isNaN(v_549ed3)) {
-      return v_549ed3 >= 50 ? '정상' : '위험';
+      return v_c77a2e(v_549ed3, v_d5b8a0) ? '정상' : '위험';
     }
     return null;
   }

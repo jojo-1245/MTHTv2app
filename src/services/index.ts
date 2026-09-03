@@ -46,6 +46,15 @@ export type { NotificationItem, NotificationType, GetNotificationsResponse } fro
 export { getSystemConfig } from './systemApi';
 export type { SystemConfig } from './systemApi';
 
+export { getSwapConfig, getSwapQuote, executeSwap, getSwapHistory } from './swapApi';
+export type {
+  SwapDirection,
+  SwapConfig,
+  SwapQuote,
+  SwapExecuteResult,
+  SwapHistoryItem,
+} from './swapApi';
+
 export { logToServer } from './clientLog';
 export type { LogLevel } from './clientLog';
 

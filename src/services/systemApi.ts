@@ -5,10 +5,16 @@ export interface SystemConfig {
   force_update: boolean;
   wallet_tab_hidden: boolean;
   wallet_tab_url: string;
+
+  bnb_wallet_enabled?: boolean | string;
+
+  swap_enabled?: boolean | string;
   min_app_version?: { android: string; ios: string };
   fzljtili_license_key?: string;
   youcam_api_key?: string;
   skin_acne_hidden?: boolean | string;
+
+  ios_vital_reference_shown?: boolean | string;
   [key: string]: unknown;
 }
 

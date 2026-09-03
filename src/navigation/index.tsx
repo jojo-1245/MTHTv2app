@@ -17,6 +17,7 @@ import v_873cfb from '../screens/PasswordChangedScreen';
 import v_c1e2b5 from '../screens/CountrySelectScreen';
 import { v_952e24 } from '../screens/wallet/WalletScreen';
 import { v_5b640b } from '../screens/wallet/WalletSendScreen';
+import { v_1b07c2 } from '../screens/wallet/WalletSwapScreen';
 import { v_2ba37d } from '../screens/wallet/WalletQrScanScreen';
 import { v_31216c } from '../screens/wallet/WalletTransactionProgressScreen';
 import { v_1cd2a2 } from '../screens/wallet/WalletTransactionResultScreen';
@@ -79,6 +80,7 @@ export type RootStackParamList = {
   | undefined;
   Wallet: undefined;
   WalletSend: { tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] } } | undefined;
+  WalletSwap: undefined;
   WalletReceive:
   | {
     title?: string;
@@ -286,6 +288,7 @@ export const AppNavigator: v_a3453e.FC = () => {
         <Stack.Screen name="CountrySelect" component={v_c1e2b5} />
         <Stack.Screen name="Wallet" component={v_952e24} />
         <Stack.Screen name="WalletSend" component={v_5b640b} />
+        <Stack.Screen name="WalletSwap" component={v_1b07c2} />
         <Stack.Screen name="WalletReceive" component={v_a023f9} />
         <Stack.Screen name="WalletQrScan" component={v_2ba37d} />
         <Stack.Screen name="WalletEstimate" component={v_31216c} />
@@ -341,6 +344,7 @@ export const v_ce4741 = {
   countrySelect: 'CountrySelect',
   wallet: 'Wallet',
   walletSend: 'WalletSend',
+  walletSwap: 'WalletSwap',
   walletReceive: 'WalletReceive',
   walletQrScan: 'WalletQrScan',
   walletEstimate: 'WalletEstimate',
