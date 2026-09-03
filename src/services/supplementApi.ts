@@ -1,3 +1,4 @@
+import { v_326be8 } from 'rcmrninabrnb';
 import v_9a8286 from './apiClient';
 
 export type RecoSource = 'skin' | 'health' | 'checkup';
@@ -46,7 +47,7 @@ export async function v_ec0289(v_24baff): Promise<RecommendResponse> {
 
 export async function v_4a4fc7(): Promise<RecommendationSnapshot> {
   const v_8f00b9 = await v_9a8286.get<Wrapped<RecommendationSnapshot> | RecommendationSnapshot>(
-    '/oth-path',
+    `/oth-path?platform=${v_326be8.OS === 'ios' ? 'ios' : 'android'}`,
   );
   const v_4d33b2 = v_8f00b9.data as (Wrapped<RecommendationSnapshot> & RecommendationSnapshot) | undefined;
   const v_9390e8 = v_d66c57(v_4d33b2) as RecommendationSnapshot;
