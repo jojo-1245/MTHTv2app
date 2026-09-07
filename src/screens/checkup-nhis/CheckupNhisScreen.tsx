@@ -12,6 +12,7 @@ import {
 import { v_556baf, v_570c34, v_729608, v_cb41de, v_e775af } from '../../components';
 import { v_889fad } from '../../components/AlertHost';
 import v_16c240 from '../../components/SupplementRecommendCta';
+import v_2d0741 from './components/CheckupRecordSheet';
 import { v_a0daa8 } from '../../navigation';
 import { v_15baf2, v_b67103, v_ff5546 } from '../../services';
 import type { v_84adce, v_e86309 } from '../../services/codefApi';
@@ -20,6 +21,7 @@ import {
   v_ae5f46,
   v_4e2e5d,
 } from '../../utils/checkupErrorMessage';
+import { v_772971 } from 'jmpfvteuuztnp';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import type { v_8ad91b } from '../../navigation';
@@ -73,6 +75,8 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const [v_ff38f8, v_7b5f10] = v_5ab095<v_e86309 | null>(null);
   const [v_4622b9, v_fa923c] = v_5ab095<any[]>([]);
   const [v_678155, v_9ed182] = v_5ab095<v_84adce[]>([]);
+  const [v_8cc501, v_44dbcc] = v_5ab095<v_84adce | null>(null);
+  const [v_8126f5, v_c94bdc] = v_5ab095(false);
 
   const [v_7c9da3, v_db9949] = v_5ab095<number | null>(null);
 
@@ -431,7 +435,14 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                 <Text style={v_d81136.guide}>저장된 건강검진 기록이 없습니다.</Text>
               )}
               {!v_683210 && v_678155.map((v_cb35cb, v_ebec57) => (
-                <RecordCard key={v_cb35cb.id ?? v_ebec57} row={v_cb35cb} />
+                <RecordCard
+                  key={v_cb35cb.id ?? v_ebec57}
+                  row={v_cb35cb}
+                  onPress={() => {
+                    v_44dbcc(v_cb35cb);
+                    v_c94bdc(true);
+                  }}
+                />
               ))}
               <View style={v_d81136.recordsButton}>
                 <PrimaryButton
@@ -442,6 +453,15 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
             </View>
           )}
       </SafeScrollView>
+      <CheckupRecordSheet
+        visible={v_8126f5}
+        row={v_8cc501}
+        onClose={() => {
+          v_c94bdc(false);
+          v_44dbcc(null);
+        }}
+        formatDate={v_608e6b}
+      />
     </SafeView>
   );
 };
@@ -553,7 +573,8 @@ const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
   );
 };
 
-const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => {
+const RecordCard: v_a3453e.FC<{ row: v_84adce; onPress: () => void }> = ({ row: v_3ac7e7, onPress: v_719eed }) => {
+  const { t: v_8d41d7 } = v_772971();
   const v_ce04c7 = v_1068f0([
     v_3ac7e7.height != null ? `키 ${v_3ac7e7.height}cm` : null,
     v_3ac7e7.weight != null ? `몸무게 ${v_3ac7e7.weight}kg` : null,
@@ -580,7 +601,7 @@ const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => {
   const v_b935a3 = !!(v_ce04c7 || v_909ad1 || v_4cbb19 || v_79cdfc || v_3ac7e7.judgment);
 
   return (
-    <View style={v_3839df.card}>
+    <TouchableOpacity style={v_3839df.card} onPress={v_719eed} activeOpacity={0.75}>
       <Text style={v_3839df.cardTitle}>
         {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year)}
         {v_3ac7e7.organization ? ` · ${String(v_3ac7e7.organization).replace(/\+/g, ' ')}` : ''}
@@ -600,7 +621,8 @@ const RecordCard: v_a3453e.FC<{ row: v_84adce }> = ({ row: v_3ac7e7 }) => {
           이 기록에는 키·몸무게 등 일반검진 수치가 없습니다.
         </Text>
       )}
-    </View>
+      <Text style={v_3839df.tapHint}>{v_8d41d7('checkup_nhis.sheet.tap_hint')}</Text>
+    </TouchableOpacity>
   );
 };
 
@@ -759,6 +781,12 @@ const v_3839df = v_472849.create({
     color: '#475569',
     marginTop: 4,
     lineHeight: 20,
+  },
+  tapHint: {
+    marginTop: v_9b1a04.small,
+    fontSize: v_ef658a.small,
+    fontFamily: v_843035.medium,
+    color: v_1bfbd0.bluePrimary,
   },
 });
 

@@ -2353,5 +2353,77 @@
     "next": "Next",
     "start": "Get started",
     "close": "Close"
+  },
+  "checkup_nhis": {
+    "sheet": {
+      "title": "Health checkup results",
+      "tap_hint": "Tap for details",
+      "empty": "No checkup values to display.",
+      "judgment": "Overall assessment",
+      "status_normal": "Normal",
+      "status_risk": "Attention",
+      "disclaimer": "This screen shows NHIS checkup results as received and does not provide medical diagnosis.",
+      "sections": {
+        "anthropometry": "Measurements",
+        "blood_pressure": "Blood pressure",
+        "glucose": "Glucose",
+        "lipid": "Lipids",
+        "blood": "Blood",
+        "liver": "Liver function",
+        "kidney": "Kidney function",
+        "urine": "Urinalysis"
+      },
+      "items": {
+        "height": "Height",
+        "weight": "Weight",
+        "bmi": "BMI",
+        "waist": "Waist",
+        "systolic_bp": "Systolic",
+        "diastolic_bp": "Diastolic",
+        "fasting_glucose": "Fasting glucose",
+        "total_cholesterol": "Total cholesterol",
+        "hdl": "HDL",
+        "ldl": "LDL",
+        "triglyceride": "Triglycerides",
+        "hemoglobin": "Hemoglobin",
+        "ast": "AST",
+        "alt": "ALT",
+        "gtp": "GGT",
+        "creatinine": "Creatinine",
+        "gfr": "eGFR",
+        "urine_protein": "Urine protein"
+      },
+      "units": {
+        "cm": "cm",
+        "kg": "kg",
+        "kg_m2": "kg/m²",
+        "mmhg": "mmHg",
+        "mg_dl": "mg/dL",
+        "g_dl": "g/dL",
+        "iu_l": "IU/L",
+        "ml_min": "mL/min",
+        "none": ""
+      },
+      "reference": {
+        "height": "—",
+        "weight": "—",
+        "bmi": "18.5–22.9",
+        "waist": "M<90 F<85",
+        "systolic_bp": "<120",
+        "diastolic_bp": "<80",
+        "fasting_glucose": "<100",
+        "total_cholesterol": "<200",
+        "hdl": "M≥40 F≥50",
+        "ldl": "<130",
+        "triglyceride": "<150",
+        "hemoglobin": "12–16.5",
+        "ast": "<40",
+        "alt": "<40",
+        "gtp": "<63",
+        "creatinine": "<1.2",
+        "gfr": "≥60",
+        "urine_protein": "Negative"
+      }
+    }
   }
 }
