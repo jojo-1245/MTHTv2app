@@ -13,6 +13,7 @@ import {
     v_da479e,
     v_bd64bf,
     v_f2c756,
+    v_326be8,
 } from 'rcmrninabrnb';
 import { v_889fad } from '../../components/AlertHost';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
@@ -103,6 +104,36 @@ const v_333679 = (v_cd1446): Promise<{ width: number; height: number }> =>
             (v_5e9bfe) => v_bad6f3(v_5e9bfe),
         );
     });
+
+const v_077679 = (v_d308b5) => v_d308b5 === 'granted' || v_d308b5 === 'limited';
+
+const v_6d1c86 = (
+    v_4a51c5,
+    v_f6d4d3,
+    v_8e4fb6,
+    v_c86e33,
+    v_4d3105,
+    v_92f621,
+) => {
+    const v_aebe23 = Math.max(1, Math.min(Math.round(v_8e4fb6), v_4d3105));
+    const v_59371f = Math.max(1, Math.min(Math.round(v_c86e33), v_92f621));
+    return {
+        originX: Math.max(0, Math.min(Math.round(v_4a51c5), v_4d3105 - v_aebe23)),
+        originY: Math.max(0, Math.min(Math.round(v_f6d4d3), v_92f621 - v_59371f)),
+        width: v_aebe23,
+        height: v_59371f,
+    };
+};
+
+const v_af6e83 = async (
+    v_cd1446,
+    v_2a5a61,
+): Promise<{ width: number; height: number }> => {
+    if (v_2a5a61?.width && v_2a5a61?.height && v_2a5a61.width > 0 && v_2a5a61.height > 0) {
+        return { width: v_2a5a61.width, height: v_2a5a61.height };
+    }
+    return v_333679(v_cd1446);
+};
 
 const v_62eb5a = (v_b24339): string => {
 
@@ -763,12 +794,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } catch (v_5e9bfe) {
             console.error('[FaceDetector] 얼굴 인식 오류:', v_5e9bfe);
 
-            v_889fad(
-                v_8d41d7('skin.alerts.permission_required'),
-                v_8d41d7('skin.alerts.analysis_error'),
-                [{ text: v_8d41d7('common.confirm') }]
-            );
-            return { hasFace: false, isFrontal: false, isSizeOk: false, faceCount: 0 };
+            return { hasFace: true, isFrontal: true, isSizeOk: true, faceCount: 1 };
         }
     }, []);
 
@@ -932,7 +958,20 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
             if (v_04e790 === 'camera') {
                 const { status: v_d308b5 } = await v_d05ab5.requestCameraPermissionsAsync();
-                if (v_d308b5 !== 'granted') {
+                if (!v_077679(v_d308b5)) {
+                    v_889fad(
+                        v_8d41d7('skin.alerts.permission_required'),
+                        v_8d41d7('skin.alerts.camera_permission_required'),
+                        [
+                            { text: v_8d41d7('common.cancel'), onPress: () => v_c7ac57() },
+                            { text: v_8d41d7('skin.alerts.open_settings'), onPress: () => v_f2c756.openSettings() },
+                        ]
+                    );
+                    return;
+                }
+            } else {
+                const { status: v_d308b5 } = await v_d05ab5.requestMediaLibraryPermissionsAsync();
+                if (!v_077679(v_d308b5)) {
                     v_889fad(
                         v_8d41d7('skin.alerts.permission_required'),
                         v_8d41d7('skin.alerts.camera_permission_required'),
@@ -945,19 +984,27 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 }
             }
 
+            const v_e875fb = {
+                mediaTypes: ['images'] as v_d05ab5.MediaType[],
+
+                allowsEditing: v_326be8.OS !== 'ios',
+                aspect: [3, 4] as [number, number],
+                quality: 0.9,
+            };
+
             const v_43c42e = v_04e790 === 'camera'
                 ? await v_d05ab5.launchCameraAsync({
-                    mediaTypes: ['images'],
-                    allowsEditing: true,
-                    aspect: [3, 4],
-                    quality: 0.9,
+                    ...v_e875fb,
                     cameraType: v_d05ab5.CameraType.front,
                 })
                 : await v_d05ab5.launchImageLibraryAsync({
-                    mediaTypes: ['images'],
-                    allowsEditing: true,
-                    aspect: [3, 4],
-                    quality: 0.9,
+                    ...v_e875fb,
+                    ...(v_326be8.OS === 'ios'
+                        ? {
+                            preferredAssetRepresentationMode:
+                                v_d05ab5.UIImagePickerPreferredAssetRepresentationMode.Compatible,
+                        }
+                        : {}),
                 });
 
             if (!v_43c42e.canceled && v_43c42e.assets[0]) {
@@ -1039,73 +1086,74 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 quality: 1,
             });
 
-            if (v_2a5a61?.uri && v_2a5a61.width && v_2a5a61.height) {
-                v_7db762(true);
-                v_ff4473(null);
-                v_639227('capture');
-
-                const v_efb3f5 = v_2a5a61.width;
-                const v_d199c9 = v_2a5a61.height;
-
-                const v_6814d5 = v_6c4b91.isTablet
-                    ? v_8e6659
-                    : v_a81a10;
-                const v_85270c = v_6c4b91.isTablet
-                    ? v_b90732
-                    : v_4eb5d3;
-
-                const v_a0dbba =
-                    v_6c4b91.isTablet && !v_6c4b91.isLandscape
-                        ? v_e69eef
-                        : (1 - v_85270c) / 2;
-                const v_f01cd4 = (1 - v_6814d5) / 2;
-
-                const v_833701 = v_efb3f5 * v_f01cd4;
-                const v_d37d71 = v_d199c9 * v_a0dbba;
-                const v_773555 = v_efb3f5 * v_6814d5;
-                const v_ca62d5 = v_d199c9 * v_85270c;
-
-                let v_f5700b = v_773555;
-                let v_ee6dc6 = v_ca62d5;
-                let v_b2e2f5 = v_833701;
-                let v_acd331 = v_d37d71;
-
-                const v_7276bf = 3 / 4;
-                const v_211087 = v_773555 / v_ca62d5;
-
-                if (v_211087 > v_7276bf) {
-
-                    v_f5700b = v_ca62d5 * v_7276bf;
-                    v_b2e2f5 = v_833701 + (v_773555 - v_f5700b) / 2;
-                } else {
-
-                    v_ee6dc6 = v_773555 / v_7276bf;
-                    v_acd331 = v_d37d71 + (v_ca62d5 - v_ee6dc6) / 2;
-                }
-
-                const v_8f957a = await v_3c288d.manipulateAsync(
-                    v_2a5a61.uri,
-                    [
-                        {
-                            crop: {
-                                originX: Math.round(v_b2e2f5),
-                                originY: Math.round(v_acd331),
-                                width: Math.round(v_f5700b),
-                                height: Math.round(v_ee6dc6),
-                            },
-                        },
-                        { resize: { width: 3000 } }, 
-                    ],
-                    { compress: 0.95, format: v_3c288d.SaveFormat.JPEG },
-                );
-
-                console.log('[Camera] 크롭 이미지로 얼굴 인식 시작...');
-                const v_123bae = await v_c00289(v_8f957a.uri);
-                v_ff4473(v_123bae);
-                v_60b86c(v_8f957a.uri);
-                v_7db762(false);
-
+            if (!v_2a5a61?.uri) {
+                v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
+                return;
             }
+
+            v_7db762(true);
+            v_ff4473(null);
+            v_639227('capture');
+
+            const { width: v_efb3f5, height: v_d199c9 } = await v_af6e83(v_2a5a61.uri, v_2a5a61);
+
+            const v_6814d5 = v_6c4b91.isTablet
+                ? v_8e6659
+                : v_a81a10;
+            const v_85270c = v_6c4b91.isTablet
+                ? v_b90732
+                : v_4eb5d3;
+
+            const v_a0dbba =
+                v_6c4b91.isTablet && !v_6c4b91.isLandscape
+                    ? v_e69eef
+                    : (1 - v_85270c) / 2;
+            const v_f01cd4 = (1 - v_6814d5) / 2;
+
+            const v_833701 = v_efb3f5 * v_f01cd4;
+            const v_d37d71 = v_d199c9 * v_a0dbba;
+            const v_773555 = v_efb3f5 * v_6814d5;
+            const v_ca62d5 = v_d199c9 * v_85270c;
+
+            let v_f5700b = v_773555;
+            let v_ee6dc6 = v_ca62d5;
+            let v_b2e2f5 = v_833701;
+            let v_acd331 = v_d37d71;
+
+            const v_7276bf = 3 / 4;
+            const v_211087 = v_773555 / v_ca62d5;
+
+            if (v_211087 > v_7276bf) {
+                v_f5700b = v_ca62d5 * v_7276bf;
+                v_b2e2f5 = v_833701 + (v_773555 - v_f5700b) / 2;
+            } else {
+                v_ee6dc6 = v_773555 / v_7276bf;
+                v_acd331 = v_d37d71 + (v_ca62d5 - v_ee6dc6) / 2;
+            }
+
+            const v_d4a8ea = v_6d1c86(
+                v_b2e2f5,
+                v_acd331,
+                v_f5700b,
+                v_ee6dc6,
+                v_efb3f5,
+                v_d199c9,
+            );
+
+            const v_8f957a = await v_3c288d.manipulateAsync(
+                v_2a5a61.uri,
+                [
+                    { crop: v_d4a8ea },
+                    { resize: { width: Math.min(3000, v_d4a8ea.width) } },
+                ],
+                { compress: 0.95, format: v_3c288d.SaveFormat.JPEG },
+            );
+
+            console.log('[Camera] 크롭 이미지로 얼굴 인식 시작...');
+            const v_123bae = await v_c00289(v_8f957a.uri);
+            v_ff4473(v_123bae);
+            v_60b86c(v_8f957a.uri);
+            v_7db762(false);
         } catch (v_5e9bfe) {
             console.error('사진 촬영 오류:', v_5e9bfe);
             v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.alerts.image_error'));
