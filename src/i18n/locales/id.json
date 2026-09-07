@@ -2170,5 +2170,77 @@
     "next": "Berikutnya",
     "start": "Mulai",
     "close": "Tutup"
+  },
+  "checkup_nhis": {
+    "sheet": {
+      "title": "Hasil pemeriksaan kesehatan",
+      "tap_hint": "Ketuk untuk detail",
+      "empty": "Tidak ada nilai pemeriksaan.",
+      "judgment": "Penilaian keseluruhan",
+      "status_normal": "Normal",
+      "status_risk": "Perhatian",
+      "disclaimer": "Layar ini menampilkan hasil NHIS apa adanya dan bukan diagnosis medis.",
+      "sections": {
+        "anthropometry": "Pengukuran",
+        "blood_pressure": "Tekanan darah",
+        "glucose": "Glukosa",
+        "lipid": "Lipid",
+        "blood": "Darah",
+        "liver": "Fungsi hati",
+        "kidney": "Fungsi ginjal",
+        "urine": "Urinalisis"
+      },
+      "items": {
+        "height": "Tinggi",
+        "weight": "Berat",
+        "bmi": "BMI",
+        "waist": "Lingkar pinggang",
+        "systolic_bp": "Sistolik",
+        "diastolic_bp": "Diastolik",
+        "fasting_glucose": "Glukosa puasa",
+        "total_cholesterol": "Kolesterol total",
+        "hdl": "HDL",
+        "ldl": "LDL",
+        "triglyceride": "Trigliserida",
+        "hemoglobin": "Hemoglobin",
+        "ast": "AST",
+        "alt": "ALT",
+        "gtp": "GGT",
+        "creatinine": "Kreatinin",
+        "gfr": "eGFR",
+        "urine_protein": "Protein urin"
+      },
+      "units": {
+        "cm": "cm",
+        "kg": "kg",
+        "kg_m2": "kg/m²",
+        "mmhg": "mmHg",
+        "mg_dl": "mg/dL",
+        "g_dl": "g/dL",
+        "iu_l": "IU/L",
+        "ml_min": "mL/min",
+        "none": ""
+      },
+      "reference": {
+        "height": "—",
+        "weight": "—",
+        "bmi": "18.5–22.9",
+        "waist": "P<90 W<85",
+        "systolic_bp": "<120",
+        "diastolic_bp": "<80",
+        "fasting_glucose": "<100",
+        "total_cholesterol": "<200",
+        "hdl": "P≥40 W≥50",
+        "ldl": "<130",
+        "triglyceride": "<150",
+        "hemoglobin": "12–16.5",
+        "ast": "<40",
+        "alt": "<40",
+        "gtp": "<63",
+        "creatinine": "<1.2",
+        "gfr": "≥60",
+        "urine_protein": "Negatif"
+      }
+    }
   }
 }
