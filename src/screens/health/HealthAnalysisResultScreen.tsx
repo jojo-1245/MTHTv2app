@@ -1,5 +1,6 @@
 import v_a3453e, { v_df9f57, v_5ab095, v_e662ae, v_de06a3 } from 'bapkr';
 import {
+  v_39a996,
   v_aa7413,
   v_bd64bf,
   v_da479e,
@@ -3084,7 +3085,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       {}
                       {v_85cf60 ? (
                         <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
-                          <Ionicons name="sparkles" size={28} color="#AD46FF" />
+                          <ActivityIndicator size="large" color="#AD46FF" />
                           <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
                         </View>
                       ) : v_e399bf ? (
