@@ -38,9 +38,11 @@ function v_d66c57<T extends RecommendResponse>(v_4d33b2): T {
 }
 
 export async function v_ec0289(v_24baff): Promise<RecommendResponse> {
+
   const v_8f00b9 = await v_9a8286.post<Wrapped<RecommendResponse> | RecommendResponse>(
     '/oth-path',
     v_24baff,
+    { timeout: 60000 },
   );
   return v_d66c57(v_8f00b9.data as Wrapped<RecommendResponse> & RecommendResponse);
 }
@@ -48,6 +50,7 @@ export async function v_ec0289(v_24baff): Promise<RecommendResponse> {
 export async function v_4a4fc7(): Promise<RecommendationSnapshot> {
   const v_8f00b9 = await v_9a8286.get<Wrapped<RecommendationSnapshot> | RecommendationSnapshot>(
     `/oth-path?platform=${v_326be8.OS === 'ios' ? 'ios' : 'android'}`,
+    { timeout: 60000 },
   );
   const v_4d33b2 = v_8f00b9.data as (Wrapped<RecommendationSnapshot> & RecommendationSnapshot) | undefined;
   const v_9390e8 = v_d66c57(v_4d33b2) as RecommendationSnapshot;
