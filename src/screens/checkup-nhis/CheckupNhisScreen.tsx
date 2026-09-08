@@ -73,7 +73,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const [v_b627c5, v_25d955] = v_5ab095('');
 
   const [v_ff38f8, v_7b5f10] = v_5ab095<v_e86309 | null>(null);
-  const [v_4622b9, v_fa923c] = v_5ab095<any[]>([]);
+  const [v_4622b9, v_fa923c] = v_5ab095<v_84adce[]>([]);
   const [v_678155, v_9ed182] = v_5ab095<v_84adce[]>([]);
   const [v_8cc501, v_44dbcc] = v_5ab095<v_84adce | null>(null);
   const [v_8126f5, v_c94bdc] = v_5ab095(false);
@@ -134,7 +134,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         v_7b5f10(v_cb35cb.twoWay);
         v_ae4844('authPending');
       } else {
-        v_fa923c(v_cb35cb.data ? [v_cb35cb.data] : []);
+        v_fa923c(v_cb35cb.data ? [v_33e989(v_cb35cb.data, 0)] : []);
         v_db9949(v_28c823(v_cb35cb));
         v_ae4844('result');
       }
@@ -201,7 +201,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         (v_23805a) =>
           v_9bbdf7(v_23805a, 'height', 'resHeight', 'weight', 'resWeight', 'bmi', 'resBMI') == null,
       );
-      let v_907715 = v_5f5c66;
+      let displayRows: v_84adce[] = v_5f5c66.map((v_23805a, v_ebec57) => v_33e989(v_23805a, v_ebec57));
       if (v_450f7d) {
         try {
           const v_18b8bf = await v_ff5546();
@@ -217,30 +217,16 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               fasting_glucose: v_3ac7e7.fasting_glucose,
             })),
           });
-          if (v_18b8bf.length) {
-            v_907715 = v_18b8bf.map((v_3ac7e7) => ({
-              id: v_3ac7e7.id,
-              checkupDate: v_3ac7e7.checkup_date,
-              organization: v_3ac7e7.organization,
-              height: v_3ac7e7.height,
-              weight: v_3ac7e7.weight,
-              bmi: v_3ac7e7.bmi,
-              systolicBp: v_3ac7e7.systolic_bp,
-              diastolicBp: v_3ac7e7.diastolic_bp,
-              fastingGlucose: v_3ac7e7.fasting_glucose,
-              totalCholesterol: v_3ac7e7.total_cholesterol,
-              judgment: v_3ac7e7.judgment,
-            }));
-          }
+          if (v_18b8bf.length) v_e1b93f = v_18b8bf;
         } catch (v_9e86fd) {
           console.log('[CheckupNhis] DB fallback 실패', v_9e86fd);
         }
       }
 
-      v_fa923c(v_907715);
-      v_db9949(v_28c823(v_cb35cb) ?? (v_907715[0]?.id ?? null));
+      v_fa923c(v_e1b93f);
+      v_db9949(v_28c823(v_cb35cb) ?? (v_e1b93f[0]?.id ?? null));
       v_ae4844('result');
-      if (!v_907715.length) {
+      if (!v_e1b93f.length) {
         v_889fad('안내', v_ae5f46());
       }
     } catch (v_9e86fd) {
@@ -416,8 +402,15 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               {v_4622b9.length === 0 && (
                 <Text style={v_d81136.guide}>조회된 검진 결과가 없습니다.</Text>
               )}
-              {v_4622b9.map((v_23805a, v_ebec57) => (
-                <ResultCard key={v_ebec57} it={v_23805a} />
+              {v_4622b9.map((v_cb35cb, v_ebec57) => (
+                <RecordCard
+                  key={v_cb35cb.id ?? v_ebec57}
+                  row={v_cb35cb}
+                  onPress={() => {
+                    v_44dbcc(v_cb35cb);
+                    v_c94bdc(true);
+                  }}
+                />
               ))}
               <SupplementRecommendCta source="checkup" recordId={v_7c9da3} />
               <PrimaryButton title="완료" onPress={v_c7ac57} />
@@ -489,89 +482,50 @@ function v_9bbdf7(v_23805a, ...v_fa53ec: string[]): unknown {
   return undefined;
 }
 
-function v_6ab990(v_23805a, ...v_fa53ec: string[]): string {
-  const v_81e2ef = v_9bbdf7(v_23805a, ...v_fa53ec);
-  return v_81e2ef == null || v_81e2ef === '' ? '-' : String(v_81e2ef);
-}
-
 function v_1068f0(v_468545, v_24cf2a = ' · '): string | null {
   const v_ef8ab1 = v_468545.filter((v_e2a85c): v_e2a85c is string => !!v_e2a85c && v_e2a85c !== '-');
   return v_ef8ab1.length ? v_ef8ab1.join(v_24cf2a) : null;
 }
 
-function v_9216a2(v_81e2ef): boolean {
-  return v_81e2ef != null && v_81e2ef !== '' && v_81e2ef !== '-';
+function v_1e3ec7(v_81e2ef): number | undefined {
+  if (v_81e2ef == null || v_81e2ef === '') return undefined;
+  const v_f4e98d = Number(v_81e2ef);
+  return Number.isFinite(v_f4e98d) ? v_f4e98d : undefined;
 }
 
-const ResultCard: v_a3453e.FC<{ it: any }> = ({ it: v_23805a }) => {
-  v_a3453e.useEffect(() => {
-    console.log('[CheckupNhis] ResultCard 렌더', {
-      keys: Object.keys(v_23805a || {}),
-      json: JSON.stringify(v_23805a),
-    });
-  }, [v_23805a]);
+function v_031dce(v_81e2ef): string | undefined {
+  if (v_81e2ef == null || v_81e2ef === '') return undefined;
+  return String(v_81e2ef);
+}
 
-  const v_3cffaf = v_608e6b(
-    v_9bbdf7(v_23805a, 'checkupDate', 'checkup_date', 'resCheckupDate'),
-    v_9bbdf7(v_23805a, 'checkupYear', 'checkup_year', 'resCheckupYear'),
-  );
-  const v_95f192 = v_6ab990(v_23805a, 'organization', 'resOrganizationName', 'resOrganization');
-  const v_f85720 = v_95f192 === '-' ? '-' : v_95f192.replace(/\+/g, ' ');
-  const v_342b41 = v_6ab990(v_23805a, 'checkupType', 'resCheckupType');
-  const v_c86e33 = v_6ab990(v_23805a, 'height', 'resHeight');
-  const v_14832c = v_6ab990(v_23805a, 'weight', 'resWeight');
-  const v_38fea4 = v_6ab990(v_23805a, 'bmi', 'resBMI');
-  const v_1a85dc = v_6ab990(v_23805a, 'systolicBp', 'systolic_bp');
-  const v_c1441e = v_6ab990(v_23805a, 'diastolicBp', 'diastolic_bp');
-  const v_dfca81 = v_6ab990(v_23805a, 'fastingGlucose', 'fasting_glucose', 'resFastingBloodSuger', 'resFastingBloodSugar');
-  const v_510b1a = v_6ab990(v_23805a, 'totalCholesterol', 'total_cholesterol', 'resTotalCholesterol');
-  const v_2312b4 = v_6ab990(v_23805a, 'judgment', 'resJudgment');
-
-  const v_ce04c7 = v_1068f0([
-    v_9216a2(v_c86e33) ? `키 ${v_c86e33}cm` : null,
-    v_9216a2(v_14832c) ? `몸무게 ${v_14832c}kg` : null,
-    v_9216a2(v_38fea4) ? `BMI ${v_38fea4}` : null,
-  ], ' / ');
-  const v_6e9efd =
-    v_9216a2(v_1a85dc) || v_9216a2(v_c1441e)
-      ? `혈압 ${v_9216a2(v_1a85dc) ? v_1a85dc : '-'}/${v_9216a2(v_c1441e) ? v_c1441e : '-'}`
-      : null;
-  const v_909ad1 = v_1068f0([
-    v_6e9efd,
-    v_9216a2(v_dfca81) ? `공복혈당 ${v_dfca81}` : null,
-  ]);
-  const v_4cbb19 = v_1068f0([
-    v_9216a2(v_510b1a) ? `총콜레스테롤 ${v_510b1a}` : null,
-    v_9216a2(v_2312b4) ? `판정 ${v_2312b4}` : null,
-  ]);
-  const v_b935a3 = !!(v_ce04c7 || v_909ad1 || v_4cbb19);
-
-  return (
-    <View style={v_3839df.card}>
-      <Text style={v_3839df.cardTitle}>
-        {v_3cffaf}{v_f85720 !== '-' ? ` · ${v_f85720}` : ''}
-      </Text>
-      {v_342b41 !== '-' ? (
-        <Text style={v_3839df.row}>검진유형 {v_342b41}</Text>
-      ) : null}
-      {v_b935a3 ? (
-        <>
-          {v_ce04c7 ? <Text style={v_3839df.row}>{v_ce04c7}</Text> : null}
-          {v_909ad1 ? <Text style={v_3839df.row}>{v_909ad1}</Text> : null}
-          {v_4cbb19 ? <Text style={v_3839df.row}>{v_4cbb19}</Text> : null}
-        </>
-      ) : (
-        <Text style={v_3839df.row}>
-          이 기록에는 키·몸무게 등 일반검진 수치가 없습니다
-          {v_342b41 !== '-' && v_342b41.includes('암')
-            ? ` (${v_342b41} 요약)`
-            : ''}
-          .
-        </Text>
-      )}
-    </View>
-  );
-};
+function v_33e989(v_23805a, v_a56041): v_84adce {
+  const v_2c44c0 = v_23805a?.id;
+  return {
+    id: typeof v_2c44c0 === 'number' ? v_2c44c0 : v_a56041,
+    checkup_year: v_031dce(v_9bbdf7(v_23805a, 'checkupYear', 'checkup_year', 'resCheckupYear')),
+    checkup_date: v_031dce(v_9bbdf7(v_23805a, 'checkupDate', 'checkup_date', 'resCheckupDate')),
+    organization: v_031dce(v_9bbdf7(v_23805a, 'organization', 'resOrganizationName', 'resOrganization')),
+    height: v_1e3ec7(v_9bbdf7(v_23805a, 'height', 'resHeight')),
+    weight: v_1e3ec7(v_9bbdf7(v_23805a, 'weight', 'resWeight')),
+    bmi: v_1e3ec7(v_9bbdf7(v_23805a, 'bmi', 'resBMI')),
+    waist: v_1e3ec7(v_9bbdf7(v_23805a, 'waist', 'resWaist')),
+    systolic_bp: v_1e3ec7(v_9bbdf7(v_23805a, 'systolicBp', 'systolic_bp')),
+    diastolic_bp: v_1e3ec7(v_9bbdf7(v_23805a, 'diastolicBp', 'diastolic_bp')),
+    fasting_glucose: v_1e3ec7(v_9bbdf7(v_23805a, 'fastingGlucose', 'fasting_glucose', 'resFastingBloodSuger', 'resFastingBloodSugar')),
+    total_cholesterol: v_1e3ec7(v_9bbdf7(v_23805a, 'totalCholesterol', 'total_cholesterol', 'resTotalCholesterol')),
+    hdl: v_1e3ec7(v_9bbdf7(v_23805a, 'hdl', 'hdlCholesterol', 'resHDLCholesterol')),
+    ldl: v_1e3ec7(v_9bbdf7(v_23805a, 'ldl', 'ldlCholesterol', 'resLDLCholesterol')),
+    triglyceride: v_1e3ec7(v_9bbdf7(v_23805a, 'triglyceride', 'resTriglyceride')),
+    hemoglobin: v_1e3ec7(v_9bbdf7(v_23805a, 'hemoglobin', 'resHemoglobin')),
+    ast: v_1e3ec7(v_9bbdf7(v_23805a, 'ast', 'resAST')),
+    alt: v_1e3ec7(v_9bbdf7(v_23805a, 'alt', 'resALT')),
+    gtp: v_1e3ec7(v_9bbdf7(v_23805a, 'gtp', 'yGtp', 'resyGTP', 'resGTP')),
+    creatinine: v_1e3ec7(v_9bbdf7(v_23805a, 'creatinine', 'resCreatinine')),
+    gfr: v_1e3ec7(v_9bbdf7(v_23805a, 'gfr', 'resGFR')),
+    urine_protein: v_031dce(v_9bbdf7(v_23805a, 'urineProtein', 'urine_protein', 'resUrinaryProtein')),
+    judgment: v_031dce(v_9bbdf7(v_23805a, 'judgment', 'resJudgment')),
+  };
+}
 
 const RecordCard: v_a3453e.FC<{ row: v_84adce; onPress: () => void }> = ({ row: v_3ac7e7, onPress: v_719eed }) => {
   const { t: v_8d41d7 } = v_772971();
