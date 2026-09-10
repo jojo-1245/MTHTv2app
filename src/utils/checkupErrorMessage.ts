@@ -1,28 +1,31 @@
 
 
+import v_9c213b from '../i18n';
+
 export function v_b724a0(
   v_c99bd2,
   v_0debf4,
 ): string {
+  const v_8d41d7 = v_9c213b.t.bind(v_9c213b);
   switch (v_c99bd2) {
     case 'CF-09002':
     case 'CF-00003':
-      return '일시적인 연동 오류입니다. 잠시 후 다시 시도하거나 고객센터에 문의해 주세요.';
+      return v_8d41d7('checkup_nhis.errors.transient');
     case 'CF-13000':
-      return '입력하신 정보와 CODEF 등록 정보가 일치하지 않습니다. 생년월일/이름/휴대폰번호를 다시 확인해 주세요.';
+      return v_8d41d7('checkup_nhis.errors.mismatch');
     case 'CF-00017':
-      return '일시적인 연동 오류입니다. 고객센터에 문의해 주세요.';
+      return v_8d41d7('checkup_nhis.errors.transient_support');
     case 'CF-NETWORK':
-      return '서버 연결에 실패했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.';
+      return v_8d41d7('checkup_nhis.errors.network');
     case 'TIMEOUT':
-      return '인증 대기 시간이 초과되었습니다. 인증 후 다시 시도해 주세요.';
+      return v_8d41d7('checkup_nhis.auth_timeout');
     default:
-      return v_0debf4 || '건강검진 조회에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+      return v_0debf4 || v_8d41d7('checkup_nhis.errors.query_failed');
   }
 }
 
 export function v_ae5f46(): string {
-  return '최근 건강검진 기록이 없습니다.';
+  return v_9c213b.t('checkup_nhis.errors.empty_result');
 }
 
 export function v_4e2e5d(v_49263d): string | undefined {
