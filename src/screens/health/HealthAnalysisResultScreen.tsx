@@ -2556,13 +2556,19 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         v_b2926d = !isNaN(v_cb2c3a) ? v_0aab8b(Math.round(v_cb2c3a)) : 'N/A';
                       } else if (v_3b27d9 === v_e3e816.HEART_AGE) {
                         const v_cb2c3a = typeof v_3b402b === 'number' ? v_3b402b : Number(v_3b402b);
-                        v_b2926d = !isNaN(v_cb2c3a) ? `${Math.round(v_cb2c3a)}세` : 'N/A';
+                        v_b2926d = !isNaN(v_cb2c3a) ? `${Math.round(v_cb2c3a)} ${v_8d41d7('health_analysis.result.age_unit')}` : 'N/A';
                       } else {
                         v_b2926d = v_a6fe82(v_3b402b, v_3b27d9, v_8d41d7);
                       }
                       const v_d308b5 = v_0aaeba(v_3b27d9, v_3b402b);
                       const v_d72c04 = v_463ca2(v_d308b5);
-                      return { type: v_3b27d9, icon: v_9ddfab, iconColor: v_ef160b, label: v_50f905(v_3b27d9, v_8d41d7), displayValue: v_b2926d, status: v_d308b5, statusColors: v_d72c04, valueColor: v_d308b5 === '위험' ? '#EF4444' : v_1bfbd0.text };
+                      const v_c4180e =
+                        v_d308b5 === '정상'
+                          ? v_8d41d7('health_analysis.result.normal')
+                          : v_d308b5 === '위험'
+                            ? v_8d41d7('health_analysis.result.risk')
+                            : null;
+                      return { type: v_3b27d9, icon: v_9ddfab, iconColor: v_ef160b, label: v_50f905(v_3b27d9, v_8d41d7), displayValue: v_b2926d, status: v_d308b5, statusLabel: v_c4180e, statusColors: v_d72c04, valueColor: v_d308b5 === '위험' ? '#EF4444' : v_1bfbd0.text };
                     })
                     .filter(Boolean);
                   if (v_4552ca.length === 0) return null;
@@ -2576,7 +2582,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <View style={v_d81136.metricCardLabelContainer}>
                             <Text style={v_2f6fcc(v_d81136.metricCardLabel, 'metricCardLabel')}>
                               {v_5eae50!.label}
-                              {v_5eae50!.type === v_e3e816.BLOOD_PRESSURE && v_5eae50!.status && ` (${v_5eae50!.status})`}
+                              {v_5eae50!.type === v_e3e816.BLOOD_PRESSURE && v_5eae50!.statusLabel && ` (${v_5eae50!.statusLabel})`}
                             </Text>
                           </View>
                           <Text style={[v_2f6fcc(v_d81136.metricCardValue, 'metricCardValue'), { color: v_5eae50!.valueColor }]}>{v_5eae50!.displayValue}</Text>
@@ -3076,9 +3082,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       {}
                       <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
                         <Text style={{ fontSize: 11, color: '#9CA3AF' }}>
-                          측정 Record ID:{' '}
+                          {v_8d41d7('health_analysis.result.measure_record_id')}
                           <Text style={{ color: v_4ae380 ? '#6B7280' : '#EF4444', fontWeight: '600' }}>
-                            {v_4ae380 != null ? `#${v_4ae380}` : '없음'}
+                            {v_4ae380 != null ? `#${v_4ae380}` : v_8d41d7('health_analysis.result.record_id_none')}
                           </Text>
                         </Text>
                       </View>
@@ -3086,7 +3092,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                       {v_85cf60 ? (
                         <View style={[v_d81136.aiAnalysisSubCard, { alignItems: 'center', paddingVertical: 32 }]}>
                           <ActivityIndicator size="large" color="#AD46FF" />
-                          <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>AI 힌티가 분석 중입니다...</Text>
+                          <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>{v_8d41d7('health_analysis.result.ai_analyzing')}</Text>
                         </View>
                       ) : v_e399bf ? (
                         <View style={v_d81136.aiAnalysisSubCard}>
@@ -3094,7 +3100,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                             <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
                               <Ionicons name="sparkles" size={18} color="#AD46FF" />
                             </View>
-                            <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>AI 힌티 종합 분석</Text>
+                            <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionTitle, 'aiAnalysisSectionTitle')}>{v_8d41d7('health_analysis.result.ai_comprehensive_title')}</Text>
                           </View>
                           <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
                         </View>

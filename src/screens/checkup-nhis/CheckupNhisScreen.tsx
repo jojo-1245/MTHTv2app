@@ -1,4 +1,4 @@
-import v_a3453e, { v_de06a3, v_c4deb2, v_e662ae, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_de06a3, v_c4deb2, v_df9f57, v_e662ae, v_5ab095 } from 'bapkr';
 import {
   v_3094a2,
   v_19b633,
@@ -37,20 +37,6 @@ type ProviderItem = {
   image?: v_07a341;
 };
 
-const v_280029 = [
-  {
-    label: '카카오톡',
-    value: '1',
-    color: '#FEE500',
-    textColor: '#191919',
-    image: require('../../../assets/images/auth/kakao.png'),
-  },
-  { label: '삼성패스', value: '3', icon: 'S', color: '#1428A0', textColor: '#FFFFFF' },
-  { label: 'PASS', value: '5', icon: 'P', color: '#E8344E', textColor: '#FFFFFF' },
-  { label: '네이버', value: '6', icon: 'N', color: '#03C75A', textColor: '#FFFFFF' },
-  { label: '토스', value: '8', icon: 'T', color: '#0064FF', textColor: '#FFFFFF' },
-];
-
 const v_adae4e = [
   { label: 'SKT', value: '0' },
   { label: 'KT', value: '1' },
@@ -62,6 +48,24 @@ type Props = v_432191<v_8ad91b, 'CheckupNhis'>;
 const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   const v_c0d106 = v_c7daf6.params?.initialTab ?? 'new';
   const { goBack: v_c7ac57 } = v_a0daa8();
+  const { t: v_8d41d7 } = v_772971();
+
+  const v_280029 = v_df9f57(
+    () => [
+      {
+        label: v_8d41d7('checkup_nhis.providers.kakao'),
+        value: '1',
+        color: '#FEE500',
+        textColor: '#191919',
+        image: require('../../../assets/images/auth/kakao.png'),
+      },
+      { label: v_8d41d7('checkup_nhis.providers.samsung'), value: '3', icon: 'S', color: '#1428A0', textColor: '#FFFFFF' },
+      { label: v_8d41d7('checkup_nhis.providers.pass'), value: '5', icon: 'P', color: '#E8344E', textColor: '#FFFFFF' },
+      { label: v_8d41d7('checkup_nhis.providers.naver'), value: '6', icon: 'N', color: '#03C75A', textColor: '#FFFFFF' },
+      { label: v_8d41d7('checkup_nhis.providers.toss'), value: '8', icon: 'T', color: '#0064FF', textColor: '#FFFFFF' },
+    ],
+    [v_8d41d7],
+  );
 
   const [v_ab4803, v_ae4844] = v_5ab095<Phase>(v_c0d106 === 'records' ? 'records' : 'form');
   const [v_683210, v_34a50a] = v_5ab095(false);
@@ -103,22 +107,22 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
     v_34a50a(true);
     v_ff5546()
       .then(v_18b8bf => { if (v_759436) v_9ed182(v_18b8bf); })
-      .catch(v_9e86fd => v_889fad('오류', v_9e86fd?.message ?? '기록을 불러오지 못했습니다.'))
+      .catch(v_9e86fd => v_889fad(v_8d41d7('checkup_nhis.error_title'), v_9e86fd?.message ?? v_8d41d7('checkup_nhis.load_records_failed')))
       .finally(() => { if (v_759436) v_34a50a(false); });
     return () => { v_759436 = false; };
-  }, [v_ab4803]);
+  }, [v_ab4803, v_8d41d7]);
 
   const v_cfb0b1 = async () => {
     if (!v_e38ca2) {
-      v_889fad('입력 확인', '간편인증 방식을 선택해주세요.');
+      v_889fad(v_8d41d7('checkup_nhis.input_check_title'), v_8d41d7('checkup_nhis.select_provider'));
       return;
     }
     if (v_fd1bb4 && !v_b627c5) {
-      v_889fad('입력 확인', '통신사를 선택해주세요.');
+      v_889fad(v_8d41d7('checkup_nhis.input_check_title'), v_8d41d7('checkup_nhis.select_telecom'));
       return;
     }
     if (!v_f08a5e || !/^\d{8}$/.test(v_598ded) || !/^01\d{8,9}$/.test(v_f1c488)) {
-      v_889fad('입력 확인', '이름·생년월일(YYYYMMDD 8자리)·휴대폰을 모두 확인해주세요.');
+      v_889fad(v_8d41d7('checkup_nhis.input_check_title'), v_8d41d7('checkup_nhis.validate_fields'));
       return;
     }
     v_34a50a(true);
@@ -142,7 +146,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
       const v_badeaf = v_b724a0(v_c99bd2);
       v_889fad(
-        '오류',
+        v_8d41d7('checkup_nhis.error_title'),
         __DEV__ ? `${v_badeaf}\n(CODE=${v_c99bd2 || 'unknown'})` : v_badeaf,
       );
     } finally {
@@ -173,7 +177,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
         await new Promise(v_8f00b9 => setTimeout(v_8f00b9, v_f839bb));
       }
       if (!v_cb35cb || v_cb35cb.status !== 'done') {
-        v_889fad('인증 확인', '인증 대기 시간이 초과되었습니다. 다시 시도해 주세요.');
+        v_889fad(v_8d41d7('checkup_nhis.auth_check_title'), v_8d41d7('checkup_nhis.auth_timeout'));
         return;
       }
       const v_5f5c66 = v_cb35cb.items ?? [];
@@ -227,16 +231,16 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       v_db9949(v_28c823(v_cb35cb) ?? (v_e1b93f[0]?.id ?? null));
       v_ae4844('result');
       if (!v_e1b93f.length) {
-        v_889fad('안내', v_ae5f46());
+        v_889fad(v_8d41d7('checkup_nhis.notice_title'), v_ae5f46());
       }
     } catch (v_9e86fd) {
       const v_c99bd2 = v_4e2e5d(v_9e86fd);
       v_889fad(
-        v_c99bd2 === 'TIMEOUT' ? '시간 초과' : '인증 확인',
+        v_c99bd2 === 'TIMEOUT' ? v_8d41d7('checkup_nhis.auth_timeout') : v_8d41d7('checkup_nhis.auth_check_title'),
         (() => {
           const v_badeaf = v_b724a0(
             v_c99bd2,
-            '폰에서 인증을 완료한 뒤 다시 시도해주세요.',
+            v_8d41d7('checkup_nhis.auth_guide'),
           );
           return __DEV__ ? `${v_badeaf}\n(CODE=${v_c99bd2 || 'unknown'})` : v_badeaf;
         })(),
@@ -245,7 +249,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       v_34a50a(false);
       v_0aa733.current = false;
     }
-  }, [v_ff38f8, v_f08a5e, v_598ded, v_f1c488, v_e38ca2, v_b627c5, v_fd1bb4]);
+  }, [v_ff38f8, v_f08a5e, v_598ded, v_f1c488, v_e38ca2, v_b627c5, v_fd1bb4, v_8d41d7]);
 
   v_c4deb2(() => {
     const v_1ae212 = v_6b5698.addEventListener('change', (v_a448ad) => {
@@ -259,7 +263,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
   return (
     <SafeView style={v_d81136.screen} showBottomBackground={false}>
       <Header
-        title="건강검진"
+        title={v_8d41d7('checkup_nhis.title')}
         showBackButton
         onBackPress={v_c7ac57}
       />
@@ -274,7 +278,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
       >
           {v_ab4803 === 'form' && (
             <View style={v_d81136.form}>
-              <Text style={v_d81136.label}>간편인증 선택</Text>
+              <Text style={v_d81136.label}>{v_8d41d7('checkup_nhis.select_auth')}</Text>
               <View style={v_d81136.providers}>
                 {v_280029.map(v_e2a85c => {
                   const v_abacaa = v_e38ca2 === v_e2a85c.value;
@@ -312,12 +316,14 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               {!!v_e38ca2 && (
                 <View style={v_d81136.authForm}>
                   <Text style={v_d81136.authFormTitle}>
-                    {v_2d6e99?.label ?? '인증'} 정보 입력
+                    {v_8d41d7('checkup_nhis.auth_info_title', {
+                      provider: v_2d6e99?.label ?? v_8d41d7('checkup_nhis.auth_fallback'),
+                    })}
                   </Text>
 
                   {v_fd1bb4 && (
                     <>
-                      <Text style={v_d81136.subLabel}>통신사</Text>
+                      <Text style={v_d81136.subLabel}>{v_8d41d7('checkup_nhis.telecom')}</Text>
                       <View style={v_d81136.telecoms}>
                         {v_adae4e.map(v_8d41d7 => (
                           <TouchableOpacity
@@ -342,19 +348,19 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                   )}
 
                   <TextField
-                    label="이름"
+                    label={v_8d41d7('checkup_nhis.name')}
                     value={v_f08a5e}
                     onChangeText={v_bcbad6}
                   />
                   <TextField
-                    label="생년월일 (YYYYMMDD)"
+                    label={v_8d41d7('checkup_nhis.birth_date')}
                     value={v_598ded}
                     onChangeText={v_20e43d}
                     keyboardType="number-pad"
                     maxLength={8}
                   />
                   <TextField
-                    label="휴대폰번호"
+                    label={v_8d41d7('checkup_nhis.phone')}
                     value={v_f1c488}
                     onChangeText={v_fcfadf}
                     keyboardType="phone-pad"
@@ -362,7 +368,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                   />
 
                   <PrimaryButton
-                    title={v_683210 ? '조회 중...' : '건강검진 조회'}
+                    title={v_683210 ? v_8d41d7('checkup_nhis.querying') : v_8d41d7('checkup_nhis.query_button')}
                     onPress={v_cfb0b1}
                     disabled={v_683210}
                   />
@@ -375,10 +381,10 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
             <View style={v_d81136.center}>
               <ActivityIndicator size="large" color={v_1bfbd0.buttonPrimary} />
               <Text style={v_d81136.guide}>
-                {'선택한 인증 앱에서 인증을 완료해주세요.\n완료 후 아래 버튼을 눌러주세요.\n(최대 약 3분까지 대기할 수 있습니다)'}
+                {v_8d41d7('checkup_nhis.auth_guide')}
               </Text>
               <PrimaryButton
-                title={v_683210 ? '확인 중...' : '인증 완료했어요'}
+                title={v_683210 ? v_8d41d7('checkup_nhis.confirming') : v_8d41d7('checkup_nhis.auth_done')}
                 onPress={v_b25ffb}
                 disabled={v_683210}
               />
@@ -391,7 +397,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                 disabled={v_683210}
               >
                 <Text style={{ color: v_1bfbd0.secondaryText, textAlign: 'center' }}>
-                  취소하고 다시 입력
+                  {v_8d41d7('checkup_nhis.cancel_reenter')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -400,7 +406,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
           {v_ab4803 === 'result' && (
             <View>
               {v_4622b9.length === 0 && (
-                <Text style={v_d81136.guide}>조회된 검진 결과가 없습니다.</Text>
+                <Text style={v_d81136.guide}>{v_8d41d7('checkup_nhis.no_query_results')}</Text>
               )}
               {v_4622b9.map((v_cb35cb, v_ebec57) => (
                 <RecordCard
@@ -413,7 +419,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                 />
               ))}
               <SupplementRecommendCta source="checkup" recordId={v_7c9da3} />
-              <PrimaryButton title="완료" onPress={v_c7ac57} />
+              <PrimaryButton title={v_8d41d7('checkup_nhis.done')} onPress={v_c7ac57} />
             </View>
           )}
 
@@ -425,7 +431,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                 </View>
               )}
               {!v_683210 && v_678155.length === 0 && (
-                <Text style={v_d81136.guide}>저장된 건강검진 기록이 없습니다.</Text>
+                <Text style={v_d81136.guide}>{v_8d41d7('checkup_nhis.no_saved_records')}</Text>
               )}
               {!v_683210 && v_678155.map((v_cb35cb, v_ebec57) => (
                 <RecordCard
@@ -439,7 +445,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
               ))}
               <View style={v_d81136.recordsButton}>
                 <PrimaryButton
-                  title="새 건강검진 조회"
+                  title={v_8d41d7('checkup_nhis.new_query')}
                   onPress={() => v_ae4844('form')}
                 />
               </View>
@@ -453,22 +459,31 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
           v_c94bdc(false);
           v_44dbcc(null);
         }}
-        formatDate={v_608e6b}
+        formatDate={(v_479f05, v_0eaaff) => v_608e6b(v_479f05, v_0eaaff, v_8d41d7)}
       />
     </SafeView>
   );
 };
 
-function v_608e6b(v_479f05, v_0eaaff): string {
-  if (v_479f05 == null || v_479f05 === '') return '검진';
+function v_608e6b(v_479f05, v_0eaaff, v_8d41d7): string {
+  if (v_479f05 == null || v_479f05 === '') return v_8d41d7('checkup_nhis.date_fallback');
   const v_fd5f43 = String(v_479f05).trim();
   const v_35f85c = v_fd5f43.match(/^(\d{4})[-\/.]?(\d{2})[-\/.]?(\d{2})/);
-  if (v_35f85c) return `${v_35f85c[1]}년 ${Number(v_35f85c[2])}월 ${Number(v_35f85c[3])}일`;
-
+  if (v_35f85c) {
+    return v_8d41d7('checkup_nhis.date_ymd', {
+      year: v_35f85c[1],
+      month: Number(v_35f85c[2]),
+      day: Number(v_35f85c[3]),
+    });
+  }
   const v_861f6d = v_fd5f43.match(/^(\d{2})(\d{2})$/);
   const v_64877a = v_0eaaff != null ? String(v_0eaaff).replace(/\D/g, '').slice(0, 4) : '';
   if (v_861f6d && v_64877a.length === 4) {
-    return `${v_64877a}년 ${Number(v_861f6d[1])}월 ${Number(v_861f6d[2])}일`;
+    return v_8d41d7('checkup_nhis.date_ymd', {
+      year: v_64877a,
+      month: Number(v_861f6d[1]),
+      day: Number(v_861f6d[2]),
+    });
   }
   return v_fd5f43;
 }
@@ -530,20 +545,20 @@ function v_33e989(v_23805a, v_a56041): v_84adce {
 const RecordCard: v_a3453e.FC<{ row: v_84adce; onPress: () => void }> = ({ row: v_3ac7e7, onPress: v_719eed }) => {
   const { t: v_8d41d7 } = v_772971();
   const v_ce04c7 = v_1068f0([
-    v_3ac7e7.height != null ? `키 ${v_3ac7e7.height}cm` : null,
-    v_3ac7e7.weight != null ? `몸무게 ${v_3ac7e7.weight}kg` : null,
-    v_3ac7e7.bmi != null ? `BMI ${v_3ac7e7.bmi}` : null,
+    v_3ac7e7.height != null ? `${v_8d41d7('checkup_nhis.sheet.items.height')} ${v_3ac7e7.height}${v_8d41d7('checkup_nhis.sheet.units.cm')}` : null,
+    v_3ac7e7.weight != null ? `${v_8d41d7('checkup_nhis.sheet.items.weight')} ${v_3ac7e7.weight}${v_8d41d7('checkup_nhis.sheet.units.kg')}` : null,
+    v_3ac7e7.bmi != null ? `${v_8d41d7('checkup_nhis.sheet.items.bmi')} ${v_3ac7e7.bmi}` : null,
   ], ' / ');
   const v_6e9efd =
     v_3ac7e7.systolic_bp != null || v_3ac7e7.diastolic_bp != null
-      ? `혈압 ${v_3ac7e7.systolic_bp ?? '-'}/${v_3ac7e7.diastolic_bp ?? '-'}`
+      ? `${v_8d41d7('checkup_nhis.sheet.sections.blood_pressure')} ${v_3ac7e7.systolic_bp ?? '-'}/${v_3ac7e7.diastolic_bp ?? '-'}`
       : null;
   const v_909ad1 = v_1068f0([
     v_6e9efd,
-    v_3ac7e7.fasting_glucose != null ? `공복혈당 ${v_3ac7e7.fasting_glucose}` : null,
+    v_3ac7e7.fasting_glucose != null ? `${v_8d41d7('checkup_nhis.sheet.items.fasting_glucose')} ${v_3ac7e7.fasting_glucose}` : null,
   ]);
   const v_4cbb19 = v_1068f0([
-    v_3ac7e7.total_cholesterol != null ? `총콜레스테롤 ${v_3ac7e7.total_cholesterol}` : null,
+    v_3ac7e7.total_cholesterol != null ? `${v_8d41d7('checkup_nhis.sheet.items.total_cholesterol')} ${v_3ac7e7.total_cholesterol}` : null,
     v_3ac7e7.hdl != null ? `HDL ${v_3ac7e7.hdl}` : null,
     v_3ac7e7.ldl != null ? `LDL ${v_3ac7e7.ldl}` : null,
   ]);
@@ -557,7 +572,7 @@ const RecordCard: v_a3453e.FC<{ row: v_84adce; onPress: () => void }> = ({ row: 
   return (
     <TouchableOpacity style={v_3839df.card} onPress={v_719eed} activeOpacity={0.75}>
       <Text style={v_3839df.cardTitle}>
-        {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year)}
+        {v_608e6b(v_3ac7e7.checkup_date, v_3ac7e7.checkup_year, v_8d41d7)}
         {v_3ac7e7.organization ? ` · ${String(v_3ac7e7.organization).replace(/\+/g, ' ')}` : ''}
       </Text>
       {v_b935a3 ? (
@@ -567,12 +582,12 @@ const RecordCard: v_a3453e.FC<{ row: v_84adce; onPress: () => void }> = ({ row: 
           {v_4cbb19 ? <Text style={v_3839df.row}>{v_4cbb19}</Text> : null}
           {v_79cdfc ? <Text style={v_3839df.row}>{v_79cdfc}</Text> : null}
           {v_3ac7e7.judgment ? (
-            <Text style={v_3839df.row}>판정 {v_3ac7e7.judgment}</Text>
+            <Text style={v_3839df.row}>{v_8d41d7('checkup_nhis.sheet.judgment')} {v_3ac7e7.judgment}</Text>
           ) : null}
         </>
       ) : (
         <Text style={v_3839df.row}>
-          이 기록에는 키·몸무게 등 일반검진 수치가 없습니다.
+          {v_8d41d7('checkup_nhis.sheet.empty')}
         </Text>
       )}
       <Text style={v_3839df.tapHint}>{v_8d41d7('checkup_nhis.sheet.tap_hint')}</Text>
