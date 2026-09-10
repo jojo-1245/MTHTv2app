@@ -619,10 +619,15 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_d5dda0 = new Date(v_42044e);
     const v_5c2f9f = new Date();
     const v_147971 = v_d5dda0.toDateString() === v_5c2f9f.toDateString();
+    const v_6f298b = v_9c213b.language?.startsWith('ko')
+      ? 'ko-KR'
+      : v_9c213b.language?.startsWith('id')
+        ? 'id-ID'
+        : 'en-US';
     if (v_147971) {
-      return v_d5dda0.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      return v_d5dda0.toLocaleTimeString(v_6f298b, { hour: '2-digit', minute: '2-digit' });
     }
-    return v_d5dda0.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return v_d5dda0.toLocaleDateString(v_6f298b, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
   const v_465869 = async () => {
@@ -1332,26 +1337,26 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
                     <Text style={v_d81136.aiBubbleText}>{v_326be8.OS === 'ios' ? v_8d41d7('chat.ai_welcome_ios') : v_8d41d7('chat.ai_welcome')}</Text>
                   </View>
                   <Text style={v_d81136.aiMessageDateOuter}>
-                    {new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
+                    {new Date().toLocaleTimeString(v_9c213b.language?.startsWith('ko') ? 'ko-KR' : v_9c213b.language?.startsWith('id') ? 'id-ID' : 'en-US', { hour: '2-digit', minute: '2-digit' })}
                   </Text>
                   {}
                   <View style={v_d81136.suggestionContainer}>
                     <Text style={v_d81136.suggestionTitle}>
-                      {v_8d41d7('chat.can_ask_these') || '이러한 내용을 물어볼 수 있습니다'}
+                      {v_8d41d7('chat.can_ask_these')}
                     </Text>
                     <TouchableOpacity
                       style={v_d81136.suggestionButton}
-                      onPress={() => v_f32824('내 최근 건강정보 분석해줘')}
+                      onPress={() => v_f32824(v_8d41d7('chat.suggest_analyze_health'))}
                       activeOpacity={0.8}
                     >
-                      <Text style={v_d81136.suggestionButtonText}>🏥 내 최근 건강정보 분석해줘</Text>
+                      <Text style={v_d81136.suggestionButtonText}>{v_8d41d7('chat.suggest_analyze_health')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={v_d81136.suggestionButton}
-                      onPress={() => v_f32824('내 최근 피부정보 분석해줘')}
+                      onPress={() => v_f32824(v_8d41d7('chat.suggest_analyze_skin'))}
                       activeOpacity={0.8}
                     >
-                      <Text style={v_d81136.suggestionButtonText}>✨ 내 최근 피부정보 분석해줘</Text>
+                      <Text style={v_d81136.suggestionButtonText}>{v_8d41d7('chat.suggest_analyze_skin')}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
