@@ -492,15 +492,17 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
       v_889fad(v_8d41d7('signup.error_terms_required'), v_8d41d7('signup.error_terms_message'));
       return;
     }
+    if (v_c01add || !v_088b9e || v_088b9e.length < 8) {
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_phone'));
+      return;
+    }
 
     const payload: v_d4ca6e = {
       email: v_8f37ac,
       password: v_adc076,
       name: v_affc3e,
-
-      ...(v_c01add || !v_088b9e
-        ? { mobile: null }
-        : { mobile: v_088b9e }),
+      mobile: v_088b9e,
+      mobile_code: v_6c3a47,
       gender: v_7ebe28(),
       age_range: v_a02735(v_f83808),
       country: v_a4d981,
@@ -525,11 +527,23 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
       v_889fad(v_8d41d7('signup.success_title'), v_8d41d7('signup.success_message'), async () => {
         try {
           await v_c1a440({ email: v_8f37ac, purpose: 'signup' });
-          v_c65f5d.navigate('EmailVerification', { email: v_8f37ac, purpose: 'signup' });
+          v_c65f5d.navigate('EmailVerification', {
+            email: v_8f37ac,
+            purpose: 'signup',
+            channel: 'email',
+            mobile: v_088b9e,
+            mobile_code: v_6c3a47,
+          });
         } catch (v_49263d) {
           const v_badeaf = v_49263d instanceof Error ? v_49263d.message : v_8d41d7('signup.error_unknown');
           v_889fad(v_8d41d7('signup.error_title'), v_badeaf);
-          v_c65f5d.navigate('EmailVerification', { email: v_8f37ac, purpose: 'signup' });
+          v_c65f5d.navigate('EmailVerification', {
+            email: v_8f37ac,
+            purpose: 'signup',
+            channel: 'email',
+            mobile: v_088b9e,
+            mobile_code: v_6c3a47,
+          });
         }
       });
     } catch (v_5e9bfe) {

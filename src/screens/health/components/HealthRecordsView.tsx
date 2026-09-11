@@ -59,7 +59,7 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
 
     { key: 'pulse_rate', labelKey: 'pulse_rate', value: 72, status: 'normal', unit: 'bpm', descKey: 'pulse_rate_desc' },
 
-    { key: 'respiration_rate', labelKey: 'respiration_rate', value: 16, status: 'normal', unit: '회/분', descKey: 'respiration_rate_desc' },
+    { key: 'respiration_rate', labelKey: 'respiration_rate', value: 16, status: 'normal', unit: '/min', descKey: 'respiration_rate_desc' },
 
     { key: 'oxygen_saturation', labelKey: 'oxygen_saturation', value: 98, status: 'normal', unit: '%', descKey: 'oxygen_saturation_desc' },
 
@@ -92,7 +92,7 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
     { key: 'high_total_cholesterol_risk', labelKey: 'high_total_cholesterol_risk', value: '낮음', status: 'normal', descKey: 'high_total_cholesterol_risk_desc' },
     { key: 'low_hemoglobin_risk', labelKey: 'low_hemoglobin_risk', value: '낮음', status: 'normal', descKey: 'low_hemoglobin_risk_desc' },
 
-    { key: 'heart_age', labelKey: 'heart_age', value: 35, status: 'normal', unit: '세', descKey: 'heart_age_desc' },
+    { key: 'heart_age', labelKey: 'heart_age', value: 35, status: 'normal', unit: 'age', descKey: 'heart_age_desc' },
 
     { key: 'cardiac_workload', labelKey: 'cardiac_workload', value: 8640, status: 'normal', descKey: 'cardiac_workload_desc' },
     { key: 'pulse_pressure', labelKey: 'pulse_pressure', value: 40, status: 'normal', unit: 'mmHg', descKey: 'pulse_pressure_desc' },
@@ -1245,7 +1245,11 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
                                 <View style={v_d81136.measurementValueLeft}>
                                   <Text style={[v_d81136.measurementItemValue, { fontSize: v_c0b708.measurementItemValue }]}>{v_8c0b26.value}</Text>
                                   {v_8c0b26.unit && (
-                                    <Text style={[v_d81136.measurementItemUnit, { fontSize: v_c0b708.measurementItemUnit }]}>{v_8c0b26.unit}</Text>
+                                    <Text style={[v_d81136.measurementItemUnit, { fontSize: v_c0b708.measurementItemUnit }]}>
+                                      {v_8c0b26.key === 'heart_age' || v_8c0b26.unit === 'age' || v_8c0b26.unit === '세'
+                                        ? v_8d41d7('health_analysis.result.age_unit')
+                                        : v_8c0b26.unit}
+                                    </Text>
                                   )}
                                 </View>
                                 <View
