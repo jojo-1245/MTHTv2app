@@ -1,4 +1,4 @@
-import { v_f2c756, v_326be8 } from 'rcmrninabrnb';
+import { v_2d4718, v_f2c756, v_326be8 } from 'rcmrninabrnb';
 import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import v_9c213b from '../../i18n';
 import { v_889fad } from '../../components/AlertHost';
@@ -69,6 +69,14 @@ async function v_824454(v_328259): Promise<void> {
   }
 }
 
+function v_9a28a6(v_d799e2 = 600): Promise<void> {
+  return new Promise((v_6f7712) => {
+    v_2d4718.runAfterInteractions(() => {
+      setTimeout(v_6f7712, v_d799e2);
+    });
+  });
+}
+
 export function v_2d2eda(): Promise<boolean> {
   return new Promise((v_6f7712) => {
     v_889fad(
@@ -121,11 +129,9 @@ export async function v_bb4efc(
   v_f71b56,
   opts: v_2c8bdd.WebBrowserOpenOptions = v_4793d0,
 ): Promise<boolean> {
-
   await v_824454({ dismiss: false });
   try {
     const v_43c42e = await v_2c8bdd.openBrowserAsync(v_f71b56, v_328259);
-
     await v_824454({ dismiss: false });
     if (__DEV__) {
       console.log('[linking] openBrowserAsync result', v_43c42e?.type);
@@ -143,10 +149,19 @@ export async function v_e184b5(v_a448ad = '/', v_b36f96): Promise<boolean> {
   if (v_b36f96?.confirm) {
     const v_3ed4c3 = await v_2d2eda();
     if (!v_3ed4c3) return false;
+    await v_9a28a6();
   }
   try {
     const v_c9c6be = await v_f96be4();
-    return await v_bb4efc(v_dbb24a(v_c9c6be, v_a448ad));
+    const v_f71b56 = v_dbb24a(v_c9c6be, v_a448ad);
+    if (v_b36f96?.confirm) {
+      await v_9a28a6(200);
+    }
+    if (v_326be8.OS === 'ios') {
+      v_f42779('linking_open_shop_ios_external', { url_host: v_4ba786(v_f71b56) });
+      return await v_5ab0fb(v_f71b56);
+    }
+    return await v_bb4efc(v_f71b56);
   } catch (v_5e9bfe) {
     v_c538c0('linking_open_shop_failed', v_5e9bfe, {
       next_path: typeof v_a448ad === 'string' ? v_a448ad.split('?')[0].slice(0, 80) : undefined,
