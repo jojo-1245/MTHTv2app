@@ -789,13 +789,22 @@
   },
   "email_verification": {
     "title": "Enter Verification Code",
+    "title_sms": "SMS Verification",
     "description_prefix": "Please enter the 6-digit code sent to ",
     "description_suffix": ".",
+    "description_sms_prefix": "We sent a code to your phone ",
+    "description_sms_suffix": ".",
+    "email_confirm_hint": "Your email identifies the account. Double-check for typos.",
+    "sms_failover": "Verify via SMS",
     "resend": "Resend Code",
     "verify_btn": "Verify",
+    "verifying": "Verifying...",
     "success_title": "Verification Complete",
-    "success_message": "Email verification is complete.",
-    "resend_label": "Resend code in"
+    "success_message": "Verification is complete.",
+    "resend_label": "Resend code in",
+    "error_title": "Verification failed",
+    "error_verify": "Invalid or expired verification code.",
+    "error_resend": "Failed to resend the code."
   },
   "forgot_password": {
     "send_code": "Send code",

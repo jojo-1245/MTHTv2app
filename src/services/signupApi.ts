@@ -9,6 +9,7 @@ export type SignupPayload = {
   password: string;
   name: string;
   mobile?: string | null; 
+  mobile_code?: string | null;
   gender?: number | null;
   age_range?: number | null;
   country?: string | null; 
@@ -247,6 +248,55 @@ export async function signup(payload: SignupPayload): Promise<void> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, payload, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
+export type SendSmsVerificationPayload = {
+  email: string;
+  mobile: string;
+  mobile_code?: string | null;
+  purpose: 'signup' | 'password_reset';
+};
+
+export async function sendSmsVerification(payload: SendSmsVerificationPayload): Promise<void> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
+    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, payload, {
+      timeout: API_TIMEOUT,
+      headers,
+    });
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
+export type VerifySmsPayload = {
+  email: string;
+  mobile: string;
+  code: string;
+  purpose: 'signup' | 'password_reset';
+  device_info?: Record<string, unknown>;
+};
+
+export async function verifySms(payload: VerifySmsPayload): Promise<void> {
+  const env = getEnv();
+  const baseURL = env.GATEWAY;
+  const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
+  if (!baseURL) throw new Error('서버 주소가 설정되지 않았습니다. GATEWAY를 확인해주세요.');
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
     await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, payload, {
       timeout: API_TIMEOUT,
