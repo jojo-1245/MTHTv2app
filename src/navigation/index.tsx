@@ -63,7 +63,11 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'naver' } | undefined;
   ForgotPassword: undefined;
-  PasswordVerification: { email: string };
+  PasswordVerification: {
+    email: string;
+    channel?: 'email' | 'sms';
+    mobile?: string;
+  };
   ResetPassword: { email: string; code: string };
   PasswordChanged: undefined;
   EmailVerification:
