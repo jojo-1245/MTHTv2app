@@ -12,7 +12,12 @@ const API_TIMEOUT = 20000;
 type ApiResponse<T> = {
   success?: boolean;
   data?: T;
-  error?: { message: string; statusCode?: number };
+  error?: {
+    message: string;
+    statusCode?: number;
+    code?: string;
+    details?: Record<string, unknown>;
+  };
 };
 
 export interface LoginAuthPayload {
@@ -43,10 +48,29 @@ function normalizeError(error: unknown): Error {
       error.response?.statusText ||
       error.message ||
       '요청 중 오류가 발생했습니다.';
-    return new Error(message);
+    const err = new Error(message) as Error & {
+      code?: string;
+      details?: Record<string, unknown>;
+    };
+    err.code = apiResponse?.error?.code;
+    if (apiResponse?.error?.details && typeof apiResponse.error.details === 'object') {
+      err.details = apiResponse.error.details as Record<string, unknown>;
+    }
+    return err;
   }
   if (error instanceof Error) return error;
   return new Error('요청 중 알 수 없는 오류가 발생했습니다.');
+}
+
+export function isPendingVerificationError(
+  error: unknown
+): error is Error & {
+  code: string;
+  details?: { email?: string; mobile?: string | null; mobile_code?: string | null };
+} {
+  if (!(error instanceof Error)) return false;
+  const e = error as Error & { code?: string };
+  return e.code === '1007' || /pending verification/i.test(error.message || '');
 }
 
 export async function loginMember(params: {

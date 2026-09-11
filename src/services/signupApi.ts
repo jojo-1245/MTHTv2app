@@ -142,7 +142,15 @@ export type SendVerificationPayload = {
   purpose?: 'signup' | 'password_reset' | 'profile_change' | 'login' | 'export_private_key';
 };
 
-export async function sendVerification(payload: SendVerificationPayload): Promise<void> {
+export type SendVerificationResult = {
+  channel: 'email' | 'sms';
+  mobile?: string | null;
+  expires_in?: number;
+};
+
+export async function sendVerification(
+  payload: SendVerificationPayload
+): Promise<SendVerificationResult> {
   const env = getEnv();
   const baseURL = env.GATEWAY;
   const oth-secret = env.CLIENT_TOKEN || env.GATEWAY_AUTH_CODE;
@@ -154,10 +162,21 @@ export async function sendVerification(payload: SendVerificationPayload): Promis
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers.Authorization = `Bearer ${oth-secret}`;
-    await axios.post<ApiResponse<unknown>>(`${baseURL}/oth-path`, body, {
-      timeout: API_TIMEOUT,
-      headers,
-    });
+    const res = await axios.post<ApiResponse<SendVerificationResult>>(
+      `${baseURL}/oth-path`,
+      body,
+      {
+        timeout: API_TIMEOUT,
+        headers,
+      }
+    );
+    const data = res.data?.data;
+    const channel = data?.channel === 'sms' ? 'sms' : 'email';
+    return {
+      channel,
+      mobile: data?.mobile ?? null,
+      expires_in: data?.expires_in,
+    };
   } catch (error) {
     if (__DEV__ && axios.isAxiosError(error)) {
       console.log('[signupApi] send-verification 에러:', {

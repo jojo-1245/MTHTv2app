@@ -32,6 +32,8 @@ import * as v_2c8bdd from 'refjsvmnhpbvuhzr';
 import { v_e4a763 } from '../utils/env';
 import { v_67ec53, v_d41982, v_545a63, v_2cd4e6 } from '../services';
 import type { v_8adb2f } from '../services/authApi';
+import { v_1fc886 } from '../services/authApi';
+import { v_c1a440 } from '../services/signupApi';
 import { v_87ba9a } from '../navigation/postLoginNavigation';
 import v_9a8286 from '../services/apiClient';
 
@@ -118,7 +120,12 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const [v_2129ec, v_874dfe] = v_5ab095(true);
   const [v_cd31a8, v_deef62] = v_5ab095(false);
   const [v_ac3ab7, v_028502] = v_5ab095(false);
-  const [v_153a89, v_879b56] = v_5ab095({
+  const [v_153a89, v_879b56] = v_5ab095<{
+    visible: boolean;
+    title: string;
+    message: string;
+    onConfirm?: () => void;
+  }>({
     visible: false,
     title: '',
     message: '',
@@ -174,20 +181,24 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     });
   };
 
-  const v_889fad = (v_9f1622, v_a8cd21) => {
+  const v_889fad = (v_9f1622, v_a8cd21, v_e2be2d) => {
     v_879b56({
       visible: true,
       title: v_9f1622,
       message: v_a8cd21,
+      onConfirm: v_e2be2d,
     });
   };
 
   const v_34f542 = () => {
+    const v_9b064f = v_153a89.onConfirm;
     v_879b56({
       visible: false,
       title: '',
       message: '',
+      onConfirm: undefined,
     });
+    v_9b064f?.();
   };
 
   const v_d4705b = async () => {
@@ -251,12 +262,44 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       }
       v_87ba9a(v_c65f5d, v_bd4b7d);
     } catch (v_5e9bfe) {
+      if (v_1fc886(v_5e9bfe)) {
+        const v_5ab5bd = v_5e9bfe.details ?? {};
+        const v_3dba52 =
+          (typeof v_5ab5bd.email === 'string' && v_5ab5bd.email) || v_8f37ac;
+        const v_966f6a =
+          typeof v_5ab5bd.mobile === 'string' && v_5ab5bd.mobile ? v_5ab5bd.mobile : undefined;
+        const v_982d62 =
+          v_5ab5bd.mobile_code != null ? String(v_5ab5bd.mobile_code) : null;
+        v_889fad(
+          v_8d41d7('login.error_pending_title'),
+          v_8d41d7('login.error_pending_message'),
+          async () => {
+            try {
+              await v_c1a440({ email: v_3dba52, purpose: 'signup' });
+            } catch (v_b8f4ab) {
+
+              if (__DEV__) console.warn('[Login] pending verification resend failed', v_b8f4ab);
+            }
+            v_c65f5d.navigate('EmailVerification', {
+              email: v_3dba52,
+              purpose: 'signup',
+              channel: 'email',
+              mobile: v_966f6a,
+              mobile_code: v_982d62,
+              redirectTo: 'Login',
+            });
+          }
+        );
+        return;
+      }
       const v_4b5200 = v_8d41d7('login.error_unknown');
       let v_d6bda5 = v_4b5200;
       if (v_5e9bfe instanceof Error) {
         const v_75195c = v_5e9bfe.message || '';
         if (/invalid email or password/i.test(v_75195c)) {
           v_d6bda5 = v_8d41d7('login.error_failed');
+        } else if (/account is deactivated/i.test(v_75195c)) {
+          v_d6bda5 = v_8d41d7('login.error_deactivated');
         } else {
           v_d6bda5 = v_75195c;
         }
