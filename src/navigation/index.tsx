@@ -71,6 +71,9 @@ export type RootStackParamList = {
     email?: string;
     purpose?: 'signup' | 'password_reset' | 'profile_change';
     redirectTo?: keyof RootStackParamList;
+    channel?: 'email' | 'sms';
+    mobile?: string;
+    mobile_code?: string | null;
   }
   | undefined;
   CountrySelect:
