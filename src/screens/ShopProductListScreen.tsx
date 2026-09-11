@@ -20,7 +20,7 @@ type Props = v_432191<v_8ad91b, 'ShopProductList'>;
 const ShopProductListScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
   const { goBack: v_c7ac57 } = v_a0daa8();
-  const { openShop: v_e184b5 } = v_ffe36d();
+  const { openShopProduct: v_99cd96 } = v_ffe36d();
   const [v_4622b9, v_fa923c] = v_5ab095<v_e9d814[]>([]);
   const [v_f4d612, v_13fd7a] = v_5ab095<number | null>(null);
   const [v_bf751c, v_8bbf9d] = v_5ab095(false);
@@ -59,7 +59,7 @@ const ShopProductListScreen: v_a3453e.FC<Props> = () => {
               renderItem={({ item: v_8c0b26 }) => {
                 const v_6e4734 = v_95c036(v_8c0b26.it_price, v_f4d612);
                 return (
-                  <TouchableOpacity style={v_d81136.card} onPress={() => v_e184b5(v_8c0b26.item_url)} activeOpacity={0.85}>
+                  <TouchableOpacity style={v_d81136.card} onPress={() => v_99cd96(v_8c0b26.it_id)} activeOpacity={0.85}>
                     {v_8c0b26.image_url
                       ? <Image source={{ uri: v_8c0b26.image_url }} style={v_d81136.img} />
                       : <View style={[v_d81136.img, v_d81136.imgPlaceholder]} />}
