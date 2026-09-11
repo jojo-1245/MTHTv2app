@@ -15,6 +15,7 @@ import {
   v_015a21,
   v_8348d9,
   v_f41071,
+  v_8a180c,
 } from '../services/stepTrackingService';
 import {
   v_157cb4,
@@ -103,10 +104,19 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
         let v_fd7b23 = v_635b76;
 
         try {
-          const v_dc359d = await v_f41071();
-          if (v_dc359d > v_fd7b23) {
-            v_fd7b23 = v_dc359d;
+          const v_4e3a2c = await v_8a180c();
+          if (v_4e3a2c > v_fd7b23) {
+            v_fd7b23 = v_4e3a2c;
           }
+          try {
+            const { logToServer: v_f42779 } = require('../services/clientLog');
+            v_f42779('step_hydrate_recover', {
+              saved_steps: v_635b76,
+              recovered_steps: v_4e3a2c,
+              next_steps: v_fd7b23,
+              platform: v_326be8.OS,
+            });
+          } catch { }
         } catch {
 
         }
@@ -273,7 +283,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                 if (v_9c9484 > v_a6a5f1) v_4b95c4(v_9c9484);
               });
 
-              v_f41071().then((v_71e9eb) => {
+              v_8a180c().then((v_71e9eb) => {
                 if (!v_41ed06) return;
                 let v_9c9484;
                 if (v_635b76 === 0 && v_71e9eb <= 1) {
@@ -283,6 +293,16 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                   if (v_71e9eb > 0) v_6f7c85.push(v_71e9eb);
                   v_9c9484 = Math.max(...v_6f7c85);
                 }
+                try {
+                  const { logToServer: v_f42779 } = require('../services/clientLog');
+                  v_f42779('step_init_recover', {
+                    saved_steps: v_635b76,
+                    recovered_steps: v_71e9eb,
+                    final_steps: v_9c9484,
+                    displayed: v_3e3188.current,
+                    platform: v_326be8.OS,
+                  });
+                } catch { }
                 if (v_9c9484 >= v_3e3188.current) {
                   v_4b95c4(v_9c9484);
                   if (v_9c9484 > v_635b76) v_7f798a(v_9c9484);
@@ -377,7 +397,16 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
         if (v_3b10d8 === 'active') {
           try { await v_5640a4(); } catch {}
           try {
-            const v_71e9eb = await v_f41071();
+            const v_e98932 = v_3e3188.current;
+            const v_71e9eb = await v_8a180c();
+            try {
+              const { logToServer: v_f42779 } = require('../services/clientLog');
+              v_f42779('step_active_recover', {
+                before_steps: v_e98932,
+                recovered_steps: v_71e9eb,
+                platform: v_326be8.OS,
+              });
+            } catch { }
             if (v_71e9eb > 0 && v_71e9eb > v_3e3188.current) {
               v_4b95c4(v_71e9eb);
               await v_7f798a(v_71e9eb);

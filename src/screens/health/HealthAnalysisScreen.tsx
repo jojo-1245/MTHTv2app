@@ -908,9 +908,12 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         if (!v_f91d86) {
           const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
           v_889fad(
-            '잔액 부족',
-            `건강 분석에 ${v_399221} MTHT가 필요합니다.\n현재 잔액: ${v_244eb8} MTHT`,
-            [{ text: '확인' }]
+            v_8d41d7('health_analysis.intro.insufficient_balance_title'),
+            v_8d41d7('health_analysis.intro.insufficient_balance_alert', {
+              fee: v_399221,
+              balance: v_244eb8,
+            }),
+            [{ text: v_8d41d7('common.confirm') }]
           );
           return;
         }
@@ -2116,18 +2119,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               <View style={v_d81136.introButtonContainer}>
                 {v_4452dd && (
                   <View style={v_d81136.freeTrialBadge}>
-                    <Text style={v_d81136.freeTrialBadgeText}>🎁 무료 체험 가능</Text>
+                    <Text style={v_d81136.freeTrialBadgeText}>{v_8d41d7('health_analysis.intro.free_trial_badge')}</Text>
                   </View>
                 )}
                 {!v_f91d86 && !v_4452dd && (
                   <View style={v_d81136.insufficientBalanceNotice}>
                     <Text style={v_d81136.insufficientBalanceText}>
-                      {`MTHT 잔액 부족 (필요: ${v_399221} MTHT)`}
+                      {v_8d41d7('health_analysis.intro.insufficient_balance', { amount: v_399221 })}
                     </Text>
                   </View>
                 )}
                 <PrimaryButton
-                  title={v_4452dd ? '무료 체험 시작' : v_8d41d7('health_analysis.intro.start_button')}
+                  title={v_4452dd ? v_8d41d7('health_analysis.intro.free_trial_start') : v_8d41d7('health_analysis.intro.start_button')}
                   onPress={async () => {
                     if (!v_d63b37()) return;
 
