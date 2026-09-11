@@ -54,11 +54,13 @@ function v_c538c0(
   v_f42779(v_bd1444, v_931bf0, { level: 'error', message: v_bd1444 });
 }
 
-async function v_824454(): Promise<void> {
-  try {
-    await v_2c8bdd.dismissBrowser();
-  } catch {
+async function v_824454(v_328259): Promise<void> {
+  if (v_328259?.dismiss) {
+    try {
+      await v_2c8bdd.dismissBrowser();
+    } catch {
 
+    }
   }
   try {
     await v_2c8bdd.coolDownAsync();
@@ -120,14 +122,18 @@ export async function v_bb4efc(
   opts: v_2c8bdd.WebBrowserOpenOptions = v_4793d0,
 ): Promise<boolean> {
 
-  await v_824454();
+  await v_824454({ dismiss: false });
   try {
-    await v_2c8bdd.openBrowserAsync(v_f71b56, v_328259);
-    await v_824454();
+    const v_43c42e = await v_2c8bdd.openBrowserAsync(v_f71b56, v_328259);
+
+    await v_824454({ dismiss: false });
+    if (__DEV__) {
+      console.log('[linking] openBrowserAsync result', v_43c42e?.type);
+    }
     return true;
   } catch (v_5e9bfe) {
     v_c538c0('linking_inapp_open_failed', v_5e9bfe, { url_host: v_4ba786(v_f71b56) });
-    await v_824454();
+    await v_824454({ dismiss: true });
     v_336a9d();
     return false;
   }
@@ -145,7 +151,7 @@ export async function v_e184b5(v_a448ad = '/', v_b36f96): Promise<boolean> {
     v_c538c0('linking_open_shop_failed', v_5e9bfe, {
       next_path: typeof v_a448ad === 'string' ? v_a448ad.split('?')[0].slice(0, 80) : undefined,
     });
-    await v_824454();
+    await v_824454({ dismiss: true });
     v_336a9d();
     return false;
   }
