@@ -471,6 +471,9 @@
     "error_empty_password": "Please enter your password.",
     "error_failed": "Login Failed",
     "error_unknown": "An unknown error occurred during login.",
+    "error_pending_title": "Verification required",
+    "error_pending_message": "Sign-up is not complete. Please finish email or SMS verification.",
+    "error_deactivated": "This account is deactivated. Please contact support.",
     "kakao_login": "Kakao Login",
     "naver_login": "Naver Login",
     "google_login": "Google Login",
@@ -808,7 +811,12 @@
   },
   "forgot_password": {
     "send_code": "Send code",
-    "remember_pwd": "Remember password? "
+    "remember_pwd": "Remember password? ",
+    "channel_hint": "Enter the email you used to sign up. The code is sent via the same method you verified with (email or SMS).",
+    "sent_email_prefix": "Enter the 6-digit code sent to ",
+    "sent_email_suffix": ".",
+    "sent_sms_prefix": "We sent a code to your phone ",
+    "sent_sms_suffix": "."
   },
   "reset_password": {
     "title": "Reset password",
