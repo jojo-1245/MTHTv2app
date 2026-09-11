@@ -438,6 +438,9 @@
     "error_empty_password": "Silakan masukkan kata sandi Anda.",
     "error_failed": "Gagal Masuk",
     "error_unknown": "Terjadi kesalahan yang tidak diketahui saat masuk.",
+    "error_pending_title": "Verifikasi diperlukan",
+    "error_pending_message": "Pendaftaran belum selesai. Silakan selesaikan verifikasi email atau SMS.",
+    "error_deactivated": "Akun ini dinonaktifkan. Silakan hubungi dukungan.",
     "kakao_login": "Masuk dengan Kakao",
     "naver_login": "Masuk dengan Naver",
     "google_login": "Masuk dengan Google",
@@ -773,7 +776,12 @@
   },
   "forgot_password": {
     "send_code": "Kirim kode",
-    "remember_pwd": "Ingat kata sandi? "
+    "remember_pwd": "Ingat kata sandi? ",
+    "channel_hint": "Masukkan email yang digunakan saat daftar. Kode dikirim lewat metode verifikasi saat daftar (email atau SMS).",
+    "sent_email_prefix": "Masukkan kode 6 digit yang dikirim ke ",
+    "sent_email_suffix": ".",
+    "sent_sms_prefix": "Kami mengirim kode ke nomor ",
+    "sent_sms_suffix": "."
   },
   "reset_password": {
     "title": "Atur ulang kata sandi",

@@ -8,6 +8,7 @@ export {
   updateProfile,
   clearAuthSession,
   isSocialLoginNeedsSignup,
+  isPendingVerificationError,
 } from './authApi';
 export type { LoginAuthPayload, MeProfile, UpdateProfilePayload, SocialLoginResult, MyReferralItem, MyReferralsResponse, ReferralSaleItem, ReferralSalesResponse } from './authApi';
 
