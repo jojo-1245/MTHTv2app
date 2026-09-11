@@ -13,7 +13,8 @@ type Props = v_432191<v_8ad91b, 'PasswordVerification'>;
 
 const PasswordVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7 } = v_772971();
-  const { email: v_e0c7e8 } = v_c7daf6.params;
+  const { email: v_e0c7e8, channel: v_8e9fad = 'email', mobile: v_49ea09 } = v_c7daf6.params;
+  const v_e34c8e = v_8e9fad === 'sms';
 
   const v_83b05b = (v_c99bd2) => {
     v_c65f5d.navigate('ResetPassword', { email: v_e0c7e8, code: v_c99bd2 });
@@ -30,12 +31,24 @@ const PasswordVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
     }
   };
 
+  const v_2819de = v_e34c8e ? v_49ea09 || '—' : v_e0c7e8;
+
   return (
     <VerificationCodeTemplate
-      title={v_8d41d7('email_verification.title')}
+      title={
+        v_e34c8e
+          ? v_8d41d7('email_verification.title_sms', 'SMS 인증')
+          : v_8d41d7('email_verification.title')
+      }
       subtitle={
         <Text style={{ fontSize: 14, fontFamily: v_843035.regular, color: v_1bfbd0.secondaryText }}>
-          {v_e0c7e8}
+          {v_e34c8e
+            ? v_8d41d7('forgot_password.sent_sms_prefix')
+            : v_8d41d7('forgot_password.sent_email_prefix')}
+          <Text style={{ fontFamily: v_843035.semibold, color: v_1bfbd0.text }}>{v_2819de}</Text>
+          {v_e34c8e
+            ? v_8d41d7('forgot_password.sent_sms_suffix')
+            : v_8d41d7('forgot_password.sent_email_suffix')}
         </Text>
       }
       onBack={() => v_c65f5d.goBack()}
