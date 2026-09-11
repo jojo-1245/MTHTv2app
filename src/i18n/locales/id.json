@@ -485,7 +485,7 @@
     "error_terms_required": "Persetujuan Ketentuan Diperlukan",
     "error_terms_message": "Silakan setujui Ketentuan Layanan.",
     "success_title": "Pendaftaran Selesai",
-    "success_message": "Silakan lanjutkan dengan verifikasi email.",
+    "success_message": "Silakan lanjutkan verifikasi. (default: email)",
     "success_message_social": "Pendaftaran berhasil. Ketuk login sosial untuk masuk.",
     "social_email_locked": "Email akun sosial tidak dapat diubah.",
     "region_all": "Semua Wilayah",
@@ -754,13 +754,22 @@
   },
   "email_verification": {
     "title": "Masukkan Kode Verifikasi",
+    "title_sms": "Verifikasi SMS",
     "description_prefix": "Silakan masukkan 6 digit kode yang dikirim ke ",
     "description_suffix": ".",
+    "description_sms_prefix": "Kami mengirim kode ke nomor ",
+    "description_sms_suffix": ".",
+    "email_confirm_hint": "Email digunakan untuk mengidentifikasi akun. Periksa lagi apakah ada kesalahan ketik.",
+    "sms_failover": "Verifikasi via SMS",
     "resend": "Kirim Ulang Kode",
     "verify_btn": "Verifikasi",
+    "verifying": "Memverifikasi...",
     "success_title": "Verifikasi Selesai",
-    "success_message": "Verifikasi email telah selesai.",
-    "resend_label": "Kirim ulang kode dalam"
+    "success_message": "Verifikasi telah selesai.",
+    "resend_label": "Kirim ulang kode dalam",
+    "error_title": "Verifikasi gagal",
+    "error_verify": "Kode verifikasi tidak valid atau sudah kedaluwarsa.",
+    "error_resend": "Gagal mengirim ulang kode."
   },
   "forgot_password": {
     "send_code": "Kirim kode",
