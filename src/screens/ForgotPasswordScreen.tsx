@@ -31,8 +31,13 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
     v_34a50a(true);
     try {
-      await v_c1a440({ email: v_2f361a, purpose: 'password_reset' });
-      v_c65f5d.navigate('PasswordVerification', { email: v_2f361a });
+
+      const v_43c42e = await v_c1a440({ email: v_2f361a, purpose: 'password_reset' });
+      v_c65f5d.navigate('PasswordVerification', {
+        email: v_2f361a,
+        channel: v_43c42e.channel,
+        mobile: v_43c42e.mobile ?? undefined,
+      });
     } catch (v_5e9bfe) {
       v_889fad(
         v_8d41d7('common.error'),
@@ -57,6 +62,7 @@ const ForgotPasswordScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={v_d81136.form}>
+          <Text style={v_d81136.hint}>{v_8d41d7('forgot_password.channel_hint')}</Text>
           <TextField
             testID="forgot-password-email"
             label={v_8d41d7('login.email_label')}
@@ -101,6 +107,12 @@ const v_d81136 = v_472849.create({
     width: '100%',
     maxWidth: 780,
     gap: v_9b1a04.large,
+  },
+  hint: {
+    fontSize: 13,
+    fontFamily: v_843035.regular,
+    color: v_1bfbd0.secondaryText,
+    lineHeight: 20,
   },
   footerRow: {
     flexDirection: 'row',

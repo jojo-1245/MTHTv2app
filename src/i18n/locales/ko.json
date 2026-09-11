@@ -472,6 +472,9 @@
         "error_empty_password": "비밀번호를 입력해주세요.",
         "error_failed": "로그인 실패",
         "error_unknown": "로그인 중 알 수 없는 오류가 발생했습니다.",
+        "error_pending_title": "인증이 필요합니다",
+        "error_pending_message": "가입은 완료되지 않았습니다. 이메일 또는 SMS 인증을 마쳐 주세요.",
+        "error_deactivated": "비활성화된 계정입니다. 고객센터에 문의해 주세요.",
         "kakao_login": "카카오 로그인",
         "naver_login": "네이버 로그인",
         "google_login": "구글 로그인",
@@ -819,7 +822,12 @@
     },
     "forgot_password": {
         "send_code": "인증코드 전송",
-        "remember_pwd": "비밀번호가 생각나셨나요? "
+        "remember_pwd": "비밀번호가 생각나셨나요? ",
+        "channel_hint": "가입할 때 쓴 이메일을 입력하세요. 인증번호는 가입 시 인증한 방법(이메일 또는 SMS)으로 자동 발송됩니다.",
+        "sent_email_prefix": "",
+        "sent_email_suffix": " 이메일로 보내드린 6자리 코드를 입력하세요.",
+        "sent_sms_prefix": "등록하신 휴대폰 ",
+        "sent_sms_suffix": " 으로 인증번호를 보냈습니다."
     },
     "reset_password": {
         "title": "비밀번호 재설정",
