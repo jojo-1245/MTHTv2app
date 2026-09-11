@@ -1,39 +1,64 @@
 import v_b5030f from 'imsks';
-import { v_2d4718 } from 'rcmrninabrnb';
+import { v_2d4718, v_326be8 } from 'rcmrninabrnb';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
 import { v_4b3c9f } from '../services/authApi';
 import { v_889fad } from '../components/AlertHost';
+import { v_f42779 } from '../services/clientLog';
 
-export function v_edfdf4(v_5e9bfe): boolean {
+export type AuthErrorMatchReason =
+  | 'http_401'
+  | 'http_403'
+  | 'msg_login_required'
+  | 'msg_unauthorized'
+  | 'msg_authentication'
+  | 'msg_forbidden'
+  | null;
+
+export function v_d8eb34(v_5e9bfe): AuthErrorMatchReason {
   if (v_b5030f.isAxiosError(v_5e9bfe)) {
+    const v_d308b5 = v_5e9bfe.response?.status;
+    if (v_d308b5 === 401) return 'http_401';
+    if (v_d308b5 === 403) return 'http_403';
 
-    if (v_5e9bfe.response?.status === 401 || v_5e9bfe.response?.status === 403) {
-      return true;
-    }
+    return null;
   }
 
   if (v_5e9bfe instanceof Error) {
     const v_1744b9 = v_5e9bfe.message.toLowerCase();
-    return (
-      v_1744b9.includes('로그인이 필요') ||
-      v_1744b9.includes('로그인') ||
-      v_1744b9.includes('401') ||
-      v_1744b9.includes('unauthorized') ||
-      v_1744b9.includes('authentication') ||
-      v_1744b9.includes('forbidden') ||
-      v_1744b9.includes('signature verification')
-    );
+    if (v_1744b9.includes('로그인이 필요')) return 'msg_login_required';
+    if (v_1744b9.includes('unauthorized')) return 'msg_unauthorized';
+    if (v_1744b9.includes('authentication')) return 'msg_authentication';
+    if (v_1744b9.includes('forbidden')) return 'msg_forbidden';
   }
 
-  return false;
+  return null;
+}
+
+export function v_edfdf4(v_5e9bfe): boolean {
+  return v_d8eb34(v_5e9bfe) != null;
 }
 
 export function v_998b9d(
   v_e7e852,
   v_5e9bfe
 ): boolean {
-  if (v_edfdf4(v_5e9bfe)) {
-    console.log('[authErrorHandler] 인증 에러 감지. 세션 삭제 후 로그인 페이지로 이동...');
+  const v_58ca36 = v_d8eb34(v_5e9bfe);
+  if (v_58ca36) {
+    const v_d308b5 = v_b5030f.isAxiosError(v_5e9bfe) ? v_5e9bfe.response?.status : undefined;
+    const v_badeaf = v_5e9bfe instanceof Error ? v_5e9bfe.message.slice(0, 200) : undefined;
+    const v_931bf0 = {
+      reason: v_58ca36,
+      http_status: v_d308b5,
+      error_message: v_badeaf,
+      platform: v_326be8.OS,
+    };
+    if (__DEV__) {
+      console.warn('[authErrorHandler] 인증 에러 감지 → 로그아웃', v_931bf0);
+    }
+    v_f42779('auth_error_logout', v_931bf0, {
+      level: 'warn',
+      message: `auth_error:${v_58ca36}`,
+    });
 
     v_4b3c9f().catch(() => {});
     try {
@@ -49,7 +74,6 @@ export function v_998b9d(
           {
             text: '확인',
             onPress: () => {
-
               v_2d4718.runAfterInteractions(() => {
                 setTimeout(v_2a53b4, 150);
               });
@@ -66,4 +90,3 @@ export function v_998b9d(
   }
   return false;
 }
-
