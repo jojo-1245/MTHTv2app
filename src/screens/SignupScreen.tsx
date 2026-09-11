@@ -1,4 +1,4 @@
-import v_a3453e, { v_c4deb2, v_df9f57, v_5ab095 } from 'bapkr';
+import v_a3453e, { v_c4deb2, v_df9f57, v_e662ae, v_5ab095 } from 'bapkr';
 import {
   v_39a996,
   v_9cabcb,
@@ -68,6 +68,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const [v_a6fcf8, v_539b92] = v_5ab095(false);
   const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
+  const v_25381d = v_e662ae<v_79c4f2>(null);
   const [v_c3eac4, v_bdc43c] =
     v_5ab095<'none' | 'male' | 'female'>('none');
   const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
@@ -77,6 +78,13 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_9bf12c, v_fb6bbb] = v_5ab095('');
   const [v_88dca2, v_e33ec0] = v_5ab095(false);
+
+  const v_98cf8e = () => {
+
+    setTimeout(() => {
+      v_25381d.current?.focus();
+    }, 100);
+  };
 
   v_c4deb2(() => {
     const v_c99bd2 = v_c7daf6?.params?.referralCode;
@@ -493,7 +501,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
       return;
     }
     if (v_c01add || !v_088b9e || v_088b9e.length < 8) {
-      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_phone'));
+      v_889fad(v_8d41d7('signup.error_input'), v_8d41d7('signup.error_empty_phone'), v_98cf8e);
       return;
     }
 
@@ -646,6 +654,7 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
             {}
             <TextField
+              ref={v_25381d}
               testID="signup-phone"
               label={v_8d41d7('signup.phone_label')}
               placeholder={v_8d41d7('signup.phone_placeholder')}
