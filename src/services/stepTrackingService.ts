@@ -142,6 +142,34 @@ export const v_f41071 = async (): Promise<number> => {
   }
 };
 
+export function v_39a73c(): Date {
+  const v_d5dda0 = new Date();
+  v_d5dda0.setHours(0, 0, 0, 0);
+  return v_d5dda0;
+}
+
+export const v_8a180c = async (): Promise<number> => {
+  if (v_326be8.OS === 'android') {
+    return v_f41071();
+  }
+  if (v_326be8.OS !== 'ios') {
+    return 0;
+  }
+  try {
+    const { Pedometer: v_5dafcb } = require('rdtggkuyjeos');
+    const v_37a1a7 = await v_5dafcb.isAvailableAsync();
+    if (!v_37a1a7) return 0;
+    const v_965edf = v_39a73c();
+    const v_3b508c = new Date();
+    const v_43c42e = await v_5dafcb.getStepCountAsync(v_965edf, v_3b508c);
+    const v_eb271c = typeof v_43c42e?.steps === 'number' ? v_43c42e.steps : 0;
+    return v_eb271c > 0 ? v_eb271c : 0;
+  } catch (v_9e86fd) {
+    console.warn('[StepTracking] iOS 과거 걸음 조회 실패:', v_9e86fd);
+    return 0;
+  }
+};
+
 export const v_015a21 = async (): Promise<void> => {
   if (v_326be8.OS !== 'android') return;
 

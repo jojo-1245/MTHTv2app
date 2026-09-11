@@ -30,6 +30,7 @@ import {
   v_7ebf51,
   v_4ce80f,
   v_56d16a,
+  v_e4f0c5,
   v_3e7a50,
   v_c940dd,
   v_2e2f88,
@@ -759,6 +760,17 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   <Image source={v_87993b} style={v_d81136.headerLogo} resizeMode="contain" />
                 </View>
                 <View style={v_d81136.headerRight}>
+                  <TouchableOpacity
+                    onPress={() => v_9b57fc('ShopProductList')}
+                    style={v_d81136.headerIconBtn}
+                    hitSlop={8}
+                    accessibilityRole="button"
+                    accessibilityLabel={v_8d41d7('shop.list_title')}
+                  >
+                    <View style={[v_d81136.headerIconPill, v_d81136.notifPill]}>
+                      <ShoppingBag size={22} color="#FFFFFF" />
+                    </View>
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={() => v_9b57fc('MyInfoNotify')} style={v_d81136.headerIconBtn} hitSlop={8}>
                     <View style={[v_d81136.headerIconPill, v_d81136.notifPill]}>
                       <Bell size={22} color="#FFFFFF" />
