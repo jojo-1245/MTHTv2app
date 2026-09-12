@@ -40,7 +40,6 @@ const RecommendedSupplementsScreen: v_a3453e.FC<Props> = () => {
   const { goBack: v_c7ac57 } = v_a0daa8();
   const { openShopCheckout: v_565824, openItemExplan: v_9dcb16, loading: v_683210 } = v_ffe36d();
   const [v_4622b9, v_fa923c] = v_5ab095<v_d74666[]>([]);
-  const [v_11b55b, v_9d4998] = v_5ab095(false);
   const [v_7b301e, v_62e455] = v_5ab095(true);
   const [v_1c5924, v_fb4b30] = v_5ab095<Set<string>>(new Set());
 
@@ -53,12 +52,10 @@ const RecommendedSupplementsScreen: v_a3453e.FC<Props> = () => {
           if (!v_759436) return;
           if (v_326be8.OS === 'ios' && v_cb35cb.safeMode === false) {
             v_fa923c([]);
-            v_9d4998(false);
             v_fb4b30(new Set());
             return;
           }
           v_fa923c(v_cb35cb.items);
-          v_9d4998(v_cb35cb.safeMode);
           v_fb4b30(new Set());
         })
         .catch((v_9e86fd) => {
@@ -225,9 +222,6 @@ const RecommendedSupplementsScreen: v_a3453e.FC<Props> = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {v_11b55b ? (
-                <Text style={v_d81136.safeNote}>{v_8d41d7('supplements.safe_mode_note')}</Text>
-              ) : null}
             </>
           )}
         </SafeScrollView>
@@ -324,7 +318,6 @@ const v_d81136 = v_472849.create({
   },
   checkoutBtnDisabled: { opacity: 0.4 },
   checkoutBtnText: { color: '#fff', fontSize: 14, fontWeight: '700' },
-  safeNote: { marginTop: 12, fontSize: 11, color: '#888', textAlign: 'center' },
 });
 
 export default v_5109e7;
