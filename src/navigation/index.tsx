@@ -52,6 +52,16 @@ import v_5109e7 from '../screens/RecommendedSupplementsScreen';
 import { v_4482f8, v_5bfacf } from '../hooks/useShopPaymentPush';
 import { v_6c5337, type v_c99f09 } from './resolveInitialRoute';
 
+import type { v_0476f3 } from '../services/walletApi';
+
+export type WalletRouteContext = {
+  walletId: number;
+  address: string;
+  chainId: number;
+  networkName: string;
+  balance: v_0476f3;
+};
+
 export type RootStackParamList = {
   Home: undefined;
   MetaHome: undefined;
@@ -86,7 +96,10 @@ export type RootStackParamList = {
   }
   | undefined;
   Wallet: undefined;
-  WalletSend: { tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] } } | undefined;
+  WalletSend: {
+    tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] };
+    walletContext?: WalletRouteContext;
+  } | undefined;
   WalletSwap: undefined;
   WalletReceive:
   | {
@@ -97,7 +110,10 @@ export type RootStackParamList = {
   | undefined;
   WalletQrScan: undefined;
   WalletEstimate: undefined;
-  WalletTransactionProgress: { tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] } } | undefined;
+  WalletTransactionProgress: {
+    tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] };
+    walletContext?: WalletRouteContext;
+  } | undefined;
   WalletTransactionResult: undefined;
   TransactionDetails: undefined;
   WalletTokenDetail: {
@@ -112,6 +128,7 @@ export type RootStackParamList = {
       fallbackLabel?: string;
       fallbackColors?: string[];
     };
+    walletContext?: WalletRouteContext;
   };
   FontTest: undefined;
   MyInfo: undefined;
