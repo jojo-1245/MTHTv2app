@@ -114,8 +114,38 @@ export type RootStackParamList = {
     tokenData?: { id: string; title: string; subtitle?: string; amount?: string; suffix?: string; iconSource?: any; badgeLabel?: string; fallbackLabel?: string; fallbackColors?: string[] };
     walletContext?: WalletRouteContext;
   } | undefined;
-  WalletTransactionResult: undefined;
-  TransactionDetails: undefined;
+  WalletTransactionResult: {
+    tx?: {
+      tx_hash: string;
+      from_address: string;
+      to_address: string;
+      amount: string;
+      symbol: string;
+      network_name?: string;
+      chain_id?: number;
+      fee?: string | null;
+      created_at?: string;
+      status?: string;
+      block_number?: number | null;
+    };
+    walletId?: number;
+  } | undefined;
+  TransactionDetails: {
+    tx?: {
+      tx_hash: string;
+      from_address: string;
+      to_address: string;
+      amount: string;
+      symbol: string;
+      network_name?: string;
+      chain_id?: number;
+      fee?: string | null;
+      created_at?: string;
+      status?: string;
+      block_number?: number | null;
+    };
+    walletId?: number;
+  } | undefined;
   WalletTokenDetail: {
     tokenData: {
       id: string;
