@@ -683,7 +683,7 @@ export default function v_8b28f5({ route: v_c7daf6, navigation: v_c65f5d }: Prop
             <View style={v_d81136.aiResultsContainer}>
               <View style={v_d81136.aiLoadingContainer}>
                 <ActivityIndicator size="large" color="#7C6BFF" />
-                <Text style={v_d81136.aiLoadingText}>AI 힌티가 생각중입니다...</Text>
+                <Text style={v_d81136.aiLoadingText}>{v_8d41d7('skin_comparison.ai_thinking')}</Text>
               </View>
             </View>
           ) : (
