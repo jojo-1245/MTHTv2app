@@ -2152,7 +2152,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                                 <View style={{ padding: 20, alignItems: 'center' }}>
                                     <ActivityIndicator size="large" color="#AD46FF" />
                                     <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { marginTop: 12, textAlign: 'center' }]}>
-                                        AI가 피부 상태를 분석 중입니다...
+                                        {v_8d41d7('skin.result.ai_analyzing')}
                                     </Text>
                                 </View>
                             ) : v_e399bf ? (
@@ -2162,7 +2162,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                             ) : (
                                 <View style={v_d81136.aiAnalysisSubCard}>
                                     <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { color: '#9CA3AF' }]}>
-                                        AI 분석 결과를 불러오는 중입니다...
+                                        {v_8d41d7('skin.result.ai_loading')}
                                     </Text>
                                 </View>
                             )}
