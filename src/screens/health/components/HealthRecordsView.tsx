@@ -53,7 +53,8 @@ export interface HealthRecord {
 }
 
 const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
-  const v_694b25 = [
+
+  const v_79c0df = [
 
     { key: 'blood_pressure', labelKey: 'blood_pressure', value: '120/80', status: 'normal', unit: 'mmHg', descKey: 'blood_pressure_desc' },
 
@@ -97,7 +98,8 @@ const v_ee03c5 = (v_11ea7b = {}): MeasurementItem[] => {
     { key: 'cardiac_workload', labelKey: 'cardiac_workload', value: 8640, status: 'normal', descKey: 'cardiac_workload_desc' },
     { key: 'pulse_pressure', labelKey: 'pulse_pressure', value: 40, status: 'normal', unit: 'mmHg', descKey: 'pulse_pressure_desc' },
     { key: 'mean_arterial_pressure', labelKey: 'mean_arterial_pressure', value: 93, status: 'normal', unit: 'mmHg', descKey: 'mean_arterial_pressure_desc' },
-  ].filter(v_8c0b26 => !v_9da885(v_8c0b26.key));
+  ];
+  const v_694b25 = v_79c0df.filter(v_8c0b26 => !v_9da885(v_8c0b26.key));
 
   if (Object.keys(v_11ea7b).length === 0) return v_694b25;
   return v_694b25.map((v_8c0b26) => {

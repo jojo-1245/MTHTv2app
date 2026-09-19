@@ -14,6 +14,10 @@ export type ShopPaymentNavParams = {
   mthtAmount?: string;
 };
 
+function v_7761b6(v_24baff): v_24baff is { orderId?: string } {
+  return !!v_24baff && typeof v_24baff === 'object' && 'orderId' in v_24baff;
+}
+
 function v_d91fe8(v_9390e8): ShopPaymentNavParams | null {
   const v_9d3240 = v_9390e8?.order_id ?? v_9390e8?.orderId;
   if (!v_9d3240) return null;
@@ -34,7 +38,7 @@ export function v_9bf7de(v_24baff) {
   const v_75e117 = (v_45fe0c = 50) => {
     if (v_60875a.isReady()) {
       const v_275ccd = v_60875a.getCurrentRoute();
-      if (v_275ccd?.name === 'ShopPaymentConfirm' && v_275ccd.params?.orderId === v_931bf0.orderId) {
+      if (v_275ccd?.name === 'ShopPaymentConfirm' && v_7761b6(v_275ccd.params) && v_275ccd.params.orderId === v_931bf0.orderId) {
         console.log('[ShopPayment] already on screen:', v_931bf0.orderId);
         return;
       }
