@@ -155,7 +155,7 @@ export async function v_a1b0e7(
     }
     return v_9390e8;
   } catch (v_9e86fd) {
-    const v_35a1f5 = v_9e86fd as { response?: { data?: ApiResponse<unknown> }; code?: string; message?: string };
+    const v_35a1f5 = v_9e86fd as { response?: { data?: ApiResponse<unknown>; status?: number }; code?: string; message?: string };
     const v_badeaf = v_35a1f5.response?.data?.error?.message;
     if (__DEV__) {
       console.warn('[shopApi] confirm failed:', v_9d3240, v_403b73, v_35a1f5.response?.status, v_badeaf ?? v_35a1f5.message);
