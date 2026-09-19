@@ -31,7 +31,7 @@ export type {
 export { getHealthRecords, saveHealthRecord, getHealthRecordById, getLatestHealthRecord, compareHealthRecords, analyzeHealthComparisonAi, analyzeHealthRecordAi, deleteHealthRecord } from './healthApi';
 export type { HealthRecordItem, HealthRecordsResponse, SaveHealthRecordPayload, CompareHealthRecordsPayload, CompareHealthRecordsResponse } from './healthApi';
 
-export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords, analyzeSkinComparisonAi, analyzeSkinRecordAi } from './skinApi';
+export { saveSkinRecord, getSkinRecords, getSkinRecordById, getLatestSkinRecord, compareSkinRecords, analyzeSkinComparisonAi, analyzeSkinRecordAi, deleteSkinRecord } from './skinApi';
 export type { SaveSkinRecordPayload, SaveSkinRecordResponse, SkinRecordItem, SkinRecordsResponse, SkinRecordDetailResponse, CompareSkinRecordsPayload, CompareSkinRecordsResponse } from './skinApi';
 
 export { checkAttendance, getAttendanceStatus, getAttendanceStatusDetail, getStepsSyncState, syncSteps, getRewardsHistory, getRewardConfig, getMonthlyStepStatus, AlreadyCheckedInError } from './rewardsApi';
