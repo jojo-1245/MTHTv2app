@@ -54,6 +54,8 @@ export function v_80f1f0(record: v_6ed856): v_218d40 | null {
     health_level: (v_9390e8.health_level as string) ?? 'normal',
     vital_signs: (v_9390e8.vital_signs as v_218d40['vital_signs']) ?? {},
     metadata: v_9390e8.metadata as v_218d40['metadata'],
+
+    created_at: (v_9390e8.created_at as string) ?? v_cbbd71.createdAt,
   };
 }
 
