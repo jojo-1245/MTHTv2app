@@ -811,13 +811,13 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
         <SafeScrollView
           style={v_d81136.flex}
           backgroundColor="#FAFAFA"
-          contentContainerStyle={[
+          contentContainerStyle={v_472849.flatten([
             v_d81136.scrollContent,
             {
               paddingTop: v_6c4b91.isLandscape ? 12 : v_af2c88(16, 32),
               paddingBottom: v_6c4b91.isLandscape ? 16 : v_af2c88(24, 40),
             },
-          ]}
+          ])}
           showBottomBackground={false}
         >
           <CenteredContentShell
