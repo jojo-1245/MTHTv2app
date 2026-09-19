@@ -10,6 +10,7 @@ import {
     v_4623af,
 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
+import type { v_75de9d } from 'zqqvxke';
 import type { v_432191 } from 'xpfgrcdafpntkgxfmgxpxnedjkvmtc';
 import { v_1bfbd0, v_843035, v_9b1a04, v_ef658a } from '../../constants';
 import { v_729608, v_556baf, v_1c1837 } from '../../components';
@@ -36,7 +37,7 @@ function v_dc25a4(v_f4e98d): string {
     return `${Math.floor(v_f4e98d || 0).toLocaleString('ko-KR')}원`;
 }
 
-function v_c4180e(v_8d41d7, v_d308b5): string {
+function v_c4180e(t: v_75de9d, v_d308b5): string {
     if (v_d308b5 === 'pending') return v_8d41d7('referral_sales.status_pending', '정산 대기');
     if (v_d308b5 === 'settled') return v_8d41d7('referral_sales.status_settled', '정산 완료');
     return v_d308b5;
