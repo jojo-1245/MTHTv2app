@@ -28,11 +28,15 @@ describe('supplementApi.recommend', () => {
       },
     });
     const v_8d4337 = await v_ec0289({ source: 'checkup', recordId: 5, platform: 'ios' });
-    expect(v_9a8286.post).toHaveBeenCalledWith('/oth-path', {
-      source: 'checkup',
-      recordId: 5,
-      platform: 'ios',
-    });
+    expect(v_9a8286.post).toHaveBeenCalledWith(
+      '/oth-path',
+      {
+        source: 'checkup',
+        recordId: 5,
+        platform: 'ios',
+      },
+      { timeout: 60000 },
+    );
     expect(v_8d4337.items[0].shopItemId).toBe('2026062420');
     expect(v_8d4337.safeMode).toBe(true);
   });
@@ -61,6 +65,7 @@ describe('supplementApi.getRecommendation', () => {
 
     expect(v_9a8286.get).toHaveBeenCalledWith(
       expect.stringMatching(/^\/oth-path\/supplements\/recommendation\?platform=(ios|android)$/),
+      { timeout: 60000 },
     );
     expect(v_8d4337.recordId).toBe(99);
     expect(v_8d4337.source).toBe('health');

@@ -1,13 +1,30 @@
 import { v_f2c756, v_03e392 } from 'rcmrninabrnb';
 import { v_5ab0fb } from '../index';
 
-jest.mock('rcmrninabrnb', () => ({
-  Linking: { canOpenURL: jest.fn(), openURL: jest.fn() },
-  Alert: { alert: jest.fn() },
-}));
+jest.mock('rcmrninabrnb', () => {
+  const v_61a388 = jest.requireActual('react-native');
+  const v_11ea7b = {
+    Linking: { canOpenURL: jest.fn(), openURL: jest.fn() },
+    Alert: { alert: jest.fn() },
+  };
+  return new Proxy(v_61a388, {
+    get(v_5f5d6d, v_e36420, v_b9fbb4) {
+      if (typeof v_e36420 === 'string' && v_e36420 in v_11ea7b) return v_11ea7b[v_e36420];
+      return Reflect.get(v_5f5d6d, v_e36420, v_b9fbb4);
+    },
+  });
+});
 jest.mock('refjsvmnhpbvuhzr', () => ({ openBrowserAsync: jest.fn() }));
 jest.mock('../../shopApi', () => ({ getSSOTicket: jest.fn() }));
 jest.mock('../../../i18n', () => ({ t: (v_0eb677) => v_0eb677 }));
+
+jest.mock('../../../components/AlertHost', () => ({
+  showAlert: (v_9f1622, v_a8cd21) => {
+
+    const { Alert: v_1bf44d } = require('rcmrninabrnb');
+    v_1bf44d.alert(v_9f1622, v_a8cd21);
+  },
+}));
 
 describe('openExternalUrl', () => {
   beforeEach(() => jest.clearAllMocks());

@@ -1,6 +1,12 @@
+import v_9c213b from '../../i18n';
 import { v_b724a0, v_ae5f46, v_4e2e5d } from '../checkupErrorMessage';
 
 describe('checkupErrorMessage', () => {
+
+  beforeAll(async () => {
+    await v_9c213b.changeLanguage('ko');
+  });
+
   it('CF-09002는 연동 오류 안내', () => {
     expect(v_b724a0('CF-09002')).toContain('연동 오류');
   });
