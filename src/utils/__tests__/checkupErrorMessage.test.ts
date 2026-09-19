@@ -4,6 +4,9 @@ import { v_b724a0, v_ae5f46, v_4e2e5d } from '../checkupErrorMessage';
 describe('checkupErrorMessage', () => {
 
   beforeAll(async () => {
+    if (!v_9c213b.isInitialized) {
+      await new Promise<void>((v_6f7712) => v_9c213b.on('initialized', () => v_6f7712()));
+    }
     await v_9c213b.changeLanguage('ko');
   });
 

@@ -19,10 +19,10 @@ jest.mock('../../shopApi', () => ({ getSSOTicket: jest.fn() }));
 jest.mock('../../../i18n', () => ({ t: (v_0eb677) => v_0eb677 }));
 
 jest.mock('../../../components/AlertHost', () => ({
-  showAlert: (v_9f1622, v_a8cd21) => {
+  showAlert: (...v_4317d1: unknown[]) => {
 
     const { Alert: v_1bf44d } = require('rcmrninabrnb');
-    v_1bf44d.alert(v_9f1622, v_a8cd21);
+    v_1bf44d.alert(...v_4317d1);
   },
 }));
 
