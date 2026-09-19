@@ -196,8 +196,8 @@ const v_d81136 = v_472849.create({
     paddingBottom: v_9b1a04.xlarge,
   },
   inner: { width: '100%' },
-  label: { fontFamily: v_843035.regular, fontSize: v_ef658a.small, color: v_1bfbd0.textSecondary },
-  orderId: { fontFamily: v_843035.semiBold, fontSize: v_ef658a.medium, color: v_1bfbd0.text, marginBottom: v_9b1a04.large },
+  label: { fontFamily: v_843035.regular, fontSize: v_ef658a.small, color: v_1bfbd0.secondaryText },
+  orderId: { fontFamily: v_843035.semibold, fontSize: v_ef658a.medium, color: v_1bfbd0.text, marginBottom: v_9b1a04.large },
   card: {
     backgroundColor: v_1bfbd0.white,
     borderRadius: 16,
@@ -209,7 +209,7 @@ const v_d81136 = v_472849.create({
     shadowRadius: 8,
     elevation: 2,
   },
-  amountLabel: { fontFamily: v_843035.regular, fontSize: v_ef658a.small, color: v_1bfbd0.textSecondary },
+  amountLabel: { fontFamily: v_843035.regular, fontSize: v_ef658a.small, color: v_1bfbd0.secondaryText },
   krw: { fontFamily: v_843035.bold, fontSize: 28, color: v_1bfbd0.buttonPrimary, marginTop: 8 },
   mtht: { fontFamily: v_843035.medium, fontSize: v_ef658a.medium, color: v_1bfbd0.text, marginTop: 6 },
   panel: {
@@ -231,7 +231,7 @@ const v_d81136 = v_472849.create({
   hint: {
     fontFamily: v_843035.regular,
     fontSize: v_ef658a.small,
-    color: v_1bfbd0.textSecondary,
+    color: v_1bfbd0.secondaryText,
     marginBottom: v_9b1a04.medium,
     lineHeight: 22,
     textAlign: 'left',
@@ -239,7 +239,7 @@ const v_d81136 = v_472849.create({
   hintCenter: {
     fontFamily: v_843035.regular,
     fontSize: v_ef658a.small,
-    color: v_1bfbd0.textSecondary,
+    color: v_1bfbd0.secondaryText,
     marginBottom: v_9b1a04.large,
     lineHeight: 22,
     textAlign: 'center',
@@ -247,16 +247,16 @@ const v_d81136 = v_472849.create({
   actionGroup: { gap: 12, marginTop: 4 },
   secondaryBtn: { marginTop: 0 },
   success: {
-    fontFamily: v_843035.semiBold,
+    fontFamily: v_843035.semibold,
     fontSize: v_ef658a.large,
     color: '#27ae60',
     marginBottom: v_9b1a04.xmedium,
     textAlign: 'center',
   },
   declined: {
-    fontFamily: v_843035.semiBold,
+    fontFamily: v_843035.semibold,
     fontSize: v_ef658a.large,
-    color: v_1bfbd0.textSecondary,
+    color: v_1bfbd0.secondaryText,
     marginBottom: v_9b1a04.medium,
     textAlign: 'center',
     lineHeight: 24,
@@ -264,7 +264,7 @@ const v_d81136 = v_472849.create({
   tx: {
     fontFamily: v_843035.regular,
     fontSize: v_ef658a.small,
-    color: v_1bfbd0.textSecondary,
+    color: v_1bfbd0.secondaryText,
     marginBottom: v_9b1a04.medium,
     textAlign: 'center',
     lineHeight: 20,

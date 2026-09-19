@@ -295,7 +295,7 @@ const CheckupNhisScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6 }) => {
                       <View style={[
                         v_d81136.providerIcon,
                         !v_e2a85c.image && { backgroundColor: v_e2a85c.color },
-                        v_e2a85c.image && v_d81136.providerIconImageWrap,
+                        !!v_e2a85c.image && v_d81136.providerIconImageWrap,
                       ]}>
                         {v_e2a85c.image ? (
                           <Image source={v_e2a85c.image} style={v_d81136.providerIconImage} />
