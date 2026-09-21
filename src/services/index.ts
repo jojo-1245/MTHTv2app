@@ -58,6 +58,13 @@ export type {
 
 export { logToServer } from './clientLog';
 export type { LogLevel } from './clientLog';
+export {
+  trackPageEvent,
+  trackPageOpen,
+  trackAction,
+  trackNavigationStateChange,
+  routeNameToPageId,
+} from './pageTrack';
 
 export { requestCheckup, approveCheckup, getMyCheckups } from './codefApi';
 export type { CheckupInput, TwoWay, CheckupRow, RequestCheckupResult, ApproveCheckupResult } from './codefApi';
