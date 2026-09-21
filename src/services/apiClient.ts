@@ -5,6 +5,7 @@ import { v_624bd2 } from '../constants';
 import { v_2a53b4 } from '../navigation/rootNavigationRef';
 import { v_0b4eec, v_1cec06, v_8e9934 } from '../utils/tokenCache';
 import { v_42edc9 } from '../utils/dateUtils';
+import { v_c6c34e, v_8830f3 } from './maintenanceSignal';
 
 const v_8a74cb = 20000;
 
@@ -69,6 +70,10 @@ v_9a8286.interceptors.response.use(
     const v_d308b5 = v_5e9bfe.response?.status;
     const v_9390e8 = v_5e9bfe.response?.data as any;
     const v_a8cd21 = v_9390e8?.error?.message || '';
+
+    if (v_c6c34e(v_d308b5, v_9390e8)) {
+      v_8830f3();
+    }
 
     const v_edfdf4 =
       v_d308b5 === 401 ||
