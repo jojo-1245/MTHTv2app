@@ -267,3 +267,29 @@ test('보강 3-2: 9003 이 1초에 200건 쏟아져도 재조회는 1회로 억�
 
   expect(v_9cebb9).toHaveBeenCalledTimes(v_2113ce + 1);
 });
+
+describe('보강 3-2: 조회가 끝나는 틱 근처에 들어온 신호도 삼켜지지 않는다 (finally 레이스)', () => {
+
+  for (let v_4f4226 = 0; v_4f4226 <= 6; v_4f4226 += 1) {
+    test(`fetch resolve 후 ${v_4f4226} hop 지점에 도착한 신호`, async () => {
+      let resolveFirst: (value: ReturnType<typeof v_d308b5> | null) => void = () => undefined;
+      const v_63dc80 = new Promise<ReturnType<typeof v_d308b5> | null>((v_6f7712) => {
+        v_5047a2 = v_6f7712;
+      });
+      v_9cebb9.mockReturnValueOnce(v_63dc80).mockResolvedValue(v_d308b5(true));
+
+      v_0da18b(() => v_bfe92f(true));
+      await v_4692eb(v_10b152);
+      expect(v_9cebb9).toHaveBeenCalledTimes(1);
+
+      await v_be73a0(async () => {
+        v_5047a2(v_d308b5(false));
+        for (let v_ebec57 = 0; v_ebec57 < v_4f4226; v_ebec57 += 1) await Promise.resolve();
+        v_8830f3(7_000_000 + v_4f4226 * 1_000_000);
+        for (let v_ebec57 = 0; v_ebec57 < 6; v_ebec57 += 1) await Promise.resolve();
+      });
+
+      expect(v_9cebb9).toHaveBeenCalledTimes(2);
+    });
+  }
+});

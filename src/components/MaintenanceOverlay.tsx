@@ -25,8 +25,9 @@ export function v_c8aeff({ visible: v_cf55be, onRetry: v_09e13b }: MaintenanceOv
     v_5f3183(true);
     try {
       await v_09e13b();
-    } catch {
+    } catch (v_9e86fd) {
 
+      if (__DEV__) console.log('[MaintenanceOverlay] 재확인 실패:', v_9e86fd);
     } finally {
       v_5f3183(false);
     }
