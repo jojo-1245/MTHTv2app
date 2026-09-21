@@ -19,6 +19,8 @@ export function v_bfe92f(v_d20c84 = true) {
 
   const v_3ee6e7 = v_e662ae(0);
 
+  const v_b911c1 = v_e662ae<(() => Promise<unknown>) | null>(null);
+
   const v_4ae0bf = v_de06a3(async () => {
     if (!v_d20c84) return;
     if (v_9468fd.current) {
@@ -53,12 +55,18 @@ export function v_bfe92f(v_d20c84 = true) {
       } while (v_d340ab.current);
     })().finally(() => {
       v_9468fd.current = null;
-      v_d340ab.current = false;
+
+      if (v_d340ab.current) {
+        v_d340ab.current = false;
+        void v_b911c1.current?.();
+      }
     });
 
     v_9468fd.current = v_d9b231;
     return v_d9b231;
   }, [v_d20c84]);
+
+  v_b911c1.current = v_4ae0bf;
 
   v_c4deb2(() => {
     if (!v_d20c84) {

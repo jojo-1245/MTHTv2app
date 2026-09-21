@@ -25,12 +25,14 @@ export function v_8830f3(v_5c2f9f = Date.now()): boolean {
 
       const v_724e7b = v_8b0dd9() as Promise<unknown> | void;
       if (v_724e7b && typeof (v_724e7b as Promise<unknown>).then === 'function') {
-        void (v_724e7b as Promise<unknown>).catch(() => {
+        void (v_724e7b as Promise<unknown>).catch((v_9e86fd) => {
 
+          if (__DEV__) console.log('[MaintenanceSignal] 구독자 비동기 실패:', v_9e86fd);
         });
       }
-    } catch {
+    } catch (v_9e86fd) {
 
+      if (__DEV__) console.log('[MaintenanceSignal] 구독자 예외:', v_9e86fd);
     }
   });
   return true;
