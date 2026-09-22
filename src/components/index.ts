@@ -75,6 +75,7 @@ export { MaintenanceOverlay } from './MaintenanceOverlay';
 export { MedicalDisclaimerModal } from './MedicalDisclaimerModal';
 export { StoreUpdateModal } from './StoreUpdateModal';
 export { UpdateReadyModal } from './UpdateReadyModal';
+export { PageTrackErrorBoundary } from './PageTrackErrorBoundary';
 
 export { default as SidebarMenu } from './SidebarMenu';
 export type { SidebarMenuProps, SidebarMenuItem } from './SidebarMenu';

@@ -63,7 +63,12 @@ export {
   trackPageOpen,
   trackAction,
   trackNavigationStateChange,
+  trackRuntimeError,
+  installPageTrackErrorHandlers,
+  getLastPageId,
   routeNameToPageId,
+  PAGE_TRACK_ERROR_ACTION,
+  PAGE_RUNTIME_ERROR_ACTION,
 } from './pageTrack';
 
 export { requestCheckup, approveCheckup, getMyCheckups } from './codefApi';
