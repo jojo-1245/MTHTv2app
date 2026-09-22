@@ -18,8 +18,9 @@ import { v_96a538 } from './src/hooks/useVersionCheck';
 import { v_bfb6ac } from './src/hooks/useEasUpdate';
 import { v_b357c3 } from './src/services/admob';
 import { v_bfe92f } from './src/hooks/useKeepalive';
-import { v_9cafa7, v_fba277, v_26d101, v_e7b48a } from './src/components';
+import { v_9cafa7, v_fba277, v_26d101, v_e7b48a, v_c8aeff, v_e0fb12 } from './src/components';
 import * as v_79a9df from './src/services/versionService';
+import { v_38ff2c } from './src/services/pageTrack';
 import './src/i18n';
 
 const v_20ccc6 = {
@@ -84,7 +85,7 @@ export default function v_6540c3() {
     dismiss: v_24b920,
   } = v_bfb6ac();
 
-  const { notice: v_d48273, dismissNotice: v_2852e3 } = v_bfe92f(v_4c1272);
+  const { notice: v_d48273, dismissNotice: v_2852e3, maintenanceMode: v_441eb2, recheck: v_14b5f1 } = v_bfe92f(v_4c1272);
 
   v_c4deb2(() => {
 
@@ -97,6 +98,10 @@ export default function v_6540c3() {
 
   v_c4deb2(() => {
     v_7c6176.preventAutoHideAsync().catch(() => null);
+  }, []);
+
+  v_c4deb2(() => {
+    v_38ff2c();
   }, []);
 
   v_c4deb2(() => {
@@ -171,13 +176,19 @@ export default function v_6540c3() {
           <PharmacistGuestProvider>
             <WalletProvider>
               <StepTrackingProvider>
-                <AppNavigator />
-                <AlertHost />
+                <PageTrackErrorBoundary>
+                  <AppNavigator />
+                  <AlertHost />
+                </PageTrackErrorBoundary>
               </StepTrackingProvider>
             </WalletProvider>
           </PharmacistGuestProvider>
         </AppProvider>
       </SafeAreaProvider>
+
+      {
+}
+      <MaintenanceOverlay visible={v_441eb2} onRetry={v_14b5f1} />
 
       <EmergencyNoticeModal notice={v_d48273} onDismiss={v_2852e3} />
 
