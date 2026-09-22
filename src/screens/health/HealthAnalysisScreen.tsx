@@ -87,10 +87,14 @@ enum SmokingStatus {
   NON_SMOKER = 2,
 }
 
-import { v_6daddc, v_2c13e7, v_1f53bf } from '../../hooks/useSystemConfig';
+import { v_6daddc, v_bb8240, v_2c13e7, v_1f53bf } from '../../hooks/useSystemConfig';
 const v_fa53c9 = async (): Promise<string> => {
   await v_6daddc();
-  const v_651d83 = v_2c13e7('fzljtili_license_key');
+  let v_651d83 = v_2c13e7('fzljtili_license_key');
+  if (!v_651d83) {
+    await v_bb8240().catch(() => {});
+    v_651d83 = v_2c13e7('fzljtili_license_key');
+  }
   if (!v_651d83) {
     console.warn('경고: 서버 config에 fzljtili_license_key가 비어있습니다.');
   }

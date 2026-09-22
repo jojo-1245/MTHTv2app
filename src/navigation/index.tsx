@@ -51,6 +51,7 @@ import v_d3b4f6 from '../screens/ShopPaymentConfirmScreen';
 import v_5109e7 from '../screens/RecommendedSupplementsScreen';
 import { v_4482f8, v_5bfacf } from '../hooks/useShopPaymentPush';
 import { v_6c5337, type v_c99f09 } from './resolveInitialRoute';
+import { v_699050 } from '../services/pageTrack';
 
 import type { v_0476f3 } from '../services/walletApi';
 
@@ -299,6 +300,9 @@ export const AppNavigator: v_a3453e.FC = () => {
 
   const v_ad5855 = v_de06a3(async () => {
     console.log('[DeepLink] onReady 진입 — getInitialURL 호출');
+    try {
+      v_699050(v_60875a.getRootState());
+    } catch {  }
     const v_f71b56 = await v_f2c756.getInitialURL();
     console.log('[DeepLink] getInitialURL 결과:', v_f71b56);
     if (v_f71b56) {
@@ -322,7 +326,11 @@ export const AppNavigator: v_a3453e.FC = () => {
   }
 
   return (
-    <NavigationContainer ref={v_60875a} onReady={v_ad5855}>
+    <NavigationContainer
+      ref={v_60875a}
+      onReady={v_ad5855}
+      onStateChange={v_699050}
+    >
       <Stack.Navigator
         initialRouteName={v_9a7abf}
         screenOptions={{

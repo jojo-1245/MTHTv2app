@@ -112,9 +112,14 @@ class v_3c3bb8 {
   }
 
   async ensureApiKey(): Promise<string> {
-    const { ensureSystemConfig: v_6daddc, getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
+
+    const { ensureSystemConfig: v_6daddc, refreshSystemConfig: v_bb8240, getSystemConfigValue: v_2c13e7 } = require('../hooks/useSystemConfig');
     await v_6daddc();
     this.apiKey = v_2c13e7('youcam_api_key') || '';
+    if (!this.apiKey) {
+      await v_bb8240().catch(() => {});
+      this.apiKey = v_2c13e7('youcam_api_key') || '';
+    }
     return this.apiKey;
   }
 
