@@ -36,7 +36,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
-import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, type v_71beaa } from './vitalSignStatus';
+import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, v_c7d798, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
 import { v_5a0119 } from '../../hooks/useUserRole';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
@@ -329,7 +329,15 @@ const v_50f905 = (v_3b27d9, v_8d41d7): string => {
     [v_e3e816.PULSE_PRESSURE]: v_8d41d7('health_analysis.vitals.pulse_pressure'),
     [v_e3e816.BODY_TENSION_SCORE]: v_8d41d7('health_analysis.vitals.body_tension_score'),
   };
-  return v_f2dfb8[v_3b27d9] || `Result (${v_3b27d9})`;
+
+  if (typeof v_3b27d9 === 'string' && Object.prototype.hasOwnProperty.call(v_f2dfb8, v_3b27d9)) {
+    return (v_f2dfb8 as Record<string, string>)[v_3b27d9];
+  }
+  const v_653390 = typeof v_3b27d9 === 'number' ? v_3b27d9 : Number(v_3b27d9);
+  if (Number.isFinite(v_653390) && v_f2dfb8[v_653390]) {
+    return v_f2dfb8[v_653390];
+  }
+  return v_8d41d7('health_analysis.vitals.unknown', '측정결과');
 };
 
 const v_2c4b08 = (v_3b27d9, v_8d41d7): string => {
@@ -370,7 +378,14 @@ const v_2c4b08 = (v_3b27d9, v_8d41d7): string => {
     [v_e3e816.PULSE_PRESSURE]: v_8d41d7('health_analysis.vitals.pulse_pressure_desc'),
     [v_e3e816.BODY_TENSION_SCORE]: v_8d41d7('health_analysis.vitals.body_tension_score_desc'),
   };
-  return v_394a2e[v_3b27d9] || v_8d41d7('health_analysis.vitals.default_desc');
+  if (typeof v_3b27d9 === 'string' && Object.prototype.hasOwnProperty.call(v_394a2e, v_3b27d9)) {
+    return (v_394a2e as Record<string, string>)[v_3b27d9];
+  }
+  const v_653390 = typeof v_3b27d9 === 'number' ? v_3b27d9 : Number(v_3b27d9);
+  if (Number.isFinite(v_653390) && v_394a2e[v_653390]) {
+    return v_394a2e[v_653390];
+  }
+  return v_8d41d7('health_analysis.vitals.default_desc');
 };
 
 interface RiskCriteria {
@@ -653,7 +668,16 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_a7f568, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7, fromHistory: v_4c18b6 } = v_c7daf6.params;
+  const { results: v_b938a1, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7, fromHistory: v_4c18b6 } = v_c7daf6.params;
+
+  const v_a7f568 = v_df9f57(() => {
+    const v_479f05 = (v_b938a1 || {}) as Record<string, any>;
+    const v_fa53ec = Object.keys(v_479f05);
+    if (v_fa53ec.length === 0) return v_479f05 as Record<number, any>;
+    const v_92eea9 = v_fa53ec.every((v_0eb677) => Number.isFinite(Number(v_0eb677)) && String(Number(v_0eb677)) === v_0eb677);
+    if (v_92eea9) return v_479f05 as Record<number, any>;
+    return v_c7d798(v_479f05);
+  }, [v_b938a1]);
   const [v_ac1d22, v_02dd63] = v_5ab095<'measure' | 'records'>('measure');
   const v_033e14 = v_e0068c();
   const v_6c4b91 = v_2cc9f8();
@@ -2568,7 +2592,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           : v_d308b5 === '위험'
                             ? v_8d41d7('health_analysis.result.risk')
                             : null;
-                      return { type: v_3b27d9, icon: v_9ddfab, iconColor: v_ef160b, label: v_50f905(v_3b27d9, v_8d41d7), displayValue: v_b2926d, status: v_d308b5, statusLabel: v_c4180e, statusColors: v_d72c04, valueColor: v_d308b5 === '위험' ? '#EF4444' : v_1bfbd0.text };
+                      return { type: v_3b27d9, icon: v_9ddfab, iconColor: v_ef160b, label: v_50f905(Number(v_3b27d9), v_8d41d7), displayValue: v_b2926d, status: v_d308b5, statusLabel: v_c4180e, statusColors: v_d72c04, valueColor: v_d308b5 === '위험' ? '#EF4444' : v_1bfbd0.text };
                     })
                     .filter(Boolean);
                   if (v_4552ca.length === 0) return null;
@@ -2890,6 +2914,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                     <Text style={v_d81136.sectionHeader}>{v_8d41d7('health_analysis.result.section_others')}</Text>
                     {v_71e822.map(([v_3b27d9, v_9390e8]) => {
                       const v_653390 = Number(v_3b27d9);
+                      if (!Number.isFinite(v_653390)) return null;
                       const v_1833e7 = v_50f905(v_653390, v_8d41d7);
                       const v_72b4e2 = v_a6fe82(v_9390e8.value, v_653390, v_8d41d7);
                       const v_1d99bf = v_fec579(v_72b4e2);
