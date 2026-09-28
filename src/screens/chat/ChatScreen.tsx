@@ -40,6 +40,9 @@ import v_e209a2 from '../../components/DataConsentModal';
 import { v_9d6425 } from '../health/vitalSignStatus';
 import { v_19dbdf } from '../../hooks/useSystemConfig';
 import { v_f5ba54 } from '../../services/skinAnalysis';
+import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
+import { v_624bd2 } from '../../constants';
+import { v_0b4eec, v_1cec06 } from '../../utils/tokenCache';
 
 const v_90fa17 = require('../../../assets/images/robot_face.png');
 
@@ -677,8 +680,9 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 
     try {
 
+      const v_b1ae2f = v_fd771c(v_e7b2f2);
       const { healthRecords: v_77cfc3, skinRecords: v_d6b96e } = await v_edced5(
-        v_fd771c(v_e7b2f2),
+        v_b1ae2f,
         { getHealthRecords: v_777b12, getSkinRecords: v_81fcbc },
       );
 
@@ -746,6 +750,17 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
 
       v_6f3521.setRequestHeader('x-app-locale', v_9c213b.language || 'ko');
 
+      v_6f3521.setRequestHeader('x-app-platform', v_326be8.OS === 'android' ? 'android' : 'ios');
+
+      let v_2ca7e0 = v_0b4eec();
+      if (!v_2ca7e0) {
+        v_2ca7e0 = await v_e84827.getItem(v_624bd2.authToken);
+        if (v_2ca7e0) v_1cec06(v_2ca7e0);
+      }
+      if (v_2ca7e0) {
+        v_6f3521.setRequestHeader('Authorization', `Bearer ${v_2ca7e0}`);
+      }
+
       let v_3e1c56 = 0;
 
       v_6f3521.onreadystatechange = () => {
@@ -777,13 +792,20 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
         v_41d55d(v_ba2215 => v_ba2215.map(v_35f85c => v_35f85c.id === v_4e9c48 ? { ...v_35f85c, text: '네트워크 오류가 발생했습니다.', isLoading: false } : v_35f85c));
       };
 
+      const v_27ecba = v_fd771c(v_e7b2f2);
       const v_931bf0 = {
         query: v_9b6134,
         stream: true,
         jsonData: {
           healthData: v_681458,
           skinData: v_0fa025,
-        }
+        },
+
+        record_refs: {
+          health_record_id: v_ec41ce?.id ?? null,
+          skin_record_id: v_068098?.id ?? null,
+          sub_account_id: v_b1ae2f.kind === 'sub' ? Number(v_b1ae2f.subAccountId) || null : null,
+        },
       };
 
       v_6f3521.send(JSON.stringify(v_931bf0));
