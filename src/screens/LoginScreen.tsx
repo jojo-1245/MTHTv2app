@@ -475,10 +475,9 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         if (__DEV__) console.log('[Google] 사용자 취소 코드 감지 → 조용히 종료');
         return;
       }
-      const v_badeaf = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
-      const v_e629b5 = v_badeaf === 'Google 계정 이메일 공개 동의가 필요합니다.'
-        ? v_badeaf
-        : v_8d41d7('login.error_unknown');
+
+      const v_badeaf = v_5e9bfe instanceof Error ? v_5e9bfe.message.trim() : '';
+      const v_e629b5 = v_badeaf || v_8d41d7('login.error_unknown');
       v_889fad(v_8d41d7('login.error_failed'), v_e629b5);
     } finally {
       v_deef62(false);
