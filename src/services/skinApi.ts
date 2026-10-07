@@ -890,3 +890,56 @@ export async function v_e42095(v_fbf3b0): Promise<void> {
     throw v_1bbaa4(v_5e9bfe);
   }
 }
+
+export type SkinAnalysisAttemptStatus =
+  | 'started'
+  | 'api_success'
+  | 'api_fail'
+  | 'save_success'
+  | 'save_fail';
+
+export type LogSkinAnalysisAttemptPayload = {
+  kind?: 'skin' | 'health';
+  status: SkinAnalysisAttemptStatus;
+  save_target?: 'skin_records' | 'health_records' | 'pharmacy_visit_records' | 'none' | null;
+  record_id?: number | null;
+  sub_account_id?: number | null;
+  pharmacy_visitor_id?: number | null;
+  pharmacy_id?: number | null;
+  task_id?: string | null;
+  error_code?: string | null;
+  error_message?: string | null;
+  overall_score?: number | null;
+  skin_age?: number | null;
+  platform?: string | null;
+  app_version?: string | null;
+  device_info?: string | null;
+  payload?: Record<string, unknown> | null;
+};
+
+export function v_f85fc8(v_931bf0): void {
+  void (async () => {
+    try {
+      const v_c9c489 = v_e4a763();
+      const v_fed274 = v_c9c489.GATEWAY;
+      if (!v_fed274) return;
+      const v_21cc31 = await v_bcce6e();
+      if (!v_21cc31) return;
+      await v_b5030f.post(
+        `${v_fed274}/oth-path`,
+        v_931bf0,
+        {
+          timeout: 8000,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${v_21cc31}`,
+          },
+        },
+      );
+    } catch (v_9e86fd) {
+      if (__DEV__) {
+        console.warn('[skinApi] logSkinAnalysisAttempt failed:', v_9e86fd);
+      }
+    }
+  })();
+}
