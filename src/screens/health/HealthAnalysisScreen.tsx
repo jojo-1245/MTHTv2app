@@ -52,7 +52,7 @@ import { v_9e8766, v_326fbf, v_5a0119 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
-import { v_207199, v_23b7ab, v_8c9ccd } from '../../services';
+import { v_207199, v_23b7ab, v_8c9ccd, v_f85fc8 } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
 import { v_777b12 } from '../../services/healthApi';
 
@@ -1665,6 +1665,17 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             }
           } catch (v_09112b) {
             console.error('[결과 화면 이동] API 저장 실패:', v_09112b);
+            const v_b38b72 = v_8ea5e8(v_5f6b8d, v_3de945);
+            v_f85fc8({
+              kind: 'health',
+              status: 'save_fail',
+              save_target: v_b38b72 ? 'pharmacy_visit_records' : 'health_records',
+              pharmacy_visitor_id: v_b38b72 && v_3de945?.visitorId ? v_3de945.visitorId : null,
+              error_code: 'CLIENT_SAVE_FAIL',
+              error_message: v_09112b instanceof Error ? v_09112b.message : String(v_09112b),
+              overall_score: v_e93dff,
+              platform: v_326be8.OS,
+            });
           }
 
           console.log('[결과 화면 이동] navigate, recordId:', v_4ae380);
