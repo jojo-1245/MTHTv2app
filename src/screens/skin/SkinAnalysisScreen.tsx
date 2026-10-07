@@ -61,7 +61,7 @@ import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a } from '../../services';
+import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a, v_f85fc8 } from '../../services';
 import { v_81fcbc, v_095212, type v_b57732 } from '../../services/skinApi';
 import { v_71f4f5 } from '../../services/pharmacyApi';
 import {
@@ -658,7 +658,8 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 }
 
                 let v_0bce57;
-                if (v_8ea5e8(v_5f6b8d, v_3de945)) {
+                const v_b38b72 = v_8ea5e8(v_5f6b8d, v_3de945);
+                if (v_b38b72) {
                     v_0bce57 = await v_e252f4({
                         verifiedGuest: v_3de945,
                         kind: 'skin',
@@ -679,7 +680,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 if (v_0bce57) {
                     v_f4f730.current = v_0bce57;
                     v_43dcda(v_0bce57);
-                    if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
+                    if (!v_b38b72) {
                         v_8c9ccd('skin_analysis', v_0bce57)
                             .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
                             .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
@@ -687,6 +688,21 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 }
             } catch (v_5e9bfe) {
                 console.error('[SkinAnalysisScreen] 피부 분석 결과 저장 실패:', v_5e9bfe);
+                const v_b38b72 = v_8ea5e8(v_5f6b8d, v_3de945);
+                const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
+                const v_083682 = v_0c2f9b?.isCurrent === true;
+                const v_f6ed03 = v_2282da(v_e7b2f2);
+                const v_e30c60 = v_083682 ? null : (v_f6ed03 && v_f6ed03 !== '1' && v_f6ed03 !== 'me' ? Number(v_f6ed03) : null);
+                v_f85fc8({
+                    status: 'save_fail',
+                    save_target: v_b38b72 ? 'pharmacy_visit_records' : 'skin_records',
+                    sub_account_id: v_e30c60,
+                    pharmacy_visitor_id: v_b38b72 && v_3de945?.visitorId ? v_3de945.visitorId : null,
+                    task_id: v_e521b9?.taskId ?? null,
+                    error_code: 'CLIENT_SAVE_FAIL',
+                    error_message: v_5e9bfe instanceof Error ? v_5e9bfe.message : String(v_5e9bfe),
+                    platform: v_326be8.OS,
+                });
 
             }
         };
@@ -936,10 +952,24 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 timestamp: new Date().toISOString(),
             });
             v_639227('result');
+            v_f85fc8({
+                status: 'api_success',
+                save_target: 'none',
+                task_id: v_927f76.data.task_id ?? null,
+                platform: v_326be8.OS,
+                payload: { mode: v_34e5bb, concerns: v_3e850e?.length },
+            });
 
         } catch (v_5e9bfe) {
             console.error('피부 분석 오류:', v_5e9bfe);
             const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('skin.alerts.analysis_error');
+            v_f85fc8({
+                status: 'api_fail',
+                save_target: 'none',
+                error_code: 'YOUCAM_FAIL',
+                error_message: v_a8cd21,
+                platform: v_326be8.OS,
+            });
             v_5c59f6(v_a8cd21);
             v_889fad(v_8d41d7('common.error'), v_8d41d7('skin.capture.verification_failed_retake'));
             v_639227('capture');
