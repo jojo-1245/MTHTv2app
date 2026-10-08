@@ -54,6 +54,9 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
 
   const v_5739ac = v_c7daf6.params?.fromSocial;
   const v_9607d3 = v_c7daf6.params?.email ?? '';
+  const v_e230fe = v_c7daf6.params?.name ?? '';
+  const v_3b6fd7 = v_c7daf6.params?.gender;
+  const v_636e42 = v_c7daf6.params?.ageRange;
 
   const v_21bdd5 = v_df9f57(() => [
     { value: 'none' as const, label: v_8d41d7('signup.select') },
@@ -70,10 +73,10 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   const [v_d74a81, v_fcce73] = v_5ab095(v_8d7bc8.phone ?? '');
   const v_25381d = v_e662ae<v_79c4f2>(null);
   const [v_c3eac4, v_bdc43c] =
-    v_5ab095<'none' | 'male' | 'female'>('none');
-  const [v_f83808, v_64a312] = v_5ab095<AgeOption>('select');
+    v_5ab095<'none' | 'male' | 'female'>(v_3b6fd7 ?? 'none');
+  const [v_f83808, v_64a312] = v_5ab095<AgeOption>(v_636e42 ?? 'select');
   const [v_e0c7e8, v_fedf34] = v_5ab095(v_9607d3);
-  const [v_1833e7, v_318f24] = v_5ab095('');
+  const [v_1833e7, v_318f24] = v_5ab095(v_e230fe);
   const [v_adc076, v_52b279] = v_5ab095('');
   const [v_0b3ebe, v_241a35] = v_5ab095('');
   const [v_9bf12c, v_fb6bbb] = v_5ab095('');
@@ -111,6 +114,18 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
   v_c4deb2(() => {
     if (v_9607d3) v_fedf34(v_9607d3);
   }, [v_9607d3]);
+
+  v_c4deb2(() => {
+    if (v_e230fe) v_318f24(v_e230fe);
+  }, [v_e230fe]);
+
+  v_c4deb2(() => {
+    if (v_3b6fd7) v_bdc43c(v_3b6fd7);
+  }, [v_3b6fd7]);
+
+  v_c4deb2(() => {
+    if (v_636e42) v_64a312(v_636e42);
+  }, [v_636e42]);
 
   const v_0e461e = (v_3b402b): boolean => {
     const v_9a3638 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
