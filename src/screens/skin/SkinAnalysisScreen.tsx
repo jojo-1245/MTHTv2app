@@ -469,6 +469,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_f4f730 = v_e662ae<number | null>(null);
     const [v_4ae380, v_43dcda] = v_5ab095<number | null>(null);
 
+    const v_869122 = v_e662ae<number | null>(null);
+
+    const v_44479f = v_e662ae<number | null>(null);
+
     const v_85278b = v_e662ae(false);
     const [v_72ba9a, v_ce85ec] = v_5ab095(false);
 
@@ -713,32 +717,54 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     }, [v_e521b9, v_91943c, v_c86f08, v_e7b2f2, v_058956]);
 
     v_a3453e.useEffect(() => {
+        const v_fbf3b0 = v_f4f730.current ?? v_4ae380;
         if (__DEV__) {
             console.log('[AI 피부분석 effect]', {
                 ollamaAnalysis: !!v_e399bf,
-                isOllamaLoading: v_85cf60,
                 savedRecordId: v_4ae380,
                 savedRecordIdRef: v_f4f730.current,
+                aiAnalyzedRecordId: v_869122.current,
+                aiInFlight: v_44479f.current,
             });
         }
-        if (v_e399bf || v_85cf60) return;
-        const v_fbf3b0 = v_f4f730.current;
         if (!v_fbf3b0) {
             if (__DEV__) console.warn('[AI 피부분석] recordId 없음 - 저장 완료 대기 중');
             return;
         }
+        if (v_869122.current === v_fbf3b0) {
+            if (__DEV__) console.log('[AI 피부분석] 이미 이 recordId 분석 완료 — skip', v_fbf3b0);
+            return;
+        }
+        if (v_44479f.current === v_fbf3b0) return;
+
         if (__DEV__) console.log('[AI 피부분석] Ollama 호출 시작, recordId:', v_fbf3b0);
+        v_44479f.current = v_fbf3b0;
         v_952b9d(true);
         v_b42e4a(v_fbf3b0)
             .then((v_43c42e) => {
-                if (__DEV__) console.log('[AI 피부분석] 완료');
+
+                if (v_f4f730.current !== v_fbf3b0) {
+                    if (__DEV__) console.warn('[AI 피부분석] stale 응답 discard', v_fbf3b0);
+                    return;
+                }
+                if (__DEV__) console.log('[AI 피부분석] 완료, recordId:', v_fbf3b0);
+                v_869122.current = v_fbf3b0;
                 v_b11b33(v_43c42e);
             })
             .catch((v_9e86fd) => {
+                if (v_f4f730.current !== v_fbf3b0) return;
                 console.error('[AI 피부분석] 실패:', v_9e86fd);
+                v_869122.current = v_fbf3b0;
                 v_b11b33('AI 분석 중 오류가 발생했습니다.');
             })
-            .finally(() => v_952b9d(false));
+            .finally(() => {
+                if (v_44479f.current === v_fbf3b0) {
+                    v_44479f.current = null;
+                }
+                if (v_f4f730.current === v_fbf3b0) {
+                    v_952b9d(false);
+                }
+            });
     }, [v_4ae380]);
 
     const v_c00289 = v_de06a3(async (v_ee89db): Promise<FaceValidation> => {
@@ -874,6 +900,17 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_e61e4f(v_8d41d7('skin.analyzing.preparing'));
             v_5c59f6('');
             v_6f6f79(null);
+
+            v_85278b.current = false;
+            v_ce85ec(false);
+            v_b11b33(null);
+            v_952b9d(false);
+            v_43dcda(null);
+            v_f4f730.current = null;
+            v_869122.current = null;
+            v_44479f.current = null;
+            v_02a5a0.current = false;
+            v_f013b2.current = null;
 
             const v_5dc227 = v_34e5bb === 'hd' ? 2560 : 1920;
             console.log(`[Analysis] ${v_34e5bb.toUpperCase()} 모드로 이미지 리사이즈: ${v_5dc227}px`);
@@ -1270,8 +1307,11 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         v_5c59f6('');
         v_e61e4f('');
         v_b11b33(null);
+        v_952b9d(false);
         v_43dcda(null);
         v_f4f730.current = null;
+        v_869122.current = null;
+        v_44479f.current = null;
         v_02a5a0.current = false;
         v_f013b2.current = null;
     }, []);
@@ -1335,6 +1375,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             v_f013b2.current = v_42044e;
             v_f4f730.current = v_3cfdfc.id;
             v_43dcda(v_3cfdfc.id);
+
+            v_869122.current = null;
+            v_44479f.current = null;
             v_b11b33(null);
             v_952b9d(false);
             v_60b86c(v_3cfdfc.image_url ?? null);
