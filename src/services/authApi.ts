@@ -30,13 +30,19 @@ export interface LoginAuthPayload {
   [key: string]: unknown;
 }
 
-export type SocialLoginResult =
-  | { needsSignup: true; email: string }
-  | LoginAuthPayload;
+export type SocialLoginNeedsSignup = {
+  needsSignup: true;
+  email: string;
+  name?: string;
+  gender?: 'male' | 'female';
+  ageRange?: '10' | '20' | '30' | '40' | '50+';
+};
+
+export type SocialLoginResult = SocialLoginNeedsSignup | LoginAuthPayload;
 
 export function isSocialLoginNeedsSignup(
   r: SocialLoginResult
-): r is { needsSignup: true; email: string } {
+): r is SocialLoginNeedsSignup {
   return typeof r === 'object' && r !== null && (r as { needsSignup?: boolean }).needsSignup === true;
 }
 
@@ -201,15 +207,24 @@ export async function socialLogin(params: {
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (oth-secret) headers['X-Client-Token'] = oth-secret;
-    const res = await axios.post<ApiResponse<LoginAuthPayload & { needsSignup?: boolean; email?: string }>>(
-      url,
-      body,
-      { timeout: API_TIMEOUT, headers }
-    );
+    const res = await axios.post<
+      ApiResponse<
+        LoginAuthPayload & {
+          needsSignup?: boolean;
+          email?: string;
+          name?: string;
+          gender?: string;
+          ageRange?: string;
+        }
+      >
+    >(url, body, { timeout: API_TIMEOUT, headers });
     const raw = res.data as Record<string, unknown> | undefined;
     const data = (raw?.data != null ? raw.data : raw) as Record<string, unknown> | null | undefined;
     const needsSignupVal = data?.needsSignup ?? raw?.needsSignup;
     const emailVal = data?.email ?? raw?.email;
+    const nameVal = data?.name ?? raw?.name;
+    const genderVal = data?.gender ?? raw?.gender;
+    const ageRangeVal = data?.ageRange ?? raw?.ageRange;
 
     const payload: LoginAuthPayload =
       typeof data === 'object' && data !== null ? (data as LoginAuthPayload) : ({ token: data } as LoginAuthPayload);
@@ -230,19 +245,42 @@ export async function socialLogin(params: {
         hasData: !!data,
         needsSignup: needsSignupVal,
         email: emailVal,
+        name: nameVal,
+        gender: genderVal,
+        ageRange: ageRangeVal,
         keys: data ? Object.keys(data) : [],
         hasToken,
         hasMember,
       });
     }
 
+    const toNeedsSignup = (): SocialLoginNeedsSignup => {
+      const gender =
+        genderVal === 'male' || genderVal === 'female' ? genderVal : undefined;
+      const ageRange =
+        ageRangeVal === '10' ||
+        ageRangeVal === '20' ||
+        ageRangeVal === '30' ||
+        ageRangeVal === '40' ||
+        ageRangeVal === '50+'
+          ? ageRangeVal
+          : undefined;
+      return {
+        needsSignup: true,
+        email: typeof emailVal === 'string' ? emailVal : '',
+        ...(typeof nameVal === 'string' && nameVal ? { name: nameVal } : {}),
+        ...(gender ? { gender } : {}),
+        ...(ageRange ? { ageRange } : {}),
+      };
+    };
+
     if (needsSignupVal === true && !hasToken) {
       if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (needsSignup, 토큰 없음)', { email: emailVal });
-      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+      return toNeedsSignup();
     }
     if (!hasToken) {
       if (__DEV__) console.log('[authApi] social-login → 회원가입 플로우 (토큰 없음)');
-      return { needsSignup: true, email: typeof emailVal === 'string' ? emailVal : '' };
+      return toNeedsSignup();
     }
     if (__DEV__) console.log('[authApi] social-login → 로그인 처리', { hasToken, hasMember });
     return payload;
