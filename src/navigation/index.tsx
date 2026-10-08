@@ -72,7 +72,14 @@ export type RootStackParamList = {
     autoSendOtp?: boolean;
   } | undefined;
   Login: undefined;
-  Signup: { referralCode?: string; email?: string; fromSocial?: 'google' | 'apple' | 'naver' } | undefined;
+  Signup: {
+    referralCode?: string;
+    email?: string;
+    fromSocial?: 'google' | 'apple' | 'naver';
+    name?: string;
+    gender?: 'male' | 'female';
+    ageRange?: '10' | '20' | '30' | '40' | '50+';
+  } | undefined;
   ForgotPassword: undefined;
   PasswordVerification: {
     email: string;
