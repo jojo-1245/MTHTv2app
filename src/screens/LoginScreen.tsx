@@ -3,6 +3,7 @@ import {
   v_39a996,
   v_0e1f26,
   v_e767d1,
+  v_f2c756,
   v_aa7413,
   v_326be8,
   v_472849,
@@ -36,6 +37,19 @@ import { v_1fc886 } from '../services/authApi';
 import { v_c1a440 } from '../services/signupApi';
 import { v_87ba9a } from '../navigation/postLoginNavigation';
 import v_9a8286 from '../services/apiClient';
+
+v_2c8bdd.maybeCompleteAuthSession();
+
+function v_982381(v_f71b56): boolean {
+  if (!v_f71b56) return false;
+  const v_c2a559 = v_f71b56.includes('code=') || v_f71b56.includes('error=');
+  if (!v_c2a559) return false;
+  return (
+    v_f71b56.includes('/oauth/naver') ||
+    v_f71b56.startsWith('ai.metahint.appw://') ||
+    v_f71b56.startsWith('metahintai://')
+  );
+}
 
 const v_a98e10 = ({ size: v_05b441 = 20 }: { size?: number }) => (
   <Svg width={v_05b441} height={v_05b441} viewBox="0 0 120 111" fill="none">
@@ -325,22 +339,67 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       return;
     }
     v_deef62(true);
+    let v_1e5bc0 = null;
+    const v_3c60e6 = new Promise<string | null>((v_6f7712) => {
+      v_1e5bc0 = v_6f7712;
+    });
+    const v_e7a9dc = v_f2c756.addEventListener('url', ({ url: v_f71b56 }) => {
+      if (v_982381(v_f71b56)) {
+        v_1e5bc0?.(v_f71b56);
+        v_1e5bc0 = null;
+      }
+    });
     try {
       const v_b6e533 = Math.random().toString(36).slice(2, 15);
       const v_04129a =
         `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${encodeURIComponent(v_e3f3fd)}` +
         `&state=${encodeURIComponent(v_b6e533)}&redirect_uri=${encodeURIComponent(v_f41eea)}`;
-      const v_43c42e = await v_2c8bdd.openAuthSessionAsync(v_04129a, v_f41eea);
-      if (__DEV__) console.log('[Naver] 인증 결과', { type: v_43c42e.type, hasUrl: !!(v_43c42e as { url?: string }).url });
-      if (v_43c42e.type !== 'success' || !v_43c42e.url) {
-        if (v_43c42e.type === 'cancel') {
+
+      const v_1b36b5 = v_2c8bdd.openAuthSessionAsync(v_04129a, v_f41eea);
+      const v_d01d3c = await Promise.race([
+        v_1b36b5.then((v_cb35cb) => ({ source: 'session' as const, r: v_cb35cb })),
+        v_3c60e6.then((v_f71b56) => (v_f71b56 ? { source: 'link' as const, url: v_f71b56 } : null)),
+      ]);
+
+      let v_f71b56;
+      if (v_d01d3c?.source === 'link') {
+        if (__DEV__) console.log('[Naver] deep link로 콜백 수신');
+        try {
+          await v_2c8bdd.dismissBrowser();
+        } catch {
+
+        }
+        v_f71b56 = v_d01d3c.url;
+      } else if (v_d01d3c?.source === 'session') {
+        if (__DEV__) {
+          console.log('[Naver] 인증 결과', {
+            type: v_d01d3c.r.type,
+            hasUrl: !!(v_d01d3c.r as { url?: string }).url,
+          });
+        }
+        if (v_d01d3c.r.type === 'success' && v_d01d3c.r.url) {
+          v_f71b56 = v_d01d3c.r.url;
+        } else if (v_d01d3c.r.type === 'cancel') {
           if (__DEV__) console.log('[Naver] 사용자 취소');
           return;
+        } else {
+
+          const v_38066f = await Promise.race([
+            v_3c60e6,
+            new Promise<null>((v_6f7712) => setTimeout(() => v_6f7712(null), 5000)),
+          ]);
+          if (!v_38066f) {
+            v_889fad(v_8d41d7('login.error_failed'), v_8d41d7('login.error_unknown'));
+            return;
+          }
+          if (__DEV__) console.log('[Naver] session dismiss 후 deep link 수신');
+          v_f71b56 = v_38066f;
         }
+      } else {
         v_889fad(v_8d41d7('login.error_failed'), v_8d41d7('login.error_unknown'));
         return;
       }
-      const v_f71b56 = v_43c42e.url;
+
       const v_a63110 = v_f71b56.match(/\?([^#]+)/);
       const v_24baff = new URLSearchParams(v_a63110 ? v_a63110[1] : '');
       const v_c99bd2 = v_24baff.get('code');
@@ -364,6 +423,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
           client_secret: v_ce8a7f,
           code: v_c99bd2,
           state: v_b6e533,
+          redirect_uri: v_f41eea,
         }).toString(),
       });
       const v_fb7579 = (await v_5c81fd.json()) as { access_token?: string; error?: string };
@@ -375,7 +435,13 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_aa8b54 = await v_545a63({ provider: 'naver', token: v_fb7579.access_token });
       if (__DEV__) console.log('[Naver] social-login 결과', { needsSignup: v_2cd4e6(v_aa8b54), email: v_aa8b54.email });
       if (v_2cd4e6(v_aa8b54)) {
-        v_c65f5d.navigate('Signup', { email: v_aa8b54.email, fromSocial: 'naver' });
+        v_c65f5d.navigate('Signup', {
+          email: v_aa8b54.email,
+          fromSocial: 'naver',
+          ...(v_aa8b54.name ? { name: v_aa8b54.name } : {}),
+          ...(v_aa8b54.gender ? { gender: v_aa8b54.gender } : {}),
+          ...(v_aa8b54.ageRange ? { ageRange: v_aa8b54.ageRange } : {}),
+        });
         return;
       }
       await v_d41982(v_aa8b54, v_2129ec);
@@ -386,6 +452,9 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_a8cd21 = v_5e9bfe instanceof Error ? v_5e9bfe.message : v_8d41d7('login.error_unknown');
       v_889fad(v_8d41d7('login.error_failed'), v_a8cd21);
     } finally {
+      v_1e5bc0?.(null);
+      v_1e5bc0 = null;
+      v_e7a9dc.remove();
       v_deef62(false);
     }
   };
