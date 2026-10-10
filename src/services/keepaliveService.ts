@@ -4,6 +4,8 @@ export type NoticePayload = {
   title: string;
   content: string;
   url?: string;
+
+  blocking?: boolean;
 };
 
 export interface KeepaliveResponse {
