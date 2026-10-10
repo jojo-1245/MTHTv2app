@@ -310,19 +310,22 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       let v_d6bda5 = v_4b5200;
       if (v_5e9bfe instanceof Error) {
         const v_75195c = v_5e9bfe.message || '';
-        if (/invalid email or password/i.test(v_75195c)) {
-          v_d6bda5 = v_8d41d7('login.error_failed');
+        if (
+          /invalid email or password/i.test(v_75195c) ||
+          /member not found/i.test(v_75195c)
+        ) {
+          v_d6bda5 = v_8d41d7('login.error_invalid_credentials');
         } else if (
           /account is unavailable/i.test(v_75195c) ||
           /account is deactivated/i.test(v_75195c) ||
           /account has been withdrawn/i.test(v_75195c)
         ) {
           v_d6bda5 = v_8d41d7('login.error_unavailable');
-        } else {
+        } else if (/[\uAC00-\uD7A3]/.test(v_75195c)) {
           v_d6bda5 = v_75195c;
         }
       }
-      v_889fad(v_8d41d7('login.error_failed'), v_d6bda5);
+      v_889fad(v_8d41d7('alert.default_title'), v_d6bda5);
     } finally {
 
     }
