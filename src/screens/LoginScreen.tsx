@@ -312,8 +312,12 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         const v_75195c = v_5e9bfe.message || '';
         if (/invalid email or password/i.test(v_75195c)) {
           v_d6bda5 = v_8d41d7('login.error_failed');
-        } else if (/account is deactivated/i.test(v_75195c)) {
-          v_d6bda5 = v_8d41d7('login.error_deactivated');
+        } else if (
+          /account is unavailable/i.test(v_75195c) ||
+          /account is deactivated/i.test(v_75195c) ||
+          /account has been withdrawn/i.test(v_75195c)
+        ) {
+          v_d6bda5 = v_8d41d7('login.error_unavailable');
         } else {
           v_d6bda5 = v_75195c;
         }
