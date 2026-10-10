@@ -6,6 +6,7 @@ export {
   getMyReferrals,
   getReferralSales,
   updateProfile,
+  deleteMyAccount,
   clearAuthSession,
   isSocialLoginNeedsSignup,
   isPendingVerificationError,
