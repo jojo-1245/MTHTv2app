@@ -676,16 +676,7 @@ const LoginScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                     >
                       <GoogleIcon size={24} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[v_d81136.socialIconButton, v_d81136.naverButton]}
-                      onPress={v_40f9f9}
-                      disabled={v_cd31a8}
-                      activeOpacity={0.85}
-                      accessibilityRole="button"
-                      accessibilityLabel={v_8d41d7('login.naver_login')}
-                    >
-                      <NaverIcon size={24} />
-                    </TouchableOpacity>
+                    {}
                   </View>
                 </View>
               )}
