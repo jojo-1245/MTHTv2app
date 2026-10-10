@@ -19,6 +19,8 @@ interface EmergencyNoticeModalProps {
 export function v_fba277({ notice: v_d48273, onDismiss: v_1b97a8 }: EmergencyNoticeModalProps) {
   if (!v_d48273) return null;
 
+  const v_ec5c82 = v_d48273.blocking === true;
+
   const v_c33327 = () => {
     if (v_d48273.url) {
       v_5ab0fb(v_d48273.url);
@@ -26,7 +28,13 @@ export function v_fba277({ notice: v_d48273, onDismiss: v_1b97a8 }: EmergencyNot
   };
 
   return (
-    <Modal visible animationType="fade" transparent statusBarTranslucent>
+    <Modal
+      visible
+      animationType="fade"
+      transparent
+      statusBarTranslucent
+      onRequestClose={() => {}}
+    >
       <View style={v_d81136.overlay}>
         <SafeAreaView style={v_d81136.container}>
           <View style={v_d81136.card}>
@@ -34,7 +42,7 @@ export function v_fba277({ notice: v_d48273, onDismiss: v_1b97a8 }: EmergencyNot
               <View style={v_d81136.alertIcon} />
               <Text style={v_d81136.title}>{v_d48273.title}</Text>
             </View>
-            
+
             <Text style={v_d81136.content}>{v_d48273.content}</Text>
 
             <View style={v_d81136.buttonContainer}>
@@ -47,12 +55,14 @@ export function v_fba277({ notice: v_d48273, onDismiss: v_1b97a8 }: EmergencyNot
                 </TouchableOpacity>
               ) : null}
 
-              <TouchableOpacity 
-                style={[v_d81136.button, v_d81136.dismissBtn]} 
-                onPress={v_1b97a8}
-              >
-                <Text style={v_d81136.dismissText}>확인</Text>
-              </TouchableOpacity>
+              {v_ec5c82 ? null : (
+                <TouchableOpacity
+                  style={[v_d81136.button, v_d81136.dismissBtn]}
+                  onPress={v_1b97a8}
+                >
+                  <Text style={v_d81136.dismissText}>확인</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </SafeAreaView>
