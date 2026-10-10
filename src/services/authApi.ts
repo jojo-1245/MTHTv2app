@@ -452,6 +452,8 @@ export interface MeProfile {
   vip?: number; 
   business?: number | boolean; 
   member_type?: number; 
+
+  has_password?: boolean;
   [key: string]: unknown;
 }
 
@@ -744,6 +746,36 @@ export async function verifyEmailCode(
     );
     return res.data?.data ?? (res.data as unknown as { verified: boolean });
   } catch (error) {
+    throw normalizeError(error);
+  }
+}
+
+export async function deleteMyAccount(params: {
+  password?: string;
+  confirm?: boolean;
+  reason?: string;
+}): Promise<{ message?: string }> {
+  if (__DEV__) {
+    console.log('[authApi] deleteMyAccount 요청');
+  }
+  try {
+    const body: Record<string, unknown> = {};
+    if (params.password) body.password = params.password;
+    if (params.confirm === true) body.confirm = true;
+    if (params.reason) body.reason = params.reason;
+    const res = await apiClient.delete<ApiResponse<{ message?: string }>>(
+      '/oth-path',
+      { data: body }
+    );
+    return res.data?.data ?? { message: (res.data as { message?: string })?.message };
+  } catch (error) {
+    if (__DEV__ && axios.isAxiosError(error)) {
+      console.error('[authApi] deleteMyAccount 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
     throw normalizeError(error);
   }
 }
