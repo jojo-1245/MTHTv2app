@@ -514,6 +514,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
 
   const v_b98ddb = v_e662ae<boolean>(false);
 
+  const v_e8032c = v_e662ae<boolean>(false);
+
   const v_0e2ade = v_e662ae<Set<number>>(new Set());
 
   const v_919f8c = v_e662ae<v_eb2401 | null>(null);
@@ -597,6 +599,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_3be953.current = false;
     v_b1faa7.current = false;
     v_b98ddb.current = false;
+    v_e8032c.current = false;
     v_0e2ade.current.clear();
     v_1cbea0.current = false;
     v_c1affb.current = 0;
@@ -949,6 +952,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         v_567414.current = false;
         v_e7c1c1.current = false;
         v_128f31(false);
+        v_e8032c.current = false;
         v_b30457(true); 
 
         await v_a3ff5a.current?.start(v_8ea06a);
@@ -1113,6 +1117,39 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           return;
         }
         console.log('[3003 에러] 팝업 없이 진행 - READY 복귀 대기');
+        return;
+      }
+
+      if (v_7a5fef === 3004 || v_7a5fef === 3008) {
+        if (!v_4c31ba.current || v_b9ada4.current) {
+          return;
+        }
+        if (!v_a3ff5a.current || v_91943c !== 'measurement') {
+          return;
+        }
+        if (
+          v_bc50c7 !== v_eb2401.STARTING &&
+          v_bc50c7 !== v_eb2401.PROCESSING &&
+          v_bc50c7 !== v_eb2401.READY
+        ) {
+          return;
+        }
+        if (v_1dd18f.current) {
+          return;
+        }
+        if (v_e8032c.current) {
+          return;
+        }
+        v_e8032c.current = true;
+        v_128f31(true);
+        v_9d8f75.current = false;
+        v_979bbe(false);
+        console.log('[얼굴 감지율 에러] 측정 중단 안내', { code: v_7a5fef });
+        v_889fad(
+          v_8d41d7('health_analysis.errors.face_detection_stopped_title'),
+          v_8d41d7('health_analysis.errors.error_3004'),
+          [{ text: v_8d41d7('common.confirm') }]
+        );
         return;
       }
 
