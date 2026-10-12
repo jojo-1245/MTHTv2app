@@ -182,6 +182,7 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const v_4acf99 = v_e662ae<(() => void) | null>(null);
 
   const v_4c906f = v_e662ae<{ health?: string; skin?: string }>({});
+  const v_54e8a1 = v_e662ae(false);
 
   v_c4deb2(() => {
     const v_24baff = v_c7daf6.params;
@@ -203,13 +204,20 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       (v_24baff.attachedSkinSummary && v_24baff.attachedSkinSummary !== v_4c906f.current.skin);
 
     if (!v_dce528) {
+      if (v_54e8a1.current || v_4c906f.current.health || v_4c906f.current.skin) {
+        return;
+      }
+      v_54e8a1.current = true;
       const v_9a5d59 = [{
         id: 'medical-disclaimer',
         type: 'ai',
         text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
         createdAt: Date.now() - 1000,
       }];
-      v_41d55d((v_ba2215) => [...v_ba2215, ...v_9a5d59]);
+      v_41d55d((v_ba2215) => {
+        if (v_ba2215.some((v_35f85c) => v_35f85c.id === 'medical-disclaimer')) return v_ba2215;
+        return [...v_ba2215, ...v_9a5d59];
+      });
       setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 150);
       return;
     }
@@ -217,12 +225,15 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
     const v_6a372d = (v_5f7d15) => {
       const v_87cb2b = [];
 
-      v_87cb2b.push({
-        id: 'medical-disclaimer',
-        type: 'ai',
-        text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
-        createdAt: Date.now() - 1000,
-      });
+      if (!v_54e8a1.current) {
+        v_54e8a1.current = true;
+        v_87cb2b.push({
+          id: 'medical-disclaimer',
+          type: 'ai',
+          text: v_326be8.OS === 'ios' ? v_8d41d7('chat.medical_disclaimer_ios') : v_8d41d7('chat.medical_disclaimer'),
+          createdAt: Date.now() - 1000,
+        });
+      }
 
       if (v_5f7d15) {
         if (v_24baff.attachedHealthSummary && v_24baff.attachedHealthSummary !== v_4c906f.current.health) {
@@ -260,7 +271,12 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
       }
 
       if (v_87cb2b.length > 0) {
-        v_41d55d((v_ba2215) => [...v_ba2215, ...v_87cb2b]);
+        v_41d55d((v_ba2215) => {
+          const v_3c8572 = new Set(v_ba2215.map((v_35f85c) => v_35f85c.id));
+          const v_f3b1b2 = v_87cb2b.filter((v_35f85c) => !v_3c8572.has(v_35f85c.id));
+          if (v_f3b1b2.length === 0) return v_ba2215;
+          return [...v_ba2215, ...v_f3b1b2];
+        });
         setTimeout(() => v_e99f51.current?.scrollToEnd({ animated: true }), 150);
       }
     };
@@ -349,6 +365,8 @@ const ChatScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 
   const v_bb559e = () => {
     v_41d55d([]);
     v_f32824('');
+    v_4c906f.current = {};
+    v_54e8a1.current = false;
 
     const v_7d3bb1 = v_011245(v_c86f08);
     if (v_7d3bb1) v_1f1e88(v_7d3bb1);
