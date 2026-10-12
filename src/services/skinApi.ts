@@ -6,6 +6,8 @@ import { v_624bd2 } from '../constants';
 
 const v_8a74cb = 20000;
 
+const v_2ad92e = 60000;
+
 type ApiResponse<T> = {
   success?: boolean;
   data?: T;
@@ -159,7 +161,7 @@ export async function v_79be38(v_931bf0): Promise<SaveSkinRecordResponse> {
     }
 
     const v_8f00b9 = await v_b5030f.post<ApiResponse<SaveSkinRecordResponse>>(v_f71b56, v_931bf0, {
-      timeout: v_8a74cb,
+      timeout: v_2ad92e,
       headers: v_3f4675,
     });
 
