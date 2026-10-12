@@ -910,22 +910,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
           return;
         }
 
-        if (!v_f91d86) {
-          const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
-          v_889fad(
-            v_8d41d7('health_analysis.intro.insufficient_balance_title'),
-            v_8d41d7('health_analysis.intro.insufficient_balance_alert', {
-              fee: v_399221,
-              balance: v_244eb8,
-            }),
-            [{ text: v_8d41d7('common.confirm') }]
-          );
-          return;
-        }
-
-        if (!(await v_592553('health_analysis'))) {
-          return;
-        }
         if (v_160272 && !v_d63b37()) {
           return;
         }
@@ -2156,12 +2140,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                     if (!v_d63b37()) return;
 
                     const v_b6d66b = await v_ec0597();
-                    if (v_b6d66b) {
-
-                      v_6cd027(0);
-                      v_d2b6af(true);
-                    } else {
-
+                    if (!v_b6d66b) {
                       v_889fad(
                         v_8d41d7('health_analysis.intro.camera_permission_title'),
                         v_8d41d7('health_analysis.errors.camera_permission_required'),
@@ -2170,7 +2149,28 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                           { text: v_8d41d7('health_analysis.errors.open_settings'), onPress: () => v_f2c756.openSettings() },
                         ]
                       );
+                      return;
                     }
+
+                    if (!v_4452dd && !v_f91d86) {
+                      const v_244eb8 = (Math.floor(parseFloat(v_fab460) * 10) / 10).toFixed(1);
+                      v_889fad(
+                        v_8d41d7('health_analysis.intro.insufficient_balance_title'),
+                        v_8d41d7('health_analysis.intro.insufficient_balance_alert', {
+                          fee: v_399221,
+                          balance: v_244eb8,
+                        }),
+                        [{ text: v_8d41d7('common.confirm') }]
+                      );
+                      return;
+                    }
+
+                    if (!(await v_592553('health_analysis'))) {
+                      return;
+                    }
+
+                    v_6cd027(0);
+                    v_d2b6af(true);
                   }}
                   fullWidth
                 />
