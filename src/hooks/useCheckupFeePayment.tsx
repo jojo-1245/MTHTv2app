@@ -47,7 +47,7 @@ export function v_42df18() {
     v_78b5e7(false);
     v_04103a('');
 
-    v_00ab04('결제 준비 중...\n잔액·가스 확인 및 서명 중입니다.');
+    v_00ab04('검수 준비 중...\n잠시만 기다려 주세요.');
     v_aa8c1c(true);
     v_6f7712?.(v_6bee94);
   }, []);
@@ -86,7 +86,7 @@ export function v_42df18() {
           return false;
         }
 
-        v_00ab04('결제 준비 중...\n잔액·가스 확인 및 서명 중입니다.');
+        v_00ab04('검수 준비 중...\n잠시만 기다려 주세요.');
         v_aa8c1c(true);
         const v_f91eae = await v_079e97({
           type: v_3b27d9,
