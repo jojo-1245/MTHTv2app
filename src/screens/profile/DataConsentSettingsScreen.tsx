@@ -13,6 +13,7 @@ import { v_729608, v_570c34, v_1c1837 } from '../../components';
 import v_e209a2 from '../../components/DataConsentModal';
 import { v_889fad } from '../../components/AlertHost';
 import type { v_8ad91b } from '../../navigation';
+import { v_a0daa8 } from '../../navigation';
 import { v_2d6571, v_b26d7d } from '../../utils/consentStore';
 import type { v_8c7694 } from '../../utils/consentStore';
 
@@ -22,6 +23,7 @@ const CONSENT_KINDS: v_8c7694[] = ['health', 'skin', 'chat'];
 
 const DataConsentSettingsScreen: v_a3453e.FC<Props> = () => {
   const { t: v_8d41d7 } = v_772971();
+  const { goBack: v_c7ac57 } = v_a0daa8();
   const [v_40c2c9, v_a75e8e] = v_5ab095<Record<v_8c7694, boolean>>({
     health: false,
     skin: false,
@@ -71,12 +73,13 @@ const DataConsentSettingsScreen: v_a3453e.FC<Props> = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout activeKey="myinfo">
       <Header
         title={v_8d41d7('consent.settings_title', 'Data Consent')}
         showBackButton
+        onBackPress={v_c7ac57}
       />
-      <SafeScrollView>
+      <SafeScrollView showBottomBackground={false} disableBottomPadding>
         <View style={v_d81136.container}>
           <Text style={v_d81136.description}>
             {v_8d41d7(

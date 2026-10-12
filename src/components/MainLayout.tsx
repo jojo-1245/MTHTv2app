@@ -38,6 +38,7 @@ const v_eecdb6 = {
   ClauseDetail: 'myinfo',
   MyInfoCloseMembership: 'myinfo',
   MyInfoFaq: 'myinfo',
+  DataConsentSettings: 'myinfo',
   ReferralShare: 'myinfo',
   MyReferrals: 'myinfo',
   ReferralSales: 'myinfo',
@@ -63,6 +64,7 @@ const v_b76a69 = {
   ClauseDetail: 'myinfo',
   MyInfoCloseMembership: 'myinfo',
   MyInfoFaq: 'myinfo',
+  DataConsentSettings: 'myinfo',
   RecommendedSupplements: 'myinfo',
 };
 
