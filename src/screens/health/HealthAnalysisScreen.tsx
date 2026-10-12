@@ -484,6 +484,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   }, [v_91943c, v_ac1d22, v_18a4c7]); 
 
   const [v_109b56, v_49296b] = v_5ab095(false);
+
+  const [v_5abc5a, v_4debd4] = v_5ab095(false);
+  const v_87a8dc = v_e662ae(false);
   const [v_ee736b, v_054130] = v_5ab095<string | undefined>();
   const v_eb342d = v_e662ae<NodeJS.Timeout | undefined>(undefined);
   const [v_c1ef35, v_b0aeaf] = v_5ab095(false);
@@ -616,6 +619,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_f36dd5(undefined);
     v_7fa926(0);
     v_128f31(false);
+    v_87a8dc.current = false;
+    v_4debd4(false);
 
     v_ad3226('');
     v_e3a875(null);
@@ -642,38 +647,53 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_ce2e95.current = false;
     v_3be953.current = false;
     v_49296b(false);
+    v_87a8dc.current = false;
+    v_4debd4(false);
     v_b0aeaf(false);
     v_808b03((v_0eb677) => v_0eb677 + 1);
     v_639227('intro');
   }, [v_98caa0]);
 
   const v_0afa99 = v_de06a3(async () => {
+    if (v_87a8dc.current) {
+      console.log('카메라 준비 중 - 중복 진입 무시');
+      return;
+    }
+    v_87a8dc.current = true;
+    v_4debd4(true);
     v_d2b6af(false);
     v_6cd027(0);
     console.log('측정하기 버튼 클릭 - 상태 초기화');
 
     try {
-      if (v_a3ff5a.current) {
-        await v_98caa0();
+      try {
+        if (v_a3ff5a.current) {
+          await v_98caa0();
+        }
+      } catch (v_49263d) {
+        console.warn('측정 진입 전 세션 종료 오류:', v_49263d);
       }
-    } catch (v_49263d) {
-      console.warn('측정 진입 전 세션 종료 오류:', v_49263d);
+      v_a3ff5a.current = undefined;
+      v_b0aeaf(false);
+      v_808b03((v_0eb677) => v_0eb677 + 1);
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
+      v_ce2e95.current = false;
+      v_3be953.current = false;
+      v_49296b(false);
+      v_b1faa7.current = false;
+      v_8a8952(undefined);
+      v_f36dd5(undefined);
+      v_7fa926(0);
+      await v_168aaf.lockAsync(
+        v_168aaf.OrientationLock.PORTRAIT_UP
+      ).catch(() => null);
+      v_639227('measurement');
+
+    } catch (v_9e86fd) {
+      console.error('측정 화면 진입 실패:', v_9e86fd);
+      v_87a8dc.current = false;
+      v_4debd4(false);
     }
-    v_a3ff5a.current = undefined;
-    v_b0aeaf(false);
-    v_808b03((v_0eb677) => v_0eb677 + 1);
-    await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
-    v_ce2e95.current = false;
-    v_3be953.current = false;
-    v_49296b(false);
-    v_b1faa7.current = false;
-    v_8a8952(undefined);
-    v_f36dd5(undefined);
-    v_7fa926(0);
-    await v_168aaf.lockAsync(
-      v_168aaf.OrientationLock.PORTRAIT_UP
-    ).catch(() => null);
-    v_639227('measurement');
   }, [v_98caa0]);
 
   const v_dbf4e9 = v_de06a3(async () => {
@@ -1795,6 +1815,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       console.log('✅ 세션이 READY 상태입니다. 카메라가 활성화되었습니다.');
 
       v_49296b(false);
+      v_87a8dc.current = false;
+      v_4debd4(false);
 
       if (v_c1affb.current > 0) {
         console.log('[3003 에러 처리] 세션 재생성 성공 - 재시도 횟수 리셋');
@@ -2196,7 +2218,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 )}
                 <PrimaryButton
                   title={v_4452dd ? v_8d41d7('health_analysis.intro.free_trial_start') : v_8d41d7('health_analysis.intro.start_button')}
+                  disabled={v_5abc5a}
                   onPress={async () => {
+                    if (v_5abc5a || v_87a8dc.current) return;
                     if (!v_d63b37()) return;
 
                     const v_b6d66b = await v_ec0597();
@@ -2546,7 +2570,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 ) : (
                   <PrimaryButton
                     title={v_8d41d7('health_analysis.intro.start_button')}
+                    disabled={v_5abc5a}
                     onPress={() => {
+                      if (v_5abc5a || v_87a8dc.current) return;
                       void v_dbf4e9();
                     }}
                     fullWidth
@@ -2676,7 +2702,9 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               <View style={v_d81136.buttonContainer}>
                 <PrimaryButton
                   title={
-                    v_bc50c7 === v_eb2401.READY
+                    v_5abc5a || v_109b56
+                      ? v_8d41d7('health_analysis.measurement.camera_loading_title')
+                      : v_bc50c7 === v_eb2401.READY
                       ? v_8d41d7('health_analysis.measurement.button_start')
                       : v_bc50c7 === v_eb2401.STARTING ||
                         v_bc50c7 === v_eb2401.PROCESSING
@@ -2685,6 +2713,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                   }
                   onPress={v_ac8071}
                   disabled={
+                    v_5abc5a ||
                     v_109b56 ||
                     (v_bc50c7 === v_eb2401.READY && v_2a37b1) ||
                     (v_bc50c7 !== v_eb2401.READY &&
@@ -2748,12 +2777,27 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     />
   );
 
+  const v_def2ac = v_5abc5a ? (
+    <View style={v_d81136.resultPreparingOverlay} pointerEvents="auto">
+      <View style={v_d81136.resultPreparingBox}>
+        <ActivityIndicator size="large" color={v_1bfbd0.bluePrimary} />
+        <Text style={v_d81136.resultPreparingText}>
+          {v_8d41d7('health_analysis.measurement.camera_loading_title')}
+        </Text>
+        <Text style={[v_d81136.resultPreparingText, { marginTop: 8, fontSize: 13, fontWeight: '400', opacity: 0.85 }]}>
+          {v_8d41d7('health_analysis.measurement.camera_loading_message')}
+        </Text>
+      </View>
+    </View>
+  ) : null;
+
   if (v_91943c === 'intro') {
     return (
       <>
         <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>
         {v_e95e2c}
         {v_f0b7fd}
+        {v_def2ac}
       </>
     );
   }
@@ -2767,6 +2811,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       </MainLayout>
       {v_e95e2c}
       {v_f0b7fd}
+      {v_def2ac}
     </>
   );
 };
