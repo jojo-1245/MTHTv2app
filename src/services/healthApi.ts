@@ -6,6 +6,8 @@ import { v_624bd2 } from '../constants';
 
 const v_8a74cb = 20000;
 
+const v_2ad92e = 60000;
+
 const v_48d821 = 'metahint_health_last_check_ts';
 const v_172e22 = 'metahint_health_last_record';
 const v_7a2425 = 10 * 1000;
@@ -237,7 +239,7 @@ export async function v_207199(v_931bf0): Promise<HealthRecordItem> {
     }
 
     const v_8f00b9 = await v_b5030f.post<ApiResponse<HealthRecordItem>>(v_f71b56, v_931bf0, {
-      timeout: v_8a74cb,
+      timeout: v_2ad92e,
       headers: v_3f4675,
     });
 
