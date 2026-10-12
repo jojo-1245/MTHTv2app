@@ -648,11 +648,18 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_d2b6af(false);
     v_6cd027(0);
     console.log('측정하기 버튼 클릭 - 상태 초기화');
-    if (v_a3ff5a.current) {
-      await v_98caa0();
-      v_a3ff5a.current = undefined;
-      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
+
+    try {
+      if (v_a3ff5a.current) {
+        await v_98caa0();
+      }
+    } catch (v_49263d) {
+      console.warn('측정 진입 전 세션 종료 오류:', v_49263d);
     }
+    v_a3ff5a.current = undefined;
+    v_b0aeaf(false);
+    v_808b03((v_0eb677) => v_0eb677 + 1);
+    await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 2000));
     v_ce2e95.current = false;
     v_3be953.current = false;
     v_49296b(false);
@@ -660,7 +667,6 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
     v_8a8952(undefined);
     v_f36dd5(undefined);
     v_7fa926(0);
-    v_b0aeaf(false);
     await v_168aaf.lockAsync(
       v_168aaf.OrientationLock.PORTRAIT_UP
     ).catch(() => null);
@@ -840,14 +846,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       });
 
       if (v_748547?.code === 7009) {
-        console.log('7009 에러 발생 - 재시도 허용');
+        console.log('7009 에러 발생 - 자동 재시도 차단, 사용자 확인 후 재시도');
+        v_3be953.current = true;
         v_ce2e95.current = false;
         v_a3ff5a.current = undefined;
         v_49296b(false);
 
         v_889fad(
           v_8d41d7('health_analysis.errors.session_creation_failed'),
-          v_8d41d7('health_analysis.errors.sdk_init_error'),
+          v_8d41d7('health_analysis.sdk_alerts.7009.reason') + '\n\n' + v_8d41d7('health_analysis.sdk_alerts.7009.solution'),
           [
             {
               text: v_8d41d7('common.cancel'),
@@ -860,10 +867,22 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             {
               text: v_8d41d7('home.try_again'),
               onPress: async () => {
+                console.log('7009 재시도: 카메라 리마운트 + 네이티브 해제 대기 (3초)');
+                try {
+                  if (v_a3ff5a.current) {
+                    await v_98caa0();
+                    v_a3ff5a.current = undefined;
+                  }
+                } catch {
 
-                console.log('세션 재생성 대기 중... (2초)');
-                await new Promise(v_6f7712 => setTimeout(v_6f7712, 2000));
-                v_bb3644();
+                }
+                v_b0aeaf(false);
+                v_808b03((v_0eb677) => v_0eb677 + 1);
+                v_49296b(false);
+                await new Promise((v_6f7712) => setTimeout(v_6f7712, 3000));
+                v_3be953.current = false;
+                v_ce2e95.current = false;
+
               },
             },
           ]
@@ -896,7 +915,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         );
       }
     }
-  }, [v_ec0597, v_c1ef35, v_109b56, v_141cf8, v_2f3ab2, v_a5d6d1, v_ebc748, v_5b20cf, v_8f47c9, v_8d41d7, v_98b3fa]);
+  }, [v_ec0597, v_c1ef35, v_109b56, v_141cf8, v_2f3ab2, v_a5d6d1, v_ebc748, v_5b20cf, v_8f47c9, v_8d41d7, v_98b3fa, v_98caa0]);
 
   const v_ac8071 = v_de06a3(async () => {
     try {
@@ -1557,6 +1576,8 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             console.log('[결과 화면 이동] 세션 종료 시작...');
             await v_98caa0();
             v_a3ff5a.current = undefined;
+
+            await new Promise((v_cb35cb) => setTimeout(v_cb35cb, 1500));
             console.log('[결과 화면 이동] 세션 종료 완료');
           }
           v_b98ddb.current = false;
