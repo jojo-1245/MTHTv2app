@@ -4,6 +4,12 @@ import v_a3453e, { v_de06a3, v_e662ae, v_5ab095 } from 'bapkr';
 import { v_889fad } from '../components/AlertHost';
 import { v_d86881 } from '../components/WalletV2PinPromptModal';
 import { v_7ef860, v_8c9ccd, type v_138ec7 } from '../services';
+import { v_f28ca8 } from '../services/wallet/sendTokenAuto';
+import {
+  v_079e97,
+  v_c0a190,
+  type v_34f673,
+} from '../services/wallet/walletV2CheckupPay';
 
 type CheckupType = 'health_analysis' | 'skin_analysis';
 
@@ -12,6 +18,7 @@ export function v_42df18() {
   const [v_c3a235, v_78b5e7] = v_5ab095(false);
   const [v_8a43e1, v_04103a] = v_5ab095('');
   const v_d3aac3 = v_e662ae<((pin: string | null) => void) | null>(null);
+  const v_d81d83 = v_e662ae<v_34f673 | null>(null);
 
   const v_1979a1 = v_de06a3(() => {
     return new Promise<string | null>((v_6f7712) => {
@@ -40,22 +47,80 @@ export function v_42df18() {
     v_6f7712?.(null);
   }, []);
 
-  const v_909646 = v_de06a3(
-    async (v_3b27d9, v_fbf3b0): Promise<v_138ec7 | null> => {
+  const v_592553 = v_de06a3(
+    async (v_3b27d9): Promise<boolean> => {
+      v_d81d83.current = null;
       try {
+        const v_83d291 = await v_f28ca8();
+        if (!v_83d291) {
+          v_d81d83.current = { needed: false, reason: 'not_at', feeAmount: '0' };
+          return true;
+        }
+        const v_b32680 = await v_7ef860();
+        if (!v_b32680.email || v_b32680.id == null) {
+          v_889fad('알림', '사용자 정보를 찾을 수 없습니다.');
+          return false;
+        }
+        const v_6bee94 = await v_1979a1();
+        if (!v_6bee94) {
+          v_889fad('알림', '검진 비용 결제를 위해 PIN이 필요합니다.');
+          return false;
+        }
+        const v_f91eae = await v_079e97({
+          type: v_3b27d9,
+          pin: v_6bee94,
+          email: v_b32680.email,
+          member: Number(v_b32680.id),
+        });
+        if (!v_f91eae.ok) {
+          v_889fad('알림', v_f91eae.error);
+          return false;
+        }
+        v_d81d83.current = v_f91eae.prepared;
+        return true;
+      } catch (v_9e86fd) {
+        v_889fad('알림', v_9e86fd?.message ?? '결제 준비에 실패했습니다.');
+        return false;
+      }
+    },
+    [v_1979a1]
+  );
+
+  const v_97b779 = v_de06a3(
+    async (v_3b27d9, v_fbf3b0): Promise<v_138ec7 | null> => {
+      const v_09d858 = v_d81d83.current;
+      v_d81d83.current = null;
+
+      try {
+        if (v_09d858?.needed) {
+          const v_35db80 = await v_c0a190(v_09d858, v_fbf3b0);
+          if (!v_35db80.ok) {
+            v_889fad('알림', v_35db80.error);
+            console.error('[checkupFee] settle', v_3b27d9, v_fbf3b0, v_35db80.error);
+            return null;
+          }
+          if (v_35db80.data.tx_hash) {
+            console.log('[checkupFee] settled', v_35db80.data.tx_hash);
+          }
+          return v_35db80.data;
+        }
+
         const v_b32680 = await v_7ef860();
         if (!v_b32680.email || v_b32680.id == null) {
           throw new Error('사용자 정보를 찾을 수 없습니다.');
         }
-        const v_43c42e = await v_8c9ccd(v_3b27d9, v_fbf3b0, {
-          requestPin: v_1979a1,
-          email: v_b32680.email,
-          member: Number(v_b32680.id),
-        });
-        return v_43c42e;
+
+        if (await v_f28ca8()) {
+          const v_43c42e = await v_8c9ccd(v_3b27d9, v_fbf3b0, {
+            requestPin: v_1979a1,
+            email: v_b32680.email,
+            member: Number(v_b32680.id),
+          });
+          return v_43c42e;
+        }
+        return await v_8c9ccd(v_3b27d9, v_fbf3b0);
       } catch (v_9e86fd) {
         const v_badeaf = v_9e86fd?.message ?? '검진 비용 차감에 실패했습니다.';
-
         if (!String(v_badeaf).includes('취소')) {
           v_889fad('알림', v_badeaf);
         }
@@ -65,6 +130,12 @@ export function v_42df18() {
     },
     [v_1979a1]
   );
+
+  const v_909646 = v_97b779;
+
+  const v_5adf9a = v_de06a3(() => {
+    v_d81d83.current = null;
+  }, []);
 
   const v_e63e18 = (
     <WalletV2PinPromptModal
@@ -77,5 +148,11 @@ export function v_42df18() {
     />
   );
 
-  return { chargeCheckupFee: v_909646, pinModal: v_e63e18 };
+  return {
+    prepareBeforeCheckup: v_592553,
+    settleAfterCheckup: v_97b779,
+    chargeCheckupFee: v_909646,
+    clearPrepared: v_5adf9a,
+    pinModal: v_e63e18,
+  };
 }

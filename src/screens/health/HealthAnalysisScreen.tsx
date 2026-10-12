@@ -225,7 +225,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const { t: v_8d41d7 } = v_772971();
 
   v_1f53bf();
-  const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
+  const { prepareBeforeCheckup: v_592553, settleAfterCheckup: v_97b779, pinModal: v_f0b7fd } = v_42df18();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_6c4b91 = v_2cc9f8();
   const v_18a4c7 = v_df9f57(() => {
@@ -920,6 +920,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             }),
             [{ text: v_8d41d7('common.confirm') }]
           );
+          return;
+        }
+
+        if (!(await v_592553('health_analysis'))) {
           return;
         }
         if (v_160272 && !v_d63b37()) {
@@ -1659,7 +1663,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               v_4ae380 = v_23eae7?.id ?? (v_23eae7 as any)?.record_id;
               console.log('[결과 화면 이동] API 저장 완료, recordId:', v_4ae380);
               if (v_4ae380) {
-                v_909646('health_analysis', v_4ae380)
+                v_97b779('health_analysis', v_4ae380)
                   .then((v_cb35cb) => {
                     if (v_cb35cb?.tx_hash) console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash);
                   });

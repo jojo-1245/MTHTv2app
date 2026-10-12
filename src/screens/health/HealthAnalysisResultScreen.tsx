@@ -693,7 +693,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_5f6b8d = v_5a0119();
   const v_160272 = v_5f6b8d === 'pharmacist';
   const { verifiedGuest: v_3de945 } = v_4b2942();
-  const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
+  const { settleAfterCheckup: v_97b779, pinModal: v_f0b7fd } = v_42df18();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -1437,7 +1437,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         v_43dcda(v_0bce57);
 
         if (!v_8ea5e8(v_5f6b8d, v_3de945) && v_0bce57) {
-          await v_909646('health_analysis', v_0bce57);
+
+          await v_97b779('health_analysis', v_0bce57);
         }
 
         v_02a5a0.current = true;

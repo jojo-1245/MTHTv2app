@@ -370,7 +370,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_5f6b8d = v_5a0119();
     const v_160272 = v_5f6b8d === 'pharmacist';
     const { verifiedGuest: v_3de945 } = v_4b2942();
-    const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
+    const { prepareBeforeCheckup: v_592553, settleAfterCheckup: v_97b779, pinModal: v_f0b7fd } = v_42df18();
 
     const v_d63b37 = v_de06a3(() => {
         if (!v_160272) return true;
@@ -686,7 +686,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     v_f4f730.current = v_0bce57;
                     v_43dcda(v_0bce57);
                     if (!v_b38b72) {
-                        v_909646('skin_analysis', v_0bce57)
+                        v_97b779('skin_analysis', v_0bce57)
                             .then((v_cb35cb) => {
                                 if (v_cb35cb?.tx_hash) console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash);
                             });
@@ -871,6 +871,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
             return;
         }
+
+        if (!(await v_592553('skin_analysis'))) {
+            return;
+        }
         if (v_160272 && !v_d63b37()) {
             return;
         }
@@ -1015,7 +1019,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
         } finally {
             v_0942aa(false);
         }
-    }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7, v_f91d86, v_fab460, v_399221, v_160272, v_d63b37]);
+    }, [v_52f1d1, v_76def3, v_82f4af, v_8d41d7, v_f91d86, v_fab460, v_399221, v_160272, v_d63b37, v_592553]);
 
     const v_2e22e6 = v_de06a3(async (v_04e790) => {
 
