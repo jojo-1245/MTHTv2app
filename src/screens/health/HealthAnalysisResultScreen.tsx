@@ -35,10 +35,11 @@ import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
-import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
+import { v_207199, v_5112eb } from '../../services';
 import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, v_c7d798, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
 import { v_5a0119 } from '../../hooks/useUserRole';
+import { v_42df18 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 
@@ -692,6 +693,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_5f6b8d = v_5a0119();
   const v_160272 = v_5f6b8d === 'pharmacist';
   const { verifiedGuest: v_3de945 } = v_4b2942();
+  const { settleAfterCheckup: v_97b779, pinModal: v_f0b7fd } = v_42df18();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -1434,14 +1436,9 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         v_f4f730.current = v_0bce57;
         v_43dcda(v_0bce57);
 
-        if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
-          try {
-            if (v_0bce57) {
-              await v_8c9ccd('health_analysis', v_0bce57);
-            }
-          } catch (v_892e09) {
-            console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
-          }
+        if (!v_8ea5e8(v_5f6b8d, v_3de945) && v_0bce57) {
+
+          await v_97b779('health_analysis', v_0bce57);
         }
 
         v_02a5a0.current = true;
@@ -1829,6 +1826,37 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       improvementPoints: v_4723c3,
     };
   }, [v_a7f568, v_8d41d7, v_08e501]);
+
+  const v_0b191b = v_de06a3(() => {
+    const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2) || v_c86f08[0];
+    const v_e1c732 = v_a64f0f || v_0c2f9b?.name || v_8d41d7('health_analysis.default_user_name', '나');
+    const v_80d73f = v_42044e ? new Date(v_42044e) : new Date();
+    const v_f8e6b9 = `${v_80d73f.getFullYear()}.${String(v_80d73f.getMonth() + 1).padStart(2, '0')}.${String(v_80d73f.getDate()).padStart(2, '0')}`;
+    const v_1689c5 = v_2586c7(v_df7b8f(v_e3e816.WELLNESS_INDEX));
+    const v_a52412 = [
+      `측정일: ${v_f8e6b9}`,
+      `대상: ${v_e1c732}`,
+      v_1689c5 != null ? `건강지수: ${v_1689c5}/10` : null,
+      v_4ae380 != null ? `기록 ID: #${v_4ae380}` : null,
+      ...v_f1235f.riskItems.slice(0, 8).map((v_8c0b26) => `주의: ${v_8c0b26.name} ${v_8c0b26.valueText}`),
+      ...v_f1235f.normalItems.slice(0, 5).map((v_8c0b26) => `정상: ${v_8c0b26.name} ${v_8c0b26.valueText}`),
+    ].filter(Boolean) as string[];
+
+    v_9b57fc('Chat', {
+      initialHealthInfo: { id: v_e7b2f2, name: v_e1c732 },
+      attachedHealthSummary: v_a52412.join('\n'),
+    });
+  }, [
+    v_c86f08,
+    v_e7b2f2,
+    v_a64f0f,
+    v_42044e,
+    v_4ae380,
+    v_f1235f,
+    v_9b57fc,
+    v_8d41d7,
+    v_df7b8f,
+  ]);
 
   const v_2e670e = v_df9f57(() => {
 
@@ -2250,6 +2278,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }
 
   return (
+    <>
     <MainLayout activeKey="analysis">
       <StatusBar style="dark" />
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -3120,6 +3149,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           <Text style={[v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText'), { textAlign: 'center', marginTop: 12 }]}>{v_8d41d7('health_analysis.result.ai_analyzing')}</Text>
                         </View>
                       ) : v_e399bf ? (
+                        <>
                         <View style={v_d81136.aiAnalysisSubCard}>
                           <View style={v_d81136.aiAnalysisSectionHeader}>
                             <View style={[v_d81136.aiAnalysisSubCardIcon, { backgroundColor: '#EDE9FE' }]}>
@@ -3129,6 +3159,24 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                           </View>
                           <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_dff48a(v_e399bf)}</Text>
                         </View>
+                        <TouchableOpacity
+                          style={v_d81136.aiCheckupButton}
+                          activeOpacity={0.8}
+                          onPress={v_0b191b}
+                          accessibilityRole="button"
+                          accessibilityLabel={v_8d41d7('health_analysis.result.ai_checkup_btn')}
+                        >
+                          <ExpoLinearGradient
+                            colors={['#AD46FF', '#6B4CBF']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={v_d81136.aiCheckupButtonGradient}
+                          >
+                            <Ionicons name="medkit-outline" size={20} color="#FFFFFF" />
+                            <Text style={v_d81136.aiCheckupButtonText}>{v_8d41d7('health_analysis.result.ai_checkup_btn')}</Text>
+                          </ExpoLinearGradient>
+                        </TouchableOpacity>
+                        </>
                       ) : (
                       <>
                       {}
@@ -3184,7 +3232,13 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                         </View>
                         <Text style={v_2f6fcc(v_d81136.aiAnalysisSectionText, 'aiAnalysisSectionText')}>{v_326be8.OS === 'ios' ? v_8d41d7('health_analysis.result.ai_precautions_text_ios') : v_8d41d7('health_analysis.result.ai_precautions_text')}</Text>
                       </View>
-                      <TouchableOpacity style={v_d81136.aiCheckupButton} activeOpacity={0.8}>
+                      <TouchableOpacity
+                        style={v_d81136.aiCheckupButton}
+                        activeOpacity={0.8}
+                        onPress={v_0b191b}
+                        accessibilityRole="button"
+                        accessibilityLabel={v_8d41d7('health_analysis.result.ai_checkup_btn')}
+                      >
                         <ExpoLinearGradient
                           colors={['#AD46FF', '#6B4CBF']}
                           start={{ x: 0, y: 0 }}
@@ -3856,6 +3910,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         </View>
       </Modal>
     </MainLayout>
+    {v_f0b7fd}
+    </>
   );
 };
 
