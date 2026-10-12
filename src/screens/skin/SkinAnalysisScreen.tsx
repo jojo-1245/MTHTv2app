@@ -56,12 +56,12 @@ import {
     type v_38cf4d,
 } from '../../services/skinAnalysis';
 import { v_19dbdf } from '../../hooks/useSystemConfig';
-import { v_9e8766, v_2282da, v_326fbf, v_5a0119 } from '../../hooks';
+import { v_9e8766, v_2282da, v_326fbf, v_5a0119, v_42df18 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
-import { v_79be38, v_23b7ab, v_8c9ccd, v_b42e4a, v_f85fc8 } from '../../services';
+import { v_79be38, v_23b7ab, v_b42e4a, v_f85fc8 } from '../../services';
 import { v_81fcbc, v_095212, type v_b57732 } from '../../services/skinApi';
 import { v_71f4f5 } from '../../services/pharmacyApi';
 import {
@@ -370,6 +370,7 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
     const v_5f6b8d = v_5a0119();
     const v_160272 = v_5f6b8d === 'pharmacist';
     const { verifiedGuest: v_3de945 } = v_4b2942();
+    const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
 
     const v_d63b37 = v_de06a3(() => {
         if (!v_160272) return true;
@@ -685,9 +686,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                     v_f4f730.current = v_0bce57;
                     v_43dcda(v_0bce57);
                     if (!v_b38b72) {
-                        v_8c9ccd('skin_analysis', v_0bce57)
-                            .then((v_cb35cb) => console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash))
-                            .catch((v_9e86fd) => console.error('[피부분석] 비용 차감 실패:', v_9e86fd));
+                        v_909646('skin_analysis', v_0bce57)
+                            .then((v_cb35cb) => {
+                                if (v_cb35cb?.tx_hash) console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash);
+                            });
                     }
                 }
             } catch (v_5e9bfe) {
@@ -2312,11 +2314,13 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             <>
                 <MainLayout activeKey="analysis">{v_c8ac01()}</MainLayout>
                 {v_46088d}
+                {v_f0b7fd}
             </>
         );
     }
 
     return (
+        <>
         <MainLayout activeKey="analysis">
             <StatusBar style="dark" />
             <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -2566,7 +2570,9 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             )}
 
             {v_46088d}
+            {v_f0b7fd}
         </MainLayout>
+        </>
     );
 };
 

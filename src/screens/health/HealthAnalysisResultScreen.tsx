@@ -35,10 +35,11 @@ import { v_5ade23 as v_6f705c } from 'xbfwaaanosqvazmrqoah';
 import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
-import { v_207199, v_8c9ccd, v_5112eb } from '../../services';
+import { v_207199, v_5112eb } from '../../services';
 import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, v_c7d798, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
 import { v_5a0119 } from '../../hooks/useUserRole';
+import { v_42df18 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 
@@ -692,6 +693,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const v_5f6b8d = v_5a0119();
   const v_160272 = v_5f6b8d === 'pharmacist';
   const { verifiedGuest: v_3de945 } = v_4b2942();
+  const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
 
   const v_48f046 = v_f074c5 || [
     { id: '1', name: v_f08a5e || v_8d41d7('health_analysis.default_user_name', '나'), isCurrent: true },
@@ -1434,14 +1436,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         v_f4f730.current = v_0bce57;
         v_43dcda(v_0bce57);
 
-        if (!v_8ea5e8(v_5f6b8d, v_3de945)) {
-          try {
-            if (v_0bce57) {
-              await v_8c9ccd('health_analysis', v_0bce57);
-            }
-          } catch (v_892e09) {
-            console.warn('[HealthAnalysisResultScreen] 검진 비용 차감 실패:', v_892e09);
-          }
+        if (!v_8ea5e8(v_5f6b8d, v_3de945) && v_0bce57) {
+          await v_909646('health_analysis', v_0bce57);
         }
 
         v_02a5a0.current = true;
@@ -2250,6 +2246,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   }
 
   return (
+    <>
     <MainLayout activeKey="analysis">
       <StatusBar style="dark" />
       <SafeView style={v_d81136.screen} showBottomBackground={false}>
@@ -3856,6 +3853,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
         </View>
       </Modal>
     </MainLayout>
+    {v_f0b7fd}
+    </>
   );
 };
 
