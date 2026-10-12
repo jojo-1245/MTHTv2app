@@ -48,11 +48,11 @@ import { v_2cc9f8 } from '../../utils/tabletLayout';
 import { v_047250 } from './components';
 import type { v_8ad91b } from '../../navigation';
 import { v_1bfbd0, v_a61db3, v_843035, v_9b1a04, v_624bd2 } from '../../constants';
-import { v_9e8766, v_326fbf, v_5a0119 } from '../../hooks';
+import { v_9e8766, v_326fbf, v_5a0119, v_42df18 } from '../../hooks';
 import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
-import { v_207199, v_23b7ab, v_8c9ccd, v_f85fc8 } from '../../services';
+import { v_207199, v_23b7ab, v_f85fc8 } from '../../services';
 import type { v_9923f5 } from '../../services/healthApi';
 import { v_777b12 } from '../../services/healthApi';
 
@@ -225,6 +225,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
   const { t: v_8d41d7 } = v_772971();
 
   v_1f53bf();
+  const { chargeCheckupFee: v_909646, pinModal: v_f0b7fd } = v_42df18();
   const { navigate: v_9b57fc } = v_a0daa8();
   const v_6c4b91 = v_2cc9f8();
   const v_18a4c7 = v_df9f57(() => {
@@ -1658,9 +1659,10 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
               v_4ae380 = v_23eae7?.id ?? (v_23eae7 as any)?.record_id;
               console.log('[결과 화면 이동] API 저장 완료, recordId:', v_4ae380);
               if (v_4ae380) {
-                v_8c9ccd('health_analysis', v_4ae380)
-                  .then((v_cb35cb) => console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash))
-                  .catch((v_9e86fd) => console.error('[건강분석] 비용 차감 실패:', v_9e86fd));
+                v_909646('health_analysis', v_4ae380)
+                  .then((v_cb35cb) => {
+                    if (v_cb35cb?.tx_hash) console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash);
+                  });
               }
             }
           } catch (v_09112b) {
@@ -2687,6 +2689,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
       <>
         <MainLayout activeKey="analysis">{v_2704c1()}</MainLayout>
         {v_e95e2c}
+        {v_f0b7fd}
       </>
     );
   }
@@ -2699,6 +2702,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
         </View>
       </MainLayout>
       {v_e95e2c}
+      {v_f0b7fd}
     </>
   );
 };
