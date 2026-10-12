@@ -36,12 +36,16 @@ describe('pageTrack MH-786 error logging', () => {
     expect(v_07867c(new Error('boom')).message).toBe('boom');
   });
 
-  it('page_open posts page-event', async () => {
+  it('page_open posts page-event with page_name', async () => {
     v_841cb9('MetaHome');
     expect(v_eaae7e()).toBe('meta-home');
     expect(v_483091).toHaveBeenCalledWith(
       '/oth-path',
-      expect.objectContaining({ page_id: 'meta-home', action: 'page_open' }),
+      expect.objectContaining({
+        page_id: 'meta-home',
+        page_name: '메타 홈',
+        action: 'page_open',
+      }),
     );
   });
 
