@@ -871,10 +871,6 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
             );
             return;
         }
-
-        if (!(await v_592553('skin_analysis'))) {
-            return;
-        }
         if (v_160272 && !v_d63b37()) {
             return;
         }
@@ -895,6 +891,10 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                 v_8d41d7('common.error'),
                 v_8d41d7('skin.alerts.api_key_error'),
             );
+            return;
+        }
+
+        if (!(await v_592553('skin_analysis'))) {
             return;
         }
 
