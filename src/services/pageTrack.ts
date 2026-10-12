@@ -1,6 +1,7 @@
 import { v_326be8 } from 'rcmrninabrnb';
 import v_9a8286 from './apiClient';
 import { v_f42779 } from './clientLog';
+import { v_5a496c } from './pageLabels';
 
 let v_a5f54e = null;
 let v_ae9948 = null;
@@ -120,8 +121,10 @@ export function v_1a6afd(
     const v_a1ea33 = v_b36f96?.reportFailure !== false;
     const v_ab4c96 = v_d6c7b4();
     const v_e0833e = v_a23987();
+    const v_af7945 = v_5a496c(v_389afb).slice(0, 128) || v_389afb;
     const v_4d33b2 = {
       page_id: v_389afb,
+      page_name: v_af7945,
       action: v_9b064f,
       session_id: v_887915(),
       device_info: v_4900ee(),
