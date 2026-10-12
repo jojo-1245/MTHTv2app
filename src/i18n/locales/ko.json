@@ -1217,6 +1217,8 @@
             "face_detection_title": "얼굴 인식",
             "state_ready": "측정 준비 완료. 시작 버튼을 눌러주세요.",
             "state_ready_retry": "얼굴 인식이 되지 않아 다시 측정해야 합니다. 시작 버튼을 눌러주세요.",
+            "camera_loading_title": "카메라 준비 중",
+            "camera_loading_message": "카메라를 불러오는 중입니다.\n잠시만 기다려 주세요.",
             "state_starting": "측정 시작 중... 얼굴을 카메라에 맞춰주세요.",
             "state_processing": "측정 중... ({{seconds}}초 남음)",
             "state_default": "측정 준비 중...",
