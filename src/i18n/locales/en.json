@@ -1125,6 +1125,8 @@
       "session_error": "Session Error",
       "error_2042": "Error code: 2042\n\nSession state error occurred.\n\nPossible causes:\n- Measurement started when session was not ready\n- Session initialization incomplete\n- Camera access issue\n\nSolutions:\n1. Press \"Retry Measurement\" to start over\n2. Completely close and restart the app\n3. Check camera permissions",
       "error_3003": "Face was not detected properly. Retrying measurement.\n\nCheck:\n- Face is visible to camera\n- Sufficient lighting\n- Adjust distance from camera (30-50cm)\n- Face is facing forward",
+      "face_detection_stopped_title": "Face Detection Interrupted",
+      "error_3004": "Measurement stopped because your face was not detected steadily.\n\nPlease press the Start button again to resume.\n\nCheck:\n- Face the camera directly\n- Enough lighting\n- Keep 30–50cm distance",
       "error_default": "Error code: {{code}}\n\nAn error occurred during measurement. Please try again later.",
       "error_2042_detail": "Error code: 2042\n\nPossible causes:\n- License key issue\n- Session initialization failed\n- Camera access issue\n\nSolutions:\n1. Completely close and restart the app\n2. Check camera permissions\n3. Verify license key is set correctly",
       "error_7009": "Error code: 7009\n\nPossible causes:\n- License key issue\n- SDK initialization failed\n- Camera initialization issue\n\nPlease restart the app.",
