@@ -17,6 +17,7 @@ import {
   v_c0a190,
   type v_34f673,
 } from '../services/wallet/walletV2CheckupPay';
+import { v_f28b6f } from '../services/appsFlyer';
 
 type CheckupType = 'health_analysis' | 'skin_analysis';
 
@@ -72,6 +73,7 @@ export function v_42df18() {
         const v_83d291 = await v_f28ca8();
         if (!v_83d291) {
           v_d81d83.current = { needed: false, reason: 'not_at', feeAmount: '0' };
+          v_f28b6f(0);
           return true;
         }
         const v_b32680 = await v_7ef860();
@@ -100,10 +102,14 @@ export function v_42df18() {
           return false;
         }
         v_d81d83.current = v_f91eae.prepared;
+        v_f28b6f(
+          v_f91eae.prepared.needed ? v_f91eae.prepared.feeAmount : v_f91eae.prepared.feeAmount || 0,
+        );
         v_aa8c1c(false);
         return true;
       } catch (v_9e86fd) {
         v_aa8c1c(false);
+        v_f28b6f(0);
         v_889fad('알림', v_9e86fd?.message ?? '결제 준비에 실패했습니다.');
         return false;
       } finally {

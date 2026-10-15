@@ -62,6 +62,7 @@ import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_cf763b, v_d615ad } from 'ixigazcpvfldbecwtbvavtbi';
 import { v_79be38, v_23b7ab, v_b42e4a, v_f85fc8 } from '../../services';
+import { v_a23ce6 } from '../../services/appsFlyer';
 import { v_81fcbc, v_095212, type v_b57732 } from '../../services/skinApi';
 import { v_71f4f5 } from '../../services/pharmacyApi';
 import {
@@ -689,8 +690,17 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
                         v_97b779('skin_analysis', v_0bce57)
                             .then((v_cb35cb) => {
                                 if (v_cb35cb?.tx_hash) console.log('[피부분석] 비용 차감 완료:', v_cb35cb.tx_hash);
+                                v_a23ce6({
+                                    kind: 'skin',
+                                    success: true,
+                                    quantity: v_cb35cb?.fee_amount != null ? v_cb35cb.fee_amount : 0,
+                                });
                             });
+                    } else {
+                        v_a23ce6({ kind: 'skin', success: true, quantity: 0 });
                     }
+                } else {
+                    v_a23ce6({ kind: 'skin', success: true, quantity: 0 });
                 }
             } catch (v_5e9bfe) {
                 console.error('[SkinAnalysisScreen] 피부 분석 결과 저장 실패:', v_5e9bfe);
