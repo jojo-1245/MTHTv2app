@@ -53,6 +53,7 @@ import { v_4b2942 } from '../../context/PharmacistGuestContext';
 import { v_e252f4, v_8ea5e8 } from '../../utils/pharmacyVisitorSave';
 import { v_706488 } from '../../utils/pharmacistMeasureGuard';
 import { v_207199, v_23b7ab, v_f85fc8 } from '../../services';
+import { v_a23ce6 } from '../../services/appsFlyer';
 import type { v_9923f5 } from '../../services/healthApi';
 import { v_777b12 } from '../../services/healthApi';
 
@@ -1720,6 +1721,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 payload: v_60e8e0 as unknown as Record<string, unknown>,
               });
               console.log('[결과 화면 이동] 약국 방문자 저장 완료, recordId:', v_4ae380);
+              v_a23ce6({ kind: 'health', success: true, quantity: 0 });
             } else {
               const v_23eae7 = await v_207199(v_60e8e0);
               v_4ae380 = v_23eae7?.id ?? (v_23eae7 as any)?.record_id;
@@ -1728,7 +1730,15 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
                 v_97b779('health_analysis', v_4ae380)
                   .then((v_cb35cb) => {
                     if (v_cb35cb?.tx_hash) console.log('[건강분석] 비용 차감 완료:', v_cb35cb.tx_hash);
+
+                    v_a23ce6({
+                      kind: 'health',
+                      success: true,
+                      quantity: v_cb35cb?.fee_amount != null ? v_cb35cb.fee_amount : 0,
+                    });
                   });
+              } else {
+                v_a23ce6({ kind: 'health', success: true, quantity: 0 });
               }
             }
           } catch (v_09112b) {

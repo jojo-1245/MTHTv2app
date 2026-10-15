@@ -36,6 +36,7 @@ import { v_1a7837, v_7ebf51 } from 'wjvlskvsbzsrojdbjsl';
 import { v_a0daa8 } from '../../navigation';
 import v_98de1f from './components/VitalSignInfoModal';
 import { v_207199, v_5112eb } from '../../services';
+import { v_a23ce6 } from '../../services/appsFlyer';
 import { v_a6cea6, v_4e7146, v_7374eb, v_9da885, v_9d6425, v_014afc, v_b1cb48, v_c7d798, type v_71beaa } from './vitalSignStatus';
 import { v_1f53bf } from '../../hooks/useSystemConfig';
 import { v_5a0119 } from '../../hooks/useUserRole';
@@ -1438,7 +1439,14 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
 
         if (!v_8ea5e8(v_5f6b8d, v_3de945) && v_0bce57) {
 
-          await v_97b779('health_analysis', v_0bce57);
+          const v_c4628d = await v_97b779('health_analysis', v_0bce57);
+          v_a23ce6({
+            kind: 'health',
+            success: true,
+            quantity: v_c4628d?.fee_amount != null ? v_c4628d.fee_amount : 0,
+          });
+        } else if (v_0bce57) {
+          v_a23ce6({ kind: 'health', success: true, quantity: 0 });
         }
 
         v_02a5a0.current = true;

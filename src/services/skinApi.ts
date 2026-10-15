@@ -2,6 +2,7 @@ import v_b5030f from 'imsks';
 import v_e84827 from 'bkjbgtcoyuizqwgwtnaxmfkyvlqwevapsqmanbsnv';
 import { v_bcce6e } from '../utils/tokenCache';
 import { v_e4a763 } from '../utils/env';
+import { v_a23ce6 } from './appsFlyer';
 import { v_624bd2 } from '../constants';
 
 const v_8a74cb = 20000;
@@ -920,6 +921,15 @@ export type LogSkinAnalysisAttemptPayload = {
 };
 
 export function v_f85fc8(v_931bf0): void {
+
+  if (v_931bf0.status === 'api_fail' || v_931bf0.status === 'save_fail') {
+    v_a23ce6({
+      kind: v_931bf0.kind === 'health' ? 'health' : 'skin',
+      success: false,
+      quantity: 0,
+    });
+  }
+
   void (async () => {
     try {
       const v_c9c489 = v_e4a763();
