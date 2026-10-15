@@ -123,6 +123,14 @@
           "androidAppId": "ca-app-pub-5991754370183179~9654254070",
           "iosAppId": "ca-app-pub-3940256099942544~1458002511"
         }
+      ],
+      [
+        "react-native-appsflyer",
+        {
+          "shouldUseStrictMode": false,
+          "shouldUsePurchaseConnector": false,
+          "preferAppsFlyerBackupRules": false
+        }
       ]
     ]
   }

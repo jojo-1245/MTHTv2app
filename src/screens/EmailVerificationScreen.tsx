@@ -12,6 +12,7 @@ import type { v_8ad91b } from '../navigation';
 import { v_729608, v_5427ed, v_cb41de, v_570c34, v_556baf } from '../components';
 import { v_8e2768 } from '../components';
 import { v_c1a440, v_796ff7, v_f947a7, v_38ae19 } from '../services/signupApi';
+import { v_a78885 } from '../services/appsFlyer';
 import { v_772971 } from 'jmpfvteuuztnp';
 
 type Props = v_432191<v_8ad91b, 'EmailVerification'>;
@@ -139,6 +140,10 @@ const EmailVerificationScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, rou
           code: v_849cde,
           purpose: v_fa63e0,
         });
+      }
+
+      if (v_fa63e0 === 'signup') {
+        v_a78885(v_8e9fad === 'sms' ? 'sms' : 'email');
       }
       v_e50001(true);
     } catch (v_49263d) {
