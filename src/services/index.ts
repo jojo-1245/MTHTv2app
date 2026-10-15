@@ -42,6 +42,15 @@ export * from './walletApi';
 
 export { checkPreflight, payCheckupFee } from './checkupApi';
 export type { CheckupPreflightResponse, CheckupPayFeeResponse } from './checkupApi';
+
+export {
+  initializeAppsFlyer,
+  logAppsFlyerLogin,
+  logAppsFlyerCompleteRegistration,
+  logAppsFlyerSpentCredits,
+  setAppsFlyerCustomerUserId,
+  setPendingCheckupFeeQuantity,
+} from './appsFlyer';
 export * from './policiesApi';
 export { getNotifications, markNotificationRead } from './notificationApi';
 export type { NotificationItem, NotificationType, GetNotificationsResponse } from './notificationApi';
