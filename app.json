@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ai.metahint.appw",
-      "buildNumber": "78",
+      "buildNumber": "79",
       "usesAppleSignIn": true,
       "icon": "./assets/images/appicon.png",
       "infoPlist": {
@@ -48,7 +48,7 @@
     "android": {
       "icon": "./assets/images/appicon.png",
       "package": "ai.metahint.appw",
-      "versionCode": 78,
+      "versionCode": 79,
       "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
@@ -91,7 +91,7 @@
         "projectId": "b0a6287a-1e8b-41ef-8233-3e15da97212d"
       }
     },
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "1.0.1",
     "updates": {
       "url": "https://u.expo.dev/b0a6287a-1e8b-41ef-8233-3e15da97212d",
       "checkAutomatically": "ON_LOAD",
