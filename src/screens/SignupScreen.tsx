@@ -29,6 +29,7 @@ import { v_700ef9 } from '../context';
 import { v_dec439 } from 'zvyjokvuouwvifyzks';
 import { v_772971 } from 'jmpfvteuuztnp';
 import { v_35200c, v_c1a440, v_91bb22, type v_d4ca6e } from '../services/signupApi';
+import { v_a78885 } from '../services/appsFlyer';
 import { v_f51778, v_d30c5f } from '../services/policiesApi';
 import { v_202d44 } from '../constants/countryDialCodes';
 import { v_9553a4, v_369014 } from '../constants/regions';
@@ -540,6 +541,8 @@ const SignupScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf
       await v_35200c(v_931bf0);
       await v_e84827.setItem(v_624bd2.savedEmail, v_8f37ac);
       if (v_5739ac) {
+
+        v_a78885(String(v_5739ac));
         v_889fad(
           v_8d41d7('signup.success_title'),
           v_8d41d7('signup.success_message_social', '가입되었습니다. 소셜 로그인을 눌러 로그인하세요.'),
