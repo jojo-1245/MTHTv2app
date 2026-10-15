@@ -6,6 +6,7 @@ import { STORAGE_KEYS } from '../constants';
 import { setCachedToken, clearCachedToken } from '../utils/tokenCache';
 import { clearPharmacistGuestSession } from '../utils/pharmacistGuestSession';
 import { normalizeMemberForSession } from '../utils/userRole';
+import { logAppsFlyerLogin, setAppsFlyerCustomerUserId } from './appsFlyer';
 
 const API_TIMEOUT = 20000;
 
@@ -439,6 +440,14 @@ export async function persistAuthSession(
       keepLoggedIn,
       isLoggedInSaved: keepLoggedIn,
     });
+  }
+
+  try {
+    const member = (payload as any).member ?? (payload as any).user;
+    if (member?.id != null) setAppsFlyerCustomerUserId(member.id);
+    logAppsFlyerLogin();
+  } catch {
+
   }
 }
 
