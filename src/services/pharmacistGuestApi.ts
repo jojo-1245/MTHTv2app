@@ -18,13 +18,15 @@ export type PharmacistGuestVerifyResult = {
 
 export async function v_cb0098(v_24baff): Promise<{ expiresIn: number; dev?: boolean; devCode?: string; name?: string; phone?: string }> {
   const v_43c42e = await v_119173(v_24baff);
-  if (__DEV__) {
-    console.log('[pharmacistGuestApi] DEV OTP: 111111 (pharmacy dev mode)');
+
+  const v_45472f = v_43c42e.dev === true;
+  if (__DEV__ && v_45472f) {
+    console.log('[pharmacistGuestApi] server SMS dev mode — OTP 111111');
   }
   return {
     expiresIn: v_43c42e.expiresIn,
     dev: v_43c42e.dev,
-    devCode: __DEV__ ? '111111' : undefined,
+    devCode: v_45472f ? '111111' : undefined,
     name: v_43c42e.name,
     phone: v_43c42e.phone,
   };
@@ -48,7 +50,7 @@ export async function v_e76669(v_24baff): Promise<PharmacistGuestVerifyResult> {
   };
 }
 
-export async function v_3dafc1(v_24baff): Promise<{ expiresIn: number; devCode?: string }> {
+export async function v_3dafc1(v_24baff): Promise<{ expiresIn: number; dev?: boolean; devCode?: string }> {
   const v_43c42e = await v_cb0098(v_24baff);
-  return { expiresIn: v_43c42e.expiresIn, devCode: v_43c42e.devCode };
+  return { expiresIn: v_43c42e.expiresIn, dev: v_43c42e.dev, devCode: v_43c42e.devCode };
 }
