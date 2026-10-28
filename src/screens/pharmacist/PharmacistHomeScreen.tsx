@@ -215,7 +215,8 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       v_f07cc4('');
       v_6a8302(v_43c42e.expiresIn ?? 180);
       v_fd7d1f('otp');
-      if (__DEV__ && v_43c42e.devCode) {
+
+      if (v_43c42e.dev && v_43c42e.devCode) {
         v_199f88({
           title: v_8d41d7('pharmacist.guest_auth.dev_code_title'),
           message: v_8d41d7('pharmacist.guest_auth.dev_code_message', { code: v_43c42e.devCode }),
@@ -318,7 +319,7 @@ const PharmacistHomeScreen: v_a3453e.FC<Props> = ({ route: v_c7daf6, navigation:
       const v_43c42e = await v_3dafc1({ name: v_1833e7, phone: v_d74a81 });
       v_6a8302(v_43c42e.expiresIn ?? 180);
       v_f07cc4('');
-      if (__DEV__ && v_43c42e.devCode) {
+      if (v_43c42e.dev && v_43c42e.devCode) {
         v_199f88({
           title: v_8d41d7('pharmacist.guest_auth.dev_code_title'),
           message: v_8d41d7('pharmacist.guest_auth.dev_code_message', { code: v_43c42e.devCode }),
