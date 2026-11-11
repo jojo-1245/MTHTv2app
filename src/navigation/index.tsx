@@ -213,6 +213,8 @@ export type RootStackParamList = {
     recordId?: number;
 
     fromHistory?: boolean;
+
+    vitalSigns?: Record<string, unknown>;
   };
   HealthComparison: {
     recordA: { id: string; date: string; time: string; healthIndex: number; items: any[] };
