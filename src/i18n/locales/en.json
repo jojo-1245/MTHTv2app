@@ -2354,7 +2354,10 @@
     "total_label": "Total",
     "checkout_cta": "Checkout",
     "detail_hint": "Tap to view product details",
-    "detail_a11y": "View product details for {{name}}"
+    "detail_a11y": "View product details for {{name}}",
+    "list_loading": "Loading recommended supplements",
+    "list_failed": "Couldn't load recommended supplements",
+    "list_empty": "No supplements match this result"
   },
   "walletV2Pin": {
     "title_enter": "Set wallet protection PIN",

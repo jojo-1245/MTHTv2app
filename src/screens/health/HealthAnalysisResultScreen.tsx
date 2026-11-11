@@ -20,6 +20,7 @@ import { v_25515d } from 'zvyjokvuouwvifyzks';
 import v_f595b9, { v_bf60de } from 'vpztcxjmsfanunln';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
 import v_16c240 from '../../components/SupplementRecommendCta';
+import v_a5a634 from '../../components/PharmacistSupplementList';
 import { v_dff48a } from '../../utils/aiTextFormat';
 import { v_0d0e7d, type v_9a970c } from '../../utils/analysisResultTabletStyles';
 import { v_2cc9f8 } from '../../utils/tabletLayout';
@@ -670,7 +671,7 @@ const v_a6fe82 = (v_3b402b, v_3b27d9, v_8d41d7): string => {
 const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v_c7daf6 }) => {
   const { t: v_8d41d7, i18n: v_9c213b } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
-  const { results: v_b938a1, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7, fromHistory: v_4c18b6 } = v_c7daf6.params;
+  const { results: v_b938a1, timestamp: v_42044e, userName: v_f08a5e, accounts: v_f074c5, selectedAccountId: v_565544, userInfo: v_bb789b, savedBeforeNavigate: v_04b545, recordId: v_ebdbf7, fromHistory: v_4c18b6, vitalSigns: v_4a097d } = v_c7daf6.params;
 
   const v_a7f568 = v_df9f57(() => {
     const v_479f05 = (v_b938a1 || {}) as Record<string, any>;
@@ -761,6 +762,12 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
   const [v_85cf60, v_952b9d] = v_5ab095(false);
   const v_f4f730 = v_e662ae<number | null>(null);
   const [v_4ae380, v_43dcda] = v_5ab095<number | null>(null);
+  const [v_09d2dd, v_c96d1f] = v_5ab095<Record<string, unknown> | null>(
+    v_4a097d ?? null,
+  );
+  v_a3453e.useEffect(() => {
+    if (v_4a097d) v_c96d1f(v_4a097d);
+  }, [v_4a097d]);
 
   const v_61a127 = v_e662ae<v_122070>(null);
 
@@ -778,6 +785,8 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       savedRecordIdRef: v_f4f730.current,
     });
     if (v_e399bf || v_85cf60) return;
+
+    if (v_160272) return;
     const v_fbf3b0 = v_f4f730.current;
     if (!v_fbf3b0) {
       console.warn('[AI 분석] recordId 없음 - AI 호출 스킵. savedRecordId state:', v_4ae380);
@@ -1372,6 +1381,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
             };
           }
         });
+        v_c96d1f(v_0946e7);
 
         const v_0c2f9b = v_c86f08.find((v_779914) => v_779914.id === v_e7b2f2);
         const v_083682 = v_0c2f9b?.isCurrent === true;
@@ -3263,12 +3273,21 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                   </>
                 )}
 
-                {}
-                <SupplementRecommendCta
-                  source="health"
-                  recordId={v_4ae380 ?? null}
-                  skipUpsert={!!v_4c18b6}
-                />
+                {
+}
+                {v_160272 ? (
+                  <PharmacistSupplementList
+                    source="health"
+                    vitalSigns={v_09d2dd}
+                    sex={v_bb789b?.gender ?? null}
+                  />
+                ) : (
+                  <SupplementRecommendCta
+                    source="health"
+                    recordId={v_4ae380 ?? null}
+                    skipUpsert={!!v_4c18b6}
+                  />
+                )}
 
                 {
 }
