@@ -36,6 +36,7 @@ const v_0abe94 = 12;
 import { v_a0daa8 } from '../../navigation';
 import { v_729608, v_570c34, v_556baf, v_cb41de, v_8714fe, v_1c1837, v_d3705d, v_47f7b9 } from '../../components';
 import v_16c240 from '../../components/SupplementRecommendCta';
+import v_a5a634, { v_0b3fa9 } from '../../components/PharmacistSupplementList';
 import { v_dff48a } from '../../utils/aiTextFormat';
 import { v_945458 } from './components';
 import type { v_8ad91b } from '../../navigation';
@@ -2261,11 +2262,18 @@ const SkinAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route: v
 
                 {
 }
-                <SupplementRecommendCta
-                    source="skin"
-                    recordId={v_4ae380 ?? null}
-                    skipUpsert={v_72ba9a}
-                />
+                {v_160272 ? (
+                    <PharmacistSupplementList
+                        source="skin"
+                        analysisResult={v_0b3fa9(v_e521b9)}
+                    />
+                ) : (
+                    <SupplementRecommendCta
+                        source="skin"
+                        recordId={v_4ae380 ?? null}
+                        skipUpsert={v_72ba9a}
+                    />
+                )}
 
                 {}
                 <View style={v_d81136.medicalDisclaimerCard}>

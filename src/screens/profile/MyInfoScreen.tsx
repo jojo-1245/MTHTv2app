@@ -24,6 +24,7 @@ import { v_0e72e5 } from '../../services/pointClickOfferwall';
 import { v_998b9d } from '../../utils/authErrorHandler';
 import { v_e4a763 } from '../../utils/env';
 import { v_3d4e28, v_d752db } from '../../utils/appVersion';
+import { v_5a0119 } from '../../hooks/useUserRole';
 
 type Props = v_432191<v_8ad91b, 'MyInfo'>;
 
@@ -36,6 +37,7 @@ type TierType = 'wm' | 'bm' | 'pm';
 const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const { t: v_8d41d7 } = v_772971();
   const { navigate: v_9b57fc } = v_a0daa8();
+  const v_160272 = v_5a0119() === 'pharmacist';
   const v_033e14 = v_e0068c();
 
   const [v_727031, v_4ffb1e] = v_5ab095<v_2c95cc | null>(null);
@@ -145,6 +147,10 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
         isLogout: true,
       },
     ];
+
+  const v_81049d = v_160272
+    ? v_0dea6d.filter((v_8c0b26) => v_8c0b26.id !== 'offerwall' && v_8c0b26.id !== 'consent')
+    : v_0dea6d;
 
   const v_a2c2c9 = () => {
     if (__DEV__) console.log('[Offerwall] handleOfferwall pressed');
@@ -268,59 +274,65 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
               </View>
               <Text style={v_d81136.email}>{v_b43178}</Text>
             </View>
-            <TouchableOpacity
-              style={v_d81136.referralBtn}
-              onPress={() => v_9b57fc('ReferralShare')}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="share-social-outline" size={24} color={v_1bfbd0.text} />
-              <Text style={v_d81136.referralText}>{v_8d41d7('profile.referral')}</Text>
-            </TouchableOpacity>
+            {v_160272 ? null : (
+              <TouchableOpacity
+                style={v_d81136.referralBtn}
+                onPress={() => v_9b57fc('ReferralShare')}
+                activeOpacity={0.7}
+              >
+                <Ionicons name="share-social-outline" size={24} color={v_1bfbd0.text} />
+                <Text style={v_d81136.referralText}>{v_8d41d7('profile.referral')}</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           {
 }
-          <View
-            style={v_d81136.nftInfoCard}
-            accessibilityLabel={v_8d41d7('profile.nft_held')}
-          >
-            <View style={v_d81136.nftInfoContent}>
-              <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
-              <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount} testID="profile-vip-count">{v_a75189.toLocaleString()}{v_8d41d7('profile.nft_unit')}</Text>
-              </Text>
-            </View>
-          </View>
-          <TouchableOpacity
-            style={v_d81136.nftInfoCard}
-            onPress={() => v_9b57fc('CheckupNhis', { initialTab: 'records' })}
-            activeOpacity={0.85}
-            accessibilityRole="button"
-            accessibilityLabel={v_8d41d7('profile.checkup_history')}
-          >
-            <View style={v_d81136.nftInfoContent}>
-              <Ionicons name="medkit-outline" size={24} color="#10B981" />
-              <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('profile.checkup_history')}
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={v_d81136.nftInfoCard}
-            onPress={() => v_9b57fc('RecommendedSupplements')}
-            activeOpacity={0.85}
-            accessibilityRole="button"
-            accessibilityLabel={v_8d41d7('supplements.page_title')}
-          >
-            <View style={v_d81136.nftInfoContent}>
-              <Ionicons name="nutrition-outline" size={24} color="#D97706" />
-              <Text style={v_d81136.nftInfoText}>
-                {v_8d41d7('supplements.page_title')}
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
-          </TouchableOpacity>
+          {v_160272 ? null : (
+            <>
+              <View
+                style={v_d81136.nftInfoCard}
+                accessibilityLabel={v_8d41d7('profile.nft_held')}
+              >
+                <View style={v_d81136.nftInfoContent}>
+                  <Ionicons name="layers-outline" size={24} color="#2B7FFF" />
+                  <Text style={v_d81136.nftInfoText}>
+                    {v_8d41d7('profile.nft_held')} <Text style={v_d81136.nftInfoCount} testID="profile-vip-count">{v_a75189.toLocaleString()}{v_8d41d7('profile.nft_unit')}</Text>
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={v_d81136.nftInfoCard}
+                onPress={() => v_9b57fc('CheckupNhis', { initialTab: 'records' })}
+                activeOpacity={0.85}
+                accessibilityRole="button"
+                accessibilityLabel={v_8d41d7('profile.checkup_history')}
+              >
+                <View style={v_d81136.nftInfoContent}>
+                  <Ionicons name="medkit-outline" size={24} color="#10B981" />
+                  <Text style={v_d81136.nftInfoText}>
+                    {v_8d41d7('profile.checkup_history')}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={v_d81136.nftInfoCard}
+                onPress={() => v_9b57fc('RecommendedSupplements')}
+                activeOpacity={0.85}
+                accessibilityRole="button"
+                accessibilityLabel={v_8d41d7('supplements.page_title')}
+              >
+                <View style={v_d81136.nftInfoContent}>
+                  <Ionicons name="nutrition-outline" size={24} color="#D97706" />
+                  <Text style={v_d81136.nftInfoText}>
+                    {v_8d41d7('supplements.page_title')}
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color={v_1bfbd0.secondaryText} />
+              </TouchableOpacity>
+            </>
+          )}
 
           {
 
@@ -328,7 +340,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
 
           {}
           <View style={v_d81136.menuCard}>
-            {v_0dea6d.map((v_8c0b26, v_a56041) => {
+            {v_81049d.map((v_8c0b26, v_a56041) => {
               const v_44c68a = 'isLogout' in v_8c0b26 && v_8c0b26.isLogout === true;
               const v_7e3a89 = 'isOfferwall' in v_8c0b26 && v_8c0b26.isOfferwall === true;
               const v_c288e9 = 'iconName' in v_8c0b26 ? v_8c0b26.iconName : ('help-circle' as const);
@@ -338,7 +350,7 @@ const MyInfoScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
                   testID={`profile-menu-${v_8c0b26.id}`}
                   style={[
                     v_d81136.menuItem,
-                    v_a56041 < v_0dea6d.length - 1 && v_d81136.menuItemBorder,
+                    v_a56041 < v_81049d.length - 1 && v_d81136.menuItemBorder,
                   ]}
                   onPress={
                     v_44c68a
