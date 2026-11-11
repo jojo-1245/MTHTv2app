@@ -1766,6 +1766,7 @@ const HealthAnalysisScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, route:
             userInfo: v_f4ebd0,
             savedBeforeNavigate: true,
             recordId: v_4ae380,
+            vitalSigns: v_0946e7,
           });
         } catch (v_9e86fd) {
           console.error('[결과 화면 이동] 오류:', v_9e86fd);

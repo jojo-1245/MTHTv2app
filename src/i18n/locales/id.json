@@ -2171,7 +2171,10 @@
     "total_label": "Total",
     "checkout_cta": "Bayar",
     "detail_hint": "Ketuk untuk melihat detail produk",
-    "detail_a11y": "Lihat detail produk {{name}}"
+    "detail_a11y": "Lihat detail produk {{name}}",
+    "list_loading": "Memuat suplemen rekomendasi",
+    "list_failed": "Gagal memuat suplemen rekomendasi",
+    "list_empty": "Tidak ada suplemen untuk hasil ini"
   },
   "walletV2Pin": {
     "title_enter": "Atur PIN perlindungan dompet",
