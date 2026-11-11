@@ -25,4 +25,15 @@ describe('stripLatexMarkup', () => {
       '가격은 $100 이고 배송비는 $5 입니다',
     );
   });
+
+  it('단위 명령과 공백이 있는 수식을 단위 글자로 바꾼다', () => {
+    expect(v_dff48a('SDNN: $6\\text{ bpm}$(s) (정상)')).toBe('SDNN: 6 bpm(s) (정상)');
+    expect(v_dff48a('RMSSD: $68\\text{ ms}$(s) (정상)')).toBe('RMSSD: 68 ms(s) (정상)');
+    expect(v_dff48a('혈압: $14/70\\text{ mmHg}$(s) (낮음)')).toBe('혈압: 14/70 mmHg(s) (낮음)');
+  });
+
+  it('제목 표시와 굵은 글자 표시를 벗긴다', () => {
+    expect(v_dff48a('### 맥파 신호(Vital Signs):')).toBe('맥파 신호(Vital Signs):');
+    expect(v_dff48a('상태는 **정상**입니다.')).toBe('상태는 정상입니다.');
+  });
 });
