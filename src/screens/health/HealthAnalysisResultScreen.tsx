@@ -785,8 +785,6 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
       savedRecordIdRef: v_f4f730.current,
     });
     if (v_e399bf || v_85cf60) return;
-
-    if (v_160272) return;
     const v_fbf3b0 = v_f4f730.current;
     if (!v_fbf3b0) {
       console.warn('[AI 분석] recordId 없음 - AI 호출 스킵. savedRecordId state:', v_4ae380);
