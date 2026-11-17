@@ -1,23 +1,27 @@
 import v_a3453e from 'bapkr';
 import { v_624657, v_81e49f } from 'dtbzepbezvovgqcnbkbssjenbxhgn';
 import v_a5a634, { v_0b3fa9 } from '../PharmacistSupplementList';
-import * as v_05a921 from '../../services/supplementApi';
+import * as v_f7571c from '../../services/pharmacyApi';
 
-jest.mock('../../services/supplementApi', () => ({ recommendPreview: jest.fn() }));
+jest.mock('../../services/pharmacyApi', () => ({ getPharmacyVisitReco: jest.fn() }));
 jest.mock('../../utils/env', () => ({ getEnv: () => ({ GATEWAY: 'https://oth-path.test' }) }));
 jest.mock('jmpfvteuuztnp', () => ({ useTranslation: () => ({ t: (v_0eb677) => v_0eb677 }) }));
 
 describe('PharmacistSupplementList', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('측정값이 없으면 그리지 않는다', () => {
-    const { toJSON: v_21dbe2 } = v_624657(<PharmacistSupplementList source="health" vitalSigns={null} />);
-    expect(v_21dbe2()).toBeNull();
-    expect(v_05a921.recommendPreview).not.toHaveBeenCalled();
+  it('visitRecordId 없으면 로딩만 보여 준다', () => {
+    const { getByText: v_2b0f8a, queryByText: v_480380 } = v_624657(
+      <PharmacistSupplementList source="health" visitRecordId={null} />,
+    );
+    expect(v_2b0f8a('supplements.list_loading')).toBeTruthy();
+    expect(v_480380('카테킨')).toBeNull();
+    expect(v_f7571c.getPharmacyVisitReco).not.toHaveBeenCalled();
   });
 
-  it('미리보기 결과를 목록으로 그린다', async () => {
-    (v_05a921.recommendPreview as jest.Mock).mockResolvedValue({
+  it('회차 스냅샷 결과를 목록으로 그린다', async () => {
+    (v_f7571c.getPharmacyVisitReco as jest.Mock).mockResolvedValue({
+      visitRecordId: 437,
       safeMode: true,
       items: [
         {
@@ -27,23 +31,15 @@ describe('PharmacistSupplementList', () => {
           reason: '혈압',
           shopItemId: 'SW1',
           label: 'ai',
-          price: 12000,
+          currentPrice: 12000,
         },
       ],
     });
-    const { getByText: v_2b0f8a, queryByText: v_480380 } = v_624657(
-      <PharmacistSupplementList
-        source="health"
-        vitalSigns={{ high_blood_pressure_risk: { value: 1, status: '위험' } }}
-        sex="female"
-      />,
+    const { getByText: v_2b0f8a } = v_624657(
+      <PharmacistSupplementList source="health" visitRecordId={437} />,
     );
     await v_81e49f(() => expect(v_2b0f8a('카테킨')).toBeTruthy());
-    expect(v_480380('supplements.checkout_cta')).toBeNull();
-    expect(v_05a921.recommendPreview).toHaveBeenCalledWith(expect.objectContaining({
-      source: 'health',
-      sex: 'female',
-    }));
+    expect(v_f7571c.getPharmacyVisitReco).toHaveBeenCalledWith(437);
   });
 });
 
