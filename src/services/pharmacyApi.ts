@@ -134,6 +134,41 @@ export async function v_71f4f5(v_610eb5): Promise<PharmacyVisitorRecord[]> {
   }
 }
 
+export type PharmacyVisitRecoItem = {
+  gunkiId?: number;
+  productName: string;
+  imageUrl?: string | null;
+  reason?: string;
+  shopItemId?: string | null;
+  label?: 'ai' | 'extra';
+  price?: number;
+  currentPrice?: number | null;
+  soldout?: boolean;
+};
+
+export type PharmacyVisitRecoResponse = {
+  visitRecordId: number;
+  visitorId?: number;
+  source?: string | null;
+  safeMode?: boolean;
+  items: PharmacyVisitRecoItem[] | null;
+  message?: string;
+};
+
+export async function v_026e73(
+  v_fbf3b0,
+): Promise<PharmacyVisitRecoResponse> {
+  try {
+    const v_8f00b9 = await v_9a8286.get<{ success: boolean; data: PharmacyVisitRecoResponse }>(
+      `/oth-path${v_fbf3b0}/reco`,
+      { timeout: 30000 },
+    );
+    return v_b37be4(v_8f00b9);
+  } catch (v_5e9bfe) {
+    throw new Error(v_9f9d96(v_5e9bfe, '회차 추천을 불러오지 못했습니다.'));
+  }
+}
+
 export async function v_f6fac8(v_fbf3b0): Promise<void> {
   try {
     await v_9a8286.delete(`/oth-path${v_fbf3b0}`);

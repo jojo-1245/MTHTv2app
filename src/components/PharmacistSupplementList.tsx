@@ -1,7 +1,11 @@
 import v_a3453e, { v_c4deb2, v_5ab095 } from 'bapkr';
-import { v_3094a2, v_19b633, v_cf9c33, v_39a996, v_472849, v_326be8 } from 'rcmrninabrnb';
+import { v_3094a2, v_19b633, v_cf9c33, v_39a996, v_472849 } from 'rcmrninabrnb';
 import { v_772971 } from 'jmpfvteuuztnp';
-import { v_8b95d1, type v_d74666 } from '../services/supplementApi';
+import {
+  v_026e73,
+  type v_a85836,
+} from '../services/pharmacyApi';
+import type { v_d74666 } from '../services/supplementApi';
 import { v_e4a763 } from '../utils/env';
 import { v_9f896c } from '../utils/shopProductKind';
 
@@ -32,70 +36,104 @@ function v_28895b(it: v_d74666, v_a56041): string {
   return `idx-${v_a56041}`;
 }
 
+function v_b0c206(rows: v_a85836[]): v_d74666[] {
+  return v_18b8bf.map((v_23805a) => {
+    const v_6bbb57 =
+      v_23805a.currentPrice != null && Number(v_23805a.currentPrice) > 0
+        ? Number(v_23805a.currentPrice)
+        : v_23805a.price != null && Number(v_23805a.price) > 0
+          ? Number(v_23805a.price)
+          : undefined;
+    return {
+      gunkiId: typeof v_23805a.gunkiId === 'number' ? v_23805a.gunkiId : 0,
+      productName: v_23805a.productName || '-',
+      imageUrl: v_23805a.imageUrl ?? null,
+      reason: v_23805a.reason || '',
+      shopItemId: v_23805a.shopItemId ?? null,
+      label: v_23805a.label === 'extra' ? 'extra' : 'ai',
+      ...(v_6bbb57 != null ? { price: v_6bbb57 } : {}),
+    };
+  });
+}
+
+const v_fbb4dd = [400, 800, 1200, 1600, 2000, 2500, 3000, 3500, 4000, 5000];
+
+async function v_b9f82b(
+  v_2a631f,
+  v_361415,
+): Promise<v_d74666[]> {
+  for (let v_ebec57 = 0; v_ebec57 < v_fbb4dd.length; v_ebec57++) {
+    if (!v_361415.alive) return [];
+    const v_9390e8 = await v_026e73(v_2a631f);
+    if (v_9390e8.items && v_9390e8.items.length > 0) {
+      return v_b0c206(v_9390e8.items);
+    }
+    if (v_ebec57 < v_fbb4dd.length - 1) {
+      await new Promise((v_cb35cb) => setTimeout(v_cb35cb, v_fbb4dd[v_ebec57]));
+    }
+  }
+  return [];
+}
+
 interface Props {
   source: 'health' | 'skin';
+
+  visitRecordId?: number | null;
 
   vitalSigns?: Record<string, unknown> | null;
 
   analysisResult?: Record<string, unknown> | null;
+
   sex?: 'male' | 'female' | null;
 }
 
 export default function v_a5a634({
-  source: v_04e790,
-  vitalSigns: v_0946e7,
-  analysisResult: v_e521b9,
-  sex: v_d1d54c,
+  visitRecordId: v_2a631f,
 }: Props): v_a3453e.JSX.Element | null {
   const { t: v_8d41d7 } = v_772971();
-  const v_dea7c3 = v_04e790 === 'health' ? v_0946e7 : v_e521b9;
-  const v_89240d = v_dea7c3 ? JSON.stringify(v_dea7c3) : '';
   const [v_4622b9, v_fa923c] = v_5ab095<v_d74666[]>([]);
   const [v_ab4803, v_ae4844] = v_5ab095<'idle' | 'loading' | 'ready' | 'error'>('idle');
 
   v_c4deb2(() => {
-    if (!v_89240d) {
+    if (v_2a631f == null || !Number.isFinite(v_2a631f) || v_2a631f <= 0) {
       v_fa923c([]);
       v_ae4844('idle');
       return;
     }
-    let v_759436 = true;
+    const v_361415 = { alive: true };
     v_ae4844('loading');
-    v_8b95d1({
-      source: v_04e790,
-      platform: v_326be8.OS === 'ios' ? 'ios' : 'android',
-      vitalSigns: v_04e790 === 'health' ? (v_0946e7 ?? undefined) : undefined,
-      analysisResult: v_04e790 === 'skin' ? (v_e521b9 ?? undefined) : undefined,
-      sex: v_d1d54c ?? null,
-    })
-      .then((v_cb35cb) => {
-        if (!v_759436) return;
-        if (v_326be8.OS === 'ios' && v_cb35cb.safeMode === false) {
-          v_fa923c([]);
-          v_ae4844('ready');
-          return;
-        }
-        v_fa923c(v_cb35cb.items);
+    v_b9f82b(v_2a631f, v_361415)
+      .then((v_ef8ab1) => {
+        if (!v_361415.alive) return;
+        v_fa923c(v_ef8ab1);
         v_ae4844('ready');
       })
       .catch((v_9e86fd) => {
-        const v_49263d = v_9e86fd as { message?: string; response?: { status?: number; data?: unknown } };
-        console.warn('[PharmacistSupplementList] 추천 목록 실패', {
+        const v_49263d = v_9e86fd as { message?: string };
+        console.warn('[PharmacistSupplementList] 회차 추천 로드 실패', {
+          visitRecordId: v_2a631f,
           message: v_49263d?.message,
-          status: v_49263d?.response?.status,
-          data: v_49263d?.response?.data,
         });
-        if (!v_759436) return;
+        if (!v_361415.alive) return;
         v_fa923c([]);
         v_ae4844('error');
       });
     return () => {
-      v_759436 = false;
+      v_361415.alive = false;
     };
+  }, [v_2a631f]);
 
-  }, [v_04e790, v_89240d, v_d1d54c]);
-
-  if (!v_89240d) return null;
+  if (v_2a631f == null) {
+    return (
+      <View style={v_d81136.section} testID="pharmacist-supplement-list">
+        <Text style={v_d81136.title}>{v_8d41d7('supplements.page_title')}</Text>
+        <View style={v_d81136.statusBox}>
+          <ActivityIndicator color="#111" />
+          <Text style={v_d81136.statusText}>{v_8d41d7('supplements.list_loading')}</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={v_d81136.section} testID="pharmacist-supplement-list">
