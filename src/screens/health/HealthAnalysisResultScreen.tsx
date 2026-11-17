@@ -3276,8 +3276,7 @@ const HealthAnalysisResultScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d, 
                 {v_160272 ? (
                   <PharmacistSupplementList
                     source="health"
-                    vitalSigns={v_09d2dd}
-                    sex={v_bb789b?.gender ?? null}
+                    visitRecordId={v_4ae380}
                   />
                 ) : (
                   <SupplementRecommendCta
