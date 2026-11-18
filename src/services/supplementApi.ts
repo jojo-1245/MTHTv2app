@@ -37,6 +37,21 @@ function v_d66c57<T extends RecommendResponse>(v_4d33b2): T {
   };
 }
 
+export async function v_8b95d1(v_24baff): Promise<RecommendResponse> {
+  const v_8f00b9 = await v_9a8286.post<Wrapped<RecommendResponse> | RecommendResponse>(
+    '/oth-path',
+    {
+      source: v_24baff.source,
+      platform: v_24baff.platform,
+      vitalSigns: v_24baff.vitalSigns,
+      analysisResult: v_24baff.analysisResult,
+      ...(v_24baff.sex ? { sex: v_24baff.sex } : {}),
+    },
+    { timeout: 60000 },
+  );
+  return v_d66c57(v_8f00b9.data as Wrapped<RecommendResponse> & RecommendResponse);
+}
+
 export async function v_ec0289(v_24baff): Promise<RecommendResponse> {
 
   const v_8f00b9 = await v_9a8286.post<Wrapped<RecommendResponse> | RecommendResponse>(
