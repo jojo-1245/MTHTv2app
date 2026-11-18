@@ -713,6 +713,7 @@ export async function v_5112eb(v_fbf3b0): Promise<string> {
     }
   }
 
+  const v_f6634c = Date.now();
   try {
     const v_3f4675 = {
       'Content-Type': 'application/json',
@@ -724,7 +725,7 @@ export async function v_5112eb(v_fbf3b0): Promise<string> {
       console.log('[healthApi] analyzeHealthRecordAi 요청:', { url: v_f71b56, recordId: v_fbf3b0 });
     }
 
-    const v_8f00b9 = await v_b5030f.post(v_f71b56, { record_id: v_fbf3b0 }, { timeout: 60000, headers: v_3f4675 });
+    const v_8f00b9 = await v_b5030f.post(v_f71b56, { record_id: v_fbf3b0 }, { timeout: 120000, headers: v_3f4675 });
 
     const v_9390e8 = v_8f00b9.data?.data;
     if (v_9390e8?.analysis) {
@@ -736,6 +737,9 @@ export async function v_5112eb(v_fbf3b0): Promise<string> {
       console.error('[healthApi] analyzeHealthRecordAi 에러:', {
         status: v_5e9bfe.response?.status,
         data: v_5e9bfe.response?.data,
+        code: v_5e9bfe.code,
+        message: v_5e9bfe.message,
+        elapsedMs: Date.now() - v_f6634c,
       });
     }
     throw v_1bbaa4(v_5e9bfe);

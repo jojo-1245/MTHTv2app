@@ -749,6 +749,7 @@ export const HealthRecordsView: v_a3453e.FC<HealthRecordsViewProps> = ({
         savedBeforeNavigate: true,
         recordId: v_fbf3b0,
         fromHistory: true,
+        vitalSigns: v_61f930.vital_signs as Record<string, unknown>,
       });
     } catch (v_5e9bfe) {
       console.error('[HealthRecordsView] 전체 결과 열기 실패:', v_5e9bfe);
