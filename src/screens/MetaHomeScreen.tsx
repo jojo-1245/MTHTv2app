@@ -232,6 +232,11 @@ const v_2258bf = 1000;
 const v_234582 = 25;
 const v_8bf63f = 'metahint_step_notification_enabled';
 
+const v_c567d7 = 'metahint_step_count';
+const v_368d84 = 'metahint_step_count_date';
+const v_141a47 = 3 * 60 * 1000;
+const v_b4c97e = [10000, 20000, 30000, 40000, 50000] as const;
+
 type Props = v_432191<v_8ad91b, 'MetaHome'>;
 
 const v_857bbc = ['weekday_mon', 'weekday_tue', 'weekday_wed', 'weekday_thu', 'weekday_fri', 'weekday_sat', 'weekday_sun'] as const;
@@ -600,6 +605,8 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
   const v_d0a009 = v_e662ae(false);
   const v_1394a8 = v_e662ae(0);
   const v_73f10c = v_e662ae<string | null>(null);
+  const v_b344a5 = v_e662ae(0);
+  const v_2b233e = v_e662ae<Set<number>>(new Set());
   const [v_0e0399, v_00e50d] = v_5ab095<number | null>(null);
   const [v_61d2e7, v_7b7e60] = v_5ab095(() => v_312d93(v_9c213b.language));
 
@@ -612,10 +619,49 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
     }).catch(() => { });
   }, []);
 
+  const v_09c991 = v_de06a3(async (v_58ca36, v_328259) => {
+    const v_5c2f9f = Date.now();
+    const v_78e56b = v_3e3188.current;
+    const v_731d3f = v_328259?.force === true || v_78e56b >= 20000;
+    if (!v_731d3f && v_5c2f9f - v_b344a5.current < v_141a47) return;
+    v_b344a5.current = v_5c2f9f;
+    try {
+      const v_227df7 = v_312d93(v_9c213b.language);
+      const [v_d94577, v_d48d35] = await Promise.all([
+        v_e84827.getItem(v_368d84),
+        v_e84827.getItem(v_c567d7),
+      ]);
+      const v_635b76 = v_d48d35 != null && v_d48d35 !== '' ? Number(v_d48d35) : null;
+      const v_da910e = v_d94577 != null && v_d94577 !== '' && v_d94577 !== v_227df7;
+      const v_0a2cd1 = v_328259?.claimed;
+      v_f42779(
+        'step_home_snapshot',
+        {
+          reason: v_58ca36,
+          device_steps: v_78e56b,
+          record_date: v_227df7,
+          saved_date: v_d94577,
+          saved_steps: Number.isFinite(v_635b76) ? v_635b76 : null,
+          date_mismatch: v_da910e,
+          claimed_count: Array.isArray(v_0a2cd1) ? v_0a2cd1.length : undefined,
+          pedometer_available: v_9c8eed,
+          step_notification_enabled: v_264467,
+          platform: v_326be8.OS,
+        },
+        v_da910e || v_78e56b >= 30000 ? { level: 'warn' } : undefined,
+      );
+    } catch {
+
+    }
+  }, [v_9c213b.language, v_9c8eed, v_264467]);
+
   v_c4deb2(() => {
     const v_4e23a2 = v_73f10c.current !== null && v_73f10c.current !== v_61d2e7;
     v_73f10c.current = v_61d2e7;
-    if (v_4e23a2) v_04f4d8([]);
+    if (v_4e23a2) {
+      v_04f4d8([]);
+      v_2b233e.current = new Set();
+    }
     v_277835(v_61d2e7);
   }, [v_61d2e7, v_277835]);
 
@@ -631,20 +677,32 @@ const MetaHomeScreen: v_a3453e.FC<Props> = ({ navigation: v_c65f5d }) => {
       const v_a448ad = v_312d93(v_9c213b.language);
       v_7b7e60((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
       v_277835(v_a448ad);
+      void v_09c991('app_active');
     });
     return () => {
       clearInterval(v_ca94a2);
       v_1ae212.remove();
     };
-  }, [v_9c213b.language, v_277835]);
+  }, [v_9c213b.language, v_277835, v_09c991]);
 
   v_cf763b(
     v_de06a3(() => {
       const v_a448ad = v_312d93(v_9c213b.language);
       v_7b7e60((v_ba2215) => (v_ba2215 !== v_a448ad ? v_a448ad : v_ba2215));
       v_277835(v_a448ad);
-    }, [v_9c213b.language, v_277835])
+      void v_09c991('home_focus');
+    }, [v_9c213b.language, v_277835, v_09c991])
   );
+
+  v_c4deb2(() => {
+    for (const v_d361d7 of v_b4c97e) {
+      if (v_dc679a < v_d361d7) continue;
+      if (v_2b233e.current.has(v_d361d7)) continue;
+      v_2b233e.current.add(v_d361d7);
+      void v_09c991(`threshold_${v_d361d7}`, { force: true });
+    }
+  }, [v_dc679a, v_09c991]);
+
   v_c4deb2(() => { v_7c14c7().then(v_01dcf5 => v_00e50d(v_01dcf5.step_reward_per1k)).catch(() => { }); }, []);
   v_c4deb2(() => { v_8c7f62().then(v_d308b5 => v_c060b8(v_d308b5)).catch(() => { }); }, []);
   const v_616ba8 = v_df9f57(() => Array.from({ length: v_c19e2d / v_2258bf }, (v_37eab7, v_ebec57) => (v_ebec57 + 1) * v_2258bf), []);
