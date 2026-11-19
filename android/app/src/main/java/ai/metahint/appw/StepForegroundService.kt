@@ -25,6 +25,7 @@ class StepForegroundService : Service(), SensorEventListener {
         const val CHANNEL_ID = "step-tracking-silent"
         const val NOTIFICATION_ID = 1001
         const val ACTION_UPDATE = "ai.metahint.appw.UPDATE_STEPS"
+        const val ACTION_RESET_FOR_NEW_DAY = "ai.metahint.appw.RESET_FOR_NEW_DAY"
         const val ACTION_STOP = "ai.metahint.appw.STOP"
         const val EXTRA_STEPS = "steps"
         const val EXTRA_STEP_UNIT = "step_unit"
@@ -76,6 +77,11 @@ class StepForegroundService : Service(), SensorEventListener {
                 stopSelf()
                 return START_NOT_STICKY
             }
+            ACTION_RESET_FOR_NEW_DAY -> {
+
+                val unit = intent.getStringExtra(EXTRA_STEP_UNIT) ?: stepUnit
+                resetStepsForNewDay(unit)
+            }
             ACTION_UPDATE -> {
                 val steps = intent.getIntExtra(EXTRA_STEPS, 0)
                 val unit = intent.getStringExtra(EXTRA_STEP_UNIT) ?: "걸음"
@@ -89,6 +95,7 @@ class StepForegroundService : Service(), SensorEventListener {
                     stepOffset = lastStepCounterTotal - currentSteps
                 }
                 stepUnit = unit
+                saveStepCount(currentSteps)
                 startForeground(NOTIFICATION_ID, buildNotification(currentSteps, unit))
             }
             else -> {
@@ -189,6 +196,19 @@ class StepForegroundService : Service(), SensorEventListener {
         startForeground(NOTIFICATION_ID, buildNotification(currentSteps, stepUnit))
     }
 
+    private fun resetStepsForNewDay(unit: String = stepUnit) {
+        currentSteps = 0
+        stepOffset = 0
+        lastStepCount = 0
+        hasCounterBaseline = false
+        lastStepCounterTotal = 0
+        lastCheckedDate = ""
+        stepUnit = unit
+        saveStepCount(0)
+        startForeground(NOTIFICATION_ID, buildNotification(0, stepUnit))
+        lastCheckedDate = getTodayDateString()
+    }
+
     private fun checkAndResetIfNewDay() {
         val today = getTodayDateString()
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -199,16 +219,8 @@ class StepForegroundService : Service(), SensorEventListener {
         }
 
         if (!savedDate.isNullOrEmpty() && savedDate != today) {
-            currentSteps = 0
-            stepOffset = 0
-            lastStepCount = 0
-            hasCounterBaseline = false
-            lastStepCounterTotal = 0
-            lastCheckedDate = ""
-            saveStepCount(0)
-            if (isTracking) {
-                startForeground(NOTIFICATION_ID, buildNotification(0, stepUnit))
-            }
+            resetStepsForNewDay(stepUnit)
+            return
         } else if (savedDate.isNullOrEmpty()) {
             saveStepCount(currentSteps)
         }

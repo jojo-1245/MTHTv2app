@@ -142,6 +142,22 @@ export const v_f41071 = async (): Promise<number> => {
   }
 };
 
+export const v_488de4 = async (v_59929c = '걸음'): Promise<boolean> => {
+  if (v_326be8.OS !== 'android' || !v_d4c370()) {
+    return false;
+  }
+  try {
+    if (typeof v_7ee4c6.resetForNewDay !== 'function') {
+      return false;
+    }
+    await v_7ee4c6.resetForNewDay(v_59929c);
+    return true;
+  } catch (v_9e86fd) {
+    console.warn('[StepTracking] 네이티브 일자 리셋 실패:', v_9e86fd);
+    return false;
+  }
+};
+
 export function v_39a73c(): Date {
   const v_d5dda0 = new Date();
   v_d5dda0.setHours(0, 0, 0, 0);
