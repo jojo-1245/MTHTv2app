@@ -16,6 +16,7 @@ import {
   v_8348d9,
   v_f41071,
   v_8a180c,
+  v_488de4,
 } from '../services/stepTrackingService';
 import {
   v_157cb4,
@@ -31,6 +32,8 @@ const v_368d84 = 'metahint_step_count_date';
 const v_c19e2d = 10000;
 
 export const v_d4a77d = true;
+
+const v_92d4cd = 5000;
 
 interface StepTrackingContextValue {
   currentSteps: number;
@@ -50,6 +53,8 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
   const v_11aba6 = v_e662ae<{ remove: () => void } | null>(null);
   const v_157eb2 = v_e662ae(0);
   const v_0e4285 = v_e662ae(false);
+
+  const v_61ee07 = v_e662ae(0);
   const [v_9c8eed, v_64b293] = v_5ab095<boolean | null>(null);
   const [v_264467, v_e882e2] = v_5ab095(false);
 
@@ -68,6 +73,61 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     return v_312d93(v_9c213b.language);
   }, [v_9c213b.language]);
 
+  const v_8dc5f9 = v_de06a3(() => v_f74058('home.step_unit', '걸음'), [v_f74058]);
+
+  const v_eeff7b = v_de06a3(async (v_546cfc) => {
+    v_61ee07.current = Date.now() + 15_000;
+    const v_80cae9 = v_8dc5f9();
+    let v_71e9eb = 0;
+    try {
+      v_71e9eb = await v_f41071();
+    } catch {
+      v_71e9eb = 0;
+    }
+    const v_35c806 =
+      v_546cfc >= v_92d4cd &&
+      v_71e9eb >= v_92d4cd &&
+      v_71e9eb >= Math.floor(v_546cfc * 0.8);
+    if (v_35c806 || (v_546cfc > 0 && v_71e9eb > v_546cfc)) {
+      const v_0cdf2d = await v_488de4(v_80cae9);
+      try {
+        const { logToServer: v_f42779 } = require('../services/clientLog');
+        v_f42779('step_native_day_reset', {
+          steps_before_reset: v_546cfc,
+          service_steps_before: v_71e9eb,
+          carryover: v_35c806,
+          reset_ok: v_0cdf2d,
+          platform: v_326be8.OS,
+        }, { level: 'warn' });
+      } catch { }
+      try {
+        await v_8348d9(0, v_c19e2d, v_80cae9);
+      } catch { }
+
+      v_61ee07.current = Date.now() + (v_0cdf2d ? 15_000 : 18 * 60 * 60 * 1000);
+      return 0;
+    }
+    return v_71e9eb;
+  }, [v_8dc5f9]);
+
+  const v_424da8 = v_de06a3((v_71e9eb): boolean => {
+    if (v_71e9eb <= v_3e3188.current) return true;
+    if (Date.now() >= v_61ee07.current) return true;
+
+    if (v_3e3188.current < 200 && v_71e9eb >= v_92d4cd) {
+      try {
+        const { logToServer: v_f42779 } = require('../services/clientLog');
+        v_f42779('step_recover_suppressed', {
+          displayed: v_3e3188.current,
+          recovered_steps: v_71e9eb,
+          platform: v_326be8.OS,
+        }, { level: 'warn' });
+      } catch { }
+      return false;
+    }
+    return true;
+  }, []);
+
   const v_7f798a = v_de06a3(async (v_eb271c) => {
     try {
       const v_227df7 = v_c877df();
@@ -84,9 +144,14 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       const v_d94577 = await v_e84827.getItem(v_368d84);
       const v_227df7 = v_c877df();
       if (v_d94577 === null || v_d94577 === '' || v_d94577 !== v_227df7) {
+        const v_bc798c = await v_e84827.getItem(v_c567d7);
+        const v_bdfc08 = v_bc798c ? parseInt(v_bc798c, 10) || 0 : 0;
         await v_e84827.setItem(v_c567d7, '0');
         await v_e84827.setItem(v_368d84, v_227df7);
         v_5948ce.current = 0;
+        if (v_d94577 !== null && v_d94577 !== '' && v_d94577 !== v_227df7) {
+          await v_eeff7b(v_bdfc08);
+        }
         return 0;
       }
       const v_635b76 = await v_e84827.getItem(v_c567d7);
@@ -97,7 +162,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       console.warn('걸음수 로드 실패:', v_5e9bfe);
       return 0;
     }
-  }, [v_c877df]);
+  }, [v_c877df, v_eeff7b]);
 
   v_c4deb2(() => { v_3e3188.current = v_dc679a; }, [v_dc679a]);
 
@@ -135,7 +200,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
         try {
           const v_4e3a2c = await v_8a180c();
-          if (v_4e3a2c > v_fd7b23) {
+          if (v_4e3a2c > v_fd7b23 && v_424da8(v_4e3a2c)) {
             v_fd7b23 = v_4e3a2c;
           }
           try {
@@ -165,7 +230,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     return () => {
       v_41ed06 = false;
     };
-  }, [v_e9771f, v_7f798a]);
+  }, [v_e9771f, v_7f798a, v_424da8]);
 
   v_c4deb2(() => {
     if (!v_264467 || !v_0c7e2f()) return;
@@ -263,10 +328,12 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                 service_steps: v_dc359d,
               }, { level: 'warn' });
             } catch { }
+            const v_e98932 = v_635b76;
             await v_e84827.setItem(v_c567d7, '0');
             await v_e84827.setItem(v_368d84, v_227df7);
             v_635b76 = 0;
             v_5948ce.current = 0;
+            await v_eeff7b(Math.max(v_e98932, v_dc359d));
           }
 
           const v_02fdad = await v_303ad0();
@@ -303,12 +370,13 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
 
               v_8a180c().then((v_71e9eb) => {
                 if (!v_41ed06) return;
+                const v_999957 = v_424da8(v_71e9eb);
                 let v_9c9484;
-                if (v_635b76 === 0 && v_71e9eb <= 1) {
-                  v_9c9484 = 0;
+                if (v_635b76 === 0 && (!v_999957 || v_71e9eb <= 1)) {
+                  v_9c9484 = Math.max(v_635b76, v_3e3188.current);
                 } else {
                   const v_6f7c85 = [v_635b76, v_3e3188.current];
-                  if (v_71e9eb > 0) v_6f7c85.push(v_71e9eb);
+                  if (v_999957 && v_71e9eb > 0) v_6f7c85.push(v_71e9eb);
                   v_9c9484 = Math.max(...v_6f7c85);
                 }
                 try {
@@ -318,6 +386,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
                     recovered_steps: v_71e9eb,
                     final_steps: v_9c9484,
                     displayed: v_3e3188.current,
+                    accepted: v_999957,
                     platform: v_326be8.OS,
                   });
                 } catch { }
@@ -356,7 +425,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       v_11aba6.current = null;
       v_0e4285.current = false;
     };
-  }, [v_84b08a]);
+  }, [v_84b08a, v_e9771f, v_7f798a, v_c877df, v_9c213b.language, v_eeff7b, v_424da8]);
 
   v_c4deb2(() => {
     const v_8d41d7 = setTimeout(() => {
@@ -385,13 +454,14 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       const v_d94577 = await v_e84827.getItem(v_368d84);
       const v_227df7 = v_c877df();
       if (v_d94577 !== null && v_d94577 !== '' && v_d94577 !== v_227df7) {
+        const v_e98932 = v_3e3188.current;
         try {
           const { logToServer: v_f42779 } = require('../services/clientLog');
           v_f42779('step_reset_new_day', {
             saved_date: v_d94577,
             today: v_227df7,
             language: v_9c213b.language,
-            current_steps_before_reset: v_3e3188.current,
+            current_steps_before_reset: v_e98932,
             rewatch: v_d4a77d,
           }, { level: 'warn' });
         } catch { }
@@ -399,15 +469,16 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
         await v_e84827.setItem(v_368d84, v_227df7);
         v_5948ce.current = 0;
         v_3e3188.current = 0;
+        v_4b95c4(0);
+        await v_eeff7b(v_e98932);
         if (v_d4a77d && v_0e4285.current) {
           v_84b08a();
         }
-        v_4b95c4(0);
       }
     } catch (v_5e9bfe) {
       console.warn('[StepTracking] 날짜 체크 실패:', v_5e9bfe);
     }
-  }, [v_84b08a, v_c877df, v_9c213b.language]);
+  }, [v_84b08a, v_c877df, v_9c213b.language, v_eeff7b]);
 
   v_c4deb2(() => {
     const v_207dac = setInterval(() => { v_5640a4(); }, 60000);
@@ -424,15 +495,17 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
           try {
             const v_e98932 = v_3e3188.current;
             const v_71e9eb = await v_8a180c();
+            const v_84ebfe = v_424da8(v_71e9eb);
             try {
               const { logToServer: v_f42779 } = require('../services/clientLog');
               v_f42779('step_active_recover', {
                 before_steps: v_e98932,
                 recovered_steps: v_71e9eb,
+                accepted: v_84ebfe,
                 platform: v_326be8.OS,
               });
             } catch { }
-            if (v_71e9eb > 0 && v_71e9eb > v_3e3188.current) {
+            if (v_84ebfe && v_71e9eb > 0 && v_71e9eb > v_3e3188.current) {
               v_4b95c4(v_71e9eb);
               await v_7f798a(v_71e9eb);
             }
@@ -441,7 +514,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       });
     } catch {}
     return () => { try { v_269481?.remove(); } catch {} };
-  }, [v_5640a4, v_7f798a]);
+  }, [v_5640a4, v_7f798a, v_424da8]);
 
   v_c4deb2(() => {
     if (v_326be8.OS !== 'android') return;
@@ -455,7 +528,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
       v_da0c31 = true;
       try {
         const v_71e9eb = await v_f41071();
-        if (v_71e9eb > v_3e3188.current) {
+        if (v_71e9eb > v_3e3188.current && v_424da8(v_71e9eb)) {
           v_4b95c4(v_71e9eb);
         }
       } catch {
@@ -466,7 +539,7 @@ export const StepTrackingProvider: v_a3453e.FC<{ children: v_a3453e.ReactNode }>
     }, v_706c5a);
 
     return () => clearInterval(v_cb36b1);
-  }, [v_264467]);
+  }, [v_264467, v_424da8]);
 
   const v_3b402b = v_df9f57(() => ({
     currentSteps: v_dc679a,
